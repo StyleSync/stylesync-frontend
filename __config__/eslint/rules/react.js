@@ -52,7 +52,6 @@ module.exports = {
     'react/no-children-prop': 'error',
     'react/jsx-first-prop-new-line': ['error', 'multiline'],
     'react/jsx-tag-spacing': 'error',
-    'react/require-default-props': 'error',
     'react/forbid-foreign-prop-types': 'off',
     'react/void-dom-elements-no-children': 'error',
     'react/jsx-no-target-blank': 'error',
