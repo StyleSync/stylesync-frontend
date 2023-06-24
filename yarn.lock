@@ -9,6 +9,18 @@
   dependencies:
     regenerator-runtime "^0.13.11"
 
+"@commitlint/config-angular-type-enum@^17.4.0":
+  version "17.4.0"
+  resolved "https://registry.npmjs.org/@commitlint/config-angular-type-enum/-/config-angular-type-enum-17.4.0.tgz#5b6c882f192d1c7f4b0f42526637295434179d7f"
+  integrity sha512-qbmfOfVqQHMKfc6CxS0A9b7+EFsOyEBoh4+i8Qa05uk8YhT/zY1CeIXK5V3wwemMDcHUegyL/ZnwCvWD7g8GxA==
+
+"@commitlint/config-angular@^17.6.6":
+  version "17.6.6"
+  resolved "https://registry.npmjs.org/@commitlint/config-angular/-/config-angular-17.6.6.tgz#6788fcad45b9a12b5ca68606474eebbd43f381a8"
+  integrity sha512-9hKLCMkW4JNTZW/bs/oXYWzaOmMJM8xGwL+muy2HMGWlH9NvbsQsYo/mz2PMtI+ybs0COpTjWvH/42hr9hADIA==
+  dependencies:
+    "@commitlint/config-angular-type-enum" "^17.4.0"
+
 "@eslint-community/eslint-utils@^4.2.0":
   version "4.4.0"
   resolved "https://registry.npmjs.org/@eslint-community/eslint-utils/-/eslint-utils-4.4.0.tgz#a23514e8fb9af1269d5f7788aa556798d61c6b59"
