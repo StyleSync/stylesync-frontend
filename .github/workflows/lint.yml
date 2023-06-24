@@ -1,0 +1,43 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Use Yarn
+        run: npm install -g yarn@1
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Install Commitlint
+        run: yarn global add @commitlint/cli
+
+      - name: Run ESLint
+        run: yarn lint
+
+      - name: Run Prettier
+        run: yarn prettier 'src/**/*.{js,jsx,ts,tsx}' --check
+
+      - name: Run TypeScript check
+        run: yarn tsc --noEmit
+
+      - name: Validate commit messages
+        run: echo $(git log -1 --pretty=%B) | commitlint --config commitlint.config.js
