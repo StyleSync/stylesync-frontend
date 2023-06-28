@@ -4,11 +4,5 @@
     "./__config__/eslint",
     "prettier",
     "plugin:storybook/recommended"
-  ],
-  "overrides": [{
-    "files": ["*.stories.ts", "*.stories.tsx"],
-    "rules": {
-      "react-hooks/rules-of-hooks": "off"
-    }
-  }]
+  ]
 }
