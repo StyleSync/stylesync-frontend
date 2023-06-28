@@ -1,0 +1,64 @@
+.base {
+    color: var(--color-dark);
+}
+
+/* variants */
+
+.title {
+    font-size: 28px;
+    line-height: 33px;
+}
+
+.subtitle {
+    font-size: 20px;
+    line-height: 24px;
+}
+
+.body1 {
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.body2 {
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.small {
+    font-size: 12px;
+    line-height: 14px;
+}
+
+/* weight */
+
+.thin {
+    font-weight: 100;
+}
+
+.ultralight {
+    font-weight: 200;
+}
+
+.light {
+    font-weight: 300;
+}
+
+.regular {
+    font-weight: 400;
+}
+
+.medium {
+    font-weight: 500;
+}
+
+.semibold {
+    font-weight: 600;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.black {
+    font-weight: 900;
+}
