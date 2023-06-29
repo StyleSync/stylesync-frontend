@@ -1,5 +1,6 @@
 // colors
 $primary-color: #3B82EF;
+$accent-color: #0252CC;
 $dark-color: #323E4A;
 $grey-color: #939DAA;
 $accent-color: #0252CC;
@@ -7,6 +8,7 @@ $accent-color: #0252CC;
 // transitions
 $transition-ultrafast: 0.3s;
 $transition-fast: 0.5s;
+$transition-medium: 0.7s;
 
 // export colors
 :export {

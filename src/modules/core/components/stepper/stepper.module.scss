@@ -1,0 +1,176 @@
+@use '@/styles/variables.module';
+
+.root {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0 10px 19px;
+}
+
+.step {
+    position: relative;
+    border-radius: 50%;
+    transition: background-color variables.$transition-fast;
+    user-select: none;
+
+    .stepText {
+        position: absolute;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        top: calc(100% + 5px);
+        left: 50%;
+        transform: translateX(-50%);
+        color: variables.$grey-color;
+
+        &_active {
+            transition: variables.$transition-fast;
+            transition-delay: variables.$transition-medium;
+            color: variables.$accent-color;
+        }
+
+        &_passed {
+            color: variables.$accent-color;
+        }
+    }
+}
+
+.badge {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border-width: 1px;
+    border-style: solid;
+    border-color: variables.$grey-color;
+    color: variables.$grey-color;
+
+    &::before {
+        position: absolute;
+        top: 11px;
+        left: 4px;
+        display: block;
+        content: '';
+        width: 2px;
+        height: 0;
+        background-color: #fff;
+        border-radius: 1px;
+        transform: rotate(-45deg);
+        transform-origin: top right;
+    }
+
+    &::after {
+        position: absolute;
+        top: 16px;
+        left: 7px;
+        display: block;
+        content: '';
+        width: 2px;
+        height: 0;
+        background-color: #fff;
+        border-radius: 1px;
+        transform: rotate(-139deg);
+        transform-origin: top right;
+    }
+
+    &_active {
+        transition: variables.$transition-fast;
+        transition-delay: variables.$transition-medium;
+        border-color: variables.$accent-color;
+        color: variables.$accent-color;
+    }
+
+    &_passed {
+        position: relative;
+        background-color: variables.$accent-color;
+        border-color: variables.$accent-color;
+        color: transparent;
+
+        &::before {
+            animation-name: check1;
+            animation-duration: 0.3s;
+            animation-fill-mode: forwards;
+        }
+
+        &::after {
+            animation-name: check2;
+            animation-duration: 0.3s;
+            animation-fill-mode: forwards;
+            animation-delay: 0.15s;
+        }
+    }
+
+    .badgeText {
+        color: inherit;
+    }
+}
+
+.line {
+    position: relative;
+    height: 1px;
+    flex: 1;
+    background-color: variables.$grey-color;
+
+    .lineProgress {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 1px;
+        width: 0;
+        background-color: variables.$accent-color;
+        transition-duration: variables.$transition-medium;
+
+        &_active {
+            width: 100%;
+        }
+    }
+}
+
+.vertical {
+    flex-direction: column;
+    width: fit-content;
+    padding: 0 16px 0 0;
+
+    .stepText {
+        left: calc(100% + 16px);
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .line {
+        height: unset;
+        width: 1px;
+    }
+
+    .lineProgress {
+        width: 1px;
+        height: 0;
+
+        &_active {
+            height: 100%;
+        }
+    }
+}
+
+@keyframes check1 {
+    from {
+        height: 0;
+    }
+
+    to {
+        height: 7px;
+    }
+}
+
+@keyframes check2 {
+    from {
+        height: 0;
+    }
+
+    to {
+        height: 13px;
+    }
+}

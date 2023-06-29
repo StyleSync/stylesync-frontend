@@ -227,6 +227,7 @@ module.exports = {
       'error',
       { blankLine: 'always', prev: 'block-like', next: '*' },
     ],
+    '@typescript-eslint/consistent-type-imports': 'error',
   },
   overrides: [
     {

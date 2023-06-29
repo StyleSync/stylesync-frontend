@@ -9,7 +9,7 @@ import InfoIcon from '@/assets/icons/info.svg?icon';
 import LocationIcon from '@/assets/icons/location.svg?icon';
 import StarIcon from '@/assets/icons/star.svg?icon';
 
-import { SVGComponentElement } from './icon.interface';
+import type { SVGComponentElement } from './icon.interface';
 
 export const icons = {
   phone: PhoneIcon,
