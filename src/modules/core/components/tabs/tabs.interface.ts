@@ -1,5 +1,5 @@
-import { IconName } from '@/modules/core/components';
-import { TypographyProps } from '@/modules/core/components/typogrpahy/typography.interface';
+import type { IconName } from '@/modules/core/components';
+import type { TypographyProps } from '@/modules/core/components/typogrpahy/typography.interface';
 
 type Tab = {
   key: string;

@@ -1,4 +1,4 @@
-import { ChildrenProp } from '@/modules/core/types/react.types';
+import type { ChildrenProp } from '@/modules/core/types/react.types';
 
 export type RadioButtonProps = {
   value: string;
