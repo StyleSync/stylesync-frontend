@@ -9,7 +9,8 @@
     "lint": "next lint",
     "prepare": "husky install",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "svg:optimize": "node ./scripts/svg-optimize.js"
   },
   "dependencies": {
     "@types/node": "20.3.1",
@@ -39,6 +40,7 @@
     "husky": "^8.0.3",
     "lint-staged": "^13.2.2",
     "prettier": "^2.8.8",
-    "storybook": "^7.0.23"
+    "storybook": "^7.0.23",
+    "svgo": "^3.0.2"
   }
 }
