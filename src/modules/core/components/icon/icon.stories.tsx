@@ -19,7 +19,7 @@ type Story = StoryObj<typeof Icon>;
 
 export const Variants: Story = {
   render: (args) => (
-    <Icon {...args} width={30} height={30}>
+    <Icon {...args} width={30} height={30} style={{ color: '#323E4A' }}>
       Title.
     </Icon>
   ),
