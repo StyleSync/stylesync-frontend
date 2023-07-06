@@ -1,3 +1,4 @@
+const path = require('path');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   webpack(config) {
@@ -26,6 +27,9 @@ const nextConfig = {
     fileLoaderRule.exclude = /\.svg$/i;
 
     return config;
+  },
+  sassOptions: {
+    includePaths: [path.join(__dirname, 'styles')],
   },
 };
 

@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { fonts } from '@/styles/fonts';
 
 import type { TypographyProps } from './typography.interface';
-import styles from './typography.module.css';
+import styles from './typography.module.scss';
 
 export const Typography: FC<TypographyProps> = ({
   children,

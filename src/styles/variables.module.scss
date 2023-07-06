@@ -1,0 +1,14 @@
+// colors
+$primary-color: #3B82EF;
+$dark-color: #323E4A;
+$grey-color: #939DAA;
+
+// transitions
+$transition-fast: 0.5s;
+
+// export colors
+:export {
+  primaryColor: $primary-color;
+  darkColor: $dark-color;
+  greyColor: $grey-color;
+}
