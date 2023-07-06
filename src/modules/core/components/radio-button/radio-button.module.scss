@@ -1,0 +1,55 @@
+@use '@/styles/variables.module';
+
+.root {
+    position: relative;
+    display: flex;
+    width: fit-content;
+    cursor: pointer;
+    transition-duration: variables.$transition-fast;
+    padding: 10px;
+    border-radius: 50%;
+
+    &:hover {
+        background-color: rgba(25, 118, 210, 0.04);
+    }
+
+    .radio {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 100%;
+        border-width: 1px;
+        border-style: solid;
+        border-color: variables.$grey-color;
+        transition-duration: variables.$transition-fast;
+    }
+
+    .dot {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        transition-duration: variables.$transition-fast;
+        transition-property: background-color;
+    }
+
+    input {
+        opacity: 0;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+
+        &:checked {
+            & + .radio {
+                border-color: variables.$primary-color;
+
+                .dot {
+                    background-color: variables.$primary-color;
+                }
+            }
+        }
+    }
+}

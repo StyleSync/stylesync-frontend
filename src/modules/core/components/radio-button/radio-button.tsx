@@ -7,7 +7,7 @@ import type {
   RadioGroupProps,
   RadioGroupContextValue,
 } from './radio-button.interface';
-import styles from './radio-button.module.css';
+import styles from './radio-button.module.scss';
 
 const RadioGroupContext = createContext<RadioGroupContextValue>({
   activeValue: null,

@@ -1,5 +1,7 @@
+@use '@/styles/variables.module';
+
 .base {
-    color: var(--color-dark);
+    color: variables.$dark-color;
 }
 
 /* variants */
