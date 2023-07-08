@@ -6,9 +6,22 @@ const meta: Meta<typeof Input> = {
   title: 'Core UI/Input',
   component: Input,
   tags: ['autodocs'],
+  args: {
+    label: 'Label',
+    error: false,
+  },
   argTypes: {
     error: {
       control: 'boolean',
+    },
+    className: {
+      control: false,
+    },
+    labelClassName: {
+      control: false,
+    },
+    containerClassName: {
+      control: false,
     },
   },
 };
@@ -16,16 +29,17 @@ const meta: Meta<typeof Input> = {
 export default meta;
 type Story = StoryObj<typeof Input>;
 
-export const Default: Story = {
-  args: {
-    label: 'Label',
-  },
-};
+export const Default: Story = {};
 export const Error: Story = {
   args: {
-    label: 'Label',
     error: true,
-    value: 'Error',
-    onChange: () => {},
+    defaultValue: 'Error',
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+    defaultValue: 'Disabled',
   },
 };
