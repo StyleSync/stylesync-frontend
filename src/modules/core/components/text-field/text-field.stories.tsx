@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Input } from './input';
+import { TextField } from './text-field';
 
-const meta: Meta<typeof Input> = {
-  title: 'Core UI/Input',
-  component: Input,
+const meta: Meta<typeof TextField> = {
+  title: 'Core UI/TextField',
+  component: TextField,
   tags: ['autodocs'],
   args: {
     label: 'Label',
@@ -27,7 +27,7 @@ const meta: Meta<typeof Input> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof Input>;
+type Story = StoryObj<typeof TextField>;
 
 export const Default: Story = {};
 export const Error: Story = {
@@ -41,5 +41,12 @@ export const Disabled: Story = {
   args: {
     disabled: true,
     defaultValue: 'Disabled',
+  },
+};
+
+export const Textarea: Story = {
+  args: {
+    variant: 'textarea',
+    rows: 5,
   },
 };
