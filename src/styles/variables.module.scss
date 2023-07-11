@@ -2,8 +2,10 @@
 $primary-color: #3B82EF;
 $dark-color: #323E4A;
 $grey-color: #939DAA;
+$accent-color: #0252CC;
 
 // transitions
+$transition-ultrafast: 0.3s;
 $transition-fast: 0.5s;
 
 // export colors
@@ -11,4 +13,5 @@ $transition-fast: 0.5s;
   primaryColor: $primary-color;
   darkColor: $dark-color;
   greyColor: $grey-color;
+  accentColor: $accent-color;
 }
