@@ -1,29 +1,25 @@
 import { InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
-import { StylingProps, SupportedFonts } from '@/styles/styles.types';
+import { SupportedFonts } from '@/styles/styles.types';
 
 type Variant = 'input' | 'textarea';
 
-export type InputProps = StylingProps &
-  InputHTMLAttributes<HTMLInputElement> & {
-    variant: 'input';
-    label?: string;
-    error?: boolean;
-    containerClassName?: string;
-    labelClassName?: string;
-    font?: SupportedFonts;
-  };
+type InputProps = {
+  variant: 'input';
+} & InputHTMLAttributes<HTMLInputElement>;
 
-export type TextAreaProps = StylingProps &
-  TextareaHTMLAttributes<HTMLTextAreaElement> & {
-    variant: 'textarea';
-    label?: string;
-    error?: boolean;
-    containerClassName?: string;
-    labelClassName?: string;
-    font?: SupportedFonts;
-  };
+type TextAreaProps = {
+  variant: 'textarea';
+} & TextareaHTMLAttributes<HTMLTextAreaElement>;
 
-export type TextFieldProps = InputProps | TextAreaProps;
+export type TextFieldProps = {
+  label?: string;
+  error?: boolean;
+  classes?: {
+    container?: string;
+    label?: string;
+  };
+  font?: SupportedFonts;
+} & (InputProps | TextAreaProps);
 
 export function isInputProps(
   variant: Variant,

@@ -19,8 +19,7 @@ export const TextField = forwardRef<
       label,
       error,
       className,
-      containerClassName,
-      labelClassName,
+      classes,
       font = 'SF_PRO_TEXT',
       variant = 'input',
       ...props
@@ -35,7 +34,7 @@ export const TextField = forwardRef<
     };
 
     return (
-      <div className={clsx(styles.container, containerClassName)}>
+      <div className={clsx(styles.container, classes?.container)}>
         {isInputProps(variant, props) && (
           <input
             ref={ref as ForwardedRef<HTMLInputElement>}
@@ -82,7 +81,7 @@ export const TextField = forwardRef<
                 [styles.labelError]: error,
                 [styles.textAreaLabel]: variant === 'textarea',
               },
-              labelClassName
+              classes?.label
             )}
           >
             {label}

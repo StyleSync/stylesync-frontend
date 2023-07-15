@@ -8,8 +8,7 @@
   "overrides": [{
     "files": ["*.stories.ts", "*.stories.tsx"],
     "rules": {
-      "react-hooks/rules-of-hooks": "off",
-      "@typescript-eslint/consistent-type-imports": "error"
+      "react-hooks/rules-of-hooks": "off"
     }
   }]
 }
