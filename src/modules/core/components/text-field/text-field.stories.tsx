@@ -17,10 +17,7 @@ const meta: Meta<typeof TextField> = {
     className: {
       control: false,
     },
-    labelClassName: {
-      control: false,
-    },
-    containerClassName: {
+    classes: {
       control: false,
     },
   },
