@@ -1,5 +1,5 @@
-import { InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
-import { SupportedFonts } from '@/styles/styles.types';
+import type { InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
+import type { SupportedFonts } from '@/styles/styles.types';
 
 type Variant = 'input' | 'textarea';
 
