@@ -1,10 +1,10 @@
-import { ForwardedRef, forwardRef, useState } from 'react';
+import { type ForwardedRef, forwardRef, useState } from 'react';
 import clsx from 'clsx';
 // fonts
 import { fonts } from '@/styles/fonts';
 
 import {
-  TextFieldProps,
+  type TextFieldProps,
   isInputProps,
   isTextAreaProps,
 } from './text-field.interface';
