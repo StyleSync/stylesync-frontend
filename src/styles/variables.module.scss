@@ -1,9 +1,11 @@
 // colors
 $primary-color: #3B82EF;
+$primary-light-color: #d8e6fc;
 $accent-color: #0252CC;
 $dark-color: #323E4A;
 $grey-color: #939DAA;
 $accent-color: #0252CC;
+$error-color: #ff0000;
 
 // transitions
 $transition-ultrafast: 0.3s;
@@ -16,4 +18,6 @@ $transition-medium: 0.7s;
   darkColor: $dark-color;
   greyColor: $grey-color;
   accentColor: $accent-color;
+  errorColor: $error-color;
+  primaryLightColor: $primary-light-color;
 }

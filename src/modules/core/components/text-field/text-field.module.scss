@@ -21,7 +21,7 @@
   width: 100%;
   border: 1px solid variables.$primary-light-color;
   border-radius: 30px;
-  transition: border variables.$transition-ultra-fast ease;
+  transition: border variables.$transition-ultrafast ease;
 
   &:focus {
     border: 1px solid variables.$primary-color;
