@@ -7,17 +7,30 @@ $grey-color: #939DAA;
 $accent-color: #0252CC;
 $error-color: #ff0000;
 
+// gradients
+$instagram-gradient: radial-gradient(122.91% 144.60% at 1.81% 90.83%, #FED576 0%, #F47133 26.34%, #BC3081 60.91%, #4C63D2 100%);
+
 // transitions
 $transition-ultrafast: 0.3s;
 $transition-fast: 0.5s;
 $transition-medium: 0.7s;
 
-// export colors
+// shadows
+$main-box-shadow: 0px 4px 15px 0px rgba(37, 74, 165, 0.10);
+
+// shape
+$border-radius-small: 6px;
+$border-radius-medium: 12px;
+$border-radius-large: 30px;
+
 :export {
+  // colors
   primaryColor: $primary-color;
   darkColor: $dark-color;
   greyColor: $grey-color;
   accentColor: $accent-color;
   errorColor: $error-color;
   primaryLightColor: $primary-light-color;
+  // gradients
+  instagramGradient: $instagram-gradient;
 }
