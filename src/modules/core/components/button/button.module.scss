@@ -1,0 +1,77 @@
+@use '@/styles/utils';
+@use '@/styles/variables.module';
+
+:export {
+  ripplePrimaryColor: lighten(variables.$primary-color, 5%);
+  rippleSecondaryColor: lighten(variables.$primary-color, 30%);
+}
+
+.base {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: utils.spacing(5);
+  background-color: unset;
+  border: unset;
+  cursor: pointer;
+  padding: utils.spacing(0, 3);
+  width: fit-content;
+  border: 1px solid transparent;
+  column-gap: utils.spacing(1);
+
+  &:disabled {
+    cursor: default;
+  }
+
+  &_textless {
+    padding: 0;
+    width: utils.spacing(5);
+  }
+}
+
+.primary {
+  border-radius: variables.$border-radius-large;
+  background-color: variables.$primary-color;
+  color: #fff;
+  transition: variables.$transition-ultrafast;
+  box-shadow: variables.$main-box-shadow;
+
+  &:hover {
+    background-color: darken(variables.$primary-color, 5%);
+  }
+
+  &:disabled {
+    background-color: darken(variables.$primary-light-color, 10%);
+    box-shadow: none;
+  }
+}
+
+.secondary {
+  border-radius: variables.$border-radius-large;
+  background-color: transparent;
+  color: variables.$primary-color;
+  transition: variables.$transition-ultrafast;
+  border: 1px solid variables.$primary-color;
+
+  &:hover {
+    color: darken(variables.$primary-color, 15%);
+    border-color: darken(variables.$primary-color, 15%);
+  }
+
+  &:disabled {
+    border-color: darken(variables.$primary-light-color, 10%);
+    color: darken(variables.$primary-light-color, 10%);
+  }
+}
+
+.text {
+  position: relative;
+  color: inherit;
+}
+
+.icon {
+  position: relative;
+  color: inherit;
+  width: 20px;
+  height: 20px;
+}

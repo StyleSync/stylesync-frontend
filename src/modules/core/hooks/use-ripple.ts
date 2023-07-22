@@ -72,7 +72,7 @@ const createRipple =
     }ms ease-in;
   `;
 
-    element.appendChild(span);
+    element.prepend(span);
 
     span.addEventListener('animationend', () => {
       element.removeChild(span);
