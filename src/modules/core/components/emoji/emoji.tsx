@@ -1,20 +1,26 @@
 import { type FC } from 'react';
-// animations
 import Lottie from 'lottie-react';
-import sunglasses from '../../../../assets/animations/emoji_sunglasses.json';
-import heartEyes from '../../../../assets/animations/emoji_heart_eyes.json';
-
-import type { EmojiProps } from './emoji.interface';
+// animations
+import sunglasses from '@/assets/lottie-files/emoji/emoji-sunglasses.json';
+import heartEyes from '@/assets/lottie-files/emoji/emoji-heart-eyes.json';
 
 // keys
-const emojiAnimations: Record<'sunglasses' | 'heart_eyes', unknown> = {
+const emojies = {
   sunglasses,
-  heart_eyes: heartEyes,
+  'heart-eyes': heartEyes,
+} satisfies Record<string, object>;
+
+export type EmojiName = keyof typeof emojies;
+
+type EmojiProps = {
+  name: EmojiName;
+  width: number;
+  height: number;
 };
 
 const Emoji: FC<EmojiProps> = ({ name, width, height }) => {
   const style = { width, height };
-  const animationsData = emojiAnimations[name];
+  const animationsData = emojies[name];
 
   return <Lottie style={style} animationData={animationsData} />;
 };
