@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-
+import 'leaflet/dist/leaflet.css';
 import { Emoji } from './emoji';
 
 const meta: Meta<typeof Emoji> = {
