@@ -6,6 +6,10 @@
   margin: 0;
 }
 
+.leaflet-container {
+  flex: 1;
+}
+
 .link {
   color: variables.$primary-color;
   text-decoration: none;
