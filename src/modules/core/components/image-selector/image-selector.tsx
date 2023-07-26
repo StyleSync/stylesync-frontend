@@ -42,17 +42,12 @@ export const ImageSelector = forwardRef<HTMLInputElement, ImageSelectorProps>(
       <div>
         <div
           {...getRootProps({
-            className: clsx(
-              styles.container,
-              styles.imageSelectContainer,
-              classes?.container,
-              {
-                [styles.containerDragAccept]: isDragAccept,
-                [styles.containerDragReject]: isDragReject,
-                [styles.imageSelectContainer]: !previewFile,
-                [styles.imagePreviewContainer]: previewFile,
-              }
-            ),
+            className: clsx(styles.container, classes?.container, {
+              [styles.containerDragAccept]: isDragAccept,
+              [styles.containerDragReject]: isDragReject,
+              [styles.imageSelectContainer]: !previewFile,
+              [styles.imagePreviewContainer]: previewFile,
+            }),
             style: {
               width,
               height,

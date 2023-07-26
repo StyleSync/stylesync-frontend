@@ -31,6 +31,7 @@
 .imageSelectContainer {
   padding: utils.spacing(1);
   text-align: center;
+  cursor: pointer;
 }
 
 .actionContainer {
@@ -43,7 +44,7 @@
   bottom: 0;
   height: 100%;
   width: 100%;
-  gap: utils.spacing(3);
+  gap: utils.spacing(4);
   padding-bottom: utils.spacing(3);
   border-radius: 21px;
   background: linear-gradient(
@@ -55,10 +56,17 @@
 
 .imagePreview {
   border-radius: 21px;
+  object-fit: cover;
 }
 
 .imagePreviewContainer {
   border: none;
+
+  &:focus,
+  &:focus-visible {
+    border: none;
+    outline: none;
+  }
 
   &:hover,
   &:focus-within {
