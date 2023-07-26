@@ -9,6 +9,7 @@ import InfoIcon from '@/assets/icons/info.svg?icon';
 import LocationIcon from '@/assets/icons/location.svg?icon';
 import StarIcon from '@/assets/icons/star.svg?icon';
 import HeartIcon from '@/assets/icons/heart.svg?icon';
+import CheckMarkIcon from '@/assets/icons/check-mark.svg?icon';
 import HaircutIcon from '@/assets/icons/haircut.svg?icon';
 import MakeupIcon from '@/assets/icons/makup.svg?icon';
 import NailsIcon from '@/assets/icons/nails.svg?icon';
@@ -27,6 +28,7 @@ export const icons = {
   location: LocationIcon,
   star: StarIcon,
   heart: HeartIcon,
+  'check-mark': CheckMarkIcon,
   close: CloseIcon,
   pencil: PencilIcon,
   haircut: HaircutIcon,

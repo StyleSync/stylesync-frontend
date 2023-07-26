@@ -3,15 +3,7 @@ import type { SupportedFonts } from '@/styles/styles.types';
 
 type Variant = 'input' | 'textarea';
 
-type InputProps = {
-  variant: 'input';
-} & InputHTMLAttributes<HTMLInputElement>;
-
-type TextAreaProps = {
-  variant: 'textarea';
-} & TextareaHTMLAttributes<HTMLTextAreaElement>;
-
-export type TextFieldProps = {
+type TextFieldGeneralProps = {
   label?: string;
   error?: boolean;
   classes?: {
@@ -19,7 +11,19 @@ export type TextFieldProps = {
     label?: string;
   };
   font?: SupportedFonts;
-} & (InputProps | TextAreaProps);
+};
+
+export type InputProps = {
+  variant: 'input';
+} & TextFieldGeneralProps &
+  InputHTMLAttributes<HTMLInputElement>;
+
+type TextAreaProps = {
+  variant: 'textarea';
+} & TextFieldGeneralProps &
+  TextareaHTMLAttributes<HTMLTextAreaElement>;
+
+export type TextFieldProps = InputProps | TextAreaProps;
 
 export function isInputProps(
   variant: Variant,

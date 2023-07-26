@@ -5,7 +5,7 @@ import { Typography } from '@/modules/core/components/typogrpahy';
 import { RadioButton } from './radio-button';
 
 const meta: Meta<typeof RadioButton> = {
-  title: 'Core UI/Radio button',
+  title: 'Core UI/RadioButton',
   component: RadioButton,
   tags: ['autodocs'],
   argTypes: {},

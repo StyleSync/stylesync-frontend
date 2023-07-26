@@ -1,0 +1,45 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+
+.root {
+  position: relative;
+}
+
+.selectors {
+  display: flex;
+  align-items: center;
+  column-gap: utils.spacing(1);
+}
+
+.divider {
+  width: 1px;
+  height: 180px;
+  background-color: variables.$primary-light-color;
+}
+
+.submitButton {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+  border: none;
+  background-color: variables.$primary-light-color;
+  opacity: 0;
+
+  &:disabled {
+    background-color: transparent;
+  }
+
+  &.entering {
+    opacity: 1;
+  }
+  &.entered {
+    opacity: 1;
+  }
+  &.exiting {
+    opacity: 0;
+  }
+  &.exited {
+    opacity: 0;
+  }
+}
