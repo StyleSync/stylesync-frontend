@@ -1,0 +1,17 @@
+@use '@/styles/utils';
+@use '@/styles/variables.module';
+
+.root {
+  display: flex;
+  align-items: center;
+  height: 26px;
+  width: fit-content;
+  column-gap: utils.spacing(0.5);
+  border-radius: variables.$border-radius-large;
+  padding: 0 12px;
+  border: 1px solid variables.$primary-color;
+}
+
+.text {
+  color: variables.$primary-color;
+}
