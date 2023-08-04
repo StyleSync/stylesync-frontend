@@ -8,6 +8,8 @@ import ImageIcon from '@/assets/icons/image.svg?icon';
 import InfoIcon from '@/assets/icons/info.svg?icon';
 import LocationIcon from '@/assets/icons/location.svg?icon';
 import StarIcon from '@/assets/icons/star.svg?icon';
+import PlusIcon from '@/assets/icons/plus.svg?icon';
+import MinusIcon from '@/assets/icons/minus.svg?icon';
 
 import type { SVGComponentElement } from './icon.interface';
 
@@ -20,6 +22,8 @@ export const icons = {
   image: ImageIcon,
   location: LocationIcon,
   star: StarIcon,
+  plus: PlusIcon,
+  minus: MinusIcon,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;

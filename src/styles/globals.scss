@@ -4,17 +4,6 @@
   margin: 0;
 }
 
-html,
-body {
-  &:global(.leaflet-container) {
-    flex: 1;
-  }
-}
-
-.leaflet-container {
-  flex: 1;
-}
-
 @keyframes use-ripple-animation {
   from {
     opacity: 1;

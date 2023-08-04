@@ -1,5 +1,6 @@
-import { type FC, useState, useEffect } from 'react';
-
+import { type FC, useState, useEffect, useRef } from 'react';
+import L, { divIcon } from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import {
   MapContainer,
   TileLayer,
@@ -8,8 +9,7 @@ import {
   ZoomControl,
 } from 'react-leaflet';
 
-import { divIcon } from 'leaflet';
-import 'leaflet/dist/leaflet.css';
+import { Zoom } from '../zoom/zoom';
 
 import styles from './map.module.scss';
 import avatar from './avatar.png';
@@ -33,6 +33,8 @@ const customMarker = divIcon({
 export const Map: FC = () => {
   const [position, setPosition] = useState<null | [number, number]>(null);
 
+  const mapRef = useRef<L.Map>(null);
+
   useEffect(() => {
     navigator.permissions.query({ name: 'geolocation' }).then((result) => {
       navigator.geolocation.getCurrentPosition((pos) => {
@@ -41,23 +43,35 @@ export const Map: FC = () => {
     });
   }, []);
 
+  const handleZoomIn = () => {
+    mapRef.current?.zoomIn();
+  };
+
+  const handleZoomOut = () => {
+    mapRef.current?.zoomOut();
+  };
+
   const URL = 'eugenederii/clkls8pny000c01qx0bnr2mhl';
   const AccessToken =
     'pk.eyJ1IjoiZXVnZW5lZGVyaWkiLCJhIjoiY2xrbHMxY2t5MDZucjNlb3h0Mmc4OGVlcSJ9.stj0ywdapaAI46qlOoFV9A';
 
   return (
     <div className={styles.map_container}>
+      <Zoom
+        className={styles.zoomControl}
+        onZoomOut={handleZoomOut}
+        onZoomIn={handleZoomIn}
+      />
       <MapContainer
         center={[50.517483, 30.495037]}
         zoom={13}
         scrollWheelZoom={true}
         zoomControl={false}
+        ref={mapRef}
       >
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url={`https://api.mapbox.com/styles/v1/${URL}/tiles/{z}/{x}/{y}?access_token=${AccessToken}`}
         />
-        <ZoomControl zoomInText='s' position='bottomright' />
         {position && (
           <>
             <Marker icon={customMarker} position={position}>

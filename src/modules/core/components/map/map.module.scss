@@ -1,6 +1,7 @@
 @use '@/styles/variables.module';
 
 .map_container {
+  position: relative;
   height: 500px;
   display: flex;
 }
@@ -74,6 +75,18 @@
   animation: 1s ease-in-out 0.5s infinite both running testAnimation;
 }
 
+.zoomControl {
+  position: absolute;
+  bottom: 24px;
+  right: 20px;
+  z-index: 10;
+}
+
+:global(.leaflet-container) {
+  flex: 1;
+  z-index: 0;
+}
+
 @keyframes testAnimation {
   from {
     background-color: #fff;
@@ -83,22 +96,4 @@
     background-color: transparent;
     transform: scale(1);
   }
-}
-
-/* Стилі для контролу зуму */
-.leaflet-control-zoom {
-  /* Ваші стилі для контролу зуму */
-  border: 4px solid rgba(0, 0, 0, 0.2);
-}
-
-/* Стилі для кнопок "Приблизити" та "Віддалити" у контролі зуму */
-.leaflet-control-zoom a {
-}
-
-/* Стилі для смуги зуму у контролі зуму */
-.leaflet-control-zoom-slider {
-}
-
-/* Стилі для маркера зуму у контролі зуму */
-.leaflet-control-zoom a:last-child:before {
 }
