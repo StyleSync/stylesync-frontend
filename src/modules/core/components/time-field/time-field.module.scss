@@ -1,0 +1,32 @@
+@use '@/styles/variables.module';
+
+.root {
+  position: relative;
+}
+
+.submitButton {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+  border: none;
+  background-color: variables.$primary-light-color;
+  opacity: 0;
+
+  &:disabled {
+    background-color: transparent;
+  }
+
+  &.entering {
+    opacity: 1;
+  }
+  &.entered {
+    opacity: 1;
+  }
+  &.exiting {
+    opacity: 0;
+  }
+  &.exited {
+    opacity: 0;
+  }
+}

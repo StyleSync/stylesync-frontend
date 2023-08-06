@@ -1,0 +1,33 @@
+@use '@/styles/utils';
+@use '@/styles/variables.module';
+
+.content {
+  padding: utils.spacing(1);
+  background-color: #fff;
+  box-shadow: variables.$main-box-shadow;
+  border-radius: variables.$border-radius-medium;
+  transition: 300ms;
+  outline: none;
+  transform: translateY(0.25rem);
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+
+  &.entering {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  &.entered {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  &.exiting {
+    opacity: 0;
+    transform: translateY(0.25rem);
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+  &.exited {
+    opacity: 0;
+    transform: translateY(0.25rem);
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}

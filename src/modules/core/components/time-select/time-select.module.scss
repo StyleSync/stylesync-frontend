@@ -1,0 +1,83 @@
+@use '@/styles/variables.module';
+
+.root {
+  position: relative;
+  display: flex;
+  flex:1;
+  height: 200px;
+  border-radius: 12px;
+  user-select: none;
+}
+
+.timeColumn {
+  flex:1;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-snap-type: y mandatory;
+  z-index: 2;
+  outline: none;
+  border-radius: variables.$border-radius-small;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 3px variables.$grey-color;
+  }
+}
+
+.timeItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  min-height: 40px;
+  border-radius: 6px;
+  scroll-snap-align: start;
+  cursor: pointer;
+
+
+  &_nearby {
+    .timeText {
+      color: rgba(variables.$dark-color, 0.75);
+    }
+  }
+
+  &_active {
+    .timeText {
+      font-size: 18px;
+      color: variables.$primary-color;
+    }
+  }
+
+}
+
+.timeText {
+  font-size: 14px;
+  color: rgba(variables.$dark-color, 0.5);
+  transition: 0.3s;
+}
+
+.divider {
+  margin: auto 0;
+  padding-bottom: 3px;
+  color: variables.$primary-color;
+  z-index: 2;
+}
+
+.selection {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  height: 40px;
+  background-color: variables.$primary-light-color;
+  transform: translateY(-50%);
+  border-radius: 6px;
+  z-index: 1;
+}
