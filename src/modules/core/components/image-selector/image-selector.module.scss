@@ -1,0 +1,134 @@
+@use '@/styles/utils';
+@use '@/styles/variables.module';
+
+.container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 21px;
+  border: 1px dashed variables.$primary-light-color;
+  background: variables.$grey-light-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: border variables.$transition-ultrafast ease-in-out;
+
+  &:active {
+    outline: none;
+  }
+
+  &:focus,
+  &:focus-visible {
+    border: 1px dashed variables.$accent-color;
+    outline: none;
+
+    .label {
+      color: variables.$accent-color;
+    }
+  }
+}
+
+.imageSelectContainer {
+  padding: utils.spacing(1);
+  text-align: center;
+  cursor: pointer;
+}
+
+.actionContainer {
+  opacity: 0;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: flex-end;
+  transition: opacity 0.3s ease;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  gap: utils.spacing(4);
+  padding-bottom: utils.spacing(3);
+  border-radius: 21px;
+  background: linear-gradient(
+    360deg,
+    rgba(59, 130, 239, 0.7) 0%,
+    rgba(255, 255, 255, 0.14) 100%
+  );
+}
+
+.imagePreview {
+  border-radius: 21px;
+  object-fit: cover;
+}
+
+.imagePreviewContainer {
+  border: none;
+
+  &:focus,
+  &:focus-visible {
+    border: none;
+    outline: none;
+  }
+
+  &:hover,
+  &:focus-within {
+    .actionContainer {
+      opacity: 1;
+    }
+
+    .actionButton {
+      transform: translateY(0);
+    }
+  }
+}
+
+.actionButton {
+  background-color: transparent;
+  border: none;
+  transition: transform 400ms cubic-bezier(.47,1.64,.41,1.3);
+  transform: translateY(30px);
+
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
+
+  & svg {
+    width: 24px;
+    height: 24px;
+    fill: #ffffff;
+  }
+
+  &:focus, &:focus-visible {
+    outline: 2px solid lighten(variables.$primary-color, 20%);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+}
+
+.containerDragReject {
+  border: 1px dashed variables.$error-color;
+  cursor: not-allowed;
+
+  .label {
+    color: variables.$error-color;
+  }
+}
+
+.containerDragAccept {
+  border: 1px dashed variables.$success-color;
+
+  .label {
+    color: variables.$success-color;
+  }
+}
+
+.label {
+  position: absolute;
+  pointer-events: none;
+  transform: translate(0, -50%);
+  top: 0;
+  transform-origin: top left;
+  transition: color variables.$transition-ultrafast ease-in-out;
+  color: variables.$grey-color;
+  left: utils.spacing(3);
+  padding: utils.spacing(0, 1);
+  background-color: #ffffff;
+}

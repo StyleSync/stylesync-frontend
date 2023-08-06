@@ -4,8 +4,10 @@ $primary-light-color: #d8e6fc;
 $accent-color: #0252CC;
 $dark-color: #323E4A;
 $grey-color: #939DAA;
+$grey-light-color: #FAFBFC;
 $accent-color: #0252CC;
 $error-color: #ff0000;
+$success-color: #4BB543;
 
 // gradients
 $instagram-gradient: radial-gradient(122.91% 144.60% at 1.81% 90.83%, #FED576 0%, #F47133 26.34%, #BC3081 60.91%, #4C63D2 100%);
@@ -28,8 +30,10 @@ $border-radius-large: 30px;
   primaryColor: $primary-color;
   darkColor: $dark-color;
   greyColor: $grey-color;
+  greyLightColor: $grey-light-color;
   accentColor: $accent-color;
   errorColor: $error-color;
+  successColor: $success-color;
   primaryLightColor: $primary-light-color;
   // gradients
   instagramGradient: $instagram-gradient;
