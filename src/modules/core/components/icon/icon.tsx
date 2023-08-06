@@ -9,6 +9,9 @@ import InfoIcon from '@/assets/icons/info.svg?icon';
 import LocationIcon from '@/assets/icons/location.svg?icon';
 import StarIcon from '@/assets/icons/star.svg?icon';
 import HeartIcon from '@/assets/icons/heart.svg?icon';
+import HaircutIcon from '@/assets/icons/haircut.svg?icon';
+import MakeupIcon from '@/assets/icons/makup.svg?icon';
+import NailsIcon from '@/assets/icons/nails.svg?icon';
 import CloseIcon from '@/assets/icons/close.svg?icon';
 import PencilIcon from '@/assets/icons/pencil.svg?icon';
 
@@ -26,6 +29,9 @@ export const icons = {
   heart: HeartIcon,
   close: CloseIcon,
   pencil: PencilIcon,
+  haircut: HaircutIcon,
+  makeup: MakeupIcon,
+  nails: NailsIcon,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;
