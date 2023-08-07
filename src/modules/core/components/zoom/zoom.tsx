@@ -4,7 +4,7 @@ import { Icon } from '@/modules/core/components';
 import { ZoomProps } from './zoom.interface';
 import clsx from 'clsx';
 
-export const Zoom: FC<ZoomProps> = ({
+export const ZoomControl: FC<ZoomProps> = ({
   onZoomIn,
   onZoomOut,
   className,

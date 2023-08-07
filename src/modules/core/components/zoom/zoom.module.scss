@@ -1,16 +1,18 @@
+@use '@/styles/variables.module';
+
 .zoom_control {
   width: 32px;
   height: 65px;
   display: flex;
   flex-direction: column;
-  box-shadow: 0px 4px 15px 0px rgba(37, 74, 165, 0.1);
+  box-shadow: variables.$main-box-shadow;
   border-radius: 6px;
   background-color: #fff;
 
   span {
     width: 100%;
     height: 1px;
-    background-color: #fafbfc;
+    background-color: variables.$grey-light-color;
   }
 }
 
@@ -23,7 +25,7 @@
   svg {
     width: 12px;
     height: 12px;
-    color: #323e4a;
+    color: variables.$dark-color;
   }
 }
 
@@ -36,6 +38,6 @@
   svg {
     width: 12px;
     height: 12px;
-    color: #323e4a;
+    color: variables.$dark-color;
   }
 }

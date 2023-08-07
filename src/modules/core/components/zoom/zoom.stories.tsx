@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Zoom } from './zoom';
+import { ZoomControl } from './zoom';
 
-const meta: Meta<typeof Zoom> = {
+const meta: Meta<typeof ZoomControl> = {
   title: 'Core UI/Zoom',
-  component: Zoom,
+  component: ZoomControl,
   tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof Zoom>;
+type Story = StoryObj<typeof ZoomControl>;
 
 export const Default: Story = {};
