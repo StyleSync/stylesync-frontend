@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { ZoomControl } from './zoom';
+import { ZoomControl } from './zoom-control';
 
 const meta: Meta<typeof ZoomControl> = {
-  title: 'Core UI/Zoom',
+  title: 'Location UI/ZoomControl',
   component: ZoomControl,
   tags: ['autodocs'],
 };

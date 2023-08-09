@@ -1,6 +1,6 @@
 @use '@/styles/variables.module';
 
-.zoom_control {
+.zoomControl {
   width: 32px;
   height: 65px;
   display: flex;
@@ -16,7 +16,7 @@
   }
 }
 
-.zoom_control_in {
+.zoomControlIn {
   flex: 1;
   background-color: transparent;
   position: relative;
@@ -29,7 +29,7 @@
   }
 }
 
-.zoom_control_on {
+.zoomControlOn {
   background-color: transparent;
   flex: 1;
   position: relative;

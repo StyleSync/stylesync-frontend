@@ -1,1 +1,0 @@
-export { ZoomControl } from './zoom';
