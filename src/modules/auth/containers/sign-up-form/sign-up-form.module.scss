@@ -1,0 +1,136 @@
+@use '@/styles/utils';
+@use '@/styles/variables.module';
+
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 380px;
+  row-gap: utils.spacing(6);
+}
+
+.stepper {
+  padding: utils.spacing(0, 3)
+}
+
+.title {
+  margin: 0 auto;
+  font-size: 22px;
+}
+
+.content {
+  position: relative;
+  height: 226px;
+  width: 100%;
+  margin-top: 20px;
+
+  .item {
+    transition: opacity 0.2s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+
+    &.entering {
+      transition-delay: 0.2s;
+      opacity: 1;
+    }
+    &.entered {
+      transition-delay: 0.2s;
+      opacity: 1;
+    }
+    &.exiting {
+      opacity: 0;
+    }
+    &.exited {
+      opacity: 0;
+    }
+  }
+}
+
+.actions {
+  display: flex;
+
+  .back {
+    transition: width opacity margin-right variables.$transition-ultrafast;
+
+    &.entering {
+      opacity: 1;
+      width: 80px;
+      margin-right: utils.spacing(2);
+    }
+    &.entered {
+      opacity: 1;
+      width: 80px;
+      margin-right: utils.spacing(2);
+    }
+    &.exiting {
+      opacity: 0;
+      width: 0;
+      margin-right: 0;
+    }
+    &.exited {
+      opacity: 0;
+      width: 0;
+      margin-right: 0;
+    }
+  }
+
+  .submit {
+    flex:1;
+  }
+}
+
+.social {
+  display: flex;
+  justify-content: center;
+  column-gap: utils.spacing(3);
+
+  .socialButtonWrapper {
+    position: relative;
+
+  }
+
+  button {
+    width: 50px;
+    height: 50px;
+    border: none;
+    background-color: #fff;
+    box-shadow: variables.$main-box-shadow;
+
+    svg {
+      transition: 0.5s;
+      width: utils.spacing(3);
+      height: utils.spacing(3);
+    }
+
+    &:hover, &:focus-visible {
+      transform: scale(1.1);
+
+      svg {
+        width: utils.spacing(4);
+        height: utils.spacing(4);
+      }
+
+      & ~ .socialInfo {
+        transition-delay: 0.2s;
+        opacity: 1;
+      }
+    }
+  }
+
+  .socialInfo {
+    position: absolute;
+    top: calc(100% + 16px);
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    transition: opacity variables.$transition-medium;
+    opacity: 0;
+
+    span {
+      color: variables.$grey-color;
+    }
+  }
+}
