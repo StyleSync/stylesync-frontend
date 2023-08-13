@@ -1,5 +1,7 @@
 import '@/styles/globals.scss';
 import { type ReactNode } from 'react';
+// providers
+import { TrpcProvider } from '@/utils/trpc-provider';
 
 export const metadata = {
   title: 'Create Next App',
@@ -9,7 +11,9 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang='en'>
-      <body>{children}</body>
+      <body>
+        <TrpcProvider>{children}</TrpcProvider>
+      </body>
     </html>
   );
 }
