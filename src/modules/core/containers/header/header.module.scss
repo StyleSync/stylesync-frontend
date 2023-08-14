@@ -1,6 +1,6 @@
 @use '@/styles/variables.module';
 @use '@/styles/utils';
-@use '@/styles/screen-size-mixins';
+@use '@/styles/mixins';
 
 .root {
   position: fixed;
@@ -20,11 +20,11 @@
     margin-bottom: 5px;
   }
 
-  @include screen-size-mixins.tablet {
+  @include mixins.tablet {
     padding: utils.spacing(0, 5);
   }
 
-  @include screen-size-mixins.phone {
+  @include mixins.phone {
     padding: utils.spacing(0, 3);
     height: 60px;
 
@@ -43,7 +43,7 @@
   .text {
     color: variables.$grey-color;
 
-    @include screen-size-mixins.phone {
+    @include mixins.phone {
       display: none;
     }
   }

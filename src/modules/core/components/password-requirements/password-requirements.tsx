@@ -9,7 +9,7 @@ import {
   lowercaseCharacterRegex,
   digitRegex,
   passwordMinLength,
-} from '@/modules/auth/validation/schemas/sign-up-validation.schemas';
+} from '@/modules/auth/validation/schemas/password-validation.schemas';
 
 import type { PasswordStrengthBarProps } from './password-requirements.interface';
 import styles from './password-requirements.module.scss';

@@ -1,4 +1,4 @@
-@use '@/styles/screen-size-mixins';
+@use '@/styles/mixins';
 @use '@/styles/utils';
 
 .root {
@@ -8,11 +8,11 @@
   background: radial-gradient(331.49% 141.42% at -0.00% 100.00%, #FFF 0%, #FFF 48.96%, rgba(200, 223, 254, 0.93) 99.99%);
   padding-top: 20vh;
 
-  @include screen-size-mixins.tablet {
+  @include mixins.tablet {
     padding-top: 18vh;
   }
 
-  @include screen-size-mixins.phone {
+  @include mixins.phone {
     padding-left: utils.spacing(3);
     padding-right: utils.spacing(3);
   }

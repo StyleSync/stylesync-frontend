@@ -1,18 +1,17 @@
 import { type FC } from 'react';
 import { useBoolean } from 'usehooks-ts';
-import { type UseFormReturn, Controller } from 'react-hook-form';
+import { type UseFormReturn } from 'react-hook-form';
 // components
 import {
-  Link,
   TextField,
   Typography,
-  Checkbox,
   Button,
   PasswordRequirements,
 } from '@/modules/core/components';
 
 import styles from './account-credentials-form.module.scss';
 import type { SignUpUserData } from '@/modules/auth/types/sign-up.types';
+import Link from 'next/link';
 
 type AccountCredentialsFormProps = {
   form: UseFormReturn<SignUpUserData>;
@@ -69,23 +68,20 @@ export const AccountCredentialsForm: FC<AccountCredentialsFormProps> = ({
           highlight={Boolean(form.formState.errors.password)}
         />
       </div>
-      <div className={styles.terms}>
-        <Controller
-          control={form.control}
-          render={({ fieldState, field }) => (
-            <Checkbox
-              value={field.value}
-              onChange={field.onChange}
-              classes={{ checkmark: styles.checkmark }}
-              error={Boolean(fieldState.error)}
-            />
-          )}
-          name='isTermsAgreed'
-        />
-        <Typography>
-          I have read and agree to the <Link href='#'>Terms of Service</Link>
-        </Typography>
-      </div>
+      <Typography className={styles.terms} variant='small'>
+        By signing up, you agree to our{' '}
+        <Link href='#' className='link'>
+          Terms
+        </Link>
+        ,{' '}
+        <Link href='#' className='link'>
+          Privacy Policy
+        </Link>{' '}
+        and{' '}
+        <Link href='#' className='link'>
+          Cookies Policy
+        </Link>
+      </Typography>
     </form>
   );
 };

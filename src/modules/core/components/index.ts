@@ -9,7 +9,6 @@ export * from './popover';
 export * from './button';
 export * from './image-selector';
 export * from './emoji';
-export * from './link';
 export * from './checkbox';
 export * from './password-requirements';
 export * from './divider';

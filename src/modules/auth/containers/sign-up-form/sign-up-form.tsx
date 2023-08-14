@@ -16,11 +16,6 @@ import { AccountTypeSelect } from '@/modules/auth/containers/account-type-select
 import { AccountCredentialsForm } from '@/modules/auth/containers/account-credentials-form';
 // validation
 import { signUpFormValidationSchema } from '@/modules/auth/validation/schemas/sign-up-validation.schemas';
-// constants
-import {
-  signUpFormDefaultValues,
-  SIGN_UP_STEPS,
-} from '@/modules/auth/constants/sign-up.constants';
 // types
 import type { ButtonProps } from '@/modules/core/components/button/button.interface';
 import type { AccountType } from '@/modules/user/types/account.types';
@@ -28,14 +23,30 @@ import type { SignUpUserData } from '@/modules/auth/types/sign-up.types';
 
 import styles from './sign-up-form.module.scss';
 
+export const signUpSteps: { value: string; text: string }[] = [
+  {
+    value: 'account-type',
+    text: 'Account type',
+  },
+  {
+    value: 'credentials',
+    text: 'Credentials',
+  },
+];
+
+export const defaultValues: SignUpUserData = {
+  email: '',
+  password: '',
+};
+
 export const SignUpForm: FC = () => {
   // form
   const form = useForm<SignUpUserData>({
-    defaultValues: signUpFormDefaultValues,
+    defaultValues,
     resolver: zodResolver(signUpFormValidationSchema),
   });
   // state
-  const [step, setStep] = useState(SIGN_UP_STEPS[0].value);
+  const [step, setStep] = useState(signUpSteps[0].value);
   const [accountType, setAccountType] = useState<AccountType | null>(null);
   // ids
   const formId = useId();
@@ -78,7 +89,7 @@ export const SignUpForm: FC = () => {
       </Typography>
       <Stepper
         value={step}
-        steps={SIGN_UP_STEPS}
+        steps={signUpSteps}
         classes={{
           root: styles.stepper,
         }}

@@ -1,7 +1,15 @@
-import type { ReactNode } from 'react';
-// components
-import { AuthLayout } from '@/modules/auth/components/auth-layout';
+// containers
+import { Header } from '@/modules/core/containers/header';
+// types
+import type { ChildrenProp } from '@/modules/core/types/react.types';
 
-export default function Layout({ children }: { children: ReactNode }) {
-  return <AuthLayout>{children}</AuthLayout>;
+import styles from './layout.module.scss';
+
+export default function Layout({ children }: ChildrenProp) {
+  return (
+    <div className={styles.root}>
+      <Header />
+      {children}
+    </div>
+  );
 }
