@@ -8,8 +8,8 @@ import styles from './layout.module.scss';
 export default function Layout({ children }: ChildrenProp) {
   return (
     <div className={styles.root}>
-      <Header />
-      {children}
+      <Header className={styles.header} />
+      <div className={styles.content}>{children}</div>
     </div>
   );
 }

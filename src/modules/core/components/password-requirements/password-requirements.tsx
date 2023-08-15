@@ -1,4 +1,4 @@
-import React, { type FC, useEffect, useRef } from 'react';
+import React, { type FC, useEffect } from 'react';
 import { useBoolean } from 'usehooks-ts';
 import clsx from 'clsx';
 // components
@@ -40,7 +40,6 @@ export const PasswordRequirements: FC<PasswordStrengthBarProps> = ({
   style,
 }) => {
   const isRequirementsFit = useBoolean(true);
-  const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     isRequirementsFit.setValue(
@@ -56,7 +55,6 @@ export const PasswordRequirements: FC<PasswordStrengthBarProps> = ({
         className
       )}
       style={style}
-      ref={rootRef}
     >
       {requirements.map((requirement, i) => (
         <div
