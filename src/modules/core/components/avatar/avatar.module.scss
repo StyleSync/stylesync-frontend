@@ -1,0 +1,31 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+
+.circle {
+  border-radius: 50%;
+}
+
+.rect {
+  border-radius: 15%;
+}
+
+.userIcon {
+  width: 100%;
+  height: 100%;
+}
+
+.avatarContainer {
+  display: flex;
+  border: 2px solid #fff;
+  overflow: hidden;
+  background-color: #d8e6fc;
+}
+
+.fallbackContainer {
+  width: 100%;
+  height: 100%;
+}
+
+.shadow {
+  box-shadow: variables.$main-box-shadow;
+}
