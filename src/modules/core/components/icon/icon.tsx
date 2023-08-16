@@ -15,6 +15,7 @@ import MakeupIcon from '@/assets/icons/makup.svg?icon';
 import NailsIcon from '@/assets/icons/nails.svg?icon';
 import CloseIcon from '@/assets/icons/close.svg?icon';
 import PencilIcon from '@/assets/icons/pencil.svg?icon';
+import UserIcon from '@/assets/icons/user.svg?icon';
 
 import type { SVGComponentElement } from './icon.interface';
 
@@ -34,6 +35,7 @@ export const icons = {
   haircut: HaircutIcon,
   makeup: MakeupIcon,
   nails: NailsIcon,
+  user: UserIcon,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;

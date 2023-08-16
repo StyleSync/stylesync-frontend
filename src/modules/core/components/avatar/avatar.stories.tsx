@@ -13,7 +13,7 @@ type Story = StoryObj<typeof Avatar>;
 
 export const Default: Story = {
   args: {
-    url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPeg-dzIDOCGO3HF0p__2il1jVuAQ5XfTEjw&usqp=CAU',
+    // url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPeg-dzIDOCGO3HF0p__2il1jVuAQ5XfTEjw&usqp=CAU',
     size: 'small',
     shape: 'circle',
   },
