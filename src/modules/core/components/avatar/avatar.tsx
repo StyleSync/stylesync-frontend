@@ -1,6 +1,5 @@
 import { type FC, useMemo } from 'react';
 import clsx from 'clsx';
-
 import Image from 'next/image';
 
 import type { AvatarProps } from './avatar.interface';
@@ -14,13 +13,19 @@ export const Avatar: FC<AvatarProps> = ({
   shape = 'circle',
 }) => {
   const avatarSize = useMemo(() => {
+    const SIZES = {
+      medium: 56,
+      large: 156,
+      small: 40,
+    };
+
     if (size === 'medium') {
-      return 56;
+      return SIZES.medium;
     } else if (size === 'large') {
-      return 156;
-    } else {
-      return 40;
+      return SIZES.large;
     }
+
+    return SIZES.small;
   }, [size]);
 
   return (
@@ -50,7 +55,7 @@ export const Avatar: FC<AvatarProps> = ({
   );
 };
 
-const UserIcon: React.FC = () => (
+const UserIcon: FC = () => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     width='24'
