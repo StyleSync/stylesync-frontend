@@ -32,20 +32,14 @@ export const Map: FC<MapProps> = ({ markers }) => {
     mapRef.current?.zoomOut();
   };
 
-  const defaultLatitude = 50.517483;
-  const defaultLongitude = 30.495037;
+  const defaultCoordinates = { latitude: 50.517483, longitude: 30.495037 };
 
   return (
     <div className={styles.mapContainer}>
-      <ZoomControl
-        className={styles.zoomControl}
-        onZoomOut={handleZoomOut}
-        onZoomIn={handleZoomIn}
-      />
       <MapContainer
-        center={[defaultLatitude, defaultLongitude]}
+        center={[defaultCoordinates.latitude, defaultCoordinates.longitude]}
         zoom={13}
-        scrollWheelZoom={true}
+        scrollWheelZoom
         zoomControl={false}
         ref={mapRef}
       >
@@ -66,6 +60,11 @@ export const Map: FC<MapProps> = ({ markers }) => {
           );
         })}
       </MapContainer>
+      <ZoomControl
+        className={styles.zoomControl}
+        onZoomOut={handleZoomOut}
+        onZoomIn={handleZoomIn}
+      />
     </div>
   );
 };
