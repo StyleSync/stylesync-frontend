@@ -1,0 +1,95 @@
+@use '@/styles/utils';
+@use '@/styles/variables.module';
+
+.container {
+  width: 100%;
+  height: 270px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid variables.$primary-light-color;
+  border-radius: 12px;
+  box-shadow: variables.$main-box-shadow;
+}
+
+.header {
+  height: 80%;
+  background: linear-gradient(57deg, #3b82ef 2.47%, #b9d5ff 100%);
+
+  border-radius: 12px;
+}
+.title {
+  display: flex;
+  color: #fff;
+  padding-left: 199px;
+  padding-top: 115px;
+  font-size: 40px;
+}
+
+.footer {
+  height: 100px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 12px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 14px 22px 28px;
+}
+.footerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tagsAndMap {
+  display: flex;
+  flex-direction: column;
+}
+
+.serviceTags {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.additionalCount {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 26px;
+  width: 26px;
+  border-radius: 50%;
+  border: 1px solid variables.$primary-light-color;
+}
+
+.footerButtons {
+  display: flex;
+  column-gap: 10px;
+  padding-top: 10px;
+}
+
+.locationSection {
+  display: flex;
+  align-items: center;
+  padding-top: 14px;
+}
+
+.locationIcon {
+  width: 18px;
+  height: 18px;
+  color: variables.$grey-color;
+}
+
+.distance {
+  margin-left: 6px;
+  color: variables.$grey-color;
+}
+
+.showOnMap {
+  margin-left: 14px;
+  color: variables.$accent-color;
+  cursor: pointer;
+}
+
+.footerButtons {
+}
