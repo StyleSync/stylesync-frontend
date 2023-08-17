@@ -10,28 +10,33 @@ import type {
 
 import type { AccountTypeSelectProps } from './account-type-select.interface';
 import styles from './account-type-select.module.scss';
-
-const ACCOUNT_TYPE_DISPLAY_DATA: Record<AccountType, AccountTypeDisplayData> = {
-  professional: {
-    title: 'Professional account',
-    emoji: 'sunglasses',
-    description:
-      'Provide services, manage bookings, get analytics and essential tools for business',
-  },
-  client: {
-    title: 'Client account',
-    emoji: 'heart-eyes',
-    description:
-      'Choose and book services, find Pro’s, and make payments with security and comfort',
-    badge: 'Soon',
-    disabled: true,
-  },
-};
+import { useIntl } from 'react-intl';
 
 export const AccountTypeSelect: FC<AccountTypeSelectProps> = ({
   value,
   onChange,
 }) => {
+  const intl = useIntl();
+  // memo
+  const accountTypeDisplayData: Record<AccountType, AccountTypeDisplayData> = {
+    professional: {
+      emoji: 'sunglasses',
+      title: intl.formatMessage({ id: 'signUp.accountType.proCard.title' }),
+      description: intl.formatMessage({
+        id: 'signUp.accountType.proCard.description',
+      }),
+    },
+    client: {
+      emoji: 'heart-eyes',
+      title: intl.formatMessage({ id: 'signUp.accountType.clientCard.title' }),
+      description: intl.formatMessage({
+        id: 'signUp.accountType.clientCard.description',
+      }),
+      badge: intl.formatMessage({ id: 'signUp.accountType.clientCard.badge' }),
+      disabled: true,
+    },
+  };
+
   return (
     <div className={styles.root}>
       <RadioButton.Group
@@ -39,12 +44,12 @@ export const AccountTypeSelect: FC<AccountTypeSelectProps> = ({
         value={value}
         onChange={(accountType) => onChange(accountType as AccountType)}
       >
-        {Object.keys(ACCOUNT_TYPE_DISPLAY_DATA).map((key) => (
+        {Object.keys(accountTypeDisplayData).map((key) => (
           <AccountTypeCard
             key={key}
             value={key as AccountType}
             onClick={() => onChange(key as AccountType)}
-            {...ACCOUNT_TYPE_DISPLAY_DATA[key as AccountType]}
+            {...accountTypeDisplayData[key as AccountType]}
           />
         ))}
       </RadioButton.Group>
