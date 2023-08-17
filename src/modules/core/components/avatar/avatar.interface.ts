@@ -2,10 +2,10 @@ import { type ReactNode } from 'react';
 
 export type AvatarProps = {
   url?: string;
-  size?: AvatarSize; // default - small
-  fallback?: ReactNode; // default - user icon
-  shadow?: boolean; // default - false
-  shape?: 'circle' | 'rect'; // default - sircle
+  size?: AvatarSize;
+  fallback?: ReactNode;
+  shadow?: boolean;
+  shape?: 'circle' | 'rect';
 };
 
 export type AvatarSize = 'small' | 'medium' | 'large';
