@@ -2,7 +2,7 @@ import { type FC } from 'react';
 // components
 import { Icon, Typography } from '@/modules/core/components';
 // constants
-import { SERVICE_METADATA } from '@/modules/service/constants/service-icon.constants';
+import { SERVICE_METADATA } from '@/modules/service/constants/service.constants';
 
 import type { ServiceTagProps } from './service-tag.interface';
 import styles from './service-tag.module.scss';

@@ -1,4 +1,11 @@
-import { type FC, createContext, useContext, useRef } from 'react';
+import {
+  type FC,
+  type ChangeEvent,
+  createContext,
+  useContext,
+  useRef,
+  useCallback,
+} from 'react';
 // hooks
 import { useRipple } from '@/modules/core/hooks/use-ripple';
 
@@ -17,13 +24,20 @@ const RadioGroupContext = createContext<RadioGroupContextValue>({
 
 const RadioButton: FC<RadioButtonProps> & {
   Group: FC<RadioGroupProps>;
-} = ({ value }) => {
+} = ({ value, disabled }) => {
   // refs
   const rootRef = useRef<HTMLLabelElement>(null);
   // context
   const { activeValue, name, onChange } = useContext(RadioGroupContext);
 
   useRipple(rootRef);
+
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      onChange(e.target.value);
+    },
+    [onChange]
+  );
 
   return (
     <label className={styles.root} ref={rootRef}>
@@ -32,7 +46,8 @@ const RadioButton: FC<RadioButtonProps> & {
         name={name}
         value={value}
         checked={activeValue === value}
-        onChange={() => onChange(value)}
+        onChange={handleChange}
+        disabled={disabled}
       />
       <div className={styles.radio}>
         <div className={styles.dot} />

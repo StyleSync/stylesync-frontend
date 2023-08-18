@@ -1,0 +1,50 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  height: 70px;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: variables.$main-box-shadow;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: utils.spacing(0, 10);
+
+  svg {
+    margin-bottom: 5px;
+  }
+
+  @include mixins.tablet {
+    padding: utils.spacing(0, 5);
+  }
+
+  @include mixins.phone {
+    padding: utils.spacing(0, 3);
+    height: 60px;
+
+    svg {
+      width: 103px;
+      height: 26px;
+    }
+  }
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  column-gap: utils.spacing(3);
+
+  .text {
+    color: variables.$grey-color;
+
+    @include mixins.phone {
+      display: none;
+    }
+  }
+}

@@ -10,7 +10,7 @@
 .step {
     position: relative;
     border-radius: 50%;
-    transition: background-color variables.$transition-fast;
+    transition: background-color variables.$transition-ultrafast;
     user-select: none;
 
     .stepText {
@@ -24,13 +24,13 @@
         color: variables.$grey-color;
 
         &_active {
-            transition: variables.$transition-fast;
-            transition-delay: variables.$transition-medium;
-            color: variables.$accent-color;
+            transition: variables.$transition-ultrafast;
+            transition-delay: variables.$transition-ultrafast;
+            color: variables.$primary-color;
         }
 
         &_passed {
-            color: variables.$accent-color;
+            color: variables.$primary-color;
         }
     }
 }
@@ -77,16 +77,16 @@
     }
 
     &_active {
-        transition: variables.$transition-fast;
-        transition-delay: variables.$transition-medium;
-        border-color: variables.$accent-color;
-        color: variables.$accent-color;
+        transition: variables.$transition-ultrafast;
+        transition-delay: variables.$transition-ultrafast;
+        border-color: variables.$primary-color;
+        color: variables.$primary-color;
     }
 
     &_passed {
         position: relative;
-        background-color: variables.$accent-color;
-        border-color: variables.$accent-color;
+        background-color: variables.$primary-color;
+        border-color: variables.$primary-color;
         color: transparent;
 
         &::before {
@@ -120,8 +120,8 @@
         left: 0;
         height: 1px;
         width: 0;
-        background-color: variables.$accent-color;
-        transition-duration: variables.$transition-medium;
+        background-color: variables.$primary-color;
+        transition-duration: variables.$transition-ultrafast;
 
         &_active {
             width: 100%;

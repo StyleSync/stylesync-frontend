@@ -1,0 +1,54 @@
+@use '@/styles/utils';
+@use '@/styles/variables.module';
+
+.root {
+  position: relative;
+  background-color: #fff;
+  padding: utils.spacing(1, 2, 2);
+  box-shadow: variables.$main-box-shadow;
+  border-radius: variables.$border-radius-medium;
+  cursor: pointer;
+  transition: variables.$transition-medium;
+  overflow: hidden;
+  user-select: none;
+
+  &:hover {
+    box-shadow: 0 4px 15px 0 rgba(37, 74, 165, 0.20);
+  }
+
+  &_disabled {
+    cursor: default;
+    pointer-events: none;
+    background-color: variables.$grey-light-color;
+  }
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  column-gap: utils.spacing(1);
+  margin: utils.spacing(0, -1);
+}
+
+.description {
+  color: variables.$grey-color;
+  margin-top: utils.spacing(1);
+}
+
+.badge {
+  position: absolute;
+  top: 14px;
+  right: -24px;
+  height: 24px;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(45deg);
+  background: variables.$primary-light-color;
+
+  .text {
+    font-size: 10px;
+    color: variables.$primary-color;
+  }
+}

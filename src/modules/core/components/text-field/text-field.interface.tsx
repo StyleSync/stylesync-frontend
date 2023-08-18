@@ -1,4 +1,8 @@
-import type { InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
+import type {
+  InputHTMLAttributes,
+  ReactNode,
+  TextareaHTMLAttributes,
+} from 'react';
 import type { SupportedFonts } from '@/styles/styles.types';
 
 type Variant = 'input' | 'textarea';
@@ -11,6 +15,7 @@ type TextFieldGeneralProps = {
     label?: string;
   };
   font?: SupportedFonts;
+  endAdornment?: ReactNode;
 };
 
 export type InputProps = {
