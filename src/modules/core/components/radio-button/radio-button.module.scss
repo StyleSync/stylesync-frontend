@@ -1,4 +1,5 @@
 @use '@/styles/variables.module';
+@use '@/styles/utils';
 
 .root {
     position: relative;
@@ -6,7 +7,7 @@
     width: fit-content;
     cursor: pointer;
     transition-duration: variables.$transition-fast;
-    padding: 10px;
+    padding: utils.spacing(1);
     border-radius: 50%;
 
     &:hover {
@@ -50,6 +51,14 @@
                     background-color: variables.$primary-color;
                 }
             }
+        }
+
+        &:focus-visible + .radio {
+            box-shadow: 0 0 0 1px #fff, 0 0 0 2px variables.$primary-color;
+        }
+
+        &:disabled + .radio {
+            opacity: 0.5;
         }
     }
 }

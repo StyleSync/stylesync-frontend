@@ -1,7 +1,10 @@
-import { type ForwardedRef, forwardRef, useState } from 'react';
+import { type ForwardedRef, forwardRef, useRef, useEffect } from 'react';
 import clsx from 'clsx';
+import { useBoolean } from 'usehooks-ts';
 // fonts
 import { fonts } from '@/styles/fonts';
+// hooks
+import { useCombinedRefs } from '@/modules/core/hooks/use-combined-refs';
 
 import {
   type TextFieldProps,
@@ -20,24 +23,44 @@ export const TextField = forwardRef<
       error,
       className,
       classes,
+      endAdornment,
       font = 'SF_PRO_TEXT',
       variant = 'input',
       ...props
     },
     ref
   ) => {
-    const [internalValue, setInternalValue] = useState(
-      props.value || props.defaultValue || ''
-    );
-    const internalOnChange = (e: { target: { value: string } }) => {
-      setInternalValue(e.target.value);
-    };
+    // state
+    const hasText = useBoolean();
+    // refs
+    const textFieldRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
+    const combinedRefs = useCombinedRefs<
+      HTMLInputElement | HTMLTextAreaElement
+    >(ref, textFieldRef);
+
+    useEffect(() => {
+      const textFieldElement = combinedRefs.current;
+
+      hasText.setValue(Boolean(textFieldElement?.value));
+
+      const onInput = () => {
+        const inputValue = textFieldElement?.value.trim();
+
+        hasText.setValue(Boolean(inputValue));
+      };
+
+      textFieldElement?.addEventListener('input', onInput);
+
+      return () => {
+        textFieldElement?.removeEventListener('input', onInput);
+      };
+    }, [hasText.setValue, combinedRefs]);
 
     return (
       <div className={clsx(styles.container, classes?.container)}>
         {isInputProps(variant, props) && (
           <input
-            ref={ref as ForwardedRef<HTMLInputElement>}
+            ref={combinedRefs as ForwardedRef<HTMLInputElement>}
             className={clsx(
               className,
               styles.textField,
@@ -47,15 +70,13 @@ export const TextField = forwardRef<
                 [styles.textFieldError]: error,
               }
             )}
-            value={props.value ?? internalValue}
-            onChange={props.onChange ?? internalOnChange}
             {...props}
           />
         )}
 
         {isTextAreaProps(variant, props) && (
           <textarea
-            ref={ref as ForwardedRef<HTMLTextAreaElement>}
+            ref={combinedRefs as ForwardedRef<HTMLTextAreaElement>}
             className={clsx(
               className,
               styles.textField,
@@ -65,8 +86,6 @@ export const TextField = forwardRef<
                 [styles.textFieldError]: error,
               }
             )}
-            value={props.value ?? internalValue}
-            onChange={props.onChange ?? internalOnChange}
             {...props}
           />
         )}
@@ -77,7 +96,7 @@ export const TextField = forwardRef<
               styles.label,
               fonts[font].className,
               {
-                [styles.labelActive]: Boolean(props.value || internalValue),
+                [styles.labelActive]: hasText.value,
                 [styles.labelError]: error,
                 [styles.textAreaLabel]: variant === 'textarea',
               },
@@ -86,6 +105,9 @@ export const TextField = forwardRef<
           >
             {label}
           </label>
+        )}
+        {endAdornment && (
+          <div className={styles.endAdornment}>{endAdornment}</div>
         )}
       </div>
     );

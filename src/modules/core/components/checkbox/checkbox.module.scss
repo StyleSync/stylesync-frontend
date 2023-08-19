@@ -24,6 +24,10 @@
       background-color: unset;
     }
   }
+
+  &_error .checkmark {
+    border: 1px solid variables.$error-color;
+  }
 }
 
 .input {
@@ -32,6 +36,10 @@
   cursor: pointer;
   height: 0;
   width: 0;
+
+  &:focus-visible + .checkmark {
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px variables.$primary-color;
+  }
 }
 
 .checkmark {

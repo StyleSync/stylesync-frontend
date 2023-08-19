@@ -6,7 +6,13 @@ import { useRipple } from '@/modules/core/hooks/use-ripple';
 import type { CheckboxProps } from './checkbox.inerface';
 import styles from './checkbox.module.scss';
 
-const Checkbox: FC<CheckboxProps> = ({ disabled, onChange, value }) => {
+const Checkbox: FC<CheckboxProps> = ({
+  disabled,
+  onChange,
+  value,
+  classes,
+  error,
+}) => {
   // refs
   const rootRef = useRef<HTMLLabelElement>(null);
 
@@ -20,9 +26,14 @@ const Checkbox: FC<CheckboxProps> = ({ disabled, onChange, value }) => {
 
   return (
     <label
-      className={clsx(styles.container, {
-        [styles.container_disabled]: disabled,
-      })}
+      className={clsx(
+        styles.container,
+        {
+          [styles.container_disabled]: disabled,
+          [styles.container_error]: error,
+        },
+        classes?.root
+      )}
       ref={rootRef}
     >
       <input
@@ -33,9 +44,13 @@ const Checkbox: FC<CheckboxProps> = ({ disabled, onChange, value }) => {
         onChange={handleChange}
       />
       <span
-        className={clsx(styles.checkmark, {
-          [styles.checkmark_active]: value,
-        })}
+        className={clsx(
+          styles.checkmark,
+          {
+            [styles.checkmark_active]: value,
+          },
+          classes?.checkmark
+        )}
       />
     </label>
   );

@@ -16,6 +16,15 @@ import NailsIcon from '@/assets/icons/nails.svg?icon';
 import CloseIcon from '@/assets/icons/close.svg?icon';
 import PencilIcon from '@/assets/icons/pencil.svg?icon';
 import UserIcon from '@/assets/icons/user.svg?icon';
+import ArrowRightIcon from '@/assets/icons/arrow-right.svg?icon';
+import ArrowLeftIcon from '@/assets/icons/arrow-left.svg?icon';
+import ChevronRightIcon from '@/assets/icons/chevron-right.svg?icon';
+import StyleSyncLogoIcon from '@/assets/icons/stylesync-logo.svg?icon';
+import EyeIcon from '@/assets/icons/eye.svg?icon';
+import EyeNoIcon from '@/assets/icons/eye-no.svg?icon';
+import GoogleLogoIcon from '@/assets/icons/google-logo.svg?icon';
+import FacebookLogoIcon from '@/assets/icons/facebook-logo.svg?icon';
+import InstagramLogoIcon from '@/assets/icons/instagram-logo.svg?icon';
 
 import type { SVGComponentElement } from './icon.interface';
 
@@ -36,6 +45,15 @@ export const icons = {
   makeup: MakeupIcon,
   nails: NailsIcon,
   user: UserIcon,
+  'arrow-right': ArrowRightIcon,
+  'arrow-left': ArrowLeftIcon,
+  'chevron-right': ChevronRightIcon,
+  'stylesync-logo': StyleSyncLogoIcon,
+  eye: EyeIcon,
+  'eye-no': EyeNoIcon,
+  'google-logo': GoogleLogoIcon,
+  'facebook-logo': FacebookLogoIcon,
+  'instagram-logo': InstagramLogoIcon,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;

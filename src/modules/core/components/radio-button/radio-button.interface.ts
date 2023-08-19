@@ -2,6 +2,7 @@ import type { ChildrenProp } from '@/modules/core/types/react.types';
 
 export type RadioButtonProps = {
   value: string;
+  disabled?: boolean;
 };
 
 export type RadioGroupProps = ChildrenProp & {

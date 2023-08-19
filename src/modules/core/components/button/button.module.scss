@@ -18,6 +18,12 @@
   width: fit-content;
   border: 1px solid transparent;
   column-gap: utils.spacing(1);
+  outline: none;
+  border-radius: variables.$border-radius-large;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px variables.$primary-color;
+  }
 
   &:disabled {
     cursor: default;
@@ -30,7 +36,6 @@
 }
 
 .primary {
-  border-radius: variables.$border-radius-large;
   background-color: variables.$primary-color;
   color: #fff;
   transition: variables.$transition-ultrafast;
@@ -47,7 +52,6 @@
 }
 
 .secondary {
-  border-radius: variables.$border-radius-large;
   background-color: transparent;
   color: variables.$primary-color;
   transition: variables.$transition-ultrafast;
