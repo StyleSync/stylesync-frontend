@@ -2,6 +2,7 @@
 
 - [Initial setup](#initial-setup)
 - [Start application](#start-application)
+- [Prisma setup](#prisma-setup)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
@@ -26,7 +27,7 @@ For deploy project locally, please follow the next guide:
    $ yarn install
    ```
 
-## <a name="initial-setup"></a> Start application
+## <a name="start-application"></a> Start application
 
 First, run the development server:
 
@@ -43,6 +44,21 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+
+## <a name="prisma setup"></a> Prisma setup 
+
+To generate Prisma client, you can run the next command:
+
+```bash
+prisma generate
+```
+
+This will add models to the `@prisma/client` package and generate Prisma Client to `node_modules/@prisma/client`,
+also it will generate the corresponding TypeScript types.
+
+To learn more about how Prisma generate client, you can check next link:
+
+- [Generating Prisma Client](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-prismaclient/generating-prisma-client) - learn about generating functionallity for Prisma.
 
 ## Learn More
 
