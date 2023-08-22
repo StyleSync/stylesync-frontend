@@ -6,26 +6,25 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
-  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
 }
 
 // Next Auth models
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -41,13 +40,21 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String        @id @default(cuid())
+  avatar        String?
+  firstName     String?
+  lastName      String?
+  phone         String?       @unique
   name          String?
-  email         String?   @unique
+  email         String?       @unique
   emailVerified DateTime?
   image         String?
+  companyId     String?
+  company       Comapany?     @relation(fields: [companyId], references: [id], onDelete: SetNull)
   accounts      Account[]
   sessions      Session[]
+  bookings      Booking[]
+  professional  Professional?
 }
 
 model VerificationToken {
@@ -56,4 +63,72 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+// Data models
+
+model Comapany {
+  id      String  @id @default(cuid())
+  name    String
+  address String?
+  phone   String?
+  email   String?
+  website String?
+  users   User[]
+}
+
+model Professional {
+  id         String                  @id @default(cuid())
+  userId     String                  @unique
+  user       User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  facebook   String?
+  instagram  String?
+  about      String?
+  schedule   String?
+  portfolios Portfolio[]
+  services   ServiceOnProfessional[]
+}
+
+model Service {
+  id            String                  @id @default(cuid())
+  name          String
+  professionals ServiceOnProfessional[]
+}
+
+model ServiceOnProfessional {
+  id             String       @id @default(cuid())
+  title          String
+  price          Float
+  currency       String
+  duration       Int
+  serviceId      String
+  service        Service      @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  professionalId String
+  professional   Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+  bookings       Booking[]
+}
+
+model Portfolio {
+  id             String       @id @default(cuid())
+  title          String
+  description    String?
+  link           String
+  professionalId String
+  professional   Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+}
+
+model Booking {
+  id                    String                @id @default(cuid())
+  startTime             DateTime
+  endTime               DateTime
+  date                  DateTime
+  userId                String?
+  user                  User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
+  guestFirstName        String?
+  guestLastName         String?
+  guestPhone            String?
+  guestEmail            String?
+  status                String
+  serviceProfessionalId String
+  serviceProfessional   ServiceOnProfessional @relation(fields: [serviceProfessionalId], references: [id])
 }
