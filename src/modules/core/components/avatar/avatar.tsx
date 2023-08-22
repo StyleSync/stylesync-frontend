@@ -15,6 +15,8 @@ const SIZES: Record<AvatarSize, number> = {
 
 export const Avatar: FC<AvatarProps> = ({
   url,
+  className,
+  style,
   size = 'small',
   fallback = <Icon name='user' className={styles.userIcon} />,
   shadow = false,
