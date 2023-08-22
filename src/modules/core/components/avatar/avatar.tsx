@@ -15,18 +15,26 @@ const SIZES: Record<AvatarSize, number> = {
 
 export const Avatar: FC<AvatarProps> = ({
   url,
+  className,
+  style,
   size = 'small',
   fallback = <Icon name='user' className={styles.userIcon} />,
   shadow = false,
   shape = 'circle',
 }) => (
   <div
-    className={clsx(styles.avatarContainer, styles[shape], {
-      [styles.shadow]: shadow,
-    })}
+    className={clsx(
+      styles.avatarContainer,
+      styles[shape],
+      {
+        [styles.shadow]: shadow,
+      },
+      className
+    )}
     style={{
       width: `${SIZES[size]}px`,
       height: `${SIZES[size]}px`,
+      ...style,
     }}
   >
     {url && (

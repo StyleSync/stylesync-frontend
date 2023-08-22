@@ -1,7 +1,7 @@
 'use client';
 import styles from './user-header.module.scss';
 // components
-import { Typography, Button, Icon } from '@/modules/core/components';
+import { Typography, Button, Icon, Avatar } from '@/modules/core/components';
 import { ServiceTag } from '@/modules/service/components';
 
 export const UserHeader = () => {
@@ -14,7 +14,7 @@ export const UserHeader = () => {
       </div>
       <div className={styles.footer}>
         <div className={styles.footerContent}>
-          <img src='#' alt='d' />
+          <Avatar className={styles.avatar} shadow shape='rect' size='large' />
           <div className={styles.tagsAndMap}>
             <div className={styles.serviceTags}>
               <ServiceTag service='hair' />

@@ -3,7 +3,7 @@ import styles from './profile.module.scss';
 
 export default function Profile() {
   return (
-    <main>
+    <main className={styles.root}>
       <section className={styles.section}>
         <UserHeader />
       </section>
