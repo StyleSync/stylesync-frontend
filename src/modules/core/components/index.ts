@@ -12,3 +12,4 @@ export * from './emoji';
 export * from './checkbox';
 export * from './password-requirements';
 export * from './divider';
+export * from './avatar';
