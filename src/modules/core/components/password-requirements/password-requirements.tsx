@@ -1,3 +1,4 @@
+'use client';
 import React, { type FC, useEffect } from 'react';
 import { useBoolean } from 'usehooks-ts';
 import clsx from 'clsx';
@@ -13,25 +14,7 @@ import {
 
 import type { PasswordStrengthBarProps } from './password-requirements.interface';
 import styles from './password-requirements.module.scss';
-
-const requirements = [
-  {
-    title: 'One uppercase character',
-    test: (password: string) => uppercaseCharacterRegex.test(password),
-  },
-  {
-    title: 'One lowercase character',
-    test: (password: string) => lowercaseCharacterRegex.test(password),
-  },
-  {
-    title: '8 characters minimum',
-    test: (password: string) => password.length >= passwordMinLength,
-  },
-  {
-    title: 'One digit',
-    test: (password: string) => digitRegex.test(password),
-  },
-];
+import { useIntl } from 'react-intl';
 
 export const PasswordRequirements: FC<PasswordStrengthBarProps> = ({
   password,
@@ -39,13 +22,37 @@ export const PasswordRequirements: FC<PasswordStrengthBarProps> = ({
   highlight,
   style,
 }) => {
+  const intl = useIntl();
+  // state
   const isRequirementsFit = useBoolean(true);
+  // memo
+  const requirements = [
+    {
+      title: intl.formatMessage({ id: 'validation.password.oneUppercaseChar' }),
+      test: (p: string) => uppercaseCharacterRegex.test(p),
+    },
+    {
+      title: intl.formatMessage({ id: 'validation.password.oneLowercaseChar' }),
+      test: (p: string) => lowercaseCharacterRegex.test(p),
+    },
+    {
+      title: intl.formatMessage(
+        { id: 'validation.password.minLength' },
+        { length: passwordMinLength }
+      ),
+      test: (p: string) => p.length >= passwordMinLength,
+    },
+    {
+      title: intl.formatMessage({ id: 'validation.password.oneDigit' }),
+      test: (p: string) => digitRegex.test(p),
+    },
+  ];
 
   useEffect(() => {
     isRequirementsFit.setValue(
       requirements.every((requirement) => requirement.test(password))
     );
-  }, [password, isRequirementsFit.setValue]);
+  }, [password, isRequirementsFit.setValue, requirements]);
 
   return (
     <div

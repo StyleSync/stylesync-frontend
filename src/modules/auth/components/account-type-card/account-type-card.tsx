@@ -1,10 +1,10 @@
 import { type FC } from 'react';
+import clsx from 'clsx';
 // components
 import { RadioButton, Typography, Emoji } from '@/modules/core/components';
 
 import type { AccountTypeCardProps } from './account-type-card.interface';
 import styles from './account-type-card.module.scss';
-import clsx from 'clsx';
 
 export const AccountTypeCard: FC<AccountTypeCardProps> = ({
   value,

@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Transition } from 'react-transition-group';
+import { useIntl } from 'react-intl';
 // components
 import {
   Button,
@@ -21,18 +22,8 @@ import type { ButtonProps } from '@/modules/core/components/button/button.interf
 import type { AccountType } from '@/modules/user/types/account.types';
 import type { SignUpUserData } from '@/modules/auth/types/sign-up.types';
 
+import type { SignUpStepValue, SignUpStep } from './sign-up-form.interface';
 import styles from './sign-up-form.module.scss';
-
-export const signUpSteps: { value: string; text: string }[] = [
-  {
-    value: 'account-type',
-    text: 'Account type',
-  },
-  {
-    value: 'credentials',
-    text: 'Credentials',
-  },
-];
 
 export const defaultValues: SignUpUserData = {
   email: '',
@@ -41,12 +32,13 @@ export const defaultValues: SignUpUserData = {
 
 export const SignUpForm: FC = () => {
   // form
+  const intl = useIntl();
   const form = useForm<SignUpUserData>({
     defaultValues,
     resolver: zodResolver(signUpFormValidationSchema),
   });
   // state
-  const [step, setStep] = useState(signUpSteps[0].value);
+  const [step, setStep] = useState<SignUpStepValue>('account-type');
   const [accountType, setAccountType] = useState<AccountType | null>(null);
   // ids
   const formId = useId();
@@ -54,7 +46,7 @@ export const SignUpForm: FC = () => {
   const buttonProps = useMemo<ButtonProps>(() => {
     if (step === 'account-type') {
       return {
-        text: 'Next',
+        text: intl.formatMessage({ id: 'general.actions.next' }),
         iconEnd: 'arrow-right',
         type: 'button',
         disabled: !accountType,
@@ -76,6 +68,20 @@ export const SignUpForm: FC = () => {
     return {};
   }, [formId, step, accountType]);
 
+  const signUpSteps = useMemo<SignUpStep[]>(
+    () => [
+      {
+        value: 'account-type',
+        text: intl.formatMessage({ id: 'signUp.accountType.title' }),
+      },
+      {
+        value: 'credentials',
+        text: intl.formatMessage({ id: 'signUp.credentials.title' }),
+      },
+    ],
+    [intl]
+  );
+
   const handleFormSubmit = useCallback(() => {}, []);
 
   const handleBackClick = useCallback(() => {
@@ -85,7 +91,7 @@ export const SignUpForm: FC = () => {
   return (
     <div className={styles.root}>
       <Typography variant='title' className={styles.title} As='h1'>
-        Create Account
+        {intl.formatMessage({ id: 'signUp.title' })}
       </Typography>
       <Stepper
         value={step}
@@ -137,19 +143,25 @@ export const SignUpForm: FC = () => {
             <div className={styles.socialButtonWrapper}>
               <Button icon='google-logo' variant='secondary' />
               <div className={styles.socialInfo}>
-                <Typography variant='small'>Sign up with Google</Typography>
+                <Typography variant='small'>
+                  {intl.formatMessage({ id: 'signUp.social.google' })}
+                </Typography>
               </div>
             </div>
             <div className={styles.socialButtonWrapper}>
               <Button icon='instagram-logo' variant='secondary' />
               <div className={styles.socialInfo}>
-                <Typography variant='small'>Sign up with Instagram</Typography>
+                <Typography variant='small'>
+                  {intl.formatMessage({ id: 'signUp.social.instagram' })}
+                </Typography>
               </div>
             </div>
             <div className={styles.socialButtonWrapper}>
               <Button icon='facebook-logo' variant='secondary' />
               <div className={styles.socialInfo}>
-                <Typography variant='small'>Sign up with Facebook</Typography>
+                <Typography variant='small'>
+                  {intl.formatMessage({ id: 'signUp.social.facebook' })}
+                </Typography>
               </div>
             </div>
           </div>

@@ -1,6 +1,8 @@
 import { type FC } from 'react';
 import { useBoolean } from 'usehooks-ts';
 import { type UseFormReturn } from 'react-hook-form';
+import { useIntl } from 'react-intl';
+import Link from 'next/link';
 // components
 import {
   TextField,
@@ -11,7 +13,6 @@ import {
 
 import styles from './account-credentials-form.module.scss';
 import type { SignUpUserData } from '@/modules/auth/types/sign-up.types';
-import Link from 'next/link';
 
 type AccountCredentialsFormProps = {
   form: UseFormReturn<SignUpUserData>;
@@ -24,6 +25,7 @@ export const AccountCredentialsForm: FC<AccountCredentialsFormProps> = ({
   formId,
   onSubmit,
 }) => {
+  const intl = useIntl();
   // state
   const isPasswordVisible = useBoolean();
   // refs
@@ -39,7 +41,7 @@ export const AccountCredentialsForm: FC<AccountCredentialsFormProps> = ({
         {...form.register('email')}
         error={Boolean(form.formState.errors.email)}
         variant='input'
-        label='Email'
+        label={intl.formatMessage({ id: 'general.credentials.email' })}
         autoComplete='email'
         spellCheck='false'
         aria-label='email'
@@ -50,7 +52,7 @@ export const AccountCredentialsForm: FC<AccountCredentialsFormProps> = ({
           {...form.register('password')}
           error={Boolean(form.formState.errors.password)}
           variant='input'
-          label='Password'
+          label={intl.formatMessage({ id: 'general.credentials.password' })}
           aria-label='password'
           type={isPasswordVisible.value ? 'text' : 'password'}
           endAdornment={
@@ -69,17 +71,17 @@ export const AccountCredentialsForm: FC<AccountCredentialsFormProps> = ({
         />
       </div>
       <Typography className={styles.terms} variant='small'>
-        By signing up, you agree to our{' '}
+        {intl.formatMessage({ id: 'signUp.userAgreement.description' })}
         <Link href='#' className='link'>
-          Terms
+          {intl.formatMessage({ id: 'signUp.userAgreement.terms' })}
         </Link>
-        ,{' '}
+        {', '}
         <Link href='#' className='link'>
-          Privacy Policy
+          {intl.formatMessage({ id: 'signUp.userAgreement.privacy' })}
         </Link>{' '}
-        and{' '}
+        {intl.formatMessage({ id: 'general.conjunction.and' })}{' '}
         <Link href='#' className='link'>
-          Cookies Policy
+          {intl.formatMessage({ id: 'signUp.userAgreement.cookies' })}
         </Link>
       </Typography>
     </form>

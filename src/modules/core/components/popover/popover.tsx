@@ -1,3 +1,4 @@
+'use client';
 import { type FC, useCallback, useEffect, useRef } from 'react';
 import * as RPopover from '@radix-ui/react-popover';
 import { Transition } from 'react-transition-group';

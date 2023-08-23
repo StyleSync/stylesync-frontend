@@ -1,3 +1,4 @@
+'use client';
 import { type ForwardedRef, forwardRef, useRef, useEffect } from 'react';
 import clsx from 'clsx';
 import { useBoolean } from 'usehooks-ts';

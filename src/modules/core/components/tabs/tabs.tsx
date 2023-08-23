@@ -1,3 +1,4 @@
+'use client';
 import { type CSSProperties, type FC, useMemo, useState } from 'react';
 import clsx from 'clsx';
 // components
