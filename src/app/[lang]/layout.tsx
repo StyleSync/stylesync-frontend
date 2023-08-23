@@ -3,18 +3,26 @@ import '@/styles/globals.scss';
 import { i18nConfig } from '@/modules/internationalization/constants/i18n.constants';
 // providers
 import { TrpcProvider } from '@/utils/trpc-provider';
+import { IntlProvider } from '@/modules/internationalization/containers/intl-provider';
 // types
 import type { ChildrenProp } from '@/modules/core/types/react.types';
 import type { PageParams } from '@/modules/core/types/next.types';
+import { getDictionary } from '@/modules/internationalization/utils/dictionary.utils';
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params,
 }: ChildrenProp & PageParams) {
+  const dictionary = await getDictionary(params.lang);
+
   return (
     <html lang={params.lang}>
       <body>
-        <TrpcProvider>{children}</TrpcProvider>
+        <TrpcProvider>
+          <IntlProvider locale={params.lang} dictionary={dictionary}>
+            {children}
+          </IntlProvider>
+        </TrpcProvider>
       </body>
     </html>
   );
