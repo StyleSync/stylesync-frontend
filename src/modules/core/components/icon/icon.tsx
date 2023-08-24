@@ -25,6 +25,7 @@ import EyeNoIcon from '@/assets/icons/eye-no.svg?icon';
 import GoogleLogoIcon from '@/assets/icons/google-logo.svg?icon';
 import FacebookLogoIcon from '@/assets/icons/facebook-logo.svg?icon';
 import InstagramLogoIcon from '@/assets/icons/instagram-logo.svg?icon';
+import InBoxIcon from '@/assets/icons/inbox.svg?icon';
 
 import type { SVGComponentElement } from './icon.interface';
 
@@ -54,6 +55,7 @@ export const icons = {
   'google-logo': GoogleLogoIcon,
   'facebook-logo': FacebookLogoIcon,
   'instagram-logo': InstagramLogoIcon,
+  inbox: InBoxIcon,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;
