@@ -1,0 +1,23 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+
+.root {
+  position: relative;
+  display: flex;
+  width: fit-content;
+  border-radius: variables.$border-radius-medium;
+  padding: 1px;
+  transition: variables.$transition-ultrafast;
+
+  button {
+    background-color: #fff;
+    border-radius: 11px;
+    padding: 0 utils.spacing(2);
+    transition: variables.$transition-ultrafast;
+
+    span {
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+  }
+}

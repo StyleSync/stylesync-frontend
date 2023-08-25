@@ -16,10 +16,6 @@
   justify-content: space-between;
   padding: utils.spacing(0, 10);
 
-  svg {
-    //margin-bottom: 5px;
-  }
-
   @include mixins.tablet {
     padding: utils.spacing(0, 5);
   }
@@ -31,20 +27,6 @@
     svg {
       width: 103px;
       height: 26px;
-    }
-  }
-}
-
-.right {
-  display: flex;
-  align-items: center;
-  column-gap: utils.spacing(3);
-
-  .text {
-    color: variables.$grey-color;
-
-    @include mixins.phone {
-      display: none;
     }
   }
 }
