@@ -1,0 +1,33 @@
+@use '@/styles/utils';
+@use '@/styles/variables.module';
+
+.serviceBox {
+  margin-top: 25px;
+  position: relative;
+}
+.serviceBox:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background-color: variables.$primary-light-color;
+  bottom: -15px;
+}
+.serviceContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.serviceInfo {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+}
+.serviceTime {
+  color: variables.$grey-color;
+}
+.servicePriceBtn {
+  display: flex;
+  align-items: center;
+  column-gap: 40px;
+}

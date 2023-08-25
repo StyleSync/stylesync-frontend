@@ -1,2 +1,14 @@
 @use '@/styles/utils';
 @use '@/styles/variables.module';
+
+.container {
+  margin-top: 60px;
+  margin-bottom: 160px; // will have to be removed
+}
+
+.service {
+  margin-top: 40px;
+  padding: 20px;
+  box-shadow: variables.$main-box-shadow;
+  border-radius: 12px;
+}
