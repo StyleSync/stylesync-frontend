@@ -2,7 +2,7 @@
 @use '@/styles/variables.module';
 
 .serviceBox {
-  margin-top: 25px;
+  margin-top: utils.spacing(3);
   position: relative;
 }
 .serviceBox:not(:last-child)::before {
@@ -11,17 +11,24 @@
   width: 100%;
   height: 1px;
   background-color: variables.$primary-light-color;
-  bottom: -15px;
+  bottom: utils.spacing(-1.9);
 }
 .serviceContent {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 767px) {
+    column-gap: utils.spacing(1.1);
+  }
 }
 .serviceInfo {
   display: flex;
   flex-direction: column;
-  row-gap: 16px;
+  row-gap: utils.spacing(2);
+  @media (max-width: 496px) {
+    column-gap: utils.spacing(3.8);
+    flex-wrap: wrap;
+  }
 }
 .serviceTime {
   color: variables.$grey-color;
@@ -29,5 +36,12 @@
 .servicePriceBtn {
   display: flex;
   align-items: center;
-  column-gap: 40px;
+  column-gap: utils.spacing(5);
+  white-space: nowrap;
+  @media (max-width: 600px) {
+    column-gap: 15px;
+  }
+  @media (max-width: 360px) {
+    column-gap: utils.spacing(1);
+  }
 }
