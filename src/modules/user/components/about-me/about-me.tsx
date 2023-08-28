@@ -23,43 +23,37 @@ export const AboutMe = () => {
         </Typography>
       </div>
       <div className={styles.contacts}>
-        <div className={styles.socialBtns}>
-          <div
-            className={clsx(styles.borderContainer, styles.facebookContainer)}
-          >
-            <Button
-              className={clsx(styles.socialButton, styles.facebookButton)}
-              variant='unstyled'
-              icon='facebook-logo'
-              text='Facebook'
-            />
-          </div>
-          <div
-            className={clsx(styles.borderContainer, styles.instagramContainer)}
-          >
-            <Button
-              className={clsx(styles.socialButton, styles.instagramButton)}
-              variant='unstyled'
-              icon='instagram-logo'
-              text='Instagram'
-            />
-          </div>
+        <div className={clsx(styles.borderContainer, styles.facebookContainer)}>
+          <Button
+            className={clsx(styles.socialButton, styles.facebookButton)}
+            variant='unstyled'
+            icon='facebook-logo'
+            text='Facebook'
+          />
+        </div>
+        <div
+          className={clsx(styles.borderContainer, styles.instagramContainer)}
+        >
+          <Button
+            className={clsx(styles.socialButton, styles.instagramButton)}
+            variant='unstyled'
+            icon='instagram-logo'
+            text='Instagram'
+          />
         </div>
 
-        <div className={styles.contacBtns}>
-          <Button
-            className={styles.contactButton}
-            variant='unstyled'
-            icon='phone'
-            text='+38 099 022 78 56'
-          />
-          <Button
-            className={styles.contactButton}
-            variant='unstyled'
-            icon='inbox'
-            text='kate@gmail.com'
-          />
-        </div>
+        <Button
+          className={styles.contactButton}
+          variant='unstyled'
+          icon='phone'
+          text='+38 099 022 78 56'
+        />
+        <Button
+          className={styles.contactButton}
+          variant='unstyled'
+          icon='inbox'
+          text='kate@gmail.com'
+        />
       </div>
     </div>
   );

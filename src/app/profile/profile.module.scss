@@ -1,5 +1,6 @@
 @use '@/styles/variables.module';
 @use '@/styles/utils';
+@use '@/styles/mixins';
 
 .section {
 }
@@ -8,6 +9,9 @@
   max-width: 968px;
   margin: 0 auto;
   padding: 0 24px;
+  @include mixins.phone {
+    padding: 0 15px;
+  }
 }
 
 .root {
