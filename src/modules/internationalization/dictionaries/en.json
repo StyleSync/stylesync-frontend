@@ -1,8 +1,12 @@
 {
   "general.actions.next": "Next",
+  "general.actions.signIn": "Sign in",
+  "general.actions.signUp": "Sign up",
+  "general.actions.forgotPassword": "Forgot password?",
   "general.credentials.email": "Email",
   "general.credentials.password": "Password",
   "general.conjunction.and": "and",
+  "general.conjunction.or": "or",
   "validation.password.oneUppercaseChar": "One uppercase character",
   "validation.password.oneLowercaseChar": "One lowercase character",
   "validation.password.minLength": "{length} characters minimum",
@@ -21,5 +25,11 @@
   "signUp.userAgreement.description": "By signing up, you agree to our ",
   "signUp.userAgreement.terms": "Terms",
   "signUp.userAgreement.privacy": "Privacy Policy",
-  "signUp.userAgreement.cookies": "Cookies Policy"
+  "signUp.userAgreement.cookies": "Cookies Policy",
+  "signUp.header.signInDescription": "Already have an account?",
+  "signIn.title": "Sign in to StyleSync",
+  "signIn.social.google": "Sign in with Google",
+  "signIn.social.instagram": "Sign in with Instagram",
+  "signIn.social.facebook": "Sign in with Facebook",
+  "signIn.header.signUpDescription": "Don’t have an account?"
 }

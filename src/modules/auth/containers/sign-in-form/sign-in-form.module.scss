@@ -1,0 +1,75 @@
+@use '@/styles/utils';
+@use '@/styles/variables.module';
+
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 636px;
+  max-width: 380px;
+  //row-gap: utils.spacing(6);
+
+  .stepper {
+    padding: utils.spacing(0, 3)
+  }
+
+  .title {
+    margin: 0 auto;
+    font-size: 22px;
+  }
+
+  .content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    row-gap: utils.spacing(3);
+    margin-top: utils.spacing(6);
+  }
+
+  .submit {
+    width: 100%;
+    margin-top: utils.spacing(4);
+  }
+
+  .forgotPassword {
+    display: flex;
+    width: fit-content;
+    margin: utils.spacing(2, auto, 6, auto);
+  }
+
+  .social {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: utils.spacing(3);
+    margin-top: utils.spacing(6);
+
+    label, button {
+      width: 100%;
+      //column-gap: 24px;
+    }
+
+    button {
+      column-gap: utils.spacing(2);
+    }
+
+    label {
+      box-shadow: 0 18px 30px 0 rgba(variables.$primary-color, 0.09);
+
+      &:hover {
+        box-shadow: 0 10px 30px 0 rgba(variables.$primary-color, 0.2);
+      }
+    }
+
+    .google {
+      span {
+      }
+    }
+    .instagram {
+      svg {
+      }
+    }
+    .facebook {
+    }
+  }
+}
+

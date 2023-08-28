@@ -1,6 +1,7 @@
 import type { ButtonHTMLAttributes } from 'react';
 import type { IconName } from '@/modules/core/components';
 import type { StylingProps } from '@/styles/styles.types';
+import type { TypographyProps } from '@/modules/core/components/typogrpahy/typography.interface';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'unstyled';
 
@@ -14,4 +15,5 @@ export type ButtonProps = Omit<
     icon?: IconName;
     iconEnd?: IconName;
     rippleColor?: string;
+    typographyProps?: Partial<TypographyProps>;
   };

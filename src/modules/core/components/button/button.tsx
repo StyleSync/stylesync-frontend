@@ -27,6 +27,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       style,
       rippleColor,
+      typographyProps,
       ...props
     },
     ref
@@ -58,7 +59,11 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {!!icon && <Icon className={styles.icon} name={icon} />}
-        {!!text && <Typography className={styles.text}>{text}</Typography>}
+        {!!text && (
+          <Typography className={styles.text} {...typographyProps}>
+            {text}
+          </Typography>
+        )}
         {!!iconEnd && <Icon className={styles.icon} name={iconEnd} />}
       </button>
     );

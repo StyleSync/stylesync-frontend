@@ -1,8 +1,12 @@
 {
   "general.actions.next": "Далі",
+  "general.actions.signIn": "Увійти",
+  "general.actions.signUp": "Зареєструватися",
+  "general.actions.forgotPassword": "Забули пароль?",
   "general.credentials.email": "Електронна пошта",
   "general.credentials.password": "Пароль",
   "general.conjunction.and": "і",
+  "general.conjunction.or": "або",
   "validation.password.oneUppercaseChar": "Одна велика буква",
   "validation.password.oneLowercaseChar": "One мала буква",
   "validation.password.minLength": "Мінімум {length} символів",
@@ -21,5 +25,11 @@
   "signUp.userAgreement.description": "Реєструючись, ви погоджуєтеся з нишими ",
   "signUp.userAgreement.terms": "Умовами",
   "signUp.userAgreement.privacy": "Політикою конфіденційності",
-  "signUp.userAgreement.cookies": "Політикою файлів cookie"
+  "signUp.userAgreement.cookies": "Політикою файлів cookie",
+  "signUp.header.signInDescription": "Вже маєте аккаунт?",
+  "signIn.title": "Увійти до StyleSync",
+  "signIn.social.google": "Увійти через Google",
+  "signIn.social.instagram": "Увійти через Instagram",
+  "signIn.social.facebook": "Увійти через Facebook",
+  "signIn.header.signUpDescription": "Не маєте аккаунту?"
 }
