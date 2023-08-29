@@ -1,6 +1,6 @@
 @use '@/styles/utils';
 @use '@/styles/variables.module';
-
+@use '@/styles/mixins';
 .container {
   width: 100%;
   height: 270px;
