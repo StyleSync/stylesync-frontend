@@ -1,14 +1,7 @@
 @use '@/styles/utils';
 @use '@/styles/variables.module';
-
+@use '@/styles/mixins';
 .container {
   margin-top: utils.spacing(7.5);
   margin-bottom: utils.spacing(20); // will have to be removed
-}
-
-.service {
-  margin-top: utils.spacing(5);
-  padding: utils.spacing(2.5);
-  box-shadow: variables.$main-box-shadow;
-  border-radius: utils.spacing(1.5);
 }

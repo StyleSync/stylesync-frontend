@@ -2,7 +2,9 @@
 
 // components
 import { Typography } from '@/modules/core/components';
-import { ServiceTag, ServiceEntity } from '@/modules/service/components';
+import { ServicesTable } from '@/modules/service/components';
+
+import { faker } from '@faker-js/faker';
 
 import styles from './user-services.module.scss';
 
@@ -12,47 +14,94 @@ export const Services = () => {
       <Typography className={styles.title} variant='title'>
         Services
       </Typography>
-      <div className={styles.service}>
-        <ServiceTag service='hair' />
-        <ServiceEntity
-          serviceName='Haircut for children'
-          serviceTime='40min'
-          servicePrice='25 $'
-        />
-        <ServiceEntity
-          serviceName='Haircut for adults'
-          serviceTime='1h'
-          servicePrice='25 $'
-        />
-        <ServiceEntity
-          serviceName='Haircut for adults + beard trimming'
-          serviceTime='1h 30min'
-          servicePrice='25 $'
-        />
-      </div>
-      <div className={styles.service}>
-        <ServiceTag service='makeup' />
-        <ServiceEntity
-          serviceName='Wedding makeup'
-          serviceTime='1h 30min'
-          servicePrice='25 $'
-        />
-        <ServiceEntity
-          serviceName='Evening makeup'
-          serviceTime='1h'
-          servicePrice='25 $'
-        />
-        <ServiceEntity
-          serviceName='Makeup masterclass'
-          serviceTime='2h'
-          servicePrice='25 $'
-        />
-        <ServiceEntity
-          serviceName='Base makeup'
-          serviceTime='30min'
-          servicePrice='25 $'
-        />
-      </div>
+
+      <ServicesTable
+        service='hair'
+        userServices={[
+          {
+            id: faker.string.uuid(),
+            name: 'Haircut for children',
+            duration: '1h',
+            price: faker.commerce.price({
+              min: 100,
+              max: 200,
+              dec: 0,
+              symbol: '$',
+            }),
+          },
+          {
+            id: faker.string.uuid(),
+            name: 'Haircut for adults',
+            duration: '1h',
+            price: faker.commerce.price({
+              min: 100,
+              max: 200,
+              dec: 0,
+              symbol: '$',
+            }),
+          },
+          {
+            id: faker.string.uuid(),
+            name: 'Haircut for adults + beard trimming',
+            duration: '1h',
+            price: faker.commerce.price({
+              min: 100,
+              max: 200,
+              dec: 0,
+              symbol: '$',
+            }),
+          },
+        ]}
+      />
+      <ServicesTable
+        service='makeup'
+        userServices={[
+          {
+            id: faker.string.uuid(),
+            name: 'Wedding makeup',
+            duration: '1h',
+            price: faker.commerce.price({
+              min: 100,
+              max: 200,
+              dec: 0,
+              symbol: '$',
+            }),
+          },
+          {
+            id: faker.string.uuid(),
+            name: 'Evening makeup',
+            duration: '1h',
+            price: faker.commerce.price({
+              min: 100,
+              max: 200,
+              dec: 0,
+              symbol: '$',
+            }),
+          },
+          {
+            id: faker.string.uuid(),
+            name: 'Makeup masterclass',
+            duration: '1h',
+            price: faker.commerce.price({
+              min: 100,
+              max: 200,
+              dec: 0,
+              symbol: '$',
+            }),
+          },
+          {
+            id: faker.string.uuid(),
+            name: 'Base makeup',
+            duration: '1h',
+            price: faker.commerce.price({
+              min: 100,
+              max: 200,
+              dec: 0,
+              symbol: '$',
+            }),
+          },
+        ]}
+      />
     </div>
   );
 };
