@@ -36,6 +36,7 @@ import TimeIcon from '@/assets/icons/time.svg?icon';
 import FlagUkraine from '@/assets/icons/flag-ukraine.svg?icon';
 import FlagUSA from '@/assets/icons/flag-usa.svg?icon';
 import FlagEurope from '@/assets/icons/flag-europe.svg?icon';
+import InBoxIcon from '@/assets/icons/inbox.svg?icon';
 
 import type { SVGComponentElement } from './icon.interface';
 
@@ -76,6 +77,7 @@ export const icons = {
   'flag-ukraine': FlagUkraine,
   'flag-usa': FlagUSA,
   'flag-europe': FlagEurope,
+  inbox: InBoxIcon,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;

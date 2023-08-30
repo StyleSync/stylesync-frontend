@@ -1,0 +1,97 @@
+@use '@/styles/utils';
+@use '@/styles/variables.module';
+@use '@/styles/mixins';
+
+.container {
+  margin: 50px 0px 60px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 40px;
+  @include mixins.phone {
+    margin: 30px 0px 30px;
+    row-gap: 20px;
+  }
+}
+.title {
+  @include mixins.phone {
+    font-size: 16px;
+  }
+}
+
+.contacts {
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  row-gap: 10px;
+  @include mixins.phone {
+    justify-content: center;
+  }
+}
+
+// buttons
+.socialBtns {
+  display: flex;
+  column-gap: 10px;
+}
+.borderContainer {
+  padding: 1px;
+  border-radius: variables.$border-radius-medium;
+  width: fit-content;
+}
+.instagramContainer {
+  background: variables.$instagram-gradient;
+}
+.facebookContainer {
+  background: variables.$facebook-gradient;
+}
+
+//
+
+.socialButton {
+  background-color: #fff;
+  border-radius: variables.$border-radius-medium;
+  // @include mixins.phone {
+  //   span {
+  //     font-size: 12px;
+  //   }
+  // }
+
+  span {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  // @include mixins.phone {
+  //   font-size: 5px;
+  // }
+}
+
+.facebookButton {
+  span {
+    background-image: variables.$facebook-gradient;
+  }
+}
+.instagramButton {
+  span {
+    background-image: variables.$instagram-gradient;
+  }
+}
+
+.contacBtns {
+  display: flex;
+  column-gap: 10px;
+  white-space: nowrap;
+}
+
+.contactButton {
+  padding: 10px 12px;
+  border: 1px solid variables.$primary-light-color;
+  // @include mixins.phone {
+  //   padding: 8px 10px;
+  //   span {
+  //     padding: utils.spacing(0, 0);
+  //     font-size: 10px;
+  //   }
+  // }
+}
