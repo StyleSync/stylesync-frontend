@@ -2,6 +2,7 @@
 @use '@/styles/variables.module';
 @use '@/styles/mixins';
 .container {
+  margin-top: 50px;
   width: 100%;
   height: 270px;
   position: relative;
@@ -10,6 +11,12 @@
   border-radius: 12px;
   box-shadow: variables.$main-box-shadow;
   background: linear-gradient(57deg, #3b82ef 2.47%, #b9d5ff 100%);
+  @include mixins.phone {
+    background: none;
+  }
+  @media (max-width: 785px) {
+    height: 320px;
+  }
 }
 
 .header {
@@ -33,18 +40,29 @@
   left: 0;
   width: 100%;
   padding: 14px 22px 28px;
+  @media (max-width: 785px) {
+    height: 150px;
+  }
 }
 .footerContent {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-left: 180px;
+  gap: 15px;
+  @media (max-width: 785px) {
+    flex-direction: column;
+  }
 }
 
 .avatar {
   position: absolute;
   top: -80px;
   left: 22px;
+  @include mixins.phone {
+    width: 80px;
+    height: 80px;
+  }
 }
 
 .tagsAndMap {
@@ -56,6 +74,14 @@
   display: flex;
   align-items: center;
   column-gap: 8px;
+}
+
+.tags {
+  display: flex;
+  column-gap: 8px;
+  @media (max-width: 785px) {
+    column-gap: 20px;
+  }
 }
 
 .additionalCount {
@@ -72,6 +98,12 @@
   display: flex;
   align-items: center;
   padding-top: 14px;
+  @media (max-width: 785px) {
+    margin-left: 30px;
+  }
+  @include mixins.phone {
+    display: none;
+  }
 }
 
 .locationIcon {
@@ -95,4 +127,8 @@
   display: flex;
   column-gap: 10px;
   padding-top: 10px;
+  @media (max-width: 785px) {
+    padding-top: 5px;
+    column-gap: 20px;
+  }
 }

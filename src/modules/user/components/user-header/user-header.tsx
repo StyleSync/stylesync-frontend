@@ -17,9 +17,11 @@ export const UserHeader = () => {
           <Avatar className={styles.avatar} shadow shape='rect' size='large' />
           <div className={styles.tagsAndMap}>
             <div className={styles.serviceTags}>
-              <ServiceTag service='hair' />
-              <ServiceTag service='nails' />
-              <ServiceTag service='makeup' />
+              <div className={styles.tags}>
+                <ServiceTag service='hair' />
+                <ServiceTag service='nails' />
+                <ServiceTag service='makeup' />
+              </div>
               <span className={styles.additionalCount}>
                 <Typography variant='small'>+2</Typography>
               </span>
