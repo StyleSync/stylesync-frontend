@@ -22,7 +22,15 @@
   background-color: variables.$grey-light-color;
   padding-top: 110px;
   padding-bottom: 94px;
+  @include mixins.phone {
+    padding-top: 50px;
+    padding-bottom: 1px;
+    background-color: transparent;
+  }
 }
 .sectionAboutMe {
   border-top: 1px solid variables.$primary-light-color;
+  @include mixins.phone {
+    border-top: none;
+  }
 }

@@ -9,7 +9,7 @@ import styles from './avatar.module.scss';
 
 const SIZES: Record<AvatarSize, number> = {
   small: 40,
-  medium: 56,
+  medium: 80,
   large: 156,
 };
 

@@ -1,4 +1,5 @@
 'use client';
+
 import { type FC, useCallback, useMemo, useState } from 'react';
 import { Gallery as ReactGridGallery } from 'react-grid-gallery';
 import Lightbox from 'yet-another-react-lightbox';

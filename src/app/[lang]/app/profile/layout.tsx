@@ -1,7 +1,7 @@
 import '@/styles/globals.scss';
 import { type ReactNode } from 'react';
 // providers
-import { Header } from '@/modules/core/containers/header';
+import { Header } from '@/modules/core/components';
 
 export const metadata = {
   title: 'StyleSync | Tennisha’s Beauty',

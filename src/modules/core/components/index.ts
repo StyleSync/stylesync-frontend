@@ -23,3 +23,4 @@ export * from './price-field';
 export * from './placeholder';
 export * from './dialog';
 export * from './avatar';
+export * from './header';
