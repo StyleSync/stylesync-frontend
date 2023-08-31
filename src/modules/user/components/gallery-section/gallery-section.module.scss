@@ -1,0 +1,12 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.title {
+  margin-bottom: 40px;
+}
+.button {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}

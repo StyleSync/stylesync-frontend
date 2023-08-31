@@ -1,4 +1,9 @@
-import { UserHeader, Services, AboutMe } from '@/modules/user/components';
+import {
+  UserHeader,
+  Services,
+  AboutMe,
+  GallerySection,
+} from '@/modules/user/components';
 
 import styles from './profile.module.scss';
 
@@ -14,6 +19,12 @@ export default function Profile() {
       <section className={styles.sectionAboutMe}>
         <div className={styles.container}>
           <AboutMe />
+        </div>
+      </section>
+
+      <section className={styles.sectionGallery}>
+        <div className={styles.container}>
+          <GallerySection />
         </div>
       </section>
 
