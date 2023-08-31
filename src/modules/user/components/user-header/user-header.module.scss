@@ -2,7 +2,6 @@
 @use '@/styles/variables.module';
 @use '@/styles/mixins';
 .container {
-  margin-top: 50px;
   width: 100%;
   height: 270px;
   position: relative;
@@ -11,23 +10,45 @@
   border-radius: 12px;
   box-shadow: variables.$main-box-shadow;
   background: linear-gradient(57deg, #3b82ef 2.47%, #b9d5ff 100%);
-  @include mixins.phone {
-    background: none;
-  }
   @media (max-width: 785px) {
     height: 320px;
+  }
+  @include mixins.phone {
+    border: none;
+    background: none;
+    box-shadow: none;
+    height: 220px;
   }
 }
 
 .header {
   height: 100%;
+  @include mixins.phone {
+    height: 50%;
+  }
 }
 .title {
   display: flex;
   color: #fff;
-  padding-left: 199px;
-  padding-top: 115px;
+  margin-left: 199px;
+  margin-top: 115px;
   font-size: 40px;
+
+  @include mixins.phone {
+    color: #323e4a;
+    font-size: 30px;
+    margin-top: 60px;
+  }
+  @media (max-width: 490px) {
+    font-size: 25px;
+  }
+  @media (max-width: 445px) {
+    font-size: 20px;
+  }
+  @media (max-width: 400px) {
+    font-size: 18px;
+    margin-left: 115px;
+  }
 }
 
 .footer {
@@ -41,7 +62,12 @@
   width: 100%;
   padding: 14px 22px 28px;
   @media (max-width: 785px) {
-    height: 150px;
+    height: 145px;
+  }
+  @include mixins.phone {
+    background: none;
+    border-bottom: 1px solid variables.$primary-light-color;
+    padding: 0px;
   }
 }
 .footerContent {
@@ -60,8 +86,7 @@
   top: -80px;
   left: 22px;
   @include mixins.phone {
-    width: 80px;
-    height: 80px;
+    top: -40px;
   }
 }
 
@@ -74,6 +99,10 @@
   display: flex;
   align-items: center;
   column-gap: 8px;
+  @include mixins.phone {
+    margin-top: 30px;
+    display: none;
+  }
 }
 
 .tags {
@@ -82,6 +111,15 @@
   @media (max-width: 785px) {
     column-gap: 20px;
   }
+  @include mixins.phone {
+    column-gap: 8px;
+  }
+
+  // @include mixins.phone {
+  //   &div:last-child(3) {
+  //     display: none;
+  //   }
+  // }
 }
 
 .additionalCount {
@@ -130,5 +168,8 @@
   @media (max-width: 785px) {
     padding-top: 5px;
     column-gap: 20px;
+  }
+  @include mixins.phone {
+    display: none;
   }
 }

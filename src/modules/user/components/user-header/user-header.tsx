@@ -3,8 +3,12 @@ import styles from './user-header.module.scss';
 // components
 import { Typography, Button, Icon, Avatar } from '@/modules/core/components';
 import { ServiceTag } from '@/modules/service/components';
+import { useWindowSize } from 'usehooks-ts';
 
 export const UserHeader = () => {
+  const { width } = useWindowSize();
+  const mobileBreakpoint = 450;
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -14,7 +18,12 @@ export const UserHeader = () => {
       </div>
       <div className={styles.footer}>
         <div className={styles.footerContent}>
-          <Avatar className={styles.avatar} shadow shape='rect' size='large' />
+          <Avatar
+            className={styles.avatar}
+            shadow
+            shape='rect'
+            size={width < mobileBreakpoint ? 'medium' : 'large'}
+          />
           <div className={styles.tagsAndMap}>
             <div className={styles.serviceTags}>
               <div className={styles.tags}>

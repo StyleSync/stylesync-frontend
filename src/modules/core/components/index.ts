@@ -14,3 +14,4 @@ export * from './password-requirements';
 export * from './divider';
 export * from './gallery';
 export * from './avatar';
+export * from './header';

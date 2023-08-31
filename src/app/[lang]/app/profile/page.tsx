@@ -11,14 +11,15 @@ export default function Profile() {
         </div>
       </section>
 
-      <section className={styles.sectionServices}>
-        <div className={styles.container}>
-          <Services />
-        </div>
-      </section>
       <section className={styles.sectionAboutMe}>
         <div className={styles.container}>
           <AboutMe />
+        </div>
+      </section>
+
+      <section className={styles.sectionServices}>
+        <div className={styles.container}>
+          <Services />
         </div>
       </section>
     </main>
