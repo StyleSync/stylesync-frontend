@@ -2,4 +2,5 @@ import type { ButtonProps } from '@/modules/core/components/button/button.interf
 
 export type GradientButtonProps = Omit<ButtonProps, 'variant'> & {
   gradient: string;
+  rippleColor?: string;
 };

@@ -15,18 +15,27 @@ import MakeupIcon from '@/assets/icons/makup.svg?icon';
 import NailsIcon from '@/assets/icons/nails.svg?icon';
 import CloseIcon from '@/assets/icons/close.svg?icon';
 import PencilIcon from '@/assets/icons/pencil.svg?icon';
-import PlusIcon from '@/assets/icons/plus.svg?icon';
 import MinusIcon from '@/assets/icons/minus.svg?icon';
 import UserIcon from '@/assets/icons/user.svg?icon';
 import ArrowRightIcon from '@/assets/icons/arrow-right.svg?icon';
 import ArrowLeftIcon from '@/assets/icons/arrow-left.svg?icon';
+import ArrowBottomIcon from '@/assets/icons/arrow-bottom.svg?icon';
+import ArrowTopIcon from '@/assets/icons/arrow-top.svg?icon';
 import ChevronRightIcon from '@/assets/icons/chevron-right.svg?icon';
+import ChevronTopIcon from '@/assets/icons/chevron-top.svg?icon';
+import ChevronBottomIcon from '@/assets/icons/chevron-bottom.svg?icon';
 import StyleSyncLogoIcon from '@/assets/icons/stylesync-logo.svg?icon';
 import EyeIcon from '@/assets/icons/eye.svg?icon';
 import EyeNoIcon from '@/assets/icons/eye-no.svg?icon';
 import GoogleLogoIcon from '@/assets/icons/google-logo.svg?icon';
 import FacebookLogoIcon from '@/assets/icons/facebook-logo.svg?icon';
 import InstagramLogoIcon from '@/assets/icons/instagram-logo.svg?icon';
+import PlusIcon from '@/assets/icons/plus.svg?icon';
+import TrashIcon from '@/assets/icons/trash.svg?icon';
+import TimeIcon from '@/assets/icons/time.svg?icon';
+import FlagUkraine from '@/assets/icons/flag-ukraine.svg?icon';
+import FlagUSA from '@/assets/icons/flag-usa.svg?icon';
+import FlagEurope from '@/assets/icons/flag-europe.svg?icon';
 
 import type { SVGComponentElement } from './icon.interface';
 
@@ -51,13 +60,22 @@ export const icons = {
   user: UserIcon,
   'arrow-right': ArrowRightIcon,
   'arrow-left': ArrowLeftIcon,
+  'arrow-bottom': ArrowBottomIcon,
+  'arrow-top': ArrowTopIcon,
   'chevron-right': ChevronRightIcon,
+  'chevron-bottom': ChevronBottomIcon,
+  'chevron-top': ChevronTopIcon,
   'stylesync-logo': StyleSyncLogoIcon,
   eye: EyeIcon,
   'eye-no': EyeNoIcon,
   'google-logo': GoogleLogoIcon,
   'facebook-logo': FacebookLogoIcon,
   'instagram-logo': InstagramLogoIcon,
+  trash: TrashIcon,
+  time: TimeIcon,
+  'flag-ukraine': FlagUkraine,
+  'flag-usa': FlagUSA,
+  'flag-europe': FlagEurope,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;

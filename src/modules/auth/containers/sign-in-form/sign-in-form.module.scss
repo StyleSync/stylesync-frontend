@@ -1,6 +1,16 @@
 @use '@/styles/utils';
 @use '@/styles/variables.module';
 
+$google-ripple-color: rgba(variables.$primary-color, 0.2);
+$facebook-ripple-color: rgba(#19AFFF, 0.2);
+$instagram-ripple-color: rgba(#BC3081, 0.2);
+
+:export {
+  googleRippleColor: $google-ripple-color;
+  facebookRippleColor: $facebook-ripple-color;
+  instagramRippleColor: $instagram-ripple-color;
+}
+
 .root {
   display: flex;
   flex-direction: column;
@@ -45,30 +55,38 @@
 
     label, button {
       width: 100%;
-      //column-gap: 24px;
+    }
+
+    label {
+      &:hover {
+        transform: scale(1.03);
+      }
     }
 
     button {
       column-gap: utils.spacing(2);
     }
 
-    label {
+    .google {
       box-shadow: 0 18px 30px 0 rgba(variables.$primary-color, 0.09);
 
       &:hover {
-        box-shadow: 0 10px 30px 0 rgba(variables.$primary-color, 0.2);
-      }
-    }
-
-    .google {
-      span {
-      }
-    }
-    .instagram {
-      svg {
+        box-shadow: 0 18px 30px 0 rgba(variables.$primary-color, 0.15);
       }
     }
     .facebook {
+      box-shadow: 0 18px 30px 0 rgba(#19AFFF, 0.09);
+
+      &:hover {
+        box-shadow: 0 18px 30px 0 rgba(#19AFFF, 0.15);
+      }
+    }
+    .instagram {
+      box-shadow: 0 18px 30px 0 rgba(#BC3081, 0.09);
+
+      &:hover {
+        box-shadow: 0 18px 30px 0 rgba(#BC3081, 0.15);
+      }
     }
   }
 }

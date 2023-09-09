@@ -1,0 +1,43 @@
+@use '@/styles/utils';
+@use '@/styles/mixins';
+@use '@/styles/variables.module';
+
+.root {
+  display: flex;
+  flex-direction: column;
+
+  .option {
+    display: flex;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    height: utils.spacing(6);
+    background-color: transparent;
+    transition: variables.$transition-ultrafast;
+    border-radius: variables.$border-radius-small;
+    padding: utils.spacing(0, 1);
+
+    &:hover {
+      background-color: variables.$primary-light-color;
+    }
+
+    span {
+      text-align: start;
+    }
+  }
+
+  .placeholder {
+    display: flex;
+    align-items: center;
+    column-gap: utils.spacing(1);
+    padding: utils.spacing(3);
+
+    svg {
+      width: utils.spacing(2);
+    }
+
+    span, svg {
+      color: variables.$grey-color
+    }
+  }
+}

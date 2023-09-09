@@ -17,7 +17,11 @@ export const Popover: FC<PopoverProps> = ({
   children,
   trigger,
   align,
+  alignOffset,
+  sideOffset,
+  side,
   followTriggerWidth = false,
+  disableAutofocus = false,
 }) => {
   const popperRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -39,6 +43,16 @@ export const Popover: FC<PopoverProps> = ({
     [onClose]
   );
 
+  const handleOpenAutoFocus = useCallback(
+    (e: Event) => {
+      if (disableAutofocus) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    },
+    [disableAutofocus]
+  );
+
   return (
     <RPopover.Root open>
       <RPopover.Anchor ref={triggerRef} asChild>
@@ -49,12 +63,15 @@ export const Popover: FC<PopoverProps> = ({
           <RPopover.Portal>
             <RPopover.Content
               ref={popperRef}
-              autoFocus={false}
-              onPointerDownOutside={handlePointerDownOutside}
-              onEscapeKeyDown={onClose}
               className={clsx(styles.content, styles[status])}
               style={{ width: followTriggerWidth ? width : 'unset' }}
               align={align}
+              alignOffset={alignOffset}
+              side={side}
+              sideOffset={sideOffset}
+              onEscapeKeyDown={onClose}
+              onPointerDownOutside={handlePointerDownOutside}
+              onOpenAutoFocus={handleOpenAutoFocus}
             >
               {children}
             </RPopover.Content>

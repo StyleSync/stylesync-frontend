@@ -17,10 +17,10 @@ import { GradientButton } from '@/modules/core/components/gradient-button';
 // types
 import type { SignUpUserData } from '@/modules/auth/types/sign-up.types';
 import type { UserCredentials } from '@/modules/auth/types/auth.types';
+// scss
+import scssVariables from '@/styles/variables.module.scss';
 
 import styles from './sign-in-form.module.scss';
-
-import scssVariables from '@/styles/variables.module.scss';
 
 const defaultValues: UserCredentials = {
   email: '',
@@ -82,18 +82,21 @@ export const SignInForm: FC = () => {
         <div className={styles.social}>
           <GradientButton
             gradient={scssVariables.accentColor}
+            rippleColor={styles.googleRippleColor}
             icon='google-logo'
             text={intl.formatMessage({ id: 'signIn.social.google' })}
             className={styles.google}
           />
           <GradientButton
             gradient={scssVariables.facebookGradient}
+            rippleColor={styles.facebookRippleColor}
             icon='facebook-logo'
             text={intl.formatMessage({ id: 'signIn.social.facebook' })}
             className={styles.facebook}
           />
           <GradientButton
             gradient={scssVariables.instagramGradient}
+            rippleColor={styles.instagramRippleColor}
             icon='instagram-logo'
             text={intl.formatMessage({ id: 'signIn.social.instagram' })}
             className={styles.instagram}

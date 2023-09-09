@@ -9,5 +9,7 @@ export type ImageSelectorProps = {
   };
   width?: number;
   height?: number;
+  disablePreview?: boolean;
+  onImageSelected?: (file: File[]) => void;
 } & InputHTMLAttributes<HTMLInputElement> &
-  ChildrenProp;
+  Partial<ChildrenProp>;

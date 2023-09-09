@@ -17,13 +17,15 @@ export const Divider: FC<DividerProps> = ({
         [styles.horizontal]: variant === 'horizontal',
       })}
     >
-      <div className={styles.children}>
-        {typeof children === 'string' ? (
-          <Typography>{children}</Typography>
-        ) : (
-          <>{children}</>
-        )}
-      </div>
+      {!(children === null || children === undefined || children === '') && (
+        <div className={styles.children}>
+          {typeof children === 'string' ? (
+            <Typography>{children}</Typography>
+          ) : (
+            <>{children}</>
+          )}
+        </div>
+      )}
     </div>
   );
 };

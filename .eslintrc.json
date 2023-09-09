@@ -10,5 +10,10 @@
     "rules": {
       "react-hooks/rules-of-hooks": "off"
     }
+  }, {
+    "files": "scripts/*.js",
+    "rules": {
+      "no-console": "off"
+    }
   }]
 }

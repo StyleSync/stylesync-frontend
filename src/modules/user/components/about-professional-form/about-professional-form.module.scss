@@ -1,0 +1,39 @@
+@use '@/styles/utils';
+@use '@/styles/mixins';
+@use '@/styles/variables.module';
+
+.root {
+  display: flex;
+  flex-direction: column;
+  row-gap: utils.spacing(4);
+  flex: 1;
+  width: 100%;
+
+  .avatarSelectText {
+    color: variables.$primary-color;
+  }
+
+  .avatarSelect {
+    @include mixins.phone {
+      display: none;
+    }
+  }
+
+  .avatarSelectMobile {
+    display: none;
+
+    @include mixins.phone {
+      display: flex;
+    }
+  }
+}
+
+.inputsRow {
+  display: flex;
+  column-gap: utils.spacing(4);
+
+  @include mixins.phone {
+    flex-direction: column;
+    row-gap: utils.spacing(4);
+  }
+}

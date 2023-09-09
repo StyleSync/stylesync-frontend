@@ -1,3 +1,5 @@
+'use client';
+
 import {
   type FC,
   type ChangeEvent,
@@ -33,6 +35,8 @@ export const TimeRangeField: FC<TimeRangeFieldInterface> = ({
   value,
   onChange,
   inputProps,
+  className,
+  style,
 }) => {
   // state
   const isActive = useBoolean();
@@ -134,7 +138,11 @@ export const TimeRangeField: FC<TimeRangeFieldInterface> = ({
       isOpen={isActive.value}
       onClose={finishTimeSelection}
       trigger={
-        <div className={styles.root} ref={rootRef}>
+        <div
+          className={clsx(styles.root, className)}
+          style={style}
+          ref={rootRef}
+        >
           <TextField
             {...inputProps}
             ref={inputRef}
@@ -161,6 +169,7 @@ export const TimeRangeField: FC<TimeRangeFieldInterface> = ({
         </div>
       }
       followTriggerWidth
+      disableAutofocus
     >
       <div className={styles.selectors}>
         <TimeSelect value={startTime} onChange={setStartTime} />

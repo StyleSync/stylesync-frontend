@@ -45,16 +45,16 @@ export const TextField = forwardRef<
 
       hasText.setValue(Boolean(textFieldElement?.value));
 
-      const onInput = () => {
+      const onChange = () => {
         const inputValue = textFieldElement?.value.trim();
 
         hasText.setValue(Boolean(inputValue));
       };
 
-      textFieldElement?.addEventListener('input', onInput);
+      textFieldElement?.addEventListener('change', onChange);
 
       return () => {
-        textFieldElement?.removeEventListener('input', onInput);
+        textFieldElement?.removeEventListener('input', onChange);
       };
     }, [hasText.setValue, combinedRefs]);
 

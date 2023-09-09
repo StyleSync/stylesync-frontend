@@ -63,7 +63,7 @@ const createRipple =
     left: ${positionLeft}px;
     position: absolute;
     border-radius: 50%;
-    background-color: ${options?.rippleColor || RIPPLE_COLOR};
+    background: ${options?.rippleColor || RIPPLE_COLOR};
     pointer-events: none;
     width: ${rippleSize}px;
     height: ${rippleSize}px;

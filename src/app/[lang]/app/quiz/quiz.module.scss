@@ -1,0 +1,18 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+$header-height: 74px;
+$header-height-mobile: 62px;
+$header-bottom-content-height-mobile: 24px;
+
+.root {
+  display: flex;
+  height: calc(100vh - #{$header-height});
+  width: 100%;
+  background: radial-gradient(331.49% 141.42% at -0.00% 100.00%, #FFF 0%, #FFF 48.96%, rgba(200, 223, 254, 0.93) 99.99%);
+
+  @include mixins.phone {
+    height: calc(100vh - #{$header-height-mobile} - #{$header-bottom-content-height-mobile});
+  }
+}

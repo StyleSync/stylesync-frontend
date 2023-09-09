@@ -1,9 +1,9 @@
 // types
-import type { SupportedService } from '@/modules/service/types/service.types';
+import type { SupportedServiceKey } from '@/modules/service/types/service.types';
 import type { IconName } from '@/modules/core/components';
 
 export const SERVICE_METADATA: Record<
-  SupportedService,
+  SupportedServiceKey,
   {
     icon: IconName;
     name: string;

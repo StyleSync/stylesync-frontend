@@ -7,3 +7,17 @@
 @mixin desktop {
   @media (max-width: 1920px) { @content; }
 }
+
+// animations
+
+@mixin inline-animation($duration, $iteration-count) {
+  $name: inline-#{unique-id()};
+
+  @keyframes #{$name} {
+    @content;
+  }
+
+  animation-name: $name;
+  animation-duration: $duration;
+  animation-iteration-count: $iteration-count;
+}
