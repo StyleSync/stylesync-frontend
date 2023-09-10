@@ -8,6 +8,7 @@ import { IntlProvider } from '@/modules/internationalization/containers/intl-pro
 import type { ChildrenProp } from '@/modules/core/types/react.types';
 import type { PageParams } from '@/modules/core/types/next.types';
 import { getDictionary } from '@/modules/internationalization/utils/dictionary.utils';
+import { Providers } from '@/app/[lang]/providers';
 
 export default async function RootLayout({
   children,
@@ -20,7 +21,7 @@ export default async function RootLayout({
       <body>
         <TrpcProvider>
           <IntlProvider locale={params.lang} dictionary={dictionary}>
-            {children}
+            <Providers session={params.session}>{children}</Providers>
           </IntlProvider>
         </TrpcProvider>
       </body>
