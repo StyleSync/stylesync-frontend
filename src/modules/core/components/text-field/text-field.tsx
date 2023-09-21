@@ -60,19 +60,26 @@ export const TextField = forwardRef<
     return (
       <div className={clsx(styles.container, classes?.container)}>
         {isInputProps(variant, props) && (
-          <input
-            ref={combinedRefs as ForwardedRef<HTMLInputElement>}
-            className={clsx(
-              className,
-              styles.textField,
-              styles.input,
-              fonts[font].className,
-              {
-                [styles.textFieldError]: error,
-              }
-            )}
-            {...props}
-          />
+          <>
+            <fieldset className={styles.fieldset}>
+              <input
+                ref={combinedRefs as ForwardedRef<HTMLInputElement>}
+                className={clsx(
+                  className,
+                  styles.textField,
+                  styles.input,
+                  fonts[font].className,
+                  {
+                    [styles.textFieldError]: error,
+                  }
+                )}
+                {...props}
+              />
+              <legend className={styles.legend}>
+                <span className={styles.span}>Label</span>
+              </legend>
+            </fieldset>
+          </>
         )}
 
         {isTextAreaProps(variant, props) && (
