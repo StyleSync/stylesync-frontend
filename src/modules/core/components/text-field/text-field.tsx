@@ -13,6 +13,7 @@ import {
   isTextAreaProps,
 } from './text-field.interface';
 import styles from './text-field.module.scss';
+import { Typography } from '@/modules/core/components';
 
 export const TextField = forwardRef<
   HTMLInputElement | HTMLTextAreaElement,
@@ -58,28 +59,25 @@ export const TextField = forwardRef<
     }, [hasText.setValue, combinedRefs]);
 
     return (
-      <div className={clsx(styles.container, classes?.container)}>
+      <div
+        className={clsx(
+          styles.root,
+          { [styles.active]: hasText.value },
+          { [styles.error]: error },
+          classes?.container
+        )}
+      >
         {isInputProps(variant, props) && (
-          <>
-            <fieldset className={styles.fieldset}>
-              <input
-                ref={combinedRefs as ForwardedRef<HTMLInputElement>}
-                className={clsx(
-                  className,
-                  styles.textField,
-                  styles.input,
-                  fonts[font].className,
-                  {
-                    [styles.textFieldError]: error,
-                  }
-                )}
-                {...props}
-              />
-              <legend className={styles.legend}>
-                <span className={styles.span}>Label</span>
-              </legend>
-            </fieldset>
-          </>
+          <input
+            ref={combinedRefs as ForwardedRef<HTMLInputElement>}
+            className={clsx(
+              className,
+              styles.textField,
+              styles.input,
+              fonts[font].className
+            )}
+            {...props}
+          />
         )}
 
         {isTextAreaProps(variant, props) && (
@@ -89,10 +87,7 @@ export const TextField = forwardRef<
               className,
               styles.textField,
               styles.textArea,
-              fonts[font].className,
-              {
-                [styles.textFieldError]: error,
-              }
+              fonts[font].className
             )}
             {...props}
           />
@@ -104,8 +99,6 @@ export const TextField = forwardRef<
               styles.label,
               fonts[font].className,
               {
-                [styles.labelActive]: hasText.value,
-                [styles.labelError]: error,
                 [styles.textAreaLabel]: variant === 'textarea',
               },
               classes?.label
@@ -117,6 +110,11 @@ export const TextField = forwardRef<
         {endAdornment && (
           <div className={styles.endAdornment}>{endAdornment}</div>
         )}
+        <fieldset className={styles.fieldset}>
+          <legend className={styles.legend}>
+            {!!label && <Typography>{label}</Typography>}
+          </legend>
+        </fieldset>
       </div>
     );
   }

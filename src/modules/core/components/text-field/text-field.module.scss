@@ -1,22 +1,57 @@
 @use '@/styles/utils';
 @use '@/styles/variables.module';
 
-.container {
+.root {
   position: relative;
   width: 100%;
+  border-radius: 30px;
 
-  &:focus-within label {
-    transform: translate(0, -10%) scale(0.8);
-    top: 0;
-    color: variables.$primary-color;
+  &:focus-within {
+    label {
+      color: variables.$primary-color;
+    }
+
+    .fieldset {
+      border-color: variables.$primary-color;
+    }
+  }
+
+  &:focus-within, &.active {
+    label {
+      transform: translate(0, -40%) scale(0.8);
+      top: 0;
+    }
+
+    .legend {
+      transition: variables.$transition-ultrafast;
+      max-width: 100%;
+    }
+  }
+
+  &.error {
+    .fieldset {
+      border-color: variables.$error-color !important;
+    }
+
+    .label {
+      color: variables.$error-color !important;
+    }
   }
 }
 
 .fieldset {
-  border-radius: 30px;
-  border: 1px solid variables.$primary-light-color;
-  padding: 0 26px;
+  position: absolute;
+  text-align: left;
+  inset: -5px 0px 0px;
+  margin: 0;
+  padding: 0 22px;
+  pointer-events: none;
+  border-radius: inherit;
+  overflow: hidden;
+  border: 1px solid variables.$grey-color;
+  transition: variables.$transition-ultrafast;
 }
+
 .legend {
   width: auto;
   overflow: hidden;
@@ -25,14 +60,15 @@
   height: 11px;
   font-size: 0.75em;
   visibility: hidden;
-  max-width: 0.01px;
-}
-.span {
-  display: inline-block;
-  opacity: 0;
-  visibility: visible;
-  padding-left: 5px;
-  padding-right: 5px;
+  max-width: 0;
+
+  span {
+    display: inline-block;
+    opacity: 0;
+    visibility: visible;
+    padding: utils.spacing(0, 1);
+    font-size: 11.2px;
+  }
 }
 
 .textField {
@@ -50,10 +86,9 @@
 .input {
   height: 48px;
   background: transparent;
-  &:focus {
-    & + .legend {
-      max-width: 100%;
-    }
+
+  &:disabled {
+    background-color: variables.$grey-light-color;
   }
 }
 
@@ -69,28 +104,18 @@
   transform: translate(0, -50%) scale(1);
   transform-origin: top left;
   transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, color 0.3s ease;
-  color: #939daa;
+  color: variables.$grey-color;
   font-size: 14px;
   line-height: 18px;
   top: 50%;
   left: utils.spacing(3);
   padding: utils.spacing(0, 1);
   border-radius: 4px;
-  background-color: #fff;
 }
 
 .textAreaLabel {
   top: utils.spacing(2);
   transform: translate(0, 0) scale(1);
-}
-
-.labelActive {
-  transform: translate(0, -40%) scale(0.8);
-  top: 0;
-}
-
-.labelError {
-  color: variables.$error-color !important;
 }
 
 .endAdornment {
@@ -101,9 +126,4 @@
 }
 
 .textFieldError {
-  border: 1px solid variables.$error-color;
-
-  &:focus {
-    border: 1px solid variables.$error-color;
-  }
 }
