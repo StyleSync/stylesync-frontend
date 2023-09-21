@@ -138,7 +138,9 @@ export const SignUpForm: FC = () => {
       </div>
       {step === 'credentials' && (
         <>
-          <Divider variant='horizontal'>or</Divider>
+          <Divider variant='horizontal'>
+            {intl.formatMessage({ id: 'general.conjunction.or' })}
+          </Divider>
           <div className={styles.social}>
             <div className={styles.socialButtonWrapper}>
               <Button icon='google-logo' variant='secondary' />
