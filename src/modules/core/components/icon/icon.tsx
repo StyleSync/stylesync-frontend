@@ -15,6 +15,8 @@ import MakeupIcon from '@/assets/icons/makup.svg?icon';
 import NailsIcon from '@/assets/icons/nails.svg?icon';
 import CloseIcon from '@/assets/icons/close.svg?icon';
 import PencilIcon from '@/assets/icons/pencil.svg?icon';
+import PlusIcon from '@/assets/icons/plus.svg?icon';
+import MinusIcon from '@/assets/icons/minus.svg?icon';
 import UserIcon from '@/assets/icons/user.svg?icon';
 import ArrowRightIcon from '@/assets/icons/arrow-right.svg?icon';
 import ArrowLeftIcon from '@/assets/icons/arrow-left.svg?icon';
@@ -44,6 +46,8 @@ export const icons = {
   haircut: HaircutIcon,
   makeup: MakeupIcon,
   nails: NailsIcon,
+  plus: PlusIcon,
+  minus: MinusIcon,
   user: UserIcon,
   'arrow-right': ArrowRightIcon,
   'arrow-left': ArrowLeftIcon,

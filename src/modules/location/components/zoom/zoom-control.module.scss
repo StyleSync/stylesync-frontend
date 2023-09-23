@@ -1,0 +1,43 @@
+@use '@/styles/variables.module';
+
+.zoomControl {
+  width: 32px;
+  height: 65px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: variables.$main-box-shadow;
+  border-radius: 6px;
+  background-color: #fff;
+
+  span {
+    width: 100%;
+    height: 1px;
+    background-color: variables.$grey-light-color;
+  }
+}
+
+.zoomControlIn {
+  flex: 1;
+  background-color: transparent;
+  position: relative;
+  cursor: pointer;
+  border: none;
+  svg {
+    width: 12px;
+    height: 12px;
+    color: variables.$dark-color;
+  }
+}
+
+.zoomControlOn {
+  background-color: transparent;
+  flex: 1;
+  position: relative;
+  cursor: pointer;
+  border: none;
+  svg {
+    width: 12px;
+    height: 12px;
+    color: variables.$dark-color;
+  }
+}
