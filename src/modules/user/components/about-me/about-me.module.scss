@@ -2,31 +2,31 @@
 @use '@/styles/variables.module';
 @use '@/styles/mixins';
 
-.container {
-  margin: 50px 0px 60px;
+.root {
   display: flex;
   flex-direction: column;
-  row-gap: 40px;
-  @include mixins.phone {
-    margin: 30px 0px 30px;
-    row-gap: 20px;
+  row-gap: utils.spacing(4);
+
+  .description {
+    width: 100%;
+    max-width: 90%;
   }
-}
-.title {
-  @include mixins.phone {
-    font-size: 16px;
+
+  .contactButton {
+    height: 42px;
+    border: 1px solid variables.$grey-color;
+    padding: utils.spacing(0, 2);
+    border-radius: variables.$border-radius-medium;
   }
 }
 
 .contacts {
-  display: flex;
-  column-gap: 10px;
+  display: none;
+  //display: flex;
   align-items: center;
-  flex-wrap: wrap;
   row-gap: 10px;
-  @include mixins.phone {
-    justify-content: center;
-  }
+  column-gap: 10px;
+  flex-wrap: wrap;
 }
 
 // buttons
@@ -82,16 +82,4 @@
   display: flex;
   column-gap: 10px;
   white-space: nowrap;
-}
-
-.contactButton {
-  padding: 10px 12px;
-  border: 1px solid variables.$primary-light-color;
-  // @include mixins.phone {
-  //   padding: 8px 10px;
-  //   span {
-  //     padding: utils.spacing(0, 0);
-  //     font-size: 10px;
-  //   }
-  // }
 }

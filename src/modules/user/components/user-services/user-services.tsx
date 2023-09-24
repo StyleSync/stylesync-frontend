@@ -10,10 +10,8 @@ import styles from './user-services.module.scss';
 
 export const Services = () => {
   return (
-    <div className={styles.container}>
-      <Typography className={styles.title} variant='title'>
-        Services
-      </Typography>
+    <div className={styles.root}>
+      <Typography variant='subtitle'>Services</Typography>
 
       <ServicesTable
         service='hair'

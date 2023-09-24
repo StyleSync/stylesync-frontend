@@ -1,7 +1,6 @@
 @use '@/styles/utils';
 @use '@/styles/variables.module';
 @use '@/styles/mixins';
-.container {
-  margin-top: utils.spacing(7.5);
-  margin-bottom: utils.spacing(20); // will have to be removed
+
+.root {
 }

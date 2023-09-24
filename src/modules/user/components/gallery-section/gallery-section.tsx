@@ -211,10 +211,8 @@ export const GallerySection = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.title}>
-        <Typography variant='title'>Gallery</Typography>
-      </div>
+    <div className={styles.root}>
+      <Typography variant='subtitle'>Gallery</Typography>
       <Gallery images={imagesData.slice(0, visibleImages)} />
       {visibleImages < imagesData.length && (
         <div className={styles.button}>

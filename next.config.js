@@ -54,6 +54,17 @@ const nextConfig = {
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
   },
+  images: {
+    remotePatterns: [
+      // faker.js images
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+        port: '',
+        pathname: '/u/*',
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;

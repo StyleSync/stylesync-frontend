@@ -1,55 +1,99 @@
 @use '@/styles/utils';
 @use '@/styles/variables.module';
 @use '@/styles/mixins';
+
 .container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 270px;
-  position: relative;
   overflow: hidden;
-  border: 1px solid variables.$primary-light-color;
-  border-radius: 12px;
+  border-radius: variables.$border-radius-medium;
   box-shadow: variables.$main-box-shadow;
-  background: linear-gradient(57deg, #3b82ef 2.47%, #b9d5ff 100%);
-  @media (max-width: 785px) {
-    height: 320px;
+  //background: linear-gradient(57deg, #3b82ef 2.47%, #b9d5ff 100%);
+  background: linear-gradient(223deg, #FBCB50 20.89%, #D87297 54.78%, #E36658 100%);
+
+  .top {
+    display: flex;
+    align-items: center;
+    margin-top: auto;
+    column-gap: utils.spacing(2);
+    padding: utils.spacing(3, 3);
+    row-gap: utils.spacing(1);
+
+    .avatar {
+    }
+
+    .name {
+      color: #fff;
+      //font-size: 40px;
+    }
   }
-  @include mixins.phone {
-    border: none;
-    background: none;
-    box-shadow: none;
-    height: 220px;
+
+  .info {
+    display: flex;
+    align-items: center;
+    height: 100px;
+    width: 100%;
+    background-color: #fff;
+    padding: utils.spacing(0, 3);
+
+    .general {
+      display: flex;
+      flex-direction: column-reverse;
+      row-gap: utils.spacing(2);
+      flex: 1;
+
+      .services {
+        display: flex;
+        column-gap: utils.spacing(1);
+
+        .service {
+          border-color: #fff;
+          background-color: variables.$grey-light-color;
+          box-shadow: variables.$main-box-shadow;
+
+          span {
+            color: variables.$dark-color;
+          }
+        }
+      }
+
+      .location {
+        display: flex;
+        align-items: center;
+        column-gap: utils.spacing(1);
+
+        svg {
+          color: variables.$grey-color;
+          width: 18px;
+        }
+
+        span {
+          color: variables.$grey-color;
+        }
+
+        // fixme
+        .link {
+          text-decoration: none;
+          display: flex;
+          span {
+            display: flex;
+            color: variables.$primary-color;
+          }
+        }
+      }
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      column-gap: utils.spacing(2);
+    }
   }
 }
 
-.header {
-  height: 100%;
-  @include mixins.phone {
-    height: 50%;
-  }
-}
-.title {
-  display: flex;
-  color: #fff;
-  margin-left: 199px;
-  margin-top: 115px;
-  font-size: 40px;
-
-  @include mixins.phone {
-    color: #323e4a;
-    font-size: 30px;
-    margin-top: 60px;
-  }
-  @media (max-width: 490px) {
-    font-size: 25px;
-  }
-  @media (max-width: 445px) {
-    font-size: 20px;
-  }
-  @media (max-width: 400px) {
-    font-size: 18px;
-    margin-left: 115px;
-  }
-}
 
 .footer {
   height: 100px;
@@ -70,6 +114,7 @@
     padding: 0px;
   }
 }
+
 .footerContent {
   display: flex;
   justify-content: space-between;
@@ -78,15 +123,6 @@
   gap: 15px;
   @media (max-width: 785px) {
     flex-direction: column;
-  }
-}
-
-.avatar {
-  position: absolute;
-  top: -80px;
-  left: 22px;
-  @include mixins.phone {
-    top: -40px;
   }
 }
 

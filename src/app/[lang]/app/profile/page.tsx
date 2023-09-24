@@ -1,38 +1,54 @@
+import clsx from 'clsx';
+// components
 import {
   UserHeader,
   Services,
   AboutMe,
   GallerySection,
 } from '@/modules/user/components';
+import Bg from '@/assets/images/test.png';
 
 import styles from './profile.module.scss';
+import { Tabs } from '@/modules/core/components';
 
 export default function Profile() {
   return (
     <main className={styles.root}>
-      <section className={styles.sectionHeader}>
-        <div className={styles.container}>
-          <UserHeader />
-        </div>
+      <img alt='' className={styles.img} src={Bg.src} />
+      <section className={clsx(styles.section, styles.headerSection)}>
+        <UserHeader />
       </section>
-
-      <section className={styles.sectionAboutMe}>
-        <div className={styles.container}>
+      <section className={clsx(styles.section)}>
+        <Tabs
+          value='about'
+          tabs={[
+            {
+              key: 'about',
+              name: 'About',
+            },
+            {
+              key: 'services',
+              name: 'Services',
+            },
+            {
+              key: 'gallery',
+              name: 'Gallery',
+            },
+          ]}
+        />
+      </section>
+      <div className={styles.divider} />
+      <div className={styles.sectionGroup}>
+        <section className={clsx(styles.section, styles.block)}>
           <AboutMe />
-        </div>
-      </section>
-
-      <section className={styles.sectionGallery}>
-        <div className={styles.container}>
-          <GallerySection />
-        </div>
-      </section>
-
-      <section className={styles.sectionServices}>
-        <div className={styles.container}>
+        </section>
+        <section className={clsx(styles.section, styles.block)}>
           <Services />
-        </div>
-      </section>
+        </section>
+        <section className={clsx(styles.section, styles.block)}>
+          <GallerySection />
+        </section>
+      </div>
     </main>
   );
 }
