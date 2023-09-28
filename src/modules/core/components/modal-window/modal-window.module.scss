@@ -1,0 +1,70 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+
+.DialogOverlay {
+  background-color: var(--black-a9);
+  position: fixed;
+  inset: 0;
+  animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.DialogContent {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: variables.$main-box-shadow;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 370px;
+  max-height: 100%;
+  padding: 30px;
+  animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.DialogContent:focus {
+  outline: none;
+}
+
+.DialogTitle {
+  font-weight: 500;
+  font-size: 27px;
+}
+
+.DialogDescription {
+}
+
+.buttonsContainer {
+  display: flex;
+  column-gap: 10px;
+  justify-content: center;
+}
+
+.closeButton {
+  border-color: variables.$grey-color;
+  color: variables.$grey-color;
+  &:hover {
+    border-color: variables.$dark-color;
+    color: variables.$dark-color;
+  }
+}
+
+@keyframes overlayShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes contentShow {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.56);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
