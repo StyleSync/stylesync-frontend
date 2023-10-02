@@ -15,6 +15,7 @@ import MakeupIcon from '@/assets/icons/makup.svg?icon';
 import NailsIcon from '@/assets/icons/nails.svg?icon';
 import CloseIcon from '@/assets/icons/close.svg?icon';
 import PencilIcon from '@/assets/icons/pencil.svg?icon';
+import PlusIcon from '@/assets/icons/plus.svg?icon';
 import MinusIcon from '@/assets/icons/minus.svg?icon';
 import UserIcon from '@/assets/icons/user.svg?icon';
 import ArrowRightIcon from '@/assets/icons/arrow-right.svg?icon';
@@ -30,12 +31,13 @@ import EyeNoIcon from '@/assets/icons/eye-no.svg?icon';
 import GoogleLogoIcon from '@/assets/icons/google-logo.svg?icon';
 import FacebookLogoIcon from '@/assets/icons/facebook-logo.svg?icon';
 import InstagramLogoIcon from '@/assets/icons/instagram-logo.svg?icon';
-import PlusIcon from '@/assets/icons/plus.svg?icon';
 import TrashIcon from '@/assets/icons/trash.svg?icon';
 import TimeIcon from '@/assets/icons/time.svg?icon';
 import FlagUkraine from '@/assets/icons/flag-ukraine.svg?icon';
 import FlagUSA from '@/assets/icons/flag-usa.svg?icon';
 import FlagEurope from '@/assets/icons/flag-europe.svg?icon';
+import HorizontalPoints from '@/assets/icons/horizontal-points.svg?icon';
+import List from '@/assets/icons/list.svg?icon';
 import InBoxIcon from '@/assets/icons/inbox.svg?icon';
 
 import type { SVGComponentElement } from './icon.interface';
@@ -77,6 +79,8 @@ export const icons = {
   'flag-ukraine': FlagUkraine,
   'flag-usa': FlagUSA,
   'flag-europe': FlagEurope,
+  points: HorizontalPoints,
+  list: List,
   inbox: InBoxIcon,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
