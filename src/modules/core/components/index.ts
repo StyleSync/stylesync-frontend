@@ -13,4 +13,4 @@ export * from './checkbox';
 export * from './password-requirements';
 export * from './divider';
 export * from './gallery';
-export * from './modal-window';
+export * from './dialog';
