@@ -2,9 +2,13 @@
 import clsx from 'clsx';
 import { useState } from 'react';
 // components
-import { Tabs, Typography, Avatar, Icon } from '@/modules/core/components';
+import { BookingInfoCard } from '@/modules/booking/components/bookingInfoCard';
+
+import { Tabs, Typography } from '@/modules/core/components';
 
 import styles from './my-bookings.module.scss';
+
+import { faker } from '@faker-js/faker';
 
 export default function MyBookings() {
   const [value, setValue] = useState('bookings');
@@ -37,56 +41,21 @@ export default function MyBookings() {
           <div className={styles.tabContiner}>
             <div className={styles.tabBox}>
               <Typography variant='subtitle'>Upcoming bookings</Typography>
-              <div className={styles.bookingContainer}>
-                <div className={styles.bookingInfo}>
-                  <div className={styles.avatar}>
-                    <Avatar />
-                  </div>
-                  <div className={styles.bookingDateEvent}>
-                    <div className={styles.bookingdate}>
-                      <Typography variant='body1'>
-                        Thursday, Jun 01, 12:00 - 13:00
-                      </Typography>
-                    </div>
-                    <div className={styles.bookingEvent}>
-                      <Typography
-                        className={styles.bookingEventTypography}
-                        variant='body2'
-                      >
-                        Tanusha’s Beauty, evening makeup
-                      </Typography>
-                    </div>
-                  </div>
-                </div>
-                <Icon className={styles.bookingIcon} name='points' />
-              </div>
+
+              <BookingInfoCard
+                name='Tanusha’s Beauty'
+                serviceName=' evening makeup'
+                date={faker.date.future().toString()}
+              />
             </div>
 
             <div className={styles.tabBox}>
               <Typography variant='subtitle'>Past bookings</Typography>
-              <div className={styles.bookingContainer}>
-                <div className={styles.bookingInfo}>
-                  <div className={styles.avatar}>
-                    <Avatar />
-                  </div>
-                  <div className={styles.bookingDateEvent}>
-                    <div className={styles.bookingdate}>
-                      <Typography variant='body1'>
-                        Thursday, Jun 01, 12:00 - 13:00
-                      </Typography>
-                    </div>
-                    <div className={styles.bookingEvent}>
-                      <Typography
-                        className={styles.bookingEventTypography}
-                        variant='body2'
-                      >
-                        Tanusha’s Beauty, evening makeup
-                      </Typography>
-                    </div>
-                  </div>
-                </div>
-                <Icon className={styles.bookingIcon} name='points' />
-              </div>
+              <BookingInfoCard
+                name='Tanusha’s Beauty'
+                serviceName=' evening makeup'
+                date={faker.date.past().toString()}
+              />
             </div>
           </div>
         )}
