@@ -90,6 +90,24 @@
   }
 }
 
+.light {
+  background-color: #fff;
+  color: variables.$dark-color;
+  transition: variables.$transition-ultrafast;
+  box-shadow: variables.$main-box-shadow;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px #fff;
+  }
+
+  &:hover {
+  }
+
+  &:disabled {
+    color: variables.$grey-color;
+  }
+}
+
 .danger {
   background-color: transparent;
   color: variables.$error-color;

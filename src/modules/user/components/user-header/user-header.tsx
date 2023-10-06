@@ -12,6 +12,7 @@ import GirlPng from '@/assets/images/girl.png';
 
 import styles from './user-header.module.scss';
 import clsx from 'clsx';
+import { Emoji } from '@/modules/core/components/emoji';
 
 export const UserHeader = () => {
   return (
@@ -22,6 +23,7 @@ export const UserHeader = () => {
           size='medium'
           shadow
           shape='rect'
+          fallback={<Emoji name='sunglasses' width={50} height={50} />}
           url={GirlPng.src}
         />
         <Typography className={styles.name} variant='title'>

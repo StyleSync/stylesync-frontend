@@ -1,31 +1,50 @@
 'use client';
-import { type FC } from 'react';
+import { type FC, useCallback, useMemo } from 'react';
 import { useBoolean } from 'usehooks-ts';
 import clsx from 'clsx';
+import { signOut } from 'next-auth/react';
 // components
 import { Avatar } from '@/modules/core/components/avatar';
 import { Emoji } from '@/modules/core/components/emoji';
 import { Icon } from '@/modules/core/components/icon';
 import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
+// types
+import type { DropdownItem } from '@/modules/core/components/dropdown-menu/dropdown-menu.interface';
 
 import type { UserMenuBadgeProps } from './user-menu-badge.interface';
 import styles from './user-menu-badge.module.scss';
 
 export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
   const isOpen = useBoolean();
+  // memo
+  const options = useMemo<DropdownItem[]>(
+    () => [
+      {
+        id: 'profile',
+        text: 'Profile settings',
+      },
+      {
+        id: 'sign-out',
+        text: 'Sign out',
+      },
+    ],
+    []
+  );
+
+  const handleOptionSelect = useCallback(
+    (item: DropdownItem) => {
+      if (item.id === 'sign-out') {
+        signOut({ callbackUrl: '/' });
+      }
+
+      isOpen.setFalse();
+    },
+    [isOpen]
+  );
 
   return (
     <DropdownMenu
-      items={[
-        {
-          id: 'profile',
-          text: 'Profile',
-        },
-        {
-          id: 'sign-out',
-          text: 'Sign out',
-        },
-      ]}
+      items={options}
       trigger={
         <button
           className={clsx(
@@ -44,6 +63,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
       }
       isOpen={isOpen.value}
       onClose={isOpen.setFalse}
+      onSelect={handleOptionSelect}
       popoverProps={{
         disablePortal: true,
         sideOffset: 8,

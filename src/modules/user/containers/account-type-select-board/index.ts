@@ -1,0 +1,1 @@
+export { AccountTypeSelectBoard } from './account-type-select-board';

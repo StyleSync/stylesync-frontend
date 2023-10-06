@@ -1,0 +1,39 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: utils.spacing(3);
+  padding: utils.spacing(3, 10);
+  background-color: #fff;
+  box-shadow: variables.$main-box-shadow;
+  border-radius: 6px;
+  margin: utils.spacing(10);
+  background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+
+  .divider {
+    //opacity: 1;
+
+    span {
+      color: variables.$dark-color;
+    }
+
+    &::before {
+      background-color: variables.$dark-color;
+    }
+    &::after {
+      background-color: variables.$dark-color;
+    }
+  }
+
+  .block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    row-gap: utils.spacing(1);
+  }
+}

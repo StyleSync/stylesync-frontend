@@ -14,15 +14,19 @@ import styles from './header.module.scss';
 const Header: FC<HeaderProps> & { BottomContent: FC<ChildrenProp> } = ({
   style,
   className,
-  rightAdornment,
+  rightSlot,
+  centralSlot,
 }) => {
   return (
     <header className={clsx(styles.root, className)} style={style}>
       <div className={styles.content}>
-        <Link href='/'>
-          <Icon name='stylesync-logo' width={150} />
-        </Link>
-        {rightAdornment}
+        <div className={styles.leftSlot}>
+          <Link href='/'>
+            <Icon name='stylesync-logo' width={150} />
+          </Link>
+        </div>
+        <div className={styles.centralSlot}>{centralSlot}</div>
+        <div className={styles.rightSlot}>{rightSlot}</div>
       </div>
       <div id='header-bottom-node' />
     </header>

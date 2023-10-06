@@ -1,8 +1,5 @@
-'use client';
 import { type FC } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-// components
-import { RadioButton } from '@/modules/core/components/radio-button';
 // utils
 import {
   getLocalePathname,
@@ -14,11 +11,15 @@ import { i18nConfig } from '@/modules/internationalization/constants/i18n.consta
 import type { Locale } from '@/modules/internationalization/types/i18n.types';
 
 import type { LocaleSelectProps } from './locale-select.interface';
+import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
+import { Button } from '@/modules/core/components/button';
+import { useBoolean } from 'usehooks-ts';
 
 export const LocaleSwitcher: FC<LocaleSelectProps> = ({ locale }) => {
   const pathname = usePathname();
   const router = useRouter();
-  const handleLocaleChange = (_locale: Locale) => () => {
+  const isOpen = useBoolean();
+  const handleLocaleChange = (_locale: Locale) => {
     saveLocale(_locale);
 
     router.push(getLocalePathname(_locale, pathname));
@@ -27,18 +28,21 @@ export const LocaleSwitcher: FC<LocaleSelectProps> = ({ locale }) => {
 
   return (
     <div>
-      <p>Locale switcher:</p>
-      <RadioButton.Group
-        name='languages'
-        value={locale}
-        onChange={(value) => handleLocaleChange(value as Locale)()}
-      >
-        {i18nConfig.locales.map((_locale) => (
-          <button key={_locale} onClick={handleLocaleChange(_locale)}>
-            {_locale}
-          </button>
-        ))}
-      </RadioButton.Group>
+      <DropdownMenu
+        items={i18nConfig.locales.map((_locale) => ({
+          id: _locale,
+          text: _locale,
+        }))}
+        trigger={
+          <Button onClick={isOpen.setTrue} variant='outlined' text={locale} />
+        }
+        isOpen={isOpen.value}
+        onClose={isOpen.setFalse}
+        onSelect={(item) => {
+          handleLocaleChange(item.id as Locale);
+          isOpen.setFalse();
+        }}
+      />
     </div>
   );
 };

@@ -30,6 +30,8 @@
     }
 
     .avatar {
+      background-color: rgba(#000, 0.2);
+      backdrop-filter: saturate(180%) blur(20px);
     }
 
     .name {

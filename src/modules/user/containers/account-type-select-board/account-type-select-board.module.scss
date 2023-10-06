@@ -1,0 +1,20 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+
+.root {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: utils.spacing(4);
+  padding: utils.spacing(10, 3);
+  border-radius: variables.$border-radius-medium;
+
+  .submit {
+  }
+}

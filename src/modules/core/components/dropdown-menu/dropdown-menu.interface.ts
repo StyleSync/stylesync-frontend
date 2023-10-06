@@ -2,7 +2,7 @@ import type { IconName } from '@/modules/core/components/icon';
 import type { FC, ReactNode } from 'react';
 import type { PopoverProps } from '@/modules/core/components/popover/popover.interface';
 
-type DropdownItem = {
+export type DropdownItem = {
   id: string;
   text: string;
   icon?: IconName;

@@ -5,9 +5,8 @@ import superjson from 'superjson';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { httpBatchLink, getFetch, loggerLink } from '@trpc/client';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { createTRPCReact } from '@trpc/react-query';
-import type { AppRouter } from '@/server/routers/_app';
-export const trpc = createTRPCReact<AppRouter>();
+// utils
+import { trpc } from '@/utils/trpc';
 
 const getBaseUrl = () => {
   if (typeof window !== 'undefined')

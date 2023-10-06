@@ -1,22 +1,23 @@
 @use '@/styles/variables.module';
+@use '@/styles/utils';
 
 .root {
   position: relative;
   display: flex;
-  column-gap: 16px;
+  column-gap: utils.spacing(3);
 }
 
 .tab {
   display: flex;
   align-items: center;
   column-gap: 8px;
-  padding: 16px 8px;
+  padding: 16px 0;
   color: variables.$dark-color;
   cursor: pointer;
   transition: variables.$transition-fast;
 
   &_active {
-    color: variables.$accent-color;
+    color: variables.$primary-color;
   }
 }
 
@@ -34,7 +35,7 @@
   top: calc(100% - 2px);
   height: 2px;
   border-radius: 2px;
-  background-color: variables.$accent-color;
+  background-color: variables.$primary-color;
   transition: variables.$transition-ultrafast;
 }
 

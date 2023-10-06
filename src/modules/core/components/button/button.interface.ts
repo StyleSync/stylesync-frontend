@@ -7,6 +7,7 @@ export type ButtonVariant =
   | 'primary'
   | 'secondary'
   | 'outlined'
+  | 'light'
   | 'danger'
   | 'unstyled';
 
