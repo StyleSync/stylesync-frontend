@@ -3,8 +3,8 @@ import clsx from 'clsx';
 import { useState } from 'react';
 // components
 import { BookingInfoCard } from '@/modules/booking/components/bookingInfoCard';
-
-import { Tabs, Typography } from '@/modules/core/components';
+import { Tabs } from '@/modules/core/components/tabs';
+import { Typography } from '@/modules/core/components/typogrpahy';
 
 import styles from './my-bookings.module.scss';
 

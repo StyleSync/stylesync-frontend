@@ -2,9 +2,13 @@
 @use '@/styles/utils';
 @use '@/styles/mixins';
 
+$header-height: 74px;
+$header-height-mobile: 62px;
+
 .root {
   min-height: 100vh;
   background-color: variables.$grey-light-color;
+  padding-top: $header-height;
 }
 
 .section {

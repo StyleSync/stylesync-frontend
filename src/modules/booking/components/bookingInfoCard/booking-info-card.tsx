@@ -1,9 +1,10 @@
 import { type FC } from 'react';
-
 import { format } from 'date-fns';
-
 // components
-import { Avatar, Typography, Popover, Button } from '@/modules/core/components';
+import { Avatar } from '@/modules/core/components/avatar';
+import { Typography } from '@/modules/core/components/typogrpahy';
+import { Button } from '@/modules/core/components/button';
+import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
 // hooks
 import { useBoolean } from 'usehooks-ts';
 
@@ -34,7 +35,7 @@ export const BookingInfoCard: FC<BookingInfoCardProps> = ({
     `EEEE, d MMMM, ${formattedDateRange}`
   );
   // hooks
-  const isPopoverOpen = useBoolean();
+  const isOpen = useBoolean();
 
   return (
     <div className={styles.bookingContainer}>
@@ -56,29 +57,29 @@ export const BookingInfoCard: FC<BookingInfoCardProps> = ({
           </div>
         </div>
       </div>
-      <Popover
+
+      <DropdownMenu
+        items={[
+          {
+            id: 'profile',
+            text: 'View pros profile',
+          },
+          {
+            id: 'reschedule',
+            text: 'Reschedule',
+          },
+          {
+            id: 'cancel',
+            text: 'Cancel',
+          },
+        ]}
         trigger={
-          <Button
-            onClick={isPopoverOpen.toggle}
-            icon='points'
-            variant='unstyled'
-          />
+          <Button onClick={isOpen.toggle} icon='points' variant='unstyled' />
         }
-        isOpen={isPopoverOpen.value}
-        onClose={isPopoverOpen.setFalse}
-      >
-        <div className={styles.detailsMenu}>
-          <div className={styles.detailsMenuItem}>
-            <Button variant='unstyled' text='View pros profile' />
-          </div>
-          <div className={styles.detailsMenuItem}>
-            <Button variant='unstyled' text='Reschedule' />
-          </div>
-          <div className={styles.detailsMenuItem}>
-            <Button variant='unstyled' text='Cancel' />
-          </div>
-        </div>
-      </Popover>
+        isOpen={isOpen.value}
+        onClose={isOpen.setFalse}
+        onSelect={isOpen.setFalse}
+      />
     </div>
   );
 };
