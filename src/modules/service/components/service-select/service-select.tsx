@@ -31,7 +31,7 @@ export const ServiceSelect: FC<ServiceSelectProps> = ({
 
     return {
       text: 'Add services group',
-      variant: 'secondary',
+      variant: 'outlined',
     };
   }, [windowSizeType]);
   const popoverProps = useMemo<Partial<PopoverProps>>(() => {

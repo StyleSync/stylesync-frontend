@@ -3,7 +3,12 @@ import type { IconName } from '@/modules/core/components';
 import type { StylingProps } from '@/styles/styles.types';
 import type { TypographyProps } from '@/modules/core/components/typogrpahy/typography.interface';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'unstyled';
+export type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'outlined'
+  | 'danger'
+  | 'unstyled';
 
 export type ButtonProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,

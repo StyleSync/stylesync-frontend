@@ -44,7 +44,7 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
 
     return {
       text: 'Add gallery image',
-      variant: 'secondary',
+      variant: 'outlined',
       icon: 'image',
     };
   }, [windowSizeType]);

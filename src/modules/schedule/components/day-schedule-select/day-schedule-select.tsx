@@ -60,7 +60,7 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
           <div className={styles.breaks}>
             <Button
               icon='plus'
-              variant='secondary'
+              variant='outlined'
               className={styles.addBreak}
               onClick={handleAddClick}
             />
