@@ -1,6 +1,9 @@
 import { type FC, useMemo } from 'react';
-import { Button, Icon, Popover, Typography } from '@/modules/core/components';
 import { useBoolean } from 'usehooks-ts';
+import clsx from 'clsx';
+// components
+import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
+import { Button } from '@/modules/core/components';
 // constants
 import { SERVICE_METADATA } from '@/modules/service/constants/service.constants';
 // hooks
@@ -12,7 +15,6 @@ import type { PopoverProps } from '@/modules/core/components/popover/popover.int
 
 import type { ServiceSelectProps } from './service-select.interface';
 import styles from './service-select.module.scss';
-import clsx from 'clsx';
 
 export const ServiceSelect: FC<ServiceSelectProps> = ({
   onServiceSelect,
@@ -49,9 +51,21 @@ export const ServiceSelect: FC<ServiceSelectProps> = ({
   }, [windowSizeType]);
 
   return (
-    <Popover
-      isOpen={isOpen.value}
-      onClose={isOpen.setFalse}
+    <DropdownMenu
+      items={Object.keys(SERVICE_METADATA)
+        .filter(
+          (service) => !blackList.includes(service as SupportedServiceKey)
+        )
+        .map((service) => {
+          const { icon, name } =
+            SERVICE_METADATA[service as SupportedServiceKey];
+
+          return {
+            id: service,
+            text: name,
+            icon,
+          };
+        })}
       trigger={
         <Button
           {...buttonProps}
@@ -60,35 +74,19 @@ export const ServiceSelect: FC<ServiceSelectProps> = ({
           className={clsx('mobileActionBtn', styles.trigger)}
         />
       }
-      {...popoverProps}
-    >
-      <div className={styles.root}>
-        {Object.keys(SERVICE_METADATA)
-          .filter(
-            (service) => !blackList.includes(service as SupportedServiceKey)
-          )
-          .map((service) => {
-            const { icon, name } =
-              SERVICE_METADATA[service as SupportedServiceKey];
+      isOpen={isOpen.value}
+      onClose={isOpen.setFalse}
+      onSelect={(item) => {
+        if (onServiceSelect) {
+          onServiceSelect(item.id as SupportedServiceKey);
+        }
 
-            return (
-              <button
-                key={service}
-                className={styles.option}
-                onClick={() => {
-                  if (onServiceSelect) {
-                    onServiceSelect(service as SupportedServiceKey);
-                  }
-
-                  isOpen.setFalse();
-                }}
-              >
-                <Icon name={icon} width={20} height={20} />
-                <Typography>{name}</Typography>
-              </button>
-            );
-          })}
-      </div>
-    </Popover>
+        isOpen.setFalse();
+      }}
+      popoverProps={{
+        followTriggerWidth: true,
+        ...popoverProps,
+      }}
+    />
   );
 };

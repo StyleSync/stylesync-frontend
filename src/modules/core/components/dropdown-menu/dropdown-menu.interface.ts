@@ -1,5 +1,6 @@
 import type { IconName } from '@/modules/core/components';
 import type { FC, ReactNode } from 'react';
+import type { PopoverProps } from '@/modules/core/components/popover/popover.interface';
 
 type DropdownItem = {
   id: string;
@@ -14,4 +15,5 @@ export type DropdownMenuProps = {
   onClose: () => void;
   onSelect?: (item: DropdownItem) => void;
   render?: FC<DropdownItem>;
+  popoverProps?: Partial<Omit<PopoverProps, 'onClose' | 'isOpen' | 'trigger'>>;
 };

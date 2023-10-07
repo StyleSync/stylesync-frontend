@@ -69,7 +69,7 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
         <div className={styles.actions}>
           <Button
             icon='plus'
-            variant='secondary'
+            variant='outlined'
             type='button'
             onClick={handleAddClick}
           />

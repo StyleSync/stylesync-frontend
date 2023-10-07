@@ -12,9 +12,16 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({
   trigger,
   items,
   render,
+  popoverProps,
 }) => {
   return (
-    <Popover isOpen={isOpen} onClose={onClose} trigger={trigger} sideOffset={4}>
+    <Popover
+      isOpen={isOpen}
+      onClose={onClose}
+      trigger={trigger}
+      sideOffset={4}
+      {...popoverProps}
+    >
       <div className={styles.root}>
         {items.map((item) => (
           <button
