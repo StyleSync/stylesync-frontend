@@ -10,11 +10,7 @@ import {
 import { useBoolean } from 'usehooks-ts';
 import clsx from 'clsx';
 // components
-import {
-  Button,
-  Gallery,
-  ItemsListEmptyIllustrationPlaceholder,
-} from '@/modules/core/components';
+import { Button, Gallery, Placeholder } from '@/modules/core/components';
 // hooks
 import { useWindowSizeType } from '@/modules/core/hooks/use-window-size-type';
 // types
@@ -105,10 +101,12 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
         onChange={handleImageSelected}
         multiple
       />
-      <ItemsListEmptyIllustrationPlaceholder
+      <Placeholder
         isActive={images.length === 0}
-        illustration='files'
-        description='No images added'
+        placeholder={{
+          illustration: 'files',
+          description: 'No images added',
+        }}
         fadeIn
       >
         <div className={styles.galleryWrapper}>
@@ -120,7 +118,7 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
             }}
           />
         </div>
-      </ItemsListEmptyIllustrationPlaceholder>
+      </Placeholder>
     </div>
   );
 };

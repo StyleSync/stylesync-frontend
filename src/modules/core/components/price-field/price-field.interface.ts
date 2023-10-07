@@ -6,5 +6,5 @@ export type PriceFieldProps = {
   currency: Currency;
   onPriceChange: (price: string) => void;
   onCurrencyChange: (currency: Currency) => void;
-  inputProps?: Omit<InputProps, 'variant' | 'value' | 'onChange'>;
+  inputProps?: Omit<InputProps, 'variant' | 'value' | 'onChange' | 'onFocus'>;
 };

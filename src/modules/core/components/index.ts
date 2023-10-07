@@ -21,5 +21,4 @@ export * from './header';
 export * from './illustration';
 export * from './price-field';
 export * from './placeholder';
-export * from './items-list-empty-illustration-placeholder';
 export * from './dialog';

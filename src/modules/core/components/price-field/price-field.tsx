@@ -1,4 +1,10 @@
-import { type FC, type ChangeEvent, Fragment } from 'react';
+import {
+  type FC,
+  type ChangeEvent,
+  type FocusEvent,
+  Fragment,
+  useCallback,
+} from 'react';
 import { useBoolean } from 'usehooks-ts';
 import clsx from 'clsx';
 // components
@@ -14,6 +20,8 @@ import {
   currencies,
   currencyMeta,
 } from '@/modules/core/constants/currency.constants';
+// utils
+import { formatPrice } from '@/modules/core/utils/price.utils';
 // types
 import type { Currency } from '@/modules/core/types/currency.types';
 
@@ -29,6 +37,8 @@ export const PriceField: FC<PriceFieldProps> = ({
 }) => {
   // state
   const isOpen = useBoolean();
+  // memo
+  const formattedPrice = formatPrice(price);
 
   const handleCurrencyClick = (_currency: Currency) => () => {
     onCurrencyChange(_currency);
@@ -36,17 +46,32 @@ export const PriceField: FC<PriceFieldProps> = ({
   };
 
   const handleTextFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value === '' || !isNaN(+e.target.value)) {
-      onPriceChange(e.target.value.trim());
+    const value = e.target.value.replaceAll(',', '');
+
+    if (value === '' || !isNaN(+value)) {
+      onPriceChange(value.trim());
     }
   };
+
+  const handleTextFieldFocus = useCallback(
+    (e: FocusEvent<HTMLInputElement>) => {
+      const { value } = e.target;
+
+      if (value.length > 0) {
+        e.target.setSelectionRange(0, value.length);
+      }
+    },
+    []
+  );
 
   return (
     <div className={styles.root}>
       <TextField
         variant='input'
-        value={price}
+        value={formattedPrice}
+        // value={price}
         onChange={handleTextFieldChange}
+        onFocus={handleTextFieldFocus}
         {...inputProps}
       />
       <Popover

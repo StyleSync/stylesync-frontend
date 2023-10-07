@@ -1,8 +1,29 @@
 import { type FC } from 'react';
+import clsx from 'clsx';
+// components
+import { Illustration, Typography } from '@/modules/core/components';
 
 import type { PlaceholderProps } from './placeholder.interface';
 import styles from './placeholder.module.scss';
-import clsx from 'clsx';
+
+const renderPlaceholder = (placeholder: PlaceholderProps['placeholder']) => {
+  if (
+    placeholder &&
+    typeof placeholder === 'object' &&
+    'illustration' in placeholder
+  ) {
+    return (
+      <div className={styles.illustrationPlaceholder}>
+        <Illustration name={placeholder.illustration} width={220} />
+        {placeholder.description && (
+          <Typography>{placeholder.description}</Typography>
+        )}
+      </div>
+    );
+  }
+
+  return <>{placeholder}</>;
+};
 
 export const Placeholder: FC<PlaceholderProps> = ({
   isActive,
@@ -23,7 +44,7 @@ export const Placeholder: FC<PlaceholderProps> = ({
       })}
       style={style}
     >
-      {placeholder}
+      {renderPlaceholder(placeholder)}
     </div>
   );
 };

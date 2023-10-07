@@ -1,6 +1,8 @@
 import { type FC, useCallback, useState } from 'react';
 // components
 import { ServiceSelect } from '@/modules/service/components';
+import { Placeholder } from '@/modules/core/components';
+// containers
 import { ServiceConstructorTable } from '@/modules/service/containers/service-constructor-table';
 // types
 import type {
@@ -11,7 +13,6 @@ import type {
 
 import type { ProfessionalServicesFormProps } from './professional-services-form.interface';
 import styles from './professional-services-form.module.scss';
-import { ItemsListEmptyIllustrationPlaceholder } from '@/modules/core/components/items-list-empty-illustration-placeholder';
 
 export const ProfessionalServicesForm: FC<
   ProfessionalServicesFormProps
@@ -58,10 +59,12 @@ export const ProfessionalServicesForm: FC<
         blackList={Object.keys(serviceGroup) as SupportedServiceKey[]}
       />
 
-      <ItemsListEmptyIllustrationPlaceholder
+      <Placeholder
         isActive={Object.keys(serviceGroup).length === 0}
-        illustration='folder'
-        description='No services added'
+        placeholder={{
+          illustration: 'folder',
+          description: 'No services added',
+        }}
         fadeIn
       >
         {Object.keys(serviceGroup).map((serviceKey) => (
@@ -75,7 +78,7 @@ export const ProfessionalServicesForm: FC<
             onRemoveClick={handleServiceRemove}
           />
         ))}
-      </ItemsListEmptyIllustrationPlaceholder>
+      </Placeholder>
     </div>
   );
 };
