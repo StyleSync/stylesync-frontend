@@ -17,9 +17,11 @@
   }
 
   @include mixins.phone {
-    padding: utils.spacing(3);
-    margin-bottom: utils.spacing(10);
+    padding: utils.spacing(3, 3, 12);
     border: none;
+    overflow-y: unset;
+    height: fit-content;
+    min-height: 100%;
   }
 
   .stepper {

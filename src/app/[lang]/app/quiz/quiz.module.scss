@@ -11,8 +11,10 @@ $header-bottom-content-height-mobile: 24px;
   height: calc(100vh - #{$header-height});
   width: 100%;
   background: radial-gradient(331.49% 141.42% at -0.00% 100.00%, #FFF 0%, #FFF 48.96%, rgba(200, 223, 254, 0.93) 99.99%);
+  min-height: 100vh;
+  padding-top: $header-height;
 
   @include mixins.phone {
-    height: calc(100vh - #{$header-height-mobile} - #{$header-bottom-content-height-mobile});
+    padding-top: calc(#{$header-height-mobile} + #{$header-bottom-content-height-mobile});
   }
 }
