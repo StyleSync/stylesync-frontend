@@ -1,0 +1,34 @@
+@use '@/styles/variables.module';
+@use '@/styles/mixins';
+@use '@/styles/utils';
+
+.root {
+  background-color: #fff;
+  box-shadow: variables.$main-box-shadow;
+  border-radius: variables.$border-radius-medium;
+  overflow: hidden;
+  animation-name: fadein;
+  animation-duration: 0.3s;
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+    padding: utils.spacing(0,3);
+
+    .actions {
+      display: flex;
+      column-gap: utils.spacing(2);
+    }
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

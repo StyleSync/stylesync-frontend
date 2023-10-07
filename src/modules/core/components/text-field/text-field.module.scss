@@ -61,6 +61,7 @@
   font-size: 0.75em;
   visibility: hidden;
   max-width: 0;
+  transition-delay: 0.1ms;
 
   span {
     display: inline-block;
@@ -74,7 +75,7 @@
 .textField {
   color: variables.$dark-color;
   outline: none;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 18px;
   padding: utils.spacing(0, 4);
   width: 100%;

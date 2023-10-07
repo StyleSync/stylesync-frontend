@@ -41,10 +41,14 @@ export const Stepper: FC<StepperProps> = ({
                 <div className={styles.badgeSplash} />
               </div>
               <Typography
-                className={clsx(styles.stepText, {
-                  [styles.stepText_active]: isActive,
-                  [styles.stepText_passed]: isPassed,
-                })}
+                className={clsx(
+                  styles.stepText,
+                  {
+                    [styles.stepText_active]: isActive,
+                    [styles.stepText_passed]: isPassed,
+                  },
+                  classes?.stepText
+                )}
                 variant='small'
                 weight='medium'
                 {...typographyProps}

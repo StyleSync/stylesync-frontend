@@ -9,11 +9,20 @@ import { useCombinedRefs } from '@/modules/core/hooks/use-combined-refs';
 
 import type { ButtonProps, ButtonVariant } from './button.interface';
 import styles from './button.module.scss';
+import { Spinner } from '@/modules/core/components/spinner';
 
 const RIPPLE_COLORS: Record<ButtonVariant, string> = {
   primary: styles.ripplePrimaryColor,
   secondary: styles.rippleSecondaryColor,
   unstyled: styles.rippleSecondaryColor,
+  danger: styles.rippleDangerColor,
+};
+
+const SPINNER_COLORS: Record<ButtonVariant, string> = {
+  primary: styles.spinnerPrimaryColor,
+  secondary: styles.spinnerSecondaryColor,
+  unstyled: styles.spinnerSecondaryColor,
+  danger: styles.spinnerDangerColor,
 };
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -28,6 +37,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       style,
       rippleColor,
       typographyProps,
+      isLoading,
       ...props
     },
     ref
@@ -49,15 +59,19 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           {
             [styles.primary]: variant === 'primary',
             [styles.secondary]: variant === 'secondary',
+            [styles.danger]: variant === 'danger',
             [styles.base_textless]: !text,
           },
           className
         )}
         ref={combinedRef}
-        disabled={disabled}
+        disabled={disabled || isLoading}
         style={style}
         {...props}
       >
+        {!!isLoading && (
+          <Spinner size='small' color={SPINNER_COLORS[variant]} />
+        )}
         {!!icon && <Icon className={styles.icon} name={icon} />}
         {!!text && (
           <Typography className={styles.text} {...typographyProps}>

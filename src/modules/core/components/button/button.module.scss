@@ -2,8 +2,14 @@
 @use '@/styles/variables.module';
 
 :export {
+  // ripple
   ripplePrimaryColor: lighten(variables.$primary-color, 5%);
   rippleSecondaryColor: lighten(variables.$primary-color, 30%);
+  rippleDangerColor: lighten(variables.$error-color, 20%);
+  // spinner
+  spinnerPrimaryColor: #fff;
+  spinnerSecondaryColor: variables.$primary-color;
+  spinnerDangerColor: variables.$error-color;
 }
 
 .base {
@@ -65,6 +71,27 @@
   &:disabled {
     border-color: darken(variables.$primary-light-color, 10%);
     color: darken(variables.$primary-light-color, 10%);
+  }
+}
+
+.danger {
+  background-color: transparent;
+  color: variables.$error-color;
+  transition: variables.$transition-ultrafast;
+  border: 1px solid variables.$error-color;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px variables.$error-color;
+  }
+
+  &:hover {
+    color: darken(variables.$error-color, 15%);
+    border-color: darken(variables.$error-color, 15%);
+  }
+
+  &:disabled {
+    border-color: darken(variables.$error-color, 10%);
+    color: darken(variables.$error-color, 10%);
   }
 }
 

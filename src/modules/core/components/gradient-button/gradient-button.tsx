@@ -1,4 +1,4 @@
-import { type FC } from 'react';
+import { type FC, useRef } from 'react';
 import clsx from 'clsx';
 // components
 import { Button } from '@/modules/core/components';
@@ -10,10 +10,14 @@ export const GradientButton: FC<GradientButtonProps> = ({
   style,
   className,
   gradient,
+  rippleColor,
   ...props
 }) => {
+  const labelRef = useRef<HTMLLabelElement>(null);
+
   return (
     <label
+      ref={labelRef}
       className={clsx(styles.root, className)}
       style={{ background: gradient, ...style }}
     >
@@ -22,10 +26,10 @@ export const GradientButton: FC<GradientButtonProps> = ({
         typographyProps={{
           style: {
             background: gradient,
-            // @ts-ignore
-            '-webkit-background-clip': 'text',
+            WebkitBackgroundClip: 'text',
           },
         }}
+        rippleColor={rippleColor}
         {...props}
       />
     </label>

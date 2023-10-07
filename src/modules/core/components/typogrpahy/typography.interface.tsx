@@ -28,7 +28,7 @@ export type TypographyWeight =
   | 'bold'
   | 'black';
 
-export type TypographyProps = ChildrenProp &
+export type TypographyProps = Partial<ChildrenProp> &
   StylingProps & {
     variant?: TypographyVariant;
     As?: TypographyTag;

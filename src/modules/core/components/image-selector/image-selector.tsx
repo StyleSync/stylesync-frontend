@@ -18,6 +18,8 @@ export const ImageSelector = forwardRef<HTMLInputElement, ImageSelectorProps>(
       height = 150,
       placeholder,
       children,
+      disablePreview,
+      onImageSelected,
       ...props
     },
     ref
@@ -27,9 +29,9 @@ export const ImageSelector = forwardRef<HTMLInputElement, ImageSelectorProps>(
     );
     const { getRootProps, getInputProps, open, isDragAccept, isDragReject } =
       useDropzone({
-        noClick: !!previewFile,
-        noDrag: !!previewFile,
-        noKeyboard: !!previewFile,
+        noClick: !!previewFile && !disablePreview,
+        noDrag: !!previewFile && !disablePreview,
+        noKeyboard: !!previewFile && !disablePreview,
         accept: {
           'image/jpeg': [],
           'image/png': [],
@@ -37,65 +39,64 @@ export const ImageSelector = forwardRef<HTMLInputElement, ImageSelectorProps>(
         maxFiles: 1,
         onDrop: (acceptedFilesDropped) => {
           setPreviewFile(URL.createObjectURL(acceptedFilesDropped[0]));
+          onImageSelected && onImageSelected(acceptedFilesDropped);
         },
       });
 
     return (
-      <div>
-        <div
-          {...getRootProps({
-            className: clsx(styles.container, classes?.container, {
-              [styles.containerDragAccept]: isDragAccept,
-              [styles.containerDragReject]: isDragReject,
-              [styles.imageSelectContainer]: !previewFile,
-              [styles.imagePreviewContainer]: previewFile,
-            }),
-            style: {
-              width,
-              height,
-            },
-          })}
-        >
-          {previewFile && (
-            <>
-              <div className={styles.actionContainer}>
-                <button
-                  className={styles.actionButton}
-                  onClick={() => setPreviewFile(undefined)}
-                >
-                  <Icon name='close' />
-                </button>
-                <button className={styles.actionButton} onClick={open}>
-                  <Icon name='pencil' />
-                </button>
-              </div>
-              <Image
-                className={styles.imagePreview}
-                width={width}
-                height={height}
-                src={previewFile}
-                alt='File preview'
-                // Revoke data uri after image is loaded
-                onLoad={() => {
-                  URL.revokeObjectURL(previewFile);
-                }}
-              />
-            </>
-          )}
-          {!previewFile && (
-            <>
-              <Typography
-                As='div'
-                variant='body2'
-                className={clsx(styles.label, classes?.label)}
+      <div
+        {...getRootProps({
+          className: clsx(styles.container, classes?.container, {
+            [styles.containerDragAccept]: isDragAccept,
+            [styles.containerDragReject]: isDragReject,
+            [styles.imageSelectContainer]: !previewFile || disablePreview,
+            [styles.imagePreviewContainer]: previewFile && !disablePreview,
+          }),
+          style: {
+            width,
+            height,
+          },
+        })}
+      >
+        {previewFile && !disablePreview && (
+          <>
+            <div className={styles.actionContainer}>
+              <button
+                className={styles.actionButton}
+                onClick={() => setPreviewFile(undefined)}
               >
-                {label}
-              </Typography>
-              {children ?? <Typography>{placeholder}</Typography>}
-            </>
-          )}
-          <input ref={ref} {...getInputProps()} {...props} />
-        </div>
+                <Icon name='close' />
+              </button>
+              <button className={styles.actionButton} onClick={open}>
+                <Icon name='pencil' />
+              </button>
+            </div>
+            <Image
+              className={styles.imagePreview}
+              width={width}
+              height={height}
+              src={previewFile}
+              alt='File preview'
+              // Revoke data uri after image is loaded
+              onLoad={() => {
+                URL.revokeObjectURL(previewFile);
+              }}
+            />
+          </>
+        )}
+        {(!previewFile || disablePreview) && (
+          <>
+            <Typography
+              As='div'
+              variant='body2'
+              className={clsx(styles.label, classes?.label)}
+            >
+              {label}
+            </Typography>
+            {children ?? <Typography>{placeholder}</Typography>}
+          </>
+        )}
+        <input ref={ref} {...getInputProps()} {...props} />
       </div>
     );
   }

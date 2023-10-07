@@ -1,0 +1,66 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+
+.root {
+  position: relative;
+
+  .currency {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100% - 2px);
+    border: none;
+    background-color: variables.$primary-light-color;
+    border-top-right-radius: variables.$border-radius-large;
+    border-bottom-right-radius: variables.$border-radius-large;
+    width: utils.spacing(10);
+    column-gap: utils.spacing(0.5);
+    cursor: pointer;
+
+    span {
+      color: variables.$primary-color;
+    }
+
+    svg {
+      width: 12px;
+      color: variables.$primary-color;
+    }
+  }
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+
+  .option {
+    display: flex;
+    align-items: center;
+    padding: utils.spacing(0, 1);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    height: utils.spacing(6);
+    width: 100%;
+    min-width: 100px;
+    border-radius: variables.$border-radius-small;
+    column-gap: utils.spacing(1);
+    transition: variables.$transition-ultrafast;
+
+    &:hover {
+      background-color: variables.$grey-light-color;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &.active {
+      span {
+        color: variables.$primary-color;
+      }
+    }
+  }
+}

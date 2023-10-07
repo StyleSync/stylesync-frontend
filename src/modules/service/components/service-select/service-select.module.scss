@@ -1,0 +1,31 @@
+@use '@/styles/utils';
+@use '@/styles/mixins';
+@use '@/styles/variables.module';
+
+.root {
+  display: flex;
+  flex-direction: column;
+
+  .option {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    height: utils.spacing(6);
+    transition: variables.$transition-ultrafast;
+    border-radius: variables.$border-radius-small;
+    padding: utils.spacing(0, 1);
+    column-gap: utils.spacing(1);
+
+    &:hover {
+      background-color: variables.$primary-light-color;
+    }
+  }
+}
+
+.trigger {
+  @include mixins.phone {
+    bottom: utils.spacing(14);
+  }
+}

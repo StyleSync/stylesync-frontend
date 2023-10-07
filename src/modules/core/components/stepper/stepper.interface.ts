@@ -14,5 +14,6 @@ export type StepperProps = {
     root?: string;
     step?: string;
     line?: string;
+    stepText?: string;
   };
 };

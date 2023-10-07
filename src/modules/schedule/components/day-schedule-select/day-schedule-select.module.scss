@@ -1,0 +1,69 @@
+@use '@/styles/utils';
+@use '@/styles/mixins';
+@use '@/styles/variables.module';
+
+.root {
+  display: flex;
+  flex-direction: column;
+  row-gap: utils.spacing(3);
+  padding-bottom: utils.spacing(1);
+
+  .head {
+    display: flex;
+    align-items: center;
+    column-gap: utils.spacing(1);
+    width: fit-content;
+  }
+
+  .fields {
+    display: flex;
+    column-gap: utils.spacing(3);
+    transition: variables.$transition-ultrafast;
+
+    @include mixins.phone {
+      flex-direction: column;
+      row-gap: utils.spacing(2);
+    }
+
+    &.notActive {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .group {
+      display: flex;
+      flex-direction: column;
+      row-gap: utils.spacing(1);
+
+      .groupName {
+        color: variables.$grey-color;
+      }
+    }
+
+    .addBreak {
+      width: utils.spacing(6);
+      height: utils.spacing(6);
+    }
+
+    .breaks {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      row-gap: utils.spacing(2);
+      column-gap: utils.spacing(2);
+
+      @include mixins.phone {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    .timeRangeSelect {
+      @include mixins.phone {
+        flex: 1;
+        width: 100%;
+      }
+    }
+  }
+
+}

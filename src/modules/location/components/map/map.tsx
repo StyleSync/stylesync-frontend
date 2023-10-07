@@ -1,61 +1,87 @@
-import { type FC, useState, useEffect, useRef } from 'react';
+import {
+  type FC,
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useLayoutEffect,
+} from 'react';
 import type L from 'leaflet';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
-
-import { ZoomControl } from '@/modules/location/components/zoom/zoom-control';
+// components
+import { ZoomControl } from '@/modules/location/components';
+// constants
 import {
   proUserMarkerIcon,
   viewerUserMarkerIcon,
 } from '@/modules/location/constants/map.constants';
+// hooks
+import { useCombinedRefs } from '@/modules/core/hooks/use-combined-refs';
+// styles
+import 'leaflet/dist/leaflet.css';
 
-import styles from './map.module.scss';
 import type { MapProps } from './map.interface';
+import styles from './map.module.scss';
 
-export const Map: FC<MapProps> = ({ markers }) => {
-  const [position, setPosition] = useState<null | [number, number]>(null);
+const defaultCoordinates = { latitude: 48.3358856, longitude: 31.1788196 };
 
+const Map: FC<MapProps> = ({ markers, showUserPosition = false, ...props }) => {
+  // state
+  const [userPosition, setUserPosition] = useState<null | [number, number]>(
+    null
+  );
+  // refs
   const mapRef = useRef<L.Map>(null);
+  const combinedRef = useCombinedRefs<L.Map>(props.mapRef, mapRef);
 
   useEffect(() => {
-    navigator.permissions.query({ name: 'geolocation' }).then(() => {
+    if (showUserPosition) {
       navigator.geolocation.getCurrentPosition((pos) => {
-        setPosition([pos.coords.latitude, pos.coords.longitude]);
+        setUserPosition([pos.coords.latitude, pos.coords.longitude]);
       });
-    });
+    }
+  }, [showUserPosition]);
+
+  useLayoutEffect(() => {
+    const attributionElement = document.querySelector(
+      '.leaflet-control-attribution'
+    );
+
+    if (attributionElement) {
+      attributionElement.remove();
+    }
   }, []);
 
-  const handleZoomIn = () => {
-    mapRef.current?.zoomIn();
-  };
+  const handleZoomIn = useCallback(() => {
+    combinedRef.current?.zoomIn();
+  }, [combinedRef]);
 
-  const handleZoomOut = () => {
-    mapRef.current?.zoomOut();
-  };
-
-  const defaultCoordinates = { latitude: 50.517483, longitude: 30.495037 };
+  const handleZoomOut = useCallback(() => {
+    combinedRef.current?.zoomOut();
+  }, [combinedRef]);
 
   return (
     <div className={styles.mapContainer}>
       <MapContainer
+        ref={combinedRef}
         center={[defaultCoordinates.latitude, defaultCoordinates.longitude]}
-        zoom={13}
+        zoom={6}
         scrollWheelZoom
         zoomControl={false}
-        ref={mapRef}
       >
         <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
-        {position && <Marker icon={viewerUserMarkerIcon} position={position} />}
-
-        {markers.map((marker, index) => {
-          const markeIcon = marker.avatar
-            ? proUserMarkerIcon(marker.avatar)
-            : undefined;
+        {showUserPosition && userPosition && (
+          <Marker icon={viewerUserMarkerIcon} position={userPosition} />
+        )}
+        {markers?.map((marker, index) => {
+          const icon = proUserMarkerIcon(marker.avatar);
 
           return (
             <Marker
               key={index}
-              icon={markeIcon}
+              icon={icon}
               position={[marker.lat, marker.lng]}
+              {...marker.markerProps}
             />
           );
         })}
@@ -68,3 +94,7 @@ export const Map: FC<MapProps> = ({ markers }) => {
     </div>
   );
 };
+
+Map.displayName = 'Map';
+
+export { Map };

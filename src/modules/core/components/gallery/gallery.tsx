@@ -1,3 +1,4 @@
+'use client';
 import { type FC, useCallback, useMemo, useState } from 'react';
 import { Gallery as ReactGridGallery } from 'react-grid-gallery';
 import Lightbox from 'yet-another-react-lightbox';
@@ -8,7 +9,7 @@ import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import type { GalleryProps } from './gallery.interface';
 import './gallery.global.scss';
 
-export const Gallery: FC<GalleryProps> = ({ images }) => {
+export const Gallery: FC<GalleryProps> = ({ images, galleryProps }) => {
   const [index, setIndex] = useState<number>(-1);
   // memo
   const slides = useMemo(
@@ -29,6 +30,7 @@ export const Gallery: FC<GalleryProps> = ({ images }) => {
         images={images}
         onClick={handleImageClick}
         enableImageSelection={false}
+        {...galleryProps}
       />
       <Lightbox
         slides={slides}

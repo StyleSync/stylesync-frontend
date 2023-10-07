@@ -6,27 +6,32 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1;
-  height: 70px;
   width: 100%;
-  background-color: #fff;
-  box-shadow: variables.$main-box-shadow;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: utils.spacing(0, 10);
+  flex-direction: column;
+  background-color: rgba(#fff, 0.8);
+  backdrop-filter: saturate(180%) blur(20px);
+  box-shadow: variables.$main-box-shadow;
+  padding: utils.spacing(2, 10);
+  z-index: 1;
 
   @include mixins.tablet {
-    padding: utils.spacing(0, 5);
+    padding: utils.spacing(2, 5);
   }
 
   @include mixins.phone {
-    padding: utils.spacing(0, 3);
-    height: 60px;
+    padding: utils.spacing(2, 3);
 
     svg {
       width: 103px;
       height: 26px;
     }
+  }
+
+  .content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 }

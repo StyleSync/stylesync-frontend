@@ -25,6 +25,11 @@ $border-radius-small: 6px;
 $border-radius-medium: 12px;
 $border-radius-large: 30px;
 
+// screens
+$screen-phone: 600px;
+$screen-tablet: 1200px;
+$screen-desktop: 1920px;
+
 :export {
   // colors
   primaryColor: $primary-color;
@@ -38,4 +43,6 @@ $border-radius-large: 30px;
   // gradients
   instagramGradient: $instagram-gradient;
   facebookGradient: $facebook-gradient;
+  // screens
+  screenPhone: $screen-phone;
 }

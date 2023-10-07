@@ -1,0 +1,20 @@
+@use '@/styles/utils';
+@use '@/styles/variables.module';
+
+.root {
+  position: relative;
+  height: utils.spacing(1);
+  width: 100%;
+  border-radius: variables.$border-radius-small;
+  overflow: hidden;
+
+  .progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border-radius: variables.$border-radius-small;
+    transition: variables.$transition-ultrafast;
+  }
+}
+

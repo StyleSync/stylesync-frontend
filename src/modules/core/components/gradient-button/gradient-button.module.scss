@@ -9,6 +9,10 @@
   padding: 1px;
   transition: variables.$transition-ultrafast;
 
+  & > span {
+    z-index: 1;
+  }
+
   button {
     background-color: #fff;
     border-radius: 11px;
@@ -18,6 +22,9 @@
     span {
       -webkit-background-clip: text;
       color: transparent;
+    }
+
+    &:hover {
     }
   }
 }

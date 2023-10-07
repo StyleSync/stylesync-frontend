@@ -66,7 +66,7 @@ export const SignUpForm: FC = () => {
     }
 
     return {};
-  }, [formId, step, accountType]);
+  }, [step, intl, accountType, formId]);
 
   const signUpSteps = useMemo<SignUpStep[]>(
     () => [

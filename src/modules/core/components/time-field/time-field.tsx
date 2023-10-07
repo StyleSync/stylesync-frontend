@@ -1,3 +1,5 @@
+'use client';
+
 import {
   type FC,
   type ChangeEvent,
@@ -129,6 +131,7 @@ export const TimeField: FC<TimeFieldProps> = ({
               <Button
                 variant='secondary'
                 icon='check-mark'
+                type='button'
                 disabled={!Time.guard(value)}
                 onClick={finishTimeSelection}
                 className={clsx(styles.submitButton, styles[state])}
@@ -138,6 +141,7 @@ export const TimeField: FC<TimeFieldProps> = ({
         </div>
       }
       followTriggerWidth
+      disableAutofocus
     >
       <TimeSelect value={time} onChange={setTime} />
     </Popover>

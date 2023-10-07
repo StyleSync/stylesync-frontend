@@ -1,3 +1,5 @@
+import type { GalleryProps as ReactGridGalleryProps } from 'react-grid-gallery';
+
 export type GalleryImage = {
   src: string;
   original: string;
@@ -8,4 +10,8 @@ export type GalleryImage = {
 
 export type GalleryProps = {
   images: GalleryImage[];
+  galleryProps?: Omit<
+    ReactGridGalleryProps,
+    'images' | 'onClick' | 'enableImageSelection'
+  >;
 };
