@@ -7,6 +7,16 @@
   flex-direction: column;
   row-gap: utils.spacing(4);
 
+  @include mixins.phone {
+    row-gap: utils.spacing(2);
+  }
+
+  .title {
+    @include mixins.phone {
+      font-size: 18px;
+    }
+  }
+
   .description {
     width: 100%;
     max-width: 90%;

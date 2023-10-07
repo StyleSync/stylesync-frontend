@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import Image from 'next/image';
 // components
 import {
   UserHeader,
@@ -6,19 +7,20 @@ import {
   AboutMe,
   GallerySection,
 } from '@/modules/user/components';
+import { Tabs } from '@/modules/core/components';
+// assets
 import Bg from '@/assets/images/test.png';
 
 import styles from './profile.module.scss';
-import { Tabs } from '@/modules/core/components';
 
 export default function Profile() {
   return (
     <main className={styles.root}>
-      <img alt='' className={styles.img} src={Bg.src} />
+      <Image className={styles.img} {...Bg} alt='background' />
       <section className={clsx(styles.section, styles.headerSection)}>
         <UserHeader />
       </section>
-      <section className={clsx(styles.section)}>
+      <section className={clsx(styles.section, styles.tabsSection)}>
         <Tabs
           value='about'
           tabs={[

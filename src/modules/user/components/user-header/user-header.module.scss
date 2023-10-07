@@ -11,8 +11,11 @@
   overflow: hidden;
   border-radius: variables.$border-radius-medium;
   box-shadow: variables.$main-box-shadow;
-  //background: linear-gradient(57deg, #3b82ef 2.47%, #b9d5ff 100%);
-  background: linear-gradient(223deg, #FBCB50 20.89%, #D87297 54.78%, #E36658 100%);
+  background: linear-gradient(to right, #fa709a 0%, #fee140 100%);
+
+  @include mixins.phone {
+    height: fit-content;
+  }
 
   .top {
     display: flex;
@@ -22,12 +25,21 @@
     padding: utils.spacing(3, 3);
     row-gap: utils.spacing(1);
 
+    @include mixins.phone {
+      padding: utils.spacing(2);
+    }
+
     .avatar {
     }
 
     .name {
       color: #fff;
-      //font-size: 40px;
+
+      @include mixins.phone {
+        font-size: 24px;
+        line-height: 29px;
+        max-width: 60%;
+      }
     }
   }
 
@@ -38,6 +50,11 @@
     width: 100%;
     background-color: #fff;
     padding: utils.spacing(0, 3);
+
+    @include mixins.phone {
+      padding: utils.spacing(2);
+      height: unset;
+    }
 
     .general {
       display: flex;
@@ -63,7 +80,10 @@
       .location {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
+        row-gap: utils.spacing(2);
         column-gap: utils.spacing(1);
+
 
         svg {
           color: variables.$grey-color;
@@ -74,13 +94,9 @@
           color: variables.$grey-color;
         }
 
-        // fixme
-        .link {
-          text-decoration: none;
-          display: flex;
-          span {
-            display: flex;
-            color: variables.$primary-color;
+        .showOnMapLink {
+          @include mixins.phone {
+            display: none;
           }
         }
       }
@@ -90,122 +106,10 @@
       display: flex;
       align-items: center;
       column-gap: utils.spacing(2);
+
+      @include mixins.phone {
+        display: none;
+      }
     }
-  }
-}
-
-
-.footer {
-  height: 100px;
-  background-color: rgb(255, 255, 255);
-  border-top-left-radius: 11px;
-  border-top-right-radius: 11px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 14px 22px 28px;
-  @media (max-width: 785px) {
-    height: 145px;
-  }
-  @include mixins.phone {
-    background: none;
-    border-bottom: 1px solid variables.$primary-light-color;
-    padding: 0px;
-  }
-}
-
-.footerContent {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-left: 180px;
-  gap: 15px;
-  @media (max-width: 785px) {
-    flex-direction: column;
-  }
-}
-
-.tagsAndMap {
-  display: flex;
-  flex-direction: column;
-}
-
-.serviceTags {
-  display: flex;
-  align-items: center;
-  column-gap: 8px;
-  @include mixins.phone {
-    margin-top: 30px;
-    display: none;
-  }
-}
-
-.tags {
-  display: flex;
-  column-gap: 8px;
-  @media (max-width: 785px) {
-    column-gap: 20px;
-  }
-  @include mixins.phone {
-    column-gap: 8px;
-  }
-
-  // @include mixins.phone {
-  //   &div:last-child(3) {
-  //     display: none;
-  //   }
-  // }
-}
-
-.additionalCount {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 26px;
-  width: 26px;
-  border-radius: 50%;
-  border: 1px solid variables.$primary-light-color;
-}
-
-.locationSection {
-  display: flex;
-  align-items: center;
-  padding-top: 14px;
-  @media (max-width: 785px) {
-    margin-left: 30px;
-  }
-  @include mixins.phone {
-    display: none;
-  }
-}
-
-.locationIcon {
-  width: 18px;
-  height: 18px;
-  color: variables.$grey-color;
-}
-
-.distance {
-  margin-left: 6px;
-  color: variables.$grey-color;
-}
-
-.showOnMap {
-  margin-left: 14px;
-  color: variables.$accent-color;
-  cursor: pointer;
-}
-
-.footerButtons {
-  display: flex;
-  column-gap: 10px;
-  padding-top: 10px;
-  @media (max-width: 785px) {
-    padding-top: 5px;
-    column-gap: 20px;
-  }
-  @include mixins.phone {
-    display: none;
   }
 }

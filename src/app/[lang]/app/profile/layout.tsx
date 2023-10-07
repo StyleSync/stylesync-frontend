@@ -1,7 +1,5 @@
 import '@/styles/globals.scss';
 import { type ReactNode } from 'react';
-// providers
-import { Header } from '@/modules/core/components';
 
 export const metadata = {
   title: 'StyleSync | Tennisha’s Beauty',
@@ -9,10 +7,5 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  return (
-    <>
-      <Header />
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }

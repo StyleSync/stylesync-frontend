@@ -8,6 +8,7 @@ import { ServiceTag } from '@/modules/service/components';
 import GirlPng from '@/assets/images/girl.png';
 
 import styles from './user-header.module.scss';
+import clsx from 'clsx';
 
 export const UserHeader = () => {
   return (
@@ -36,9 +37,11 @@ export const UserHeader = () => {
             <Typography>
               {faker.location.streetAddress({ useFullAddress: true })}
             </Typography>
-            <Link href='#' className={styles.link}>
-              <Typography>Show on map</Typography>
-            </Link>
+            <Typography>
+              <Link href='#' className={clsx('link', styles.showOnMapLink)}>
+                Show on map
+              </Link>
+            </Typography>
           </div>
         </div>
         <div className={styles.actions}>
@@ -46,35 +49,6 @@ export const UserHeader = () => {
           <Button variant='primary' text='Book' />
         </div>
       </div>
-      {/* <div className={styles.footer}>*/}
-      {/*  <div className={styles.footerContent}>*/}
-      {/*    <div className={styles.tagsAndMap}>*/}
-      {/*      <div className={styles.serviceTags}>*/}
-      {/*        <div className={styles.tags}>*/}
-      {/*          <ServiceTag service='hair' />*/}
-      {/*          <ServiceTag service='nails' />*/}
-      {/*          <ServiceTag service='makeup' />*/}
-      {/*        </div>*/}
-      {/*        <span className={styles.additionalCount}>*/}
-      {/*          <Typography variant='small'>+2</Typography>*/}
-      {/*        </span>*/}
-      {/*      </div>*/}
-      {/*      <div className={styles.locationSection}>*/}
-      {/*        <Icon className={styles.locationIcon} name='location' />*/}
-      {/*        <Typography variant='body2' className={styles.distance}>*/}
-      {/*          290 m. from you*/}
-      {/*        </Typography>*/}
-      {/*        <Typography variant='body2' className={styles.showOnMap}>*/}
-      {/*          Show on map*/}
-      {/*        </Typography>*/}
-      {/*      </div>*/}
-      {/*    </div>*/}
-      {/*    <div className={styles.footerButtons}>*/}
-      {/*      <Button variant='secondary' text='Send message' />*/}
-      {/*      <Button variant='primary' text='Book' />*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/* </div>*/}
     </div>
   );
 };

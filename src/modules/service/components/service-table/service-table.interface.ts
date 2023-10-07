@@ -1,7 +1,7 @@
-import type { SupportedService } from '@/modules/service/types/service.types';
+import type { SupportedServiceKey } from '@/modules/service/types/service.types';
 
 export type ServicesTableProps = {
-  service: SupportedService;
+  service: SupportedServiceKey;
   userServices: {
     id: string;
     name: string;
