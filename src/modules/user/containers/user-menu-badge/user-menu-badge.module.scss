@@ -18,8 +18,8 @@
     display: block;
     position: absolute;
     top: utils.spacing(-0.5);
-    left: utils.spacing(-1);
-    width: calc(100% + 16px);
+    left: utils.spacing(-0.5);
+    width: calc(100% + 8px);
     height: calc(100% + 8px);
     background-color: variables.$primary-light-color;
     border-radius: variables.$border-radius-small;

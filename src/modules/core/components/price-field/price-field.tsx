@@ -1,20 +1,8 @@
-import {
-  type FC,
-  type ChangeEvent,
-  type FocusEvent,
-  Fragment,
-  useCallback,
-} from 'react';
+import { type FC, type ChangeEvent, type FocusEvent, useCallback } from 'react';
 import { useBoolean } from 'usehooks-ts';
 import clsx from 'clsx';
 // components
-import {
-  Divider,
-  Icon,
-  Popover,
-  TextField,
-  Typography,
-} from '@/modules/core/components';
+import { Icon, TextField, Typography } from '@/modules/core/components';
 // constants
 import {
   currencies,
@@ -27,6 +15,7 @@ import type { Currency } from '@/modules/core/types/currency.types';
 
 import type { PriceFieldProps } from './price-field.interface';
 import styles from './price-field.module.scss';
+import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
 
 export const PriceField: FC<PriceFieldProps> = ({
   price,
@@ -39,11 +28,6 @@ export const PriceField: FC<PriceFieldProps> = ({
   const isOpen = useBoolean();
   // memo
   const formattedPrice = formatPrice(price);
-
-  const handleCurrencyClick = (_currency: Currency) => () => {
-    onCurrencyChange(_currency);
-    isOpen.setFalse();
-  };
 
   const handleTextFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replaceAll(',', '');
@@ -74,9 +58,14 @@ export const PriceField: FC<PriceFieldProps> = ({
         onFocus={handleTextFieldFocus}
         {...inputProps}
       />
-      <Popover
+      <DropdownMenu
         isOpen={isOpen.value}
         onClose={isOpen.setFalse}
+        items={currencies.map((_currency) => ({
+          id: _currency,
+          text: _currency,
+          icon: currencyMeta[_currency].icon,
+        }))}
         trigger={
           <button
             className={clsx('focusable', styles.currency)}
@@ -87,29 +76,15 @@ export const PriceField: FC<PriceFieldProps> = ({
             <Icon name={isOpen.value ? 'chevron-top' : 'chevron-bottom'} />
           </button>
         }
-        side='bottom'
-        align='end'
-        sideOffset={2}
-      >
-        <div className={styles.options}>
-          {currencies.map((_currency, index) => (
-            <Fragment key={_currency}>
-              <button
-                className={clsx('focusable', styles.option, {
-                  [styles.active]: _currency === currency,
-                })}
-                onClick={handleCurrencyClick(_currency)}
-              >
-                <Icon name={currencyMeta[_currency].icon} width={24} />
-                <Typography>{_currency}</Typography>
-              </button>
-              {index !== currencies.length - 1 && (
-                <Divider variant='horizontal' />
-              )}
-            </Fragment>
-          ))}
-        </div>
-      </Popover>
+        popoverProps={{
+          side: 'bottom',
+          align: 'end',
+        }}
+        onSelect={(item) => {
+          onCurrencyChange(item.id as Currency);
+          isOpen.setFalse();
+        }}
+      />
     </div>
   );
 };
