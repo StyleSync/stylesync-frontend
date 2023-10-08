@@ -1,0 +1,65 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+// todo: move vars to separate file
+$header-height: 74px;
+$header-height-mobile: 62px;
+
+.root {
+  min-height: 100vh;
+  background-color: variables.$grey-light-color;
+
+  .divider {
+    width: 100%;
+    height: 1px;
+  }
+
+  .img {
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    opacity: 0.2;
+    object-fit: cover;
+  }
+}
+
+.section {
+  width: 100%;
+  max-width: 968px;
+  padding-left: utils.spacing(3);
+  padding-right: utils.spacing(3);
+  margin: 0 auto;
+
+  &.headerSection {
+    padding-top: calc(#{ utils.spacing(7)} + #{$header-height});
+    padding-bottom: utils.spacing(7);
+
+    @include mixins.phone {
+      padding-top: calc(#{utils.spacing(4)} + #{$header-height-mobile});
+      padding-bottom: utils.spacing(4);
+    }
+  }
+
+  &.tabsSection {
+    @include mixins.phone {
+      display: none;
+    }
+  }
+
+  &.block {
+    padding-top: utils.spacing(6);
+    padding-bottom: utils.spacing(2);
+
+    @include mixins.phone {
+      padding-top: utils.spacing(3);
+    }
+  }
+}
+
+.sectionGroup {
+  position: relative;
+  background-color: #fff;
+  padding-bottom: utils.spacing(10);
+  box-shadow: variables.$main-box-shadow;
+}

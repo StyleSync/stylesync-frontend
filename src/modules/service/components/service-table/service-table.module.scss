@@ -1,0 +1,56 @@
+@use '@/styles/utils';
+@use '@/styles/variables.module';
+@use '@/styles/mixins';
+.serviceBox {
+  margin-top: utils.spacing(3);
+  position: relative;
+}
+.serviceBox:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background-color: variables.$primary-light-color;
+  bottom: utils.spacing(-1.9);
+}
+.serviceContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @include mixins.phone {
+    column-gap: utils.spacing(1.1);
+  }
+}
+.serviceInfo {
+  display: flex;
+  flex-direction: column;
+  row-gap: utils.spacing(2);
+
+  @include mixins.phone {
+    column-gap: utils.spacing(3.8);
+    flex-wrap: wrap;
+  }
+}
+.serviceTime {
+  color: variables.$grey-color;
+}
+.servicePriceBtn {
+  display: flex;
+  align-items: center;
+  column-gap: utils.spacing(5);
+  white-space: nowrap;
+  @include mixins.phone {
+    column-gap: 15px;
+  }
+
+  @media (max-width: 360px) {
+    column-gap: utils.spacing(1);
+  }
+}
+.service {
+  margin-top: utils.spacing(5);
+  padding: utils.spacing(2.5);
+  box-shadow: variables.$main-box-shadow;
+  border-radius: utils.spacing(1.5);
+}

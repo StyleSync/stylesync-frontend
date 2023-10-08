@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import AboutProPreview from '@/assets/images/about-pro-preview.jpeg';
+import AboutProPreview from '@/assets/images/about-pro-preview.png';
 
 import { BrowserView } from './browser-view';
 
