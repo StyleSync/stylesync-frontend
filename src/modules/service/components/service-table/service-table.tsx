@@ -34,7 +34,7 @@ export const ServicesTable: FC<ServicesTableProps> = ({
               >
                 {userService.price}
               </Typography>
-              <Button variant='secondary' text='Book' />
+              <Button variant='outlined' text='Book' />
             </div>
           </div>
         </div>
