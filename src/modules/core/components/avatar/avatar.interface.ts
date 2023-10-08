@@ -1,6 +1,7 @@
 import { type ReactNode } from 'react';
+import type { StylingProps } from '@/styles/styles.types';
 
-export type AvatarProps = {
+export type AvatarProps = StylingProps & {
   url?: string;
   size?: AvatarSize;
   fallback?: ReactNode;

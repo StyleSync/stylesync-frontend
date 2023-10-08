@@ -98,7 +98,7 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
           <div className={styles.actions}>
             <Button
               icon='pencil'
-              variant='secondary'
+              variant='outlined'
               onClick={handleEditClick}
             />
             <Button icon='trash' variant='danger' onClick={handleDeleteClick} />

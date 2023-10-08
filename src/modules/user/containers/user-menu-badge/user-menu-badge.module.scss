@@ -1,0 +1,50 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+
+.root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: variables.$border-radius-small;
+  padding: utils.spacing(0, 1);
+  cursor: pointer;
+  column-gap: utils.spacing(1);
+  background-color: transparent;
+  border: none;
+
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: utils.spacing(-0.5);
+    left: utils.spacing(-0.5);
+    width: calc(100% + 8px);
+    height: calc(100% + 8px);
+    background-color: variables.$primary-light-color;
+    border-radius: variables.$border-radius-small;
+    opacity: 0;
+    transition: variables.$transition-ultrafast;
+  }
+
+  &:hover {
+    &::before {
+      opacity: 0.5;
+    }
+  }
+
+  &.active {
+    &::before {
+      opacity: 0.4;
+    }
+  }
+
+  .avatar {
+    //border: none;
+    background: variables.$primary-light-color;
+  }
+
+  svg {
+    position: relative;
+  }
+}

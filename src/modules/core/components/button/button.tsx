@@ -14,6 +14,7 @@ import { Spinner } from '@/modules/core/components/spinner';
 const RIPPLE_COLORS: Record<ButtonVariant, string> = {
   primary: styles.ripplePrimaryColor,
   secondary: styles.rippleSecondaryColor,
+  outlined: styles.rippleOutlinedColor,
   unstyled: styles.rippleSecondaryColor,
   danger: styles.rippleDangerColor,
 };
@@ -21,6 +22,7 @@ const RIPPLE_COLORS: Record<ButtonVariant, string> = {
 const SPINNER_COLORS: Record<ButtonVariant, string> = {
   primary: styles.spinnerPrimaryColor,
   secondary: styles.spinnerSecondaryColor,
+  outlined: styles.spinnerOutlinedColor,
   unstyled: styles.spinnerSecondaryColor,
   danger: styles.spinnerDangerColor,
 };
@@ -59,6 +61,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           {
             [styles.primary]: variant === 'primary',
             [styles.secondary]: variant === 'secondary',
+            [styles.outlined]: variant === 'outlined',
             [styles.danger]: variant === 'danger',
             [styles.base_textless]: !text,
           },

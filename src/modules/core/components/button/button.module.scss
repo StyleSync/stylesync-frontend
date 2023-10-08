@@ -5,10 +5,12 @@
   // ripple
   ripplePrimaryColor: lighten(variables.$primary-color, 5%);
   rippleSecondaryColor: lighten(variables.$primary-color, 30%);
+  rippleOutlinedColor: lighten(variables.$primary-color, 30%);
   rippleDangerColor: lighten(variables.$error-color, 20%);
   // spinner
   spinnerPrimaryColor: #fff;
   spinnerSecondaryColor: variables.$primary-color;
+  spinnerOutlinedColor: variables.$primary-color;
   spinnerDangerColor: variables.$error-color;
 }
 
@@ -58,10 +60,24 @@
 }
 
 .secondary {
+  background-color: variables.$primary-light-color;
+  color: variables.$primary-color;
+  transition: variables.$transition-ultrafast;
+
+  &:hover {
+    color: darken(variables.$primary-color, 15%);
+  }
+
+  &:disabled {
+    color: darken(variables.$primary-light-color, 10%);
+  }
+}
+
+.outlined {
   background-color: transparent;
   color: variables.$primary-color;
   transition: variables.$transition-ultrafast;
-  border: 1px solid variables.$primary-color;
+  border-color: variables.$primary-color;
 
   &:hover {
     color: darken(variables.$primary-color, 15%);
@@ -69,8 +85,8 @@
   }
 
   &:disabled {
-    border-color: darken(variables.$primary-light-color, 10%);
     color: darken(variables.$primary-light-color, 10%);
+    border-color: darken(variables.$primary-light-color, 10%);
   }
 }
 

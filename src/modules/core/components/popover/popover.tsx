@@ -1,5 +1,5 @@
 'use client';
-import { type FC, useCallback, useEffect, useRef } from 'react';
+import { type FC, Fragment, useCallback, useEffect, useRef } from 'react';
 import * as RPopover from '@radix-ui/react-popover';
 import { Transition } from 'react-transition-group';
 import { useElementSize } from 'usehooks-ts';
@@ -22,11 +22,16 @@ export const Popover: FC<PopoverProps> = ({
   side,
   followTriggerWidth = false,
   disableAutofocus = false,
+  disablePortal = false,
 }) => {
   const popperRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
   // state
   const [setTriggreRef, { width }] = useElementSize();
+  // refs
+  const { current: PortalOrFragment } = useRef(
+    disablePortal ? Fragment : RPopover.Portal
+  );
 
   useEffect(() => {
     setTriggreRef(triggerRef.current);
@@ -60,7 +65,7 @@ export const Popover: FC<PopoverProps> = ({
       </RPopover.Anchor>
       <Transition timeout={IN_OUT_ANIMATION_DURATION} in={isOpen} unmountOnExit>
         {(status) => (
-          <RPopover.Portal>
+          <PortalOrFragment>
             <RPopover.Content
               ref={popperRef}
               className={clsx(styles.content, styles[status])}
@@ -75,7 +80,7 @@ export const Popover: FC<PopoverProps> = ({
             >
               {children}
             </RPopover.Content>
-          </RPopover.Portal>
+          </PortalOrFragment>
         )}
       </Transition>
     </RPopover.Root>

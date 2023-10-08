@@ -19,14 +19,22 @@ export const Avatar: FC<AvatarProps> = ({
   fallback = <Icon name='user' className={styles.userIcon} />,
   shadow = false,
   shape = 'circle',
+  style,
+  className,
 }) => (
   <div
-    className={clsx(styles.avatarContainer, styles[shape], {
-      [styles.shadow]: shadow,
-    })}
+    className={clsx(
+      styles.avatarContainer,
+      styles[shape],
+      {
+        [styles.shadow]: shadow,
+      },
+      className
+    )}
     style={{
       width: `${SIZES[size]}px`,
       height: `${SIZES[size]}px`,
+      ...style,
     }}
   >
     {url && (
