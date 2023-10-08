@@ -1,13 +1,11 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 // components
-import {
-  UserHeader,
-  Services,
-  AboutMe,
-  GallerySection,
-} from '@/modules/user/components';
-import { Tabs } from '@/modules/core/components';
+import { UserHeader } from '@/modules/user/components/user-header';
+import { AboutMe } from '@/modules/user/components/about-me';
+import { GallerySection } from '@/modules/user/components/gallery-section';
+import { Tabs } from '@/modules/core/components/tabs';
+import { Services } from '@/modules/user/components/user-services';
 // assets
 import Bg from '@/assets/images/bg-1.png';
 

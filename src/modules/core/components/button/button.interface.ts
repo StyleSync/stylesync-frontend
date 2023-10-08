@@ -1,5 +1,5 @@
 import type { ButtonHTMLAttributes } from 'react';
-import type { IconName } from '@/modules/core/components';
+import type { IconName } from '@/modules/core/components/icon';
 import type { StylingProps } from '@/styles/styles.types';
 import type { TypographyProps } from '@/modules/core/components/typogrpahy/typography.interface';
 

@@ -2,7 +2,9 @@ import { type FC, type ChangeEvent, type FocusEvent, useCallback } from 'react';
 import { useBoolean } from 'usehooks-ts';
 import clsx from 'clsx';
 // components
-import { Icon, TextField, Typography } from '@/modules/core/components';
+import { Icon } from '@/modules/core/components/icon';
+import { TextField } from '@/modules/core/components/text-field';
+import { Typography } from '@/modules/core/components/typogrpahy';
 // constants
 import {
   currencies,

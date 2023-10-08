@@ -1,14 +1,15 @@
 'use client';
 import { type FC } from 'react';
+import { useBoolean } from 'usehooks-ts';
+import clsx from 'clsx';
 // components
 import { Avatar } from '@/modules/core/components/avatar';
-import { Emoji, Icon } from '@/modules/core/components';
+import { Emoji } from '@/modules/core/components/emoji';
+import { Icon } from '@/modules/core/components/icon';
+import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
 
 import type { UserMenuBadgeProps } from './user-menu-badge.interface';
 import styles from './user-menu-badge.module.scss';
-import clsx from 'clsx';
-import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
-import { useBoolean } from 'usehooks-ts';
 
 export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
   const isOpen = useBoolean();

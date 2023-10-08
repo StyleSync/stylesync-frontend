@@ -4,13 +4,11 @@ import { z } from 'zod';
 import { useIntl } from 'react-intl';
 import { zodResolver } from '@hookform/resolvers/zod';
 // components
-import {
-  Button,
-  PriceField,
-  TextField,
-  TimeField,
-  Typography,
-} from '@/modules/core/components';
+import { Button } from '@/modules/core/components/button';
+import { PriceField } from '@/modules/core/components/price-field';
+import { TextField } from '@/modules/core/components/text-field';
+import { TimeField } from '@/modules/core/components/time-field';
+import { Typography } from '@/modules/core/components/typogrpahy';
 // types
 import type { ServiceData } from '@/modules/service/types/service.types';
 

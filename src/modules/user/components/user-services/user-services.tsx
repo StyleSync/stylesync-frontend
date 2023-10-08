@@ -1,13 +1,14 @@
 'use client';
 
 // components
-import { Typography } from '@/modules/core/components';
-import { ServicesTable } from '@/modules/service/components';
+import { Typography } from '@/modules/core/components/typogrpahy';
+import { ServicesTable } from '@/modules/service/components/service-table';
 
 import { faker } from '@faker-js/faker';
 
 import styles from './user-services.module.scss';
 
+// todo: component name should be same as file name
 export const Services = () => {
   return (
     <div className={styles.root}>

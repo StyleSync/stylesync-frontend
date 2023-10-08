@@ -11,7 +11,8 @@ import {
 import { useBoolean, useUpdateEffect } from 'usehooks-ts';
 import { Transition } from 'react-transition-group';
 // components
-import { TextField, TimeSelect } from '@/modules/core/components';
+import { TextField } from '@/modules/core/components/text-field';
+import { TimeSelect } from '@/modules/core/components/time-select';
 import { Popover } from '@/modules/core/components/popover';
 import { Button } from '@/modules/core/components/button';
 // utils

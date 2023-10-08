@@ -8,7 +8,9 @@ import { ProfessionalQuizletWizardStepSchedule } from '@/modules/user/containers
 import { ProfessionalQuizletWizardStepGallery } from '@/modules/user/containers/professional-quizlet-wizard-step-gallery';
 import { ProfessionalQuizletWizardStepLocation } from '@/modules/user/containers/professional-quizlet-wizard-step-location';
 // components
-import { Stepper, Progress, Header } from '@/modules/core/components';
+import { Header } from '@/modules/core/components/header';
+import { Stepper } from '@/modules/core/components/stepper';
+import { Progress } from '@/modules/core/components/progress';
 // hooks
 import { useQueryParams } from '@/modules/core/hooks/use-search-params';
 

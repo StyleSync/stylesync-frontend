@@ -3,12 +3,10 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 // components
-import {
-  TextField,
-  ImageSelector,
-  Typography,
-  AvatarSelectMobile,
-} from '@/modules/core/components';
+import { TextField } from '@/modules/core/components/text-field';
+import { ImageSelector } from '@/modules/core/components/image-selector';
+import { Typography } from '@/modules/core/components/typogrpahy';
+import { AvatarSelectMobile } from '@/modules/core/components/avatar-select-mobile';
 // hooks
 import { useImageInputState } from '@/modules/core/hooks/use-image-input-state';
 

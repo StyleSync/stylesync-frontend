@@ -3,7 +3,7 @@ import { useBoolean } from 'usehooks-ts';
 import clsx from 'clsx';
 // components
 import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
-import { Button } from '@/modules/core/components';
+import { Button } from '@/modules/core/components/button';
 // constants
 import { SERVICE_METADATA } from '@/modules/service/constants/service.constants';
 // hooks

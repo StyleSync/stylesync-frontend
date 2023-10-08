@@ -1,7 +1,7 @@
 import { type FC, useCallback, useState } from 'react';
 // components
-import { ServiceSelect } from '@/modules/service/components';
-import { Placeholder } from '@/modules/core/components';
+import { ServiceSelect } from '@/modules/service/components/service-select';
+import { Placeholder } from '@/modules/core/components/placeholder';
 // containers
 import { ServiceConstructorTable } from '@/modules/service/containers/service-constructor-table';
 // types

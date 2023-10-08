@@ -2,10 +2,11 @@
 import { type FC } from 'react';
 
 // components
-import { Typography, Button } from '@/modules/core/components';
-import type { ServicesTableProps } from './service-table.interface';
-import { ServiceTag } from '@/modules/service/components';
+import { Button } from '@/modules/core/components/button';
+import { Typography } from '@/modules/core/components/typogrpahy';
+import { ServiceTag } from '@/modules/service/components/service-tag';
 
+import type { ServicesTableProps } from './service-table.interface';
 import styles from './service-table.module.scss';
 
 export const ServicesTable: FC<ServicesTableProps> = ({

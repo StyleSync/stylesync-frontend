@@ -1,8 +1,8 @@
 import { type FC, useCallback } from 'react';
 import { v4 } from 'uuid';
 // components
-import { Button } from '@/modules/core/components';
-import { ServiceTag } from '@/modules/service/components';
+import { Button } from '@/modules/core/components/button';
+import { ServiceTag } from '@/modules/service/components/service-tag';
 // containers
 import { ServiceConstructorRow } from '@/modules/service/containers/service-constructor-row';
 // utils

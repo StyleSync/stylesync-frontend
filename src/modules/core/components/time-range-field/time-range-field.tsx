@@ -12,12 +12,10 @@ import { useBoolean, useUpdateEffect } from 'usehooks-ts';
 import { Transition } from 'react-transition-group';
 import clsx from 'clsx';
 // components
-import {
-  Popover,
-  TextField,
-  TimeSelect,
-  Button,
-} from '@/modules/core/components';
+import { Popover } from '@/modules/core/components/popover';
+import { TextField } from '@/modules/core/components/text-field';
+import { TimeSelect } from '@/modules/core/components/time-select';
+import { Button } from '@/modules/core/components/button';
 // utils
 import {
   formatTimeRange,

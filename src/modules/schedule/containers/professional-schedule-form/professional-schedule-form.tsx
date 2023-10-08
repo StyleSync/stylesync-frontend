@@ -1,7 +1,7 @@
 import { type FC, Fragment, useState } from 'react';
 // components
-import { Divider } from '@/modules/core/components';
-import { DayScheduleSelect } from '@/modules/schedule/components';
+import { Divider } from '@/modules/core/components/divider';
+import { DayScheduleSelect } from '@/modules/schedule/components/day-schedule-select';
 // utils
 import { formatTimeRange, Time } from '@/modules/core/utils/time.utils';
 

@@ -9,13 +9,11 @@ import { useBoolean, useDebounce } from 'usehooks-ts';
 import type { SearchResult } from 'leaflet-geosearch/lib/providers/provider';
 import type { RawResult } from 'leaflet-geosearch/lib/providers/openStreetMapProvider';
 // components
-import {
-  Icon,
-  Placeholder,
-  Popover,
-  TextField,
-  Typography,
-} from '@/modules/core/components';
+import { Placeholder } from '@/modules/core/components/placeholder';
+import { Icon } from '@/modules/core/components/icon';
+import { TextField } from '@/modules/core/components/text-field';
+import { Popover } from '@/modules/core/components/popover';
+import { Typography } from '@/modules/core/components/typogrpahy';
 // hooks
 import { useLocationSearchQuery } from '@/modules/location/hooks/use-location-search-query';
 

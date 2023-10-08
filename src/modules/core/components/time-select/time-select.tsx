@@ -10,7 +10,7 @@ import {
 } from 'react';
 import clsx from 'clsx';
 // components
-import { Typography } from '@/modules/core/components';
+import { Typography } from '@/modules/core/components/typogrpahy';
 // utils
 import { range } from '@/modules/core/utils/array.utils';
 import { Time } from '@/modules/core/utils/time.utils';

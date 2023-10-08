@@ -6,12 +6,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Transition } from 'react-transition-group';
 import { useIntl } from 'react-intl';
 // components
-import {
-  Button,
-  Stepper,
-  Typography,
-  Divider,
-} from '@/modules/core/components';
+import { Button } from '@/modules/core/components/button';
+import { Stepper } from '@/modules/core/components/stepper';
+import { Typography } from '@/modules/core/components/typogrpahy';
+import { Divider } from '@/modules/core/components/divider';
 // containers
 import { AccountTypeSelect } from '@/modules/auth/containers/account-type-select';
 import { AccountCredentialsForm } from '@/modules/auth/containers/account-credentials-form';
