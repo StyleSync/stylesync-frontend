@@ -10,7 +10,9 @@ import {
 import { useBoolean } from 'usehooks-ts';
 import clsx from 'clsx';
 // components
-import { Button, Gallery, Placeholder } from '@/modules/core/components';
+import { Button } from '@/modules/core/components/button';
+import { Gallery } from '@/modules/core/components/gallery';
+import { Placeholder } from '@/modules/core/components/placeholder';
 // hooks
 import { useWindowSizeType } from '@/modules/core/hooks/use-window-size-type';
 // types

@@ -1,6 +1,7 @@
 import { type FC } from 'react';
 // components
-import { Button, Typography } from '@/modules/core/components';
+import { Button } from '@/modules/core/components/button';
+import { Typography } from '@/modules/core/components/typogrpahy';
 
 import type { ProfessionalQuizletWizardStepLayoutProps } from './professional-quizlet-wizard-step-layout.interface';
 import styles from './professional-quizlet-wizard-step-layout.module.scss';

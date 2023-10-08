@@ -1,10 +1,9 @@
-'use client';
-
 import { type FC } from 'react';
 import clsx from 'clsx';
 // components
 import { Avatar } from '@/modules/core/components/avatar';
-import { Emoji, Typography } from '@/modules/core/components';
+import { Emoji } from '@/modules/core/components/emoji';
+import { Typography } from '@/modules/core/components/typogrpahy';
 
 import type { AvatarSelectMobileProps } from './avatar-select-mobile.interface';
 import styles from './avatar-select-mobile.module.scss';

@@ -1,6 +1,8 @@
 import { type FC } from 'react';
 // components
-import { Icon, Popover, Typography } from '@/modules/core/components';
+import { Icon } from '@/modules/core/components/icon';
+import { Popover } from '@/modules/core/components/popover';
+import { Typography } from '@/modules/core/components/typogrpahy';
 
 import type { DropdownMenuProps } from './dropdown-menu.interface';
 import styles from './dropdown-menu.module.scss';

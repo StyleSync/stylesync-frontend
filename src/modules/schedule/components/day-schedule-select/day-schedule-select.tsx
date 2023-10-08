@@ -1,13 +1,11 @@
 import { type FC, useCallback } from 'react';
 import clsx from 'clsx';
 // components
-import {
-  Button,
-  Checkbox,
-  Typography,
-  TimeRangeField,
-  Divider,
-} from '@/modules/core/components';
+import { Button } from '@/modules/core/components/button';
+import { Checkbox } from '@/modules/core/components/checkbox';
+import { Typography } from '@/modules/core/components/typogrpahy';
+import { TimeRangeField } from '@/modules/core/components/time-range-field';
+import { Divider } from '@/modules/core/components/divider';
 
 import type { DayScheduleSelectProps } from './day-schedule-select.interface';
 import styles from './day-schedule-select.module.scss';

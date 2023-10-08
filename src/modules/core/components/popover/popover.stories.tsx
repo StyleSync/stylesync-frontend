@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 // components
-import { Typography } from '@/modules/core/components';
+import { Typography } from '@/modules/core/components/typogrpahy';
 
 import { Popover } from './popover';
 import { useBoolean } from 'usehooks-ts';

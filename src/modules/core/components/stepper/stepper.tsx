@@ -1,7 +1,7 @@
 import { type FC, Fragment } from 'react';
 import clsx from 'clsx';
 // components
-import { Typography } from '@/modules/core/components';
+import { Typography } from '@/modules/core/components/typogrpahy';
 
 import type { StepperProps } from './stepper.interface';
 import styles from './stepper.module.scss';

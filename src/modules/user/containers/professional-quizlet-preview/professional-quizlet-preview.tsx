@@ -3,7 +3,7 @@ import Link from 'next/link';
 import clsx from 'clsx';
 // components
 import { BrowserView } from '@/modules/core/components/browser-view';
-import { Typography } from '@/modules/core/components';
+import { Typography } from '@/modules/core/components/typogrpahy';
 // assets
 import AboutProPreview from '@/assets/images/about-pro-preview.png';
 

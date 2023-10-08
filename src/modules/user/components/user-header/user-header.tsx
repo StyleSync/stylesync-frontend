@@ -2,8 +2,11 @@
 import Link from 'next/link';
 import { faker } from '@faker-js/faker';
 // components
-import { Typography, Button, Icon, Avatar } from '@/modules/core/components';
-import { ServiceTag } from '@/modules/service/components';
+import { Typography } from '@/modules/core/components/typogrpahy';
+import { Button } from '@/modules/core/components/button';
+import { Icon } from '@/modules/core/components/icon';
+import { Avatar } from '@/modules/core/components/avatar';
+import { ServiceTag } from '@/modules/service/components/service-tag';
 // temp
 import GirlPng from '@/assets/images/girl.png';
 

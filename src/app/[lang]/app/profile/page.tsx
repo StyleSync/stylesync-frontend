@@ -1,13 +1,11 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 // components
-import {
-  UserHeader,
-  Services,
-  AboutMe,
-  GallerySection,
-} from '@/modules/user/components';
-import { Tabs } from '@/modules/core/components';
+import { UserHeader } from '@/modules/user/components/user-header';
+import { AboutMe } from '@/modules/user/components/about-me';
+import { GallerySection } from '@/modules/user/components/gallery-section';
+import { Services } from '@/modules/user/components/user-services';
+import { ProfessionalProfileTabs } from '@/modules/user/components/professional-profile-tabs';
 // assets
 import Bg from '@/assets/images/bg-1.png';
 
@@ -21,23 +19,7 @@ export default function Profile() {
         <UserHeader />
       </section>
       <section className={clsx(styles.section, styles.tabsSection)}>
-        <Tabs
-          value='about'
-          tabs={[
-            {
-              key: 'about',
-              name: 'About',
-            },
-            {
-              key: 'services',
-              name: 'Services',
-            },
-            {
-              key: 'gallery',
-              name: 'Gallery',
-            },
-          ]}
-        />
+        <ProfessionalProfileTabs />
       </section>
       <div className={styles.divider} />
       <div className={styles.sectionGroup}>

@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { useBoolean } from 'usehooks-ts';
+// components
+import { Button } from '@/modules/core/components/button';
 
 import { DropdownMenu } from './dropdown-menu';
-import { Button } from '@/modules/core/components';
-import { useBoolean } from 'usehooks-ts';
 
 const meta: Meta<typeof DropdownMenu> = {
   title: 'Core UI/DropdownMenu',

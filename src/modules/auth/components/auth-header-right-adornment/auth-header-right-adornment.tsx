@@ -2,7 +2,8 @@
 import { type FC, useCallback } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 // components
-import { Button, Typography } from '@/modules/core/components';
+import { Button } from '@/modules/core/components/button';
+import { Typography } from '@/modules/core/components/typogrpahy';
 
 import styles from './auth-header-right-adornment.module.scss';
 import { useIntl } from 'react-intl';

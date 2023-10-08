@@ -1,9 +1,8 @@
-'use client';
 import React, { type FC, useEffect } from 'react';
 import { useBoolean } from 'usehooks-ts';
 import clsx from 'clsx';
 // components
-import { Typography } from '@/modules/core/components';
+import { Typography } from '@/modules/core/components/typogrpahy';
 // validation
 import {
   uppercaseCharacterRegex,

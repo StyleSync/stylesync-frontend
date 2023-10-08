@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import { Dialog, Typography } from '@/modules/core/components';
+// components
+import { Typography } from '@/modules/core/components/typogrpahy';
+
+import { Dialog } from './dialog';
 
 const meta: Meta<typeof Dialog> = {
   title: 'Core UI/Dialog',

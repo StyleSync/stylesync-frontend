@@ -1,7 +1,7 @@
 import { type FC } from 'react';
 // components
-import { AccountTypeCard } from '@/modules/auth/components';
-import { RadioButton } from '@/modules/core/components';
+import { AccountTypeCard } from '@/modules/auth/components/account-type-card';
+import { RadioButton } from '@/modules/core/components/radio-button';
 // types
 import type {
   AccountType,

@@ -1,8 +1,8 @@
-'use client';
 import { forwardRef, useRef } from 'react';
 import clsx from 'clsx';
 // components
-import { Icon, Typography } from '@/modules/core/components';
+import { Icon } from '@/modules/core/components/icon';
+import { Typography } from '@/modules/core/components/typogrpahy';
 // hooks
 import { useRipple } from '@/modules/core/hooks/use-ripple';
 import { useCombinedRefs } from '@/modules/core/hooks/use-combined-refs';

@@ -1,7 +1,8 @@
-'use client';
 import { type ForwardedRef, forwardRef, useRef, useEffect } from 'react';
 import clsx from 'clsx';
 import { useBoolean } from 'usehooks-ts';
+// components
+import { Typography } from '@/modules/core/components/typogrpahy';
 // fonts
 import { fonts } from '@/styles/fonts';
 // hooks
@@ -13,7 +14,6 @@ import {
   isTextAreaProps,
 } from './text-field.interface';
 import styles from './text-field.module.scss';
-import { Typography } from '@/modules/core/components';
 
 export const TextField = forwardRef<
   HTMLInputElement | HTMLTextAreaElement,

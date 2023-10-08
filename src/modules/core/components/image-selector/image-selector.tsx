@@ -1,10 +1,10 @@
-'use client';
 import { forwardRef, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
 import clsx from 'clsx';
 // components
-import { Icon, Typography } from '@/modules/core/components';
+import { Icon } from '@/modules/core/components/icon';
+import { Typography } from '@/modules/core/components/typogrpahy';
 
 import type { ImageSelectorProps } from './image-selector.interface';
 import styles from './image-selector.module.scss';

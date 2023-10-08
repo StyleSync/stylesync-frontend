@@ -1,6 +1,7 @@
 import { type FC } from 'react';
 // components
-import { Icon, Typography } from '@/modules/core/components';
+import { Icon } from '@/modules/core/components/icon';
+import { Typography } from '@/modules/core/components/typogrpahy';
 // constants
 import { SERVICE_METADATA } from '@/modules/service/constants/service.constants';
 

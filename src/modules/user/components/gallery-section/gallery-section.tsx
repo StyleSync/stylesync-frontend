@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 // components
-import { Gallery, Typography, Button } from '@/modules/core/components';
+import { Gallery } from '@/modules/core/components/gallery';
+import { Typography } from '@/modules/core/components/typogrpahy';
+import { Button } from '@/modules/core/components/button';
 
 import styles from './gallery-section.module.scss';
 

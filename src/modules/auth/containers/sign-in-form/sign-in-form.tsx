@@ -7,12 +7,10 @@ import { useIntl } from 'react-intl';
 import Link from 'next/link';
 import { z } from 'zod';
 // components
-import {
-  Button,
-  Typography,
-  Divider,
-  TextField,
-} from '@/modules/core/components';
+import { Button } from '@/modules/core/components/button';
+import { Typography } from '@/modules/core/components/typogrpahy';
+import { Divider } from '@/modules/core/components/divider';
+import { TextField } from '@/modules/core/components/text-field';
 import { GradientButton } from '@/modules/core/components/gradient-button';
 // types
 import type { SignUpUserData } from '@/modules/auth/types/sign-up.types';

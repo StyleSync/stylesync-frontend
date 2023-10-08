@@ -2,7 +2,7 @@ import { type FC } from 'react';
 import clsx from 'clsx';
 import Image from 'next/image';
 // components
-import { Icon } from '@/modules/core/components';
+import { Icon } from '@/modules/core/components/icon';
 
 import type { AvatarProps, AvatarSize } from './avatar.interface';
 import styles from './avatar.module.scss';

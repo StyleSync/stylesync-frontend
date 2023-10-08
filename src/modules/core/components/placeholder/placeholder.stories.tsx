@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
+// components
+import { Typography } from '@/modules/core/components/typogrpahy';
 
 import { Placeholder } from './placeholder';
-import { Typography } from '@/modules/core/components';
 
 const meta: Meta<typeof Placeholder> = {
   title: 'Core UI/Placeholder',

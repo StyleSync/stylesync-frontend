@@ -1,6 +1,7 @@
 'use client';
 // components
-import { Typography, Button } from '@/modules/core/components';
+import { Button } from '@/modules/core/components/button';
+import { Typography } from '@/modules/core/components/typogrpahy';
 import { GradientButton } from '@/modules/core/components/gradient-button';
 // styles
 import scssVariables from '@/styles/variables.module.scss';

@@ -2,7 +2,7 @@
 import { type FC } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 // components
-import { RadioButton } from '@/modules/core/components';
+import { RadioButton } from '@/modules/core/components/radio-button';
 // utils
 import {
   getLocalePathname,

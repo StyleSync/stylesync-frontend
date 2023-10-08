@@ -9,7 +9,7 @@ import {
 import type L from 'leaflet';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 // components
-import { ZoomControl } from '@/modules/location/components';
+import { ZoomControl } from '@/modules/location/components/zoom';
 // constants
 import {
   proUserMarkerIcon,
