@@ -1,4 +1,3 @@
-'use client';
 import { forwardRef, useRef } from 'react';
 import clsx from 'clsx';
 // components

@@ -1,4 +1,3 @@
-'use client';
 import { useRef, type FC } from 'react';
 import clsx from 'clsx';
 // hooks

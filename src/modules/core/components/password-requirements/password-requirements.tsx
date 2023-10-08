@@ -1,4 +1,3 @@
-'use client';
 import React, { type FC, useEffect } from 'react';
 import { useBoolean } from 'usehooks-ts';
 import clsx from 'clsx';
