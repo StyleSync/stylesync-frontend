@@ -8,14 +8,18 @@ import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
 // hooks
 import { useBoolean } from 'usehooks-ts';
 
+import GirlImage from '@/assets/images/girl.png';
+
 import type { BookingInfoCardProps } from './booking-info-card.interface';
 
 import styles from './booking-info-card.module.scss';
+import clsx from 'clsx';
 
 export const BookingInfoCard: FC<BookingInfoCardProps> = ({
   name,
   date,
   serviceName,
+  variant = 'light',
 }) => {
   const startDate = new Date(date); // Start date
 
@@ -38,43 +42,53 @@ export const BookingInfoCard: FC<BookingInfoCardProps> = ({
   const isOpen = useBoolean();
 
   return (
-    <div className={styles.bookingContainer}>
-      <div className={styles.bookingInfo}>
-        <div className={styles.avatar}>
-          <Avatar />
-        </div>
-        <div className={styles.bookingDateEvent}>
-          <div className={styles.bookingdate}>
-            <Typography variant='body1'>{formattedDate}</Typography>
-          </div>
-          <div className={styles.bookingEvent}>
-            <Typography
-              className={styles.bookingEventTypography}
-              variant='body2'
-            >
-              {name}, {serviceName}
-            </Typography>
-          </div>
+    <div className={clsx(styles.root, styles[variant])}>
+      <div className={styles.container}>
+        <Avatar className={styles.avatar} url={GirlImage.src} />
+        <div className={styles.info}>
+          <Typography
+            className={styles.datetime}
+            variant='body1'
+            weight='medium'
+          >
+            {formattedDate}
+          </Typography>
+          <Typography
+            className={styles.description}
+            variant='body2'
+            weight='medium'
+          >
+            {name}, {serviceName}
+          </Typography>
         </div>
       </div>
-
       <DropdownMenu
         items={[
           {
             id: 'profile',
-            text: 'View pros profile',
+            text: 'Profile',
+            icon: 'user',
           },
           {
             id: 'reschedule',
             text: 'Reschedule',
+            icon: 'time',
           },
           {
             id: 'cancel',
             text: 'Cancel',
+            icon: 'close',
+            variant: 'danger',
           },
         ]}
         trigger={
-          <Button onClick={isOpen.toggle} icon='points' variant='unstyled' />
+          <Button
+            className={styles.moreButton}
+            onClick={isOpen.toggle}
+            icon='points'
+            variant='unstyled'
+            rippleColor='#60CF8C'
+          />
         }
         isOpen={isOpen.value}
         onClose={isOpen.setFalse}

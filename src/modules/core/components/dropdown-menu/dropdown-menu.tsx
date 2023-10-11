@@ -6,6 +6,7 @@ import { Typography } from '@/modules/core/components/typogrpahy';
 
 import type { DropdownMenuProps } from './dropdown-menu.interface';
 import styles from './dropdown-menu.module.scss';
+import clsx from 'clsx';
 
 export const DropdownMenu: FC<DropdownMenuProps> = ({
   isOpen,
@@ -27,7 +28,11 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({
       <div className={styles.root}>
         {items.map((item) => (
           <button
-            className={styles.option}
+            className={clsx(
+              styles.option,
+              { [styles.danger]: item.variant === 'danger' },
+              item.className
+            )}
             key={item.id}
             onClick={() => onSelect && onSelect(item)}
           >

@@ -6,15 +6,36 @@ $header-height: 74px;
 $header-height-mobile: 62px;
 
 .root {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
+  padding-top: calc(#{$header-height} + #{utils.spacing(4)});
+
+  .img {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.2;
+    object-fit: cover;
+  }
+}
+
+.pageContent {
+  position: relative;
+  display: flex;
+  flex: 1;
+  width: 100%;
+  box-shadow: 0 4px 15px 0 rgba(37, 74, 165, 0.1);
   background-color: variables.$grey-light-color;
-  padding-top: $header-height;
 }
 
 .section {
+  position: relative;
   width: 100%;
   max-width: 968px;
-  padding-top: utils.spacing(5);
   padding-left: utils.spacing(3);
   padding-right: utils.spacing(3);
   margin: 0 auto;

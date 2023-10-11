@@ -10,6 +10,7 @@ import { getDictionary } from '@/modules/internationalization/utils/dictionary.u
 // types
 import type { ChildrenProp } from '@/modules/core/types/react.types';
 import type { PageParams } from '@/modules/core/types/next.types';
+import { fonts } from '@/styles/fonts';
 
 export default async function RootLayout({
   children,
@@ -19,7 +20,7 @@ export default async function RootLayout({
 
   return (
     <html lang={params.lang}>
-      <body>
+      <body className={fonts.SF_PRO_TEXT.className}>
         <TrpcProvider>
           <IntlProvider locale={params.lang} dictionary={dictionary}>
             <Providers session={params.session}>{children}</Providers>

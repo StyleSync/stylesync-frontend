@@ -19,12 +19,32 @@
     padding: utils.spacing(0, 2);
     column-gap: utils.spacing(1);
 
+    span {
+      transition: variables.$transition-ultrafast;
+    }
+
     &:hover {
       background-color: rgba(variables.$primary-light-color, .5);
+      color: variables.$primary-color;
+
+      span {
+        color: variables.$primary-color;
+      }
     }
 
     &:focus-visible {
       box-shadow: 0 0 0 2px #fff, 0 0 0 4px variables.$primary-color;
+    }
+
+    &.danger {
+      color: variables.$error-color;
+      &:hover {
+        background-color: rgba(variables.$error-color, .08);
+      }
+
+      span {
+        color: variables.$error-color;
+      }
     }
   }
 }

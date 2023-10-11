@@ -39,6 +39,7 @@ import FlagEurope from '@/assets/icons/flag-europe.svg?icon';
 import HorizontalPoints from '@/assets/icons/horizontal-points.svg?icon';
 import List from '@/assets/icons/list.svg?icon';
 import InBoxIcon from '@/assets/icons/inbox.svg?icon';
+import SettingsIcon from '@/assets/icons/settings.svg?icon';
 
 import type { SVGComponentElement } from './icon.interface';
 
@@ -82,6 +83,7 @@ export const icons = {
   points: HorizontalPoints,
   list: List,
   inbox: InBoxIcon,
+  settings: SettingsIcon,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;
