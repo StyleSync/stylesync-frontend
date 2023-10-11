@@ -50,7 +50,7 @@ model User {
   emailVerified DateTime?
   image         String?
   companyId     String?
-  company       Comapany?     @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  company       Company?     @relation(fields: [companyId], references: [id], onDelete: SetNull)
   accounts      Account[]
   sessions      Session[]
   bookings      Booking[]
@@ -67,7 +67,7 @@ model VerificationToken {
 
 // Data models
 
-model Comapany {
+model Company {
   id      String  @id @default(cuid())
   name    String
   address String?
