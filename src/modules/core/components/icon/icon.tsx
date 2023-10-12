@@ -39,6 +39,12 @@ import FlagEurope from '@/assets/icons/flag-europe.svg?icon';
 import HorizontalPoints from '@/assets/icons/horizontal-points.svg?icon';
 import List from '@/assets/icons/list.svg?icon';
 import InBoxIcon from '@/assets/icons/inbox.svg?icon';
+import FolderIcon from '@/assets/icons/folder.svg?icon';
+import Copy from '@/assets/icons/copy.svg?icon';
+import Viber from '@/assets/icons/viber.svg?icon';
+import FacebookMessenger from '@/assets/icons/facebook-messenger.svg?icon';
+import Gmail from '@/assets/icons/gmail.svg?icon';
+import InstagramLogoInvite from '@/assets/icons/instagram-logo-invite.svg?icon';
 import SettingsIcon from '@/assets/icons/settings.svg?icon';
 import LogOutIcon from '@/assets/icons/log-out.svg?icon';
 
@@ -75,7 +81,11 @@ export const icons = {
   'eye-no': EyeNoIcon,
   'google-logo': GoogleLogoIcon,
   'facebook-logo': FacebookLogoIcon,
+  'facebook-messenger': FacebookMessenger,
   'instagram-logo': InstagramLogoIcon,
+  'instagram-logo-invite': InstagramLogoInvite,
+  gmail: Gmail,
+  viber: Viber,
   trash: TrashIcon,
   time: TimeIcon,
   'flag-ukraine': FlagUkraine,
@@ -84,6 +94,8 @@ export const icons = {
   points: HorizontalPoints,
   list: List,
   inbox: InBoxIcon,
+  folder: FolderIcon,
+  copy: Copy,
   settings: SettingsIcon,
   'log-out': LogOutIcon,
 } satisfies Record<string, FC<SVGComponentElement>>;

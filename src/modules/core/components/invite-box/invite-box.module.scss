@@ -1,0 +1,72 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.boxContainer {
+  padding: utils.spacing(2.5);
+  border-radius: variables.$border-radius-medium;
+  display: flex;
+  flex-direction: column;
+  row-gap: utils.spacing(2);
+  @media (max-width: 1300px) {
+    padding: utils.spacing(2);
+  }
+}
+
+.link {
+  background-color: #fcf0d8;
+}
+.invite {
+  background-color: variables.$primary-light-color;
+}
+
+.yellow {
+  color: #efb33b;
+}
+.blue {
+  color: variables.$primary-color;
+}
+.boxSubTitle {
+  color: #aaa293;
+}
+
+.boxClipboard {
+  padding: utils.spacing(1.1);
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: variables.$border-radius-medium;
+  @include mixins.tablet {
+    padding: utils.spacing(0.5, 1);
+  }
+}
+.boxCopyIcon {
+  cursor: pointer;
+  transition: color 0.2s ease 0s;
+  &:hover {
+    color: variables.$success-color;
+  }
+}
+
+.inviteTitle {
+  color: variables.$primary-color;
+}
+
+.socialMedia {
+  display: flex;
+  column-gap: utils.spacing(3);
+  padding: utils.spacing(0, 1.1);
+}
+
+.socialIcon {
+  cursor: pointer;
+  transition: transform 0.2s ease 0s;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.copied {
+  color: variables.$success-color;
+}

@@ -1,0 +1,40 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.root {
+  height: calc(100vh - 75px);
+  display: flex;
+  margin-top: 75px;
+}
+
+.menuForms {
+  padding: utils.spacing(6, 4.5);
+  flex-grow: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  @include mixins.phone {
+    padding: utils.spacing(4, 2);
+  }
+}
+
+.menuInvite {
+  width: 100%;
+  max-width: 430px;
+  padding: utils.spacing(8, 4.5);
+  background-color: variables.$grey-light-color;
+  display: flex;
+  flex-direction: column;
+  row-gap: utils.spacing(4);
+  border-left: 1px solid rgba(37, 74, 165, 0.1);
+
+  @media (max-width: 1300px) {
+    max-width: 350px;
+  }
+
+  @include mixins.tablet {
+    display: none;
+  }
+}
