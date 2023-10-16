@@ -1,46 +1,50 @@
 'use client';
-
+// components
 import { Button } from '@/modules/core/components/button';
 import { AboutProfessionalForm } from '@/modules/user/components/about-professional-form';
-import { ProfileSettingsNavigation } from '@/modules/user/containers/profile-settings-navigation/profile-settings-navigation';
+import { ProfessionalGalleryForm } from '@/modules/user/components/professional-gallery-form';
+import { ProfessionalServicesForm } from '@/modules/service/containers/professional-services-form';
+import { ProfessionalScheduleForm } from '@/modules/schedule/containers/professional-schedule-form';
+import { UserLocationSelectForm } from '@/modules/location/containers/user-location-select-form';
+// hooks
+import { useQueryParams } from '@/modules/core/hooks/use-search-params';
 
-import { InviteBox } from '@/modules/core/components/invite-box';
+export default function ProfileSettingsAbout() {
+  const { queryParams } = useQueryParams<{ step: string }>();
+  const initialTab = 'about';
+  // memo
+  const activeTab = queryParams.step ?? initialTab;
 
-import styles from './profile-settings.module.scss';
-
-export default function ProfileSettings() {
   return (
-    <div className={styles.root}>
-      <ProfileSettingsNavigation />
-
-      <div className={styles.menuForms}>
-        <AboutProfessionalForm />
-        <Button className={styles.buttonSave} text='Save' variant='primary' />
-      </div>
-
-      <div className={styles.menuInvite}>
-        <InviteBox
-          variant='link'
-          titleColor='yellow'
-          copyText='stylesync/gloria-dalas'
-          title='Link to your profile!'
-          subTitle='We highly recommend adding a link to your business account on Instagram, Facebook, or any other platform you use to connect with your clients'
-        />
-        <InviteBox
-          variant='invite'
-          titleColor='blue'
-          copyText='stylesync/invite.com.us'
-          title='Invite your friends!'
-          subTitle='To invite your friend use this referal link'
-          icon={[
-            'instagram-logo-invite',
-            'facebook-logo',
-            'facebook-messenger',
-            'gmail',
-            'viber',
-          ]}
-        />
-      </div>
-    </div>
+    <>
+      {activeTab === 'about' && (
+        <>
+          <AboutProfessionalForm />
+          <Button text='Save' variant='primary' />
+        </>
+      )}
+      {activeTab === 'portfolio' && (
+        <>
+          <ProfessionalGalleryForm />
+          <Button text='Save' variant='primary' />
+        </>
+      )}
+      {activeTab === 'services' && (
+        <>
+          <ProfessionalServicesForm />
+          <Button text='Save' variant='primary' />
+        </>
+      )}
+      {activeTab === 'schedule' && (
+        <>
+          <ProfessionalScheduleForm />
+        </>
+      )}
+      {activeTab === 'location' && (
+        <>
+          <UserLocationSelectForm />
+        </>
+      )}
+    </>
   );
 }

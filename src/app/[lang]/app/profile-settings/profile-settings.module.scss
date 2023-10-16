@@ -6,17 +6,23 @@
   height: calc(100vh - 75px);
   display: flex;
   margin-top: 75px;
+  overflow: hidden;
 }
 
-.menuForms {
+.mainContainer {
   padding: utils.spacing(6, 4.5);
   flex-grow: 1;
   width: 100%;
   display: flex;
   flex-direction: column;
+  height: 100%;
   justify-content: space-between;
+  overflow: auto;
   @include mixins.phone {
-    padding: utils.spacing(4, 2);
+    display: none;
+  }
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 

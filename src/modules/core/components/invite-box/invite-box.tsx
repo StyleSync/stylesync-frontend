@@ -1,3 +1,4 @@
+'use client';
 import type { FC } from 'react';
 import clsx from 'clsx';
 // library
@@ -50,7 +51,9 @@ export const InviteBox: FC<InviteBoxProps> = ({
           width={20}
           height={20}
           name='copy'
-          onClick={() => copy(copyText)}
+          onClick={() => {
+            copy(copyText);
+          }}
         />
       </div>
 

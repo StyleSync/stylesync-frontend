@@ -14,12 +14,9 @@
   @include mixins.tablet {
     width: 300px;
   }
-  @media (max-width: 800px) {
-    width: 240px;
-  }
+
   @include mixins.phone {
-    padding-top: utils.spacing(4);
-    width: 180px;
+    width: 100%;
   }
 }
 
@@ -52,27 +49,42 @@
   margin-top: utils.spacing(6);
   display: flex;
   flex-direction: column;
-}
-.menuTab {
-  display: flex;
-  column-gap: utils.spacing(1.1);
-  align-items: center;
-  padding: 13px 20px 13px 19px;
-  cursor: pointer;
-  transition: all 0.2s ease 0s;
-  border-radius: variables.$border-radius-medium;
-  &:hover {
-    background-color: variables.$primary-light-color;
-    box-shadow: variables.$main-box-shadow;
-    color: variables.$primary-color;
-    .text {
+  row-gap: utils.spacing(1.1);
+  .menuTab {
+    width: 133px;
+    transition: all 0.2s ease 0s;
+    &:hover {
+      background-color: #fff;
+      box-shadow: variables.$main-box-shadow;
+      color: variables.$primary-color;
+      .titleText {
+        color: variables.$primary-color;
+      }
+    }
+    &.active {
+      background-color: variables.$primary-light-color;
+      box-shadow: variables.$main-box-shadow;
       color: variables.$primary-color;
     }
   }
 }
 
-.menuTab:not(:last-child) {
-  margin-bottom: utils.spacing(1.1);
+.menuTab {
+  width: 133px;
+  transition: all 0.2s ease 0s;
+  &:hover {
+    background-color: #fff;
+    box-shadow: variables.$main-box-shadow;
+    color: variables.$primary-color;
+    .titleText {
+      color: variables.$primary-color;
+    }
+  }
+  &.active {
+    background-color: variables.$primary-light-color;
+    box-shadow: variables.$main-box-shadow;
+    color: variables.$primary-color;
+  }
 }
 
 .menuPolicy {
