@@ -1,0 +1,108 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+
+:root {
+  --fc-button-active-bg-color: #c5d8f8;
+}
+
+.fc-view-harness {
+  background-color: #fff;
+  box-shadow: variables.$main-box-shadow;
+  border-radius: variables.$border-radius-medium;
+}
+
+.fc-theme-standard {
+  td {
+    border-color: #EDF4FC;
+  }
+
+  th {
+    border-color: #EDF4FC;
+
+    .fc-scrollgrid-sync-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+
+      a {
+        font-size: 16px;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .fc-scrollgrid {
+    border: none;
+  }
+}
+
+.fc {
+  .fc-timegrid-slot-label {
+    border: none;
+  }
+
+  .fc-toolbar-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: variables.$dark-color;
+  }
+
+  .fc-timegrid-slot-label-cushion {
+    font-size: 14px;
+    color: variables.$dark-color;
+  }
+
+  .fc-toolbar-chunk:last-child {
+    margin-left: utils.spacing(2);
+  }
+
+  .fc-today-button {
+    background-color: transparent;
+    border: none !important;
+    color: variables.$primary-color;
+
+    &:disabled {
+      background-color: transparent;
+      color: variables.$primary-color;
+    }
+  }
+
+  .fc-button-group {
+    .fc-button-primary {
+      background-color: variables.$primary-light-color;
+      border: none;
+      border-radius: 50% !important;
+      width: 36px;
+      height: 36px;
+      margin: 0 8px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      outline: none;
+      transition: variables.$transition-ultrafast;
+
+      &:hover {
+        background-color: darken(variables.$primary-light-color, 2%);
+      }
+
+      &:active {
+        box-shadow: none;
+      }
+
+      &:focus {
+        box-shadow: none;
+      }
+
+      &:focus-visible {
+        box-shadow: 0 0 0 2px #fff, 0 0 0 4px variables.$primary-color;
+      }
+
+      .fc-icon {
+        color: variables.$primary-color;
+        font-size: 18px;
+      }
+    }
+  }
+}

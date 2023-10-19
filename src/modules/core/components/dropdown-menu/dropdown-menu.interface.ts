@@ -6,6 +6,8 @@ type DropdownItem = {
   id: string;
   text: string;
   icon?: IconName;
+  variant?: 'default' | 'danger';
+  className?: string;
 };
 
 export type DropdownMenuProps = {

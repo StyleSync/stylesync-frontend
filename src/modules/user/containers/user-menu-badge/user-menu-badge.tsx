@@ -19,11 +19,13 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
       items={[
         {
           id: 'profile',
-          text: 'Profile',
+          text: 'Profile settings',
+          icon: 'settings',
         },
         {
           id: 'sign-out',
           text: 'Sign out',
+          variant: 'danger',
         },
       ]}
       trigger={
