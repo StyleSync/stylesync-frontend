@@ -1,18 +1,18 @@
 'use client';
 import Link from 'next/link';
 import { faker } from '@faker-js/faker';
+import clsx from 'clsx';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Button } from '@/modules/core/components/button';
 import { Icon } from '@/modules/core/components/icon';
 import { Avatar } from '@/modules/core/components/avatar';
 import { ServiceTag } from '@/modules/service/components/service-tag';
+import { Emoji } from '@/modules/core/components/emoji';
 // temp
 import GirlPng from '@/assets/images/girl.png';
 
 import styles from './user-header.module.scss';
-import clsx from 'clsx';
-import { Emoji } from '@/modules/core/components/emoji';
 
 export const UserHeader = () => {
   return (

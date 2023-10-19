@@ -10,8 +10,9 @@ import { ProfessionalProfileTabs } from '@/modules/user/components/professional-
 import Bg from '@/assets/images/bg-1.png';
 
 import styles from './profile.module.scss';
+import type { PageParams } from '@/modules/core/types/next.types';
 
-export default function Profile() {
+export default async function Profile({ params }: PageParams) {
   return (
     <main className={styles.root}>
       <Image className={styles.img} {...Bg} alt='background' />

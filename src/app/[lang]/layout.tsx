@@ -10,6 +10,10 @@ import { getDictionary } from '@/modules/internationalization/utils/dictionary.u
 // types
 import type { ChildrenProp } from '@/modules/core/types/react.types';
 import type { PageParams } from '@/modules/core/types/next.types';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+
+export const dynamic = 'force-static';
 
 export default async function RootLayout({
   children,

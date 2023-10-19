@@ -1,7 +1,4 @@
-// TODO: Fix linter when you have type and export in same line
-import type { NextAuthOptions } from 'next-auth';
-// eslint-disable-next-line no-duplicate-imports
-import NextAuth from 'next-auth';
+import NextAuth, { getServerSession, type NextAuthOptions } from 'next-auth';
 import Auth0Provider from 'next-auth/providers/auth0';
 import { PrismaClient } from '@prisma/client';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
