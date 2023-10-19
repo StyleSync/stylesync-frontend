@@ -16,6 +16,7 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({
   items,
   render,
   popoverProps,
+  typographyProps,
 }) => {
   return (
     <Popover
@@ -41,7 +42,7 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({
             ) : (
               <>
                 {item.icon && <Icon name={item.icon} width={20} height={20} />}
-                <Typography>{item.text}</Typography>
+                <Typography {...typographyProps}>{item.text}</Typography>
               </>
             )}
           </button>

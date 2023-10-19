@@ -34,4 +34,24 @@
     align-items: center;
     justify-content: space-between;
   }
+
+  .centralSlot {
+    width: 100%;
+    max-width: 968px;
+    padding: utils.spacing(0,3);
+  }
+
+  .rightSlot {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex: 1;
+  }
+
+  .leftSlot {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 1;
+  }
 }

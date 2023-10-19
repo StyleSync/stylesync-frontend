@@ -11,7 +11,7 @@ export default function AuthLayout({ children }: ChildrenProp) {
     <div className={styles.root}>
       <Header
         className={styles.header}
-        rightAdornment={<AuthHeaderRightAdornment />}
+        rightSlot={<AuthHeaderRightAdornment />}
       />
       <div className={styles.content}>{children}</div>
     </div>

@@ -33,11 +33,24 @@
 
     .moreButton {
       color: variables.$dark-color;
+      transition: variables.$transition-ultrafast;
+
+      &:hover, &.active {
+        background-color: darken(#fff, 4%);
+      }
     }
   }
 
   &.green {
     background: linear-gradient(24deg, #76C38F 0%, #60CF8C 48.44%, #A7C12C 100%);
+
+    .moreButton {
+      transition: variables.$transition-ultrafast;
+
+      &:hover, &.active {
+        background-color: darken(#9ac443, 5%);
+      }
+    }
   }
 
   @include mixins.phone {

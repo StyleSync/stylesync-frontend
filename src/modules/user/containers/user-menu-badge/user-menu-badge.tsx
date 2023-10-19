@@ -44,6 +44,9 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
           <Icon name='chevron-bottom' width={12} />
         </button>
       }
+      typographyProps={{
+        weight: 'medium',
+      }}
       isOpen={isOpen.value}
       onClose={isOpen.setFalse}
       popoverProps={{

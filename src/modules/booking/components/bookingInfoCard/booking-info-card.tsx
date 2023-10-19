@@ -83,16 +83,20 @@ export const BookingInfoCard: FC<BookingInfoCardProps> = ({
         ]}
         trigger={
           <Button
-            className={styles.moreButton}
+            className={clsx(styles.moreButton, {
+              [styles.active]: isOpen.value,
+            })}
             onClick={isOpen.toggle}
             icon='points'
             variant='unstyled'
-            rippleColor='#60CF8C'
+            rippleColor='rgba(0,0,0,.1)'
           />
         }
         isOpen={isOpen.value}
         onClose={isOpen.setFalse}
         onSelect={isOpen.setFalse}
+        popoverProps={{ sideOffset: 8 }}
+        typographyProps={{ weight: 'medium' }}
       />
     </div>
   );

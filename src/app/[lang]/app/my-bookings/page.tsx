@@ -19,7 +19,7 @@ export default function MyBookings() {
   const { queryParams, setQueryParams } = useQueryParams<{
     tab: 'calendar' | 'list';
   }>();
-  const activeTab = queryParams.tab ?? 'calendar';
+  const activeTab = queryParams.tab ?? 'list';
 
   const handleTabChange = useCallback(
     (key: string) => {
@@ -31,7 +31,7 @@ export default function MyBookings() {
   return (
     <div className={styles.root}>
       <Image {...Bg} alt='background' className={styles.img} />
-      <section className={clsx(styles.section)}>
+      <section className={'pageContent'}>
         <Tabs
           value={activeTab}
           onChange={handleTabChange}
@@ -50,7 +50,7 @@ export default function MyBookings() {
         />
       </section>
       <div className={styles.pageContent}>
-        <section className={clsx(styles.section, styles.light)}>
+        <section className={clsx('pageContent', styles.light)}>
           {activeTab === 'list' && (
             <div className={styles.tabContiner}>
               <div className={styles.tabBox}>

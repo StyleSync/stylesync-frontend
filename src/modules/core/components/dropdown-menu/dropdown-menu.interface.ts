@@ -1,6 +1,7 @@
 import type { IconName } from '@/modules/core/components/icon';
 import type { FC, ReactNode } from 'react';
 import type { PopoverProps } from '@/modules/core/components/popover/popover.interface';
+import type { TypographyProps } from '@/modules/core/components/typogrpahy/typography.interface';
 
 type DropdownItem = {
   id: string;
@@ -18,4 +19,5 @@ export type DropdownMenuProps = {
   onSelect?: (item: DropdownItem) => void;
   render?: FC<DropdownItem>;
   popoverProps?: Partial<Omit<PopoverProps, 'onClose' | 'isOpen' | 'trigger'>>;
+  typographyProps?: TypographyProps;
 };

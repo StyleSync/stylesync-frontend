@@ -7,7 +7,7 @@ import type { ChildrenProp } from '@/modules/core/types/react.types';
 export default function AppLayout({ children }: ChildrenProp) {
   return (
     <>
-      <Header rightAdornment={<UserMenuBadge />} />
+      <Header rightSlot={<UserMenuBadge />} />
       {children}
     </>
   );
