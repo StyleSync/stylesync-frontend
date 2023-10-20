@@ -1,0 +1,42 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+
+.root {
+  display: flex;
+  align-items: center;
+  column-gap: utils.spacing(5);
+
+  .link {
+    position: relative;
+    text-decoration: none;
+    color: variables.$dark-color;
+
+    &:hover {
+      color: #000;
+    }
+
+    &::before {
+      position: absolute;
+      top: calc(100% + 3px);
+      left: 0;
+      width: 0;
+      height: 2px;
+      border-radius: 2px;
+      background-color: variables.$primary-color;
+      content: '';
+      transition: variables.$transition-ultrafast;
+    }
+
+    &.active {
+      color: variables.$primary-color;
+
+      &::before {
+        width: 50%;
+      }
+    }
+
+    span {
+      color: inherit;
+    }
+  }
+}

@@ -3,21 +3,34 @@
 .root {
   position: relative;
   display: flex;
-  column-gap: 16px;
+  column-gap: 8px;
 }
 
 .tab {
   display: flex;
   align-items: center;
   column-gap: 8px;
-  padding: 16px 8px;
+  padding: 8px 16px;
   color: variables.$dark-color;
   cursor: pointer;
-  transition: variables.$transition-fast;
+  transition: variables.$transition-ultrafast;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+
+  &:hover {
+    background-color: rgba(black, .05);
+  }
 
   &_active {
-    color: variables.$accent-color;
+    color: variables.$primary-color;
+    background-color: rgba(variables.$primary-light-color, .5);
+
+
+    &:hover {
+      background-color: rgba(variables.$primary-light-color, .6);
+    }
   }
+
 }
 
 .tabName {
@@ -28,13 +41,3 @@
   width: 16px;
   height: 16px;
 }
-
-.indicator {
-  position: absolute;
-  top: calc(100% - 2px);
-  height: 2px;
-  border-radius: 2px;
-  background-color: variables.$accent-color;
-  transition: variables.$transition-ultrafast;
-}
-

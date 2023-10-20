@@ -1,7 +1,7 @@
 import type { IconName } from '@/modules/core/components/icon';
 import type { TypographyProps } from '@/modules/core/components/typogrpahy/typography.interface';
 
-type Tab = {
+export type Tab = {
   key: string;
   name: string;
   icon?: IconName;

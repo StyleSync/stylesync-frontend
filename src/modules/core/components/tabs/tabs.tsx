@@ -1,4 +1,4 @@
-import { type CSSProperties, type FC, useMemo, useState } from 'react';
+import { type FC } from 'react';
 import clsx from 'clsx';
 // components
 import { Icon } from '@/modules/core/components/icon';
@@ -13,21 +13,6 @@ export const Tabs: FC<TabsProps> = ({
   onChange,
   typographyProps,
 }) => {
-  // state
-  const [activeTabElement, setActiveTabElement] =
-    useState<HTMLDivElement | null>(null);
-  // memo
-  const indicatorStyles = useMemo<CSSProperties>(() => {
-    if (!activeTabElement) {
-      return {};
-    }
-
-    return {
-      left: activeTabElement.offsetLeft,
-      width: activeTabElement.clientWidth,
-    };
-  }, [activeTabElement]);
-
   const handleTabClick = (key: string) => () => {
     if (value !== key) {
       onChange && onChange(key);
@@ -39,11 +24,6 @@ export const Tabs: FC<TabsProps> = ({
       {tabs.map((tab) => (
         <div
           key={tab.key}
-          ref={(element) => {
-            if (element && tab.key === value) {
-              setActiveTabElement(element);
-            }
-          }}
           className={clsx(styles.tab, {
             [styles.tab_active]: value === tab.key,
           })}
@@ -59,7 +39,6 @@ export const Tabs: FC<TabsProps> = ({
           </Typography>
         </div>
       ))}
-      <div className={styles.indicator} style={indicatorStyles} />
     </div>
   );
 };
