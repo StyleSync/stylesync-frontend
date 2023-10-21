@@ -41,6 +41,18 @@
     padding: 0;
     width: utils.spacing(5);
   }
+
+  .text {
+    position: relative;
+    color: inherit;
+  }
+
+  .icon {
+    position: relative;
+    color: inherit;
+    width: 20px;
+    height: 20px;
+  }
 }
 
 .primary {
@@ -109,16 +121,4 @@
     border-color: darken(variables.$error-color, 10%);
     color: darken(variables.$error-color, 10%);
   }
-}
-
-.text {
-  position: relative;
-  color: inherit;
-}
-
-.icon {
-  position: relative;
-  color: inherit;
-  width: 20px;
-  height: 20px;
 }

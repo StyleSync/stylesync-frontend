@@ -15,11 +15,13 @@ import type { DropdownItem } from '@/modules/core/components/dropdown-menu/dropd
 import type { UserMenuBadgeProps } from './user-menu-badge.interface';
 import styles from './user-menu-badge.module.scss';
 import { trpc } from '@/modules/core/utils/trpc.utils';
+import { useRouter } from 'next/navigation';
 
 export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
   // state
   const isOpen = useBoolean();
   const session = useSession();
+  const router = useRouter();
   // queries
   const { data: me } = trpc.user.me.useQuery(undefined, {
     enabled: session.status === 'authenticated',
@@ -28,7 +30,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
   const handleSelect = useCallback(
     ({ id }: DropdownItem) => {
       if (id === 'profile-settings') {
-        // todo: add navigation to profile settings screen
+        router.push('/app/profile-settings');
       }
 
       if (id === 'sign-out') {
@@ -37,7 +39,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
 
       isOpen.setFalse();
     },
-    [isOpen]
+    [isOpen, router]
   );
 
   if (session.status === 'loading') {

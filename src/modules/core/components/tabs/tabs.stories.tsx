@@ -15,7 +15,7 @@ type Story = StoryObj<typeof Tabs>;
 
 export const Base: Story = {
   render: () => {
-    const [value, setValue] = useState('portfolio');
+    const [value, setValue] = useState('services');
 
     return (
       <Tabs
@@ -28,8 +28,8 @@ export const Base: Story = {
             icon: 'info',
           },
           {
-            key: 'portfolio',
-            name: 'Portfolio',
+            key: 'gallery',
+            name: 'Gallery',
             icon: 'image',
           },
           {

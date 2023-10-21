@@ -12,38 +12,27 @@ import styles from './invite-box.module.scss';
 
 export const InviteBox: FC<InviteBoxProps> = ({
   copyText,
-  variant,
-  titleColor,
-  icon,
   title,
   subTitle,
+  bg = 'linear-gradient(120deg, #fccb90 0%, #d57eeb 100%)',
+  slotAfterCopyBox,
 }) => {
   const [value, copy] = useCopyToClipboard();
 
   return (
-    <div
-      className={clsx(styles.boxContainer, {
-        [styles.link]: variant === 'link',
-        [styles.invite]: variant === 'invite',
-      })}
-    >
-      <Typography
-        variant='subtitle'
-        className={clsx({
-          [styles.yellow]: titleColor === 'yellow',
-          [styles.blue]: titleColor === 'blue',
-        })}
-      >
+    <div className={clsx(styles.root)} style={{ background: bg }}>
+      <Typography variant='subtitle' className={styles.title} weight='bold'>
         {title}
       </Typography>
-
-      <Typography variant='small' className={styles.boxSubTitle}>
+      <Typography
+        variant='body2'
+        className={styles.description}
+        weight='semibold'
+      >
         {subTitle}
       </Typography>
-
-      <div className={styles.boxClipboard}>
+      <div className={styles.clipboardBox}>
         <Typography>{copyText}</Typography>
-
         <Icon
           className={clsx(styles.boxCopyIcon, {
             [styles.copied]: value,
@@ -56,20 +45,7 @@ export const InviteBox: FC<InviteBoxProps> = ({
           }}
         />
       </div>
-
-      {icon && (
-        <div className={styles.socialMedia}>
-          {icon.map((iconName, index) => (
-            <Icon
-              key={index}
-              className={styles.socialIcon}
-              width={34}
-              height={34}
-              name={iconName}
-            />
-          ))}
-        </div>
-      )}
+      {slotAfterCopyBox}
     </div>
   );
 };

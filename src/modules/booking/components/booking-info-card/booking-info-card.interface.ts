@@ -1,4 +1,4 @@
-type BookingInfoCardVariant = 'light' | 'green';
+export type BookingInfoCardVariant = 'light' | 'green';
 
 export type BookingInfoCardProps = {
   name: string;
