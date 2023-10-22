@@ -1,4 +1,4 @@
-import NextAuth from 'next-auth';
+import NextAuth, { type NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import FacebookProvider from 'next-auth/providers/facebook';
 import InstagramProvider from 'next-auth/providers/instagram';
@@ -9,7 +9,7 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-const authOptions = {
+export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
@@ -37,6 +37,15 @@ const authOptions = {
       issuer: process.env.AUTH0_ISSUER,
     }),
   ],
+  callbacks: {
+    session: async ({ session, user }) => {
+      if (session.user) {
+        return { ...session, user: { ...session.user, id: user.id } };
+      }
+
+      return session;
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);

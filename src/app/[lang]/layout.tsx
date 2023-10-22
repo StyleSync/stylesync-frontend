@@ -2,7 +2,7 @@ import '@/styles/globals.scss';
 // constants
 import { i18nConfig } from '@/modules/internationalization/constants/i18n.constants';
 // providers
-import { TrpcProvider } from '@/utils/trpc-provider';
+import { TrpcProvider } from '@/modules/core/providers/trpc-provider';
 import { IntlProvider } from '@/modules/internationalization/containers/intl-provider';
 import { Providers } from '@/app/[lang]/providers';
 // utils
