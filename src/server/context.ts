@@ -31,7 +31,7 @@ export async function createContextInner(opts: CreateContextOptions) {
  * Creates context for an incoming request
  * @link https://trpc.io/docs/context
  */
-export async function createContext(
+export async function createTRPCContext(
   opts: trpcNext.CreateNextContextOptions & { type: 'api' }
 ) {
   // not RSC
@@ -43,4 +43,4 @@ export async function createContext(
   };
 }
 
-export type Context = trpc.inferAsyncReturnType<typeof createContext>;
+export type Context = trpc.inferAsyncReturnType<typeof createTRPCContext>;

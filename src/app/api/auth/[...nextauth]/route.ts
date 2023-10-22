@@ -1,7 +1,4 @@
-// TODO: Fix linter when you have type and export in same line
-import type { NextAuthOptions } from 'next-auth';
-// eslint-disable-next-line no-duplicate-imports
-import NextAuth from 'next-auth';
+import NextAuth, { type NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import FacebookProvider from 'next-auth/providers/facebook';
 import InstagramProvider from 'next-auth/providers/instagram';
