@@ -11,6 +11,11 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
+enum Role {
+  CUSTOMER
+  PROFESSIONAL
+}
+
 // Next Auth models
 model Account {
   id                String  @id @default(cuid())
@@ -40,21 +45,23 @@ model Session {
 }
 
 model User {
-  id            String        @id @default(cuid())
-  avatar        String?
-  firstName     String?
-  lastName      String?
-  phone         String?       @unique
-  name          String?
-  email         String?       @unique
-  emailVerified DateTime?
-  image         String?
-  companyId     String?
-  company       Company?     @relation(fields: [companyId], references: [id], onDelete: SetNull)
-  accounts      Account[]
-  sessions      Session[]
-  bookings      Booking[]
-  professional  Professional?
+  id                  String        @id @default(cuid())
+  avatar              String?
+  firstName           String?
+  lastName            String?
+  phone               String?       @unique
+  name                String?
+  email               String?       @unique
+  emailVerified       DateTime?
+  image               String?
+  onboardingCompleted Boolean       @default(false)
+  userType            Role?
+  companyId           String?
+  company             Company?      @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  accounts            Account[]
+  sessions            Session[]
+  bookings            Booking[]
+  professional        Professional?
 }
 
 model VerificationToken {
