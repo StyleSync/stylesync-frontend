@@ -1,5 +1,6 @@
 declare module '*.svg?icon' {
-  import { FC, SVGAttributes } from 'react';
+  import type { FC, SVGAttributes } from 'react';
+
   const content: FC<SVGAttributes<SVGElement>>;
 
   export default content;

@@ -2,6 +2,7 @@ import { privateProcedure, publicProcedure, router } from '../trpc-helpers';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { prisma } from '@/server/prisma';
+import { Role } from '@prisma/client';
 import {
   defaultPortfolioSelect,
   defaultProfessionalSelect,
@@ -80,6 +81,12 @@ export const professionalRouter = router({
           message: `No professional for user with id '${id}'`,
         });
       }
+
+      await prisma.user.update({
+        where: { id },
+        data: { userType: Role.PROFESSIONAL },
+        select: defaultUserSelect,
+      });
 
       return professional;
     }),
