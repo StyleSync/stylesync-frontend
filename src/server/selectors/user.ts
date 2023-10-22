@@ -13,4 +13,6 @@ export const defaultUserSelect = Prisma.validator<Prisma.UserSelect>()({
   company: true,
   bookings: true,
   professional: true,
+  onboardingCompleted: true,
+  userType: true,
 });
