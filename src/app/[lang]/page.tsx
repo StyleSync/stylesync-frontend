@@ -1,15 +1,17 @@
 import { Typography } from '@/modules/core/components/typogrpahy';
-import Link from 'next/link';
 // components
 import { LocaleSwitcher } from '@/modules/internationalization/components/locale-select';
+import { Header } from '@/modules/core/components/header';
+// containers
+import { UserMenuBadge } from '@/modules/user/containers/user-menu-badge';
 // types
 import type { PageParams } from '@/modules/core/types/next.types';
 
 export default async function Home({ params }: PageParams) {
   return (
-    <main>
+    <main style={{ paddingTop: 100 }}>
+      <Header rightSlot={<UserMenuBadge />} />
       <Typography As='p'>Current locale: {params.lang}</Typography>
-      <Link href='/auth/sign-up'>Create account</Link>
       <LocaleSwitcher locale={params.lang} />
     </main>
   );

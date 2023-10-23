@@ -5,7 +5,7 @@ import { UserHeaderNavigation } from '@/modules/core/containers/user-header-navi
 // types
 import type { ChildrenProp } from '@/modules/core/types/react.types';
 
-export default function AppLayout({ children }: ChildrenProp) {
+export default async function AppLayout({ children }: ChildrenProp) {
   return (
     <>
       <Header

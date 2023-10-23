@@ -40,7 +40,15 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     session: async ({ session, user }) => {
       if (session.user) {
-        return { ...session, user: { ...session.user, id: user.id } };
+        return {
+          ...session,
+          user: {
+            ...session.user,
+            id: user.id,
+            onboardingCompleted: user.onboardingCompleted,
+            userType: user.userType,
+          },
+        };
       }
 
       return session;
