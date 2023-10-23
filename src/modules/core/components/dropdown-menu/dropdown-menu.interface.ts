@@ -3,7 +3,7 @@ import type { FC, ReactNode } from 'react';
 import type { PopoverProps } from '@/modules/core/components/popover/popover.interface';
 import type { TypographyProps } from '@/modules/core/components/typogrpahy/typography.interface';
 
-type DropdownItem = {
+export type DropdownItem = {
   id: string;
   text: string;
   icon?: IconName;

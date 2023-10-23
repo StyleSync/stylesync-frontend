@@ -1,24 +1,66 @@
 'use client';
-import { type FC } from 'react';
+import { type FC, useCallback } from 'react';
 import { useBoolean } from 'usehooks-ts';
 import clsx from 'clsx';
+import { signIn, signOut, useSession } from 'next-auth/react';
 // components
 import { Avatar } from '@/modules/core/components/avatar';
 import { Emoji } from '@/modules/core/components/emoji';
 import { Icon } from '@/modules/core/components/icon';
 import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
+import { Button } from '@/modules/core/components/button';
+// types
+import type { DropdownItem } from '@/modules/core/components/dropdown-menu/dropdown-menu.interface';
 
 import type { UserMenuBadgeProps } from './user-menu-badge.interface';
 import styles from './user-menu-badge.module.scss';
 
 export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
   const isOpen = useBoolean();
+  const session = useSession();
+
+  const handleSelect = useCallback(
+    ({ id }: DropdownItem) => {
+      if (id === 'profile-settings') {
+        // todo: add navigation to profile settings screen
+      }
+
+      if (id === 'sign-out') {
+        signOut({ callbackUrl: '/' });
+      }
+
+      isOpen.setFalse();
+    },
+    [isOpen]
+  );
+
+  if (session.status === 'loading') {
+    return null;
+  }
+
+  if (session.status === 'unauthenticated') {
+    return (
+      <Button
+        text='Sign in'
+        variant='secondary'
+        onClick={() =>
+          signIn(
+            'auth0',
+            {
+              callbackUrl: '/app/profile',
+            },
+            { prompt: 'login' }
+          )
+        }
+      />
+    );
+  }
 
   return (
     <DropdownMenu
       items={[
         {
-          id: 'profile',
+          id: 'profile-settings',
           text: 'Profile settings',
           icon: 'settings',
         },
@@ -49,6 +91,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
       }}
       isOpen={isOpen.value}
       onClose={isOpen.setFalse}
+      onSelect={handleSelect}
       popoverProps={{
         disablePortal: true,
         sideOffset: 8,
