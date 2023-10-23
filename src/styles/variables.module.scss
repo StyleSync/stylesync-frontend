@@ -36,6 +36,10 @@ $screen-phone: 600px;
 $screen-tablet: 1200px;
 $screen-desktop: 1920px;
 
+// entities
+$header-height: 74px;
+$header-height-mobile: 62px;
+
 :export {
   // colors
   primaryColor: $primary-color;

@@ -2,19 +2,17 @@
 @use '@/styles/utils';
 @use '@/styles/mixins';
 
-$header-height: 74px;
-$header-height-mobile: 62px;
 $header-bottom-content-height-mobile: 24px;
 
 .root {
   display: flex;
-  height: calc(100vh - #{$header-height});
+  height: calc(100vh - #{variables.$header-height});
   width: 100%;
   background: radial-gradient(331.49% 141.42% at -0.00% 100.00%, #FFF 0%, #FFF 48.96%, rgba(200, 223, 254, 0.93) 99.99%);
   min-height: 100vh;
-  padding-top: $header-height;
+  padding-top: variables.$header-height;
 
   @include mixins.phone {
-    padding-top: calc(#{$header-height-mobile} + #{$header-bottom-content-height-mobile});
+    padding-top: calc(#{variables.$header-height-mobile} + #{$header-bottom-content-height-mobile});
   }
 }

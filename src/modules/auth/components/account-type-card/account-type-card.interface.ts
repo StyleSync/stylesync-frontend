@@ -1,11 +1,11 @@
 import type { EmojiName } from '@/modules/core/components/emoji/emoji';
-import type { AccountType } from '@/modules/user/types/account.types';
+import type { Role } from '@prisma/client';
 
 export type AccountTypeCardProps = {
   title: string;
   description: string;
   emoji: EmojiName;
-  value: AccountType;
+  value: Role;
   onClick?: () => void;
   badge?: string;
   disabled?: boolean;

@@ -1,0 +1,14 @@
+@use '@/styles/variables.module';
+@use '@/styles/mixins';
+
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: variables.$header-height;
+  min-height: 100vh;
+
+  @include mixins.phone {
+    padding-top: variables.$header-height-mobile;
+  }
+}
