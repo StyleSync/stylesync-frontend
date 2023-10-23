@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 import Image from 'next/image';
-import { getServerSession } from 'next-auth';
 // components
 import { UserHeader } from '@/modules/user/components/user-header';
 import { AboutMe } from '@/modules/user/components/about-me';
@@ -9,17 +8,13 @@ import { Services } from '@/modules/user/components/user-services';
 import { ProfessionalProfileTabs } from '@/modules/user/components/professional-profile-tabs';
 // utils
 import { pageGuard } from '@/modules/core/utils/route.utils';
-// constants
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 // assets
 import Bg from '@/assets/images/bg-1.png';
 
 import styles from './profile.module.scss';
 
 export default async function Profile() {
-  const session = await getServerSession(authOptions);
-
-  pageGuard(session, {
+  await pageGuard({
     require: {
       userType: true,
       onboarding: true,

@@ -1,5 +1,6 @@
-import type { Session } from 'next-auth';
 import { redirect } from 'next/navigation';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 type PageGuardConfig = {
   require: {
@@ -8,10 +9,9 @@ type PageGuardConfig = {
   };
 };
 
-export const pageGuard = (
-  session: Session | null,
-  config: PageGuardConfig
-): void => {
+export const pageGuard = async (config: PageGuardConfig): Promise<void> => {
+  const session = await getServerSession(authOptions);
+
   if (!session) {
     redirect('/auth/sign-in');
 

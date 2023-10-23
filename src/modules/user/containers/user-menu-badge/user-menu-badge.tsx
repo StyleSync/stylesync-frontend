@@ -22,7 +22,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
   const handleSelect = useCallback(
     ({ id }: DropdownItem) => {
       if (id === 'profile-settings') {
-        // navigation to settings
+        // todo: add navigation to profile settings screen
       }
 
       if (id === 'sign-out') {
