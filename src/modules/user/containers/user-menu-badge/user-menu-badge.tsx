@@ -14,10 +14,16 @@ import type { DropdownItem } from '@/modules/core/components/dropdown-menu/dropd
 
 import type { UserMenuBadgeProps } from './user-menu-badge.interface';
 import styles from './user-menu-badge.module.scss';
+import { trpc } from '@/modules/core/utils/trpc.utils';
 
 export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
+  // state
   const isOpen = useBoolean();
   const session = useSession();
+  // queries
+  const { data: me } = trpc.user.me.useQuery(undefined, {
+    enabled: session.status === 'authenticated',
+  });
 
   const handleSelect = useCallback(
     ({ id }: DropdownItem) => {
@@ -35,7 +41,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
   );
 
   if (session.status === 'loading') {
-    return null;
+    return <div className={clsx(styles.skeleton, 'skeleton')} />;
   }
 
   if (session.status === 'unauthenticated') {
@@ -63,6 +69,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
           id: 'profile-settings',
           text: 'Profile settings',
           icon: 'settings',
+          disabled: !session.data?.user.userType,
         },
         {
           id: 'sign-out',
@@ -81,6 +88,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
         >
           <Avatar
             className={styles.avatar}
+            url={me?.avatar}
             fallback={<Emoji name='sunglasses' width={30} height={30} />}
           />
           <Icon name='chevron-bottom' width={12} />
@@ -93,8 +101,9 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
       onClose={isOpen.setFalse}
       onSelect={handleSelect}
       popoverProps={{
-        disablePortal: true,
         sideOffset: 8,
+        disablePortal: true,
+        backgroundBlurEffect: false,
       }}
     />
   );

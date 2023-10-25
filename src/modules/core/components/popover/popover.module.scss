@@ -10,8 +10,12 @@
   transform: translateY(0.25rem);
   transition-duration: 200ms;
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
-  background-color: rgba(#fff, 0.8);
-  backdrop-filter: saturate(180%) blur(20px);
+  background-color: #fff;
+
+  &.backgroundBlurEffect {
+    background-color: rgba(#fff, 0.8);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
 
   &.entering {
     opacity: 1;

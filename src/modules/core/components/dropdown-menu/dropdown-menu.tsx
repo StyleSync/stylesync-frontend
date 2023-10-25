@@ -36,6 +36,7 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({
             )}
             key={item.id}
             onClick={() => onSelect && onSelect(item)}
+            disabled={item.disabled}
           >
             {typeof render === 'function' ? (
               render(item)

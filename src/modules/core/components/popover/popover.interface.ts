@@ -14,4 +14,5 @@ export type PopoverProps = ChildrenProp & {
   followTriggerWidth?: boolean;
   disableAutofocus?: boolean;
   disablePortal?: boolean;
+  backgroundBlurEffect?: boolean;
 };

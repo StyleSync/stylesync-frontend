@@ -19,6 +19,24 @@
     padding: utils.spacing(0, 2);
     column-gap: utils.spacing(1);
 
+    &:disabled {
+      cursor: default;
+      color: rgba(variables.$dark-color, 0.3);
+
+      span {
+        color: rgba(variables.$dark-color, 0.3);
+      }
+
+      &:hover {
+        background-color: transparent;
+        color: rgba(variables.$dark-color, 0.3);
+
+        span {
+          color: rgba(variables.$dark-color, 0.3);
+        }
+      }
+    }
+
     span {
       transition: variables.$transition-ultrafast;
     }
