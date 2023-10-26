@@ -48,7 +48,6 @@
     "react-hook-form": "^7.45.4",
     "react-intl": "^6.4.4",
     "react-leaflet": "^4.2.1",
-    "react-transition-group": "^4.4.5",
     "rrule": "^2.7.2",
     "superjson": "^1.13.1",
     "typescript": "5.1.3",
