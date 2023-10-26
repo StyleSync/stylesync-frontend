@@ -11,17 +11,17 @@ import { Stepper } from '@/modules/core/components/stepper';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Divider } from '@/modules/core/components/divider';
 // containers
-import { AccountTypeSelect } from '@/modules/auth/containers/account-type-select';
+import { AccountTypeSelect } from '@/modules/auth/components/account-type-select';
 import { AccountCredentialsForm } from '@/modules/auth/containers/account-credentials-form';
 // validation
 import { signUpFormValidationSchema } from '@/modules/auth/validation/schemas/sign-up-validation.schemas';
 // types
 import type { ButtonProps } from '@/modules/core/components/button/button.interface';
-import type { AccountType } from '@/modules/user/types/account.types';
 import type { SignUpUserData } from '@/modules/auth/types/sign-up.types';
 
 import type { SignUpStepValue, SignUpStep } from './sign-up-form.interface';
 import styles from './sign-up-form.module.scss';
+import type { Role } from '@prisma/client';
 
 export const defaultValues: SignUpUserData = {
   email: '',
@@ -37,7 +37,7 @@ export const SignUpForm: FC = () => {
   });
   // state
   const [step, setStep] = useState<SignUpStepValue>('account-type');
-  const [accountType, setAccountType] = useState<AccountType | null>(null);
+  const [accountType, setAccountType] = useState<Role | null>(null);
   // ids
   const formId = useId();
   // memo

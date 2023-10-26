@@ -19,7 +19,7 @@ export const pageGuard = async (config: PageGuardConfig): Promise<void> => {
   }
 
   if (config.require.userType && !session.user.userType) {
-    redirect('/app/account-type-select');
+    redirect('/app/account-type');
   }
 
   if (config.require.onboarding && !session.user.onboardingCompleted) {

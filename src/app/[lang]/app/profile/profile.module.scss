@@ -2,10 +2,6 @@
 @use '@/styles/utils';
 @use '@/styles/mixins';
 
-// todo: move vars to separate file
-$header-height: 74px;
-$header-height-mobile: 62px;
-
 .root {
   min-height: 100vh;
   background-color: variables.$grey-light-color;
@@ -32,11 +28,11 @@ $header-height-mobile: 62px;
   margin: 0 auto;
 
   &.headerSection {
-    padding-top: calc(#{ utils.spacing(7)} + #{$header-height});
+    padding-top: calc(#{ utils.spacing(7)} + #{variables.$header-height});
     padding-bottom: utils.spacing(7);
 
     @include mixins.phone {
-      padding-top: calc(#{utils.spacing(4)} + #{$header-height-mobile});
+      padding-top: calc(#{utils.spacing(4)} + #{variables.$header-height-mobile});
       padding-bottom: utils.spacing(4);
     }
   }

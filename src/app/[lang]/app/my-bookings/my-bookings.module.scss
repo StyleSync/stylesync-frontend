@@ -2,14 +2,11 @@
 @use '@/styles/utils';
 @use '@/styles/mixins';
 
-$header-height: 74px;
-$header-height-mobile: 62px;
-
 .root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding-top: calc(#{$header-height} + #{utils.spacing(4)});
+  padding-top: calc(#{variables.$header-height} + #{utils.spacing(4)});
 
   .img {
     position: fixed;
