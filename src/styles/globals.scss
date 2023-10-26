@@ -84,6 +84,19 @@ body, button, input, select, textarea {
   }
 }
 
+.skeleton {
+  animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: rgba(variables.$dark-color, 0.08);
+  }
+  100% {
+    background-color: rgba(variables.$dark-color, 0.04);
+  }
+}
+
 @keyframes use-ripple-animation {
   from {
     opacity: 1;

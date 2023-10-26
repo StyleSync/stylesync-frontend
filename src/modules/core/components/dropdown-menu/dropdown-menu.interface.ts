@@ -9,6 +9,7 @@ export type DropdownItem = {
   icon?: IconName;
   variant?: 'default' | 'danger';
   className?: string;
+  disabled?: boolean;
 };
 
 export type DropdownMenuProps = {

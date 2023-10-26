@@ -4,7 +4,7 @@
 .root {
   display: flex;
   align-items: center;
-  column-gap: utils.spacing(5);
+  column-gap: utils.spacing(4);
 
   .link {
     position: relative;
@@ -37,6 +37,21 @@
 
     span {
       color: inherit;
+    }
+  }
+
+  .loadingPlaceholder {
+    justify-content: flex-start;
+  }
+
+  .skeleton {
+    display: flex;
+    column-gap: utils.spacing(4);
+
+    & > div {
+      width: 100px;
+      height: 17px;
+      border-radius: 3px;
     }
   }
 }
