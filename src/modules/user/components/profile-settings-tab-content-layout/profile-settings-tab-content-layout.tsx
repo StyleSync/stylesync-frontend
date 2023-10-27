@@ -1,11 +1,12 @@
 import { type FC } from 'react';
+// components
+import { Divider } from '@/modules/core/components/divider';
+import { Button } from '@/modules/core/components/button';
+import { Typography } from '@/modules/core/components/typogrpahy';
+import { Icon } from '@/modules/core/components/icon';
 
 import type { ProfileSettingsTabContentLayoutProps } from './profile-settings-tab-content-layout.interface';
 import styles from './profile-settings-tab-content-layout.module.scss';
-import { Icon } from '@/modules/core/components/icon';
-import { Typography } from '@/modules/core/components/typogrpahy';
-import { Button } from '@/modules/core/components/button';
-import { Divider } from '@/modules/core/components/divider';
 
 export const ProfileSettingsTabContentLayout: FC<
   ProfileSettingsTabContentLayoutProps

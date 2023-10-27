@@ -5,6 +5,7 @@
 $header-bottom-content-height-mobile: 24px;
 
 .root {
+  position: relative;
   display: flex;
   height: calc(100vh - #{variables.$header-height});
   width: 100%;

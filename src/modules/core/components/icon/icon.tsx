@@ -40,11 +40,11 @@ import HorizontalPoints from '@/assets/icons/horizontal-points.svg?icon';
 import List from '@/assets/icons/list.svg?icon';
 import InBoxIcon from '@/assets/icons/inbox.svg?icon';
 import FolderIcon from '@/assets/icons/folder.svg?icon';
-import Copy from '@/assets/icons/copy.svg?icon';
-import Viber from '@/assets/icons/viber.svg?icon';
-import FacebookMessenger from '@/assets/icons/facebook-messenger.svg?icon';
-import Gmail from '@/assets/icons/gmail.svg?icon';
-import InstagramLogoInvite from '@/assets/icons/instagram-logo-invite.svg?icon';
+import CopyIcon from '@/assets/icons/copy.svg?icon';
+import ViberLogoIcon from '@/assets/icons/viber-logo.svg?icon';
+import MessengerLogoIcon from '@/assets/icons/messenger-logo.svg?icon';
+import GmailLogoIcon from '@/assets/icons/gmail-logo.svg?icon';
+import InstagramLogoCircleContainedIcon from '@/assets/icons/instagram-logo-circle-contained.svg?icon';
 import SettingsIcon from '@/assets/icons/settings.svg?icon';
 import LogOutIcon from '@/assets/icons/log-out.svg?icon';
 
@@ -81,11 +81,11 @@ export const icons = {
   'eye-no': EyeNoIcon,
   'google-logo': GoogleLogoIcon,
   'facebook-logo': FacebookLogoIcon,
-  'facebook-messenger': FacebookMessenger,
+  'messenger-logo': MessengerLogoIcon,
   'instagram-logo': InstagramLogoIcon,
-  'instagram-logo-invite': InstagramLogoInvite,
-  gmail: Gmail,
-  viber: Viber,
+  'instagram-logo-circle-contained': InstagramLogoCircleContainedIcon,
+  'gmail-logo': GmailLogoIcon,
+  'viber-logo': ViberLogoIcon,
   trash: TrashIcon,
   time: TimeIcon,
   'flag-ukraine': FlagUkraine,
@@ -95,7 +95,7 @@ export const icons = {
   list: List,
   inbox: InBoxIcon,
   folder: FolderIcon,
-  copy: Copy,
+  copy: CopyIcon,
   settings: SettingsIcon,
   'log-out': LogOutIcon,
 } satisfies Record<string, FC<SVGComponentElement>>;

@@ -9,7 +9,9 @@ import { ProfileSettingsContent } from '@/modules/user/containers/profile-settin
 
 import styles from './profile-settings.module.scss';
 
-export default function ProfileSettingsAbout() {
+/* TODO: find better gradients for InviteBox */
+
+export default function ProfileSettings() {
   return (
     <div className={styles.root}>
       <section className={clsx(styles.sideSection, styles.left)}>
@@ -33,10 +35,13 @@ export default function ProfileSettingsAbout() {
           slotAfterCopyBox={
             <div className={styles.social}>
               <Button icon='facebook-logo' variant='unstyled' />
-              <Button icon='instagram-logo-invite' variant='unstyled' />
-              <Button icon='facebook-messenger' variant='unstyled' />
-              <Button icon='gmail' variant='unstyled' />
-              <Button icon='viber' variant='unstyled' />
+              <Button
+                icon='instagram-logo-circle-contained'
+                variant='unstyled'
+              />
+              <Button icon='messenger-logo' variant='unstyled' />
+              <Button icon='gmail-logo' variant='unstyled' />
+              <Button icon='viber-logo' variant='unstyled' />
             </div>
           }
         />

@@ -32,7 +32,7 @@ const tabContentMap: TabContentMap = {
           {
             id: 'upcomming',
             title: 'Upcomming events',
-            cardsVariant: 'light',
+            cardsVariant: 'green',
             list: upcomingEvents,
           },
           {
