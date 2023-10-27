@@ -39,13 +39,22 @@ export default async function Profile() {
       </section>
       <div className={styles.divider} />
       <div className={styles.sectionGroup}>
-        <section className={clsx(styles.section, styles.block)}>
+        <section
+          className={clsx(styles.section, styles.block)}
+          id='profile-about'
+        >
           <AboutMe />
         </section>
-        <section className={clsx(styles.section, styles.block)}>
+        <section
+          className={clsx(styles.section, styles.block)}
+          id='profile-services'
+        >
           <Services />
         </section>
-        <section className={clsx(styles.section, styles.block)}>
+        <section
+          className={clsx(styles.section, styles.block)}
+          id='profile-gallery'
+        >
           <GallerySection />
         </section>
       </div>

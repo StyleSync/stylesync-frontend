@@ -74,6 +74,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
         {
           id: 'sign-out',
           text: 'Sign out',
+          icon: 'log-out',
           variant: 'danger',
         },
       ]}

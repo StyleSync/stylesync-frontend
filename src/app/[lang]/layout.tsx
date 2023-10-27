@@ -1,6 +1,7 @@
 import '@/styles/globals.scss';
+import { Analytics } from '@vercel/analytics/react';
 // constants
-import { i18nConfig } from '@/modules/internationalization/constants/i18n.constants';
+// import { i18nConfig } from '@/modules/internationalization/constants/i18n.constants';
 // providers
 import { TrpcProvider } from '@/modules/core/providers/trpc-provider';
 import { IntlProvider } from '@/modules/internationalization/containers/intl-provider';
@@ -26,14 +27,16 @@ export default async function RootLayout({
             <Providers session={params.session}>{children}</Providers>
           </IntlProvider>
         </TrpcProvider>
+        <Analytics />
       </body>
     </html>
   );
 }
 
-export async function generateStaticParams() {
-  return i18nConfig.locales.map((locale) => ({ lang: locale }));
-}
+// TODO: it causes error 'Dynamic Server Usage: cookies'. Double check if we need this
+// export async function generateStaticParams() {
+//   return i18nConfig.locales.map((locale) => ({ lang: locale }));
+// }
 
 export const metadata = {
   title: 'Create Next App',
