@@ -40,6 +40,7 @@ import HorizontalPoints from '@/assets/icons/horizontal-points.svg?icon';
 import List from '@/assets/icons/list.svg?icon';
 import InBoxIcon from '@/assets/icons/inbox.svg?icon';
 import SettingsIcon from '@/assets/icons/settings.svg?icon';
+import LogOutIcon from '@/assets/icons/log-out.svg?icon';
 
 import type { SVGComponentElement } from './icon.interface';
 
@@ -84,6 +85,7 @@ export const icons = {
   list: List,
   inbox: InBoxIcon,
   settings: SettingsIcon,
+  'log-out': LogOutIcon,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;
