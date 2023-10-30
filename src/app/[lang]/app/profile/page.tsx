@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 // components
-import { UserHeader } from '@/modules/user/components/user-header';
+import { ProfessionalInfoBigCard } from '@/modules/user/containers/professional-info-big-card';
 import { AboutMe } from '@/modules/user/components/about-me';
 import { GallerySection } from '@/modules/user/components/gallery-section';
 import { Services } from '@/modules/user/components/user-services';
@@ -21,7 +21,7 @@ export default async function Profile() {
   return (
     <main className={styles.root}>
       <section className={clsx(styles.section, styles.headerSection)}>
-        <UserHeader />
+        <ProfessionalInfoBigCard />
       </section>
       <section className={clsx(styles.section, styles.tabsSection)}>
         <ProfessionalProfileTabs />

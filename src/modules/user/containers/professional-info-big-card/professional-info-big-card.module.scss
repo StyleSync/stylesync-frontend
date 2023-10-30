@@ -30,6 +30,18 @@
     }
 
     .avatar {
+      background: rgba(0,0,0,0.05);
+
+      svg {
+        color: #fff;
+      }
+
+      &Skeleton {
+        width: 80px;
+        height: 80px;
+        flex: unset;
+        border-radius: 15%;
+      }
     }
 
     .name {
@@ -39,6 +51,13 @@
         font-size: 24px;
         line-height: 29px;
         max-width: 60%;
+      }
+
+      &Skeleton {
+        width: 220px;
+        height: 27px;
+        flex: unset;
+        border-radius: 4px;
       }
     }
   }
@@ -75,6 +94,27 @@
             color: variables.$dark-color;
           }
         }
+
+        &Skeleton {
+          display: flex;
+          column-gap: utils.spacing(1);
+          flex: unset;
+
+          & > div {
+            height: 26px;
+            border-radius: 30px;
+
+            &:nth-child(1) {
+              width: 50px;
+            }
+            &:nth-child(2) {
+              width: 80px;
+            }
+            &:nth-child(3) {
+              width: 70px;
+            }
+          }
+        }
       }
 
       .location {
@@ -98,6 +138,13 @@
           @include mixins.phone {
             display: none;
           }
+        }
+
+        &Skeleton {
+          height: 15px;
+          width: 150px;
+          flex: unset;
+          border-radius: 4px;
         }
       }
     }

@@ -83,6 +83,7 @@
 
   &:disabled {
     color: darken(variables.$primary-light-color, 10%);
+    background-color: rgba(variables.$primary-light-color, 0.5);
   }
 }
 
