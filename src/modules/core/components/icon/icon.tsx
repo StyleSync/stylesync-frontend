@@ -39,6 +39,12 @@ import FlagEurope from '@/assets/icons/flag-europe.svg?icon';
 import HorizontalPoints from '@/assets/icons/horizontal-points.svg?icon';
 import List from '@/assets/icons/list.svg?icon';
 import InBoxIcon from '@/assets/icons/inbox.svg?icon';
+import FolderIcon from '@/assets/icons/folder.svg?icon';
+import CopyIcon from '@/assets/icons/copy.svg?icon';
+import ViberLogoIcon from '@/assets/icons/viber-logo.svg?icon';
+import MessengerLogoIcon from '@/assets/icons/messenger-logo.svg?icon';
+import GmailLogoIcon from '@/assets/icons/gmail-logo.svg?icon';
+import InstagramLogoCircleContainedIcon from '@/assets/icons/instagram-logo-circle-contained.svg?icon';
 import SettingsIcon from '@/assets/icons/settings.svg?icon';
 import LogOutIcon from '@/assets/icons/log-out.svg?icon';
 
@@ -75,7 +81,11 @@ export const icons = {
   'eye-no': EyeNoIcon,
   'google-logo': GoogleLogoIcon,
   'facebook-logo': FacebookLogoIcon,
+  'messenger-logo': MessengerLogoIcon,
   'instagram-logo': InstagramLogoIcon,
+  'instagram-logo-circle-contained': InstagramLogoCircleContainedIcon,
+  'gmail-logo': GmailLogoIcon,
+  'viber-logo': ViberLogoIcon,
   trash: TrashIcon,
   time: TimeIcon,
   'flag-ukraine': FlagUkraine,
@@ -84,6 +94,8 @@ export const icons = {
   points: HorizontalPoints,
   list: List,
   inbox: InBoxIcon,
+  folder: FolderIcon,
+  copy: CopyIcon,
   settings: SettingsIcon,
   'log-out': LogOutIcon,
 } satisfies Record<string, FC<SVGComponentElement>>;

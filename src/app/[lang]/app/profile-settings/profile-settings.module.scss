@@ -1,0 +1,83 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.root {
+  display: flex;
+  height: 100vh;
+  padding-top: variables.$header-height;
+  padding-left: utils.spacing(5);
+  padding-right: utils.spacing(5);
+
+  @include mixins.phone {
+    padding-top: variables.$header-height-mobile;
+  }
+
+  .sideSection {
+    position: relative;
+    flex: 1;
+    padding-top: utils.spacing(4);
+    padding-bottom: utils.spacing(4);
+
+    &.left {
+      padding-right: utils.spacing(3);
+    }
+
+    &.right {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding-left: utils.spacing(3);
+      row-gap: utils.spacing(3);
+
+      .social {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+
+        button {
+          background-color: #fff;
+          transition: variables.$transition-ultrafast;
+          box-shadow: variables.$main-box-shadow;
+
+          &:hover {
+            transform: scale(1.1);
+
+            svg {
+              transform: scale(0.9)
+            }
+          }
+
+          svg {
+            width: 30px;
+            height: 30px;
+            transition: variables.$transition-ultrafast;
+          }
+        }
+      }
+
+      .policy {
+        display: block;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        padding: utils.spacing(5);
+        text-align: center;
+      }
+    }
+  }
+
+  .container {
+    position: relative;
+    display: flex;
+    padding: utils.spacing(4, 0);
+    margin: 0;
+    flex-grow: 1;
+
+    @include mixins.phone {
+      display: none;
+    }
+  }
+}
+

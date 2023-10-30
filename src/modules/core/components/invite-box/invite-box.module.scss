@@ -1,0 +1,60 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.root {
+  display: flex;
+  padding: utils.spacing(2.5);
+  flex-direction: column;
+  border-radius: variables.$border-radius-medium;
+  row-gap: utils.spacing(2);
+  box-shadow: variables.$main-box-shadow;
+
+  @media (max-width: 1300px) {
+    padding: utils.spacing(2);
+  }
+
+  .title {
+    color: #fff;
+  }
+
+  .description {
+    color: #fff;
+    opacity: 0.9;
+  }
+
+  .clipboardBox {
+    padding: utils.spacing(1.5, 2);
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: variables.$border-radius-medium;
+    box-shadow: variables.$main-box-shadow;
+    @include mixins.tablet {
+      padding: utils.spacing(0.5, 1);
+    }
+  }
+}
+
+.inviteTitle {
+  color: variables.$primary-color;
+}
+
+.socialMedia {
+  display: flex;
+  column-gap: utils.spacing(3);
+  padding: utils.spacing(0, 1.1);
+}
+
+.socialIcon {
+  cursor: pointer;
+  transition: transform 0.2s ease 0s;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.copied {
+  color: variables.$success-color;
+}
