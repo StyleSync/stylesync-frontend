@@ -150,13 +150,6 @@ const imagesData = [
     width: 240,
   },
   {
-    caption: '8H (gratisography.com)',
-    height: 320,
-    original: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    src: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    width: 240,
-  },
-  {
     caption: '286H (gratisography.com)',
     height: 190,
     original: 'https://c3.staticflickr.com/9/8583/28354353794_9f2d08d8c0_b.jpg',
