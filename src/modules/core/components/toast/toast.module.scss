@@ -1,0 +1,84 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+
+.root {
+  display: flex;
+  background-color: white;
+  border-radius: variables.$border-radius-medium;
+  box-shadow: hsl(206 22% 7% / 35%) 0 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  padding: utils.spacing(2, 3);
+  column-gap: utils.spacing(2);
+  align-items: center;
+  width: 350px;
+
+  &[data-state='open'] {
+    animation: slideIn 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  &[data-state='closed'] {
+    animation: hide 100ms ease-in;
+  }
+  &[data-swipe='move'] {
+    transform: translateX(var(--radix-toast-swipe-move-x));
+  }
+  &[data-swipe='cancel'] {
+    transform: translateX(0);
+    transition: transform 200ms ease-out;
+  }
+  &[data-swipe='end'] {
+    animation: swipeOut 100ms ease-out;
+  }
+
+  &.info {
+    background-color: variables.$primary-color;
+  }
+
+  &.success {
+    background-color: variables.$success-color;
+  }
+
+  &.error {
+    background-color: variables.$error-color;
+  }
+
+  .slot {
+    display: flex;
+    flex-direction: column;
+    row-gap: utils.spacing(1);
+  }
+
+  .title {
+    color: #fff;
+  }
+
+  .description {
+    color: rgba(#fff, 0.9);
+  }
+}
+
+@keyframes hide {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(calc(100% + #{utils.spacing(3)}));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes swipeOut {
+  from {
+    transform: translateX(var(--radix-toast-swipe-end-x));
+  }
+  to {
+    transform: translateX(calc(100% + #{utils.spacing(3)}));
+  }
+}

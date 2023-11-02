@@ -1,0 +1,55 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: variables.$error-color;
+  max-width: 440px;
+  background-color: rgba(variables.$error-color, 0.05);
+  padding: utils.spacing(3, 3, 4, 3);
+  box-shadow: variables.$main-box-shadow;
+  border: 1px solid variables.$error-color;
+  border-radius: variables.$border-radius-medium;
+
+  .icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .title {
+    color: inherit;
+    text-align: center;
+    margin-top: utils.spacing(2);
+  }
+
+  .description {
+    color: inherit;
+    text-align: center;
+    margin-top: utils.spacing(2);
+  }
+
+  .actions {
+    display: flex;
+    column-gap: utils.spacing(1);
+    margin-top: utils.spacing(3);
+
+    .action {
+      background-color: #fff;
+      box-shadow: variables.$main-box-shadow;
+
+      svg {
+        fill: variables.$primary-color;
+      }
+
+      &.support {
+        color: variables.$success-color;
+
+        svg {
+          fill: variables.$success-color;
+        }
+      }
+    }
+  }
+}

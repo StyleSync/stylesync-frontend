@@ -3,6 +3,8 @@ export type AboutProfessionalFormProps = {
   onSubmit?: (
     data: AboutProfessionalFormValues & { avatar: File | null }
   ) => void;
+  initialValues?: Partial<AboutProfessionalFormValues>;
+  isLoading?: boolean;
 };
 
 export type AboutProfessionalFormValues = {
