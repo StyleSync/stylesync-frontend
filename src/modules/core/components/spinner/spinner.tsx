@@ -1,21 +1,28 @@
-import { type FC } from 'react';
+import { type FC, type SVGProps } from 'react';
 // styles
 import scssVariables from '@/styles/variables.module.scss';
 
 import type { SpinnerProps, SpinnerSize } from './spinner.interface';
 import styles from './spinner.module.scss';
 
-const sizeParams: Record<
-  SpinnerSize,
-  {
-    width: string;
-    height: string;
+const getSizeParams = (size: SpinnerSize): SVGProps<SVGSVGElement> => {
+  if (typeof size === 'number') {
+    return {
+      width: `${size}px`,
+      height: `${size}px`,
+    };
   }
-> = {
-  small: {
-    width: '18px',
-    height: '18px',
-  },
+
+  switch (size) {
+    case 'small':
+      return { width: '18px', height: '18px' };
+    case 'medium':
+      return { width: '32px', height: '32px' };
+    case 'large':
+      return { width: '64px', height: '64px' };
+    default:
+      throw new Error('Unknown spinner size');
+  }
 };
 
 export const Spinner: FC<SpinnerProps> = ({
@@ -28,7 +35,7 @@ export const Spinner: FC<SpinnerProps> = ({
       viewBox='0 0 66 66'
       xmlns='http://www.w3.org/2000/svg'
       stroke={color}
-      {...sizeParams[size]}
+      {...getSizeParams(size)}
     >
       <circle
         className={styles.circle}

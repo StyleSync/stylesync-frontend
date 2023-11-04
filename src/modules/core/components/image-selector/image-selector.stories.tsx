@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
+// components
+import { Typography } from '@/modules/core/components/typogrpahy';
 
 import { ImageSelector } from '././image-selector';
 
@@ -25,7 +27,7 @@ export const Default: Story = {};
 export const AvatarSelect: Story = {
   render: (args) => (
     <ImageSelector {...args}>
-      <span>
+      <Typography>
         <span
           style={{
             color: '#3B82EF',
@@ -34,7 +36,7 @@ export const AvatarSelect: Story = {
           Press here
         </span>{' '}
         to select an avatar image or drag and drop
-      </span>
+      </Typography>
     </ImageSelector>
   ),
 };

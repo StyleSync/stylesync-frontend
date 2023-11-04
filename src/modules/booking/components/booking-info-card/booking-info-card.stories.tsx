@@ -13,14 +13,15 @@ export default meta;
 type Story = StoryObj<typeof BookingInfoCard>;
 
 export const Base: Story = {
-  render: () => {
+  args: {
+    name: 'Tanusha’s Beauty',
+    serviceName: ' evening makeup',
+    date: faker.date.future().toString(),
+  },
+  render: (props) => {
     return (
       <div style={{ paddingBottom: '150px' }}>
-        <BookingInfoCard
-          name='Tanusha’s Beauty'
-          serviceName=' evening makeup'
-          date={faker.date.future().toString()}
-        />
+        <BookingInfoCard {...props} />
       </div>
     );
   },

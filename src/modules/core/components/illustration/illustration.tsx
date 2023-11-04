@@ -3,7 +3,7 @@ import { type FC, type SVGAttributes, memo } from 'react';
 import FolderIllustration from '@/assets/illustrations/folder.svg?icon';
 import FilesIllustration from '@/assets/illustrations/files.svg?icon';
 
-const illustrations = {
+export const illustrations = {
   folder: FolderIllustration,
   files: FilesIllustration,
 } satisfies Record<string, FC<SVGAttributes<SVGElement>>>;

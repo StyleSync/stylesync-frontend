@@ -1,4 +1,5 @@
 @use '@/styles/utils';
+@use '@/styles/variables.module';
 
 .root {
   display: flex;
@@ -11,6 +12,10 @@
       flex-direction: column;
       row-gap: utils.spacing(3);
       padding: utils.spacing(4, 0, 1);
+
+      .empty {
+        color: variables.$grey-color;
+      }
     }
   }
 }
