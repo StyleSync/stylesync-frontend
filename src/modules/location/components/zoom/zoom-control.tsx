@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { type FC } from 'react';
 import clsx from 'clsx';
 
 import { Icon } from '@/modules/core/components/icon';
@@ -13,11 +13,10 @@ export const ZoomControl: FC<ZoomProps> = ({
 }) => {
   return (
     <div className={clsx(styles.zoomControl, className)}>
-      <button onClick={onZoomIn} className={styles.zoomControlIn}>
+      <button onClick={onZoomIn} className={styles.btn}>
         <Icon name='plus' />
       </button>
-      <span>&nbsp;</span>
-      <button onClick={onZoomOut} className={styles.zoomControlOn}>
+      <button onClick={onZoomOut} className={styles.btn}>
         <Icon name='minus' />
       </button>
     </div>

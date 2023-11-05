@@ -12,6 +12,7 @@ declare module '@/styles/variables.module.scss' {
     facebookGradient: string;
     screenPhone: string;
     headerHeight: number;
+    mainBoxShadow: string;
   };
 
   export default variables;
