@@ -16,6 +16,12 @@ enum Role {
   PROFESSIONAL
 }
 
+enum Currency {
+  USD
+  UAH
+  EUR
+}
+
 // Next Auth models
 model Account {
   id                String  @id @default(cuid())
@@ -106,7 +112,7 @@ model ServiceOnProfessional {
   id             String       @id @default(cuid())
   title          String
   price          Float
-  currency       String
+  currency       Currency
   duration       Int
   serviceId      String
   service        Service      @relation(fields: [serviceId], references: [id], onDelete: Cascade)
