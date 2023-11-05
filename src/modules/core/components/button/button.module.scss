@@ -72,12 +72,13 @@
 }
 
 .secondary {
-  background-color: variables.$primary-light-color;
+  background-color: lighten(variables.$primary-light-color, 3%);
   color: variables.$primary-color;
   transition: variables.$transition-ultrafast;
 
   &:hover {
     color: darken(variables.$primary-color, 15%);
+    background-color: variables.$primary-light-color;
   }
 
   &:disabled {

@@ -1,19 +1,23 @@
 'use client';
 import Link from 'next/link';
+import clsx from 'clsx';
 import { faker } from '@faker-js/faker';
+import { useBoolean } from 'usehooks-ts';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Button } from '@/modules/core/components/button';
 import { Icon } from '@/modules/core/components/icon';
 import { Avatar } from '@/modules/core/components/avatar';
 import { ServiceTag } from '@/modules/service/components/service-tag';
+import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
 // temp
 import GirlPng from '@/assets/images/girl.png';
 
 import styles from './user-header.module.scss';
-import clsx from 'clsx';
 
 export const UserHeader = () => {
+  const isOpen = useBoolean();
+
   return (
     <div className={styles.container}>
       <div className={styles.top}>
@@ -48,7 +52,17 @@ export const UserHeader = () => {
           </div>
         </div>
         <div className={styles.actions}>
-          <Button variant='secondary' text='Send message' />
+          <UserContactPopup
+            isOpen={isOpen.value}
+            onClose={isOpen.setFalse}
+            trigger={
+              <Button
+                onClick={isOpen.setTrue}
+                variant='secondary'
+                text='Contact'
+              />
+            }
+          />
           <Button variant='primary' text='Book' />
         </div>
       </div>
