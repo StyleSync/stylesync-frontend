@@ -6,17 +6,17 @@
   display: flex;
   flex-direction: column;
 }
-.titleWrapper {
+.title {
   padding-bottom: utils.spacing(5);
 }
-.buttonsWrappeer {
+.actions {
   display: flex;
   justify-content: center;
   column-gap: utils.spacing(1);
   padding-top: utils.spacing(2);
 }
 
-.buttonShowMore {
+.showMore {
   height: utils.spacing(4);
   padding: utils.spacing(0, 2);
 }

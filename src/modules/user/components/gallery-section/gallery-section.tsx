@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 // components
 import { Gallery } from '@/modules/core/components/gallery';
 import { Typography } from '@/modules/core/components/typogrpahy';
@@ -313,6 +313,19 @@ const margin = 5;
 export const GallerySection = () => {
   const [maxRows, setMaxRows] = useState(2);
 
+  const [visibleImagesCount, setVisibleImagesCount] = useState<number>(0);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!rootRef.current) {
+      return;
+    }
+
+    const images = rootRef.current.querySelectorAll('img');
+
+    setVisibleImagesCount(images.length);
+  }, [maxRows]);
+
   const showMoreImages = () => {
     setMaxRows((prevMaxRows) => prevMaxRows + rowsToAdd);
   };
@@ -322,8 +335,8 @@ export const GallerySection = () => {
   };
 
   return (
-    <div className={styles.root}>
-      <div className={styles.titleWrapper}>
+    <div className={styles.root} ref={rootRef}>
+      <div className={styles.title}>
         <Typography variant='subtitle'>Gallery</Typography>
       </div>
       <div
@@ -332,20 +345,21 @@ export const GallerySection = () => {
       >
         <Gallery galleryProps={{ maxRows, rowHeight }} images={imagesData} />
       </div>
-      <div className={styles.buttonsWrappeer}>
+      <div className={styles.actions}>
         {maxRows > 2 && (
           <Button
-            className={styles.buttonShowMore}
+            className={styles.showMore}
             text='Hide'
-            variant='primary'
+            variant='secondary'
             onClick={hideImages}
           />
         )}
-        {maxRows < imagesData.length / 2 && (
+
+        {visibleImagesCount < imagesData.length && (
           <Button
-            className={styles.buttonShowMore}
+            className={styles.showMore}
             text='Show more'
-            variant={maxRows > 2 ? 'secondary' : 'primary'}
+            variant='primary'
             onClick={showMoreImages}
           />
         )}
