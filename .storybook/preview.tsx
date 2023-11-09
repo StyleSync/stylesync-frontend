@@ -2,6 +2,7 @@ import type { Preview } from '@storybook/react';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 // providers
 import { IntlProvider } from '@/modules/internationalization/containers/intl-provider';
+import { ToastProvider } from '@/modules/core/providers/toast-provider';
 // base locale
 import en from '@/modules/internationalization/dictionaries/en.json';
 
@@ -23,7 +24,9 @@ const preview: Preview = {
     (Story) => (
       <IntlProvider locale='en' dictionary={en}>
         <QueryClientProvider client={queryClient}>
-          <Story />
+          <ToastProvider>
+            <Story />
+          </ToastProvider>
         </QueryClientProvider>
       </IntlProvider>
     ),

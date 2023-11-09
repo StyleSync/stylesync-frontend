@@ -39,13 +39,20 @@
     width: 80%;
   }
 
-  .skipLink {
+  .skip {
     position: absolute;
     top: utils.spacing(3);
-    right: utils.spacing(3);
+    right: utils.spacing(10);
 
-    span {
-      color: variables.$grey-color
+    :global(.link) {
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      margin: 0 auto;
+
+      span {
+        color: variables.$grey-color
+      }
     }
   }
 }

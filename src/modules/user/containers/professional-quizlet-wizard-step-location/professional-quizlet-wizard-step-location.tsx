@@ -1,4 +1,5 @@
 import { type FC, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 // components
 import { ProfessionalQuizletWizardStepLayout } from '@/modules/user/components/professional-quizlet-wizard-step-layout';
 // containers
@@ -9,7 +10,11 @@ import type { ProfessionalQuizletWizardStepProps } from '@/modules/user/containe
 export const ProfessionalQuizletWizardStepLocation: FC<
   ProfessionalQuizletWizardStepProps
 > = ({ back }) => {
-  const handleSubmit = useCallback(() => {}, []);
+  const router = useRouter();
+
+  const handleSubmit = useCallback(() => {
+    router.push('/app/profile');
+  }, [router]);
 
   return (
     <ProfessionalQuizletWizardStepLayout

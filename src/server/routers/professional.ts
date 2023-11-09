@@ -25,7 +25,7 @@ export const professionalRouter = router({
     )
     .query(async ({ input }) => {
       const professional = await prisma.professional.findUnique({
-        where: { id: input.id },
+        where: { userId: input.id },
         select: {
           ...defaultProfessionalSelect,
           portfolios: !!input?.expand?.includes('portfolios') && {

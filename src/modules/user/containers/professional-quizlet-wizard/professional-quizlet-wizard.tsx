@@ -1,5 +1,4 @@
 'use client';
-
 import { type FC, useCallback, useMemo, useRef } from 'react';
 // containers
 import { ProfessionalQuizletWizardStepAbout } from '@/modules/user/containers/professional-quizlet-wizard-step-about';
@@ -13,6 +12,8 @@ import { Stepper } from '@/modules/core/components/stepper';
 import { Progress } from '@/modules/core/components/progress';
 // hooks
 import { useQueryParams } from '@/modules/core/hooks/use-search-params';
+// utils
+import { percentOf } from '@/modules/core/utils/math.utils';
 
 import type { ProfessionalQuizletWizardData } from './professional-quizlet-wizard.interface';
 import styles from './professional-quizlet-wizard.module.scss';
@@ -22,29 +23,8 @@ const initialStep: StepKey = 'about';
 
 type StepKey = (typeof steps)[number];
 
-/**
- * Calculates the percentage of a target number in relation to a base number.
- *
- * @param {number} base - The base number.
- * @param {number} target - The target number.
- * @returns {number} The percentage of the target number in relation to the base number.
- * @throws {Error} Throws an error if the base is 1, as it would result in a division by zero.
- */
-const percentOf = (base: number, target: number) => {
-  // todo: move this func outside
-  const percents = 100;
-
-  if (base === 1) {
-    throw new Error('Base cannot be 1 as it would result in division by zero.');
-  }
-
-  return (target * percents) / (base - 1);
-};
-
 export const ProfessionalQuizletWizard: FC = () => {
   const { queryParams, setQueryParams } = useQueryParams<{ step: StepKey }>();
-  // const router = useRouter();
-  // const searchParams = useSearchParams();
   // refs
   const rootRef = useRef<HTMLDivElement>(null);
   // memo

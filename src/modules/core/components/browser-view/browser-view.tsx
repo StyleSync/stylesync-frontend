@@ -17,7 +17,14 @@ export const BrowserView: FC<BrowserViewProps> = ({
       <MacBrowserChromeToolbar />
       <div className={styles.content}>
         <div className={styles.ratio} />
-        <Image className={styles.image} {...image} alt='browser page' />
+        <Image
+          className={styles.image}
+          src={image.src}
+          blurDataURL={image.blurDataURL}
+          width={image.width}
+          height={image.height}
+          alt='browser page'
+        />
       </div>
     </div>
   );

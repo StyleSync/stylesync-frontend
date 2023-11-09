@@ -47,6 +47,9 @@ import GmailLogoIcon from '@/assets/icons/gmail-logo.svg?icon';
 import InstagramLogoCircleContainedIcon from '@/assets/icons/instagram-logo-circle-contained.svg?icon';
 import SettingsIcon from '@/assets/icons/settings.svg?icon';
 import LogOutIcon from '@/assets/icons/log-out.svg?icon';
+import AlertTriangleIcon from '@/assets/icons/alert-triangle.svg?icon';
+import RefreshCcwIcon from '@/assets/icons/refresh-ccw.svg?icon';
+import ShieldIcon from '@/assets/icons/shield.svg?icon';
 
 import type { SVGComponentElement } from './icon.interface';
 
@@ -98,6 +101,9 @@ export const icons = {
   copy: CopyIcon,
   settings: SettingsIcon,
   'log-out': LogOutIcon,
+  'alert-triangle': AlertTriangleIcon,
+  'refresh-ccw': RefreshCcwIcon,
+  shield: ShieldIcon,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;

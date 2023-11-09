@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -15,6 +15,7 @@ import type {
   AboutProfessionalFormValues,
 } from './about-professional-form.interface';
 import styles from './about-professional-form.module.scss';
+import clsx from 'clsx';
 
 const defaultValues: AboutProfessionalFormValues = {
   firstName: '',
@@ -37,14 +38,18 @@ const validationSchema: z.Schema<AboutProfessionalFormValues> = z.object({
 });
 
 const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
-  ({ formId, onSubmit }) => {
+  ({ initialValues, formId, onSubmit, isLoading }) => {
     // form
-    const form = useForm<AboutProfessionalFormValues>({
+    const { reset, ...form } = useForm<AboutProfessionalFormValues>({
       defaultValues,
       resolver: zodResolver(validationSchema),
     });
     // state
     const avatar = useImageInputState();
+
+    useEffect(() => {
+      reset({ ...defaultValues, ...initialValues });
+    }, [initialValues, reset]);
 
     const handleSubmit = useCallback(
       async (data: AboutProfessionalFormValues) => {
@@ -52,6 +57,27 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
       },
       [avatar.file, onSubmit]
     );
+
+    if (isLoading) {
+      return (
+        <div className={styles.root}>
+          <div className={clsx('skeleton', styles.avatarSelectSkeleton)} />
+          <div className={styles.inputsRow}>
+            <div className='skeleton' />
+            <div className='skeleton' />
+          </div>
+          <div className={styles.inputsRow}>
+            <div className='skeleton' />
+            <div className='skeleton' />
+          </div>
+          <div className={styles.inputsRow}>
+            <div className='skeleton' />
+            <div className='skeleton' />
+          </div>
+          <div className={clsx('skeleton', styles.textAreaSkeleton)} />
+        </div>
+      );
+    }
 
     return (
       <form
@@ -92,16 +118,17 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
         </div>
         <div className={styles.inputsRow}>
           <TextField
-            {...form.register('phone')}
-            error={Boolean(form.formState.errors.phone)}
-            variant='input'
-            label='Phone'
-          />
-          <TextField
             {...form.register('email')}
             error={Boolean(form.formState.errors.email)}
             variant='input'
             label='Email'
+            disabled
+          />
+          <TextField
+            {...form.register('phone')}
+            error={Boolean(form.formState.errors.phone)}
+            variant='input'
+            label='Phone'
           />
         </div>
         <div className={styles.inputsRow}>
