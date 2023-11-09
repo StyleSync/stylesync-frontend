@@ -1,1 +1,50 @@
-.root {}
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+
+:export {
+  rippleColor: rgba(#fff, 0.5);
+}
+
+.root {
+  display: flex;
+  min-width: 200px;
+  column-gap: utils.spacing(2);
+  justify-content: center;
+  padding: utils.spacing(0.5, 1);
+
+  .socialBtn {
+    opacity: 0.9;
+    border: none;
+    color: #fff;
+    transition: variables.$transition-ultrafast;
+
+    svg {
+      transition: variables.$transition-ultrafast;
+    }
+
+    &:hover, &:focus-visible {
+      opacity: 1;
+      transform: scale(1.1);
+
+      svg {
+        transform: scale(1.1);
+      }
+    }
+
+    &.phone {
+      background-color: variables.$success-color;
+    }
+
+    &.mail {
+      background-color: variables.$grey-color;
+    }
+
+    &.instagram {
+      background: variables.$instagram-gradient;
+    }
+
+    &.facebook {
+      background: variables.$facebook-gradient;
+    }
+  }
+}

@@ -19,6 +19,7 @@ async function optimizeSvg(path) {
           },
         },
       },
+      'removeDimensions',
     ],
   });
   const optimizedSvgString = result.data;

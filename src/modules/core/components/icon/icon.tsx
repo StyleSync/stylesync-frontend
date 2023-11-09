@@ -50,6 +50,8 @@ import LogOutIcon from '@/assets/icons/log-out.svg?icon';
 import AlertTriangleIcon from '@/assets/icons/alert-triangle.svg?icon';
 import RefreshCcwIcon from '@/assets/icons/refresh-ccw.svg?icon';
 import ShieldIcon from '@/assets/icons/shield.svg?icon';
+import InstagramIcon from '@/assets/icons/instagram.svg?icon';
+import FacebookIcon from '@/assets/icons/facebook.svg?icon';
 
 import type { SVGComponentElement } from './icon.interface';
 
@@ -104,6 +106,8 @@ export const icons = {
   'alert-triangle': AlertTriangleIcon,
   'refresh-ccw': RefreshCcwIcon,
   shield: ShieldIcon,
+  instagram: InstagramIcon,
+  facebook: FacebookIcon,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;
