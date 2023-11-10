@@ -1,9 +1,9 @@
 import { type FC, Fragment, useCallback, useEffect, useRef } from 'react';
+import clsx from 'clsx';
 import * as RPopover from '@radix-ui/react-popover';
 import { Transition } from 'react-transition-group';
 import { useElementSize } from 'usehooks-ts';
-import clsx from 'clsx';
-import type { PointerDownOutsideEvent } from '@radix-ui/react-dismissable-layer';
+import { type PointerDownOutsideEvent } from '@radix-ui/react-dismissable-layer';
 
 import type { PopoverProps } from './popover.interface';
 import styles from './popover.module.scss';
@@ -73,7 +73,7 @@ export const Popover: FC<PopoverProps> = ({
                 { [styles.backgroundBlurEffect]: backgroundBlurEffect },
                 styles[status]
               )}
-              style={{ width: followTriggerWidth ? width : 'unset' }}
+              style={{ minWidth: followTriggerWidth ? width : 'unset' }}
               align={align}
               alignOffset={alignOffset}
               side={side}

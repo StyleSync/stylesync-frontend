@@ -7,7 +7,7 @@ import { httpBatchLink, getFetch, loggerLink } from '@trpc/client';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { createTRPCReact } from '@trpc/react-query';
 import type { AppRouter } from '@/server/routers/_app';
-export const trpc = createTRPCReact<AppRouter>();
+const trpc = createTRPCReact<AppRouter>();
 
 const getBaseUrl = () => {
   if (typeof window !== 'undefined')

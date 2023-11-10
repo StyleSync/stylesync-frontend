@@ -17,6 +17,7 @@ export type DropdownMenuProps = {
   trigger: ReactNode;
   isOpen: boolean;
   onClose: () => void;
+  isLoading?: boolean;
   onSelect?: (item: DropdownItem) => void;
   render?: FC<DropdownItem>;
   popoverProps?: Partial<Omit<PopoverProps, 'onClose' | 'isOpen' | 'trigger'>>;

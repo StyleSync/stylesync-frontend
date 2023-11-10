@@ -1,21 +1,22 @@
 'use client';
 import { type FC, useCallback } from 'react';
-import { useBoolean } from 'usehooks-ts';
+import { useBoolean, useEffectOnce } from 'usehooks-ts';
 import clsx from 'clsx';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 // components
 import { Avatar } from '@/modules/core/components/avatar';
 import { Emoji } from '@/modules/core/components/emoji';
 import { Icon } from '@/modules/core/components/icon';
 import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
 import { Button } from '@/modules/core/components/button';
+// utils
+import { trpc } from '@/modules/core/utils/trpc.utils';
 // types
 import type { DropdownItem } from '@/modules/core/components/dropdown-menu/dropdown-menu.interface';
 
 import type { UserMenuBadgeProps } from './user-menu-badge.interface';
 import styles from './user-menu-badge.module.scss';
-import { trpc } from '@/modules/core/utils/trpc.utils';
-import { useRouter } from 'next/navigation';
 
 export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
   // state
@@ -25,6 +26,10 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
   // queries
   const { data: me } = trpc.user.me.useQuery(undefined, {
     enabled: session.status === 'authenticated',
+  });
+
+  useEffectOnce(() => {
+    router.prefetch('/app/profile-settings');
   });
 
   const handleSelect = useCallback(

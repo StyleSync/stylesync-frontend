@@ -1,6 +1,8 @@
+import { minutesInHour } from 'date-fns';
+
 type TimeUnit = `${number}${number}`;
 
-type TimeValue = `${TimeUnit}:${TimeUnit}`;
+export type TimeValue = `${TimeUnit}:${TimeUnit}`;
 
 type TimeObject = { hours: number; minutes: number };
 
@@ -77,6 +79,19 @@ export class Time {
     const MAX_NUMERIC = 9;
 
     return unit <= MAX_NUMERIC ? `0${unit}` : (unit.toString() as TimeUnit);
+  }
+
+  public static fromMinuteDuration(duration: number): Time {
+    return new Time({
+      hours: Math.floor(duration / minutesInHour),
+      minutes: duration - Math.floor(duration / minutesInHour) * minutesInHour,
+    });
+  }
+
+  public static toMinuteDuration(time: Time | TimeValue | TimeObject): number {
+    const _time = new Time(time);
+
+    return _time.getHours() * minutesInHour + _time.getMinutes();
   }
 
   public static guard(value: string): value is TimeValue {
@@ -156,4 +171,25 @@ export const parseTimeRange = (
 
 export const isTimeRangeString = (timeRange: string): boolean => {
   return /^\d{2}:\d{2}\s*-\s*\d{2}:\d{2}$/.test(timeRange);
+};
+
+export const formatMinutesDuration = (minutes: number): string => {
+  const h = Math.floor(minutes / minutesInHour);
+  const m = minutes - h * minutesInHour;
+
+  let formatted = '';
+
+  if (h > 0) {
+    formatted += `${h}h`;
+  }
+
+  if (m > 0) {
+    if (formatted.length > 0) {
+      formatted += ' ';
+    }
+
+    formatted += `${m}min`;
+  }
+
+  return formatted;
 };

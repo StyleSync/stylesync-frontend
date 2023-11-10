@@ -1,0 +1,37 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+
+.root {
+  width: 100%;
+
+  .tag {
+    width: 80px;
+    height: utils.spacing(3);
+    border-radius: variables.$border-radius-large;
+  }
+
+  .content {
+    .row {
+      border-bottom: none;
+    }
+  }
+
+
+  .title {
+    width: 200px;
+    height: 19px;
+    border-radius: 4px;
+  }
+
+  .duration {
+    height: 14px;
+    width: 40px;
+    border-radius: 2px;
+  }
+
+  .price {
+    height: 19px;
+    width: 100px;
+    border-radius: 4px;
+  }
+}

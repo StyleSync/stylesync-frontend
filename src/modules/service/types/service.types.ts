@@ -1,18 +1,22 @@
-import type { Currency } from '@/modules/core/types/currency.types';
+import type { Service, Currency } from '@prisma/client';
 
-export type SupportedServiceKey = 'makeup' | 'hair' | 'nails';
+export type SupportedServiceKey = string;
 
-export type ServiceData = {
+export type ServiceOnProfessional = {
   id: string;
-  serviceKey: SupportedServiceKey;
   title: string;
-  duration: string;
-  price: {
-    value: string;
-    currency: Currency;
-  };
+  duration: number;
+  price: number;
+  currency: Currency;
+  service: Service;
 };
 
-export type ServiceGroup = Partial<
-  Record<SupportedServiceKey, { services: ServiceData[] }>
+export type ServiceOnProfessionalGroup = {
+  service: Service;
+  serviceOnProfessionalList: ServiceOnProfessional[];
+};
+
+export type ServiceOnProfessionalEditableFields = Pick<
+  ServiceOnProfessional,
+  'title' | 'duration' | 'price' | 'currency'
 >;

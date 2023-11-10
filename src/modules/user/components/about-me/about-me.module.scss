@@ -22,74 +22,32 @@
     max-width: 90%;
   }
 
-  .contactButton {
-    height: 42px;
-    border: 1px solid variables.$grey-color;
-    padding: utils.spacing(0, 2);
-    border-radius: variables.$border-radius-medium;
+  .empty {
+    justify-content: flex-start;
+
+    span {
+      color: variables.$grey-color;
+    }
   }
-}
 
-.contacts {
-  display: none;
-  //display: flex;
-  align-items: center;
-  row-gap: 10px;
-  column-gap: 10px;
-  flex-wrap: wrap;
-}
+  .skeleton {
+    align-items: flex-start;
+    flex-direction: column;
+    row-gap: 5px;
+    width: 100%;
 
-// buttons
-.socialBtns {
-  display: flex;
-  column-gap: 10px;
-}
-.borderContainer {
-  padding: 1px;
-  border-radius: variables.$border-radius-medium;
-  width: fit-content;
-}
-.instagramContainer {
-  background: variables.$instagram-gradient;
-}
-.facebookContainer {
-  background: variables.$facebook-gradient;
-}
+    div {
+      height: 15px;
+      border-radius: 4px;
+      width: 70%;
 
-//
+      &:nth-child(2) {
+        width: 80%;
+      }
 
-.socialButton {
-  background-color: #fff;
-  border-radius: variables.$border-radius-medium;
-  // @include mixins.phone {
-  //   span {
-  //     font-size: 12px;
-  //   }
-  // }
-
-  span {
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+      &:nth-child(3) {
+        width: 50%;
+      }
+    }
   }
-  // @include mixins.phone {
-  //   font-size: 5px;
-  // }
-}
-
-.facebookButton {
-  span {
-    background-image: variables.$facebook-gradient;
-  }
-}
-.instagramButton {
-  span {
-    background-image: variables.$instagram-gradient;
-  }
-}
-
-.contacBtns {
-  display: flex;
-  column-gap: 10px;
-  white-space: nowrap;
 }

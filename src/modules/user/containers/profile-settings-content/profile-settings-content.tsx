@@ -4,7 +4,6 @@ import type { ReactElement, FC } from 'react';
 import { ProfessionalGalleryForm } from '@/modules/user/components/professional-gallery-form';
 import { ProfessionalSettingsAbout } from '@/modules/user/containers/professional-settings-about';
 // containers
-import { ProfessionalServicesForm } from '@/modules/service/containers/professional-services-form';
 import { ProfessionalScheduleForm } from '@/modules/schedule/containers/professional-schedule-form';
 import { UserLocationSelectForm } from '@/modules/location/containers/user-location-select-form';
 // hooks
@@ -12,10 +11,11 @@ import { useProfileSettingsMenu } from '@/modules/user/hooks/use-profile-setting
 
 import type { ProfileSettingsContentProps } from './profile-settings-content.interface';
 import type { ProfileSettingsMenuItemKey } from '@/modules/user/containers/profile-settings-navigation/profile-settings.interface';
+import { ProfessionalSettingsServices } from '@/modules/user/containers/professional-settings-services';
 
 const contentMap: Record<ProfileSettingsMenuItemKey, ReactElement> = {
   about: <ProfessionalSettingsAbout />,
-  services: <ProfessionalServicesForm />,
+  services: <ProfessionalSettingsServices />,
   schedule: <ProfessionalScheduleForm />,
   gallery: <ProfessionalGalleryForm />,
   location: <UserLocationSelectForm />,

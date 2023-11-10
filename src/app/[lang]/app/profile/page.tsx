@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { ProfessionalInfoBigCard } from '@/modules/user/containers/professional-info-big-card';
 import { AboutMe } from '@/modules/user/components/about-me';
 import { GallerySection } from '@/modules/user/components/gallery-section';
-import { Services } from '@/modules/user/components/user-services';
+import { UserServices } from '@/modules/user/components/user-services';
 import { ProfessionalProfileTabs } from '@/modules/user/components/professional-profile-tabs';
 // utils
 import { pageGuard } from '@/modules/core/utils/route.utils';
@@ -38,7 +38,7 @@ export default async function Profile() {
           className={clsx(styles.section, styles.block)}
           id='profile-services'
         >
-          <Services />
+          <UserServices />
         </section>
         <section
           className={clsx(styles.section, styles.block)}

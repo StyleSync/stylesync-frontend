@@ -9,13 +9,20 @@ import styles from './divider.module.scss';
 export const Divider: FC<DividerProps> = ({
   variant = 'horizontal',
   children,
+  className,
+  style,
 }) => {
   return (
     <div
-      className={clsx(styles.root, {
-        [styles.vertical]: variant === 'vertical',
-        [styles.horizontal]: variant === 'horizontal',
-      })}
+      className={clsx(
+        styles.root,
+        {
+          [styles.vertical]: variant === 'vertical',
+          [styles.horizontal]: variant === 'horizontal',
+        },
+        className
+      )}
+      style={style}
     >
       {!(children === null || children === undefined || children === '') && (
         <div className={styles.children}>

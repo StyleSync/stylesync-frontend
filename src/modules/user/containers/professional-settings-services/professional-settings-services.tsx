@@ -1,18 +1,17 @@
 import { type FC } from 'react';
 // components
-import { ProfessionalQuizletWizardStepLayout } from '@/modules/user/components/professional-quizlet-wizard-step-layout';
-import { ProfessionalServicesForm } from '@/modules/service/containers/professional-services-form';
-import { ErrorBox } from '@/modules/core/components/error-box';
-import { Placeholder } from '@/modules/core/components/placeholder';
+import { ProfileSettingsTabContentLayout } from '@/modules/user/components/profile-settings-tab-content-layout';
 import { Spinner } from '@/modules/core/components/spinner';
+import { Placeholder } from '@/modules/core/components/placeholder';
+import { ErrorBox } from '@/modules/core/components/error-box';
+// containers
+import { ProfessionalServicesForm } from '@/modules/service/containers/professional-services-form';
 // hooks
 import { useServiceOnProfessionalGroups } from '@/modules/service/hooks/use-service-on-professional-groups';
-// types
-import type { ProfessionalQuizletWizardStepProps } from '@/modules/user/containers/professional-quizlet-wizard/professional-quizlet-wizard.interface';
+// utils
+import { showToast } from '@/modules/core/providers/toast-provider';
 
-export const ProfessionalQuizletWizardStepServices: FC<
-  ProfessionalQuizletWizardStepProps
-> = ({ next, back }) => {
+export const ProfessionalSettingsServices: FC = () => {
   const {
     groups,
     setGroups,
@@ -22,23 +21,27 @@ export const ProfessionalQuizletWizardStepServices: FC<
     isSaveLoading,
     isSaveDisabled,
   } = useServiceOnProfessionalGroups({
-    onSaved: next,
+    onSaved: () => {
+      showToast({
+        variant: 'success',
+        title: 'All done!',
+        description: 'Your changes has been saved',
+      });
+    },
   });
 
   return (
-    <ProfessionalQuizletWizardStepLayout
-      meta={{
-        title: 'Services',
-        description: 'todo...',
-      }}
-      nextButtonProps={{
-        isLoading: isSaveLoading,
-        disabled: isSaveDisabled,
-        onClick: save,
-      }}
-      prevButtonProps={{
-        onClick: back,
-      }}
+    <ProfileSettingsTabContentLayout
+      title='Services settings'
+      icon='beauty-service'
+      actions={[
+        {
+          text: 'Save',
+          isLoading: isSaveLoading,
+          disabled: isSaveDisabled,
+          onClick: save,
+        },
+      ]}
     >
       <Placeholder
         isActive={isGroupsLoading}
@@ -59,6 +62,6 @@ export const ProfessionalQuizletWizardStepServices: FC<
           />
         </Placeholder>
       </Placeholder>
-    </ProfessionalQuizletWizardStepLayout>
+    </ProfileSettingsTabContentLayout>
   );
 };

@@ -1,11 +1,12 @@
-import type {
-  ServiceData,
-  SupportedServiceKey,
-} from '@/modules/service/types/service.types';
+import type { ServiceOnProfessional } from '@/modules/service/types/service.types';
+import type { Service } from '@prisma/client';
 
 export type ServiceConstructorTableProps = {
-  serviceKey: SupportedServiceKey;
-  services: ServiceData[];
-  onChange: (serviceKey: SupportedServiceKey, services: ServiceData[]) => void;
-  onRemoveClick: (serviceKey: SupportedServiceKey) => void;
+  service: Service;
+  serviceOnProfessionalList: ServiceOnProfessional[];
+  onChange: (
+    service: Service,
+    serviceOnProfessionalList: ServiceOnProfessional[]
+  ) => void;
+  onRemoveClick: (service: Service) => void;
 };
