@@ -3,6 +3,7 @@ import type { FC } from 'react';
 import Link from 'next/link';
 import { faker } from '@faker-js/faker';
 import clsx from 'clsx';
+import { useBoolean } from 'usehooks-ts';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Button } from '@/modules/core/components/button';
@@ -11,6 +12,7 @@ import { Avatar } from '@/modules/core/components/avatar';
 import { ServiceTag } from '@/modules/service/components/service-tag';
 import { Emoji } from '@/modules/core/components/emoji';
 import { Placeholder } from '@/modules/core/components/placeholder';
+import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { getFullName } from '@/modules/user/utils/user.utils';
@@ -19,7 +21,10 @@ import type { ProfileInfoBigCardProps } from './professional-info-big-card.inter
 import styles from './professional-info-big-card.module.scss';
 
 export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = () => {
+  // queries
   const { data: me, ...meQuery } = trpc.user.me.useQuery();
+  // state
+  const isContactOpen = useBoolean();
 
   return (
     <div className={styles.container}>
@@ -86,10 +91,17 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = () => {
           </div>
         </div>
         <div className={styles.actions}>
-          <Button
-            variant='secondary'
-            text='Send message'
-            disabled={meQuery.isLoading}
+          <UserContactPopup
+            isOpen={isContactOpen.value}
+            onClose={isContactOpen.setFalse}
+            trigger={
+              <Button
+                variant='secondary'
+                text='Contact'
+                onClick={isContactOpen.setTrue}
+                disabled={meQuery.isLoading}
+              />
+            }
           />
           <Button variant='primary' text='Book' disabled={meQuery.isLoading} />
         </div>
