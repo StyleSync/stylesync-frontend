@@ -30,7 +30,7 @@ const validationSchema = z.object({
   }),
 });
 
-const mapDataToFormValues = (
+const mapServiceOnProfessionalToFormValues = (
   data: ServiceOnProfessionalEditableFields
 ): ServiceConstructorRowFormValues => ({
   title: data.title,
@@ -41,7 +41,7 @@ const mapDataToFormValues = (
   },
 });
 
-const mapFormValuesToData = (
+const mapFormValuesToServiceOnProfessional = (
   values: ServiceConstructorRowFormValues
 ): ServiceOnProfessionalEditableFields => ({
   title: values.title,
@@ -57,13 +57,14 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
 }) => {
   // state
   const [rowState, setRowState] = useState<'edit' | 'display'>(
-    validationSchema.safeParse(mapDataToFormValues(data)).success
+    validationSchema.safeParse(mapServiceOnProfessionalToFormValues(data))
+      .success
       ? 'display'
       : 'edit'
   );
   // form
   const form = useForm<ServiceConstructorRowFormValues>({
-    defaultValues: mapDataToFormValues(data),
+    defaultValues: mapServiceOnProfessionalToFormValues(data),
     resolver: zodResolver(validationSchema),
   });
 
@@ -78,7 +79,7 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
   const handleSubmit = useCallback(
     (values: ServiceConstructorRowFormValues) => {
       setRowState('display');
-      onChange(mapFormValuesToData(values));
+      onChange(mapFormValuesToServiceOnProfessional(values));
     },
     [onChange]
   );
@@ -92,7 +93,7 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
       return;
     }
 
-    form.reset(mapDataToFormValues(data));
+    form.reset(mapServiceOnProfessionalToFormValues(data));
   }, [data, form, onDelete]);
 
   return (

@@ -173,6 +173,11 @@ export const isTimeRangeString = (timeRange: string): boolean => {
   return /^\d{2}:\d{2}\s*-\s*\d{2}:\d{2}$/.test(timeRange);
 };
 
+/**
+ * Formats the duration in minutes to a string representation of hours and minutes.
+ * @param {number} minutes - The duration in minutes to be formatted.
+ * @returns {string} A string representing the duration in the format 'h hours m minutes'.
+ */
 export const formatMinutesDuration = (minutes: number): string => {
   const h = Math.floor(minutes / minutesInHour);
   const m = minutes - h * minutesInHour;
