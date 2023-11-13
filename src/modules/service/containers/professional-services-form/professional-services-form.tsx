@@ -1,79 +1,113 @@
-import { type FC, useCallback, useState } from 'react';
+import { type FC, useCallback, useMemo } from 'react';
 // components
 import { ServiceSelect } from '@/modules/service/components/service-select';
 import { Placeholder } from '@/modules/core/components/placeholder';
 // containers
 import { ServiceConstructorTable } from '@/modules/service/containers/service-constructor-table';
+// utils
+import { trpc } from '@/modules/core/utils/trpc.utils';
 // types
 import type {
-  ServiceData,
-  ServiceGroup,
-  SupportedServiceKey,
+  ServiceOnProfessional,
+  ServiceOnProfessionalGroup,
 } from '@/modules/service/types/service.types';
+import type { Service } from '@prisma/client';
 
 import type { ProfessionalServicesFormProps } from './professional-services-form.interface';
 import styles from './professional-services-form.module.scss';
 
-export const ProfessionalServicesForm: FC<
-  ProfessionalServicesFormProps
-> = () => {
-  const [serviceGroup, setServiceGroup] = useState<ServiceGroup>({});
+const alphabetCompare = (a: string, b: string) => {
+  if (a < b) {
+    return -1;
+  }
 
-  const handleServiceSelect = useCallback((serviceKey: SupportedServiceKey) => {
-    setServiceGroup((current) => ({
-      ...current,
-      [serviceKey]: {
-        services: [],
-      },
-    }));
-  }, []);
+  if (a > b) {
+    return 1;
+  }
 
-  const handleServiceGroupChange = useCallback(
-    (serviceKey: SupportedServiceKey, services: ServiceData[]) => {
-      setServiceGroup((current) => ({
-        ...current,
-        [serviceKey]: {
-          services,
-        },
-      }));
+  return 0;
+};
+
+export const ProfessionalServicesForm: FC<ProfessionalServicesFormProps> = ({
+  serviceOnProfessionalGroups,
+  setServiceOnProfessionalGroups,
+}) => {
+  const { data: serviceList, ...serviceListQuery } =
+    trpc.service.list.useQuery();
+  // memo
+  const sortedServiceOnProfessionalGroups = useMemo(() => {
+    // todo: might be downgrade performance
+    const next: ServiceOnProfessionalGroup[] = [...serviceOnProfessionalGroups];
+
+    next.sort((group1, group2) =>
+      alphabetCompare(group1.service.name, group2.service.name)
+    );
+
+    next.forEach((group) => {
+      group.serviceOnProfessionalList.sort((s1, s2) =>
+        alphabetCompare(s1.title, s2.title)
+      );
+    });
+
+    return next;
+  }, [serviceOnProfessionalGroups]);
+
+  const handleServiceSelect = useCallback(
+    (service: Service) => {
+      setServiceOnProfessionalGroups((prev) => [
+        ...prev,
+        { service, serviceOnProfessionalList: [] },
+      ]);
     },
-    []
+    [setServiceOnProfessionalGroups]
   );
 
-  const handleServiceRemove = useCallback((serviceKey: SupportedServiceKey) => {
-    setServiceGroup((current) => {
-      const stateCopy = { ...current };
+  const handleServiceGroupChange = useCallback(
+    (service: Service, serviceOnProfessionalList: ServiceOnProfessional[]) => {
+      setServiceOnProfessionalGroups((prev) => {
+        return [
+          ...prev.filter((item) => item.service.id !== service.id),
+          {
+            service,
+            serviceOnProfessionalList,
+          },
+        ];
+      });
+    },
+    [setServiceOnProfessionalGroups]
+  );
 
-      if (serviceKey in stateCopy) {
-        delete stateCopy[serviceKey];
-      }
-
-      return stateCopy;
-    });
-  }, []);
+  const handleServiceRemove = useCallback(
+    (service: Service) => {
+      setServiceOnProfessionalGroups((prev) =>
+        prev.filter((item) => item.service.id !== service.id)
+      );
+    },
+    [setServiceOnProfessionalGroups]
+  );
 
   return (
     <div className={styles.root}>
       <ServiceSelect
+        services={serviceList ?? []}
         onServiceSelect={handleServiceSelect}
-        blackList={Object.keys(serviceGroup) as SupportedServiceKey[]}
+        blackList={sortedServiceOnProfessionalGroups.map(
+          (group) => group.service.id
+        )}
+        isLoading={serviceListQuery.isLoading}
       />
-
       <Placeholder
-        isActive={Object.keys(serviceGroup).length === 0}
+        isActive={sortedServiceOnProfessionalGroups.length === 0}
         placeholder={{
           illustration: 'folder',
           description: 'No services added',
         }}
         fadeIn
       >
-        {Object.keys(serviceGroup).map((serviceKey) => (
+        {sortedServiceOnProfessionalGroups.map((group) => (
           <ServiceConstructorTable
-            key={serviceKey}
-            serviceKey={serviceKey as SupportedServiceKey}
-            services={
-              serviceGroup[serviceKey as SupportedServiceKey]?.services ?? []
-            }
+            key={group.service.id}
+            {...group}
             onChange={handleServiceGroupChange}
             onRemoveClick={handleServiceRemove}
           />

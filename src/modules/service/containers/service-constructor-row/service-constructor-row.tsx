@@ -1,7 +1,6 @@
 import { type FC, useCallback, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
-import { useIntl } from 'react-intl';
 import { zodResolver } from '@hookform/resolvers/zod';
 // components
 import { Button } from '@/modules/core/components/button';
@@ -9,20 +8,46 @@ import { PriceField } from '@/modules/core/components/price-field';
 import { TextField } from '@/modules/core/components/text-field';
 import { TimeField } from '@/modules/core/components/time-field';
 import { Typography } from '@/modules/core/components/typogrpahy';
+// utils
+import { Time, type TimeValue } from '@/modules/core/utils/time.utils';
 // types
-import type { ServiceData } from '@/modules/service/types/service.types';
+import type { ServiceOnProfessionalEditableFields } from '@/modules/service/types/service.types';
 
-import type { ServiceConstructorRowProps } from './service-constructor-row.interface';
+import type {
+  ServiceConstructorRowProps,
+  ServiceConstructorRowFormValues,
+} from './service-constructor-row.interface';
 import styles from './service-constructor-row.module.scss';
-import { currencies } from '@/modules/core/constants/currency.constants';
 
 const validationSchema = z.object({
-  duration: z.string(),
   title: z.string().min(1),
+  duration: z
+    .string()
+    .refine((arg) => Time.toMinuteDuration(arg as TimeValue) > 0),
   price: z.object({
-    value: z.string(),
-    currency: z.enum(currencies as [string, ...string[]]),
+    value: z.string().refine((arg) => !isNaN(+arg) && +arg > 0),
+    currency: z.string(),
   }),
+});
+
+const mapServiceOnProfessionalToFormValues = (
+  data: ServiceOnProfessionalEditableFields
+): ServiceConstructorRowFormValues => ({
+  title: data.title,
+  duration: Time.fromMinuteDuration(data.duration).getString(),
+  price: {
+    value: data.price.toString(),
+    currency: data.currency,
+  },
+});
+
+const mapFormValuesToServiceOnProfessional = (
+  values: ServiceConstructorRowFormValues
+): ServiceOnProfessionalEditableFields => ({
+  title: values.title,
+  currency: values.price.currency,
+  price: +values.price.value,
+  duration: Time.toMinuteDuration(values.duration as TimeValue),
 });
 
 export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
@@ -30,35 +55,33 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
   onChange,
   onDelete,
 }) => {
-  const intl = useIntl();
   // state
   const [rowState, setRowState] = useState<'edit' | 'display'>(
-    validationSchema.safeParse(data).success ? 'display' : 'edit'
+    validationSchema.safeParse(mapServiceOnProfessionalToFormValues(data))
+      .success
+      ? 'display'
+      : 'edit'
   );
   // form
-  const form = useForm<Omit<ServiceData, 'serviceKey' | 'id'>>({
-    defaultValues: data,
+  const form = useForm<ServiceConstructorRowFormValues>({
+    defaultValues: mapServiceOnProfessionalToFormValues(data),
     resolver: zodResolver(validationSchema),
   });
-
-  const handleEditClick = useCallback(() => {
-    setRowState('edit');
-  }, []);
 
   const handleDeleteClick = useCallback(() => {
     onDelete(data.id);
   }, [data.id, onDelete]);
 
+  const handleEditClick = useCallback(() => {
+    setRowState('edit');
+  }, []);
+
   const handleSubmit = useCallback(
-    (values: Omit<ServiceData, 'serviceKey' | 'id'>) => {
+    (values: ServiceConstructorRowFormValues) => {
       setRowState('display');
-      onChange({
-        id: data.id,
-        serviceKey: data.serviceKey,
-        ...values,
-      });
+      onChange(mapFormValuesToServiceOnProfessional(values));
     },
-    [data.serviceKey, data.id, onChange]
+    [onChange]
   );
 
   const handleEditCancel = useCallback(() => {
@@ -70,7 +93,7 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
       return;
     }
 
-    form.reset(data);
+    form.reset(mapServiceOnProfessionalToFormValues(data));
   }, [data, form, onDelete]);
 
   return (
@@ -80,12 +103,7 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
           <div className={styles.info}>
             <Typography variant='body1'>{form.getValues().title}</Typography>
             <Typography variant='small' className={styles.secondaryText}>
-              {intl.formatMessage(
-                { id: 'general.time.duration' },
-                {
-                  numHours: 2,
-                }
-              )}
+              {form.getValues().duration}
             </Typography>
           </div>
           <div className={styles.price}>

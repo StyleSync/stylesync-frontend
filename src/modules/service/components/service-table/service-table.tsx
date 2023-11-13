@@ -8,38 +8,38 @@ import { ServiceTag } from '@/modules/service/components/service-tag';
 
 import type { ServicesTableProps } from './service-table.interface';
 import styles from './service-table.module.scss';
+import clsx from 'clsx';
+import { formatMinutesDuration } from '@/modules/core/utils/time.utils';
 
 export const ServicesTable: FC<ServicesTableProps> = ({
   service,
-  userServices,
+  serviceOnProfessionalList,
 }) => {
   return (
-    <div className={styles.service}>
-      <ServiceTag service={service} />
-      {userServices.map((userService) => (
-        <div key={userService.id} className={styles.serviceBox}>
-          <div className={styles.serviceContent}>
-            <div className={styles.serviceInfo}>
-              <Typography className={styles.serviceName} variant='body1'>
-                {userService.name}
+    <div className={styles.root}>
+      <ServiceTag data={service} />
+      <div className={styles.content}>
+        {serviceOnProfessionalList.map((serviceOnProfessional) => (
+          <div key={serviceOnProfessional.id} className={styles.row}>
+            <div className={clsx(styles.cell, styles.vertical, styles.flex75)}>
+              <Typography className={styles.title} variant='body1'>
+                {serviceOnProfessional.title}
               </Typography>
-              <Typography className={styles.serviceTime} variant='small'>
-                {userService.duration}
+              <Typography className={styles.duration} variant='small'>
+                {formatMinutesDuration(serviceOnProfessional.duration)}
               </Typography>
             </div>
-            <div className={styles.servicePriceBtn}>
-              <Typography
-                className={styles.servicePrice}
-                variant='body1'
-                weight='medium'
-              >
-                {userService.price}
+            <div className={clsx(styles.cell, styles.flex25)}>
+              <Typography className={styles.price} variant='body1'>
+                {serviceOnProfessional.price} {serviceOnProfessional.currency}
               </Typography>
+            </div>
+            <div className={clsx(styles.cell, styles.fit)}>
               <Button variant='outlined' text='Book' />
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

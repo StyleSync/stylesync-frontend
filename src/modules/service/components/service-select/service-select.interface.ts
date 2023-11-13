@@ -1,6 +1,8 @@
-import type { SupportedServiceKey } from '@/modules/service/types/service.types';
+import type { Service } from '@prisma/client';
 
 export type ServiceSelectProps = {
-  onServiceSelect?: (serviceKey: SupportedServiceKey) => void;
-  blackList?: SupportedServiceKey[];
+  services: Service[];
+  onServiceSelect?: (service: Service) => void;
+  isLoading?: boolean;
+  blackList?: string[];
 };

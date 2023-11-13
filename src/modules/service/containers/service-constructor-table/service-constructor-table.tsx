@@ -5,67 +5,75 @@ import { Button } from '@/modules/core/components/button';
 import { ServiceTag } from '@/modules/service/components/service-tag';
 // containers
 import { ServiceConstructorRow } from '@/modules/service/containers/service-constructor-row';
-// utils
-import { Time } from '@/modules/core/utils/time.utils';
+// types
+import type {
+  ServiceOnProfessional,
+  ServiceOnProfessionalEditableFields,
+} from '@/modules/service/types/service.types';
 
 import type { ServiceConstructorTableProps } from './service-constructor-table.interface';
 import styles from './service-constructor-table.module.scss';
-import type { ServiceData } from '@/modules/service/types/service.types';
-
-const defaultTime = new Time({ hours: 1, minutes: 0 });
 
 export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
-  serviceKey,
-  services,
+  service,
+  serviceOnProfessionalList,
   onChange,
   onRemoveClick,
 }) => {
   const handleAddClick = useCallback(() => {
-    onChange(serviceKey, [
-      ...services,
+    onChange(service, [
+      ...serviceOnProfessionalList,
       {
-        serviceKey,
-        id: v4(),
-        duration: defaultTime.getString(),
+        service,
+        id: `new__${v4()}`,
         title: '',
-        price: {
-          value: '0',
-          currency: 'USD',
-        },
+        duration: 0,
+        price: 0,
+        currency: 'USD',
       },
     ]);
-  }, [serviceKey, services, onChange]);
+  }, [service, serviceOnProfessionalList, onChange]);
 
   const handleTableRemoveClick = useCallback(() => {
-    onRemoveClick(serviceKey);
-  }, [serviceKey, onRemoveClick]);
+    onRemoveClick(service);
+  }, [service, onRemoveClick]);
 
   const handleRowRemove = useCallback(
     (id: string) => {
       onChange(
-        serviceKey,
-        services.filter((service) => service.id !== id)
+        service,
+        serviceOnProfessionalList.filter((item) => item.id !== id)
       );
     },
-    [onChange, serviceKey, services]
+    [service, serviceOnProfessionalList, onChange]
   );
 
   const handleRowChange = useCallback(
-    (service: ServiceData) => {
-      const res = [
-        ...services.filter((_service) => _service.id !== service.id),
-        { ...service },
-      ];
+    (id: string) => (edited: ServiceOnProfessionalEditableFields) => {
+      const serviceOnProfessional = serviceOnProfessionalList.find(
+        (item) => item.id === id
+      );
 
-      onChange(serviceKey, res);
+      const data: ServiceOnProfessional = serviceOnProfessional
+        ? { ...serviceOnProfessional, ...edited }
+        : {
+            ...edited,
+            id: v4(),
+            service,
+          };
+
+      onChange(service, [
+        ...serviceOnProfessionalList.filter((item) => item.id !== id),
+        data,
+      ]);
     },
-    [onChange, serviceKey, services]
+    [service, serviceOnProfessionalList, onChange]
   );
 
   return (
     <div className={styles.root}>
       <div className={styles.header}>
-        <ServiceTag service={serviceKey} />
+        <ServiceTag data={service} />
         <div className={styles.actions}>
           <Button
             icon='plus'
@@ -82,11 +90,11 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
           />
         </div>
       </div>
-      {services.map((service) => (
+      {serviceOnProfessionalList.map((serviceOnProfessional) => (
         <ServiceConstructorRow
-          key={service.id}
-          data={service}
-          onChange={handleRowChange}
+          key={serviceOnProfessional.id}
+          data={serviceOnProfessional}
+          onChange={handleRowChange(serviceOnProfessional.id)}
           onDelete={handleRowRemove}
         />
       ))}

@@ -1,26 +1,21 @@
 import { type FC } from 'react';
+import clsx from 'clsx';
+import { useIntl } from 'react-intl';
 // components
-import { Icon } from '@/modules/core/components/icon';
+import { Icon, type IconName } from '@/modules/core/components/icon';
 import { Typography } from '@/modules/core/components/typogrpahy';
-// constants
-import { SERVICE_METADATA } from '@/modules/service/constants/service.constants';
 
 import type { ServiceTagProps } from './service-tag.interface';
 import styles from './service-tag.module.scss';
-import clsx from 'clsx';
 
-export const ServiceTag: FC<ServiceTagProps> = ({
-  service,
-  className,
-  style,
-}) => {
-  const { icon, name } = SERVICE_METADATA[service];
+export const ServiceTag: FC<ServiceTagProps> = ({ data, className, style }) => {
+  const { formatMessage } = useIntl();
 
   return (
     <div className={clsx(styles.root, className)} style={style}>
-      <Icon name={icon} width={16} height={16} />
+      <Icon name={data.icon as IconName} width={16} height={16} />
       <Typography variant='small' className={styles.text}>
-        {name}
+        {formatMessage({ id: data.name })}
       </Typography>
     </div>
   );

@@ -35,6 +35,7 @@ export const serviceRouter = router({
     .input(
       z.object({
         name: z.string().min(1, 'Required').max(maxLargeTextLength),
+        icon: z.string().min(1, 'Required'),
       })
     )
     .mutation(async ({ input }) => {
@@ -57,6 +58,7 @@ export const serviceRouter = router({
       z.array(
         z.object({
           name: z.string().min(1, 'Required').max(maxLargeTextLength),
+          icon: z.string().min(1, 'Required'),
         })
       )
     )

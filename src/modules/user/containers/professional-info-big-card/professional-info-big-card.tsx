@@ -67,9 +67,18 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = () => {
                 </>
               }
             >
-              <ServiceTag className={styles.service} service='hair' />
-              <ServiceTag className={styles.service} service='makeup' />
-              <ServiceTag className={styles.service} service='nails' />
+              <ServiceTag
+                className={styles.service}
+                data={{ id: 'makeup', name: 'Makeup', icon: 'makeup' }}
+              />
+              <ServiceTag
+                className={styles.service}
+                data={{ id: 'hair', name: 'Hair', icon: 'haircut' }}
+              />
+              <ServiceTag
+                className={styles.service}
+                data={{ id: 'nails', name: 'Nails', icon: 'nails' }}
+              />
             </Placeholder>
           </div>
           <div className={styles.location}>

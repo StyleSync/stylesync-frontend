@@ -1,106 +1,61 @@
 'use client';
-
+import { useMemo } from 'react';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { ServicesTable } from '@/modules/service/components/service-table';
-
-import { faker } from '@faker-js/faker';
+import { ServiceTableSkeleton } from '@/modules/service/components/service-table-skeleton';
+import { Placeholder } from '@/modules/core/components/placeholder';
+import { ErrorBox } from '@/modules/core/components/error-box';
+// utils
+import { getGroupOfServiceOnProfessionalList } from '@/modules/service/utils/service.utils';
+import { trpc } from '@/modules/core/utils/trpc.utils';
 
 import styles from './user-services.module.scss';
 
-// todo: component name should be same as file name
-export const Services = () => {
+export const UserServices = () => {
+  const { data: serviceList, ...serviceListQuery } =
+    trpc.serviceOnProfessional.list.useQuery({
+      limit: 10,
+      offset: 0,
+    });
+  const groups = useMemo(
+    () => getGroupOfServiceOnProfessionalList(serviceList ?? []),
+    [serviceList]
+  );
+
   return (
     <div className={styles.root}>
       <Typography variant='subtitle'>Services</Typography>
-
-      <ServicesTable
-        service='hair'
-        userServices={[
-          {
-            id: faker.string.uuid(),
-            name: 'Haircut for children',
-            duration: '1h',
-            price: faker.commerce.price({
-              min: 100,
-              max: 200,
-              dec: 0,
-              symbol: '$',
-            }),
-          },
-          {
-            id: faker.string.uuid(),
-            name: 'Haircut for adults',
-            duration: '1h',
-            price: faker.commerce.price({
-              min: 100,
-              max: 200,
-              dec: 0,
-              symbol: '$',
-            }),
-          },
-          {
-            id: faker.string.uuid(),
-            name: 'Haircut for adults + beard trimming',
-            duration: '1h',
-            price: faker.commerce.price({
-              min: 100,
-              max: 200,
-              dec: 0,
-              symbol: '$',
-            }),
-          },
-        ]}
-      />
-      <ServicesTable
-        service='makeup'
-        userServices={[
-          {
-            id: faker.string.uuid(),
-            name: 'Wedding makeup',
-            duration: '1h',
-            price: faker.commerce.price({
-              min: 100,
-              max: 200,
-              dec: 0,
-              symbol: '$',
-            }),
-          },
-          {
-            id: faker.string.uuid(),
-            name: 'Evening makeup',
-            duration: '1h',
-            price: faker.commerce.price({
-              min: 100,
-              max: 200,
-              dec: 0,
-              symbol: '$',
-            }),
-          },
-          {
-            id: faker.string.uuid(),
-            name: 'Makeup masterclass',
-            duration: '1h',
-            price: faker.commerce.price({
-              min: 100,
-              max: 200,
-              dec: 0,
-              symbol: '$',
-            }),
-          },
-          {
-            id: faker.string.uuid(),
-            name: 'Base makeup',
-            duration: '1h',
-            price: faker.commerce.price({
-              min: 100,
-              max: 200,
-              dec: 0,
-              symbol: '$',
-            }),
-          },
-        ]}
-      />
+      <div className={styles.content}>
+        <Placeholder
+          isActive={serviceListQuery.isLoading}
+          placeholder={<ServiceTableSkeleton rows={3} />}
+        >
+          <Placeholder
+            isActive={serviceListQuery.isError}
+            placeholder={
+              <ErrorBox
+                title='Connection with server has been interrupted'
+                description='Please check your internet connection or try refreshing the page. If the issue persists, please contact our support team for assistance.'
+              />
+            }
+          >
+            <Placeholder
+              isActive={groups.length === 0}
+              className={styles.empty}
+              placeholder={<Typography>ὣ No added services</Typography>}
+            >
+              {groups.map(({ service, serviceOnProfessionalList }) => (
+                <ServicesTable
+                  key={service.id}
+                  service={service}
+                  serviceOnProfessionalList={serviceOnProfessionalList}
+                />
+              ))}
+            </Placeholder>
+          </Placeholder>
+        </Placeholder>
+      </div>
     </div>
   );
 };

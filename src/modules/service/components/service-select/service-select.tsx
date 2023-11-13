@@ -1,6 +1,7 @@
-import { type FC, useMemo } from 'react';
+import { type FC, useCallback, useMemo } from 'react';
 import { useBoolean } from 'usehooks-ts';
 import clsx from 'clsx';
+import { useIntl } from 'react-intl';
 // components
 import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
 import { Button } from '@/modules/core/components/button';
@@ -9,17 +10,21 @@ import { SERVICE_METADATA } from '@/modules/service/constants/service.constants'
 // hooks
 import { useWindowSizeType } from '@/modules/core/hooks/use-window-size-type';
 // types
-import type { SupportedServiceKey } from '@/modules/service/types/service.types';
+import type { IconName } from '@/modules/core/components/icon';
 import type { ButtonProps } from '@/modules/core/components/button/button.interface';
 import type { PopoverProps } from '@/modules/core/components/popover/popover.interface';
+import type { DropdownItem } from '@/modules/core/components/dropdown-menu/dropdown-menu.interface';
 
 import type { ServiceSelectProps } from './service-select.interface';
 import styles from './service-select.module.scss';
 
 export const ServiceSelect: FC<ServiceSelectProps> = ({
+  services,
   onServiceSelect,
+  isLoading,
   blackList = [],
 }) => {
+  const { formatMessage } = useIntl();
   const isOpen = useBoolean();
   const windowSizeType = useWindowSizeType();
   // memo
@@ -50,20 +55,28 @@ export const ServiceSelect: FC<ServiceSelectProps> = ({
     };
   }, [windowSizeType]);
 
+  const handleSelect = useCallback(
+    (value: DropdownItem) => {
+      const service = services.find((item) => item.id === value.id);
+
+      if (onServiceSelect && service) {
+        onServiceSelect(service);
+      }
+
+      isOpen.setFalse();
+    },
+    [services, onServiceSelect, isOpen]
+  );
+
   return (
     <DropdownMenu
-      items={Object.keys(SERVICE_METADATA)
-        .filter(
-          (service) => !blackList.includes(service as SupportedServiceKey)
-        )
+      items={services
+        .filter((service) => !blackList.includes(service.id))
         .map((service) => {
-          const { icon, name } =
-            SERVICE_METADATA[service as SupportedServiceKey];
-
           return {
-            id: service,
-            text: name,
-            icon,
+            id: service.id,
+            text: formatMessage({ id: service.name }),
+            icon: service.icon as IconName,
           };
         })}
       trigger={
@@ -76,13 +89,8 @@ export const ServiceSelect: FC<ServiceSelectProps> = ({
       }
       isOpen={isOpen.value}
       onClose={isOpen.setFalse}
-      onSelect={(item) => {
-        if (onServiceSelect) {
-          onServiceSelect(item.id as SupportedServiceKey);
-        }
-
-        isOpen.setFalse();
-      }}
+      onSelect={handleSelect}
+      isLoading={isLoading}
       popoverProps={{
         followTriggerWidth: true,
         ...popoverProps,
