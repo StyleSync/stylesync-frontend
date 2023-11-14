@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
+import { useBoolean } from 'usehooks-ts';
 
 import { Checkbox } from './checkbox';
 
@@ -14,9 +14,9 @@ type Story = StoryObj<typeof Checkbox>;
 
 export const Base: Story = {
   render() {
-    const [value, setValue] = useState(true);
+    const isActive = useBoolean();
 
-    return <Checkbox onChange={setValue} value={value} />;
+    return <Checkbox onChange={isActive.toggle} value={isActive.value} />;
   },
 };
 

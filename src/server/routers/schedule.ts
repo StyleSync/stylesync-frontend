@@ -3,7 +3,6 @@ import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { prisma } from '@/server/prisma';
 import { Day } from '@prisma/client';
-import { defaultUserSelect } from '@/server/selectors';
 import { defaultScheduleSelect } from '@/server/selectors/schedule';
 import { getProfessionalFromContext } from '@/server/utils/prisma-utils';
 
@@ -100,7 +99,7 @@ export const scheduleRouter = router({
 
       return prisma.schedule.create({
         data: { ...input, professionalId: professional.id },
-        select: defaultUserSelect,
+        select: defaultScheduleSelect,
       });
     }),
   update: privateProcedure

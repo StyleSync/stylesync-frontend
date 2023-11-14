@@ -52,6 +52,7 @@ import RefreshCcwIcon from '@/assets/icons/refresh-ccw.svg?icon';
 import ShieldIcon from '@/assets/icons/shield.svg?icon';
 import InstagramIcon from '@/assets/icons/instagram.svg?icon';
 import FacebookIcon from '@/assets/icons/facebook.svg?icon';
+import AlarmIcon from '@/assets/icons/alarm.svg?icon';
 import CornerIcon from '@/assets/icons/corner.svg?icon';
 
 import type { SVGComponentElement } from './icon.interface';
@@ -109,6 +110,7 @@ export const icons = {
   shield: ShieldIcon,
   instagram: InstagramIcon,
   facebook: FacebookIcon,
+  alarm: AlarmIcon,
   corner: CornerIcon,
 } satisfies Record<string, FC<SVGComponentElement>>;
 

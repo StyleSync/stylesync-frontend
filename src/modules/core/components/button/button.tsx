@@ -75,7 +75,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {!!isLoading && (
           <Spinner size='small' color={SPINNER_COLORS[variant]} />
         )}
-        {!!icon && <Icon className={styles.icon} name={icon} />}
+        {!!icon && !isLoading && <Icon className={styles.icon} name={icon} />}
         {!!text && (
           <Typography className={styles.text} {...typographyProps}>
             {text}

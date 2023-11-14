@@ -42,6 +42,7 @@ export const ProfessionalSettingsServices: FC = () => {
           onClick: save,
         },
       ]}
+      hideActions={isGroupsLoading || isGroupsLoadingError}
     >
       <Placeholder
         isActive={isGroupsLoading}

@@ -1,0 +1,100 @@
+@use '@/styles/utils';
+@use '@/styles/mixins';
+@use '@/styles/variables.module';
+
+.root {
+  position: relative;
+  display: flex;
+  padding: utils.spacing(3);
+  border-top: 1px solid variables.$primary-light-color;
+  background-color: variables.$grey-light-color;
+  column-gap: utils.spacing(4);
+  overflow: hidden;
+  align-items: center;
+
+  &.edit {
+    padding: utils.spacing(2, 3);
+    background-color: rgba(variables.$primary-light-color, 0.3);
+    align-items: flex-start;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .cell {
+    display: flex;
+    flex: 1;
+
+    &.disabled {
+      opacity: 0.5;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    &.xPadding {
+      padding: utils.spacing(1, 0);
+    }
+
+    &.weekday {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      row-gap: utils.spacing(0.5);
+    }
+
+    &.actions {
+      width: fit-content;
+      flex: unset;
+    }
+  }
+
+  .weekday {
+    text-transform: capitalize;
+  }
+
+  .timerange {
+    flex: 1;
+  }
+
+  .addBreak {
+    width: 100%;
+  }
+
+  .dayoff {
+    position: relative;
+    left: utils.spacing(-1);
+    display: flex;
+    align-items: center;
+    column-gap: utils.spacing(0.5);
+  }
+
+  .breaks {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-wrap: wrap;
+    row-gap: utils.spacing(2);
+    column-gap: utils.spacing(2);
+
+    .break {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      column-gap: utils.spacing(0.5);
+
+      .delete {
+        width: 20px;
+        height: 20px;
+        color: variables.$error-color;
+      }
+    }
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: utils.spacing(1);
+    column-gap: utils.spacing(1);
+  }
+}

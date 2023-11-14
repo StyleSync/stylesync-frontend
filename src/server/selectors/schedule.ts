@@ -9,4 +9,6 @@ export const defaultScheduleSelect = Prisma.validator<Prisma.ScheduleSelect>()({
   isSpecificDay: true,
   date: true,
   breaks: { select: defaultBreakSelect },
+  createdAt: true,
+  updatedAt: true,
 });

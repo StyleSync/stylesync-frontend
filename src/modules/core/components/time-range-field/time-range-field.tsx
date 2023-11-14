@@ -7,7 +7,6 @@ import {
   useEffect,
 } from 'react';
 import { useBoolean, useUpdateEffect } from 'usehooks-ts';
-import { Transition } from 'react-transition-group';
 import clsx from 'clsx';
 // components
 import { Popover } from '@/modules/core/components/popover';
@@ -24,8 +23,6 @@ import {
 
 import type { TimeRangeFieldInterface } from './time-range-field.interface';
 import styles from './time-range-field.module.scss';
-
-const SUBMIT_BUTTON_IN_OUT_DURATION = 200;
 
 export const TimeRangeField: FC<TimeRangeFieldInterface> = ({
   value,
@@ -68,6 +65,10 @@ export const TimeRangeField: FC<TimeRangeFieldInterface> = ({
       setEndTime(new Time());
     }
   }, [isActive, value]);
+
+  const toggleTimeSelection = useCallback(() => {
+    isActive.value ? finishTimeSelection() : startTimeSelection();
+  }, [finishTimeSelection, isActive.value, startTimeSelection]);
 
   const handleTextFieldChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -147,21 +148,18 @@ export const TimeRangeField: FC<TimeRangeFieldInterface> = ({
             onFocus={startTimeSelection}
             variant='input'
           />
-          <Transition
-            timeout={SUBMIT_BUTTON_IN_OUT_DURATION}
-            in={isActive.value}
-            unmountOnExit
-          >
-            {(state) => (
-              <Button
-                variant='secondary'
-                icon='check-mark'
-                disabled={!isTimeRangeString(value)}
-                onClick={finishTimeSelection}
-                className={clsx(styles.submitButton, styles[state])}
-              />
-            )}
-          </Transition>
+          <Button
+            variant='secondary'
+            icon={isActive.value ? 'check-mark' : 'pencil'}
+            type='button'
+            disabled={!isTimeRangeString(value)}
+            onClick={toggleTimeSelection}
+            className={clsx(styles.submitButton, {
+              [styles.small]: inputProps?.fieldSize === 'small',
+              [styles.error]: inputProps?.error === true,
+              [styles.active]: isActive.value,
+            })}
+          />
         </div>
       }
       followTriggerWidth

@@ -1,0 +1,24 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+
+.breakSkeleton {
+  display: flex;
+  column-gap: utils.spacing(1);
+  width: 100%;
+
+  div {
+    height: 32px;
+    border-radius: variables.$border-radius-large;
+    width: 103px;
+  }
+}
+
+.tag {
+  display: flex;
+  padding: utils.spacing(1, 1.5);
+  border: 1px solid variables.$grey-color;
+  border-radius: variables.$border-radius-large;
+
+  span {
+  }
+}

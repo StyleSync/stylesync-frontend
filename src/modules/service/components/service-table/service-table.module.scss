@@ -3,7 +3,7 @@
 @use '@/styles/mixins';
 
 .root {
-  padding: utils.spacing(2.5);
+  padding: utils.spacing(3, 3, 1);
   box-shadow: variables.$main-box-shadow;
   border-radius: utils.spacing(1.5);
 

@@ -10,7 +10,7 @@ import styles from './profile-settings-tab-content-layout.module.scss';
 
 export const ProfileSettingsTabContentLayout: FC<
   ProfileSettingsTabContentLayoutProps
-> = ({ icon, title, actions, children }) => {
+> = ({ icon, title, actions, hideActions, children }) => {
   return (
     <div className={styles.root}>
       <div className={styles.title}>
@@ -23,7 +23,7 @@ export const ProfileSettingsTabContentLayout: FC<
         <div className={styles.scrolledContent}>
           <div className={styles.childrenWrapper}>{children}</div>
         </div>
-        {actions && (
+        {actions && !hideActions && (
           <>
             <Divider className={styles.divider} variant='horizontal' />
             <div className={styles.actions}>
