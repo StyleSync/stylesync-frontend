@@ -2,41 +2,41 @@
 @use '@/styles/utils';
 
 .root {
+  display: flex;
+  align-items: center;
+  column-gap: utils.spacing(1);
+
+  .iconButton {
+    border-radius: variables.$border-radius-medium;
+    width: 38px;
+    height: 38px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+.trigger {
   position: relative;
   display: flex;
   align-items: center;
-  border-radius: variables.$border-radius-small;
-  padding: utils.spacing(0, 1);
+  border-radius: variables.$border-radius-medium;
+  padding: 1px utils.spacing(1);
   cursor: pointer;
   column-gap: utils.spacing(1);
   background-color: transparent;
   border: none;
-
-
-  &::before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: utils.spacing(-0.5);
-    left: utils.spacing(-0.5);
-    width: calc(100% + 8px);
-    height: calc(100% + 8px);
-    background-color: variables.$primary-light-color;
-    border-radius: variables.$border-radius-small;
-    opacity: 0;
-    transition: variables.$transition-ultrafast;
-  }
+  transition: variables.$transition-ultrafast;
 
   &:hover {
-    &::before {
-      opacity: 0.5;
-    }
+    background-color: rgba(variables.$primary-light-color, 0.5);
   }
 
   &.active {
-    &::before {
-      opacity: 0.4;
-    }
+    background-color: #fff;//rgba(variables.$primary-light-color, 0.4);
+    box-shadow: variables.$main-box-shadow;
   }
 
   .avatar {

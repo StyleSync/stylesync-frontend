@@ -1,0 +1,48 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+
+.info {
+  display: flex;
+  align-items: center;
+  column-gap: utils.spacing(2);
+
+  .avatar {
+    background-color: #F4E0E4;
+
+    &Skeleton {
+      width: utils.spacing(10);
+      height: utils.spacing(10);
+      flex: unset;
+      border-radius: 15%;
+      border: 2px solid #fff;
+      box-shadow: variables.$main-box-shadow;
+    }
+  }
+
+  .name {
+    display: flex;
+    flex-direction: column;
+    row-gap: utils.spacing(1);
+    width: calc(100% - 96px);
+
+    .title {
+      &Skeleton {
+        width: 60%;
+        height: 24px;
+        flex: unset;
+        border-radius: 4px;
+      }
+    }
+
+    .meta {
+      color: variables.$grey-color;
+
+      &Skeleton {
+        width: 80%;
+        height: 17px;
+        flex: unset;
+        border-radius: 4px;
+      }
+    }
+  }
+}

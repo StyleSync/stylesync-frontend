@@ -3,20 +3,17 @@
 @use '@/styles/mixins';
 
 .root {
+  position: relative;
   display: flex;
   flex-direction: column;
   flex: 1;
-  border-radius: variables.$border-radius-medium;
-  background-color: #fff;
-  box-shadow: variables.$main-box-shadow;
-  padding: utils.spacing(4, 0);
 
   .title {
     display: flex;
     align-items: center;
     column-gap: utils.spacing(1);
     color: variables.$dark-color;
-    padding: utils.spacing(0, 4, 2, 4);
+    padding: utils.spacing(1, 4, 3, 4);
 
     svg {
       width: 20px;
@@ -32,22 +29,34 @@
   .content {
     flex: 1;
     display: flex;
-    padding: utils.spacing(4);
+    flex-direction: column;
+    box-shadow: variables.$main-box-shadow;
+    background-color: rgba(#fff, 0.9);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-radius: 20px;
     overflow: auto;
 
     .scrolledContent {
-      display: flex;
       flex: 1;
-      height: fit-content;
-      min-height: 100%;
-      width: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+      padding: utils.spacing(4);
+      flex-shrink: 0;
+
+      .childrenWrapper {
+        display: flex;
+        height: fit-content;
+        min-height: 100%;
+        width: 100%;
+      }
     }
   }
 
   .actions {
     display: flex;
     justify-content: flex-end;
-    padding: utils.spacing(3, 4, 0, 4);
+    padding: utils.spacing(3, 4, 4, 4);
 
     button {
       min-width: 200px;

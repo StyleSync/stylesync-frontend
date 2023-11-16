@@ -15,24 +15,8 @@
       color: #000;
     }
 
-    &::before {
-      position: absolute;
-      top: calc(100% + 3px);
-      left: 0;
-      width: 0;
-      height: 2px;
-      border-radius: 2px;
-      background-color: variables.$primary-color;
-      content: '';
-      transition: variables.$transition-ultrafast;
-    }
-
     &.active {
       color: variables.$primary-color;
-
-      &::before {
-        width: 50%;
-      }
     }
 
     span {

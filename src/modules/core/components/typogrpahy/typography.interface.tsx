@@ -34,4 +34,5 @@ export type TypographyProps = Partial<ChildrenProp> &
     As?: TypographyTag;
     weight?: TypographyWeight;
     font?: SupportedFonts;
+    cutText?: boolean;
   };

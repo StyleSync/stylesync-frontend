@@ -7,13 +7,12 @@ import { ProfessionalSettingsAbout } from '@/modules/user/containers/professiona
 import { ProfessionalScheduleForm } from '@/modules/schedule/containers/professional-schedule-form';
 import { UserLocationSelectForm } from '@/modules/location/containers/user-location-select-form';
 // hooks
-import { useProfileSettingsMenu } from '@/modules/user/hooks/use-profile-settings-menu';
+import { useSettingsNavigation } from '@/modules/user/hooks/use-settings-navigation';
 
 import type { ProfileSettingsContentProps } from './profile-settings-content.interface';
-import type { ProfileSettingsMenuItemKey } from '@/modules/user/containers/profile-settings-navigation/profile-settings.interface';
 import { ProfessionalSettingsServices } from '@/modules/user/containers/professional-settings-services';
 
-const contentMap: Record<ProfileSettingsMenuItemKey, ReactElement> = {
+const contentMap: Record<string, ReactElement> = {
   about: <ProfessionalSettingsAbout />,
   services: <ProfessionalSettingsServices />,
   schedule: <ProfessionalScheduleForm />,
@@ -22,8 +21,7 @@ const contentMap: Record<ProfileSettingsMenuItemKey, ReactElement> = {
 };
 
 export const ProfileSettingsContent: FC<ProfileSettingsContentProps> = () => {
-  const { activeMenuItem } = useProfileSettingsMenu();
-  const view = contentMap[activeMenuItem];
+  const { active } = useSettingsNavigation();
 
-  return <>{view}</>;
+  return contentMap[active];
 };

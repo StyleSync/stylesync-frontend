@@ -1,0 +1,31 @@
+@use '@/styles/utils';
+@use '@/styles/variables.module';
+
+.root {
+  display: flex;
+  width: 100%;
+  column-gap: utils.spacing(4);
+  min-height: 100vh;
+
+  .content {
+    position: relative;
+    display: flex;
+    flex: 1;
+    max-height: 100vh;
+    padding: calc(#{utils.spacing(3)} + #{variables.$header-height}) utils.spacing(3) utils.spacing(3);
+  }
+
+  .sidebar {
+    width: calc(#{variables.$sidebar-width} - #{utils.spacing(4)});
+  }
+}
+
+.headerCorner {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  color: rgba(#fff, 0.8);
+  width: utils.spacing(4);
+  height: utils.spacing(4);
+  transform: scaleX(-1);
+}

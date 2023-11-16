@@ -1,0 +1,70 @@
+@use '@/styles/utils';
+@use '@/styles/variables.module';
+
+
+.root {
+  position: fixed;
+  top: 74px;
+  left: 0;
+  z-index: 10;
+  width: variables.$sidebar-width;
+  display: flex;
+  flex-direction: column;
+  row-gap: utils.spacing(4);
+  background-color: rgba(#fff, 0.8);
+  backdrop-filter: saturate(180%) blur(20px);
+  padding: utils.spacing(3, 4);
+  height: 100%;
+  user-select: none;
+  clip-path: inset(0px -40px -10px -10px);
+  box-shadow: variables.$main-box-shadow;
+
+  .groups {
+    display: flex;
+    flex-direction: column;
+    row-gap: utils.spacing(4);
+    margin-top: utils.spacing(2);
+
+    .group {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      row-gap: utils.spacing(2);
+
+      .title {}
+
+      .links {
+        display: flex;
+        flex-direction: column;
+        row-gap: utils.spacing(1);
+        width: 100%;
+
+        .link {
+          justify-content: flex-start;
+          padding: utils.spacing(0, 2);
+          width: 100%;
+          transition: all 0.2s ease 0s;
+          border-radius: variables.$border-radius-medium;
+
+          &:hover {
+            background-color: rgba(black, .05);
+          }
+
+          &.active {
+            color: variables.$accent-color;
+            background-color: lighten(variables.$primary-light-color, 4%);
+          }
+        }
+      }
+    }
+  }
+
+  .corner {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    color: rgba(#fff, 0.8);
+    width: utils.spacing(4);
+    height: utils.spacing(4);
+  }
+}
