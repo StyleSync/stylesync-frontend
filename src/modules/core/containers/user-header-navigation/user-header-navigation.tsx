@@ -55,7 +55,7 @@ export const UserHeaderNavigation: FC<UserHeaderNavigationProps> = () => {
             key={link.href}
             href={link.href}
             className={clsx('link', styles.link, {
-              [styles.active]: pathname.includes(link.href),
+              [styles.active]: pathname.endsWith(link.href),
             })}
           >
             <Typography variant='body2' weight='medium'>

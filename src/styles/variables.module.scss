@@ -39,6 +39,7 @@ $screen-desktop: 1920px;
 // entities
 $header-height: 74px;
 $header-height-mobile: 62px;
+$sidebar-width: calc((100vw - 968px) / 2);
 
 :export {
   // colors

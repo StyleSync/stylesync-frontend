@@ -16,6 +16,7 @@ const Typography = forwardRef<HTMLElement, TypographyProps>(
       weight = 'regular',
       As = 'span',
       font = 'SF_PRO_TEXT',
+      cutText = false,
     },
     ref
   ) => {
@@ -26,6 +27,7 @@ const Typography = forwardRef<HTMLElement, TypographyProps>(
           fonts[font].className,
           styles[variant],
           styles[weight],
+          { [styles.cutText]: cutText },
           className
         )}
         // @ts-ignore

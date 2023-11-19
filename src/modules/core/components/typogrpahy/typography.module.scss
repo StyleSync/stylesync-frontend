@@ -64,3 +64,11 @@
 .black {
     font-weight: 900;
 }
+
+/* other */
+
+.cutText {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

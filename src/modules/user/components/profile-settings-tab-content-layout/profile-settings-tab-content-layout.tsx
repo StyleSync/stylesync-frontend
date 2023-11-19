@@ -19,20 +19,21 @@ export const ProfileSettingsTabContentLayout: FC<
           {title}
         </Typography>
       </div>
-      <Divider className={styles.divider} variant='horizontal' />
       <div className={styles.content}>
-        <div className={styles.scrolledContent}>{children}</div>
+        <div className={styles.scrolledContent}>
+          <div className={styles.childrenWrapper}>{children}</div>
+        </div>
+        {actions && (
+          <>
+            <Divider className={styles.divider} variant='horizontal' />
+            <div className={styles.actions}>
+              {actions.map((action, index) => (
+                <Button key={index} {...action} />
+              ))}
+            </div>
+          </>
+        )}
       </div>
-      {actions && (
-        <>
-          <Divider className={styles.divider} variant='horizontal' />
-          <div className={styles.actions}>
-            {actions.map((action, index) => (
-              <Button key={index} {...action} />
-            ))}
-          </div>
-        </>
-      )}
     </div>
   );
 };

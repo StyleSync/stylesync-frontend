@@ -3,7 +3,7 @@ import { type FC, useCallback } from 'react';
 import { useBoolean, useEffectOnce } from 'usehooks-ts';
 import clsx from 'clsx';
 import { signIn, signOut, useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 // components
 import { Avatar } from '@/modules/core/components/avatar';
 import { Emoji } from '@/modules/core/components/emoji';
@@ -22,6 +22,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
   // state
   const isOpen = useBoolean();
   const session = useSession();
+  const pathname = usePathname();
   const router = useRouter();
   // queries
   const { data: me } = trpc.user.me.useQuery(undefined, {
@@ -34,18 +35,18 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
 
   const handleSelect = useCallback(
     ({ id }: DropdownItem) => {
-      if (id === 'profile-settings') {
-        router.push('/app/profile-settings');
-      }
-
       if (id === 'sign-out') {
-        signOut({ callbackUrl: '/' });
+        void signOut({ callbackUrl: '/' });
       }
 
       isOpen.setFalse();
     },
-    [isOpen, router]
+    [isOpen]
   );
+
+  const handleSettingsClick = useCallback(() => {
+    router.push('/app/profile-settings');
+  }, [router]);
 
   if (session.status === 'loading') {
     return <div className={clsx(styles.skeleton, 'skeleton')} />;
@@ -70,49 +71,54 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
   }
 
   return (
-    <DropdownMenu
-      items={[
-        {
-          id: 'profile-settings',
-          text: 'Profile settings',
-          icon: 'settings',
-          disabled: !session.data?.user.userType,
-        },
-        {
-          id: 'sign-out',
-          text: 'Sign out',
-          icon: 'log-out',
-          variant: 'danger',
-        },
-      ]}
-      trigger={
-        <button
-          className={clsx(
-            styles.root,
-            { [styles.active]: isOpen.value },
-            'focusable'
-          )}
-          onClick={isOpen.setTrue}
-        >
-          <Avatar
-            className={styles.avatar}
-            url={me?.avatar}
-            fallback={<Emoji name='sunglasses' width={30} height={30} />}
-          />
-          <Icon name='chevron-bottom' width={12} />
-        </button>
-      }
-      typographyProps={{
-        weight: 'medium',
-      }}
-      isOpen={isOpen.value}
-      onClose={isOpen.setFalse}
-      onSelect={handleSelect}
-      popoverProps={{
-        sideOffset: 8,
-        disablePortal: true,
-        backgroundBlurEffect: false,
-      }}
-    />
+    <div className={styles.root}>
+      <Button
+        className={clsx(styles.iconButton, {
+          [styles.active]: pathname.includes('/profile-settings'),
+        })}
+        onClick={handleSettingsClick}
+        icon='settings'
+        variant='secondary'
+      />
+      <DropdownMenu
+        items={[
+          {
+            id: 'sign-out',
+            text: 'Sign out',
+            icon: 'log-out',
+            variant: 'danger',
+          },
+        ]}
+        trigger={
+          <button
+            className={clsx(
+              styles.trigger,
+              { [styles.active]: isOpen.value },
+              'focusable'
+            )}
+            onClick={isOpen.setTrue}
+          >
+            <Avatar
+              className={styles.avatar}
+              url={me?.avatar}
+              fallback={<Emoji name='sunglasses' width={30} height={30} />}
+            />
+            <Icon name='chevron-bottom' width={12} />
+          </button>
+        }
+        typographyProps={{
+          weight: 'medium',
+        }}
+        isOpen={isOpen.value}
+        onClose={isOpen.setFalse}
+        onSelect={handleSelect}
+        popoverProps={{
+          sideOffset: 5,
+          disablePortal: true,
+          backgroundBlurEffect: false,
+          align: 'end',
+        }}
+      />
+    </div>
   );
 };
