@@ -22,6 +22,16 @@ enum Currency {
   EUR
 }
 
+enum Day {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
 // Next Auth models
 model Account {
   id                String  @id @default(cuid())
@@ -68,6 +78,8 @@ model User {
   sessions            Session[]
   bookings            Booking[]
   professional        Professional?
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @default(now()) @updatedAt
 }
 
 model VerificationToken {
@@ -81,13 +93,15 @@ model VerificationToken {
 // Data models
 
 model Company {
-  id      String  @id @default(cuid())
-  name    String
-  address String?
-  phone   String?
-  email   String?
-  website String?
-  users   User[]
+  id        String   @id @default(cuid())
+  name      String
+  address   String?
+  phone     String?
+  email     String?
+  website   String?
+  users     User[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Professional {
@@ -97,9 +111,35 @@ model Professional {
   facebook   String?
   instagram  String?
   about      String?
-  schedule   String?
+  schedule   Schedule[]
   portfolios Portfolio[]
   services   ServiceOnProfessional[]
+  createdAt  DateTime                @default(now())
+  updatedAt  DateTime                @default(now()) @updatedAt
+}
+
+model Schedule {
+  id             String       @id @default(cuid())
+  start          DateTime
+  end            DateTime
+  day            Day
+  isSpecificDay  Boolean
+  date           DateTime?
+  breaks         Break[]
+  professionalId String
+  professional   Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model Break {
+  id         String   @id @default(cuid())
+  start      DateTime
+  end        DateTime
+  scheduleId String
+  schedule   Schedule @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Service {
@@ -107,6 +147,8 @@ model Service {
   name          String
   icon          String
   professionals ServiceOnProfessional[]
+  createdAt     DateTime                @default(now())
+  updatedAt     DateTime                @default(now()) @updatedAt
 }
 
 model ServiceOnProfessional {
@@ -120,6 +162,8 @@ model ServiceOnProfessional {
   professionalId String
   professional   Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
   bookings       Booking[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @default(now()) @updatedAt
 }
 
 model Portfolio {
@@ -129,6 +173,8 @@ model Portfolio {
   link           String
   professionalId String
   professional   Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
 }
 
 model Booking {
@@ -145,4 +191,6 @@ model Booking {
   status                String
   serviceProfessionalId String
   serviceProfessional   ServiceOnProfessional @relation(fields: [serviceProfessionalId], references: [id])
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
 }

@@ -13,6 +13,12 @@ type Story = StoryObj<typeof ServiceTag>;
 
 export const Default: Story = {
   args: {
-    data: { name: 'Makeup', id: 'makeup', icon: 'makeup' },
+    data: {
+      name: 'Makeup',
+      id: 'makeup',
+      icon: 'makeup',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
   },
 };

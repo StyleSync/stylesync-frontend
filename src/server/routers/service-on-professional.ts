@@ -93,7 +93,7 @@ export const serviceOnProfessionalRouter = router({
         duration: z.number().min(1, 'Required').optional(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       const serviceOnProfessional = await prisma.serviceOnProfessional.update({
         where: { id: input.id },
         data: { ...input },
@@ -104,6 +104,15 @@ export const serviceOnProfessionalRouter = router({
         throw new TRPCError({
           code: 'NOT_FOUND',
           message: `There was error updating service '${input.id}'`,
+        });
+      }
+
+      const professional = await getProfessionalFromContext(ctx);
+
+      if (serviceOnProfessional.professional.id !== professional.id) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: `You dont have permission to delete service on professional with id '${input.id}'`,
         });
       }
 

@@ -19,3 +19,32 @@ export const getProfessionalFromContext = async (ctx: Context) => {
 
   return professional;
 };
+
+export const checkScheduleBreakChangePermission = async (
+  ctx: Context,
+  id: string
+) => {
+  const schedule = await prisma.schedule.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      professionalId: true,
+    },
+  });
+
+  if (!schedule) {
+    throw new TRPCError({
+      code: 'NOT_FOUND',
+      message: `No schedule found with id '${id}'`,
+    });
+  }
+
+  const professional = await getProfessionalFromContext(ctx);
+
+  if (schedule.professionalId !== professional.id) {
+    throw new TRPCError({
+      code: 'FORBIDDEN',
+      message: `You dont have permission to do this action`,
+    });
+  }
+};
