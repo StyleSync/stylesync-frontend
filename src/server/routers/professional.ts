@@ -9,6 +9,7 @@ import {
   defaultServiceSelect,
   defaultUserSelect,
 } from '@/server/selectors';
+import { defaultScheduleSelect } from '@/server/selectors/schedule';
 
 const maxTextLength = 32;
 const maxLargeTextLength = 140;
@@ -20,7 +21,9 @@ export const professionalRouter = router({
     .input(
       z.object({
         id: z.string().min(1, 'Required'),
-        expand: z.array(z.enum(['portfolios', 'services', 'user'])).nullable(),
+        expand: z
+          .array(z.enum(['portfolios', 'services', 'user', 'schedule']))
+          .nullable(),
       })
     )
     .query(async ({ input }) => {
@@ -36,6 +39,11 @@ export const professionalRouter = router({
           },
           user: !!input?.expand?.includes('user') && {
             select: defaultUserSelect,
+          },
+          schedule: !!input?.expand?.includes('schedule') && {
+            select: defaultScheduleSelect,
+            take: 7,
+            where: { isSpecificDay: false },
           },
         },
       });
@@ -65,7 +73,6 @@ export const professionalRouter = router({
           .max(maxTextLength)
           .nullish(),
         about: z.string().min(1, 'Required').max(maxLargeTextLength).nullish(),
-        schedule: z.string().min(1, 'Required').max(maxTextLength).nullish(),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -106,7 +113,6 @@ export const professionalRouter = router({
           .max(maxTextLength)
           .nullish(),
         about: z.string().min(1, 'Required').max(maxLargeTextLength).nullish(),
-        schedule: z.string().min(1, 'Required').max(maxTextLength).nullish(),
       })
     )
     .mutation(async ({ input, ctx }) => {

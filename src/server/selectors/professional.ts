@@ -6,5 +6,4 @@ export const defaultProfessionalSelect =
     facebook: true,
     instagram: true,
     about: true,
-    schedule: true,
   });

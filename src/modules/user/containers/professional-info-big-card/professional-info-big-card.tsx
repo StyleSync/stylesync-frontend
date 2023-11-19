@@ -69,15 +69,33 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = () => {
             >
               <ServiceTag
                 className={styles.service}
-                data={{ id: 'makeup', name: 'Makeup', icon: 'makeup' }}
+                data={{
+                  id: 'makeup',
+                  name: 'Makeup',
+                  icon: 'makeup',
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+                }}
               />
               <ServiceTag
                 className={styles.service}
-                data={{ id: 'hair', name: 'Hair', icon: 'haircut' }}
+                data={{
+                  id: 'hair',
+                  name: 'Hair',
+                  icon: 'haircut',
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+                }}
               />
               <ServiceTag
                 className={styles.service}
-                data={{ id: 'nails', name: 'Nails', icon: 'nails' }}
+                data={{
+                  id: 'nails',
+                  name: 'Nails',
+                  icon: 'nails',
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+                }}
               />
             </Placeholder>
           </div>
