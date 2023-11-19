@@ -8,11 +8,9 @@ import { Spinner } from '@/modules/core/components/spinner';
 // hooks
 import { useServiceOnProfessionalGroups } from '@/modules/service/hooks/use-service-on-professional-groups';
 // types
-import type { ProfessionalQuizletWizardStepProps } from '@/modules/user/containers/professional-quizlet-wizard/professional-quizlet-wizard.interface';
+import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboard/pro-onboard.interface';
 
-export const ProfessionalQuizletWizardStepServices: FC<
-  ProfessionalQuizletWizardStepProps
-> = ({ next, back }) => {
+export const OnboardServices: FC<ProOnboardStepProps> = ({ next, back }) => {
   const {
     groups,
     setGroups,

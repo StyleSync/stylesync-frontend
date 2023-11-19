@@ -8,13 +8,11 @@ import { Placeholder } from '@/modules/core/components/placeholder';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { showToast } from '@/modules/core/providers/toast-provider';
 // types
-import type { ProfessionalQuizletWizardStepProps } from '@/modules/user/containers/professional-quizlet-wizard/professional-quizlet-wizard.interface';
+import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboard/pro-onboard.interface';
 
 import type { AboutProfessionalFormValues } from '@/modules/user/components/about-professional-form/about-professional-form.interface';
 
-export const ProfessionalQuizletWizardStepAbout: FC<
-  ProfessionalQuizletWizardStepProps
-> = ({ next }) => {
+export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
   const formId = useId();
   // queries
   const { data: me, ...meQuery } = trpc.user.me.useQuery({

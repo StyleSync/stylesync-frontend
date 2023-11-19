@@ -11,14 +11,14 @@ import { Placeholder } from '@/modules/core/components/placeholder';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 // assets
 import AboutProPreview from '@/assets/images/about-pro-preview.png';
-
-import type { ProfessionalQuizletPreviewProps } from './professional-quizlet-preview.interface';
-import styles from './professional-quizlet-preview.module.scss';
+// utils
 import { showToast } from '@/modules/core/providers/toast-provider';
+// types
+import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboard/pro-onboard.interface';
 
-export const ProfessionalQuizletPreview: FC<
-  ProfessionalQuizletPreviewProps
-> = () => {
+import styles from './onboard-preview.module.scss';
+
+export const OnboardPreview: FC<ProOnboardStepProps> = () => {
   const router = useRouter();
   const session = useSession();
   // queries

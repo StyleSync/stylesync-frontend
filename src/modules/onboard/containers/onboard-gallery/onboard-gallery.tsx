@@ -3,11 +3,9 @@ import { type FC } from 'react';
 import { ProfessionalQuizletWizardStepLayout } from '@/modules/user/components/professional-quizlet-wizard-step-layout';
 import { ProfessionalGalleryForm } from '@/modules/user/components/professional-gallery-form';
 // types
-import type { ProfessionalQuizletWizardStepProps } from '@/modules/user/containers/professional-quizlet-wizard/professional-quizlet-wizard.interface';
+import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboard/pro-onboard.interface';
 
-export const ProfessionalQuizletWizardStepGallery: FC<
-  ProfessionalQuizletWizardStepProps
-> = ({ next, back }) => {
+export const OnboardGallery: FC<ProOnboardStepProps> = ({ next, back }) => {
   return (
     <ProfessionalQuizletWizardStepLayout
       meta={{

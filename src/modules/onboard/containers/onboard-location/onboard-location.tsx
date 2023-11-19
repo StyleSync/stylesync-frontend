@@ -5,11 +5,9 @@ import { ProfessionalQuizletWizardStepLayout } from '@/modules/user/components/p
 // containers
 import { UserLocationSelectForm } from '@/modules/location/containers/user-location-select-form';
 // types
-import type { ProfessionalQuizletWizardStepProps } from '@/modules/user/containers/professional-quizlet-wizard/professional-quizlet-wizard.interface';
+import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboard/pro-onboard.interface';
 
-export const ProfessionalQuizletWizardStepLocation: FC<
-  ProfessionalQuizletWizardStepProps
-> = ({ back }) => {
+export const OnboardLocation: FC<ProOnboardStepProps> = ({ back }) => {
   const router = useRouter();
 
   const handleSubmit = useCallback(() => {

@@ -1,11 +1,10 @@
 'use client';
 import { type FC, useCallback, useMemo, useRef } from 'react';
 // containers
-import { ProfessionalQuizletWizardStepAbout } from '@/modules/user/containers/professional-quizlet-wizard-step-about';
-import { ProfessionalQuizletWizardStepServices } from '@/modules/user/containers/professional-quizlet-wizard-step-services';
-import { ProfessionalQuizletWizardStepSchedule } from '@/modules/user/containers/professional-quizlet-wizard-step-schedule';
-import { ProfessionalQuizletWizardStepGallery } from '@/modules/user/containers/professional-quizlet-wizard-step-gallery';
-import { ProfessionalQuizletWizardStepLocation } from '@/modules/user/containers/professional-quizlet-wizard-step-location';
+import { OnboardAbout } from '@/modules/onboard/containers/onboard-about';
+import { OnboardServices } from '@/modules/onboard/containers/onboard-services';
+import { OnboardGallery } from '@/modules/onboard/containers/onboard-gallery';
+import { OnboardLocation } from '@/modules/onboard/containers/onboard-location';
 // components
 import { Header } from '@/modules/core/components/header';
 import { Stepper } from '@/modules/core/components/stepper';
@@ -15,15 +14,15 @@ import { useQueryParams } from '@/modules/core/hooks/use-search-params';
 // utils
 import { percentOf } from '@/modules/core/utils/math.utils';
 
-import type { ProfessionalQuizletWizardData } from './professional-quizlet-wizard.interface';
-import styles from './professional-quizlet-wizard.module.scss';
+import type { ProfessionalQuizletWizardData } from './pro-onboard.interface';
+import styles from './pro-onboard.module.scss';
 
 const steps = ['about', 'services', 'schedule', 'gallery', 'location'] as const;
 const initialStep: StepKey = 'about';
 
 type StepKey = (typeof steps)[number];
 
-export const ProfessionalQuizletWizard: FC = () => {
+export const ProOnboard: FC = () => {
   const { queryParams, setQueryParams } = useQueryParams<{ step: StepKey }>();
   // refs
   const rootRef = useRef<HTMLDivElement>(null);
@@ -36,31 +35,31 @@ export const ProfessionalQuizletWizard: FC = () => {
         title: 'About',
         description:
           'We will use this information to create a detailed account of your experience that can be shared with your clients',
-        Step: ProfessionalQuizletWizardStepAbout,
+        Step: OnboardAbout,
       },
       services: {
         value: 'services',
         title: 'Services',
         description: 'Complete your portfolio to attract more clients',
-        Step: ProfessionalQuizletWizardStepServices,
+        Step: OnboardServices,
       },
       schedule: {
         value: 'schedule',
         title: 'Schedule',
         description: 'test',
-        Step: ProfessionalQuizletWizardStepSchedule,
+        Step: OnboardServices,
       },
       gallery: {
         value: 'gallery',
         title: 'Gallery',
         description: 'test',
-        Step: ProfessionalQuizletWizardStepGallery,
+        Step: OnboardGallery,
       },
       location: {
         value: 'location',
         title: 'Location',
         description: 'test',
-        Step: ProfessionalQuizletWizardStepLocation,
+        Step: OnboardLocation,
       },
     }),
     []

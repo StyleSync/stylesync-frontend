@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 
-export type ProfessionalQuizletWizardStepProps = {
+export type ProOnboardStepProps = {
   next: () => void;
   back: () => void;
 };
@@ -11,6 +11,6 @@ export type ProfessionalQuizletWizardData<Value extends string> = Record<
     value: string;
     title: string;
     description: string;
-    Step: FC<ProfessionalQuizletWizardStepProps>;
+    Step: FC<ProOnboardStepProps>;
   }
 >;
