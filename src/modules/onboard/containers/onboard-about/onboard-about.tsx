@@ -1,9 +1,9 @@
 import { type FC, useCallback, useId, useMemo } from 'react';
 // components
-import { AboutProfessionalForm } from '@/modules/user/components/about-professional-form';
-import { ProfessionalQuizletWizardStepLayout } from '@/modules/user/components/professional-quizlet-wizard-step-layout';
 import { ErrorBox } from '@/modules/core/components/error-box';
 import { Placeholder } from '@/modules/core/components/placeholder';
+import { OnboardLayout } from '@/modules/onboard/components/onboard-layout';
+import { AboutProfessionalForm } from '@/modules/user/components/about-professional-form';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { showToast } from '@/modules/core/providers/toast-provider';
@@ -11,6 +11,7 @@ import { showToast } from '@/modules/core/providers/toast-provider';
 import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboard/pro-onboard.interface';
 
 import type { AboutProfessionalFormValues } from '@/modules/user/components/about-professional-form/about-professional-form.interface';
+import { Spinner } from '@/modules/core/components/spinner';
 
 export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
   const formId = useId();
@@ -80,11 +81,11 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
         }
       );
     },
-    [me, meUpdateAsync, next, professionalCreate, professionalUpdate]
+    [me, meQuery, meUpdateAsync, next, professionalCreate, professionalUpdate]
   );
 
   return (
-    <ProfessionalQuizletWizardStepLayout
+    <OnboardLayout
       meta={{
         title: 'About',
         description:
@@ -97,25 +98,30 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
           professionalCreateMutation.isLoading ||
           meUpdateMutation.isLoading,
         disabled: meQuery.isLoading || meQuery.isError,
+        type: 'submit',
       }}
     >
       <Placeholder
-        isActive={meQuery.isError}
-        placeholder={
-          <ErrorBox
-            title='Connection with server has been interrupted'
-            description='Please check your internet connection or try refreshing the page. If the issue persists, please contact our support team for assistance.'
-            refresh={handleRefresh}
-          />
-        }
+        isActive={meQuery.isLoading}
+        placeholder={<Spinner size='medium' />}
       >
-        <AboutProfessionalForm
-          formId={formId}
-          onSubmit={handleSubmit}
-          isLoading={meQuery.isLoading}
-          initialValues={initialValues}
-        />
+        <Placeholder
+          isActive={meQuery.isError}
+          placeholder={
+            <ErrorBox
+              title='Connection with server has been interrupted'
+              description='Please check your internet connection or try refreshing the page. If the issue persists, please contact our support team for assistance.'
+              refresh={handleRefresh}
+            />
+          }
+        >
+          <AboutProfessionalForm
+            formId={formId}
+            onSubmit={handleSubmit}
+            initialValues={initialValues}
+          />
+        </Placeholder>
       </Placeholder>
-    </ProfessionalQuizletWizardStepLayout>
+    </OnboardLayout>
   );
 };

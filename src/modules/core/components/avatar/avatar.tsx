@@ -21,35 +21,39 @@ export const Avatar: FC<AvatarProps> = ({
   shape = 'circle',
   style,
   className,
-}) => (
-  <div
-    className={clsx(
-      styles.avatarContainer,
-      styles[shape],
-      {
-        [styles.shadow]: shadow,
-      },
-      className
-    )}
-    style={{
-      width: `${SIZES[size]}px`,
-      height: `${SIZES[size]}px`,
-      ...style,
-    }}
-  >
-    {url && (
-      <Image
-        src={url}
-        alt='Avatar'
-        width={SIZES[size]}
-        height={SIZES[size]}
-        style={{
-          objectFit: 'cover',
-        }}
-      />
-    )}
-    {!url && fallback && (
-      <div className={styles.fallbackContainer}>{fallback}</div>
-    )}
-  </div>
-);
+}) => {
+  const _size = typeof size === 'number' ? size : SIZES[size];
+
+  return (
+    <div
+      className={clsx(
+        styles.avatarContainer,
+        styles[shape],
+        {
+          [styles.shadow]: shadow,
+        },
+        className
+      )}
+      style={{
+        width: `${_size}px`,
+        height: `${_size}px`,
+        ...style,
+      }}
+    >
+      {url && (
+        <Image
+          src={url}
+          alt='Avatar'
+          width={_size}
+          height={_size}
+          style={{
+            objectFit: 'cover',
+          }}
+        />
+      )}
+      {!url && fallback && (
+        <div className={styles.fallbackContainer}>{fallback}</div>
+      )}
+    </div>
+  );
+};

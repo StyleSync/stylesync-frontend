@@ -1,13 +1,13 @@
 import { type FC } from 'react';
 // components
-import { ProfessionalQuizletWizardStepLayout } from '@/modules/user/components/professional-quizlet-wizard-step-layout';
+import { OnboardLayout } from '@/modules/onboard/components/onboard-layout';
 import { ProfessionalGalleryForm } from '@/modules/user/components/professional-gallery-form';
 // types
 import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboard/pro-onboard.interface';
 
 export const OnboardGallery: FC<ProOnboardStepProps> = ({ next, back }) => {
   return (
-    <ProfessionalQuizletWizardStepLayout
+    <OnboardLayout
       meta={{
         title: 'Gallery',
         description: 'todo...',
@@ -20,6 +20,6 @@ export const OnboardGallery: FC<ProOnboardStepProps> = ({ next, back }) => {
       }}
     >
       <ProfessionalGalleryForm />
-    </ProfessionalQuizletWizardStepLayout>
+    </OnboardLayout>
   );
 };

@@ -4,9 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 // components
 import { TextField } from '@/modules/core/components/text-field';
-import { ImageSelector } from '@/modules/core/components/image-selector';
-import { Typography } from '@/modules/core/components/typogrpahy';
-import { AvatarSelectMobile } from '@/modules/core/components/avatar-select-mobile';
+import { AvatarSelect } from '@/modules/core/components/avatar-select';
 // hooks
 import { useImageInputState } from '@/modules/core/hooks/use-image-input-state';
 
@@ -15,7 +13,6 @@ import type {
   AboutProfessionalFormValues,
 } from './about-professional-form.interface';
 import styles from './about-professional-form.module.scss';
-import clsx from 'clsx';
 
 const defaultValues: AboutProfessionalFormValues = {
   firstName: '',
@@ -38,7 +35,7 @@ const validationSchema: z.Schema<AboutProfessionalFormValues> = z.object({
 });
 
 const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
-  ({ initialValues, formId, onSubmit, isLoading }) => {
+  ({ initialValues, formId, onSubmit }) => {
     // form
     const { reset, ...form } = useForm<AboutProfessionalFormValues>({
       defaultValues,
@@ -58,56 +55,19 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
       [avatar.file, onSubmit]
     );
 
-    if (isLoading) {
-      return (
-        <div className={styles.root}>
-          <div className={clsx('skeleton', styles.avatarSelectSkeleton)} />
-          <div className={styles.inputsRow}>
-            <div className='skeleton' />
-            <div className='skeleton' />
-          </div>
-          <div className={styles.inputsRow}>
-            <div className='skeleton' />
-            <div className='skeleton' />
-          </div>
-          <div className={styles.inputsRow}>
-            <div className='skeleton' />
-            <div className='skeleton' />
-          </div>
-          <div className={clsx('skeleton', styles.textAreaSkeleton)} />
-        </div>
-      );
-    }
-
     return (
       <form
         id={formId}
         onSubmit={form.handleSubmit(handleSubmit)}
         className={styles.root}
       >
-        <AvatarSelectMobile
-          className={styles.avatarSelectMobile}
-          value={avatar.preview}
-          onChange={avatar.onChange}
-        />
-        <ImageSelector
-          label='Avatar'
-          classes={{
-            container: styles.avatarSelect,
-          }}
-        >
-          <Typography variant='body2'>
-            <span className={styles.avatarSelectText}>Press here</span> to
-            select an avatar image or drag and drop
-          </Typography>
-        </ImageSelector>
+        <AvatarSelect value={avatar.preview} onChange={avatar.onChange} />
         <div className={styles.inputsRow}>
           <TextField
             {...form.register('firstName')}
             error={Boolean(form.formState.errors.firstName)}
             variant='input'
             label='First Name *'
-            autoFocus
           />
           <TextField
             {...form.register('lastName')}

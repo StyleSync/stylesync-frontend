@@ -5,7 +5,7 @@ export type ProOnboardStepProps = {
   back: () => void;
 };
 
-export type ProfessionalQuizletWizardData<Value extends string> = Record<
+export type ProOnboardData<Value extends string> = Record<
   Value,
   {
     value: string;

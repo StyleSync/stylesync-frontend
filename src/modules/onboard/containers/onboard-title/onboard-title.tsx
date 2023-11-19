@@ -2,25 +2,25 @@
 import { type FC, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import clsx from 'clsx';
 // components
-import { BrowserView } from '@/modules/core/components/browser-view';
 import { Typography } from '@/modules/core/components/typogrpahy';
-import { Spinner } from '@/modules/core/components/spinner';
-import { Placeholder } from '@/modules/core/components/placeholder';
+import { Button } from '@/modules/core/components/button';
+import { Stepper } from '@/modules/core/components/stepper';
+import { Header } from '@/modules/core/components/header';
+import { Progress } from '@/modules/core/components/progress';
+// hooks
+import { useOnboard } from '@/modules/onboard/hooks/use-onboard';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
-// assets
-import AboutProPreview from '@/assets/images/about-pro-preview.png';
-// utils
 import { showToast } from '@/modules/core/providers/toast-provider';
-// types
-import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboard/pro-onboard.interface';
 
-import styles from './onboard-preview.module.scss';
+import styles from './onboard-title.module.scss';
 
-export const OnboardPreview: FC<ProOnboardStepProps> = () => {
+export const OnboardTitle: FC = () => {
   const router = useRouter();
   const session = useSession();
+  const { active, onboardData, progress } = useOnboard();
   // queries
   const { data: me, ...meQuery } = trpc.user.me.useQuery({
     expand: ['professional'],
@@ -37,7 +37,7 @@ export const OnboardPreview: FC<ProOnboardStepProps> = () => {
     meUpdateMutation.isLoading ||
     professionalCreateMutation.isLoading;
 
-  const handleSkipClick = useCallback(async () => {
+  const skip = useCallback(async () => {
     if (!me) {
       return;
     }
@@ -68,18 +68,35 @@ export const OnboardPreview: FC<ProOnboardStepProps> = () => {
 
   return (
     <div className={styles.root}>
-      <Typography className={styles.description}>
-        We will use this information to create a detailed account of your
-        experience that can be shared with your clients
-      </Typography>
-      <BrowserView className={styles.browser} image={AboutProPreview} />
-      <div className={styles.skip}>
-        <Placeholder isActive={isLoading} placeholder={<Spinner />}>
-          <button className='link' onClick={handleSkipClick}>
-            <Typography variant='body1'>Skip</Typography>
-          </button>
-        </Placeholder>
+      <div className={clsx('pageContent', styles.info)}>
+        <Typography variant='subtitle' weight='medium'>
+          Onboarding
+        </Typography>
+        <Button
+          className={styles.skip}
+          text='Skip'
+          variant='outlined'
+          disabled={isLoading || meQuery.isError}
+          onClick={skip}
+        />
       </div>
+      <div className='pageContent'>
+        <Stepper
+          value={active}
+          steps={Object.values(onboardData).map((data) => ({
+            value: data.value,
+            text: data.title,
+          }))}
+          classes={{
+            root: styles.stepper,
+          }}
+        />
+      </div>
+      <Header.BottomContent>
+        <div className={styles.mobileProgress}>
+          <Progress progress={progress} />
+        </div>
+      </Header.BottomContent>
     </div>
   );
 };

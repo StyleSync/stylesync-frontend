@@ -10,6 +10,8 @@ import { ERROR_MESSAGE } from '@/modules/core/constants/error-messages.constants
 // types
 import type { AboutProfessionalFormValues } from '@/modules/user/components/about-professional-form/about-professional-form.interface';
 import { showToast } from '@/modules/core/providers/toast-provider';
+import { Placeholder } from '@/modules/core/components/placeholder';
+import { Spinner } from '@/modules/core/components/spinner';
 
 export const ProfessionalSettingsAbout: FC = () => {
   const formId = useId();
@@ -82,12 +84,16 @@ export const ProfessionalSettingsAbout: FC = () => {
         },
       ]}
     >
-      <AboutProfessionalForm
-        formId={formId}
-        onSubmit={handleSubmit}
-        initialValues={initialValues}
-        isLoading={meQuery.isLoading}
-      />
+      <Placeholder
+        isActive={meQuery.isLoading}
+        placeholder={<Spinner size='medium' />}
+      >
+        <AboutProfessionalForm
+          formId={formId}
+          onSubmit={handleSubmit}
+          initialValues={initialValues}
+        />
+      </Placeholder>
     </ProfileSettingsTabContentLayout>
   );
 };

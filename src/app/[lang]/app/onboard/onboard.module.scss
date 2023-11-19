@@ -7,9 +7,8 @@ $header-bottom-content-height-mobile: 24px;
 .root {
   position: relative;
   display: flex;
-  height: calc(100vh - #{variables.$header-height});
+  flex-direction: column;
   width: 100%;
-  background: radial-gradient(331.49% 141.42% at -0.00% 100.00%, #FFF 0%, #FFF 48.96%, rgba(200, 223, 254, 0.93) 99.99%);
   min-height: 100vh;
   padding-top: variables.$header-height;
 

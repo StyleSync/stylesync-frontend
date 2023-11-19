@@ -1,0 +1,39 @@
+@use '@/styles/utils';
+@use '@/styles/variables.module';
+
+.root {
+  display: flex;
+  align-items: center;
+  column-gap: utils.spacing(1);
+  width: fit-content;
+
+  .avatar {
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    column-gap: utils.spacing(1);
+
+    .action {
+      padding: utils.spacing(0, 1);
+      border-radius: variables.$border-radius-small;
+      border: none;
+
+      &.select {
+        color: variables.$primary-color;
+      }
+
+      &.delete {
+        color: variables.$error-color;
+      }
+    }
+
+    .divider {
+      display: flex;
+      height: 12px;
+      width: 1px;
+      background-color: variables.$primary-light-color;
+    }
+  }
+}

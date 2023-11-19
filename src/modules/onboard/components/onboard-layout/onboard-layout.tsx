@@ -3,12 +3,15 @@ import { type FC } from 'react';
 import { Button } from '@/modules/core/components/button';
 import { Typography } from '@/modules/core/components/typogrpahy';
 
-import type { ProfessionalQuizletWizardStepLayoutProps } from './professional-quizlet-wizard-step-layout.interface';
-import styles from './professional-quizlet-wizard-step-layout.module.scss';
+import type { OnboardLayoutProps } from './onboard-layout.interface';
+import styles from './onboard-layout.module.scss';
 
-export const ProfessionalQuizletWizardStepLayout: FC<
-  ProfessionalQuizletWizardStepLayoutProps
-> = ({ children, meta, prevButtonProps, nextButtonProps }) => {
+export const OnboardLayout: FC<OnboardLayoutProps> = ({
+  children,
+  meta,
+  prevButtonProps,
+  nextButtonProps,
+}) => {
   return (
     <div className={styles.root}>
       {meta && (

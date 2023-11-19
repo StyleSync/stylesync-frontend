@@ -1,6 +1,6 @@
 import { type FC } from 'react';
 // components
-import { ProfessionalQuizletWizardStepLayout } from '@/modules/user/components/professional-quizlet-wizard-step-layout';
+import { OnboardLayout } from '@/modules/onboard/components/onboard-layout';
 import { ProfessionalServicesForm } from '@/modules/service/containers/professional-services-form';
 import { ErrorBox } from '@/modules/core/components/error-box';
 import { Placeholder } from '@/modules/core/components/placeholder';
@@ -24,7 +24,7 @@ export const OnboardServices: FC<ProOnboardStepProps> = ({ next, back }) => {
   });
 
   return (
-    <ProfessionalQuizletWizardStepLayout
+    <OnboardLayout
       meta={{
         title: 'Services',
         description: 'todo...',
@@ -57,6 +57,6 @@ export const OnboardServices: FC<ProOnboardStepProps> = ({ next, back }) => {
           />
         </Placeholder>
       </Placeholder>
-    </ProfessionalQuizletWizardStepLayout>
+    </OnboardLayout>
   );
 };

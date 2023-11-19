@@ -1,7 +1,7 @@
 import { type FC, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 // components
-import { ProfessionalQuizletWizardStepLayout } from '@/modules/user/components/professional-quizlet-wizard-step-layout';
+import { OnboardLayout } from '@/modules/onboard/components/onboard-layout';
 // containers
 import { UserLocationSelectForm } from '@/modules/location/containers/user-location-select-form';
 // types
@@ -15,7 +15,7 @@ export const OnboardLocation: FC<ProOnboardStepProps> = ({ back }) => {
   }, [router]);
 
   return (
-    <ProfessionalQuizletWizardStepLayout
+    <OnboardLayout
       meta={{ title: 'Location', description: 'todo...' }}
       nextButtonProps={{
         onClick: handleSubmit,
@@ -26,6 +26,6 @@ export const OnboardLocation: FC<ProOnboardStepProps> = ({ back }) => {
       }}
     >
       <UserLocationSelectForm />
-    </ProfessionalQuizletWizardStepLayout>
+    </OnboardLayout>
   );
 };
