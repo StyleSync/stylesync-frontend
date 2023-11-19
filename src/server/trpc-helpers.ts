@@ -55,7 +55,9 @@ export const privateProcedure = t.procedure.use((opts) => {
   if (!opts.ctx.user?.id) {
     throw new TRPCError({
       code: 'UNAUTHORIZED',
-      message: 'You have to be logged in to do this',
+      message: `You have to be logged in to do this ${JSON.stringify(
+        opts.ctx.user
+      )}`,
     });
   }
 
