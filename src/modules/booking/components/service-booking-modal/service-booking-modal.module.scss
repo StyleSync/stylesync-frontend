@@ -1,0 +1,78 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.container {
+  width: 620px;
+}
+
+.header {
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.closeIcon {
+  color: variables.$grey-color;
+  cursor: pointer;
+}
+
+// labelCard
+.labelContainer {
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+  width: 100%;
+  padding: 10px 0px 10px 10px;
+  margin-bottom: 30px;
+  border-radius: variables.$border-radius-medium;
+  box-shadow: variables.$main-box-shadow;
+}
+
+.lableDescr {
+  display: flex;
+  flex-direction: column;
+  row-gap: 3px;
+}
+
+.lableAddress {
+  color: variables.$grey-color;
+}
+
+.stepper {
+  padding: 0px 10px 0px 10px;
+  margin-bottom: 35px;
+}
+
+.descr {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.time {
+  color: variables.$grey-color;
+}
+
+.cardContainer {
+  width: 100%;
+  border-bottom: 1px solid variables.$primary-light-color;
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.cardWrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 15px;
+  padding-bottom: 20px;
+}
+
+.baseCardContainer {
+  display: grid;
+  row-gap: 20px;
+}
+
+//   cursor: onClick ? 'pointer' : 'unset',

@@ -1,6 +1,5 @@
 'use client';
 import { useMemo, type FC } from 'react';
-
 import Link from 'next/link';
 import { faker } from '@faker-js/faker';
 import clsx from 'clsx';
@@ -15,6 +14,7 @@ import { Avatar } from '@/modules/core/components/avatar';
 import { Tag } from '../../../core/components/tag';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
+import { ServiceBookingModal } from '@/modules/booking/components/service-booking-modal/service-booking-modal';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { getFullName } from '@/modules/user/utils/user.utils';
@@ -60,6 +60,8 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
       ) ?? []
     );
   }, [serviceOnProfessionalList]);
+
+  const isBookingOpen = useBoolean();
 
   return (
     <div className={styles.container}>
@@ -153,10 +155,16 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
               />
             }
           />
-          <Button
-            variant='primary'
-            text='Book'
-            disabled={professionalQuery.isLoading}
+          <ServiceBookingModal
+            onOpenChange={isBookingOpen.setValue}
+            isOpen={isBookingOpen.value}
+            trigger={
+              <Button
+                variant='primary'
+                text='Book'
+                disabled={professionalQuery.isLoading}
+              />
+            }
           />
         </div>
       </div>
