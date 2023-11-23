@@ -85,15 +85,17 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
   );
 
   const handleEditCancel = useCallback(() => {
-    const { success } = validationSchema.safeParse(data);
+    const formValues = mapServiceOnProfessionalToFormValues(data);
+    const validation = validationSchema.safeParse(formValues);
 
-    if (!success) {
+    if (!validation.success) {
       onDelete(data.id);
 
       return;
     }
 
-    form.reset(mapServiceOnProfessionalToFormValues(data));
+    form.reset(formValues);
+    setRowState('display');
   }, [data, form, onDelete]);
 
   return (
