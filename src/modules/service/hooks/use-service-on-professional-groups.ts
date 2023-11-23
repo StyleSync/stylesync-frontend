@@ -13,11 +13,20 @@ type Options = {
 
 export const useServiceOnProfessionalGroups = (options?: Options) => {
   // queries
+  const { data: me } = trpc.user.me.useQuery({
+    expand: ['professional'],
+  });
   const { data: serviceList, ...serviceListQuery } =
-    trpc.serviceOnProfessional.list.useQuery({
-      limit: 10,
-      offset: 0,
-    });
+    trpc.serviceOnProfessional.list.useQuery(
+      {
+        limit: 10,
+        offset: 0,
+        professionalId: me?.professional?.id,
+      },
+      {
+        enabled: Boolean(me?.professional?.id),
+      }
+    );
   const serviceOnProfessionalListMutation =
     useServiceOnProfessionalListMutation();
   // state

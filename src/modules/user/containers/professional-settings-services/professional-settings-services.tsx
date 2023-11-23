@@ -25,7 +25,7 @@ export const ProfessionalSettingsServices: FC = () => {
       showToast({
         variant: 'success',
         title: 'All done!',
-        description: 'Your changes has been saved',
+        description: 'Changes has been saved',
       });
     },
   });

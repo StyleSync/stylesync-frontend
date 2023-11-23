@@ -13,11 +13,18 @@ import { trpc } from '@/modules/core/utils/trpc.utils';
 import styles from './user-services.module.scss';
 
 export const UserServices = () => {
+  const { data: me } = trpc.user.me.useQuery({ expand: ['professional'] });
   const { data: serviceList, ...serviceListQuery } =
-    trpc.serviceOnProfessional.list.useQuery({
-      limit: 10,
-      offset: 0,
-    });
+    trpc.serviceOnProfessional.list.useQuery(
+      {
+        limit: 10,
+        offset: 0,
+        professionalId: me?.professional?.id,
+      },
+      {
+        enabled: Boolean(me?.professional),
+      }
+    );
   const groups = useMemo(
     () => getGroupOfServiceOnProfessionalList(serviceList ?? []),
     [serviceList]
