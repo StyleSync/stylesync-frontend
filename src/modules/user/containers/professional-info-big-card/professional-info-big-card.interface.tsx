@@ -1,1 +1,3 @@
-export type ProfileInfoBigCardProps = {};
+export type ProfileInfoBigCardProps = {
+  userId: string;
+};

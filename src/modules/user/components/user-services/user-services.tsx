@@ -1,5 +1,5 @@
 'use client';
-import { useMemo } from 'react';
+import { useMemo, type FC } from 'react';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { ServicesTable } from '@/modules/service/components/service-table';
@@ -12,17 +12,20 @@ import { trpc } from '@/modules/core/utils/trpc.utils';
 
 import styles from './user-services.module.scss';
 
-export const UserServices = () => {
-  const { data: me } = trpc.user.me.useQuery({ expand: ['professional'] });
+export const UserServices: FC<{ userId: string }> = ({ userId }) => {
+  const { data: professional } = trpc.professional.get.useQuery({
+    id: userId,
+    expand: ['user'],
+  });
   const { data: serviceList, ...serviceListQuery } =
     trpc.serviceOnProfessional.list.useQuery(
       {
         limit: 10,
         offset: 0,
-        professionalId: me?.professional?.id,
+        professionalId: professional?.id,
       },
       {
-        enabled: Boolean(me?.professional),
+        enabled: Boolean(professional),
       }
     );
   const groups = useMemo(
