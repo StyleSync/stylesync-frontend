@@ -32,15 +32,7 @@ export const range = (length: number, start = 0): number[] => {
  */
 
 export const isArrContainDuplications = <T>(args: T[]): boolean => {
-  const cache: T[] = [];
+  const cache: Set<T> = new Set(args);
 
-  for (const arg of args) {
-    if (cache.includes(arg)) {
-      return true;
-    }
-
-    cache.push(arg);
-  }
-
-  return false;
+  return args.length !== cache.size;
 };
