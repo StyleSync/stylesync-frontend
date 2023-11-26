@@ -16,3 +16,12 @@ export const defaultUserSelect = Prisma.validator<Prisma.UserSelect>()({
   onboardingCompleted: true,
   userType: true,
 });
+
+export const publicUserSelect = Prisma.validator<Prisma.UserSelect>()({
+  avatar: true,
+  firstName: true,
+  lastName: true,
+  phone: true,
+  name: true,
+  email: true,
+});
