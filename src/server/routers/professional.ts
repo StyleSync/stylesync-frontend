@@ -6,10 +6,11 @@ import { Role } from '@prisma/client';
 import {
   defaultPortfolioSelect,
   defaultProfessionalSelect,
-  defaultServiceSelect,
+  defaultServiceOnProfessionalSelect,
   defaultUserSelect,
 } from '@/server/selectors';
 import { defaultScheduleSelect } from '@/server/selectors/schedule';
+import { publicUserSelect } from '@/server/selectors/user';
 
 const maxTextLength = 32;
 const maxLargeTextLength = 140;
@@ -17,7 +18,7 @@ const defaultLimit = 10;
 const maxLimit = 100;
 
 export const professionalRouter = router({
-  get: privateProcedure
+  get: publicProcedure
     .input(
       z.object({
         id: z.string().min(1, 'Required'),
@@ -35,10 +36,10 @@ export const professionalRouter = router({
             select: defaultPortfolioSelect,
           },
           services: !!input?.expand?.includes('services') && {
-            select: defaultServiceSelect,
+            select: defaultServiceOnProfessionalSelect,
           },
           user: !!input?.expand?.includes('user') && {
-            select: defaultUserSelect,
+            select: publicUserSelect,
           },
           schedule: !!input?.expand?.includes('schedule') && {
             select: defaultScheduleSelect,
