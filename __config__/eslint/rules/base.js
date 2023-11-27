@@ -228,6 +228,14 @@ module.exports = {
       { blankLine: 'always', prev: 'block-like', next: '*' },
     ],
     '@typescript-eslint/consistent-type-imports': 'error',
+    'import/no-unused-modules': [
+      'error',
+      {
+        unusedExports: true,
+        missingExports: true,
+        src: ['src'],
+      },
+    ],
   },
   overrides: [
     {
@@ -247,6 +255,28 @@ module.exports = {
       files: ['*.slice.ts'],
       rules: {
         'no-param-reassign': 'off',
+      },
+    },
+    {
+      files: ['scripts/*.js'],
+      rules: {
+        'no-console': 'off',
+      },
+    },
+    // next framework files
+    {
+      files: [
+        'src/middleware.ts',
+        'src/server/**/*.ts',
+        'src/declarations/**/*.ts',
+        'src/app/**/page.tsx',
+        'src/app/**/layout.tsx',
+        'src/app/api/**/*.ts',
+        'src/**/*.stories.ts',
+        'src/**/*.stories.tsx',
+      ],
+      rules: {
+        'import/no-unused-modules': 'off',
       },
     },
   ],

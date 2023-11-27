@@ -4,7 +4,7 @@ const ANIMATION_LENGTH = 700;
 const RIPPLE_SIZE = 100;
 const RIPPLE_COLOR = 'rgba(25, 118, 210, 0.1)';
 
-export interface RippleOptions {
+interface RippleOptions {
   disabled?: boolean;
   rippleColor?: string;
   animationLength?: number;
