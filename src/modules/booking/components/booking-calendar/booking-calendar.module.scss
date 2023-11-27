@@ -1,0 +1,99 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 20px;
+  margin-bottom: 20px;
+}
+
+.dataBox {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 5px;
+  padding: 10px 20px;
+  background-color: transparent;
+  border: 1px solid variables.$primary-light-color;
+  border-radius: variables.$border-radius-medium;
+  cursor: pointer;
+}
+.dataBoxCheked {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 5px;
+  padding: 10px 20px;
+  background-color: variables.$accent-color;
+  border-radius: variables.$border-radius-medium;
+  cursor: pointer;
+}
+
+.dataBoxBooked {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 5px;
+  padding: 10px 20px;
+  color: #fff;
+  background-color: #fafbfc;
+  border: 1px solid variables.$primary-light-color;
+  border-radius: variables.$border-radius-medium;
+  cursor: pointer;
+}
+
+.infoBooked {
+  color: variables.$grey-color;
+}
+
+.infoCheked {
+  color: #fff;
+}
+
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  column-gap: 17px;
+  row-gap: 10px;
+  flex-wrap: wrap;
+}
+
+.timeBox {
+  padding: 11px 18px;
+  background-color: variables.$accent-color;
+  border-radius: variables.$border-radius-medium;
+  cursor: pointer;
+}
+
+.timeText {
+  color: #fff;
+}
+
+.timeBox2 {
+  padding: 11px 18px;
+  border-radius: variables.$border-radius-medium;
+  background-color: #fafbfc;
+  border: 1px solid variables.$primary-light-color;
+  cursor: pointer;
+}
+.timeText2 {
+  color: variables.$grey-color;
+}
+
+.timeBox3 {
+  padding: 11px 18px;
+  border-radius: variables.$border-radius-medium;
+  background-color: transparent;
+  border: 1px solid variables.$primary-light-color;
+  cursor: pointer;
+}

@@ -1,0 +1,28 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.cardContainer {
+  width: 100%;
+  border-bottom: 1px solid variables.$primary-light-color;
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.cardWrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 15px;
+  padding-bottom: 20px;
+}
+
+.descr {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.time {
+  color: variables.$grey-color;
+}
