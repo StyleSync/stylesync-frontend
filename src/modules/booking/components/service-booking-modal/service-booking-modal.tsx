@@ -2,48 +2,45 @@ import { type FC, useState } from 'react';
 // components
 import { RadioButton } from '@/modules/core/components/radio-button';
 import { Avatar } from '@/modules/core/components/avatar';
-
+import { Button } from '@/modules/core/components/button';
 import { Stepper } from '@/modules/core/components/stepper';
 import { Dialog } from '@/modules/core/components/dialog';
 import { Typography } from '@/modules/core/components/typogrpahy';
-
+import { BookingForm } from '@/modules/booking/components/booking-form';
+import { BookingCalendar } from '@/modules/booking/components/booking-calendar';
+import { BaseCardWithRadioButton } from '../booking-card-radio-button';
 // type
 import { type ModalProps } from '@/modules/core/components/dialog/dialog.interface';
-// style
-import styles from './service-booking-modal.module.scss';
-import { Button } from '@/modules/core/components/button';
+// utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 
-import { type ServiceOnProfessional } from '@/modules/service/types/service.types';
-
-const BaseCardWithRadioButton: FC<{
-  value: string;
-  serviceOnProfessional: ServiceOnProfessional;
-  onClick?: (name: string) => void;
-}> = ({ value, serviceOnProfessional, onClick }) => {
-  return (
-    <div
-      className={styles.cardContainer}
-      onClick={() => onClick && onClick(value)}
-    >
-      <div className={styles.cardWrapper}>
-        <RadioButton value={value} />
-        <div className={styles.descr}>
-          <Typography>{serviceOnProfessional.title}</Typography>
-          <Typography className={styles.time} variant='small'>
-            1h 30min
-          </Typography>
-        </div>
-      </div>
-    </div>
-  );
-};
+import styles from './service-booking-modal.module.scss';
 
 export const ServiceBookingModal: FC<Omit<ModalProps, 'children'>> = (
   props
 ) => {
   // state
-  const [value, setValue] = useState<string | null>(null);
+  const [value, setValue] = useState<string>('');
+
+  const [step, setStep] = useState<'service' | 'datetime' | 'confirmation'>(
+    'service'
+  );
+
+  const handleNext = () => {
+    if (step === 'service') {
+      setStep('datetime');
+    } else if (step === 'datetime') {
+      setStep('confirmation');
+    }
+  };
+
+  const handleBack = () => {
+    if (step === 'confirmation') {
+      setStep('datetime');
+    } else if (step === 'datetime') {
+      setStep('service');
+    }
+  };
 
   const { data: serviceList } = trpc.serviceOnProfessional.list.useQuery({
     limit: 10,
@@ -87,23 +84,49 @@ export const ServiceBookingModal: FC<Omit<ModalProps, 'children'>> = (
                 value: 'confirmation',
               },
             ]}
-            value='service'
+            value={step}
           />
         </div>
-        <div>
-          <RadioButton.Group value={value} onChange={setValue} name='cards'>
-            <div className={styles.baseCardContainer}>
-              {serviceList?.map((service) => (
-                <BaseCardWithRadioButton
-                  key={service.id}
-                  value='card1'
-                  serviceOnProfessional={service}
-                />
-              ))}
-            </div>
-          </RadioButton.Group>
+
+        <div className={styles.contentContainer}>
+          {step === 'service' && (
+            <RadioButton.Group value={value} onChange={setValue} name='cards'>
+              <div className={styles.baseCardContainer}>
+                {serviceList?.map((service) => (
+                  <BaseCardWithRadioButton
+                    key={service.id}
+                    value={value}
+                    serviceOnProfessional={service}
+                    onClick={(currentValue) => setValue(currentValue)}
+                  />
+                ))}
+              </div>
+            </RadioButton.Group>
+          )}
+          {step === 'confirmation' && <BookingForm />}
+          {step === 'datetime' && <BookingCalendar />}
         </div>
-        <Button text='Next' variant='outlined' />
+
+        <div className={styles.navigationBtns}>
+          {step !== 'service' && (
+            <Button
+              className={styles.buttonBack}
+              onClick={handleBack}
+              text='Back'
+              icon='arrow-left'
+              variant='outlined'
+            />
+          )}
+
+          <Button
+            className={styles.buttonRight}
+            onClick={handleNext}
+            text={step === 'confirmation' ? 'Confirm' : 'Next'}
+            iconEnd={step === 'confirmation' ? undefined : 'arrow-right'}
+            variant={step === 'confirmation' ? 'primary' : 'outlined'}
+            // style={{ marginLeft: step === 'service' ? 'auto' : undefined }}
+          />
+        </div>
       </div>
     </Dialog>
   );
