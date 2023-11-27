@@ -10,6 +10,7 @@ function getRecommendedLocale(request: NextRequest): string {
   // Negotiator expects plain object so we need to transform headers
   const negotiatorHeaders: Record<string, string> = {};
 
+  // @ts-ignore
   request.headers.forEach((value, key) => (negotiatorHeaders[key] = value));
 
   const locales: string[] = [...i18nConfig.locales];

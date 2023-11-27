@@ -1,0 +1,37 @@
+@use '@/styles/utils';
+@use '@/styles/variables.module';
+
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
+  border-radius: variables.$border-radius-medium;
+  box-shadow: variables.$main-box-shadow;
+  overflow: hidden;
+
+  .header {
+    display: flex;
+    align-items: center;
+    padding: utils.spacing(2, 3);
+    column-gap: utils.spacing(2);
+
+    .cell {
+      display: flex;
+      align-items: center;
+      column-gap: utils.spacing(1);
+      flex: 1;
+
+      svg {
+        width: 18px;
+        height: 18px;
+        color: variables.$dark-color;
+      }
+
+      &.actions {
+        width: 40px;
+        flex: unset;
+      }
+    }
+  }
+}

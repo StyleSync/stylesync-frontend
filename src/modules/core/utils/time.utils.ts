@@ -1,4 +1,4 @@
-import { minutesInHour } from 'date-fns';
+import { minutesInHour, set, getMinutes, getHours } from 'date-fns';
 
 type TimeUnit = `${number}${number}`;
 
@@ -71,6 +71,15 @@ export class Time {
     };
   }
 
+  public setTimeOfDate(date: Date | number): Date {
+    return set(date, {
+      hours: this.getHours(),
+      minutes: this.getMinutes(),
+      seconds: 0,
+      milliseconds: 0,
+    });
+  }
+
   public getString(): TimeValue {
     return this.value;
   }
@@ -86,6 +95,12 @@ export class Time {
       hours: Math.floor(duration / minutesInHour),
       minutes: duration - Math.floor(duration / minutesInHour) * minutesInHour,
     });
+  }
+
+  public static fromDate(date: Date | number | string): Time {
+    const _date = new Date(date);
+
+    return new Time({ hours: getHours(_date), minutes: getMinutes(_date) });
   }
 
   public static toMinuteDuration(time: Time | TimeValue | TimeObject): number {
@@ -119,38 +134,34 @@ export const formatTimeRange = (startTime: Time, endTime: Time): string => {
   return `${startTime.getString()} - ${endTime.getString()}`;
 };
 
-/**
- * Parses a time range string into two `Time` objects representing the `startTime` and `endTime`.
- *
- * @param {string} timeRange - The time range string to be parsed. The format should be "start - end".
- * @returns {[startTime: Time, endTime: Time]} An array containing the parsed `startTime` and `endTime`.
- * @throws {Error} If the `timeRange` string does not have the correct format.
- *
- * @example
- * const timeRangeString = "9:00 - 12:30";
- * const [startTime, endTime] = parseTimeRange(timeRangeString);
- * // startTime will be a Time object representing "9:00" and endTime will represent "12:30"
- *
- * @example
- * const invalidTimeRange = "9:00 to 12:30";
- * try {
- *   parseTimeRange(invalidTimeRange);
- * } catch (error) {
- *   console.error(error.message); // Output: "Time range '9:00 AM to 12:30 PM' has not correct format"
- * }
- */
-
-export const parseTimeRange = (
-  timeRange: string
-): [startTime: Time, endTime: Time] => {
+export function parseTimeRange(
+  timeRange: string,
+  returnType?: 'time'
+): [Time, Time];
+export function parseTimeRange(
+  timeRange: string,
+  returnType: 'date',
+  date: Date | number
+): [Date, Date];
+export function parseTimeRange(
+  timeRange: string,
+  returnType?: 'time' | 'date',
+  date?: Date | number
+) {
   if (!isTimeRangeString(timeRange)) {
     throw new Error(`Time range '${timeRange}' has not correct format`);
   }
 
-  const [start, end] = timeRange.split(' - ');
+  const [start, end] = timeRange
+    .split(' - ')
+    .map((timeValue) => new Time(timeValue as TimeValue));
 
-  return [new Time(start as TimeValue), new Time(end as TimeValue)];
-};
+  if (returnType === 'date' && date) {
+    return [start.setTimeOfDate(date), end.setTimeOfDate(date)];
+  }
+
+  return [start, end];
+}
 
 /**
  * Checks if the provided string is a valid time range string in the format "hh:mm - hh:mm".
@@ -198,3 +209,6 @@ export const formatMinutesDuration = (minutes: number): string => {
 
   return formatted;
 };
+
+// constants
+export const emptyTimeRange = formatTimeRange(new Time(), new Time());

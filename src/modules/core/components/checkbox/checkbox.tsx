@@ -1,4 +1,4 @@
-import { useRef, type FC } from 'react';
+import { useRef, forwardRef } from 'react';
 import clsx from 'clsx';
 // hooks
 import { useRipple } from '@/modules/core/hooks/use-ripple';
@@ -6,54 +6,46 @@ import { useRipple } from '@/modules/core/hooks/use-ripple';
 import type { CheckboxProps } from './checkbox.inerface';
 import styles from './checkbox.module.scss';
 
-const Checkbox: FC<CheckboxProps> = ({
-  disabled,
-  onChange,
-  value,
-  classes,
-  error,
-}) => {
-  // refs
-  const rootRef = useRef<HTMLLabelElement>(null);
+const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
+  ({ disabled, onChange, value, classes, error, size = 'medium' }, ref) => {
+    // refs
+    const rootRef = useRef<HTMLLabelElement>(null);
 
-  useRipple(rootRef);
+    useRipple(rootRef);
 
-  const handleChange = () => {
-    if (onChange) {
-      onChange(!value);
-    }
-  };
-
-  return (
-    <label
-      className={clsx(
-        styles.container,
-        {
-          [styles.container_disabled]: disabled,
-          [styles.container_error]: error,
-        },
-        classes?.root
-      )}
-      ref={rootRef}
-    >
-      <input
-        className={styles.input}
-        type='checkbox'
-        checked={value}
-        disabled={disabled}
-        onChange={handleChange}
-      />
-      <span
+    return (
+      <label
         className={clsx(
-          styles.checkmark,
+          styles.container,
           {
-            [styles.checkmark_active]: value,
+            [styles.container_disabled]: disabled,
+            [styles.container_error]: error,
           },
-          classes?.checkmark
+          classes?.root
         )}
-      />
-    </label>
-  );
-};
+        ref={rootRef}
+      >
+        <input
+          className={styles.input}
+          type='checkbox'
+          checked={value}
+          disabled={disabled}
+          onChange={onChange}
+          ref={ref}
+        />
+        <span
+          className={clsx(
+            styles.checkmark,
+            { [styles.checkmark_active]: value },
+            { [styles.small]: size === 'small' },
+            classes?.checkmark
+          )}
+        />
+      </label>
+    );
+  }
+);
+
+Checkbox.displayName = 'Checkbox';
 
 export { Checkbox };

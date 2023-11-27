@@ -1,7 +1,10 @@
+import type { ChangeEvent } from 'react';
+
 export type CheckboxProps = {
-  value: boolean;
+  value?: boolean;
   disabled?: boolean;
-  onChange?: (value: boolean) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  size?: 'small' | 'medium';
   classes?: {
     root?: string;
     checkmark?: string;

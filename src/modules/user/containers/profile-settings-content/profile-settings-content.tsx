@@ -4,18 +4,18 @@ import type { ReactElement, FC } from 'react';
 import { ProfessionalGalleryForm } from '@/modules/user/components/professional-gallery-form';
 import { ProfessionalSettingsAbout } from '@/modules/user/containers/professional-settings-about';
 // containers
-import { ProfessionalScheduleForm } from '@/modules/schedule/containers/professional-schedule-form';
 import { UserLocationSelectForm } from '@/modules/location/containers/user-location-select-form';
+import { ProfessionalSettingsServices } from '@/modules/user/containers/professional-settings-services';
+import { ProfessionalSettingsSchedule } from '@/modules/user/containers/professional-settings-schedule';
 // hooks
 import { useSettingsNavigation } from '@/modules/user/hooks/use-settings-navigation';
 
 import type { ProfileSettingsContentProps } from './profile-settings-content.interface';
-import { ProfessionalSettingsServices } from '@/modules/user/containers/professional-settings-services';
 
 const contentMap: Record<string, ReactElement> = {
   about: <ProfessionalSettingsAbout />,
   services: <ProfessionalSettingsServices />,
-  schedule: <ProfessionalScheduleForm />,
+  schedule: <ProfessionalSettingsSchedule />,
   gallery: <ProfessionalGalleryForm />,
   location: <UserLocationSelectForm />,
 };

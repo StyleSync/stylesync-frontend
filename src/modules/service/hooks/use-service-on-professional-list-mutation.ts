@@ -1,7 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 // utils
-import { syncServiceOnProfessionalLists } from '@/modules/service/utils/service.utils';
+import { isServiceOnProfessionalEqual } from '@/modules/service/utils/service.utils';
+import { getCrudActionsOfList } from '@/modules/core/utils/crud.utils';
 // types
 import type { ServiceOnProfessional } from '@/modules/service/types/service.types';
 
@@ -18,9 +19,10 @@ export const useServiceOnProfessionalListMutation = () => {
       base: ServiceOnProfessional[];
       next: ServiceOnProfessional[];
     }) => {
-      const { create, update, remove } = syncServiceOnProfessionalLists(
+      const { create, update, remove } = getCrudActionsOfList(
         params.base,
-        params.next
+        params.next,
+        isServiceOnProfessionalEqual
       );
 
       await Promise.all([

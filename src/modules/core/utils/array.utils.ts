@@ -22,3 +22,17 @@
 export const range = (length: number, start = 0): number[] => {
   return Array.from({ length }, (_, i) => i + start);
 };
+
+/**
+ * Checks if an array contains duplications.
+ *
+ * @template T - The type of elements in the array.
+ * @param {T[]} args - The array to check for duplications.
+ * @returns {boolean} - True if the array contains duplications, false otherwise.
+ */
+
+export const isArrContainDuplications = <T>(args: T[]): boolean => {
+  const cache: Set<T> = new Set(args);
+
+  return args.length !== cache.size;
+};

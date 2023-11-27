@@ -33,6 +33,6 @@ jobs:
       - name: Verify
         run: |
           if [ -n "$(git diff)" ]; then
-            echo "Some SVG files were not optimized. Run `node scripts/svg-optimize.js` in the root of project. Then, commit changes."
+            echo "Some SVG files were not optimized. Run 'node scripts/svg-optimize.js' in the root of project. Then, commit changes."
             exit 1
           fi

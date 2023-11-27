@@ -88,6 +88,12 @@
   height: 48px;
   background: transparent;
 
+  &.small {
+    height: 40px;
+    font-size: 14px;
+    padding: utils.spacing(0, 3);
+  }
+
   &:disabled {
     background-color: variables.$grey-light-color;
   }

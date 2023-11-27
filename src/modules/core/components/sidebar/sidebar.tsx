@@ -1,4 +1,4 @@
-import { type FC, useCallback } from 'react';
+import { type FC, Fragment, useCallback } from 'react';
 import clsx from 'clsx';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
@@ -26,8 +26,8 @@ export const Sidebar: FC<SidebarProps> = ({
   return (
     <div className={styles.root}>
       <Icon className={styles.corner} name='corner' />
-      {slots?.top?.map((slot) => (
-        <>{slot}</>
+      {slots?.top?.map((slot, i) => (
+        <Fragment key={i}>{slot}</Fragment>
       ))}
       <div className={styles.groups}>
         {linkGroups.map((group) => (
