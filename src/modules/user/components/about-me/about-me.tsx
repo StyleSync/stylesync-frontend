@@ -9,9 +9,10 @@ import { trpc } from '@/modules/core/utils/trpc.utils';
 
 import styles from './about-me.module.scss';
 
-export const AboutMe: FC = () => {
-  const { data: me, ...meQuery } = trpc.user.me.useQuery({
-    expand: ['professional'],
+export const AboutMe: FC<{ userId: string }> = ({ userId }) => {
+  const { data: professional, ...meQuery } = trpc.professional.get.useQuery({
+    id: userId,
+    expand: ['user'],
   });
 
   return (
@@ -38,11 +39,11 @@ export const AboutMe: FC = () => {
         >
           <Placeholder
             className={styles.empty}
-            isActive={!me?.professional?.about}
+            isActive={!professional?.about}
             placeholder={<Typography>No information</Typography>}
           >
             <Typography className={styles.description} variant='body2'>
-              {me?.professional?.about}
+              {professional?.about}
             </Typography>
           </Placeholder>
         </Placeholder>

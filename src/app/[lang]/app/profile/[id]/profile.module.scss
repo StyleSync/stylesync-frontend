@@ -5,6 +5,7 @@
 .root {
   min-height: 100vh;
   background-color: variables.$grey-light-color;
+  padding-top: variables.$header-height;
 
   .divider {
     width: 100%;
@@ -20,11 +21,11 @@
   margin: 0 auto;
 
   &.headerSection {
-    padding-top: calc(#{ utils.spacing(7)} + #{variables.$header-height});
+    padding-top: utils.spacing(7);
     padding-bottom: utils.spacing(7);
 
     @include mixins.phone {
-      padding-top: calc(#{utils.spacing(2)} + #{variables.$header-height-mobile});
+      padding-top: utils.spacing(1);
       padding-bottom: utils.spacing(4);
     }
   }

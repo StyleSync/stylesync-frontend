@@ -20,9 +20,14 @@ import { getFullName } from '@/modules/user/utils/user.utils';
 import type { ProfileInfoBigCardProps } from './professional-info-big-card.interface';
 import styles from './professional-info-big-card.module.scss';
 
-export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = () => {
+export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
+  userId,
+}) => {
   // queries
-  const { data: me, ...meQuery } = trpc.user.me.useQuery();
+  const { data: pro, ...meQuery } = trpc.professional.get.useQuery({
+    id: userId,
+    expand: ['user'],
+  });
   // state
   const isContactOpen = useBoolean();
 
@@ -40,7 +45,7 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = () => {
             shadow
             shape='rect'
             fallback={<Emoji name='sunglasses' width={50} height={50} />}
-            url={me?.avatar}
+            url={pro?.user?.avatar}
           />
         </Placeholder>
         <Placeholder
@@ -49,7 +54,7 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = () => {
           placeholder={null}
         >
           <Typography className={styles.name} variant='title'>
-            {getFullName(me ?? {})}
+            {getFullName(pro?.user ?? {})}
           </Typography>
         </Placeholder>
       </div>

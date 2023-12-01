@@ -5,7 +5,7 @@ import { ProfessionalSettingsSidebar } from '@/modules/settings/containers/profe
 // layouts
 import { PageLayout } from '@/modules/core/layouts/page-layout';
 
-export default function ProfileSettings() {
+export default function Settings() {
   return (
     <PageLayout sidebar={<ProfessionalSettingsSidebar />}>
       <ProfileSettingsContent />

@@ -1,5 +1,5 @@
 'use client';
-import { type FC } from 'react';
+import { type FC, useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -11,20 +11,23 @@ import { Typography } from '@/modules/core/components/typogrpahy';
 import type { UserHeaderNavigationProps } from './user-header-navigation.interface';
 import styles from './user-header-navigation.module.scss';
 
-const userLinks: { href: string; title: string }[] = [
-  {
-    href: '/app/profile',
-    title: 'Profile',
-  },
-  {
-    href: '/app/my-bookings',
-    title: 'My bookings',
-  },
-];
-
 export const UserHeaderNavigation: FC<UserHeaderNavigationProps> = () => {
   const session = useSession();
   const pathname = usePathname();
+  // memo
+  const userLinks = useMemo<{ href: string; title: string }[]>(
+    () => [
+      {
+        href: `/app/profile/${session.data?.user?.id}`,
+        title: 'Profile',
+      },
+      {
+        href: '/app/my-bookings',
+        title: 'My bookings',
+      },
+    ],
+    [session.data]
+  );
 
   if (session.status === 'unauthenticated') {
     return null;

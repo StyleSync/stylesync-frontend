@@ -76,7 +76,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
       <div className={styles.root}>
         <Button
           className={clsx(styles.iconButton, {
-            [styles.active]: pathname.includes('/profile-settings'),
+            [styles.active]: pathname.includes('/settings'),
           })}
           onClick={handleSettingsClick}
           icon='settings'
