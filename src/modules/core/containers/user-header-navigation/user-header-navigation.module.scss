@@ -1,10 +1,15 @@
 @use '@/styles/variables.module';
 @use '@/styles/utils';
+@use '@/styles/mixins';
 
 .root {
   display: flex;
   align-items: center;
   column-gap: utils.spacing(4);
+
+  @include mixins.phone {
+    display: none;
+  }
 
   .link {
     position: relative;

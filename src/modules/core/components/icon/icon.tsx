@@ -54,6 +54,8 @@ import InstagramIcon from '@/assets/icons/instagram.svg?icon';
 import FacebookIcon from '@/assets/icons/facebook.svg?icon';
 import AlarmIcon from '@/assets/icons/alarm.svg?icon';
 import CornerIcon from '@/assets/icons/corner.svg?icon';
+import MenuIcon from '@/assets/icons/menu.svg?icon';
+import ShareIcon from '@/assets/icons/share.svg?icon';
 
 import type { SVGComponentElement } from './icon.interface';
 
@@ -112,6 +114,8 @@ export const icons = {
   facebook: FacebookIcon,
   alarm: AlarmIcon,
   corner: CornerIcon,
+  menu: MenuIcon,
+  share: ShareIcon,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;

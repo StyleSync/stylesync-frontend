@@ -3,6 +3,7 @@ import { type FC, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { createPortal } from 'react-dom';
+import { useBoolean, useEventListener } from 'usehooks-ts';
 // components
 import { Icon } from '@/modules/core/components/icon';
 // types
@@ -11,18 +12,39 @@ import type { ChildrenProp } from '@/modules/core/types/react.types';
 import type { HeaderProps } from './header.interface';
 import styles from './header.module.scss';
 
+const PAGE_SCROLL_TRIGGER = 5;
+
 const Header: FC<HeaderProps> & { BottomContent: FC<ChildrenProp> } = ({
   style,
   className,
   rightSlot,
   centralSlot,
 }) => {
+  const isPageScrolled = useBoolean();
+
+  useEventListener('scroll', () => {
+    if (window.scrollY >= PAGE_SCROLL_TRIGGER) {
+      isPageScrolled.setTrue();
+
+      return;
+    }
+
+    isPageScrolled.setFalse();
+  });
+
   return (
-    <header className={clsx(styles.root, className)} style={style}>
+    <header
+      className={clsx(
+        styles.root,
+        { [styles.pageScrolled]: isPageScrolled.value },
+        className
+      )}
+      style={style}
+    >
       <div className={styles.content}>
         <div className={styles.leftSlot}>
           <Link href='/'>
-            <Icon name='stylesync-logo' width={150} />
+            <Icon className={styles.logo} name='stylesync-logo' width={150} />
           </Link>
         </div>
         <div className={styles.centralSlot}>{centralSlot}</div>

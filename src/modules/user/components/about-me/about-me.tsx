@@ -16,9 +16,6 @@ export const AboutMe: FC = () => {
 
   return (
     <div className={styles.root}>
-      <Typography className={styles.title} As='h2' variant='subtitle'>
-        About me
-      </Typography>
       <Placeholder
         isActive={meQuery.isLoading}
         className={styles.skeleton}

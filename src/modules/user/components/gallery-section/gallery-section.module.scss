@@ -5,24 +5,26 @@
 .root {
   display: flex;
   flex-direction: column;
-}
-.title {
-  padding-bottom: utils.spacing(5);
-}
-.actions {
-  display: flex;
-  justify-content: center;
-  column-gap: utils.spacing(1);
-  padding-top: utils.spacing(2);
+
+  .title {
+    padding-bottom: utils.spacing(5);
+  }
+  .actions {
+    display: flex;
+    justify-content: center;
+    column-gap: utils.spacing(1);
+    padding-top: utils.spacing(2);
+  }
+
+  .showMore {
+    height: utils.spacing(4);
+    padding: utils.spacing(0, 2);
+  }
+
+  .galleryWrapper {
+    max-height: 100%;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+  }
 }
 
-.showMore {
-  height: utils.spacing(4);
-  padding: utils.spacing(0, 2);
-}
-
-.galleryWrapper {
-  max-height: 100%;
-  overflow: hidden;
-  transition: max-height 0.5s ease;
-}

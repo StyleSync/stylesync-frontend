@@ -17,6 +17,7 @@ import type { DropdownItem } from '@/modules/core/components/dropdown-menu/dropd
 
 import type { UserMenuBadgeProps } from './user-menu-badge.interface';
 import styles from './user-menu-badge.module.scss';
+import { BurgerMenu } from '@/modules/core/containers/burger-menu';
 
 export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
   // state
@@ -71,54 +72,57 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
   }
 
   return (
-    <div className={styles.root}>
-      <Button
-        className={clsx(styles.iconButton, {
-          [styles.active]: pathname.includes('/profile-settings'),
-        })}
-        onClick={handleSettingsClick}
-        icon='settings'
-        variant='secondary'
-      />
-      <DropdownMenu
-        items={[
-          {
-            id: 'sign-out',
-            text: 'Sign out',
-            icon: 'log-out',
-            variant: 'danger',
-          },
-        ]}
-        trigger={
-          <button
-            className={clsx(
-              styles.trigger,
-              { [styles.active]: isOpen.value },
-              'focusable'
-            )}
-            onClick={isOpen.setTrue}
-          >
-            <Avatar
-              className={styles.avatar}
-              url={me?.avatar}
-              fallback={<Emoji name='sunglasses' width={30} height={30} />}
-            />
-            <Icon name='chevron-bottom' width={12} />
-          </button>
-        }
-        typographyProps={{
-          weight: 'medium',
-        }}
-        isOpen={isOpen.value}
-        onClose={isOpen.setFalse}
-        onSelect={handleSelect}
-        popoverProps={{
-          sideOffset: 5,
-          disablePortal: true,
-          backgroundBlurEffect: false,
-          align: 'end',
-        }}
-      />
-    </div>
+    <>
+      <div className={styles.root}>
+        <Button
+          className={clsx(styles.iconButton, {
+            [styles.active]: pathname.includes('/profile-settings'),
+          })}
+          onClick={handleSettingsClick}
+          icon='settings'
+          variant='secondary'
+        />
+        <DropdownMenu
+          items={[
+            {
+              id: 'sign-out',
+              text: 'Sign out',
+              icon: 'log-out',
+              variant: 'danger',
+            },
+          ]}
+          trigger={
+            <button
+              className={clsx(
+                styles.trigger,
+                { [styles.active]: isOpen.value },
+                'focusable'
+              )}
+              onClick={isOpen.setTrue}
+            >
+              <Avatar
+                className={styles.avatar}
+                url={me?.avatar}
+                fallback={<Emoji name='sunglasses' width={30} height={30} />}
+              />
+              <Icon name='chevron-bottom' width={12} />
+            </button>
+          }
+          typographyProps={{
+            weight: 'medium',
+          }}
+          isOpen={isOpen.value}
+          onClose={isOpen.setFalse}
+          onSelect={handleSelect}
+          popoverProps={{
+            sideOffset: 5,
+            disablePortal: true,
+            backgroundBlurEffect: false,
+            align: 'end',
+          }}
+        />
+      </div>
+      <BurgerMenu />
+    </>
   );
 };

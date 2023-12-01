@@ -1,10 +1,15 @@
 @use '@/styles/variables.module';
 @use '@/styles/utils';
+@use '@/styles/mixins';
 
 .root {
   display: flex;
   align-items: center;
   column-gap: utils.spacing(1);
+
+  @include mixins.phone {
+    display: none;
+  }
 
   .iconButton {
     border-radius: variables.$border-radius-medium;
@@ -35,7 +40,7 @@
   }
 
   &.active {
-    background-color: #fff;//rgba(variables.$primary-light-color, 0.4);
+    background-color: #fff;
     box-shadow: variables.$main-box-shadow;
   }
 
@@ -53,4 +58,10 @@
   height: 40px;
   border-radius: 50%;
   margin-right: 28px;
+
+  @include mixins.phone {
+    width: 30px;
+    height: 30px;
+    margin-right: 0;
+  }
 }

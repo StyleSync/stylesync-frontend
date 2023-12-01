@@ -1,9 +1,7 @@
 'use client';
-
 import { useEffect, useRef, useState } from 'react';
 // components
 import { Gallery } from '@/modules/core/components/gallery';
-import { Typography } from '@/modules/core/components/typogrpahy';
 import { Button } from '@/modules/core/components/button';
 
 import styles from './gallery-section.module.scss';
@@ -336,9 +334,6 @@ export const GallerySection = () => {
 
   return (
     <div className={styles.root} ref={rootRef}>
-      <div className={styles.title}>
-        <Typography variant='subtitle'>Gallery</Typography>
-      </div>
       <div
         className={styles.galleryWrapper}
         style={{ maxHeight: maxRows * (rowHeight + margin) }}

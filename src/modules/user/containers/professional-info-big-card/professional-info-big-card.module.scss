@@ -27,6 +27,7 @@
 
     @include mixins.phone {
       padding: utils.spacing(2);
+      flex-direction: column;
     }
 
     .avatar {
@@ -73,6 +74,7 @@
     @include mixins.phone {
       padding: utils.spacing(2);
       height: unset;
+      flex-direction: column;
     }
 
     .general {
@@ -124,6 +126,9 @@
         row-gap: utils.spacing(2);
         column-gap: utils.spacing(1);
 
+        @include mixins.phone {
+          display: none;
+        }
 
         svg {
           color: variables.$grey-color;
@@ -132,12 +137,6 @@
 
         span {
           color: variables.$grey-color;
-        }
-
-        .showOnMapLink {
-          @include mixins.phone {
-            display: none;
-          }
         }
 
         &Skeleton {
