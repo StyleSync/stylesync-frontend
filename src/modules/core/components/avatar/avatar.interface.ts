@@ -3,7 +3,7 @@ import type { StylingProps } from '@/styles/styles.types';
 
 export type AvatarProps = StylingProps & {
   url?: string | null;
-  size?: AvatarSize;
+  size?: AvatarSize | number;
   fallback?: ReactNode;
   shadow?: boolean;
   shape?: 'circle' | 'rect';

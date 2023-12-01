@@ -70,6 +70,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={combinedRef}
         disabled={disabled || isLoading}
         style={style}
+        type='button'
         {...props}
       >
         {!!isLoading && (

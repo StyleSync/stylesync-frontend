@@ -1,0 +1,18 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+$header-bottom-content-height-mobile: 24px;
+
+.root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  padding-top: variables.$header-height;
+
+  @include mixins.phone {
+    padding-top: calc(#{variables.$header-height-mobile} + #{$header-bottom-content-height-mobile});
+  }
+}

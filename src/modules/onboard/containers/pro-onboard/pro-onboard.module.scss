@@ -1,0 +1,18 @@
+@use '@/styles/variables.module';
+@use '@/styles/mixins';
+@use '@/styles/utils';
+
+.root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: #fff;
+  box-shadow: variables.$main-box-shadow;
+
+  .content {
+    display: flex;
+    flex: 1;
+  }
+}
+
+
