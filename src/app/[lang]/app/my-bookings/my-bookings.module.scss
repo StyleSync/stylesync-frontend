@@ -8,6 +8,10 @@
   min-height: 100vh;
   padding-top: calc(#{variables.$header-height} + #{utils.spacing(7)});
 
+  @include mixins.phone {
+    padding-top: calc(#{variables.$header-height-mobile} + #{utils.spacing(2)});
+  }
+
   .img {
     position: fixed;
     top: 0;

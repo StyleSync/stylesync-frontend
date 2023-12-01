@@ -5,35 +5,50 @@
 .root {
   position: fixed;
   left: 0;
-  bottom: 0;
+  bottom: -40px;
   width: 100%;
   display: none;
-  background-color: rgba(#fff, 0.9);
+  flex-direction: column;
   backdrop-filter: saturate(180%) blur(20px);
   z-index: 1;
   box-shadow: variables.$main-box-shadow;
   border-top: 1px solid variables.$grey-light-color;
+  padding-bottom: 50px;
+  background: linear-gradient(rgba(#fff, 0.8), #fff);
+
+  .tabs {
+    display: flex;
+    width: 100%;
+
+    .tab {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      height: 60px;
+      row-gap: utils.spacing(0.5);
+      border-radius: 0;
+      color: variables.$dark-color;
+      transition: variables.$transition-ultrafast;
+
+      span {
+        font-size: 12px;
+      }
+
+      &.active {
+        color: variables.$primary-color;
+      }
+    }
+  }
+
+  //&::after {
+  //  display: flex;
+  //  content: '';
+  //  width: 100%;
+  //  height: 20px;
+  //  background-color: #fff;
+  //}
 
   @include mixins.phone {
     display: flex;
-  }
-
-  .tab {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    height: 60px;
-    row-gap: utils.spacing(0.5);
-    border-radius: 0;
-    color: variables.$dark-color;
-    transition: variables.$transition-ultrafast;
-
-    span {
-      font-size: 12px;
-    }
-
-    &.active {
-      color: variables.$primary-color;
-    }
   }
 }

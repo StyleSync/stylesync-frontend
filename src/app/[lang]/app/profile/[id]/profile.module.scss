@@ -7,6 +7,10 @@
   background-color: variables.$grey-light-color;
   padding-top: variables.$header-height;
 
+  @include mixins.phone {
+    padding-top: variables.$header-height-mobile;
+  }
+
   .divider {
     width: 100%;
     height: 1px;
@@ -25,7 +29,7 @@
     padding-bottom: utils.spacing(7);
 
     @include mixins.phone {
-      padding-top: utils.spacing(1);
+      padding-top: utils.spacing(2);
       padding-bottom: utils.spacing(4);
     }
   }

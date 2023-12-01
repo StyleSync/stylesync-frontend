@@ -45,19 +45,21 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
 
   return (
     <div className={styles.root}>
-      {userLinks.map((link) => (
-        <Button
-          key={link.href}
-          className={clsx(styles.tab, {
-            [styles.active]: pathname.endsWith(link.href),
-          })}
-          icon={link.icon}
-          text={link.title}
-          onClick={() => router.push(link.href)}
-          variant='unstyled'
-          rippleColor='transparent'
-        />
-      ))}
+      <div className={styles.tabs}>
+        {userLinks.map((link) => (
+          <Button
+            key={link.href}
+            className={clsx(styles.tab, {
+              [styles.active]: pathname.endsWith(link.href),
+            })}
+            icon={link.icon}
+            text={link.title}
+            onClick={() => router.push(link.href)}
+            variant='unstyled'
+            rippleColor='transparent'
+          />
+        ))}
+      </div>
     </div>
   );
 };

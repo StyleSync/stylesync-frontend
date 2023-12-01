@@ -6,21 +6,12 @@ import { GallerySection } from '@/modules/user/components/gallery-section';
 import { UserServices } from '@/modules/user/components/user-services';
 import { ProfessionalProfileTabs } from '@/modules/user/components/professional-profile-tabs';
 import { ProfileSectionLayout } from '@/modules/user/components/profile-section-layout';
-// utils
-import { pageGuard } from '@/modules/core/utils/route.utils';
 // types
 import type { PageParams } from '@/modules/core/types/next.types';
 
 import styles from './profile.module.scss';
 
 export default async function Profile({ params }: PageParams<{ id: string }>) {
-  await pageGuard({
-    require: {
-      userType: true,
-      onboarding: true,
-    },
-  });
-
   return (
     <main className={styles.root}>
       <section className={clsx(styles.section, styles.headerSection)}>
