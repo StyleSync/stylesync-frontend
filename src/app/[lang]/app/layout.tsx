@@ -9,6 +9,7 @@ import Bg from '@/assets/images/bg-1.png';
 import type { ChildrenProp } from '@/modules/core/types/react.types';
 
 import styles from './app-layout.module.scss';
+import { BottomTabNavigation } from '@/modules/core/containers/bottom-tab-navigation';
 
 export default function AppLayout({ children }: ChildrenProp) {
   return (
@@ -26,6 +27,7 @@ export default function AppLayout({ children }: ChildrenProp) {
         alt='background'
       />
       {children}
+      <BottomTabNavigation />
     </>
   );
 }

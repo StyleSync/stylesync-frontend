@@ -2,13 +2,24 @@
 @use '@/styles/utils';
 
 .DialogOverlay {
-  background-color: rgba(0, 0, 0, 0.7);
   position: fixed;
   inset: 0;
   animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+
+  &.fullScreen {
+    backdrop-filter: saturate(180%) blur(20px);
+    background-color: rgba(white, 0.8);
+  }
+
+  &.closeAnimation {
+    animation: overlayHide 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
 }
 
 .DialogContent {
+  display: flex;
   background-color: #fff;
   border-radius: 12px;
   box-shadow: variables.$main-box-shadow;
@@ -19,9 +30,34 @@
   width: 100%;
   max-width: 370px;
   max-height: 100%;
-  padding: 30px;
-  animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  animation: contentShowDefault 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 11;
+
+  &.closeAnimation {
+
+  }
+
+  &.fullScreen {
+    top: 0;
+    right: 0;
+    left: unset;
+    transform: unset;
+    border-radius: variables.$border-radius-large 0 0;
+    width: 80%;
+    min-width: 80%;
+    max-width: 80%;
+    height: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    animation: contentShowFullscreen 150ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transition: variables.$transition-ultrafast;
+
+    &.closeAnimation {
+      animation: contentHideFullscreen 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  }
 }
+
 .DialogContent:focus {
   outline: none;
 }
@@ -30,15 +66,6 @@
   display: flex;
   column-gap: 10px;
   justify-content: center;
-}
-
-.closeButton {
-  border-color: variables.$grey-color;
-  color: variables.$grey-color;
-  &:hover {
-    border-color: variables.$dark-color;
-    color: variables.$dark-color;
-  }
 }
 
 @keyframes overlayShow {
@@ -50,7 +77,16 @@
   }
 }
 
-@keyframes contentShow {
+@keyframes overlayHide {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes contentShowDefault {
   from {
     opacity: 0;
     transform: translate(-50%, -48%) scale(0.56);
@@ -58,5 +94,27 @@
   to {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes contentShowFullscreen {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes contentHideFullscreen {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
   }
 }

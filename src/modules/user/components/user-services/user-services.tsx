@@ -32,37 +32,34 @@ export const UserServices = () => {
 
   return (
     <div className={styles.root}>
-      <Typography variant='subtitle'>Services</Typography>
-      <div className={styles.content}>
+      <Placeholder
+        isActive={serviceListQuery.isLoading}
+        placeholder={<ServiceTableSkeleton rows={3} />}
+      >
         <Placeholder
-          isActive={serviceListQuery.isLoading}
-          placeholder={<ServiceTableSkeleton rows={3} />}
+          isActive={serviceListQuery.isError}
+          placeholder={
+            <ErrorBox
+              title='Connection with server has been interrupted'
+              description='Please check your internet connection or try refreshing the page. If the issue persists, please contact our support team for assistance.'
+            />
+          }
         >
           <Placeholder
-            isActive={serviceListQuery.isError}
-            placeholder={
-              <ErrorBox
-                title='Connection with server has been interrupted'
-                description='Please check your internet connection or try refreshing the page. If the issue persists, please contact our support team for assistance.'
-              />
-            }
+            isActive={groups.length === 0}
+            className={styles.empty}
+            placeholder={<Typography>ὣ No added services</Typography>}
           >
-            <Placeholder
-              isActive={groups.length === 0}
-              className={styles.empty}
-              placeholder={<Typography>ὣ No added services</Typography>}
-            >
-              {groups.map(({ service, serviceOnProfessionalList }) => (
-                <ServicesTable
-                  key={service.id}
-                  service={service}
-                  serviceOnProfessionalList={serviceOnProfessionalList}
-                />
-              ))}
-            </Placeholder>
+            {groups.map(({ service, serviceOnProfessionalList }) => (
+              <ServicesTable
+                key={service.id}
+                service={service}
+                serviceOnProfessionalList={serviceOnProfessionalList}
+              />
+            ))}
           </Placeholder>
         </Placeholder>
-      </div>
+      </Placeholder>
     </div>
   );
 };

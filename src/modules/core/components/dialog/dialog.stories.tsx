@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
+import { useBoolean } from 'usehooks-ts';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 
@@ -26,12 +26,12 @@ export const Base: Story = {
 
 export const Controlled: Story = {
   render: () => {
-    const [isOpen, setIsOpen] = useState(false);
+    const isOpen = useBoolean();
 
     return (
       <>
-        <button onClick={() => setIsOpen(true)}>open modal</button>
-        <Dialog isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <button onClick={isOpen.setTrue}>open modal</button>
+        <Dialog isOpen={isOpen.value} onOpenChange={isOpen.setValue}>
           <Typography>Hello from modal</Typography>
         </Dialog>
       </>

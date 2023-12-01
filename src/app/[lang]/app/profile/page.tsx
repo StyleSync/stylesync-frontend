@@ -9,6 +9,7 @@ import { ProfessionalProfileTabs } from '@/modules/user/components/professional-
 import { pageGuard } from '@/modules/core/utils/route.utils';
 
 import styles from './profile.module.scss';
+import { ProfileSectionLayout } from '@/modules/user/components/profile-section-layout';
 
 export default async function Profile() {
   await pageGuard({
@@ -28,24 +29,15 @@ export default async function Profile() {
       </section>
       <div className={styles.divider} />
       <div className={styles.sectionGroup}>
-        <section
-          className={clsx(styles.section, styles.block)}
-          id='profile-about'
-        >
+        <ProfileSectionLayout title='About me' id='about-me'>
           <AboutMe />
-        </section>
-        <section
-          className={clsx(styles.section, styles.block)}
-          id='profile-services'
-        >
+        </ProfileSectionLayout>
+        <ProfileSectionLayout title='Services' id='profile-services'>
           <UserServices />
-        </section>
-        <section
-          className={clsx(styles.section, styles.block)}
-          id='profile-gallery'
-        >
+        </ProfileSectionLayout>
+        <ProfileSectionLayout title='Gallery' id='profile-gallery'>
           <GallerySection />
-        </section>
+        </ProfileSectionLayout>
       </div>
     </main>
   );

@@ -7,6 +7,10 @@
   box-shadow: variables.$main-box-shadow;
   border-radius: utils.spacing(1.5);
 
+  @include mixins.phone {
+    padding: utils.spacing(2,2,1);
+  }
+
   .content {
     display: flex;
     flex-direction: column;
@@ -26,6 +30,17 @@
         display: flex;
         align-items: center;
         flex: 1;
+
+        .title {
+          @include mixins.phone {
+            font-size: 16px;
+          }
+        }
+        .price {
+          @include mixins.phone {
+            font-size: 14px;
+          }
+        }
 
         &.flex75 {
           flex: 0.75;
