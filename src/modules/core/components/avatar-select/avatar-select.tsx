@@ -27,7 +27,6 @@ export const AvatarSelect: FC<AvatarSelectMobileProps> = ({
         size={70}
         fallback={<Emoji name='sunglasses' width={40} height={40} />}
         url={value}
-        // shape='rect'
         shadow
       />
       <div className={styles.actions}>
