@@ -22,6 +22,7 @@ export const Popover: FC<PopoverProps> = ({
   followTriggerWidth = false,
   disableAutofocus = false,
   disablePortal = false,
+  forceTriggerWidth = false,
   backgroundBlurEffect = true,
 }) => {
   const popperRef = useRef<HTMLDivElement>(null);
@@ -73,7 +74,12 @@ export const Popover: FC<PopoverProps> = ({
                 { [styles.backgroundBlurEffect]: backgroundBlurEffect },
                 styles[status]
               )}
-              style={{ minWidth: followTriggerWidth ? width : 'unset' }}
+              style={{
+                minWidth:
+                  followTriggerWidth || forceTriggerWidth ? width : 'unset',
+                width: forceTriggerWidth ? width : 'unset',
+                maxWidth: forceTriggerWidth ? width : 'unset',
+              }}
               align={align}
               alignOffset={alignOffset}
               side={side}

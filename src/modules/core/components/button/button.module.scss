@@ -1,5 +1,6 @@
-@use '@/styles/utils';
 @use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
 
 :export {
   // ripple
@@ -31,6 +32,10 @@
 
   &:focus-visible {
     box-shadow: 0 0 0 2px #fff, 0 0 0 4px variables.$primary-color;
+
+    @include mixins.phone {
+      box-shadow: none;
+    }
   }
 
   &:disabled {
@@ -45,6 +50,7 @@
   .text {
     position: relative;
     color: inherit;
+    white-space: nowrap;
   }
 
   .icon {

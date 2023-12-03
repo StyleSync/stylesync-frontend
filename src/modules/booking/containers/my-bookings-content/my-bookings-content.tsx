@@ -31,13 +31,7 @@ const tabContentMap: TabContentMap = {
         groups={[
           {
             id: 'upcomming',
-            title: 'Today, 15 Nov',
-            cardsVariant: 'light',
-            list: upcomingEvents,
-          },
-          {
-            id: 'upcomming',
-            title: 'Tomorrow, 16 Nov',
+            title: 'Upcomming',
             cardsVariant: 'light',
             list: upcomingEvents,
           },

@@ -1,0 +1,11 @@
+@use '@/styles/utils';
+
+.root {
+  display: flex;
+  padding: utils.spacing(2, 3);
+  column-gap: utils.spacing(2);
+
+  .action {
+    flex: 1;
+  }
+}

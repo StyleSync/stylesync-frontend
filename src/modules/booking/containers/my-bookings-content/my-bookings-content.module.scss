@@ -1,5 +1,10 @@
 @use '@/styles/utils';
+@use '@/styles/mixins';
 
 .root {
-  padding-top: utils.spacing(5);
+  padding-top: utils.spacing(6);
+
+  @include mixins.phone {
+    padding-top: utils.spacing(3);
+  }
 }

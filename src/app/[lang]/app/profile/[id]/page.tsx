@@ -10,6 +10,7 @@ import { ProfileSectionLayout } from '@/modules/user/components/profile-section-
 import type { PageParams } from '@/modules/core/types/next.types';
 
 import styles from './profile.module.scss';
+import { ProBookActions } from '@/modules/user/containers/pro-book-actions';
 
 export default async function Profile({ params }: PageParams<{ id: string }>) {
   return (
@@ -32,6 +33,7 @@ export default async function Profile({ params }: PageParams<{ id: string }>) {
           <GallerySection />
         </ProfileSectionLayout>
       </div>
+      <ProBookActions />
     </main>
   );
 }

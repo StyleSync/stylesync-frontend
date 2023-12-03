@@ -1,5 +1,5 @@
-import '@/styles/globals.scss';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 // constants
 // import { i18nConfig } from '@/modules/internationalization/constants/i18n.constants';
 // providers
@@ -12,6 +12,8 @@ import { getDictionary } from '@/modules/internationalization/utils/dictionary.u
 import type { ChildrenProp } from '@/modules/core/types/react.types';
 import type { PageParams } from '@/modules/core/types/next.types';
 import { fonts } from '@/styles/fonts';
+
+import '@/styles/globals.scss';
 
 export default async function RootLayout({
   children,
@@ -28,6 +30,7 @@ export default async function RootLayout({
           </IntlProvider>
         </TrpcProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

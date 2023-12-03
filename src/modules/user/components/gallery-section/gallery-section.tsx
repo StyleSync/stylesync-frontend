@@ -5,6 +5,7 @@ import { Gallery } from '@/modules/core/components/gallery';
 import { Button } from '@/modules/core/components/button';
 
 import styles from './gallery-section.module.scss';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 
 const imagesData = [
   {
@@ -50,104 +51,6 @@ const imagesData = [
     width: 240,
   },
   {
-    caption: '8H (gratisography.com)',
-    height: 320,
-    original: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    src: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    width: 240,
-  },
-  {
-    caption: '8H (gratisography.com)',
-    height: 320,
-    original: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    src: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    width: 240,
-  },
-  {
-    caption: '8H (gratisography.com)',
-    height: 320,
-    original: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    src: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    width: 240,
-  },
-  {
-    caption: '8H (gratisography.com)',
-    height: 320,
-    original: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    src: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    width: 240,
-  },
-  {
-    caption: '8H (gratisography.com)',
-    height: 320,
-    original: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    src: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    width: 240,
-  },
-  {
-    caption: '8H (gratisography.com)',
-    height: 320,
-    original: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    src: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    width: 240,
-  },
-  {
-    caption: '8H (gratisography.com)',
-    height: 320,
-    original: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    src: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    width: 240,
-  },
-  {
-    caption: '8H (gratisography.com)',
-    height: 320,
-    original: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    src: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    width: 240,
-  },
-  {
-    caption: '8H (gratisography.com)',
-    height: 320,
-    original: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    src: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    width: 240,
-  },
-  {
-    caption: '8H (gratisography.com)',
-    height: 320,
-    original: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    src: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    width: 240,
-  },
-  {
-    caption: '8H (gratisography.com)',
-    height: 320,
-    original: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    src: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    width: 240,
-  },
-  {
-    caption: '8H (gratisography.com)',
-    height: 320,
-    original: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    src: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    width: 240,
-  },
-  {
-    caption: '8H (gratisography.com)',
-    height: 320,
-    original: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    src: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    width: 240,
-  },
-  {
-    caption: '8H (gratisography.com)',
-    height: 320,
-    original: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    src: 'https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg',
-    width: 240,
-  },
-  {
     caption: '286H (gratisography.com)',
     height: 190,
     original: 'https://c3.staticflickr.com/9/8583/28354353794_9f2d08d8c0_b.jpg',
@@ -182,35 +85,6 @@ const imagesData = [
     src: 'https://c7.staticflickr.com/9/8785/28687743710_3580fcb5f0_b.jpg',
     width: 320,
   },
-  {
-    caption: 'Red Zone - Paris (Tom Eversley - isorepublic.com)',
-    height: 113,
-    original: 'https://c7.staticflickr.com/9/8785/28687743710_3580fcb5f0_b.jpg',
-    src: 'https://c7.staticflickr.com/9/8785/28687743710_3580fcb5f0_b.jpg',
-    width: 320,
-  },
-  {
-    caption: 'Red Zone - Paris (Tom Eversley - isorepublic.com)',
-    height: 113,
-    original: 'https://c7.staticflickr.com/9/8785/28687743710_3580fcb5f0_b.jpg',
-    src: 'https://c7.staticflickr.com/9/8785/28687743710_3580fcb5f0_b.jpg',
-    width: 320,
-  },
-  {
-    caption: 'Red Zone - Paris (Tom Eversley - isorepublic.com)',
-    height: 113,
-    original: 'https://c7.staticflickr.com/9/8785/28687743710_3580fcb5f0_b.jpg',
-    src: 'https://c7.staticflickr.com/9/8785/28687743710_3580fcb5f0_b.jpg',
-    width: 320,
-  },
-  {
-    caption: 'Red Zone - Paris (Tom Eversley - isorepublic.com)',
-    height: 113,
-    original: 'https://c7.staticflickr.com/9/8785/28687743710_3580fcb5f0_b.jpg',
-    src: 'https://c7.staticflickr.com/9/8785/28687743710_3580fcb5f0_b.jpg',
-    width: 320,
-  },
-
   {
     caption: 'Wood Glass (Tom Eversley - isorepublic.com)',
     height: 320,
@@ -305,11 +179,14 @@ const imagesData = [
 ];
 
 const rowsToAdd = 2;
-const rowHeight = 180;
-const margin = 5;
+const imagesInRowMobile = 3;
+const imagesInRowDefault = 4;
 
 export const GallerySection = () => {
   const [maxRows, setMaxRows] = useState(2);
+  const deviceType = useDeviceType();
+  const rowImagesCount =
+    deviceType === 'mobile' ? imagesInRowMobile : imagesInRowDefault;
 
   const [visibleImagesCount, setVisibleImagesCount] = useState<number>(0);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -334,11 +211,12 @@ export const GallerySection = () => {
 
   return (
     <div className={styles.root} ref={rootRef}>
-      <div
-        className={styles.galleryWrapper}
-        style={{ maxHeight: maxRows * (rowHeight + margin) }}
-      >
-        <Gallery galleryProps={{ maxRows, rowHeight }} images={imagesData} />
+      <div className={styles.galleryWrapper}>
+        <Gallery
+          images={imagesData}
+          rowImagesCount={rowImagesCount}
+          maxRows={maxRows}
+        />
       </div>
       <div className={styles.actions}>
         {maxRows > 2 && (

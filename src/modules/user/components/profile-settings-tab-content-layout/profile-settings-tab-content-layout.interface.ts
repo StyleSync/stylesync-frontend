@@ -7,4 +7,5 @@ export type ProfileSettingsTabContentLayoutProps = ChildrenProp & {
   icon?: IconName;
   actions?: ButtonProps[];
   hideActions?: boolean;
+  isLoading?: boolean;
 };

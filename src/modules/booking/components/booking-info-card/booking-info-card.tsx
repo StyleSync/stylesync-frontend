@@ -1,19 +1,19 @@
-import { type FC } from 'react';
+import { type FC, useRef } from 'react';
 import { format } from 'date-fns';
+import clsx from 'clsx';
+import { useBoolean } from 'usehooks-ts';
 // components
 import { Avatar } from '@/modules/core/components/avatar';
 import { Typography } from '@/modules/core/components/typogrpahy';
-import { Button } from '@/modules/core/components/button';
-import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
+import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
 // hooks
-import { useBoolean } from 'usehooks-ts';
+import { useRipple } from '@/modules/core/hooks/use-ripple';
 
 import GirlImage from '@/assets/images/girl.png';
 
 import type { BookingInfoCardProps } from './booking-info-card.interface';
 
 import styles from './booking-info-card.module.scss';
-import clsx from 'clsx';
 
 export const BookingInfoCard: FC<BookingInfoCardProps> = ({
   name,
@@ -21,6 +21,10 @@ export const BookingInfoCard: FC<BookingInfoCardProps> = ({
   serviceName,
   variant = 'light',
 }) => {
+  // state
+  const isOpen = useBoolean();
+  // refs
+  const rootRef = useRef<HTMLDivElement>(null);
   const startDate = new Date(date); // Start date
 
   const endDate = new Date(date); // Final date
@@ -30,74 +34,32 @@ export const BookingInfoCard: FC<BookingInfoCardProps> = ({
 
   // Format start and end dates separately
   const formattedStartDate = format(startDate, 'HH:mm');
-  const formattedEndDate = format(endDate, 'HH:mm');
 
-  const formattedDateRange = `${formattedStartDate}–${formattedEndDate}`;
+  const formattedDate = format(new Date(date), `EEEE, d MMM`);
 
-  const formattedDate = format(
-    new Date(date),
-    `EEEE, d MMMM, ${formattedDateRange}`
-  );
-  // hooks
-  const isOpen = useBoolean();
+  useRipple(rootRef);
 
   return (
-    <div className={clsx(styles.root, styles[variant])}>
-      <div className={styles.container}>
-        <Avatar className={styles.avatar} url={GirlImage.src} />
-        <div className={styles.info}>
-          <Typography
-            className={styles.datetime}
-            variant='body1'
-            weight='medium'
-          >
-            {formattedDate}
-          </Typography>
-          <Typography
-            className={styles.description}
-            variant='body2'
-            weight='medium'
-          >
-            {name}, {serviceName}
-          </Typography>
+    <>
+      <div
+        tabIndex={0}
+        className={clsx(styles.root, 'focusable', styles[variant])}
+        onClick={isOpen.setTrue}
+        ref={rootRef}
+      >
+        <div className={styles.container}>
+          <Avatar className={styles.avatar} url={GirlImage.src} />
+          <div className={styles.info}>
+            <Typography className={styles.datetime} variant='body1'>
+              {formattedDate} at {formattedStartDate}
+            </Typography>
+            <Typography className={styles.description} variant='small'>
+              {name}, {serviceName}
+            </Typography>
+          </div>
         </div>
       </div>
-      <DropdownMenu
-        items={[
-          {
-            id: 'profile',
-            text: 'Profile',
-            icon: 'user',
-          },
-          {
-            id: 'reschedule',
-            text: 'Reschedule',
-            icon: 'time',
-          },
-          {
-            id: 'cancel',
-            text: 'Cancel',
-            icon: 'close',
-            variant: 'danger',
-          },
-        ]}
-        trigger={
-          <Button
-            className={clsx(styles.moreButton, {
-              [styles.active]: isOpen.value,
-            })}
-            onClick={isOpen.toggle}
-            icon='points'
-            variant='unstyled'
-            rippleColor='rgba(0,0,0,.1)'
-          />
-        }
-        isOpen={isOpen.value}
-        onClose={isOpen.setFalse}
-        onSelect={isOpen.setFalse}
-        popoverProps={{ sideOffset: 8 }}
-        typographyProps={{ weight: 'medium' }}
-      />
-    </div>
+      <BookingInfoDialog isOpen={isOpen.value} onOpenChange={isOpen.setValue} />
+    </>
   );
 };

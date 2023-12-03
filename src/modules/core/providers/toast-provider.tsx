@@ -11,6 +11,7 @@ import { Toast } from '@/modules/core/components/toast';
 // types
 import type { ChildrenProp } from '@/modules/core/types/react.types';
 import type { ToastProps } from '@/modules/core/components/toast/toast.interface';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 
 type ToastData = Omit<ToastProps, 'isOpen' | 'onClose'>;
 
@@ -22,6 +23,8 @@ export const showToast = (toast: ToastData) => {
 };
 
 export const ToastProvider: FC<ChildrenProp> = ({ children }) => {
+  const deviceType = useDeviceType();
+  // state
   const [toasts, setToasts] = useState<ToastData[]>([]);
 
   useEffect(() => {
@@ -31,7 +34,9 @@ export const ToastProvider: FC<ChildrenProp> = ({ children }) => {
   }, []);
 
   return (
-    <RadixToast.Provider swipeDirection='right'>
+    <RadixToast.Provider
+      swipeDirection={deviceType === 'mobile' ? 'up' : 'right'}
+    >
       {children}
       {toasts.map((toast, index) => (
         <Toast

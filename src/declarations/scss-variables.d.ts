@@ -11,6 +11,7 @@ declare module '@/styles/variables.module.scss' {
     instagramGradient: string;
     facebookGradient: string;
     screenPhone: string;
+    screenTablet: string;
     headerHeight: number;
     mainBoxShadow: string;
   };

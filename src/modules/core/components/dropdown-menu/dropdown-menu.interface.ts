@@ -7,7 +7,7 @@ export type DropdownItem = {
   id: string;
   text: string;
   icon?: IconName;
-  variant?: 'default' | 'danger';
+  variant?: 'default' | 'danger' | 'primary';
   className?: string;
   disabled?: boolean;
 };

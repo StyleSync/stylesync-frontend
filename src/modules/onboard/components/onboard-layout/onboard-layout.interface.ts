@@ -4,7 +4,6 @@ import type { ButtonProps } from '@/modules/core/components/button/button.interf
 export type OnboardLayoutProps = ChildrenProp & {
   meta: {
     title: string;
-    description: string;
   };
   nextButtonProps?: Partial<ButtonProps>;
   prevButtonProps?: Partial<ButtonProps>;

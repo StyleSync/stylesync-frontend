@@ -11,11 +11,22 @@ import type { IconName } from '@/modules/core/components/icon';
 
 import type { BottomTabNavigationProps } from './bottom-tab-navigation.interface';
 import styles from './bottom-tab-navigation.module.scss';
+import { BottomFixedContent } from '@/modules/core/containers/bottom-fixed-content';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 
 export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
+  const deviceType = useDeviceType();
   const session = useSession();
   const pathname = usePathname();
   const router = useRouter();
+  const { data: me } = trpc.user.me.useQuery(
+    { expand: ['professional'] },
+    {
+      enabled: session.status === 'authenticated',
+    }
+  );
+
   const userLinks = useMemo<{ href: string; title: string; icon: IconName }[]>(
     () => [
       {
@@ -43,9 +54,17 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
     });
   });
 
+  if (!me?.professional) {
+    return;
+  }
+
+  if (deviceType !== 'mobile') {
+    return;
+  }
+
   return (
-    <div className={styles.root}>
-      <div className={styles.tabs}>
+    <BottomFixedContent.Item orderIndex={0}>
+      <div className={styles.root}>
         {userLinks.map((link) => (
           <Button
             key={link.href}
@@ -60,6 +79,6 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
           />
         ))}
       </div>
-    </div>
+    </BottomFixedContent.Item>
   );
 };

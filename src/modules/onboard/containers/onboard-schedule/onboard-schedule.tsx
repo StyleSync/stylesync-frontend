@@ -16,7 +16,6 @@ export const OnboardSchedule: FC<ProOnboardStepProps> = ({ next, back }) => {
     <OnboardLayout
       meta={{
         title: 'Schedule',
-        description: 'todo...',
       }}
       nextButtonProps={{
         onClick: next,

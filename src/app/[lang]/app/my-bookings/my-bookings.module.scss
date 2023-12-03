@@ -12,66 +12,12 @@
     padding-top: calc(#{variables.$header-height-mobile} + #{utils.spacing(2)});
   }
 
-  .img {
-    position: fixed;
-    top: 0;
-    left: 0;
+  .pageContent {
+    position: relative;
+    display: flex;
+    flex: 1;
     width: 100%;
-    height: 100%;
-    z-index: 0;
-    opacity: 0.2;
-    object-fit: cover;
+    box-shadow: 0 4px 15px 0 rgba(37, 74, 165, 0.1);
+    background-color: #fff;
   }
-}
-
-.pageContent {
-  position: relative;
-  display: flex;
-  flex: 1;
-  width: 100%;
-  box-shadow: 0 4px 15px 0 rgba(37, 74, 165, 0.1);
-  background-color: variables.$grey-light-color;
-}
-
-.title {
-  margin-bottom: utils.spacing(5);
-}
-.tabBox {
-  margin-top: utils.spacing(5);
-}
-.bookingContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: utils.spacing(3);
-  padding: utils.spacing(2, 3);
-  background-color: #fff;
-  border-radius: variables.$border-radius-medium;
-  box-shadow: variables.$main-box-shadow;
-
-  @include mixins.phone {
-    padding: utils.spacing(1, 2);
-  }
-}
-
-.bookingInfo {
-  display: flex;
-  column-gap: utils.spacing(1);
-  align-items: center;
-}
-
-.bookingDateEvent {
-  display: flex;
-  flex-direction: column;
-  row-gap: utils.spacing(1);
-}
-
-.bookingEventTypography {
-  color: variables.$grey-color;
-}
-
-.bookingIcon {
-  width: utils.spacing(4);
-  color: variables.$dark-color;
-  cursor: pointer;
 }

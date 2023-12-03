@@ -1,5 +1,6 @@
 @use '@/styles/variables.module';
 @use '@/styles/utils';
+@use '@/styles/mixins';
 
 .root {
   display: flex;
@@ -10,24 +11,6 @@
   column-gap: utils.spacing(2);
   align-items: center;
   width: 350px;
-
-  &[data-state='open'] {
-    animation: slideIn 150ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  &[data-state='closed'] {
-    animation: hide 100ms ease-in;
-  }
-  &[data-swipe='move'] {
-    transform: translateX(var(--radix-toast-swipe-move-x));
-  }
-  &[data-swipe='cancel'] {
-    transform: translateX(0);
-    transition: transform 200ms ease-out;
-  }
-  &[data-swipe='end'] {
-    animation: swipeOut 100ms ease-out;
-  }
 
   &.info {
     background-color: variables.$primary-color;
@@ -54,31 +37,87 @@
   .description {
     color: rgba(#fff, 0.9);
   }
-}
 
-@keyframes hide {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
+  // visibility states
 
-@keyframes slideIn {
-  from {
-    transform: translateX(calc(100% + #{utils.spacing(3)}));
+  &[data-state='open'] {
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+
+    @include mixins.inline-animation(variables.$transition-ultrafast, 1) {
+      from {
+        transform: translateX(calc(100% + #{utils.spacing(3)}));
+      }
+      to {
+        transform: translateX(0);
+      }
+    }
+
+
+    @include mixins.phone {
+      width: 100%;
+
+      @include mixins.inline-animation(variables.$transition-ultrafast, 1) {
+        from {
+          transform: translateY(-100%);
+        }
+        to {
+          transform: translateY(0);
+        }
+      }
+    }
   }
-  to {
+
+  &[data-state='closed'] {
+    animation-timing-function: ease-in;
+
+    @include mixins.inline-animation(variables.$transition-ultrafast, 1) {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+  }
+
+  &[data-swipe='move'] {
+    transform: translateX(var(--radix-toast-swipe-move-x));
+
+    @include mixins.phone {
+      transform: translateY(var(--radix-toast-swipe-move-y));
+    }
+  }
+
+  &[data-swipe='cancel'] {
     transform: translateX(0);
-  }
-}
+    transition: transform 200ms ease-out;
 
-@keyframes swipeOut {
-  from {
-    transform: translateX(var(--radix-toast-swipe-end-x));
+    @include mixins.phone {
+      transform: translateY(0);
+    }
   }
-  to {
-    transform: translateX(calc(100% + #{utils.spacing(3)}));
+
+  &[data-swipe='end'] {
+    animation-timing-function: ease-in;
+
+    @include mixins.inline-animation(variables.$transition-ultrafast, 1) {
+      from {
+        transform: translateX(var(--radix-toast-swipe-end-x));
+      }
+      to {
+        transform: translateX(calc(100% + #{utils.spacing(3)}));
+      }
+    }
+
+    @include mixins.phone {
+      @include mixins.inline-animation(variables.$transition-ultrafast, 1) {
+        from {
+          transform: translateY(var(--radix-toast-swipe-end-y));
+        }
+        to {
+          transform: translateY(-100%);
+        }
+      }
+    }
   }
 }

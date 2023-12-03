@@ -14,8 +14,6 @@ export const pageGuard = async (config: PageGuardConfig): Promise<void> => {
 
   if (!session) {
     redirect('/auth/sign-in');
-
-    return;
   }
 
   if (config.require.userType && !session.user.userType) {

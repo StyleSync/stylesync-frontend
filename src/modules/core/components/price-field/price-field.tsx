@@ -55,7 +55,6 @@ export const PriceField: FC<PriceFieldProps> = ({
       <TextField
         variant='input'
         value={formattedPrice}
-        // value={price}
         onChange={handleTextFieldChange}
         onFocus={handleTextFieldFocus}
         {...inputProps}
@@ -81,6 +80,7 @@ export const PriceField: FC<PriceFieldProps> = ({
         popoverProps={{
           side: 'bottom',
           align: 'end',
+          backgroundBlurEffect: false,
         }}
         onSelect={(item) => {
           onCurrencyChange(item.id as Currency);

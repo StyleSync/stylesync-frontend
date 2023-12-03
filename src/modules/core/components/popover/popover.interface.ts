@@ -12,6 +12,7 @@ export type PopoverProps = ChildrenProp & {
   sideOffset?: number;
   id?: string;
   followTriggerWidth?: boolean;
+  forceTriggerWidth?: boolean;
   disableAutofocus?: boolean;
   disablePortal?: boolean;
   backgroundBlurEffect?: boolean;

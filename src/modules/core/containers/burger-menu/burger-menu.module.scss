@@ -2,10 +2,22 @@
 @use '@/styles/mixins';
 @use '@/styles/variables.module';
 
+.dialogContent {
+  width: 80% !important;
+  min-width: 80% !important;
+  max-width: 80% !important;
+  border-top-left-radius: variables.$border-radius-large !important;
+}
+
+.dialogOverlay {
+  //background-color: #fff !important;
+}
+
 .root {
   display: flex;
   flex-direction: column;
   flex: 1;
+  width: 100%;
 
   .top {
     display: flex;
@@ -18,23 +30,49 @@
     background: linear-gradient(to right, #fa709a 0%, #fee140 100%);
 
     .avatar {
-      width: 60px !important;
-      height: 60px !important; // todo: update size prop of avatar component
       background-color: transparent;
+
+      &Skeleton {
+        width: 60px;
+        height: 60px;
+        flex: unset;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
     }
 
     .info {
+      flex: 1;
       display: flex;
       flex-direction: column;
       row-gap: utils.spacing(0.5);
+
+      .unauthPlaceholder {
+        flex: unset;
+        justify-content: flex-start;
+      }
     }
 
     .name {
       color: #fff;
+
+      &Skeleton {
+        width: 55%;
+        height: 18px;
+        border-radius: 4px;
+        flex: unset;
+      }
     }
 
     .email {
       color: #fff;
+
+      &Skeleton {
+        width: 77%;
+        height: 14px;
+        border-radius: 4px;
+        flex: unset;
+      }
     }
 
     .close {
@@ -52,11 +90,13 @@
     row-gap: utils.spacing(0.5);
 
     .button {
+      display: flex;
       justify-content: flex-start;
+      align-items: center;
       height: 50px;
       width: 100%;
       padding: 0 utils.spacing(4);
-      border-radius:0;// variables.$border-radius-medium;
+      border-radius:0;
       color: variables.$dark-color;
 
       &.active {
@@ -67,6 +107,22 @@
       &.danger {
         color: variables.$error-color;
       }
+
+      &.primary {
+        color: variables.$primary-color;
+      }
+
+      .skeleton {
+        height: 17px;
+        width: 63%;
+        border-radius: 4px;
+      }
+    }
+
+    .placeholder {
+      flex-direction: column;
+      flex: unset;
+      width: 100%;
     }
   }
 }

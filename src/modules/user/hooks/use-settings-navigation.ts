@@ -5,11 +5,11 @@ import { useQueryParams } from '@/modules/core/hooks/use-search-params';
 const defaultTabKey = 'services';
 
 export const useSettingsNavigation = () => {
-  const { queryParams, setQueryParams } = useQueryParams<{
-    active: string;
+  const { queryParams, setQueryParams, clearQueryParams } = useQueryParams<{
+    active?: string;
   }>();
   // memo
-  const active = queryParams.active ?? defaultTabKey;
+  const active = queryParams.active;
 
   const set = useCallback(
     (value: string) => {
@@ -18,8 +18,14 @@ export const useSettingsNavigation = () => {
     [setQueryParams]
   );
 
+  const reset = useCallback(() => {
+    clearQueryParams(['active']);
+  }, [clearQueryParams]);
+
   return {
     active,
     set,
+    reset,
+    defaultTab: defaultTabKey,
   };
 };

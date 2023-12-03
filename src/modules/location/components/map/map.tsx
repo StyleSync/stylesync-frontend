@@ -68,6 +68,7 @@ const Map: FC<MapProps> = ({ markers, showUserPosition = false, ...props }) => {
         zoom={6}
         scrollWheelZoom
         zoomControl={false}
+        data-swipable='true'
       >
         <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
         {showUserPosition && userPosition && (

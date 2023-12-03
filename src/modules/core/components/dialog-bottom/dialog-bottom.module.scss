@@ -1,0 +1,36 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: calc(#{variables.$level-dialog-1} - 1);
+  background-color: variables.$dark-color;
+  opacity: 0;
+}
+
+.content {
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  z-index: variables.$level-dialog-1;
+  box-shadow: variables.$main-box-shadow;
+  border-top-left-radius: variables.$border-radius-medium;
+  border-top-right-radius: variables.$border-radius-medium;
+
+  .dragMarker {
+    width: 50px;
+    height: 5px;
+    background-color: rgba(#fff, 0.5);
+    position: absolute;
+    top: utils.spacing(-1.5);
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 4px;
+  }
+}

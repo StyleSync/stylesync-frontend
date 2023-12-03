@@ -1,9 +1,12 @@
 import { type ReactNode } from 'react';
 import type { ChildrenProp } from '@/modules/core/types/react.types';
+import type { DialogProps as BaseDialogProps } from '@/modules/core/types/dialog.types';
 
-export type ModalProps = ChildrenProp & {
-  trigger?: ReactNode;
-  isOpen?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  fullScreen?: boolean;
-};
+export type DialogProps = ChildrenProp &
+  BaseDialogProps & {
+    trigger?: ReactNode;
+    classes?: {
+      overlay?: string;
+      content?: string;
+    };
+  };

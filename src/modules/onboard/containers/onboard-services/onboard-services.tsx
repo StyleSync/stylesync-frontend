@@ -27,7 +27,6 @@ export const OnboardServices: FC<ProOnboardStepProps> = ({ next, back }) => {
     <OnboardLayout
       meta={{
         title: 'Services',
-        description: 'todo...',
       }}
       nextButtonProps={{
         isLoading: isSaveLoading,

@@ -1,0 +1,42 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.root {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  row-gap: utils.spacing(1);
+  column-gap: utils.spacing(1);
+
+  .item {
+    position: relative;
+    display: flex;
+    flex: 1;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: variables.$border-radius-medium;
+    transition: variables.$transition-fast;
+
+    &:hover {
+      cursor: pointer;
+      filter: brightness(120%);
+    }
+
+    &:focus-visible {
+      box-shadow: 0 0 0 2px #fff, 0 0 0 4px variables.$primary-color;
+
+      @include mixins.phone {
+        box-shadow: none;
+      }
+    }
+
+    .image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}

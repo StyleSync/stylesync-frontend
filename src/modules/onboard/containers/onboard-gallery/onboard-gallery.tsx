@@ -10,7 +10,6 @@ export const OnboardGallery: FC<ProOnboardStepProps> = ({ next, back }) => {
     <OnboardLayout
       meta={{
         title: 'Gallery',
-        description: 'todo...',
       }}
       nextButtonProps={{
         onClick: next,

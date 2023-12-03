@@ -6,6 +6,12 @@
   padding-top: utils.spacing(6);
   padding-bottom: utils.spacing(6);
 
+  @include mixins.phone {
+    display: none;
+    padding-top: utils.spacing(2);
+    padding-bottom: utils.spacing(4);
+  }
+
   .info {
     display: flex;
     align-items: center;
@@ -15,6 +21,11 @@
     .skip {
       height: utils.spacing(4);
       padding: utils.spacing(0, 3);
+    }
+
+    @include mixins.phone {
+      justify-content: space-between;
+      margin-bottom: utils.spacing(1.5);
     }
   }
 
@@ -26,6 +37,7 @@
     background-color: #fff;
     background-color: rgba(#fff, 0.8);
     backdrop-filter: saturate(180%) blur(20px);
+    --webkit-backdrop-filter: saturate(180%) blur(20px);
 
     @include mixins.phone {
       display: none;
@@ -43,14 +55,5 @@
 
     @include mixins.phone {
     }
-  }
-}
-
-.mobileProgress {
-  display: none;
-
-  @include mixins.phone {
-    display: flex;
-    padding-top: utils.spacing(2);
   }
 }

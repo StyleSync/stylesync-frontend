@@ -5,10 +5,8 @@ import { useIntl } from 'react-intl';
 // components
 import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
 import { Button } from '@/modules/core/components/button';
-// constants
-import { SERVICE_METADATA } from '@/modules/service/constants/service.constants';
 // hooks
-import { useWindowSizeType } from '@/modules/core/hooks/use-window-size-type';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // types
 import type { IconName } from '@/modules/core/components/icon';
 import type { ButtonProps } from '@/modules/core/components/button/button.interface';
@@ -26,10 +24,10 @@ export const ServiceSelect: FC<ServiceSelectProps> = ({
 }) => {
   const { formatMessage } = useIntl();
   const isOpen = useBoolean();
-  const windowSizeType = useWindowSizeType();
+  const deviceType = useDeviceType();
   // memo
   const buttonProps = useMemo<Partial<ButtonProps>>(() => {
-    if (windowSizeType === 'mobile') {
+    if (deviceType === 'mobile') {
       return {
         icon: 'plus',
         variant: 'primary',
@@ -40,9 +38,9 @@ export const ServiceSelect: FC<ServiceSelectProps> = ({
       text: 'Add services group',
       variant: 'outlined',
     };
-  }, [windowSizeType]);
+  }, [deviceType]);
   const popoverProps = useMemo<Partial<PopoverProps>>(() => {
-    if (windowSizeType === 'mobile') {
+    if (deviceType === 'mobile') {
       return {
         align: 'end',
         side: 'top',
@@ -53,7 +51,7 @@ export const ServiceSelect: FC<ServiceSelectProps> = ({
     return {
       followTriggerWidth: true,
     };
-  }, [windowSizeType]);
+  }, [deviceType]);
 
   const handleSelect = useCallback(
     (value: DropdownItem) => {
@@ -83,7 +81,7 @@ export const ServiceSelect: FC<ServiceSelectProps> = ({
         <Button
           {...buttonProps}
           onClick={isOpen.toggle}
-          disabled={Object.keys(SERVICE_METADATA).length === blackList.length}
+          disabled={services.length === blackList.length}
           className={clsx('mobileActionBtn', styles.trigger)}
         />
       }
@@ -93,6 +91,7 @@ export const ServiceSelect: FC<ServiceSelectProps> = ({
       isLoading={isLoading}
       popoverProps={{
         followTriggerWidth: true,
+        disablePortal: true,
         ...popoverProps,
       }}
     />

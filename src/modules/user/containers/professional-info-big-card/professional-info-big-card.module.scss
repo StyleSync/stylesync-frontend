@@ -51,7 +51,8 @@
       @include mixins.phone {
         font-size: 24px;
         line-height: 29px;
-        max-width: 60%;
+        max-width: 80%;
+        text-align: center;
       }
 
       &Skeleton {
@@ -115,6 +116,21 @@
             &:nth-child(3) {
               width: 70px;
             }
+          }
+        }
+
+        .emptyPlaceholder {
+          justify-content: flex-start;
+          column-gap: utils.spacing(1);
+          color: variables.$grey-color;
+
+          svg {
+            width: 18px;
+            height: 18px;
+          }
+
+          span {
+            color: variables.$grey-color;
           }
         }
       }

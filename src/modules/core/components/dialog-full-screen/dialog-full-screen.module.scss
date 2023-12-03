@@ -1,0 +1,26 @@
+@use '@/styles/variables.module';
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: calc(#{variables.$level-dialog-1} - 1);
+  background-color: variables.$dark-color;
+}
+
+.content {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: unset;
+  transform: unset;
+  border-radius: 0;
+  width: 100%;
+  height: 100%;
+  z-index: variables.$level-dialog-1;
+  display: flex;
+  background-color: #fff;
+  box-shadow: variables.$main-box-shadow;
+}

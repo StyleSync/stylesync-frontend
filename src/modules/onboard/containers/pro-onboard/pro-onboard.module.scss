@@ -9,6 +9,12 @@
   background-color: #fff;
   box-shadow: variables.$main-box-shadow;
 
+  @include mixins.phone {
+    border-top-left-radius: variables.$border-radius-large;
+    border-top-right-radius: variables.$border-radius-large;
+    padding-bottom: var(--bottom-fixed-content-height);
+  }
+
   .content {
     display: flex;
     flex: 1;

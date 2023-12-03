@@ -16,7 +16,7 @@ export const OnboardLocation: FC<ProOnboardStepProps> = ({ back }) => {
 
   return (
     <OnboardLayout
-      meta={{ title: 'Location', description: 'todo...' }}
+      meta={{ title: 'Location' }}
       nextButtonProps={{
         onClick: handleSubmit,
         text: 'Done',

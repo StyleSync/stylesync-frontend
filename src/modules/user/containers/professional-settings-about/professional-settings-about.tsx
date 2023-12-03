@@ -5,13 +5,11 @@ import { ProfileSettingsTabContentLayout } from '@/modules/user/components/profi
 import { AboutProfessionalForm } from '@/modules/user/components/about-professional-form';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
+import { showToast } from '@/modules/core/providers/toast-provider';
 // constants
 import { ERROR_MESSAGE } from '@/modules/core/constants/error-messages.constants';
 // types
 import type { AboutProfessionalFormValues } from '@/modules/user/components/about-professional-form/about-professional-form.interface';
-import { showToast } from '@/modules/core/providers/toast-provider';
-import { Placeholder } from '@/modules/core/components/placeholder';
-import { Spinner } from '@/modules/core/components/spinner';
 
 export const ProfessionalSettingsAbout: FC = () => {
   const formId = useId();
@@ -19,10 +17,10 @@ export const ProfessionalSettingsAbout: FC = () => {
   const { data: me, ...meQuery } = trpc.user.me.useQuery({
     expand: ['professional'],
   });
-  const { mutate: meUpdateAsync, ...userUpdateMutation } =
-    trpc.user.update.useMutation();
-  const { mutate: professionalUpdate, ...professionalUpdateMutation } =
-    trpc.professional.update.useMutation();
+  const userUpdate = trpc.user.update.useMutation({ useErrorBoundary: false });
+  const proUpdate = trpc.professional.update.useMutation({
+    useErrorBoundary: false,
+  });
   // memo
   const initialValues = useMemo<Partial<AboutProfessionalFormValues>>(
     () => ({
@@ -39,61 +37,57 @@ export const ProfessionalSettingsAbout: FC = () => {
 
   const handleSubmit = useCallback(
     async (values: AboutProfessionalFormValues & { avatar: File | null }) => {
-      await meUpdateAsync({
-        firstName: values.firstName || undefined,
-        lastName: values.lastName || undefined,
-        phone: values.phone || undefined,
-      });
-
-      professionalUpdate(
-        {
+      Promise.all([
+        userUpdate.mutateAsync({
+          firstName: values.firstName || undefined,
+          lastName: values.lastName || undefined,
+          phone: values.phone || undefined,
+        }),
+        proUpdate.mutateAsync({
           about: values.about || undefined,
           instagram: values.instagram || undefined,
           facebook: values.facebook || undefined,
-        },
-        {
-          onSuccess: () => {
-            meQuery.refetch();
-          },
-          onError: () => {
-            showToast({
-              variant: 'error',
-              title: ERROR_MESSAGE.SOMETHING_WENT_WRONG,
-              description:
-                'Please review the entered data or try again later :)',
-            });
-          },
-        }
-      );
+        }),
+      ])
+        .then(() => {
+          meQuery.refetch();
+          showToast({
+            variant: 'success',
+            title: 'All done!',
+            description: 'Changes has been saved',
+          });
+        })
+        .catch(() => {
+          showToast({
+            variant: 'error',
+            title: ERROR_MESSAGE.SOMETHING_WENT_WRONG,
+            description: 'Please review the entered data or try again later',
+          });
+        });
     },
-    [meQuery, meUpdateAsync, professionalUpdate]
+    [meQuery, userUpdate, proUpdate]
   );
 
   return (
     <ProfileSettingsTabContentLayout
       title='About settings'
       icon='info'
+      isLoading={meQuery.isLoading}
       actions={[
         {
           text: 'Save',
           form: formId,
-          isLoading:
-            userUpdateMutation.isLoading ||
-            professionalUpdateMutation.isLoading,
+          isLoading: userUpdate.isLoading || proUpdate.isLoading,
           disabled: !me || !me.professional,
+          type: 'submit',
         },
       ]}
     >
-      <Placeholder
-        isActive={meQuery.isLoading}
-        placeholder={<Spinner size='medium' />}
-      >
-        <AboutProfessionalForm
-          formId={formId}
-          onSubmit={handleSubmit}
-          initialValues={initialValues}
-        />
-      </Placeholder>
+      <AboutProfessionalForm
+        formId={formId}
+        onSubmit={handleSubmit}
+        initialValues={initialValues}
+      />
     </ProfileSettingsTabContentLayout>
   );
 };

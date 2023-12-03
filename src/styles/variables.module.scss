@@ -40,6 +40,12 @@ $screen-desktop: 1920px;
 $header-height: 74px;
 $header-height-mobile: 62px;
 $sidebar-width: calc((100vw - 968px) / 2);
+$bottom-tab-bar-height: 111px;
+
+// z-index
+$level-dialog-1: 100;
+$level-dialog-2: 200;
+$level-dialog-3: 300;
 
 :export {
   // colors
@@ -58,6 +64,7 @@ $sidebar-width: calc((100vw - 968px) / 2);
   mainBoxShadow: $main-box-shadow;
   // screens
   screenPhone: $screen-phone;
+  screenTablet: $screen-tablet;
   // entities
   headerHeight: 74;
 }
