@@ -1,5 +1,6 @@
-@use '@/styles/utils';
 @use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
 
 .root {
   display: flex;
@@ -13,10 +14,19 @@
     flex: 1;
     max-height: 100vh;
     padding: calc(#{utils.spacing(3)} + #{variables.$header-height}) utils.spacing(3) utils.spacing(3);
+
+    @include mixins.phone {
+      display: none;
+    }
   }
 
   .sidebar {
     width: calc(#{variables.$sidebar-width} - #{utils.spacing(4)});
+    min-width: calc(266px - #{utils.spacing(4)});
+
+    @include mixins.phone {
+      width: 100%;
+    }
   }
 }
 
@@ -28,4 +38,8 @@
   width: utils.spacing(4);
   height: utils.spacing(4);
   transform: scaleX(-1);
+
+  @include mixins.phone {
+    display: none;
+  }
 }

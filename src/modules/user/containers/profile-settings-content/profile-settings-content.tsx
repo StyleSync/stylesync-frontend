@@ -1,14 +1,16 @@
 'use client';
 import type { ReactElement, FC } from 'react';
 // components
-import { ProfessionalGalleryForm } from '@/modules/user/components/professional-gallery-form';
-import { ProfessionalSettingsAbout } from '@/modules/user/containers/professional-settings-about';
+import { DialogFullScreen } from '@/modules/core/components/dialog-full-screen';
 // containers
-import { UserLocationSelectForm } from '@/modules/location/containers/user-location-select-form';
+import { ProfessionalSettingsAbout } from '@/modules/user/containers/professional-settings-about';
 import { ProfessionalSettingsServices } from '@/modules/user/containers/professional-settings-services';
 import { ProfessionalSettingsSchedule } from '@/modules/user/containers/professional-settings-schedule';
+import { ProfessionalSettingsGallery } from '@/modules/settings/containers/professional-settings-gallery';
+import { ProfessionalSettingsLocation } from '@/modules/settings/containers/professional-settings-location';
 // hooks
 import { useSettingsNavigation } from '@/modules/user/hooks/use-settings-navigation';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 
 import type { ProfileSettingsContentProps } from './profile-settings-content.interface';
 
@@ -16,12 +18,22 @@ const contentMap: Record<string, ReactElement> = {
   about: <ProfessionalSettingsAbout />,
   services: <ProfessionalSettingsServices />,
   schedule: <ProfessionalSettingsSchedule />,
-  gallery: <ProfessionalGalleryForm />,
-  location: <UserLocationSelectForm />,
+  gallery: <ProfessionalSettingsGallery />,
+  location: <ProfessionalSettingsLocation />,
 };
 
 export const ProfileSettingsContent: FC<ProfileSettingsContentProps> = () => {
-  const { active } = useSettingsNavigation();
+  const { active, defaultTab, reset } = useSettingsNavigation();
+  const deviceType = useDeviceType();
+  const stepElement = contentMap[active ?? defaultTab];
 
-  return contentMap[active];
+  if (deviceType === 'mobile') {
+    return (
+      <DialogFullScreen isOpen={!!active} onOpenChange={reset}>
+        {stepElement}
+      </DialogFullScreen>
+    );
+  }
+
+  return stepElement;
 };

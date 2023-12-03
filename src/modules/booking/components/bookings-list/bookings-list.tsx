@@ -11,8 +11,8 @@ export const BookingsList: FC<BookingsListProps> = ({ groups }) => {
   return (
     <div className={styles.root}>
       {groups.map((group) => (
-        <div className={styles.group} key='id'>
-          <Typography variant='body1' weight='semibold'>
+        <div className={styles.group} key={group.id}>
+          <Typography className={styles.title} variant='body1'>
             {group.title}
           </Typography>
           <div className={styles.list}>

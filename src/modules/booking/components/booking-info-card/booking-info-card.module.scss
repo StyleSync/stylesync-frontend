@@ -9,51 +9,35 @@
   padding: utils.spacing(2);
   border-radius: variables.$border-radius-medium;
   box-shadow: variables.$main-box-shadow;
+  transition: variables.$transition-ultrafast;
+  cursor: pointer;
 
   &.light {
     background-color: #fff;
 
     .datetime {
       color: variables.$dark-color;
-      font-weight: 400;
     }
 
     .description {
-      color: variables.$grey-color;
+      color: variables.$dark-color;
+      font-weight: 300;
     }
 
     .avatar {
-      border-color: variables.$dark-color;
-
-      path {
-        stroke: variables.$dark-color;
-      }
-    }
-
-    .moreButton {
+      background-color: rgba(variables.$dark-color, 0.1);
       color: variables.$dark-color;
-      transition: variables.$transition-ultrafast;
+    }
 
-      &:hover, &.active {
-        background-color: darken(#fff, 4%);
+    &:hover {
+      transform: scale(1.02);
+    }
+
+    @include mixins.phone {
+      &:hover {
+        transform: scale(1);
       }
     }
-  }
-
-  &.green {
-    background: linear-gradient(24deg, #76C38F 0%, #60CF8C 48.44%, #A7C12C 100%);
-
-    .moreButton {
-      transition: variables.$transition-ultrafast;
-
-      &:hover, &.active {
-        background-color: darken(#9ac443, 5%);
-      }
-    }
-  }
-
-  @include mixins.phone {
-    padding: utils.spacing(1, 2);
   }
 
   .container {

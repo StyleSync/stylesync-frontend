@@ -11,14 +11,17 @@
     align-items: center;
     border: none;
     cursor: pointer;
-    height: utils.spacing(6);
+    padding: utils.spacing(1);
     background-color: transparent;
     transition: variables.$transition-ultrafast;
     border-radius: variables.$border-radius-small;
-    padding: utils.spacing(0, 1);
 
     &:hover {
       background-color: variables.$primary-light-color;
+
+      @include mixins.phone {
+        background-color: transparent;
+      }
     }
 
     span {

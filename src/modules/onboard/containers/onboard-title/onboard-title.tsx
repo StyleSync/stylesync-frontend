@@ -7,8 +7,6 @@ import clsx from 'clsx';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Button } from '@/modules/core/components/button';
 import { Stepper } from '@/modules/core/components/stepper';
-import { Header } from '@/modules/core/components/header';
-import { Progress } from '@/modules/core/components/progress';
 // hooks
 import { useOnboard } from '@/modules/onboard/hooks/use-onboard';
 // utils
@@ -20,7 +18,7 @@ import styles from './onboard-title.module.scss';
 export const OnboardTitle: FC = () => {
   const router = useRouter();
   const session = useSession();
-  const { active, onboardData, progress } = useOnboard();
+  const { active, onboardData } = useOnboard();
   // queries
   const { data: me, ...meQuery } = trpc.user.me.useQuery({
     expand: ['professional'],
@@ -92,11 +90,6 @@ export const OnboardTitle: FC = () => {
           }}
         />
       </div>
-      <Header.BottomContent>
-        <div className={styles.mobileProgress}>
-          <Progress progress={progress} />
-        </div>
-      </Header.BottomContent>
     </div>
   );
 };

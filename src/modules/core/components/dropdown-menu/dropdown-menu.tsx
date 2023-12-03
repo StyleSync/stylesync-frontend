@@ -45,10 +45,15 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({
               className={clsx(
                 styles.option,
                 { [styles.danger]: item.variant === 'danger' },
+                { [styles.primary]: item.variant === 'primary' },
                 item.className
               )}
               key={item.id}
-              onClick={() => onSelect && onSelect(item)}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onSelect && onSelect(item);
+              }}
               disabled={item.disabled}
             >
               {typeof render === 'function' ? (

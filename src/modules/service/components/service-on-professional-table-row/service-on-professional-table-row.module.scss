@@ -1,0 +1,58 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.root {
+  display: flex;
+  flex-direction: row;
+  padding: utils.spacing(2, 3);
+  border-bottom: 1px solid variables.$primary-light-color;
+
+  @include mixins.phone {
+    padding: utils.spacing(2);
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .cell {
+    display: flex;
+    align-items: center;
+    flex: 1;
+
+    .title {
+      @include mixins.phone {
+        font-size: 16px;
+      }
+    }
+    .price {
+      @include mixins.phone {
+        font-size: 14px;
+      }
+    }
+
+    .chevron {
+      color: variables.$grey-color;
+    }
+
+    &.flex75 {
+      flex: 0.75;
+    }
+
+    &.flex25 {
+      flex: 0.25;
+    }
+
+    &.fit {
+      flex: unset;
+      width:fit-content;
+    }
+
+    &.vertical {
+      flex-direction: column;
+      row-gap: utils.spacing(1.5);
+      align-items: flex-start;
+    }
+  }
+}

@@ -48,6 +48,7 @@ export const Sidebar: FC<SidebarProps> = ({
                   text={link.name}
                   onClick={handleLinkClick(link)}
                   variant='unstyled'
+                  iconEnd='chevron-right'
                 />
               ))}
             </div>

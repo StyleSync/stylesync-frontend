@@ -87,9 +87,7 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
   return (
     <OnboardLayout
       meta={{
-        title: 'About',
-        description:
-          'We will use this information to create a detailed account of your experience that can be shared with your clients',
+        title: 'About me',
       }}
       nextButtonProps={{
         form: formId,

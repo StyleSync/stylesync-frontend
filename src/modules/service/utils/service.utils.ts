@@ -5,6 +5,7 @@ import type {
   ServiceOnProfessional,
   ServiceOnProfessionalGroup,
 } from '@/modules/service/types/service.types';
+import { alphabetCompare } from '@/modules/core/utils/array.utils';
 
 export const isServiceOnProfessionalEqual = (
   s1: Partial<ServiceOnProfessional>,
@@ -39,4 +40,39 @@ export const getGroupOfServiceOnProfessionalList = (
   });
 
   return next;
+};
+
+export const sortServiceOnProfessionalGroups = (
+  groups: ServiceOnProfessionalGroup[]
+) => {
+  const next: ServiceOnProfessionalGroup[] = [...groups];
+
+  next.sort((group1, group2) =>
+    alphabetCompare(group1.service.name, group2.service.name)
+  );
+
+  next.forEach((group) => {
+    group.serviceOnProfessionalList.sort((s1, s2) =>
+      alphabetCompare(s1.title, s2.title)
+    );
+  });
+
+  return next;
+};
+
+export const isServiceOnProfessionalValid = ({
+  title,
+  id,
+  duration,
+  currency,
+  price,
+}: ServiceOnProfessional): boolean => {
+  return (
+    !!title &&
+    title.length > 0 &&
+    duration > 0 &&
+    price > 0 &&
+    !!currency &&
+    !!id
+  );
 };

@@ -4,6 +4,7 @@
 
 .root {
   width: 100%;
+  padding: utils.spacing(3, 3, 1);
 
   .tag {
     width: 80px;
@@ -12,11 +13,25 @@
   }
 
   .content {
+    padding-top: utils.spacing(1);
+    padding-bottom: utils.spacing(1);
+
+    @include mixins.phone {
+      padding-bottom: 0;
+    }
+
     .row {
-      border-bottom: none;
+      display: flex;
+      justify-content: space-between;
+      padding: utils.spacing(2, 0);
+
+      .info {
+        display: flex;
+        flex-direction: column;
+        row-gap: utils.spacing(1);
+      }
     }
   }
-
 
   .title {
     width: 200px;
@@ -38,5 +53,9 @@
     @include mixins.phone {
       display: none;
     }
+  }
+
+  .chevron {
+    color: variables.$grey-color;
   }
 }

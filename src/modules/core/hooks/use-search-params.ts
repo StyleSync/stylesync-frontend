@@ -22,5 +22,18 @@ export function useQueryParams<T = {}>() {
     router.push(`${pathname}${query}`);
   }
 
-  return { queryParams, setQueryParams };
+  function clearQueryParams(params: (keyof T)[]) {
+    params.forEach((paramToRemove) => {
+      if (typeof paramToRemove === 'string') {
+        urlSearchParams.delete(paramToRemove);
+      }
+    });
+
+    const search = urlSearchParams.toString();
+    const query = search ? `?${search}` : '';
+
+    router.push(`${pathname}${query}`);
+  }
+
+  return { queryParams, setQueryParams, clearQueryParams };
 }

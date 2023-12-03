@@ -17,9 +17,35 @@
     height: 70px;
     padding: utils.spacing(0,3);
 
+    @include mixins.phone {
+      padding: utils.spacing(0, 2);
+      height: 60px;
+    }
+
     .actions {
       display: flex;
       column-gap: utils.spacing(2);
+
+      @include mixins.phone {
+        display: none;
+      }
+    }
+
+    .more {
+      display: none;
+      background-color: variables.$grey-light-color;
+
+      &.active {
+        background-color: darken(variables.$grey-light-color, 2%);
+      }
+
+      @include mixins.phone {
+        display: flex;
+      }
+
+      svg {
+        color: variables.$dark-color;
+      }
     }
   }
 }

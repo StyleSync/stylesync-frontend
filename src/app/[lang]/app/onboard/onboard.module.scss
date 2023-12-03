@@ -2,8 +2,6 @@
 @use '@/styles/utils';
 @use '@/styles/mixins';
 
-$header-bottom-content-height-mobile: 24px;
-
 .root {
   position: relative;
   display: flex;
@@ -13,6 +11,6 @@ $header-bottom-content-height-mobile: 24px;
   padding-top: variables.$header-height;
 
   @include mixins.phone {
-    padding-top: calc(#{variables.$header-height-mobile} + #{$header-bottom-content-height-mobile});
+    padding-top: variables.$header-height-mobile;
   }
 }

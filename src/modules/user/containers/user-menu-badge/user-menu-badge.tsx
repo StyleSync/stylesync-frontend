@@ -10,6 +10,10 @@ import { Emoji } from '@/modules/core/components/emoji';
 import { Icon } from '@/modules/core/components/icon';
 import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
 import { Button } from '@/modules/core/components/button';
+// containers
+import { BurgerMenu } from '@/modules/core/containers/burger-menu';
+// hooks
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 // types
@@ -17,7 +21,6 @@ import type { DropdownItem } from '@/modules/core/components/dropdown-menu/dropd
 
 import type { UserMenuBadgeProps } from './user-menu-badge.interface';
 import styles from './user-menu-badge.module.scss';
-import { BurgerMenu } from '@/modules/core/containers/burger-menu';
 
 export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
   // state
@@ -25,13 +28,14 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
   const session = useSession();
   const pathname = usePathname();
   const router = useRouter();
+  const deviceType = useDeviceType();
   // queries
   const { data: me } = trpc.user.me.useQuery(undefined, {
     enabled: session.status === 'authenticated',
   });
 
   useEffectOnce(() => {
-    router.prefetch('/app/profile-settings');
+    router.prefetch('/app/settings');
   });
 
   const handleSelect = useCallback(
@@ -46,8 +50,12 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
   );
 
   const handleSettingsClick = useCallback(() => {
-    router.push('/app/profile-settings');
+    router.push('/app/settings');
   }, [router]);
+
+  if (deviceType === 'mobile') {
+    return <BurgerMenu />;
+  }
 
   if (session.status === 'loading') {
     return <div className={clsx(styles.skeleton, 'skeleton')} />;
@@ -84,6 +92,11 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
         />
         <DropdownMenu
           items={[
+            {
+              id: 'share',
+              text: 'Share profile',
+              icon: 'share',
+            },
             {
               id: 'sign-out',
               text: 'Sign out',
@@ -122,7 +135,6 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
           }}
         />
       </div>
-      <BurgerMenu />
     </>
   );
 };

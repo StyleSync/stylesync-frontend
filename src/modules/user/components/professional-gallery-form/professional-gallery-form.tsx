@@ -2,7 +2,6 @@ import {
   type FC,
   type ChangeEvent,
   useCallback,
-  useEffect,
   useMemo,
   useRef,
   useState,
@@ -14,7 +13,7 @@ import { Button } from '@/modules/core/components/button';
 import { Gallery } from '@/modules/core/components/gallery';
 import { Placeholder } from '@/modules/core/components/placeholder';
 // hooks
-import { useWindowSizeType } from '@/modules/core/hooks/use-window-size-type';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // types
 import type { GalleryImage } from '@/modules/core/components/gallery/gallery.interface';
 import type { ButtonProps } from '@/modules/core/components/button/button.interface';
@@ -26,7 +25,7 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
   // state
   const [images, setImages] = useState<File[]>([]);
   const isFileUploading = useBoolean();
-  const windowSizeType = useWindowSizeType();
+  const windowSizeType = useDeviceType();
   // memo
   // @ts-ignore todo: map BE images that should contain width & height
   const galleryImages = useMemo<GalleryImage[]>(() => {
@@ -52,8 +51,6 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
   }, [windowSizeType]);
   // refs
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {}, [images]);
 
   const handleImageSelectClick = useCallback(() => {
     fileInputRef.current?.click();
@@ -112,13 +109,7 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
         fadeIn
       >
         <div className={styles.galleryWrapper}>
-          <Gallery
-            images={galleryImages}
-            galleryProps={{
-              rowHeight: 200,
-              margin: 4,
-            }}
-          />
+          <Gallery images={galleryImages} />
         </div>
       </Placeholder>
     </div>

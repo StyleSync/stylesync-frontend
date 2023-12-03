@@ -7,7 +7,10 @@ import { ServiceTableSkeleton } from '@/modules/service/components/service-table
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { ErrorBox } from '@/modules/core/components/error-box';
 // utils
-import { getGroupOfServiceOnProfessionalList } from '@/modules/service/utils/service.utils';
+import {
+  getGroupOfServiceOnProfessionalList,
+  sortServiceOnProfessionalGroups,
+} from '@/modules/service/utils/service.utils';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 
 import styles from './user-services.module.scss';
@@ -29,7 +32,10 @@ export const UserServices: FC<{ userId: string }> = ({ userId }) => {
       }
     );
   const groups = useMemo(
-    () => getGroupOfServiceOnProfessionalList(serviceList ?? []),
+    () =>
+      sortServiceOnProfessionalGroups(
+        getGroupOfServiceOnProfessionalList(serviceList ?? [])
+      ),
     [serviceList]
   );
 

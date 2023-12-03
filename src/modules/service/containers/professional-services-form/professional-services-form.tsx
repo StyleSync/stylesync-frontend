@@ -6,27 +6,13 @@ import { Placeholder } from '@/modules/core/components/placeholder';
 import { ServiceConstructorTable } from '@/modules/service/containers/service-constructor-table';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
+import { sortServiceOnProfessionalGroups } from '@/modules/service/utils/service.utils';
 // types
-import type {
-  ServiceOnProfessional,
-  ServiceOnProfessionalGroup,
-} from '@/modules/service/types/service.types';
+import type { ServiceOnProfessional } from '@/modules/service/types/service.types';
 import type { Service } from '@prisma/client';
 
 import type { ProfessionalServicesFormProps } from './professional-services-form.interface';
 import styles from './professional-services-form.module.scss';
-
-const alphabetCompare = (a: string, b: string) => {
-  if (a < b) {
-    return -1;
-  }
-
-  if (a > b) {
-    return 1;
-  }
-
-  return 0;
-};
 
 export const ProfessionalServicesForm: FC<ProfessionalServicesFormProps> = ({
   serviceOnProfessionalGroups,
@@ -35,22 +21,10 @@ export const ProfessionalServicesForm: FC<ProfessionalServicesFormProps> = ({
   const { data: serviceList, ...serviceListQuery } =
     trpc.service.list.useQuery();
   // memo
-  const sortedServiceOnProfessionalGroups = useMemo(() => {
-    // todo: might be downgrade performance
-    const next: ServiceOnProfessionalGroup[] = [...serviceOnProfessionalGroups];
-
-    next.sort((group1, group2) =>
-      alphabetCompare(group1.service.name, group2.service.name)
-    );
-
-    next.forEach((group) => {
-      group.serviceOnProfessionalList.sort((s1, s2) =>
-        alphabetCompare(s1.title, s2.title)
-      );
-    });
-
-    return next;
-  }, [serviceOnProfessionalGroups]);
+  const sortedServiceOnProfessionalGroups = useMemo(
+    () => sortServiceOnProfessionalGroups(serviceOnProfessionalGroups),
+    [serviceOnProfessionalGroups]
+  );
 
   const handleServiceSelect = useCallback(
     (service: Service) => {

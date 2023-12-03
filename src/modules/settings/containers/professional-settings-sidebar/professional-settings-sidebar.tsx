@@ -1,5 +1,5 @@
 'use client';
-import { type FC } from 'react';
+import { type FC, useMemo, type ReactNode } from 'react';
 import clsx from 'clsx';
 // components
 import { Sidebar } from '@/modules/core/components/sidebar';
@@ -9,14 +9,15 @@ import { Typography } from '@/modules/core/components/typogrpahy';
 import { Placeholder } from '@/modules/core/components/placeholder';
 // hooks
 import { useSettingsNavigation } from '@/modules/user/hooks/use-settings-navigation';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
+import { getFullName } from '@/modules/user/utils/user.utils';
 // types
 import type { SidebarLinkGroup } from '@/modules/core/components/sidebar/sidebar.interface';
 
 import type { UserSettingsSidebarProps } from './professional-settings-sidebar.interface';
 import styles from './professional-settings-sidebar.module.scss';
-import { getFullName } from '@/modules/user/utils/user.utils';
 
 const linkGroups: SidebarLinkGroup[] = [
   {
@@ -64,63 +65,73 @@ const linkGroups: SidebarLinkGroup[] = [
 ];
 
 export const ProfessionalSettingsSidebar: FC<UserSettingsSidebarProps> = () => {
+  const { active, defaultTab, set } = useSettingsNavigation();
+  const deviceType = useDeviceType();
+  // queries
   const { data: me, ...meQuery } = trpc.user.me.useQuery({
     expand: ['professional'],
   });
-  const { active, set } = useSettingsNavigation();
+  // memo
+  const topSlot = useMemo<ReactNode[] | undefined>(() => {
+    if (deviceType === 'mobile') {
+      return;
+    }
+
+    return [
+      <div key='info' className={styles.info}>
+        <Placeholder
+          className={clsx('skeleton', styles.avatarSkeleton)}
+          isActive={meQuery.isLoading}
+          placeholder={null}
+        >
+          <Avatar
+            className={styles.avatar}
+            size='medium'
+            shape='rect'
+            fallback={<Emoji name='sunglasses' width={50} height={60} />}
+            shadow
+          />
+        </Placeholder>
+        <div className={styles.name}>
+          <Placeholder
+            className={clsx('skeleton', styles.titleSkeleton)}
+            isActive={meQuery.isLoading}
+            placeholder={null}
+          >
+            <Typography
+              className={styles.title}
+              variant='body1'
+              weight='medium'
+            >
+              {getFullName(me ?? {})}
+            </Typography>
+          </Placeholder>
+          <Placeholder
+            className={clsx('skeleton', styles.metaSkeleton)}
+            isActive={meQuery.isLoading}
+            placeholder={null}
+          >
+            <Typography
+              className={styles.meta}
+              variant='small'
+              weight='regular'
+              cutText
+            >
+              {me?.email}
+            </Typography>
+          </Placeholder>
+        </div>
+      </div>,
+    ];
+  }, [deviceType, me, meQuery.isLoading]);
 
   return (
     <Sidebar
-      activeLink={active}
+      activeLink={active ?? defaultTab}
       linkGroups={linkGroups}
       onSelect={({ id }) => set(id)}
       slots={{
-        top: [
-          <div key='info' className={styles.info}>
-            <Placeholder
-              className={clsx('skeleton', styles.avatarSkeleton)}
-              isActive={meQuery.isLoading}
-              placeholder={null}
-            >
-              <Avatar
-                className={styles.avatar}
-                size='medium'
-                shape='rect'
-                fallback={<Emoji name='sunglasses' width={50} height={60} />}
-                shadow
-              />
-            </Placeholder>
-            <div className={styles.name}>
-              <Placeholder
-                className={clsx('skeleton', styles.titleSkeleton)}
-                isActive={meQuery.isLoading}
-                placeholder={null}
-              >
-                <Typography
-                  className={styles.title}
-                  variant='body1'
-                  weight='medium'
-                >
-                  {getFullName(me ?? {})}
-                </Typography>
-              </Placeholder>
-              <Placeholder
-                className={clsx('skeleton', styles.metaSkeleton)}
-                isActive={meQuery.isLoading}
-                placeholder={null}
-              >
-                <Typography
-                  className={styles.meta}
-                  variant='small'
-                  weight='regular'
-                  cutText
-                >
-                  {me?.email}
-                </Typography>
-              </Placeholder>
-            </div>
-          </div>,
-        ],
+        top: topSlot,
       }}
     />
   );

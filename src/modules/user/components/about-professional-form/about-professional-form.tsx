@@ -61,7 +61,11 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
         onSubmit={form.handleSubmit(handleSubmit)}
         className={styles.root}
       >
-        <AvatarSelect value={avatar.preview} onChange={avatar.onChange} />
+        <AvatarSelect
+          className={styles.avatarSelect}
+          value={avatar.preview}
+          onChange={avatar.onChange}
+        />
         <div className={styles.inputsRow}>
           <TextField
             {...form.register('firstName')}

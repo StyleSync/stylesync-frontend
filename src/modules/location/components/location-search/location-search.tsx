@@ -80,7 +80,8 @@ export const LocationSearch: FC<LocationSearchProps> = ({
           {...inputProps}
         />
       }
-      followTriggerWidth
+      forceTriggerWidth
+      disablePortal
       disableAutofocus
     >
       <div className={styles.root}>

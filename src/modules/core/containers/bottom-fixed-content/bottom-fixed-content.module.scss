@@ -1,0 +1,22 @@
+@use '@/styles/variables.module';
+
+.root {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0px -4px 15px 0px rgba(37, 74, 165, 0.10);;
+  transition: variables.$transition-ultrafast;
+  background-color: rgba(#fff, 0.9);
+  backdrop-filter: saturate(180%) blur(20px);
+  --webkit-backdrop-filter: saturate(180%) blur(20px);
+  display: flex;
+  flex-direction: column;
+  z-index: 20;
+
+  .item {
+    &:last-child {
+      padding-bottom: 12px;
+    }
+  }
+}

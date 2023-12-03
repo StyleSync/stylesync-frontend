@@ -1,7 +1,6 @@
 import { type FC } from 'react';
 // components
 import { ProfileSettingsTabContentLayout } from '@/modules/user/components/profile-settings-tab-content-layout';
-import { Spinner } from '@/modules/core/components/spinner';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { ErrorBox } from '@/modules/core/components/error-box';
 // containers
@@ -34,6 +33,7 @@ export const ProfessionalSettingsServices: FC = () => {
     <ProfileSettingsTabContentLayout
       title='Services settings'
       icon='beauty-service'
+      isLoading={isGroupsLoading}
       actions={[
         {
           text: 'Save',
@@ -45,23 +45,18 @@ export const ProfessionalSettingsServices: FC = () => {
       hideActions={isGroupsLoading || isGroupsLoadingError}
     >
       <Placeholder
-        isActive={isGroupsLoading}
-        placeholder={<Spinner size='medium' />}
-      >
-        <Placeholder
-          isActive={isGroupsLoadingError}
-          placeholder={
-            <ErrorBox
-              title='Connection with server has been interrupted'
-              description='Please check your internet connection or try refreshing the page. If the issue persists, please contact our support team for assistance.'
-            />
-          }
-        >
-          <ProfessionalServicesForm
-            serviceOnProfessionalGroups={groups}
-            setServiceOnProfessionalGroups={setGroups}
+        isActive={isGroupsLoadingError}
+        placeholder={
+          <ErrorBox
+            title='Connection with server has been interrupted'
+            description='Please check your internet connection or try refreshing the page. If the issue persists, please contact our support team for assistance.'
           />
-        </Placeholder>
+        }
+      >
+        <ProfessionalServicesForm
+          serviceOnProfessionalGroups={groups}
+          setServiceOnProfessionalGroups={setGroups}
+        />
       </Placeholder>
     </ProfileSettingsTabContentLayout>
   );

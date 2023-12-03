@@ -1,0 +1,73 @@
+@use '@/styles/variables.module';
+@use '@/styles/mixins';
+@use '@/styles/utils';
+
+.root {
+  display: flex;
+  flex-direction: column;
+
+
+  .userInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: utils.spacing(0.5);
+    border-bottom: 1px solid rgba(variables.$grey-color, 0.3);
+    padding: utils.spacing(3, 2);
+
+    .name {
+      margin-top: utils.spacing(1);
+    }
+
+    .email {
+      opacity: 0.8;
+    }
+  }
+
+  .bookingInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: utils.spacing(4);
+    border-bottom: 1px solid rgba(variables.$grey-color, 0.3);
+    padding: utils.spacing(3);
+
+    .time {
+      display: flex;
+      align-items: center;
+      column-gap: utils.spacing(1);
+    }
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+    padding: utils.spacing(3);
+
+    .action {
+      border-radius: 0;
+      height: 50px;
+      width: 100%;
+      justify-content: flex-start;
+      background-color: rgba(variables.$primary-color, 0.05);
+      color: variables.$primary-color;
+      border-bottom: 1px solid #fff;
+      padding: utils.spacing(0, 2);
+
+      &:first-child {
+        border-top-left-radius: variables.$border-radius-medium;
+        border-top-right-radius: variables.$border-radius-medium;
+      }
+
+      &:last-child {
+        border-bottom-left-radius: variables.$border-radius-medium;
+        border-bottom-right-radius: variables.$border-radius-medium;
+      }
+
+      &.danger {
+        background-color: rgba(variables.$error-color, 0.05);
+        color: variables.$error-color;
+      }
+    }
+  }
+}

@@ -1,193 +1,88 @@
-import { type FC, useCallback, useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { type FC, useCallback, useRef } from 'react';
 // components
 import { Button } from '@/modules/core/components/button';
-import { PriceField } from '@/modules/core/components/price-field';
-import { TextField } from '@/modules/core/components/text-field';
-import { TimeField } from '@/modules/core/components/time-field';
 import { Typography } from '@/modules/core/components/typogrpahy';
-// utils
-import { Time, type TimeValue } from '@/modules/core/utils/time.utils';
+import { ServiceOnProfessionalEditForm } from '@/modules/service/components/service-on-professional-edit-form';
+// hooks
+import { useRipple } from '@/modules/core/hooks/use-ripple';
+import { useBoolean } from 'usehooks-ts';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // types
 import type { ServiceOnProfessionalEditableFields } from '@/modules/service/types/service.types';
 
-import type {
-  ServiceConstructorRowProps,
-  ServiceConstructorRowFormValues,
-} from './service-constructor-row.interface';
+import type { ServiceConstructorRowProps } from './service-constructor-row.interface';
 import styles from './service-constructor-row.module.scss';
-
-const validationSchema = z.object({
-  title: z.string().min(1),
-  duration: z
-    .string()
-    .refine((arg) => Time.toMinuteDuration(arg as TimeValue) > 0),
-  price: z.object({
-    value: z.string().refine((arg) => !isNaN(+arg) && +arg > 0),
-    currency: z.string(),
-  }),
-});
-
-const mapServiceOnProfessionalToFormValues = (
-  data: ServiceOnProfessionalEditableFields
-): ServiceConstructorRowFormValues => ({
-  title: data.title,
-  duration: Time.fromMinuteDuration(data.duration).getString(),
-  price: {
-    value: data.price.toString(),
-    currency: data.currency,
-  },
-});
-
-const mapFormValuesToServiceOnProfessional = (
-  values: ServiceConstructorRowFormValues
-): ServiceOnProfessionalEditableFields => ({
-  title: values.title,
-  currency: values.price.currency,
-  price: +values.price.value,
-  duration: Time.toMinuteDuration(values.duration as TimeValue),
-});
+import { isServiceOnProfessionalValid } from '@/modules/service/utils/service.utils';
+import { Icon } from '@/modules/core/components/icon';
 
 export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
   data,
   onChange,
   onDelete,
 }) => {
+  const deviceType = useDeviceType();
   // state
-  const [rowState, setRowState] = useState<'edit' | 'display'>(
-    validationSchema.safeParse(mapServiceOnProfessionalToFormValues(data))
-      .success
-      ? 'display'
-      : 'edit'
-  );
-  // form
-  const form = useForm<ServiceConstructorRowFormValues>({
-    defaultValues: mapServiceOnProfessionalToFormValues(data),
-    resolver: zodResolver(validationSchema),
+  const isEdit = useBoolean(!isServiceOnProfessionalValid(data));
+  // refs
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useRipple(rootRef, {
+    disabled: isEdit.value || deviceType !== 'mobile',
   });
 
-  const handleDeleteClick = useCallback(() => {
+  const handleDelete = useCallback(() => {
     onDelete(data.id);
   }, [data.id, onDelete]);
 
-  const handleEditClick = useCallback(() => {
-    setRowState('edit');
-  }, []);
-
   const handleSubmit = useCallback(
-    (values: ServiceConstructorRowFormValues) => {
-      setRowState('display');
-      onChange(mapFormValuesToServiceOnProfessional(values));
+    (values: ServiceOnProfessionalEditableFields) => {
+      isEdit.setFalse();
+      onChange(values);
     },
-    [onChange]
+    [onChange, isEdit]
   );
 
-  const handleEditCancel = useCallback(() => {
-    const formValues = mapServiceOnProfessionalToFormValues(data);
-    const validation = validationSchema.safeParse(formValues);
-
-    if (!validation.success) {
-      onDelete(data.id);
-
-      return;
+  const handleRowClick = useCallback(() => {
+    if (deviceType === 'mobile') {
+      isEdit.setTrue();
     }
-
-    form.reset(formValues);
-    setRowState('display');
-  }, [data, form, onDelete]);
+  }, [deviceType, isEdit.setTrue]);
 
   return (
-    <div className={styles.root}>
-      {rowState === 'display' && (
-        <div className={styles.display}>
+    <div className={styles.root} ref={rootRef}>
+      {/* always display row on mobile and if !isEdit on tablet & desktop */}
+      {(!isEdit.value || deviceType === 'mobile') && (
+        <div className={styles.display} onClick={handleRowClick}>
           <div className={styles.info}>
-            <Typography variant='body1'>{form.getValues().title}</Typography>
+            <Typography variant='body1'>{data.title}</Typography>
             <Typography variant='small' className={styles.secondaryText}>
-              {form.getValues().duration}
+              {data.duration}
             </Typography>
           </div>
           <div className={styles.price}>
             <Typography variant='body1'>
-              {form.getValues().price.value} {form.getValues().price.currency}
+              {data.price} {data.currency}
             </Typography>
           </div>
           <div className={styles.actions}>
-            <Button
-              icon='pencil'
-              variant='outlined'
-              onClick={handleEditClick}
-            />
-            <Button icon='trash' variant='danger' onClick={handleDeleteClick} />
+            <Button icon='pencil' variant='outlined' onClick={isEdit.setTrue} />
+            <Button icon='trash' variant='danger' onClick={handleDelete} />
           </div>
+          <Icon
+            className={styles.chevron}
+            name='chevron-right'
+            width={18}
+            height={18}
+          />
         </div>
       )}
-      {rowState === 'edit' && (
-        <>
-          <form
-            className={styles.form}
-            onSubmit={form.handleSubmit(handleSubmit)}
-          >
-            <TextField
-              variant='input'
-              label='Service title'
-              autoFocus
-              error={Boolean(form.formState.errors.title)}
-              {...form.register('title')}
-            />
-            <Controller
-              name='price'
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <PriceField
-                  price={field.value.value}
-                  currency={field.value.currency}
-                  onCurrencyChange={(currency) =>
-                    field.onChange({
-                      value: form.getValues().price.value,
-                      currency,
-                    })
-                  }
-                  onPriceChange={(price) =>
-                    field.onChange({
-                      value: price,
-                      currency: form.getValues().price.currency,
-                    })
-                  }
-                  inputProps={{
-                    label: 'Price',
-                    error: Boolean(fieldState.error),
-                  }}
-                />
-              )}
-            />
-            <Controller
-              name='duration'
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <TimeField
-                  value={field.value}
-                  onChange={field.onChange}
-                  inputProps={{
-                    label: 'Duration',
-                    error: Boolean(fieldState.error),
-                  }}
-                />
-              )}
-            />
-            <div className={styles.actions}>
-              <Button
-                variant='secondary'
-                type='button'
-                text='Cancel'
-                onClick={handleEditCancel}
-              />
-              <Button variant='primary' text='Save' type='submit' />
-            </div>
-          </form>
-        </>
-      )}
+      <ServiceOnProfessionalEditForm
+        isActive={isEdit.value}
+        data={data}
+        onSubmit={handleSubmit}
+        onDelete={handleDelete}
+        onCancel={isEdit.setFalse}
+      />
     </div>
   );
 };

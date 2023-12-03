@@ -31,6 +31,6 @@
 
 .trigger {
   @include mixins.phone {
-    bottom: utils.spacing(14);
+    bottom: utils.spacing(15);
   }
 }

@@ -6,7 +6,7 @@ import type { IllustrationName } from '@/modules/core/components/illustration/il
 export type PlaceholderProps = ChildrenProp &
   StylingProps & {
     isActive: boolean;
-    placeholder:
+    placeholder?:
       | ReactNode
       | {
           illustration: IllustrationName;

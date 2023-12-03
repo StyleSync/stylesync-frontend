@@ -10,8 +10,6 @@ export type GalleryImage = {
 
 export type GalleryProps = {
   images: GalleryImage[];
-  galleryProps?: Omit<
-    ReactGridGalleryProps,
-    'images' | 'onClick' | 'enableImageSelection'
-  >;
+  maxRows?: number;
+  rowImagesCount?: number;
 };

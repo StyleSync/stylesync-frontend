@@ -55,4 +55,8 @@
   background-color: #fff;
   padding-bottom: utils.spacing(10);
   box-shadow: variables.$main-box-shadow;
+
+  @include mixins.phone {
+    padding-bottom: calc(var(--bottom-fixed-content-height) + #{utils.spacing(2)});
+  }
 }

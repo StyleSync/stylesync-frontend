@@ -1,9 +1,11 @@
 'use client';
-import type { FC } from 'react';
+import { useMemo, type FC } from 'react';
+
 import Link from 'next/link';
 import { faker } from '@faker-js/faker';
 import clsx from 'clsx';
 import { useBoolean } from 'usehooks-ts';
+import type { Service } from '@prisma/client';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Button } from '@/modules/core/components/button';
@@ -24,19 +26,46 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
   userId,
 }) => {
   // queries
-  const { data: pro, ...meQuery } = trpc.professional.get.useQuery({
-    id: userId,
-    expand: ['user'],
-  });
+  const { data: professional, ...professionalQuery } =
+    trpc.professional.get.useQuery({
+      id: userId,
+      expand: ['user'],
+    });
+  const { data: serviceOnProfessionalList, ...serviceOnProfessionalListQuery } =
+    trpc.serviceOnProfessional.list.useQuery(
+      {
+        professionalId: professional?.id,
+      },
+      {
+        enabled: Boolean(professional),
+      }
+    );
   // state
   const isContactOpen = useBoolean();
+  // memo
+  const services = useMemo(() => {
+    return (
+      serviceOnProfessionalList?.reduce<Service[]>(
+        (res, serviceOnProfessional) => {
+          if (
+            res.find((item) => item.id === serviceOnProfessional.service.id)
+          ) {
+            return res;
+          }
+
+          return [serviceOnProfessional.service, ...res];
+        },
+        []
+      ) ?? []
+    );
+  }, [serviceOnProfessionalList]);
 
   return (
     <div className={styles.container}>
       <div className={styles.top}>
         <Placeholder
           className={clsx('skeleton', styles.avatarSkeleton)}
-          isActive={meQuery.isLoading}
+          isActive={professionalQuery.isLoading}
           placeholder={null}
         >
           <Avatar
@@ -45,16 +74,16 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
             shadow
             shape='rect'
             fallback={<Emoji name='sunglasses' width={50} height={50} />}
-            url={pro?.user?.avatar}
+            url={professional?.user?.avatar}
           />
         </Placeholder>
         <Placeholder
           className={clsx('skeleton', styles.nameSkeleton)}
-          isActive={meQuery.isLoading}
+          isActive={professionalQuery.isLoading}
           placeholder={null}
         >
           <Typography className={styles.name} variant='title'>
-            {getFullName(pro?.user ?? {})}
+            {getFullName(professional?.user ?? {})}
           </Typography>
         </Placeholder>
       </div>
@@ -63,7 +92,7 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
           <div className={styles.services}>
             <Placeholder
               className={styles.servicesSkeleton}
-              isActive={meQuery.isLoading}
+              isActive={serviceOnProfessionalListQuery.isLoading}
               placeholder={
                 <>
                   <div className='skeleton' />
@@ -72,42 +101,30 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
                 </>
               }
             >
-              <ServiceTag
-                className={styles.service}
-                data={{
-                  id: 'makeup',
-                  name: 'Makeup',
-                  icon: 'makeup',
-                  createdAt: new Date(),
-                  updatedAt: new Date(),
-                }}
-              />
-              <ServiceTag
-                className={styles.service}
-                data={{
-                  id: 'hair',
-                  name: 'Hair',
-                  icon: 'haircut',
-                  createdAt: new Date(),
-                  updatedAt: new Date(),
-                }}
-              />
-              <ServiceTag
-                className={styles.service}
-                data={{
-                  id: 'nails',
-                  name: 'Nails',
-                  icon: 'nails',
-                  createdAt: new Date(),
-                  updatedAt: new Date(),
-                }}
-              />
+              <Placeholder
+                className={styles.emptyPlaceholder}
+                isActive={services.length === 0}
+                placeholder={
+                  <>
+                    <Icon name='beauty-service' />
+                    <Typography>No services provided</Typography>
+                  </>
+                }
+              >
+                {services.map((service) => (
+                  <ServiceTag
+                    key={service.id}
+                    className={styles.service}
+                    data={service}
+                  />
+                ))}
+              </Placeholder>
             </Placeholder>
           </div>
           <div className={styles.location}>
             <Placeholder
               className={clsx('skeleton', styles.locationSkeleton)}
-              isActive={meQuery.isLoading}
+              isActive={professionalQuery.isLoading}
               placeholder={null}
             >
               <Icon name='location' />
@@ -131,11 +148,15 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
                 variant='secondary'
                 text='Contact'
                 onClick={isContactOpen.setTrue}
-                disabled={meQuery.isLoading}
+                disabled={professionalQuery.isLoading}
               />
             }
           />
-          <Button variant='primary' text='Book' disabled={meQuery.isLoading} />
+          <Button
+            variant='primary'
+            text='Book'
+            disabled={professionalQuery.isLoading}
+          />
         </div>
       </div>
     </div>

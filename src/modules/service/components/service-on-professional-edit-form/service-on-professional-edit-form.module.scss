@@ -1,0 +1,49 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: utils.spacing(3);
+  column-gap: utils.spacing(3);
+
+  @include mixins.phone {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .title {
+    display: none;
+
+    @include mixins.phone {
+      display: flex;
+      align-items: center;
+      column-gap: utils.spacing(1);
+      margin: 0 auto;
+      padding-bottom: utils.spacing(1);
+
+    }
+  }
+
+  .actions {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: flex-end;
+    column-gap: utils.spacing(2);
+
+    button {
+      flex: 1;
+    }
+  }
+}
+
+.dialogOverlay {
+  z-index: calc(#{variables.$level-dialog-2} - 1);
+}
+
+.dialogContent {
+  padding: utils.spacing(3, 2);
+  z-index: variables.$level-dialog-2;
+}

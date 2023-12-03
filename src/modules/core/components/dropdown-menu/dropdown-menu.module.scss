@@ -49,14 +49,32 @@
       span {
         color: variables.$primary-color;
       }
+
+      @include mixins.phone {
+        background-color: transparent;
+        color: variables.$dark-color;
+      }
     }
 
     &:focus-visible {
       box-shadow: 0 0 0 2px #fff, 0 0 0 4px variables.$primary-color;
     }
 
+    &.primary {
+      color: variables.$primary-color;
+
+      &:hover {
+        background-color: rgba(variables.$primary-color, .08);
+      }
+
+      span {
+        color: variables.$primary-color;
+      }
+    }
+
     &.danger {
       color: variables.$error-color;
+
       &:hover {
         background-color: rgba(variables.$error-color, .08);
       }

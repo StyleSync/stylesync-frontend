@@ -16,16 +16,6 @@ type Story = StoryObj<typeof Dialog>;
 
 export const Base: Story = {
   render: () => {
-    return (
-      <Dialog trigger={<button>open</button>}>
-        <Typography>Hello from modal</Typography>
-      </Dialog>
-    );
-  },
-};
-
-export const Controlled: Story = {
-  render: () => {
     const isOpen = useBoolean();
 
     return (

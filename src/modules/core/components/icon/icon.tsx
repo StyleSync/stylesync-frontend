@@ -23,6 +23,7 @@ import ArrowLeftIcon from '@/assets/icons/arrow-left.svg?icon';
 import ArrowBottomIcon from '@/assets/icons/arrow-bottom.svg?icon';
 import ArrowTopIcon from '@/assets/icons/arrow-top.svg?icon';
 import ChevronRightIcon from '@/assets/icons/chevron-right.svg?icon';
+import ChevronLeftIcon from '@/assets/icons/chevron-left.svg?icon';
 import ChevronTopIcon from '@/assets/icons/chevron-top.svg?icon';
 import ChevronBottomIcon from '@/assets/icons/chevron-bottom.svg?icon';
 import StyleSyncLogoIcon from '@/assets/icons/stylesync-logo.svg?icon';
@@ -56,6 +57,7 @@ import AlarmIcon from '@/assets/icons/alarm.svg?icon';
 import CornerIcon from '@/assets/icons/corner.svg?icon';
 import MenuIcon from '@/assets/icons/menu.svg?icon';
 import ShareIcon from '@/assets/icons/share.svg?icon';
+import CommentIcon from '@/assets/icons/comment.svg?icon';
 
 import type { SVGComponentElement } from './icon.interface';
 
@@ -83,6 +85,7 @@ export const icons = {
   'arrow-bottom': ArrowBottomIcon,
   'arrow-top': ArrowTopIcon,
   'chevron-right': ChevronRightIcon,
+  'chevron-left': ChevronLeftIcon,
   'chevron-bottom': ChevronBottomIcon,
   'chevron-top': ChevronTopIcon,
   'stylesync-logo': StyleSyncLogoIcon,
@@ -116,6 +119,7 @@ export const icons = {
   corner: CornerIcon,
   menu: MenuIcon,
   share: ShareIcon,
+  comment: CommentIcon,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;
