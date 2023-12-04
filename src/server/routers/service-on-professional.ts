@@ -94,11 +94,11 @@ export const serviceOnProfessionalRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      const serviceOnProfessional = await prisma.serviceOnProfessional.update({
-        where: { id: input.id },
-        data: { ...input },
-        select: defaultServiceOnProfessionalSelect,
-      });
+      const serviceOnProfessional =
+        await prisma.serviceOnProfessional.findUnique({
+          where: { id: input.id },
+          select: defaultServiceOnProfessionalSelect,
+        });
 
       if (!serviceOnProfessional) {
         throw new TRPCError({
@@ -116,7 +116,11 @@ export const serviceOnProfessionalRouter = router({
         });
       }
 
-      return serviceOnProfessional;
+      return prisma.serviceOnProfessional.update({
+        where: { id: input.id },
+        data: { ...input },
+        select: defaultServiceOnProfessionalSelect,
+      });
     }),
   delete: privateProcedure
     .input(

@@ -113,9 +113,23 @@ model Professional {
   about      String?
   schedule   Schedule[]
   portfolios Portfolio[]
+  location   Location?
   services   ServiceOnProfessional[]
   createdAt  DateTime                @default(now())
   updatedAt  DateTime                @default(now()) @updatedAt
+}
+
+model Location {
+  id             String       @id @default(cuid())
+  name           String
+  address        String?
+  postalCode     String?
+  latitude       Float
+  longitude      Float
+  professionalId String       @unique
+  professional   Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
 }
 
 model Schedule {

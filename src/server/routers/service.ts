@@ -39,19 +39,10 @@ export const serviceRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      const service = await prisma.service.create({
+      return prisma.service.create({
         data: { ...input },
         select: defaultServiceSelect,
       });
-
-      if (!service) {
-        throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: `There was error creating service '${input.name}'`,
-        });
-      }
-
-      return service;
     }),
   createBulk: privateProcedure
     .input(
@@ -76,20 +67,11 @@ export const serviceRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      const service = await prisma.service.update({
+      return prisma.service.update({
         where: { id: input.id },
         data: { ...input },
         select: defaultServiceSelect,
       });
-
-      if (!service) {
-        throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: `There was error updating service '${input.id}'`,
-        });
-      }
-
-      return service;
     }),
   updateBulk: privateProcedure
     .input(

@@ -6,6 +6,7 @@ import { serviceOnProfessionalRouter } from '@/server/routers/service-on-profess
 import { scheduleRouter } from '@/server/routers/schedule';
 import { breakRouter } from '@/server/routers/break';
 import { portfolioRouter } from '@/server/routers/portfolio';
+import { locationRouter } from '@/server/routers/location';
 
 export const appRouter = router({
   user: userRouter,
@@ -15,6 +16,7 @@ export const appRouter = router({
   schedule: scheduleRouter,
   break: breakRouter,
   portfolio: portfolioRouter,
+  location: locationRouter,
 });
 // export type definition of API
 export type AppRouter = typeof appRouter;
