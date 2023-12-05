@@ -10,6 +10,7 @@ import {
   defaultUserSelect,
 } from '@/server/selectors';
 import { defaultScheduleSelect } from '@/server/selectors/schedule';
+import { defaultLocationSelect } from '@/server/selectors/location';
 import { publicUserSelect } from '@/server/selectors/user';
 
 const maxTextLength = 32;
@@ -23,7 +24,9 @@ export const professionalRouter = router({
       z.object({
         id: z.string().min(1, 'Required'),
         expand: z
-          .array(z.enum(['portfolios', 'services', 'user', 'schedule']))
+          .array(
+            z.enum(['portfolios', 'services', 'user', 'schedule', 'location'])
+          )
           .nullable(),
       })
     )
@@ -45,6 +48,9 @@ export const professionalRouter = router({
             select: defaultScheduleSelect,
             take: 7,
             where: { isSpecificDay: false },
+          },
+          location: !!input?.expand?.includes('location') && {
+            select: defaultLocationSelect,
           },
         },
       });
@@ -118,20 +124,12 @@ export const professionalRouter = router({
     )
     .mutation(async ({ input, ctx }) => {
       const { id } = ctx.user;
-      const professional = await prisma.professional.update({
+
+      return prisma.professional.update({
         where: { userId: id },
         data: { ...input },
         select: defaultProfessionalSelect,
       });
-
-      if (!professional) {
-        throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: `No professional for user with id '${id}'`,
-        });
-      }
-
-      return professional;
     }),
   list: publicProcedure
     .input(

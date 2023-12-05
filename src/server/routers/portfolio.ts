@@ -43,19 +43,10 @@ export const portfolioRouter = router({
     .mutation(async ({ input, ctx }) => {
       const professional = await getProfessionalFromContext(ctx);
 
-      const portfolioItem = await prisma.portfolio.create({
+      return prisma.portfolio.create({
         data: { ...input, professionalId: professional.id },
         select: defaultPortfolioSelect,
       });
-
-      if (!portfolioItem) {
-        throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: `There was error creating portfolio item '${input.title}'`,
-        });
-      }
-
-      return portfolioItem;
     }),
   update: privateProcedure
     .input(
@@ -70,9 +61,8 @@ export const portfolioRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      const portfolioItem = await prisma.portfolio.update({
+      const portfolioItem = await prisma.portfolio.findUnique({
         where: { id: input.id },
-        data: { ...input },
         select: defaultPortfolioSelect,
       });
 
@@ -92,7 +82,11 @@ export const portfolioRouter = router({
         });
       }
 
-      return portfolioItem;
+      return prisma.portfolio.update({
+        where: { id: input.id },
+        data: { ...input },
+        select: defaultPortfolioSelect,
+      });
     }),
   delete: privateProcedure
     .input(
