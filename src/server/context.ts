@@ -11,7 +11,6 @@ export interface User {
   name: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface CreateContextOptions {
   user: User | null;
   rsc: boolean;

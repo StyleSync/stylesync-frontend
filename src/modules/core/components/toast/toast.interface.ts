@@ -1,4 +1,4 @@
-export type ToastVariant = 'info' | 'success' | 'error';
+type ToastVariant = 'info' | 'success' | 'error';
 
 export type ToastProps = {
   isOpen: boolean;

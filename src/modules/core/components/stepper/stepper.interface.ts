@@ -1,6 +1,6 @@
 import type { TypographyProps } from '@/modules/core/components/typogrpahy/typography.interface';
 
-export type StepperStep = {
+type StepperStep = {
   value: string;
   text: string;
 };
