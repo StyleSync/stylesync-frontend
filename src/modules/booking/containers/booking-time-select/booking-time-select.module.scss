@@ -6,8 +6,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  column-gap: 20px;
-  margin-bottom: 20px;
+  column-gap: utils.spacing(2.5);
+  margin-bottom: utils.spacing(2.5);
 }
 
 .dataBox {
@@ -15,7 +15,7 @@
   flex-direction: column;
   align-items: center;
   row-gap: 5px;
-  padding: 10px 20px;
+  padding: utils.spacing(1, 2.5);
   background-color: transparent;
   border: 1px solid variables.$primary-light-color;
   border-radius: variables.$border-radius-medium;
@@ -26,7 +26,7 @@
   flex-direction: column;
   align-items: center;
   row-gap: 5px;
-  padding: 10px 20px;
+  padding: utils.spacing(1, 2.5);
   background-color: variables.$accent-color;
   border-radius: variables.$border-radius-medium;
   cursor: pointer;
@@ -37,7 +37,7 @@
   flex-direction: column;
   align-items: center;
   row-gap: 5px;
-  padding: 10px 20px;
+  padding: utils.spacing(1, 2.5);
   color: #fff;
   background-color: #fafbfc;
   border: 1px solid variables.$primary-light-color;
@@ -57,14 +57,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 30px;
+  margin-bottom: utils.spacing(4);
 }
 
 .footer {
   display: flex;
   align-items: center;
-  column-gap: 17px;
-  row-gap: 10px;
+  column-gap: utils.spacing(2);
+  row-gap: utils.spacing(1);
   flex-wrap: wrap;
 }
 

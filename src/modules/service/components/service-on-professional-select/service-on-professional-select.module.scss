@@ -1,0 +1,8 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.baseCardContainer {
+  display: grid;
+  row-gap: utils.spacing(2.5);
+}
