@@ -1,7 +1,7 @@
 import { Icon } from '@/modules/core/components/icon';
 import { Typography } from '@/modules/core/components/typogrpahy';
 
-import styles from './booking-calendar.module.scss';
+import styles from './booking-time-select.module.scss';
 
 const data = [
   { day: 'Sat', number: '20', month: 'May' },
@@ -11,7 +11,7 @@ const data = [
   { day: 'Wed', number: '24', month: 'May' },
 ];
 
-export const BookingCalendar = () => {
+export const BookingTimeSelect = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -80,9 +80,3 @@ export const BookingCalendar = () => {
     </div>
   );
 };
-
-// <Typography>13:00 - 14:00</Typography>
-//           <Typography>15:00 - 16:00</Typography>
-//           <Typography>16:00 - 17:00</Typography>
-//           <Typography>15:00 - 16:00</Typography>
-//           <Typography>16:00 - 17:00</Typography>

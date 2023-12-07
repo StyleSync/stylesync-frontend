@@ -1,9 +1,7 @@
-@use '@/styles/variables.module';
 @use '@/styles/utils';
-@use '@/styles/mixins';
 
 .container {
   display: flex;
   flex-direction: column;
-  row-gap: 25px;
+  row-gap: utils.spacing(3);
 }

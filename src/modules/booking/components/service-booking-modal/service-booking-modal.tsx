@@ -1,30 +1,36 @@
 import { type FC, useState } from 'react';
 // components
-import { RadioButton } from '@/modules/core/components/radio-button';
+
 import { Avatar } from '@/modules/core/components/avatar';
 import { Button } from '@/modules/core/components/button';
 import { Stepper } from '@/modules/core/components/stepper';
 import { Dialog } from '@/modules/core/components/dialog';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { BookingForm } from '@/modules/booking/components/booking-form';
-import { BookingCalendar } from '@/modules/booking/components/booking-calendar';
-import { BaseCardWithRadioButton } from '../booking-card-radio-button';
+import { BookingTimeSelect } from '@/modules/booking/containers/booking-time-select';
+import { ServiceOnProfessionalSelect } from '@/modules/service/components/service-on-professional-select';
+
 // type
 import { type ModalProps } from '@/modules/core/components/dialog/dialog.interface';
-// utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
 
 import styles from './service-booking-modal.module.scss';
 
 export const ServiceBookingModal: FC<Omit<ModalProps, 'children'>> = (
   props
 ) => {
-  // state
-  const [value, setValue] = useState<string>('');
-
   const [step, setStep] = useState<'service' | 'datetime' | 'confirmation'>(
     'service'
   );
+
+  type BookingStep = 'service' | 'confirmation' | 'datetime';
+
+  const stepsData: Record<BookingStep, { Step: FC }> = {
+    service: { Step: ServiceOnProfessionalSelect },
+    confirmation: { Step: BookingForm },
+    datetime: { Step: BookingTimeSelect },
+  };
+
+  const { Step } = stepsData[step];
 
   const handleNext = () => {
     if (step === 'service') {
@@ -41,11 +47,6 @@ export const ServiceBookingModal: FC<Omit<ModalProps, 'children'>> = (
       setStep('service');
     }
   };
-
-  const { data: serviceList } = trpc.serviceOnProfessional.list.useQuery({
-    limit: 10,
-    offset: 0,
-  });
 
   return (
     <Dialog {...props}>
@@ -89,22 +90,7 @@ export const ServiceBookingModal: FC<Omit<ModalProps, 'children'>> = (
         </div>
 
         <div className={styles.contentContainer}>
-          {step === 'service' && (
-            <RadioButton.Group value={value} onChange={setValue} name='cards'>
-              <div className={styles.baseCardContainer}>
-                {serviceList?.map((service) => (
-                  <BaseCardWithRadioButton
-                    key={service.id}
-                    value={value}
-                    serviceOnProfessional={service}
-                    onClick={(currentValue) => setValue(currentValue)}
-                  />
-                ))}
-              </div>
-            </RadioButton.Group>
-          )}
-          {step === 'confirmation' && <BookingForm />}
-          {step === 'datetime' && <BookingCalendar />}
+          <Step />
         </div>
 
         <div className={styles.navigationBtns}>
@@ -124,7 +110,6 @@ export const ServiceBookingModal: FC<Omit<ModalProps, 'children'>> = (
             text={step === 'confirmation' ? 'Confirm' : 'Next'}
             iconEnd={step === 'confirmation' ? undefined : 'arrow-right'}
             variant={step === 'confirmation' ? 'primary' : 'outlined'}
-            // style={{ marginLeft: step === 'service' ? 'auto' : undefined }}
           />
         </div>
       </div>
