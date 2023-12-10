@@ -1,6 +1,7 @@
 import { type FC } from 'react';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { RadioButton } from '@/modules/core/components/radio-button';
+import { formatDuration } from '@/modules/core/utils/time.utils';
 
 // type
 import { type ServiceOnProfessional } from '@/modules/service/types/service.types';
@@ -22,7 +23,7 @@ export const BaseCardWithRadioButton: FC<{
         <div className={styles.descr}>
           <Typography>{serviceOnProfessional.title}</Typography>
           <Typography className={styles.time} variant='small'>
-            1h 30min
+            {formatDuration(serviceOnProfessional.duration)}
           </Typography>
         </div>
       </div>
