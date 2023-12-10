@@ -212,3 +212,25 @@ export const formatMinutesDuration = (minutes: number): string => {
 
 // constants
 export const emptyTimeRange = formatTimeRange(new Time(), new Time());
+
+// formatter duration
+export const formatDuration = (duration: number): string => {
+  const hours = Math.floor(duration / 60);
+  const minutes = duration % 60;
+
+  let formattedDuration = '';
+
+  if (hours > 0) {
+    formattedDuration += `${hours} ${hours === 1 ? 'hour' : 'hours'}`;
+  }
+
+  if (minutes > 0) {
+    if (formattedDuration.length > 0) {
+      formattedDuration += ' ';
+    }
+
+    formattedDuration += `${minutes} ${minutes === 1 ? 'min' : 'mins'}`;
+  }
+
+  return formattedDuration;
+};
