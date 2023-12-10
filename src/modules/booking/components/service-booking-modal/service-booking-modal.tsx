@@ -15,20 +15,20 @@ import { type ModalProps } from '@/modules/core/components/dialog/dialog.interfa
 
 import styles from './service-booking-modal.module.scss';
 
+type BookingStep = 'service' | 'confirmation' | 'datetime';
+
+const stepsData: Record<BookingStep, { Step: FC }> = {
+  service: { Step: ServiceOnProfessionalSelect },
+  confirmation: { Step: BookingForm },
+  datetime: { Step: BookingTimeSelect },
+};
+
 export const ServiceBookingModal: FC<Omit<ModalProps, 'children'>> = (
   props
 ) => {
   const [step, setStep] = useState<'service' | 'datetime' | 'confirmation'>(
     'service'
   );
-
-  type BookingStep = 'service' | 'confirmation' | 'datetime';
-
-  const stepsData: Record<BookingStep, { Step: FC }> = {
-    service: { Step: ServiceOnProfessionalSelect },
-    confirmation: { Step: BookingForm },
-    datetime: { Step: BookingTimeSelect },
-  };
 
   const { Step } = stepsData[step];
 

@@ -1,5 +1,5 @@
-import { Icon } from '@/modules/core/components/icon';
 import { Typography } from '@/modules/core/components/typogrpahy';
+import { Button } from '@/modules/core/components/button';
 
 import styles from './booking-time-select.module.scss';
 
@@ -15,9 +15,9 @@ export const BookingTimeSelect = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <Icon width={18} height={18} name='arrow-left' />
+        <Button icon='arrow-left' variant='unstyled' />
         <Typography variant='body1'>Thursday, 18, May</Typography>
-        <Icon width={18} height={18} name='arrow-right' />
+        <Button icon='arrow-right' variant='unstyled' />
       </div>
       <div className={styles.main}>
         <div className={styles.dataBoxCheked}>
