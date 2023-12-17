@@ -1,5 +1,3 @@
-// Heads up! This component designed to use only on mobile screens.
-
 import { type FC, useCallback, useEffect, useRef } from 'react';
 import * as RadixDialog from '@radix-ui/react-dialog';
 import {

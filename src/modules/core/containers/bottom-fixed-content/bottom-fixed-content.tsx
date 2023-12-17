@@ -9,6 +9,7 @@ import {
   useCallback,
   useContext,
   useId,
+  useMemo,
 } from 'react';
 // types
 import type { ChildrenProp } from '@/modules/core/types/react.types';
@@ -36,6 +37,11 @@ const BottomFixedContent: FC<BottomFixedContentProps> & {
   const [items, setItems] = useState<RenderElement[]>([]);
   // refs
   const rootRef = useRef<HTMLDivElement>(null);
+  // memo
+  const displayItems = useMemo(
+    () => items.sort((item1, item2) => item2.orderIndex - item1.orderIndex),
+    [items]
+  );
 
   useEffect(() => {
     const element = rootRef.current;
@@ -46,6 +52,7 @@ const BottomFixedContent: FC<BottomFixedContentProps> & {
       for (const entry of entries) {
         const { height } = entry.contentRect;
 
+        // This css variable can be used in layouts to add bottom padding the same as bottom fixed content height
         document.documentElement.style.setProperty(
           '--bottom-fixed-content-height',
           `${height}px`
@@ -84,13 +91,11 @@ const BottomFixedContent: FC<BottomFixedContentProps> & {
     <BottomFixedContentContext.Provider value={{ render, unmount }}>
       {children}
       <div className={styles.root} ref={rootRef}>
-        {items
-          .sort((item1, item2) => item2.orderIndex - item1.orderIndex)
-          .map((item) => (
-            <div className={styles.item} key={item.id}>
-              {item.element}
-            </div>
-          ))}
+        {displayItems.map((item) => (
+          <div className={styles.item} key={item.id}>
+            {item.element}
+          </div>
+        ))}
       </div>
     </BottomFixedContentContext.Provider>
   );

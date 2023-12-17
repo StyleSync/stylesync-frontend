@@ -12,6 +12,7 @@
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
   background-color: #fff;
   z-index: variables.$level-dialog-3;
+  pointer-events: auto;
 
   &.backgroundBlurEffect {
     background-color: rgba(#fff, 0.8);

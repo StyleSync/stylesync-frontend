@@ -6,12 +6,13 @@ import { faker } from '@faker-js/faker';
 import clsx from 'clsx';
 import { useBoolean } from 'usehooks-ts';
 import type { Service } from '@prisma/client';
+import { useIntl } from 'react-intl';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Button } from '@/modules/core/components/button';
-import { Icon } from '@/modules/core/components/icon';
+import { Icon, type IconName } from '@/modules/core/components/icon';
 import { Avatar } from '@/modules/core/components/avatar';
-import { ServiceTag } from '@/modules/service/components/service-tag';
+import { Tag } from '../../../core/components/tag';
 import { Emoji } from '@/modules/core/components/emoji';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
@@ -25,6 +26,7 @@ import styles from './professional-info-big-card.module.scss';
 export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
   userId,
 }) => {
+  const intl = useIntl();
   // queries
   const { data: professional, ...professionalQuery } =
     trpc.professional.get.useQuery({
@@ -112,10 +114,11 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
                 }
               >
                 {services.map((service) => (
-                  <ServiceTag
+                  <Tag
                     key={service.id}
                     className={styles.service}
-                    data={service}
+                    icon={service.icon as IconName}
+                    text={intl.formatMessage({ id: service.name })}
                   />
                 ))}
               </Placeholder>

@@ -2,9 +2,10 @@ import { type FC, useCallback } from 'react';
 import { v4 } from 'uuid';
 import { useBoolean } from 'usehooks-ts';
 import clsx from 'clsx';
+import { useIntl } from 'react-intl';
 // components
 import { Button } from '@/modules/core/components/button';
-import { ServiceTag } from '@/modules/service/components/service-tag';
+import { Tag } from '../../../core/components/tag';
 import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
 // containers
 import { ServiceConstructorRow } from '@/modules/service/containers/service-constructor-row';
@@ -13,6 +14,7 @@ import type {
   ServiceOnProfessional,
   ServiceOnProfessionalEditableFields,
 } from '@/modules/service/types/service.types';
+import type { IconName } from '@/modules/core/components/icon';
 
 import type { ServiceConstructorTableProps } from './service-constructor-table.interface';
 import styles from './service-constructor-table.module.scss';
@@ -23,6 +25,8 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
   onChange,
   onRemoveClick,
 }) => {
+  const intl = useIntl();
+  // state
   const isActionsOpen = useBoolean();
 
   const handleAddClick = useCallback(() => {
@@ -78,7 +82,10 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
   return (
     <div className={styles.root}>
       <div className={styles.header}>
-        <ServiceTag data={service} />
+        <Tag
+          icon={service.icon as IconName}
+          text={intl.formatMessage({ id: service.name })}
+        />
         <div className={styles.actions}>
           <Button
             icon='plus'
