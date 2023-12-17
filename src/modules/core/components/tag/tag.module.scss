@@ -10,8 +10,9 @@
   border-radius: variables.$border-radius-large;
   padding: 0 12px;
   border: 1px solid variables.$grey-color;
+
+  .text {
+    color: variables.$dark-color;
+  }
 }
 
-.text {
-  color: variables.$dark-color;
-}

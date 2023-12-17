@@ -3,13 +3,13 @@ import clsx from 'clsx';
 // components
 import { Icon } from '@/modules/core/components/icon';
 import { Typography } from '@/modules/core/components/typogrpahy';
+import { Spinner } from '@/modules/core/components/spinner';
 // hooks
 import { useRipple } from '@/modules/core/hooks/use-ripple';
 import { useCombinedRefs } from '@/modules/core/hooks/use-combined-refs';
 
 import type { ButtonProps, ButtonVariant } from './button.interface';
 import styles from './button.module.scss';
-import { Spinner } from '@/modules/core/components/spinner';
 
 const RIPPLE_COLORS: Record<ButtonVariant, string> = {
   primary: styles.ripplePrimaryColor,

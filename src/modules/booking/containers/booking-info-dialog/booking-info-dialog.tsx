@@ -4,8 +4,8 @@ import clsx from 'clsx';
 // components
 import { Avatar } from '@/modules/core/components/avatar';
 import { Typography } from '@/modules/core/components/typogrpahy';
-import { ServiceTag } from '@/modules/service/components/service-tag';
-import { Icon, type IconName } from '@/modules/core/components/icon';
+import { Tag } from '../../../core/components/tag';
+import { Icon } from '@/modules/core/components/icon';
 import { Button } from '@/modules/core/components/button';
 import { DialogBottom } from '@/modules/core/components/dialog-bottom';
 import { Dialog } from '@/modules/core/components/dialog';
@@ -22,11 +22,13 @@ const actions = [
     id: 'call',
     text: 'Call',
     icon: 'phone',
+    variant: 'secondary',
   },
   {
     id: 'reschedule',
     text: 'Reschedule',
     icon: 'time',
+    variant: 'secondary',
   },
   {
     id: 'cancel',
@@ -34,12 +36,7 @@ const actions = [
     icon: 'close',
     variant: 'danger',
   },
-] satisfies {
-  id: string;
-  text: string;
-  icon?: IconName;
-  variant?: 'default' | 'danger';
-}[];
+] as const;
 
 export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
   isOpen,
@@ -61,10 +58,7 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
           </Typography>
         </div>
         <div className={styles.bookingInfo}>
-          <ServiceTag
-            // @ts-ignore
-            data={{ id: 'test', icon: 'nails', name: 'Evening makeup' }}
-          />
+          <Tag icon='nails' text='Evening makeup' />
           <div className={styles.time}>
             <Icon name='calendar' width={18} height={18} />
             <Typography variant='small'>Friday, 27 Dec at 15:26</Typography>
@@ -74,15 +68,13 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
           {actions.map((action) => (
             <Button
               key={action.id}
-              className={clsx(styles.action, {
-                [styles.danger]: action.variant === 'danger',
-              })}
+              className={clsx(styles.action, styles[action.variant])}
               icon={action.icon}
               text={action.text}
-              rippleColor={
-                action.variant === 'danger' ? 'rgb(255,200,223)' : undefined
-              }
-              variant='unstyled'
+              variant={action.variant}
+              typographyProps={{
+                weight: 'medium',
+              }}
             />
           ))}
         </div>

@@ -163,6 +163,7 @@ export const DialogFullScreen: FC<DialogFullScreenProps> = ({
     onOpenChange,
   ]);
 
+  // todo: refactor this logic. Potentially, need to extend and integrate hook - useTouchDirectionDrag
   // drag
   const handleContentDrag = useCallback(
     (e: TouchEvent) => {
