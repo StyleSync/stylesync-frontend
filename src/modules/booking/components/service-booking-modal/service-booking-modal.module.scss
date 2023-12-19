@@ -2,11 +2,15 @@
 @use '@/styles/utils';
 @use '@/styles/mixins';
 
+.content {
+  height: 100%;
+}
+
 .container {
-  width: 620px;
-  min-height: 100%;
   display: flex;
   flex-direction: column;
+  width: 620px;
+  padding: utils.spacing(3);
 }
 
 .header {

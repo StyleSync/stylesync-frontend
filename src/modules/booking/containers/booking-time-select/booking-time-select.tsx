@@ -1,5 +1,12 @@
+'use client';
+import { BookingTimeSelectNavigation } from '../../components/bookink-time-select-navigation';
 import { Typography } from '@/modules/core/components/typogrpahy';
-import { Button } from '@/modules/core/components/button';
+// Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Swiper styles
+import 'swiper/scss';
+import 'swiper/scss/navigation';
 
 import styles from './booking-time-select.module.scss';
 
@@ -9,53 +16,49 @@ const data = [
   { day: 'Mon', number: '22', month: 'May' },
   { day: 'Thu', number: '23', month: 'May' },
   { day: 'Wed', number: '24', month: 'May' },
+  { day: 'Day', number: '25', month: 'May' },
+  { day: 'Day', number: '26', month: 'May' },
+  { day: 'Day', number: '27', month: 'May' },
+  { day: 'Day', number: '28', month: 'May' },
+  { day: 'Day', number: '29', month: 'May' },
+  { day: 'Day', number: '30', month: 'May' },
+  { day: 'Day', number: '31', month: 'May' },
+  { day: 'Day', number: '1', month: 'June' },
+  { day: 'Day', number: '2', month: 'June' },
+  { day: 'Day', number: '3', month: 'June' },
+  { day: 'Day', number: '4', month: 'June' },
+  { day: 'Day', number: '5', month: 'June' },
 ];
 
 export const BookingTimeSelect = () => {
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <Button icon='arrow-left' variant='unstyled' />
-        <Typography variant='body1'>Thursday, 18, May</Typography>
-        <Button icon='arrow-right' variant='unstyled' />
-      </div>
       <div className={styles.main}>
-        <div className={styles.dataBoxCheked}>
-          <Typography variant='body2' className={styles.infoCheked}>
-            Thu
-          </Typography>
-          <Typography variant='body2' className={styles.infoCheked}>
-            18
-          </Typography>
-          <Typography variant='body2' className={styles.infoCheked}>
-            May
-          </Typography>
-        </div>
+        <Swiper
+          spaceBetween={10}
+          slideNextClass={styles.slideNext}
+          loop
+          slidesPerView={7}
+          className={styles.swiper}
+        >
+          <BookingTimeSelectNavigation />
 
-        <div className={styles.dataBoxBooked}>
-          <Typography variant='body2' className={styles.infoBooked}>
-            Fri
-          </Typography>
-          <Typography variant='body2' className={styles.infoBooked}>
-            19
-          </Typography>
-          <Typography variant='body2' className={styles.infoBooked}>
-            May
-          </Typography>
-        </div>
-        {data.map((item, index) => (
-          <div key={index} className={styles.dataBox}>
-            <Typography variant='body2' className={styles.info}>
-              {item.day}
-            </Typography>
-            <Typography variant='body2' className={styles.info}>
-              {item.number}
-            </Typography>
-            <Typography variant='body2' className={styles.info}>
-              {item.month}
-            </Typography>
-          </div>
-        ))}
+          {data.map((item, i) => (
+            <SwiperSlide className={styles.swiperSlide} key={i}>
+              <div className={styles.dataBox}>
+                <Typography variant='body2' className={styles.info}>
+                  {item.day}
+                </Typography>
+                <Typography variant='body2' className={styles.info}>
+                  {item.number}
+                </Typography>
+                <Typography variant='body2' className={styles.info}>
+                  {item.month}
+                </Typography>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
       <div className={styles.footer}>
         <div className={styles.timeBox}>
