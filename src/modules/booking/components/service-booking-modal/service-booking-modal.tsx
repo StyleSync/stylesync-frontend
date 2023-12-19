@@ -11,7 +11,7 @@ import { BookingTimeSelect } from '@/modules/booking/containers/booking-time-sel
 import { ServiceOnProfessionalSelect } from '@/modules/service/components/service-on-professional-select';
 
 // type
-import { type ModalProps } from '@/modules/core/components/dialog/dialog.interface';
+import type { DialogProps } from '@/modules/core/components/dialog/dialog.interface';
 
 import styles from './service-booking-modal.module.scss';
 
@@ -23,7 +23,7 @@ const stepsData: Record<BookingStep, { Step: FC }> = {
   datetime: { Step: BookingTimeSelect },
 };
 
-export const ServiceBookingModal: FC<Omit<ModalProps, 'children'>> = (
+export const ServiceBookingModal: FC<Omit<DialogProps, 'children'>> = (
   props
 ) => {
   const [step, setStep] = useState<'service' | 'datetime' | 'confirmation'>(
@@ -49,15 +49,10 @@ export const ServiceBookingModal: FC<Omit<ModalProps, 'children'>> = (
   };
 
   return (
-    <Dialog {...props}>
+    <Dialog {...props} classes={{ content: styles.content }}>
       <div className={styles.container}>
         <div className={styles.header}>
           <Typography variant='subtitle'>New booking</Typography>
-          <Button
-            onClick={() => props.onOpenChange && props.onOpenChange(false)}
-            variant='unstyled'
-            icon='close'
-          />
         </div>
         <div className={styles.labelContainer}>
           <Avatar />
