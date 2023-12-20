@@ -23,7 +23,7 @@ export async function POST(request: Request): Promise<NextResponse> {
         }
 
         return {
-          allowedContentTypes: ['image/jpeg', 'image/png', 'image/gif'],
+          allowedContentTypes: ['image/jpeg', 'image/png'],
           tokenPayload: JSON.stringify({
             id: session.user.id,
           } satisfies TokenPayload),
