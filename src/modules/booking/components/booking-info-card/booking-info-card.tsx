@@ -9,8 +9,6 @@ import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dia
 // hooks
 import { useRipple } from '@/modules/core/hooks/use-ripple';
 
-import GirlImage from '@/assets/images/girl.png';
-
 import type { BookingInfoCardProps } from './booking-info-card.interface';
 
 import styles from './booking-info-card.module.scss';
@@ -48,7 +46,7 @@ export const BookingInfoCard: FC<BookingInfoCardProps> = ({
         ref={rootRef}
       >
         <div className={styles.container}>
-          <Avatar className={styles.avatar} url={GirlImage.src} />
+          <Avatar className={styles.avatar} />
           <div className={styles.info}>
             <Typography className={styles.datetime} variant='body1'>
               {formattedDate} at {formattedStartDate}

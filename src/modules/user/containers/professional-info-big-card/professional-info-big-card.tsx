@@ -13,7 +13,6 @@ import { Button } from '@/modules/core/components/button';
 import { Icon, type IconName } from '@/modules/core/components/icon';
 import { Avatar } from '@/modules/core/components/avatar';
 import { Tag } from '../../../core/components/tag';
-import { Emoji } from '@/modules/core/components/emoji';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
 // utils
@@ -72,11 +71,10 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
         >
           <Avatar
             className={styles.avatar}
-            size='medium'
-            shadow
-            shape='rect'
-            fallback={<Emoji name='sunglasses' width={50} height={50} />}
             url={professional?.user?.avatar}
+            size='medium'
+            shape='circle'
+            shadow
           />
         </Placeholder>
         <Placeholder

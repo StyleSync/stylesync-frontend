@@ -4,7 +4,6 @@ import clsx from 'clsx';
 // components
 import { Sidebar } from '@/modules/core/components/sidebar';
 import { Avatar } from '@/modules/core/components/avatar';
-import { Emoji } from '@/modules/core/components/emoji';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Placeholder } from '@/modules/core/components/placeholder';
 // hooks
@@ -86,9 +85,9 @@ export const ProfessionalSettingsSidebar: FC<UserSettingsSidebarProps> = () => {
         >
           <Avatar
             className={styles.avatar}
-            size='medium'
-            shape='rect'
-            fallback={<Emoji name='sunglasses' width={50} height={60} />}
+            size={70}
+            shape='circle'
+            url={me?.avatar}
             shadow
           />
         </Placeholder>

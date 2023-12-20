@@ -42,7 +42,7 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
       resolver: zodResolver(validationSchema),
     });
     // state
-    const avatar = useImageInputState();
+    const avatar = useImageInputState(initialValues?.avatar);
 
     useEffect(() => {
       reset({ ...defaultValues, ...initialValues });
@@ -50,9 +50,10 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
 
     const handleSubmit = useCallback(
       async (data: AboutProfessionalFormValues) => {
-        onSubmit && onSubmit({ ...data, avatar: avatar.file });
+        onSubmit &&
+          onSubmit({ ...data, avatar: avatar.file || avatar.preview });
       },
-      [avatar.file, onSubmit]
+      [avatar.file, avatar.preview, onSubmit]
     );
 
     return (
@@ -65,6 +66,7 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
           className={styles.avatarSelect}
           value={avatar.preview}
           onChange={avatar.onChange}
+          onRemove={avatar.onRemove}
         />
         <div className={styles.inputsRow}>
           <TextField

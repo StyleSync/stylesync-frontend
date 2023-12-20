@@ -10,6 +10,7 @@ import { showToast } from '@/modules/core/providers/toast-provider';
 import { ERROR_MESSAGE } from '@/modules/core/constants/error-messages.constants';
 // types
 import type { AboutProfessionalFormValues } from '@/modules/user/components/about-professional-form/about-professional-form.interface';
+import { useAvatarUploadMutation } from '@/modules/user/hooks/use-avatar-upload-mutation';
 
 export const ProfessionalSettingsAbout: FC = () => {
   const formId = useId();
@@ -17,13 +18,18 @@ export const ProfessionalSettingsAbout: FC = () => {
   const { data: me, ...meQuery } = trpc.user.me.useQuery({
     expand: ['professional'],
   });
+  // mutations
   const userUpdate = trpc.user.update.useMutation({ useErrorBoundary: false });
   const proUpdate = trpc.professional.update.useMutation({
     useErrorBoundary: false,
   });
+  const avatarUpload = useAvatarUploadMutation();
   // memo
-  const initialValues = useMemo<Partial<AboutProfessionalFormValues>>(
+  const initialValues = useMemo<
+    Partial<AboutProfessionalFormValues & { avatar: string }>
+  >(
     () => ({
+      avatar: me?.avatar ?? undefined,
       firstName: me?.firstName ?? undefined,
       lastName: me?.lastName ?? undefined,
       phone: me?.phone ?? undefined,
@@ -34,11 +40,28 @@ export const ProfessionalSettingsAbout: FC = () => {
     }),
     [me]
   );
+  const isSaveLoading =
+    userUpdate.isLoading || proUpdate.isLoading || avatarUpload.isLoading;
 
   const handleSubmit = useCallback(
-    async (values: AboutProfessionalFormValues & { avatar: File | null }) => {
+    async (
+      values: AboutProfessionalFormValues & { avatar?: File | string | null }
+    ) => {
+      let avatarUrl: string | null = null;
+
+      if (values.avatar) {
+        if (typeof values.avatar === 'object') {
+          const uploadedAvatar = await avatarUpload.mutateAsync(values.avatar);
+
+          avatarUrl = uploadedAvatar.url;
+        } else {
+          avatarUrl = values.avatar as string;
+        }
+      }
+
       Promise.all([
         userUpdate.mutateAsync({
+          avatar: avatarUrl,
           firstName: values.firstName || undefined,
           lastName: values.lastName || undefined,
           phone: values.phone || undefined,
@@ -65,7 +88,7 @@ export const ProfessionalSettingsAbout: FC = () => {
           });
         });
     },
-    [meQuery, userUpdate, proUpdate]
+    [userUpdate, proUpdate, avatarUpload, meQuery]
   );
 
   return (
@@ -77,7 +100,7 @@ export const ProfessionalSettingsAbout: FC = () => {
         {
           text: 'Save',
           form: formId,
-          isLoading: userUpdate.isLoading || proUpdate.isLoading,
+          isLoading: isSaveLoading,
           disabled: !me || !me.professional,
           type: 'submit',
         },
