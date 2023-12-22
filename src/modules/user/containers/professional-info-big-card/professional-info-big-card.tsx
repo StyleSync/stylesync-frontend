@@ -1,6 +1,5 @@
 'use client';
 import { useMemo, type FC } from 'react';
-
 import Link from 'next/link';
 import { faker } from '@faker-js/faker';
 import clsx from 'clsx';
@@ -16,6 +15,7 @@ import { Tag } from '../../../core/components/tag';
 import { Emoji } from '@/modules/core/components/emoji';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
+import { ServiceBookingModal } from '@/modules/booking/components/service-booking-modal/service-booking-modal';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { getFullName } from '@/modules/user/utils/user.utils';
@@ -62,6 +62,8 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
     );
   }, [serviceOnProfessionalList]);
 
+  const isBookingOpen = useBoolean();
+
   return (
     <div className={styles.container}>
       <div className={styles.top}>
@@ -76,7 +78,6 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
             shadow
             shape='rect'
             fallback={<Emoji name='sunglasses' width={50} height={50} />}
-            url={professional?.user?.avatar}
           />
         </Placeholder>
         <Placeholder
@@ -85,7 +86,7 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
           placeholder={null}
         >
           <Typography className={styles.name} variant='title'>
-            {getFullName(professional?.user ?? {})}
+            {getFullName({})}
           </Typography>
         </Placeholder>
       </div>
@@ -155,10 +156,16 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
               />
             }
           />
-          <Button
-            variant='primary'
-            text='Book'
-            disabled={professionalQuery.isLoading}
+          <ServiceBookingModal
+            onOpenChange={isBookingOpen.setValue}
+            isOpen={isBookingOpen.value}
+            trigger={
+              <Button
+                variant='primary'
+                text='Book'
+                disabled={professionalQuery.isLoading}
+              />
+            }
           />
         </div>
       </div>
