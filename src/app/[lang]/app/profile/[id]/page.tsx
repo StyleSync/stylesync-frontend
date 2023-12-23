@@ -6,11 +6,12 @@ import { GallerySection } from '@/modules/user/components/gallery-section';
 import { UserServices } from '@/modules/user/components/user-services';
 import { ProfessionalProfileTabs } from '@/modules/user/components/professional-profile-tabs';
 import { ProfileSectionLayout } from '@/modules/user/components/profile-section-layout';
+import { ProLocation } from '@/modules/user/components/pro-location';
+import { ProBookActions } from '@/modules/user/containers/pro-book-actions';
 // types
 import type { PageParams } from '@/modules/core/types/next.types';
 
 import styles from './profile.module.scss';
-import { ProBookActions } from '@/modules/user/containers/pro-book-actions';
 
 export default async function Profile({ params }: PageParams<{ id: string }>) {
   return (
@@ -28,6 +29,9 @@ export default async function Profile({ params }: PageParams<{ id: string }>) {
         </ProfileSectionLayout>
         <ProfileSectionLayout title='Services' id='profile-services'>
           <UserServices userId={params.id} />
+        </ProfileSectionLayout>
+        <ProfileSectionLayout title='Location' id='profile-location'>
+          <ProLocation userId={params.id} />
         </ProfileSectionLayout>
         <ProfileSectionLayout title='Gallery' id='profile-gallery'>
           <GallerySection />

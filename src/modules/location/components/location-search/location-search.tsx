@@ -30,12 +30,12 @@ export const LocationSearch: FC<LocationSearchProps> = ({
 }) => {
   // state
   const isActive = useBoolean();
-  const [query, setQuery] = useState(value?.label ?? '');
+  const [query, setQuery] = useState(value?.name ?? '');
   const queryDebounced = useDebounce(query, SEARCH_DEBOUNCE_DELAY);
   // queries
   const locationSearchQuery = useLocationSearchQuery(queryDebounced);
   // memo
-  const locations =
+  const suggestions =
     locationSearchQuery.data?.slice(0, MAX_ITEMS_SUGGESTED) ?? [];
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export const LocationSearch: FC<LocationSearchProps> = ({
       return;
     }
 
-    setQuery(value.label);
+    setQuery(value.name);
   }, [value]);
 
   const handleTextFieldChange = useCallback(
@@ -55,10 +55,24 @@ export const LocationSearch: FC<LocationSearchProps> = ({
     []
   );
 
+  const handleTextFieldBlur = useCallback(() => {
+    if (!query && value) {
+      onChange(null);
+
+      return;
+    }
+
+    if (value && value.name !== query) {
+      setQuery(value.name);
+
+      return;
+    }
+  }, [query, value, onChange]);
+
   const handleLocationSelect = useCallback(
     (data: SearchResult<RawResult>) => () => {
       onChange({
-        label: data.label,
+        name: data.label,
         lat: data.y,
         lng: data.x,
       });
@@ -77,6 +91,7 @@ export const LocationSearch: FC<LocationSearchProps> = ({
           onFocus={isActive.setTrue}
           value={query}
           onChange={handleTextFieldChange}
+          onBlur={handleTextFieldBlur}
           {...inputProps}
         />
       }
@@ -86,7 +101,7 @@ export const LocationSearch: FC<LocationSearchProps> = ({
     >
       <div className={styles.root}>
         <Placeholder
-          isActive={locations.length === 0 && query.length === 0}
+          isActive={suggestions.length === 0 && query.length === 0}
           placeholder={
             <div className={styles.placeholder}>
               <Icon name='info' />
@@ -95,7 +110,7 @@ export const LocationSearch: FC<LocationSearchProps> = ({
           }
         >
           <Placeholder
-            isActive={locations.length === 0 && query.length > 0}
+            isActive={suggestions.length === 0 && query.length > 0}
             placeholder={
               <div className={styles.placeholder}>
                 <Icon name='info' />
@@ -103,7 +118,7 @@ export const LocationSearch: FC<LocationSearchProps> = ({
               </div>
             }
           >
-            {locations.map((location) => (
+            {suggestions.map((location) => (
               <button
                 key={`${location.x}|${location.y}`}
                 className={styles.option}

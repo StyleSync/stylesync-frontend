@@ -13,4 +13,6 @@ export type MapProps = {
   markers?: UserMarker[];
   showUserPosition?: boolean;
   mapRef?: RefObject<L.Map>;
+  center?: L.LatLngExpression;
+  zoom?: number;
 };

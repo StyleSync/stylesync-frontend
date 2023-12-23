@@ -1,0 +1,33 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.root {
+  display: flex;
+  flex-direction: column;
+  row-gap: utils.spacing(2);
+
+  .address {
+    color: variables.$grey-color;
+
+    &Skeleton {
+      width: 57%;
+      height: 17px;
+      border-radius: 4px;
+    }
+  }
+
+  .mapContainer {
+    display: flex;
+    width: 100%;
+    height: 400px;
+
+    &Skeleton {
+      flex: unset;
+      display: flex;
+      width: 100%;
+      height: 400px;
+      border-radius: variables.$border-radius-medium;
+    }
+  }
+}

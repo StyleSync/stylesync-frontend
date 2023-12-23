@@ -1,6 +1,6 @@
 'use client';
-import { type FC, useCallback } from 'react';
-import { useBoolean, useEffectOnce } from 'usehooks-ts';
+import { type FC, useCallback, useEffect } from 'react';
+import { useBoolean } from 'usehooks-ts';
 import clsx from 'clsx';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
@@ -34,9 +34,9 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
     enabled: session.status === 'authenticated',
   });
 
-  useEffectOnce(() => {
+  useEffect(() => {
     router.prefetch('/app/settings');
-  });
+  }, []);
 
   const handleSelect = useCallback(
     ({ id }: DropdownItem) => {

@@ -1,4 +1,11 @@
-import { type FC, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import type L from 'leaflet';
 import dynamic from 'next/dynamic';
 // types
@@ -26,7 +33,10 @@ const Map = dynamic(
   }
 );
 
-export const UserLocationSelectForm: FC<UserLocationSelectFormProps> = () => {
+const UserLocationSelectForm = forwardRef<
+  { getAddress: () => Address | null },
+  UserLocationSelectFormProps
+>(({ location }, ref) => {
   const [address, setAddress] = useState<Address | null>(null);
   // refs
   const mapRef = useRef<L.Map>(null);
@@ -62,6 +72,23 @@ export const UserLocationSelectForm: FC<UserLocationSelectFormProps> = () => {
     ];
   }, [address]);
 
+  useImperativeHandle(ref, () => ({
+    getAddress: () => address,
+  }));
+
+  // sync initial state
+  useEffect(() => {
+    if (location) {
+      setAddress({
+        name: location.name,
+        lat: location.latitude,
+        lng: location.longitude,
+      });
+    } else {
+      setAddress(null);
+    }
+  }, [location]);
+
   useEffect(() => {
     if (address) {
       mapRef.current?.flyTo(
@@ -88,7 +115,16 @@ export const UserLocationSelectForm: FC<UserLocationSelectFormProps> = () => {
           }}
         />
       </div>
-      <Map markers={markers} mapRef={mapRef} />
+      <Map
+        mapRef={mapRef}
+        markers={markers}
+        center={address ? [address.lat, address.lng] : undefined}
+        zoom={address ? ADDRESS_ZOOM : undefined}
+      />
     </div>
   );
-};
+});
+
+UserLocationSelectForm.displayName = 'UserLocationSelectForm';
+
+export { UserLocationSelectForm };
