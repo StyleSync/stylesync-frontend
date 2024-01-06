@@ -163,4 +163,25 @@ export const locationRouter = router({
         skip: input?.offset ?? 0,
       });
     }),
+  getByProfessionalId: publicProcedure
+    .input(
+      z.object({
+        id: z.string().min(1, 'Required'),
+      })
+    )
+    .query(async ({ input }) => {
+      const location = await prisma.location.findUnique({
+        where: { professionalId: input.id },
+        select: defaultLocationSelect,
+      });
+
+      if (!location) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `No location found with id '${input.id}'`,
+        });
+      }
+
+      return location;
+    }),
 });

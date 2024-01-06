@@ -2,7 +2,6 @@
 import { useMemo, type FC } from 'react';
 
 import Link from 'next/link';
-import { faker } from '@faker-js/faker';
 import clsx from 'clsx';
 import { useBoolean } from 'usehooks-ts';
 import type { Service } from '@prisma/client';
@@ -41,6 +40,20 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
         enabled: Boolean(professional),
       }
     );
+  const { data: location, ...locationQuery } =
+    trpc.location.getByProfessionalId.useQuery(
+      {
+        id: professional?.id ?? '',
+      },
+      {
+        enabled: Boolean(professional),
+        retry: (retryCount, error) => {
+          if (error.data?.code === 'NOT_FOUND') return false;
+
+          return retryCount <= 2;
+        },
+      }
+    );
   // state
   const isContactOpen = useBoolean();
   // memo
@@ -66,7 +79,7 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
       <div className={styles.top}>
         <Placeholder
           className={clsx('skeleton', styles.avatarSkeleton)}
-          isActive={professionalQuery.isLoading}
+          isActive={professionalQuery.isLoading && !professionalQuery.isError}
           placeholder={null}
         >
           <Avatar
@@ -125,18 +138,20 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
           <div className={styles.location}>
             <Placeholder
               className={clsx('skeleton', styles.locationSkeleton)}
-              isActive={professionalQuery.isLoading}
+              isActive={locationQuery.isLoading}
               placeholder={null}
             >
               <Icon name='location' />
-              <Typography>
-                {faker.location.streetAddress({ useFullAddress: true })}
+              <Typography className={styles.name}>
+                {location?.name || 'No location'}
               </Typography>
-              <Typography>
-                <Link href='#' className={clsx('link', styles.showOnMapLink)}>
-                  Show on map
-                </Link>
-              </Typography>
+              {location && (
+                <Typography>
+                  <Link href='#' className={clsx('link', styles.showOnMapLink)}>
+                    Show on map
+                  </Link>
+                </Typography>
+              )}
             </Placeholder>
           </div>
         </div>

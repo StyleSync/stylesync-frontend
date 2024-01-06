@@ -151,6 +151,13 @@
           width: 18px;
         }
 
+        .name {
+          max-width: 40%;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+
         span {
           color: variables.$grey-color;
         }
