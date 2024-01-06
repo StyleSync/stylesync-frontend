@@ -19,13 +19,22 @@
       padding: utils.spacing(0, 1);
       border-radius: variables.$border-radius-small;
       border: none;
+      background-color: transparent;
 
       &.select {
         color: variables.$primary-color;
+
+        &:hover {
+          color: darken(variables.$primary-color, 5%);
+        }
       }
 
       &.delete {
         color: variables.$error-color;
+
+        &:hover {
+          color: darken(variables.$error-color, 5%);
+        }
       }
     }
 

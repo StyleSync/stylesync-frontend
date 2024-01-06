@@ -54,6 +54,9 @@ const nextConfig = {
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
   },
+  images: {
+    domains: ['5tbrgt3t2sc4mnww.public.blob.vercel-storage.com'],
+  },
 };
 
 module.exports = nextConfig;

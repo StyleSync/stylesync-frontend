@@ -12,6 +12,7 @@ import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboa
 
 import type { AboutProfessionalFormValues } from '@/modules/user/components/about-professional-form/about-professional-form.interface';
 import { Spinner } from '@/modules/core/components/spinner';
+import { useAvatarUploadMutation } from '@/modules/user/hooks/use-avatar-upload-mutation';
 
 export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
   const formId = useId();
@@ -25,9 +26,13 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
     trpc.professional.create.useMutation();
   const { mutate: professionalUpdate, ...professionalUpdateMutation } =
     trpc.professional.update.useMutation();
+  const avatarUpload = useAvatarUploadMutation();
   // memo
-  const initialValues = useMemo<Partial<AboutProfessionalFormValues>>(
+  const initialValues = useMemo<
+    Partial<AboutProfessionalFormValues & { avatar: string }>
+  >(
     () => ({
+      avatar: me?.avatar ?? undefined,
       firstName: me?.firstName ?? undefined,
       lastName: me?.lastName ?? undefined,
       phone: me?.phone ?? undefined,
@@ -44,7 +49,9 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
   }, [meQuery]);
 
   const handleSubmit = useCallback(
-    async (values: AboutProfessionalFormValues & { avatar: File | null }) => {
+    async (
+      values: AboutProfessionalFormValues & { avatar?: File | string | null }
+    ) => {
       if (!me) {
         return;
       }
@@ -53,7 +60,21 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
         ? professionalUpdate
         : professionalCreate;
 
+      // todo: duplicated code, design more consistent user/professional update
+      let avatarUrl: string | null = null;
+
+      if (values.avatar) {
+        if (typeof values.avatar === 'object') {
+          const uploadedAvatar = await avatarUpload.mutateAsync(values.avatar);
+
+          avatarUrl = uploadedAvatar.url;
+        } else {
+          avatarUrl = values.avatar as string;
+        }
+      }
+
       await meUpdateAsync({
+        avatar: avatarUrl,
         firstName: values.firstName || undefined,
         lastName: values.lastName || undefined,
         phone: values.phone || undefined,

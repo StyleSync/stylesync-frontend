@@ -31,3 +31,7 @@ export const getElementCssProperties = (
 
   return res;
 };
+
+export const pxToNumber = (px: string): number => {
+  return +px.replace('px', '');
+};

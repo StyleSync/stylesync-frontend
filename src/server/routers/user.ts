@@ -105,6 +105,7 @@ export const userRouter = router({
           .min(1, 'Required')
           .max(maxTextLength)
           .nullish(),
+        avatar: z.string().url('Invalid url').min(1, 'Required').nullish(),
       })
     )
     .mutation(async ({ input, ctx }) => {
