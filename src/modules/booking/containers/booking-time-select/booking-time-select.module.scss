@@ -2,6 +2,13 @@
 @use '@/styles/utils';
 @use '@/styles/mixins';
 
+.bookingContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: utils.spacing(4);
+}
+
 .dataBox {
   display: inline-flex;
   flex-direction: column;
@@ -12,14 +19,19 @@
   border: 1px solid variables.$primary-light-color;
   border-radius: variables.$border-radius-medium;
   cursor: pointer;
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: variables.$primary-light-color;
+  }
 }
 .dataBoxCheked {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   row-gap: 5px;
+  color: #fff;
   padding: utils.spacing(1, 2.5);
-  background-color: variables.$accent-color;
+  background-color: variables.$primary-color;
   border-radius: variables.$border-radius-medium;
   cursor: pointer;
 }
@@ -45,14 +57,7 @@
   color: #fff;
 }
 
-.main {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: utils.spacing(4);
-}
-
-.footer {
+.timeBoxes {
   display: flex;
   align-items: center;
   column-gap: utils.spacing(2);
@@ -62,34 +67,26 @@
 
 .timeBox {
   padding: 11px 18px;
-  background-color: variables.$accent-color;
-  border-radius: variables.$border-radius-medium;
-  cursor: pointer;
-}
-
-.timeText {
-  color: #fff;
-}
-
-.timeBox2 {
-  padding: 11px 18px;
-  border-radius: variables.$border-radius-medium;
-  background-color: #fafbfc;
-  border: 1px solid variables.$primary-light-color;
-  cursor: pointer;
-}
-.timeText2 {
-  color: variables.$grey-color;
-}
-
-.timeBox3 {
-  padding: 11px 18px;
   border-radius: variables.$border-radius-medium;
   background-color: transparent;
   border: 1px solid variables.$primary-light-color;
   cursor: pointer;
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: variables.$primary-light-color;
+  }
 }
 
+.timeBoxChecked {
+  background-color: variables.$primary-color;
+  color: #fff;
+}
+
+.timeTextCheced {
+  color: #fff;
+}
+
+// swiper
 .swiper {
   width: 100%;
   height: 100%;
