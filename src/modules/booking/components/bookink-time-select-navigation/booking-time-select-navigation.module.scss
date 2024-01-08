@@ -2,7 +2,7 @@
 @use '@/styles/utils';
 @use '@/styles/mixins';
 
-.header {
+.dateNavigation {
   position: absolute;
   left: 50%;
   top: 0;
@@ -13,4 +13,33 @@
   justify-content: center;
   column-gap: utils.spacing(2.5);
   margin-bottom: utils.spacing(2.5);
+}
+
+.selectDate {
+  position: relative;
+  color: variables.$grey-color;
+  transition: color 0.3s;
+  &:hover {
+    color: variables.$primary-color;
+  }
+}
+
+.selectDate::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background-color: variables.$primary-color;
+  animation: lineAnimation 1s forwards;
+}
+
+@keyframes lineAnimation {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
 }

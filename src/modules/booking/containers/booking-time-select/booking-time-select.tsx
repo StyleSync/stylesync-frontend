@@ -1,58 +1,82 @@
 'use client';
+import { useState } from 'react';
+import clsx from 'clsx';
+// utils
+import { generateDates } from '@/modules/core/utils/date.utils';
+// components
 import { BookingTimeSelectNavigation } from '../../components/bookink-time-select-navigation';
 import { Typography } from '@/modules/core/components/typogrpahy';
-// Swiper React components
+// Swiper components
 import { Swiper, SwiperSlide } from 'swiper/react';
-
 // Swiper styles
 import 'swiper/scss';
 import 'swiper/scss/navigation';
-
+// style
 import styles from './booking-time-select.module.scss';
 
-const data = [
-  { day: 'Sat', number: '20', month: 'May' },
-  { day: 'Sun', number: '21', month: 'May' },
-  { day: 'Mon', number: '22', month: 'May' },
-  { day: 'Thu', number: '23', month: 'May' },
-  { day: 'Wed', number: '24', month: 'May' },
-  { day: 'Day', number: '25', month: 'May' },
-  { day: 'Day', number: '26', month: 'May' },
-  { day: 'Day', number: '27', month: 'May' },
-  { day: 'Day', number: '28', month: 'May' },
-  { day: 'Day', number: '29', month: 'May' },
-  { day: 'Day', number: '30', month: 'May' },
-  { day: 'Day', number: '31', month: 'May' },
-  { day: 'Day', number: '1', month: 'June' },
-  { day: 'Day', number: '2', month: 'June' },
-  { day: 'Day', number: '3', month: 'June' },
-  { day: 'Day', number: '4', month: 'June' },
-  { day: 'Day', number: '5', month: 'June' },
+const timeIntervals = [
+  '11:00 - 12:00',
+  '13:00 - 14:00',
+  '15:00 - 16:00',
+  '17:00 - 18:00',
+  '19:00 - 20:00',
+  '21:00 - 22:00',
 ];
 
 export const BookingTimeSelect = () => {
+  const [selectedSlide, setSelectedSlide] = useState<number | null>(null);
+  const [selectedTimeBox, setSelectedTimeBox] = useState<number | null>(null);
+
+  const handleTimeBoxClick = (index: number) => {
+    setSelectedTimeBox(index);
+  };
+
+  const handleSlideClick = (index: number) => {
+    setSelectedSlide(index);
+  };
+
   return (
-    <div className={styles.container}>
-      <div className={styles.main}>
+    <div className={styles.bookingContainer}>
+      <div className={styles.bookingContent}>
         <Swiper
-          spaceBetween={10}
+          spaceBetween={0}
           slideNextClass={styles.slideNext}
-          loop
+          loop={false}
           slidesPerView={7}
           className={styles.swiper}
         >
-          <BookingTimeSelectNavigation />
+          <BookingTimeSelectNavigation selectedSlide={selectedSlide} />
 
-          {data.map((item, i) => (
-            <SwiperSlide className={styles.swiperSlide} key={i}>
-              <div className={styles.dataBox}>
-                <Typography variant='body2' className={styles.info}>
+          {generateDates().map((item, index) => (
+            <SwiperSlide className={styles.swiperSlide} key={index}>
+              <div
+                className={clsx(styles.dataBox, {
+                  [styles.dataBoxCheked]: selectedSlide === index,
+                })}
+                onClick={() => handleSlideClick(index)}
+              >
+                <Typography
+                  variant='body2'
+                  className={clsx(styles.info, {
+                    [styles.infoCheked]: selectedSlide === index,
+                  })}
+                >
                   {item.day}
                 </Typography>
-                <Typography variant='body2' className={styles.info}>
+                <Typography
+                  variant='body2'
+                  className={clsx(styles.info, {
+                    [styles.infoCheked]: selectedSlide === index,
+                  })}
+                >
                   {item.number}
                 </Typography>
-                <Typography variant='body2' className={styles.info}>
+                <Typography
+                  variant='body2'
+                  className={clsx(styles.info, {
+                    [styles.infoCheked]: selectedSlide === index,
+                  })}
+                >
                   {item.month}
                 </Typography>
               </div>
@@ -60,25 +84,25 @@ export const BookingTimeSelect = () => {
           ))}
         </Swiper>
       </div>
-      <div className={styles.footer}>
-        <div className={styles.timeBox}>
-          <Typography className={styles.timeText}>11:00 - 12:00</Typography>
-        </div>
-        <div className={styles.timeBox2}>
-          <Typography className={styles.timeText2}>13:00 - 14:00</Typography>
-        </div>
-        <div className={styles.timeBox3}>
-          <Typography className={styles.timeText3}>15:00 - 16:00</Typography>
-        </div>
-        <div className={styles.timeBox3}>
-          <Typography className={styles.timeText3}>17:00 - 18:00</Typography>
-        </div>
-        <div className={styles.timeBox3}>
-          <Typography className={styles.timeText3}>19:00 - 20:00</Typography>
-        </div>
-        <div className={styles.timeBox3}>
-          <Typography className={styles.timeText3}>21:00 - 22:00</Typography>
-        </div>
+
+      <div className={styles.timeBoxes}>
+        {timeIntervals.map((interval, index) => (
+          <div
+            key={index}
+            className={clsx(styles.timeBox, {
+              [styles.timeBoxChecked]: selectedTimeBox === index,
+            })}
+            onClick={() => handleTimeBoxClick(index)}
+          >
+            <Typography
+              className={clsx(styles.timeText, {
+                [styles.timeTextCheced]: selectedTimeBox === index,
+              })}
+            >
+              {interval}
+            </Typography>
+          </div>
+        ))}
       </div>
     </div>
   );
