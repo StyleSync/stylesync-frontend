@@ -8,6 +8,7 @@ import {
 } from 'react';
 import type L from 'leaflet';
 import dynamic from 'next/dynamic';
+import { Button } from '@/modules/core/components/button';
 // types
 import type { Address } from '@/modules/location/types/address.types';
 import type { UserMarker } from '@/modules/location/components/map/map.interface';
@@ -104,6 +105,10 @@ const UserLocationSelectForm = forwardRef<
     }
   }, [address]);
 
+  const handleClearAddress = () => {
+    setAddress(null);
+  };
+
   return (
     <div className={styles.root}>
       <div className={styles.searchBar}>
@@ -112,6 +117,13 @@ const UserLocationSelectForm = forwardRef<
           onChange={setAddress}
           inputProps={{
             label: 'Address *',
+            endAdornment: (
+              <Button
+                variant='unstyled'
+                icon='close'
+                onClick={handleClearAddress}
+              />
+            ),
           }}
         />
       </div>

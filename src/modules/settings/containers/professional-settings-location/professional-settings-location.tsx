@@ -29,6 +29,7 @@ export const ProfessionalSettingsLocation: FC = () => {
   const locationCreate = trpc.location.create.useMutation();
   const locationUpdate = trpc.location.update.useMutation();
   const locationDelete = trpc.location.delete.useMutation();
+
   // refs
   const locationSelectFormRef = useRef<null | {
     getAddress: () => Address | null;
