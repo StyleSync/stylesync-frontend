@@ -31,8 +31,6 @@ export const ProLocation: FC<ProLocationProps> = ({ userId }) => {
       }
     );
 
-  console.log('SSSS', location);
-
   return (
     <div className={styles.root}>
       <Placeholder
