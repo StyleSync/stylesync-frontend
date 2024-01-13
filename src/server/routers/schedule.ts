@@ -5,6 +5,7 @@ import { prisma } from '@/server/prisma';
 import { Day } from '@prisma/client';
 import { defaultScheduleSelect } from '@/server/selectors/schedule';
 import { getProfessionalFromContext } from '@/server/utils/prisma-utils';
+import { mapDateToDayEnum } from '@/server/utils/helpers';
 
 const defaultLimit = 10;
 const maxLimit = 100;
@@ -78,6 +79,13 @@ export const scheduleRouter = router({
         });
       }
 
+      if (input.date && mapDateToDayEnum(input.date) !== input.day) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: `Day and date do not match`,
+        });
+      }
+
       const professional = await getProfessionalFromContext(ctx);
 
       if (!input.isSpecificDay) {
@@ -97,6 +105,22 @@ export const scheduleRouter = router({
         }
       }
 
+      const existingSchedule = await prisma.schedule.findFirst({
+        where: {
+          professionalId: professional.id,
+          isSpecificDay: input.isSpecificDay,
+          day: input.day,
+          date: input.date,
+        },
+      });
+
+      if (existingSchedule) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: `There is already a schedule for this day`,
+        });
+      }
+
       return prisma.schedule.create({
         data: { ...input, professionalId: professional.id },
         select: defaultScheduleSelect,
@@ -108,18 +132,6 @@ export const scheduleRouter = router({
         id: z.string().min(1, 'Required'),
         start: z.string().datetime().optional(),
         end: z.string().datetime().optional(),
-        day: z
-          .enum([
-            Day.MONDAY,
-            Day.TUESDAY,
-            Day.WEDNESDAY,
-            Day.THURSDAY,
-            Day.FRIDAY,
-            Day.SATURDAY,
-            Day.SUNDAY,
-          ])
-          .optional(),
-        date: z.string().optional(),
       })
     )
     .mutation(async ({ input, ctx }) => {
