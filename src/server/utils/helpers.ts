@@ -1,5 +1,6 @@
 import { getDay } from 'date-fns';
-import { type Booking, type Break, Day, type Schedule } from '@prisma/client';
+import { type Break, Day, type Schedule } from '@prisma/client';
+import type { AvailableBookingTime } from '@/server/types';
 
 export const mapDateToDayEnum = (dateString: string) => {
   const dayNumber = getDay(new Date(dateString));
@@ -68,22 +69,56 @@ export const isTimeWithinSchedule = (
   return inputStartTime >= scheduleStartTime && inputEndTime <= scheduleEndTime;
 };
 
-export const isTimeWithinBookings = (
+export const isTimeWithinPeriods = (
   startTime: string,
   endTime: string,
-  bookings: Booking[]
+  periods: { startTime: string | Date; endTime: string | Date }[]
 ): boolean => {
   const inputStartTime = new Date(startTime);
   const inputEndTime = new Date(endTime);
 
-  for (const booking of bookings) {
-    const bookingStartTime = new Date(booking.startTime);
-    const bookingEndTime = new Date(booking.endTime);
+  for (const period of periods) {
+    const periodStartTime = new Date(period.startTime);
+    const periodEndTime = new Date(period.endTime);
 
-    if (inputStartTime < bookingEndTime && inputEndTime > bookingStartTime) {
+    if (inputStartTime < periodEndTime && inputEndTime > periodStartTime) {
       return true;
     }
   }
 
   return false;
+};
+
+const defaultPeriodMinutes = 15;
+const millisecondMultiplier = 1000;
+const defaultPeriod = defaultPeriodMinutes * 60 * millisecondMultiplier; // 15 minutes in milliseconds
+
+export const getPossibleBookingTimes = (
+  currentDaySchedule: Pick<Schedule, 'start' | 'end'>,
+  duration: number,
+  period: number = defaultPeriod
+): AvailableBookingTime[] => {
+  const availableTimeList: AvailableBookingTime[] = [];
+  const durationInMilliseconds = duration * 60 * millisecondMultiplier;
+  let iteration = 0;
+
+  let startTime = new Date(currentDaySchedule.start);
+  const endTime = new Date(currentDaySchedule.end);
+
+  while (startTime.getTime() + period <= endTime.getTime() && iteration < 100) {
+    const bookingTime: AvailableBookingTime = {
+      startTime: startTime.toISOString(),
+      endTime: new Date(
+        startTime.getTime() + durationInMilliseconds
+      ).toISOString(),
+    };
+
+    availableTimeList.push(bookingTime);
+
+    // Increment the start time by the period
+    startTime = new Date(startTime.getTime() + period);
+    iteration += 1;
+  }
+
+  return availableTimeList;
 };
