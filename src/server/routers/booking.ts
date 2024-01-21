@@ -2,20 +2,19 @@ import { privateProcedure, publicProcedure, router } from '../trpc-helpers';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { prisma } from '@/server/prisma';
-import {
-  defaultBookingSelect,
-  defaultServiceOnProfessionalSelect,
-} from '@/server/selectors';
+import { defaultBookingSelect } from '@/server/selectors';
 import {
   getProfessionalFromContext,
   getProfessionalFromServiceOnProfessional,
 } from '@/server/utils/prisma-utils';
 import { defaultScheduleSelect } from '@/server/selectors/schedule';
 import {
-  isTimeWithinBookings,
+  getPossibleBookingTimes,
+  isTimeWithinPeriods,
   isTimeWithinSchedule,
   mapDateToDayEnum,
 } from '@/server/utils/helpers';
+import type { AvailableBookingTime } from '@/server/types';
 
 const maxLargeTextLength = 140;
 const defaultLimit = 10;
@@ -43,6 +42,101 @@ export const bookingRouter = router({
 
       return booking;
     }),
+  available: router({
+    list: publicProcedure
+      .input(
+        z.object({
+          serviceOnProfessionalId: z.string().min(1, 'Required'),
+          date: z.string().datetime(),
+        })
+      )
+      .query(async ({ input }) => {
+        const availableTimeList: AvailableBookingTime[] = [];
+        const serviceOnProfessional =
+          await prisma.serviceOnProfessional.findUnique({
+            where: { id: input.serviceOnProfessionalId },
+            select: {
+              id: true,
+              duration: true,
+            },
+          });
+
+        if (!serviceOnProfessional) {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: `No service on professional found with id '${input.serviceOnProfessionalId}'`,
+          });
+        }
+
+        const professional = await getProfessionalFromServiceOnProfessional(
+          serviceOnProfessional.id
+        );
+
+        // first we check if we have specific schedule for the day
+        const specificDaySchedule = await prisma.schedule.findFirst({
+          where: {
+            professionalId: professional.id,
+            isSpecificDay: true,
+            day: mapDateToDayEnum(input.date),
+          },
+          select: defaultScheduleSelect,
+        });
+
+        const defaultDaySchedule = await prisma.schedule.findFirst({
+          where: {
+            professionalId: professional.id,
+            isSpecificDay: false,
+            day: mapDateToDayEnum(input.date),
+          },
+          select: defaultScheduleSelect,
+        });
+
+        const currentDaySchedule = specificDaySchedule ?? defaultDaySchedule;
+
+        if (!currentDaySchedule) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: `No schedule found for this day`,
+          });
+        }
+
+        const bookings = await prisma.booking.findMany({
+          where: {
+            serviceProfessionalId: serviceOnProfessional.id,
+            date: input.date,
+          },
+          select: {
+            startTime: true,
+            endTime: true,
+          },
+        });
+
+        const possibleBookingTime = getPossibleBookingTimes(
+          currentDaySchedule,
+          serviceOnProfessional.duration
+        );
+
+        for (const time of possibleBookingTime) {
+          if (
+            !isTimeWithinPeriods(
+              time.startTime,
+              time.endTime,
+              availableTimeList
+            ) &&
+            isTimeWithinSchedule(
+              time.startTime,
+              time.endTime,
+              currentDaySchedule
+            ) &&
+            !isTimeWithinPeriods(time.startTime, time.endTime, bookings)
+          ) {
+            availableTimeList.push(time);
+          }
+        }
+
+        return availableTimeList;
+      }),
+  }),
   create: publicProcedure
     .input(
       z.object({
@@ -149,7 +243,7 @@ export const bookingRouter = router({
       });
 
       if (
-        isTimeWithinBookings(input.startTime, input.endTime, existingBooking)
+        isTimeWithinPeriods(input.startTime, input.endTime, existingBooking)
       ) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
@@ -247,7 +341,7 @@ export const bookingRouter = router({
               : input?.serviceProfessionalId,
           date: input?.date,
         },
-        select: defaultServiceOnProfessionalSelect,
+        select: defaultBookingSelect,
         take: input?.limit ?? defaultLimit,
         skip: input?.offset ?? 0,
       });
