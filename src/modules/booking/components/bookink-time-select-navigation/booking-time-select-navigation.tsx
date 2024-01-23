@@ -6,7 +6,7 @@ import { Button } from '@/modules/core/components/button';
 // utils
 import { generateDates } from '@/modules/core/utils/date.utils';
 // type
-import type { ServiceBookingModalProps } from './booking-time-select.interface';
+import type { BookingTimeSelectNavigationProps } from './booking-time-select.interface';
 // style
 import styles from './booking-time-select-navigation.module.scss';
 
@@ -16,12 +16,12 @@ const selectDate = (
   </Typography>
 );
 
-export const BookingTimeSelectNavigation: FC<ServiceBookingModalProps> = ({
-  selectedSlide,
-}) => {
+export const BookingTimeSelectNavigation: FC<
+  BookingTimeSelectNavigationProps
+> = ({ selectedDay }) => {
   const swiper = useSwiper();
   const dates = generateDates();
-  const selectedDate = selectedSlide !== null && dates[selectedSlide];
+  const selectedDate = selectedDay !== null && dates[selectedDay];
 
   return (
     <div className={styles.dateNavigation}>

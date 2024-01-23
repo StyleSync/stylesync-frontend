@@ -1,3 +1,3 @@
-export type ServiceBookingModalProps = {
-  selectedSlide: number | null;
+export type BookingTimeSelectNavigationProps = {
+  selectedDay: number | null;
 };

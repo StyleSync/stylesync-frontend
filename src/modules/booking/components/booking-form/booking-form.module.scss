@@ -1,7 +1,14 @@
 @use '@/styles/utils';
 
-.container {
+.root {
   display: flex;
   flex-direction: column;
   row-gap: utils.spacing(3);
+  min-height: 100%;
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
 }

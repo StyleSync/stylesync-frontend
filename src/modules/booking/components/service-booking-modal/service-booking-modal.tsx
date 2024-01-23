@@ -1,42 +1,48 @@
 import { type FC, useState } from 'react';
 // components
-
 import { Avatar } from '@/modules/core/components/avatar';
-import { Button } from '@/modules/core/components/button';
+
 import { Stepper } from '@/modules/core/components/stepper';
 import { Dialog } from '@/modules/core/components/dialog';
 import { Typography } from '@/modules/core/components/typogrpahy';
+
 import { BookingForm } from '@/modules/booking/components/booking-form';
 import { BookingTimeSelect } from '@/modules/booking/containers/booking-time-select';
 import { ServiceOnProfessionalSelect } from '@/modules/service/components/service-on-professional-select';
-
+// utils
+// import { trpc } from '@/modules/core/utils/trpc.utils';
 // type
 import type { DialogProps } from '@/modules/core/components/dialog/dialog.interface';
-
+// style
 import styles from './service-booking-modal.module.scss';
-
-type BookingStep = 'service' | 'confirmation' | 'datetime';
-
-const stepsData: Record<BookingStep, { Step: FC }> = {
-  service: { Step: ServiceOnProfessionalSelect },
-  confirmation: { Step: BookingForm },
-  datetime: { Step: BookingTimeSelect },
-};
 
 export const ServiceBookingModal: FC<Omit<DialogProps, 'children'>> = (
   props
 ) => {
+  // state ServiceOnProfessionalSelect
+  const [serviceOnProfessional, setServiceOnProfessional] =
+    useState<string>('');
+  // state BookingTimeSelect
+  const [selectedDay, setSelectedDay] = useState<number | null>(null);
+  const [selectedTimeBox, setSelectedTimeBox] = useState<number | null>(null);
+
+  // mutations
+  // const bookingCreate = trpc.booking.create.useMutation();
+
+  // steps
   const [step, setStep] = useState<'service' | 'datetime' | 'confirmation'>(
     'service'
   );
-
-  const { Step } = stepsData[step];
 
   const handleNext = () => {
     if (step === 'service') {
       setStep('datetime');
     } else if (step === 'datetime') {
       setStep('confirmation');
+    } else {
+      // bookingCreate.mutate({
+      //   serviceProfessionalId: serviceOnProfessional,
+      // });
     }
   };
 
@@ -85,27 +91,24 @@ export const ServiceBookingModal: FC<Omit<DialogProps, 'children'>> = (
         </div>
 
         <div className={styles.contentContainer}>
-          <Step />
-        </div>
-
-        <div className={styles.navigationBtns}>
-          {step !== 'service' && (
-            <Button
-              className={styles.buttonBack}
-              onClick={handleBack}
-              text='Back'
-              icon='arrow-left'
-              variant='outlined'
+          {step === 'service' && (
+            <ServiceOnProfessionalSelect
+              value={serviceOnProfessional}
+              onChange={setServiceOnProfessional}
+              onClickNext={handleNext}
             />
           )}
-
-          <Button
-            className={styles.buttonRight}
-            onClick={handleNext}
-            text={step === 'confirmation' ? 'Confirm' : 'Next'}
-            iconEnd={step === 'confirmation' ? undefined : 'arrow-right'}
-            variant={step === 'confirmation' ? 'primary' : 'outlined'}
-          />
+          {step === 'datetime' && (
+            <BookingTimeSelect
+              selectedDay={selectedDay}
+              setSelectedDay={setSelectedDay}
+              selectedTimeBox={selectedTimeBox}
+              setSelectedTimeBox={setSelectedTimeBox}
+              onClickNext={handleNext}
+              onClickBack={handleBack}
+            />
+          )}
+          {step === 'confirmation' && <BookingForm onClickBack={handleBack} />}
         </div>
       </div>
     </Dialog>

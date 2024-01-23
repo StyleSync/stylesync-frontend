@@ -1,11 +1,15 @@
 'use client';
-import { useState } from 'react';
+import { type FC } from 'react';
 import clsx from 'clsx';
 // utils
 import { generateDates } from '@/modules/core/utils/date.utils';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+
 // components
 import { BookingTimeSelectNavigation } from '../../components/bookink-time-select-navigation';
 import { Typography } from '@/modules/core/components/typogrpahy';
+// type
+import type { BookingTimeSelectProps } from '@/modules/booking/containers/booking-time-select/booking-time-select.interface';
 // Swiper components
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Swiper styles
@@ -13,6 +17,7 @@ import 'swiper/scss';
 import 'swiper/scss/navigation';
 // style
 import styles from './booking-time-select.module.scss';
+import { Button } from '@/modules/core/components/button';
 
 const timeIntervals = [
   '11:00 - 12:00',
@@ -23,20 +28,30 @@ const timeIntervals = [
   '21:00 - 22:00',
 ];
 
-export const BookingTimeSelect = () => {
-  const [selectedSlide, setSelectedSlide] = useState<number | null>(null);
-  const [selectedTimeBox, setSelectedTimeBox] = useState<number | null>(null);
+export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
+  selectedDay,
+  setSelectedDay,
+  selectedTimeBox,
+  setSelectedTimeBox,
+  onClickNext,
+  onClickBack,
+}) => {
+  const { data: me } = trpc.user.me.useQuery({ expand: ['professional'] });
+  // const bookingData = trpc.booking.list.useQuery(
+  //   { professionalId: me?.professional?.id || '' },
+  //   { enabled: !!me?.id }
+  // );
 
   const handleTimeBoxClick = (index: number) => {
     setSelectedTimeBox(index);
   };
 
   const handleSlideClick = (index: number) => {
-    setSelectedSlide(index);
+    setSelectedDay(index);
   };
 
   return (
-    <div className={styles.bookingContainer}>
+    <>
       <div className={styles.bookingContent}>
         <Swiper
           spaceBetween={0}
@@ -45,20 +60,20 @@ export const BookingTimeSelect = () => {
           slidesPerView={7}
           className={styles.swiper}
         >
-          <BookingTimeSelectNavigation selectedSlide={selectedSlide} />
+          <BookingTimeSelectNavigation selectedDay={selectedDay} />
 
           {generateDates().map((item, index) => (
             <SwiperSlide className={styles.swiperSlide} key={index}>
               <div
                 className={clsx(styles.dataBox, {
-                  [styles.dataBoxCheked]: selectedSlide === index,
+                  [styles.dataBoxCheked]: selectedDay === index,
                 })}
                 onClick={() => handleSlideClick(index)}
               >
                 <Typography
                   variant='body2'
                   className={clsx(styles.info, {
-                    [styles.infoCheked]: selectedSlide === index,
+                    [styles.infoCheked]: selectedDay === index,
                   })}
                 >
                   {item.day}
@@ -66,7 +81,7 @@ export const BookingTimeSelect = () => {
                 <Typography
                   variant='body2'
                   className={clsx(styles.info, {
-                    [styles.infoCheked]: selectedSlide === index,
+                    [styles.infoCheked]: selectedDay === index,
                   })}
                 >
                   {item.number}
@@ -74,7 +89,7 @@ export const BookingTimeSelect = () => {
                 <Typography
                   variant='body2'
                   className={clsx(styles.info, {
-                    [styles.infoCheked]: selectedSlide === index,
+                    [styles.infoCheked]: selectedDay === index,
                   })}
                 >
                   {item.month}
@@ -104,6 +119,22 @@ export const BookingTimeSelect = () => {
           </div>
         ))}
       </div>
-    </div>
+      <div className={styles.navigationBtns}>
+        <Button
+          className={styles.buttonBack}
+          onClick={onClickBack}
+          text='Back'
+          icon='arrow-left'
+          variant='outlined'
+        />
+        <Button
+          className={styles.buttonRight}
+          onClick={onClickNext}
+          text='Next'
+          variant='outlined'
+          icon='arrow-right'
+        />
+      </div>
+    </>
   );
 };
