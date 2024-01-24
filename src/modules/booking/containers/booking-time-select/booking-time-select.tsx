@@ -1,12 +1,14 @@
 'use client';
-import { type FC } from 'react';
+import { useMemo, type FC } from 'react';
 import clsx from 'clsx';
+import { format } from 'date-fns';
 // utils
-import { generateDates } from '@/modules/core/utils/date.utils';
 import { trpc } from '@/modules/core/utils/trpc.utils';
-
+import { generateDates } from '@/modules/core/utils/date.utils';
+import { formatTime } from '@/modules/core/utils/time.utils';
 // components
 import { BookingTimeSelectNavigation } from '../../components/bookink-time-select-navigation';
+import { Spinner } from '@/modules/core/components/spinner';
 import { Typography } from '@/modules/core/components/typogrpahy';
 // type
 import type { BookingTimeSelectProps } from '@/modules/booking/containers/booking-time-select/booking-time-select.interface';
@@ -17,41 +19,45 @@ import 'swiper/scss';
 import 'swiper/scss/navigation';
 // style
 import styles from './booking-time-select.module.scss';
-import { Button } from '@/modules/core/components/button';
-
-const timeIntervals = [
-  '11:00 - 12:00',
-  '13:00 - 14:00',
-  '15:00 - 16:00',
-  '17:00 - 18:00',
-  '19:00 - 20:00',
-  '21:00 - 22:00',
-];
 
 export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
   selectedDay,
   setSelectedDay,
-  selectedTimeBox,
-  setSelectedTimeBox,
-  onClickNext,
-  onClickBack,
+  selectedTimeRange,
+  setSelectedTimeRange,
+  professionalId,
 }) => {
-  const { data: me } = trpc.user.me.useQuery({ expand: ['professional'] });
-  // const bookingData = trpc.booking.list.useQuery(
-  //   { professionalId: me?.professional?.id || '' },
-  //   { enabled: !!me?.id }
-  // );
+  // state
+  // const [isLoading, setIsLoading] = useState(true);
 
-  const handleTimeBoxClick = (index: number) => {
-    setSelectedTimeBox(index);
+  const bookingData = trpc.booking.available.list.useQuery(
+    {
+      date: selectedDay || '',
+      serviceOnProfessionalId: professionalId,
+    },
+    { enabled: !!selectedDay }
+  );
+
+  const handleTimeRangeChoose = (index: number) => {
+    setSelectedTimeRange(index);
   };
 
-  const handleSlideClick = (index: number) => {
-    setSelectedDay(index);
+  const handleDayChoose = (date: string) => {
+    setSelectedDay(date);
   };
+
+  const bookingAvalibleTimes = useMemo(() => {
+    if (bookingData.data) {
+      return bookingData.data;
+    }
+
+    return [];
+  }, [bookingData]);
+
+  // console.log(bookingData.data);
 
   return (
-    <>
+    <div className={styles.root}>
       <div className={styles.bookingContent}>
         <Swiper
           spaceBetween={0}
@@ -66,33 +72,33 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
             <SwiperSlide className={styles.swiperSlide} key={index}>
               <div
                 className={clsx(styles.dataBox, {
-                  [styles.dataBoxCheked]: selectedDay === index,
+                  [styles.dataBoxCheked]: selectedDay === item,
                 })}
-                onClick={() => handleSlideClick(index)}
+                onClick={() => handleDayChoose(item)}
               >
                 <Typography
                   variant='body2'
                   className={clsx(styles.info, {
-                    [styles.infoCheked]: selectedDay === index,
+                    [styles.infoCheked]: selectedDay === item,
                   })}
                 >
-                  {item.day}
+                  {format(new Date(item), 'EEE')}
                 </Typography>
                 <Typography
                   variant='body2'
                   className={clsx(styles.info, {
-                    [styles.infoCheked]: selectedDay === index,
+                    [styles.infoCheked]: selectedDay === item,
                   })}
                 >
-                  {item.number}
+                  {format(new Date(item), 'd')}
                 </Typography>
                 <Typography
                   variant='body2'
                   className={clsx(styles.info, {
-                    [styles.infoCheked]: selectedDay === index,
+                    [styles.infoCheked]: selectedDay === item,
                   })}
                 >
-                  {item.month}
+                  {format(new Date(item), 'MMM')}
                 </Typography>
               </div>
             </SwiperSlide>
@@ -100,26 +106,51 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
         </Swiper>
       </div>
 
-      <div className={styles.timeBoxes}>
-        {timeIntervals.map((interval, index) => (
-          <div
-            key={index}
-            className={clsx(styles.timeBox, {
-              [styles.timeBoxChecked]: selectedTimeBox === index,
-            })}
-            onClick={() => handleTimeBoxClick(index)}
-          >
-            <Typography
-              className={clsx(styles.timeText, {
-                [styles.timeTextCheced]: selectedTimeBox === index,
-              })}
-            >
-              {interval}
-            </Typography>
-          </div>
-        ))}
+      <div className={styles.timeRanges}>
+        {selectedDay && (
+          <>
+            {bookingData.isLoading ? (
+              <div className={styles.spinnerContainer}>
+                <Spinner size='small' />
+                <Typography className={styles.loadingLabel}>
+                  Searching for available time...
+                </Typography>
+              </div>
+            ) : (
+              <>
+                {bookingAvalibleTimes.length > 0 ? (
+                  bookingAvalibleTimes.map((interval, index) => (
+                    <div
+                      key={index}
+                      className={clsx(styles.timeBox, {
+                        [styles.timeBoxChecked]: selectedTimeRange === index,
+                      })}
+                      onClick={() => handleTimeRangeChoose(index)}
+                    >
+                      <Typography
+                        className={clsx(styles.timeText, {
+                          [styles.timeTextCheced]: selectedTimeRange === index,
+                        })}
+                      >
+                        {`${formatTime(interval.startTime)} - ${formatTime(
+                          interval.endTime
+                        )}`}
+                      </Typography>
+                    </div>
+                  ))
+                ) : (
+                  <Typography className={styles.noAvailableTimeText}>
+                    Sorry,<span>&nbsp;no free time&nbsp;</span>, please choose
+                    another date.
+                  </Typography>
+                )}
+              </>
+            )}
+          </>
+        )}
       </div>
-      <div className={styles.navigationBtns}>
+
+      {/* <div className={styles.navigationBtns}>
         <Button
           className={styles.buttonBack}
           onClick={onClickBack}
@@ -128,13 +159,14 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
           variant='outlined'
         />
         <Button
-          className={styles.buttonRight}
+          className={styles.buttonNext}
           onClick={onClickNext}
           text='Next'
           variant='outlined'
           icon='arrow-right'
+          disabled={!selectedTimeRange}
         />
-      </div>
-    </>
+      </div> */}
+    </div>
   );
 };

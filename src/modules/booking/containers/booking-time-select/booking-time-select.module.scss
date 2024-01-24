@@ -2,6 +2,12 @@
 @use '@/styles/utils';
 @use '@/styles/mixins';
 
+.root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
 .bookingContent {
   display: flex;
   align-items: center;
@@ -57,7 +63,7 @@
   color: #fff;
 }
 
-.timeBoxes {
+.timeRanges {
   display: flex;
   align-items: center;
   column-gap: utils.spacing(2);
@@ -103,4 +109,27 @@
   margin-top: auto;
   display: flex;
   justify-content: space-between;
+}
+
+.spinnerContainer {
+  margin-top: utils.spacing(2);
+  display: flex;
+  flex: 1;
+  gap: utils.spacing(2);
+  align-items: center;
+  justify-content: center;
+}
+
+.noAvailableTimeText {
+  color: variables.$primary-color;
+  margin-top: utils.spacing(2);
+  display: inline-flex;
+  flex: 1;
+  gap: utils.spacing(2);
+  align-items: center;
+  justify-content: center;
+  white-space: normal;
+  span {
+    color: variables.$error-color;
+  }
 }

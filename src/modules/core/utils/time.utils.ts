@@ -234,3 +234,14 @@ export const formatDuration = (duration: number): string => {
 
   return formattedDuration;
 };
+
+//  formatting time in the 'HH:mm' format.
+export const formatTime = (timeString: string) => {
+  const time = new Date(timeString);
+  const formattedTime = `${time.getHours().toString().padStart(2, '0')}:${time
+    .getMinutes()
+    .toString()
+    .padStart(2, '0')}`;
+
+  return formattedTime;
+};

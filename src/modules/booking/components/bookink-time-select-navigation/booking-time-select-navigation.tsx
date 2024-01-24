@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { useMemo, type FC } from 'react';
 import { useSwiper } from 'swiper/react';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
@@ -9,6 +9,7 @@ import { generateDates } from '@/modules/core/utils/date.utils';
 import type { BookingTimeSelectNavigationProps } from './booking-time-select.interface';
 // style
 import styles from './booking-time-select-navigation.module.scss';
+import { format } from 'date-fns';
 
 const selectDate = (
   <Typography variant='body1' className={styles.selectDate}>
@@ -21,7 +22,15 @@ export const BookingTimeSelectNavigation: FC<
 > = ({ selectedDay }) => {
   const swiper = useSwiper();
   const dates = generateDates();
-  const selectedDate = selectedDay !== null && dates[selectedDay];
+  const selectedDate = useMemo(() => {
+    if (selectedDay) {
+      return dates.find((item) => {
+        return selectedDay === item;
+      });
+    }
+
+    return null;
+  }, [selectedDay, dates]);
 
   return (
     <div className={styles.dateNavigation}>
@@ -32,7 +41,7 @@ export const BookingTimeSelectNavigation: FC<
       />
       <Typography variant='body1'>
         {selectedDate
-          ? `${selectedDate.day}, ${selectedDate.number}, ${selectedDate.month}`
+          ? format(new Date(selectedDate), 'EEEE d MMM')
           : selectDate}
       </Typography>
       <Button
