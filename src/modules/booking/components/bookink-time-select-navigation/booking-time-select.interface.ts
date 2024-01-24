@@ -1,3 +1,3 @@
 export type BookingTimeSelectNavigationProps = {
-  selectedDay: number | null;
+  selectedDay: string | null;
 };

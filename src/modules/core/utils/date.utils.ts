@@ -1,19 +1,25 @@
+import { eachDayOfInterval } from 'date-fns';
+// import { enUS } from 'date-fns/locale';
+
 export const generateDates = () => {
   const currentDate = new Date();
-  const numberOfDays = 14;
-  const result = [];
+  const numberOfDays = 13;
 
-  for (let i = 0; i < numberOfDays; i++) {
-    const dayOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][
-      currentDate.getDay()
-    ];
-    const day = currentDate.getDate();
-    const month = currentDate.toLocaleString('en', { month: 'short' });
+  const endOfWeek = new Date(
+    new Date().setDate(currentDate.getDate() + numberOfDays)
+  );
+  const daysOfWeek = eachDayOfInterval({ start: currentDate, end: endOfWeek });
+  const result = daysOfWeek.map((item) => item.toISOString());
 
-    result.push({ day: dayOfWeek, number: day.toString(), month });
+  // console.log(daysOfWeek);
 
-    currentDate.setDate(currentDate.getDate() + 1);
-  }
+  // const result = daysOfWeek.map((day) => {
+  //   const dayOfWeek = format(day, 'EEE', { locale: enUS });
+  //   const dayNumber = format(day, 'd');
+  //   const month = format(day, 'MMM', { locale: enUS });
+
+  //   return { day: dayOfWeek, number: dayNumber, month };
+  // });
 
   return result;
 };

@@ -1,11 +1,10 @@
 import { type FC, useState } from 'react';
 // components
 import { Avatar } from '@/modules/core/components/avatar';
-
-import { Stepper } from '@/modules/core/components/stepper';
+import { Button } from '@/modules/core/components/button';
 import { Dialog } from '@/modules/core/components/dialog';
+import { Stepper } from '@/modules/core/components/stepper';
 import { Typography } from '@/modules/core/components/typogrpahy';
-
 import { BookingForm } from '@/modules/booking/components/booking-form';
 import { BookingTimeSelect } from '@/modules/booking/containers/booking-time-select';
 import { ServiceOnProfessionalSelect } from '@/modules/service/components/service-on-professional-select';
@@ -23,8 +22,10 @@ export const ServiceBookingModal: FC<Omit<DialogProps, 'children'>> = (
   const [serviceOnProfessional, setServiceOnProfessional] =
     useState<string>('');
   // state BookingTimeSelect
-  const [selectedDay, setSelectedDay] = useState<number | null>(null);
-  const [selectedTimeBox, setSelectedTimeBox] = useState<number | null>(null);
+  const [selectedDay, setSelectedDay] = useState<string | null>(null);
+  const [selectedTimeRange, setSelectedTimeRange] = useState<number | null>(
+    null
+  );
 
   // mutations
   // const bookingCreate = trpc.booking.create.useMutation();
@@ -95,21 +96,54 @@ export const ServiceBookingModal: FC<Omit<DialogProps, 'children'>> = (
             <ServiceOnProfessionalSelect
               value={serviceOnProfessional}
               onChange={setServiceOnProfessional}
-              onClickNext={handleNext}
             />
           )}
           {step === 'datetime' && (
             <BookingTimeSelect
               selectedDay={selectedDay}
               setSelectedDay={setSelectedDay}
-              selectedTimeBox={selectedTimeBox}
-              setSelectedTimeBox={setSelectedTimeBox}
-              onClickNext={handleNext}
-              onClickBack={handleBack}
+              selectedTimeRange={selectedTimeRange}
+              setSelectedTimeRange={setSelectedTimeRange}
+              professionalId={serviceOnProfessional}
             />
           )}
           {step === 'confirmation' && <BookingForm onClickBack={handleBack} />}
         </div>
+
+        {step !== 'confirmation' && (
+          <div className={styles.navigationBtns}>
+            {step === 'service' && (
+              <Button
+                className={styles.buttonRight}
+                onClick={handleNext}
+                text='Next'
+                variant='outlined'
+                icon='arrow-right'
+                disabled={!serviceOnProfessional}
+              />
+            )}
+
+            {step === 'datetime' && (
+              <>
+                <Button
+                  className={styles.buttonBack}
+                  onClick={handleBack}
+                  text='Back'
+                  icon='arrow-left'
+                  variant='outlined'
+                />
+                <Button
+                  className={styles.buttonNext}
+                  onClick={handleNext}
+                  text='Next'
+                  variant='outlined'
+                  icon='arrow-right'
+                  disabled={!selectedTimeRange}
+                />
+              </>
+            )}
+          </div>
+        )}
       </div>
     </Dialog>
   );
