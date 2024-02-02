@@ -1,0 +1,15 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.title {
+  color: variables.$grey-color;
+}
+.box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.infoContent {
+  color: variables.$dark-color;
+}

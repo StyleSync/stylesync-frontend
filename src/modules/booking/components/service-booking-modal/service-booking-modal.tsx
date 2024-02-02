@@ -9,9 +9,13 @@ import { BookingForm } from '@/modules/booking/components/booking-form';
 import { BookingTimeSelect } from '@/modules/booking/containers/booking-time-select';
 import { ServiceOnProfessionalSelect } from '@/modules/service/components/service-on-professional-select';
 // utils
-// import { trpc } from '@/modules/core/utils/trpc.utils';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { showToast } from '@/modules/core/providers/toast-provider';
+
 // type
-import type { DialogProps } from '@/modules/core/components/dialog/dialog.interface';
+import { type DialogProps } from '@/modules/core/components/dialog/dialog.interface';
+import { type AvailableBookingTime } from '@/server/types';
+import { type BookingFormValue } from '../booking-form/booking-form.interface';
 // style
 import styles from './service-booking-modal.module.scss';
 
@@ -23,12 +27,8 @@ export const ServiceBookingModal: FC<Omit<DialogProps, 'children'>> = (
     useState<string>('');
   // state BookingTimeSelect
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
-  const [selectedTimeRange, setSelectedTimeRange] = useState<number | null>(
-    null
-  );
-
-  // mutations
-  // const bookingCreate = trpc.booking.create.useMutation();
+  const [selectedTimeRange, setSelectedTimeRange] =
+    useState<null | AvailableBookingTime>(null);
 
   // steps
   const [step, setStep] = useState<'service' | 'datetime' | 'confirmation'>(
@@ -40,10 +40,6 @@ export const ServiceBookingModal: FC<Omit<DialogProps, 'children'>> = (
       setStep('datetime');
     } else if (step === 'datetime') {
       setStep('confirmation');
-    } else {
-      // bookingCreate.mutate({
-      //   serviceProfessionalId: serviceOnProfessional,
-      // });
     }
   };
 
@@ -52,8 +48,45 @@ export const ServiceBookingModal: FC<Omit<DialogProps, 'children'>> = (
       setStep('datetime');
     } else if (step === 'datetime') {
       setStep('service');
+
+      setSelectedDay(null);
+      setSelectedTimeRange(null);
     }
   };
+
+  // mutations
+  const bookingCreate = trpc.booking.create.useMutation();
+  // query
+  const { data: me } = trpc.user.me.useQuery({ expand: ['professional'] });
+
+  const handleConfirm = (data: BookingFormValue) => {
+    if (serviceOnProfessional && selectedDay && selectedTimeRange) {
+      bookingCreate.mutate(
+        {
+          date: selectedDay,
+          startTime: selectedTimeRange.startTime,
+          endTime: selectedTimeRange.endTime,
+          serviceProfessionalId: serviceOnProfessional,
+          guestFirstName: data.name,
+          guestLastName: data.lastName,
+          guestPhone: data.phone,
+          guestEmail: data.email,
+          userId: me?.id,
+        },
+        {
+          onError: () => {
+            showToast({
+              variant: 'error',
+              title: 'Oops, error',
+              description: 'Oops, error',
+            });
+          },
+        }
+      );
+    }
+  };
+
+  const isConfirmLoading = bookingCreate.isLoading;
 
   return (
     <Dialog {...props} classes={{ content: styles.content }}>
@@ -107,7 +140,13 @@ export const ServiceBookingModal: FC<Omit<DialogProps, 'children'>> = (
               professionalId={serviceOnProfessional}
             />
           )}
-          {step === 'confirmation' && <BookingForm onClickBack={handleBack} />}
+          {step === 'confirmation' && (
+            <BookingForm
+              isLoading={isConfirmLoading}
+              onSubmit={handleConfirm}
+              onClickBack={handleBack}
+            />
+          )}
         </div>
 
         {step !== 'confirmation' && (
@@ -118,7 +157,7 @@ export const ServiceBookingModal: FC<Omit<DialogProps, 'children'>> = (
                 onClick={handleNext}
                 text='Next'
                 variant='outlined'
-                icon='arrow-right'
+                iconEnd='arrow-right'
                 disabled={!serviceOnProfessional}
               />
             )}
@@ -137,7 +176,7 @@ export const ServiceBookingModal: FC<Omit<DialogProps, 'children'>> = (
                   onClick={handleNext}
                   text='Next'
                   variant='outlined'
-                  icon='arrow-right'
+                  iconEnd='arrow-right'
                   disabled={!selectedTimeRange}
                 />
               </>

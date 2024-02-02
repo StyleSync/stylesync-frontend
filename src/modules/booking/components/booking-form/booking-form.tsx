@@ -1,52 +1,56 @@
 import { type FC } from 'react';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 // components
 import { TextField } from '@/modules/core/components/text-field';
 import { Button } from '@/modules/core/components/button';
-
 // type
 import type {
   BookingFormValue,
   BookingFormProps,
 } from './booking-form.interface';
-
+// styles
 import styles from './booking-form.module.scss';
 
-const defaultValues: BookingFormValue = {
+const defaultValues = {
   name: '',
+  lastName: '',
   phone: '',
-  email: '',
   comment: '',
 };
 
 const validationSchema: z.Schema<BookingFormValue> = z.object({
   name: z.string().min(1),
-  phone: z.string().refine((value) => /^\+\d{1,4}\d{1,14}$/.test(value), {
-    message: 'Example, +12345678901234',
-  }),
+  lastName: z.string().min(1),
+  phone: z.string().regex(/^\+\d{1,3}\d{10}$/, 'Phone number is not valid'),
   email: z.string(),
   comment: z.string(),
 });
 
-const handleBook = (data: BookingFormValue) => {
-  console.log('ss', data);
-};
-
-export const BookingForm: FC<BookingFormProps> = ({ onClickBack }) => {
+export const BookingForm: FC<BookingFormProps> = ({
+  onClickBack,
+  onSubmit,
+  isLoading,
+}) => {
   const form = useForm<BookingFormValue>({
     defaultValues,
     resolver: zodResolver(validationSchema),
   });
 
   return (
-    <form onSubmit={form.handleSubmit(handleBook)} className={styles.root}>
+    <form onSubmit={form.handleSubmit(onSubmit)} className={styles.root}>
       <TextField
         {...form.register('name')}
         error={Boolean(form.formState.errors.name)}
         variant='input'
         label='Name*'
+      />
+      <TextField
+        {...form.register('lastName')}
+        error={Boolean(form.formState.errors.lastName)}
+        variant='input'
+        label='Last name'
       />
       <TextField
         {...form.register('phone')}
@@ -76,6 +80,7 @@ export const BookingForm: FC<BookingFormProps> = ({ onClickBack }) => {
           variant='outlined'
         />
         <Button
+          isLoading={isLoading}
           className={styles.buttonConfirm}
           type='submit'
           text='Confirm'

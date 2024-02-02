@@ -33,7 +33,6 @@ export const ServiceOnProfessionalSelect: FC<
                 key={service.id}
                 value={service.id}
                 serviceOnProfessional={service}
-                // onClick={(currentValue) => onChange(currentValue)}
               />
             ))}
           </div>
