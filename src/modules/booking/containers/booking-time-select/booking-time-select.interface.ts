@@ -1,7 +1,9 @@
+import { type AvailableBookingTime } from '@/server/types';
+
 export type BookingTimeSelectProps = {
   selectedDay: null | string;
-  setSelectedDay: (date: string) => void;
-  selectedTimeRange: number | null;
-  setSelectedTimeRange: (index: number) => void;
+  setSelectedDay: (date: string | null) => void;
+  selectedTimeRange: AvailableBookingTime | null;
+  setSelectedTimeRange: (timeRange: AvailableBookingTime | null) => void;
   professionalId: string;
 };

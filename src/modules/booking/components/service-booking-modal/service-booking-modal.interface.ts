@@ -5,6 +5,6 @@ export type ServiceBookingModalProps = {
   isOpen: boolean;
   onOpenChange: () => void;
   trigger: ReactNode;
-
+  isLoading: boolean;
   onClickBack?: () => void;
 };

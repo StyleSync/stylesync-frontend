@@ -63,7 +63,7 @@
   color: #fff;
 }
 
-.timeRanges {
+.timeRangesContainer {
   display: flex;
   align-items: center;
   column-gap: utils.spacing(2);
@@ -123,12 +123,11 @@
 .noAvailableTimeText {
   color: variables.$primary-color;
   margin-top: utils.spacing(2);
-  display: inline-flex;
+  display: flex;
   flex: 1;
-  gap: utils.spacing(2);
+  gap: 5px;
   align-items: center;
   justify-content: center;
-  white-space: normal;
   span {
     color: variables.$error-color;
   }

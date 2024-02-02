@@ -15,6 +15,8 @@ import { Tag } from '../../../core/components/tag';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
 import { ServiceBookingModal } from '@/modules/booking/components/service-booking-modal/service-booking-modal';
+// import { BookingModalSuccess } from '@/modules/booking/components/booking-modal-success/modal-successs';
+
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { getFullName } from '@/modules/user/utils/user.utils';
