@@ -122,3 +122,34 @@ export const getPossibleBookingTimes = (
 
   return availableTimeList;
 };
+
+/**
+ * Merges a date and a time into a single ISO string.
+ *
+ * @param {string} date - The date string in ISO format (YYYY-MM-DD).
+ * @param {string} time - The time string in ISO format (HH:mm:ss).
+ * @returns {string} The merged date and time in ISO format.
+ *
+ * @example
+ * // returns "2022-03-01T14:30:00.000Z"
+ * mergeDates("2022-03-01", "14:30:00")
+ */
+export const mergeDates = (
+  date: string | Date,
+  time: string | Date
+): string | Date => {
+  try {
+    const dateObj = new Date(date);
+    const timeObj = new Date(time);
+
+    dateObj.setHours(
+      timeObj.getHours(),
+      timeObj.getMinutes(),
+      timeObj.getSeconds()
+    );
+
+    return dateObj.toISOString();
+  } catch (e) {
+    return date;
+  }
+};

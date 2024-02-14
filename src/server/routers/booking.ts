@@ -2,7 +2,10 @@ import { privateProcedure, publicProcedure, router } from '../trpc-helpers';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { prisma } from '@/server/prisma';
-import { defaultBookingSelect } from '@/server/selectors';
+import {
+  defaultBookingSelect,
+  defaultServiceOnProfessionalSelect,
+} from '@/server/selectors';
 import {
   getProfessionalFromContext,
   getProfessionalFromServiceOnProfessional,
@@ -13,8 +16,11 @@ import {
   isTimeWithinPeriods,
   isTimeWithinSchedule,
   mapDateToDayEnum,
+  mergeDates,
 } from '@/server/utils/helpers';
 import type { AvailableBookingTime } from '@/server/types';
+import { BookingStatus } from '@prisma/client';
+import { endOfDay, isAfter, startOfDay } from 'date-fns';
 
 const maxLargeTextLength = 140;
 const defaultLimit = 10;
@@ -25,12 +31,20 @@ export const bookingRouter = router({
     .input(
       z.object({
         id: z.string().min(1, 'Required'),
+        expand: z.array(z.enum(['serviceProfessional'])).optional(),
       })
     )
     .query(async ({ input }) => {
       const booking = await prisma.booking.findUnique({
         where: { id: input.id },
-        select: defaultBookingSelect,
+        select: {
+          ...defaultBookingSelect,
+          serviceProfessional: !!input.expand?.includes(
+            'serviceProfessional'
+          ) && {
+            select: defaultServiceOnProfessionalSelect,
+          },
+        },
       });
 
       if (!booking) {
@@ -103,7 +117,10 @@ export const bookingRouter = router({
         const bookings = await prisma.booking.findMany({
           where: {
             serviceProfessionalId: serviceOnProfessional.id,
-            date: input.date,
+            date: {
+              gte: startOfDay(new Date(input.date)),
+              lte: endOfDay(new Date(input.date)),
+            },
           },
           select: {
             startTime: true,
@@ -150,11 +167,7 @@ export const bookingRouter = router({
           .min(1, 'Required')
           .max(maxLargeTextLength)
           .optional(),
-        guestPhone: z
-          .string()
-          .min(1, 'Required')
-          .max(maxLargeTextLength)
-          .optional(),
+        guestPhone: z.string().min(1, 'Required').max(maxLargeTextLength),
         guestEmail: z
           .string()
           .min(1, 'Required')
@@ -168,12 +181,28 @@ export const bookingRouter = router({
         input.serviceProfessionalId
       );
 
+      if (isAfter(new Date(input.startTime), new Date(input.endTime))) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: `End Date should be after Start Date`,
+        });
+      }
+
+      if (
+        isAfter(new Date(), new Date(mergeDates(input.date, input.startTime)))
+      ) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: `You have selected a past date`,
+        });
+      }
+
       // first we check if we have specific schedule for the day
       const specificDaySchedule = await prisma.schedule.findFirst({
         where: {
           professionalId: professional.id,
           isSpecificDay: true,
-          day: mapDateToDayEnum(input.date),
+          date: startOfDay(new Date(input.date)),
         },
         select: defaultScheduleSelect,
       });
@@ -238,7 +267,10 @@ export const bookingRouter = router({
       const existingBooking = await prisma.booking.findMany({
         where: {
           serviceProfessionalId: { in: servicesIds },
-          date: input.date,
+          date: {
+            gte: startOfDay(new Date(input.date)),
+            lte: endOfDay(new Date(input.date)),
+          },
         },
       });
 
@@ -251,9 +283,14 @@ export const bookingRouter = router({
         });
       }
 
+      const inputDate = mergeDates(input.date, input.startTime);
+
       const booking = await prisma.booking.create({
-        data: { ...input },
-        select: defaultBookingSelect,
+        data: { ...input, status: BookingStatus.PENDING, date: inputDate },
+        select: {
+          ...defaultBookingSelect,
+          serviceProfessional: { select: defaultServiceOnProfessionalSelect },
+        },
       });
 
       if (!booking) {
@@ -309,8 +346,13 @@ export const bookingRouter = router({
           professionalId: z.string().min(1, 'Required').optional(),
           serviceProfessionalId: z.string().min(1, 'Required').optional(),
           date: z.string().datetime().optional(),
+          startDate: z.string().datetime().optional(),
+          endDate: z.string().datetime().optional(),
           limit: z.number().min(1).max(maxLimit).default(defaultLimit),
           offset: z.number().min(0).default(0),
+          expand: z.array(z.enum(['serviceProfessional'])).optional(),
+          sortDirection: z.enum(['asc', 'desc']).optional(),
+          sortField: z.enum(['date']).optional(),
         })
         .optional()
     )
@@ -339,9 +381,30 @@ export const bookingRouter = router({
             serviceOnProfessionalIds.length > 0
               ? { in: serviceOnProfessionalIds }
               : input?.serviceProfessionalId,
-          date: input?.date,
+          AND: [
+            input?.date
+              ? {
+                  date: {
+                    gte: startOfDay(new Date(input.date)),
+                    lte: endOfDay(new Date(input.date)),
+                  },
+                }
+              : {},
+            input?.startDate ? { date: { gte: input.startDate } } : {},
+            input?.endDate ? { date: { lte: input.endDate } } : {},
+          ],
         },
-        select: defaultBookingSelect,
+        select: {
+          ...defaultBookingSelect,
+          serviceProfessional: !!input?.expand?.includes(
+            'serviceProfessional'
+          ) && {
+            select: defaultServiceOnProfessionalSelect,
+          },
+        },
+        orderBy: input?.sortField && {
+          [input.sortField]: input.sortDirection ?? 'asc',
+        },
         take: input?.limit ?? defaultLimit,
         skip: input?.offset ?? 0,
       });
