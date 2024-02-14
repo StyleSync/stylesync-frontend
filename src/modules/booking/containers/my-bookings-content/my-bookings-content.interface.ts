@@ -8,4 +8,17 @@ export type TabContentMap = Record<
   }
 >;
 
-export type MyBookingsContentProps = {};
+export type MyBookingsContentProps = {
+  id: string;
+  name: string;
+  serviceName: string;
+  date: string;
+};
+
+export type Booking = {
+  id: string;
+  serviceName: string;
+  date: string;
+  startTime: string;
+  startendTimeTime: string;
+};

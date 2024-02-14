@@ -9,8 +9,8 @@ import { BookingForm } from '@/modules/booking/components/booking-form';
 import { BookingTimeSelect } from '@/modules/booking/containers/booking-time-select';
 import { ServiceOnProfessionalSelect } from '@/modules/service/components/service-on-professional-select';
 // utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
-import { showToast } from '@/modules/core/providers/toast-provider';
+// import { trpc } from '@/modules/core/utils/trpc.utils';
+// import { showToast } from '@/modules/core/providers/toast-provider';
 
 // type
 import { type DialogProps } from '@/modules/core/components/dialog/dialog.interface';
@@ -18,18 +18,18 @@ import { type AvailableBookingTime } from '@/server/types';
 import { type BookingFormValue } from '../booking-form/booking-form.interface';
 // style
 import styles from './service-booking-modal.module.scss';
+import { type ServiceBookingModalProps } from './service-booking-modal.interface';
 
-export const ServiceBookingModal: FC<Omit<DialogProps, 'children'>> = (
-  props
-) => {
-  // state ServiceOnProfessionalSelect
+export const ServiceBookingModal: FC<
+  Omit<DialogProps, 'children'> & ServiceBookingModalProps
+> = ({ onConfirm, isLoading, ...props }) => {
+  // ServiceOnProfessionalSelect
   const [serviceOnProfessional, setServiceOnProfessional] =
     useState<string>('');
-  // state BookingTimeSelect
+  // BookingTimeSelect
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
   const [selectedTimeRange, setSelectedTimeRange] =
     useState<null | AvailableBookingTime>(null);
-
   // steps
   const [step, setStep] = useState<'service' | 'datetime' | 'confirmation'>(
     'service'
@@ -46,6 +46,8 @@ export const ServiceBookingModal: FC<Omit<DialogProps, 'children'>> = (
   const handleBack = () => {
     if (step === 'confirmation') {
       setStep('datetime');
+
+      setSelectedTimeRange(null);
     } else if (step === 'datetime') {
       setStep('service');
 
@@ -54,39 +56,16 @@ export const ServiceBookingModal: FC<Omit<DialogProps, 'children'>> = (
     }
   };
 
-  // mutations
-  const bookingCreate = trpc.booking.create.useMutation();
-  // query
-  const { data: me } = trpc.user.me.useQuery({ expand: ['professional'] });
-
   const handleConfirm = (data: BookingFormValue) => {
     if (serviceOnProfessional && selectedDay && selectedTimeRange) {
-      bookingCreate.mutate(
-        {
-          date: selectedDay,
-          startTime: selectedTimeRange.startTime,
-          endTime: selectedTimeRange.endTime,
-          serviceProfessionalId: serviceOnProfessional,
-          guestFirstName: data.name,
-          guestLastName: data.lastName,
-          guestPhone: data.phone,
-          guestEmail: data.email,
-          userId: me?.id,
-        },
-        {
-          onError: () => {
-            showToast({
-              variant: 'error',
-              title: 'Oops, error',
-              description: 'Oops, error',
-            });
-          },
-        }
-      );
+      onConfirm({
+        ...data,
+        selectedDay,
+        selectedTimeRange,
+        serviceOnProfessional,
+      });
     }
   };
-
-  const isConfirmLoading = bookingCreate.isLoading;
 
   return (
     <Dialog {...props} classes={{ content: styles.content }}>
@@ -142,7 +121,7 @@ export const ServiceBookingModal: FC<Omit<DialogProps, 'children'>> = (
           )}
           {step === 'confirmation' && (
             <BookingForm
-              isLoading={isConfirmLoading}
+              isLoading={isLoading}
               onSubmit={handleConfirm}
               onClickBack={handleBack}
             />

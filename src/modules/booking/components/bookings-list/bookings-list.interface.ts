@@ -10,10 +10,13 @@ type BookingListGroup = {
     name: string;
     serviceName: string;
     date: string;
+    startTime: Date;
+    endTime: Date;
   }[]; // todo: replace this type with BE Service type if ready
   emptyPlaceholder?: ReactNode;
 };
 
 export type BookingsListProps = {
+  loading: boolean;
   groups: BookingListGroup[];
 };

@@ -1,58 +1,68 @@
 'use client';
 import { type FC } from 'react';
-import { faker } from '@faker-js/faker';
 // components
 import { BookingsList } from '@/modules/booking/components/bookings-list';
 import { Calendar } from '@/modules/schedule/components/calendar';
 // hooks
 import { useMyBookingsTab } from '@/modules/booking/hooks/use-my-bookings-tab';
-
-import type {
-  MyBookingsContentProps,
-  TabContentMap,
-} from './my-bookings-content.interface';
+// utils
+import { trpc } from '@/modules/core/utils/trpc.utils';
+// type
+import type { MyBookingsContentProps } from './my-bookings-content.interface';
+// style
 import styles from './my-bookings-content.module.scss';
 
-const createEventsListMock = (num: number) =>
-  [...new Array(num)].map(() => ({
-    id: faker.string.uuid(),
-    name: faker.person.fullName(),
-    serviceName: 'evening makeup',
-    date: faker.date.future().toString(),
-  }));
-
-const upcomingEvents = createEventsListMock(1);
-const pastEvents = createEventsListMock(2);
-
-const tabContentMap: TabContentMap = {
-  list: {
-    content: (
-      <BookingsList
-        groups={[
-          {
-            id: 'upcomming',
-            title: 'Upcomming',
-            cardsVariant: 'light',
-            list: upcomingEvents,
-          },
-          {
-            id: 'past',
-            title: 'Past events',
-            cardsVariant: 'light',
-            list: pastEvents,
-          },
-        ]}
-      />
-    ),
-  },
-  calendar: {
-    content: <Calendar />,
-  },
-};
-
 export const MyBookingsContent: FC<MyBookingsContentProps> = () => {
-  const { activeTab } = useMyBookingsTab();
-  const { content } = tabContentMap[activeTab];
+  // // query
+  const { data: bookingList, ...bookingListQuery } = trpc.booking.list.useQuery(
+    { expand: ['serviceProfessional'] }
+  );
 
-  return <div className={styles.root}>{content}</div>;
+  const currentDate = new Date();
+
+  console.log(bookingList);
+
+  const expectedFormat = (booking: any) => ({
+    id: booking.id,
+    name: `${booking.guestFirstName} ${booking.guestLastName}`,
+    serviceName: booking.serviceProfessional.title,
+    date: booking.date,
+    startTime: booking.startTime,
+    endTime: booking.endTime,
+  });
+
+  const upcomingEvents = (bookingList || [])
+    .filter((booking) => new Date(booking.date) > currentDate)
+    .map(expectedFormat);
+
+  const pastEvents = (bookingList || [])
+    .filter((booking) => new Date(booking.date) < currentDate)
+    .map(expectedFormat);
+
+  const { activeTab } = useMyBookingsTab();
+
+  return (
+    <div className={styles.root}>
+      {activeTab === 'list' && (
+        <BookingsList
+          loading={bookingListQuery.isLoading}
+          groups={[
+            {
+              id: 'upcomming',
+              title: 'Upcomming',
+              cardsVariant: 'light',
+              list: upcomingEvents,
+            },
+            {
+              id: 'past',
+              title: 'Past events',
+              cardsVariant: 'light',
+              list: pastEvents,
+            },
+          ]}
+        />
+      )}
+      {activeTab === 'calendar' && <Calendar />}
+    </div>
+  );
 };

@@ -16,6 +16,8 @@ import styles from './booking-info-card.module.scss';
 export const BookingInfoCard: FC<BookingInfoCardProps> = ({
   name,
   date,
+  endTime,
+  startTime,
   serviceName,
   variant = 'light',
 }) => {
@@ -23,15 +25,13 @@ export const BookingInfoCard: FC<BookingInfoCardProps> = ({
   const isOpen = useBoolean();
   // refs
   const rootRef = useRef<HTMLDivElement>(null);
-  const startDate = new Date(date); // Start date
+  const startDate = new Date(startTime); // Start date
 
-  const endDate = new Date(date); // Final date
-
-  // Add 1 hour
-  endDate.setHours(endDate.getHours() + 1);
+  const endDate = new Date(endTime); // Final date
 
   // Format start and end dates separately
-  const formattedStartDate = format(startDate, 'HH:mm');
+  const formattedStartTime = format(startDate, 'HH:mm');
+  const formattedEndTime = format(endDate, 'HH:mm');
 
   const formattedDate = format(new Date(date), `EEEE, d MMM`);
 
@@ -49,7 +49,7 @@ export const BookingInfoCard: FC<BookingInfoCardProps> = ({
           <Avatar className={styles.avatar} />
           <div className={styles.info}>
             <Typography className={styles.datetime} variant='body1'>
-              {formattedDate} at {formattedStartDate}
+              {formattedDate}, {formattedStartTime} - {formattedEndTime}
             </Typography>
             <Typography className={styles.description} variant='small'>
               {name}, {serviceName}
