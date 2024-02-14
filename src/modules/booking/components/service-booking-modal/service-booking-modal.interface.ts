@@ -1,10 +1,14 @@
-// import { DialogProps } from '@radix-ui/react-dialog';
 import { type ReactNode } from 'react';
+import { type BookingFormValue } from '../booking-form/booking-form.interface';
+import { type AvailableBookingTime } from '@/server/types';
+
+export type CreateBookingRequestData = BookingFormValue & {
+  serviceOnProfessional: string;
+  selectedDay: string;
+  selectedTimeRange: AvailableBookingTime;
+};
 
 export type ServiceBookingModalProps = {
-  isOpen: boolean;
-  onOpenChange: () => void;
-  trigger: ReactNode;
   isLoading: boolean;
-  onClickBack?: () => void;
+  onConfirm: (data: CreateBookingRequestData) => void;
 };

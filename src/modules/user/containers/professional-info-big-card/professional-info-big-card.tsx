@@ -14,8 +14,6 @@ import { Avatar } from '@/modules/core/components/avatar';
 import { Tag } from '../../../core/components/tag';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
-import { ServiceBookingModal } from '@/modules/booking/components/service-booking-modal/service-booking-modal';
-// import { BookingModalSuccess } from '@/modules/booking/components/booking-modal-success/modal-successs';
 
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
@@ -23,6 +21,7 @@ import { getFullName } from '@/modules/user/utils/user.utils';
 
 import type { ProfileInfoBigCardProps } from './professional-info-big-card.interface';
 import styles from './professional-info-big-card.module.scss';
+import { CreateBooking } from '@/modules/booking/containers/create-booking-container/create-booking';
 
 export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
   userId,
@@ -62,8 +61,6 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
       ) ?? []
     );
   }, [serviceOnProfessionalList]);
-
-  const isBookingOpen = useBoolean();
 
   return (
     <div className={styles.container}>
@@ -157,17 +154,7 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
               />
             }
           />
-          <ServiceBookingModal
-            onOpenChange={isBookingOpen.setValue}
-            isOpen={isBookingOpen.value}
-            trigger={
-              <Button
-                variant='primary'
-                text='Book'
-                disabled={professionalQuery.isLoading}
-              />
-            }
-          />
+          <CreateBooking isLoadingTrigger={professionalQuery.isLoading} />
         </div>
       </div>
     </div>
