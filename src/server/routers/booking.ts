@@ -6,6 +6,7 @@ import {
   defaultBookingSelect,
   defaultServiceOnProfessionalSelect,
 } from '@/server/selectors';
+import uniqueString from 'unique-string';
 import {
   getProfessionalFromContext,
   getProfessionalFromServiceOnProfessional,
@@ -286,7 +287,12 @@ export const bookingRouter = router({
       const inputDate = mergeDates(input.date, input.startTime);
 
       const booking = await prisma.booking.create({
-        data: { ...input, status: BookingStatus.PENDING, date: inputDate },
+        data: {
+          ...input,
+          status: BookingStatus.PENDING,
+          date: inputDate,
+          code: uniqueString(),
+        },
         select: {
           ...defaultBookingSelect,
           serviceProfessional: { select: defaultServiceOnProfessionalSelect },

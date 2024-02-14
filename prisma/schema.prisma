@@ -206,6 +206,7 @@ model Booking {
   date                  DateTime
   userId                String?
   user                  User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
+  code                  String                @unique
   guestFirstName        String
   guestLastName         String?
   guestPhone            String
