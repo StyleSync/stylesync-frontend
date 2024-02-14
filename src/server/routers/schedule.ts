@@ -6,6 +6,7 @@ import { Day } from '@prisma/client';
 import { defaultScheduleSelect } from '@/server/selectors/schedule';
 import { getProfessionalFromContext } from '@/server/utils/prisma-utils';
 import { mapDateToDayEnum } from '@/server/utils/helpers';
+import { isAfter, startOfDay } from 'date-fns';
 
 const defaultLimit = 10;
 const maxLimit = 100;
@@ -72,10 +73,21 @@ export const scheduleRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
+      const inputDate = input.date
+        ? startOfDay(new Date(input.date))
+        : input.date;
+
       if (input.isSpecificDay && !input.date) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: `Specific day schedule must have a date`,
+        });
+      }
+
+      if (isAfter(new Date(input.start), new Date(input.end))) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: `End Date should be after Start Date`,
         });
       }
 
@@ -110,7 +122,7 @@ export const scheduleRouter = router({
           professionalId: professional.id,
           isSpecificDay: input.isSpecificDay,
           day: input.day,
-          date: input.date,
+          date: inputDate,
         },
       });
 
@@ -122,7 +134,11 @@ export const scheduleRouter = router({
       }
 
       return prisma.schedule.create({
-        data: { ...input, professionalId: professional.id },
+        data: {
+          ...input,
+          date: inputDate,
+          professionalId: professional.id,
+        },
         select: defaultScheduleSelect,
       });
     }),
@@ -142,6 +158,9 @@ export const scheduleRouter = router({
         select: {
           professionalId: true,
           id: true,
+          date: true,
+          start: true,
+          end: true,
         },
       });
 
@@ -156,6 +175,18 @@ export const scheduleRouter = router({
         throw new TRPCError({
           code: 'FORBIDDEN',
           message: `You dont have permission to update schedule with id '${input.id}'`,
+        });
+      }
+
+      if (
+        isAfter(
+          new Date(input.start ?? schedule.start),
+          new Date(input.end ?? schedule.end)
+        )
+      ) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: `End Date should be after Start Date`,
         });
       }
 

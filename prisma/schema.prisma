@@ -206,10 +206,11 @@ model Booking {
   date                  DateTime
   userId                String?
   user                  User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
-  guestFirstName        String?
+  guestFirstName        String
   guestLastName         String?
-  guestPhone            String?
+  guestPhone            String
   guestEmail            String?
+  guestComment          String?
   status                BookingStatus         @default(PENDING)
   serviceProfessionalId String
   serviceProfessional   ServiceOnProfessional @relation(fields: [serviceProfessionalId], references: [id])
