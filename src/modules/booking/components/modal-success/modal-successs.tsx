@@ -1,23 +1,18 @@
 import { type FC } from 'react';
+import { format } from 'date-fns';
+
 // components
 import { Button } from '@/modules/core/components/button';
-import { Divider } from '@/modules/core/components/divider';
 import { Dialog } from '@/modules/core/components/dialog';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Icon } from '@/modules/core/components/icon';
 import { InfoBox } from '../modal-success-infobox/info-box';
-//
-import { format } from 'date-fns';
 
-// utils
-// import { trpc } from '@/modules/core/utils/trpc.utils';
-// type
-import { type DialogProps } from '@/modules/core/components/dialog/dialog.interface';
 // style
 import styles from './modal-success.module.scss';
-// import { type BookingModalSuccessProps } from './modal-success.interface';
+import { type BookingModalSuccessProps } from './modal-success.interface';
 
-export const BookingModalSuccess: FC<Omit<DialogProps, 'children'>> = ({
+export const BookingModalSuccess: FC<BookingModalSuccessProps> = ({
   bookingData,
   ...props
 }) => {
@@ -29,7 +24,7 @@ export const BookingModalSuccess: FC<Omit<DialogProps, 'children'>> = ({
 
   const formattedDate = format(
     bookingData?.startTime ? new Date(bookingData?.startTime) : new Date(),
-    `d EE`
+    `d MMM`
   );
 
   const formattedStartTime = format(
@@ -44,13 +39,29 @@ export const BookingModalSuccess: FC<Omit<DialogProps, 'children'>> = ({
   const statusSuccess =
     bookingData?.status === 'PENDING' ? 'Requested' : 'Approved';
 
+  let currency = '';
+
+  switch (bookingData?.serviceProfessional.currency) {
+    case 'EUR':
+      currency = '€';
+      break;
+    case 'UAH':
+      currency = '₴';
+      break;
+    case 'USD':
+      currency = '$';
+      break;
+    default:
+      currency = '';
+      break;
+  }
+
   return (
     <Dialog {...props} classes={{ content: styles.content }}>
       <div className={styles.root}>
         <div className={styles.iconSuccess}>
           <Icon width={60} height={60} name='success' />
           <Typography variant='subtitle'>Booking successful!</Typography>
-          <Divider variant='horizontal' />
         </div>
         <div className={styles.containerInfo}>
           <InfoBox
@@ -59,7 +70,7 @@ export const BookingModalSuccess: FC<Omit<DialogProps, 'children'>> = ({
           />
           <InfoBox
             title='Price'
-            content={`${bookingData?.serviceProfessional.price} ${bookingData?.serviceProfessional.currency}`}
+            content={`${bookingData?.serviceProfessional.price}${currency}`}
           />
           <InfoBox
             title='Time'

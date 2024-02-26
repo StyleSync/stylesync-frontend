@@ -1,5 +1,6 @@
 import type { ReactElement } from 'react';
 import type { MyBookingsTabKey } from '@/modules/booking/containers/my-bookings-tabs/my-bookings-tabs.interface';
+// import { type AvailableBookingTime } from '@/server/types';
 
 export type TabContentMap = Record<
   MyBookingsTabKey,
@@ -8,17 +9,4 @@ export type TabContentMap = Record<
   }
 >;
 
-export type MyBookingsContentProps = {
-  id: string;
-  name: string;
-  serviceName: string;
-  date: string;
-};
-
-export type Booking = {
-  id: string;
-  serviceName: string;
-  date: string;
-  startTime: string;
-  startendTimeTime: string;
-};
+export type MyBookingsContentProps = {};

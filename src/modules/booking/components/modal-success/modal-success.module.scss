@@ -19,6 +19,8 @@
   align-items: center;
   row-gap: utils.spacing(3);
   margin-top: utils.spacing(1);
+  padding-bottom: utils.spacing(3);
+  border-bottom: 1px dashed #939daa;
 }
 
 .containerInfo {

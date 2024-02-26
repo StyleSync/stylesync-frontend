@@ -1,4 +1,4 @@
-import { type FC, useState } from 'react';
+import { type FC, useState, useEffect } from 'react';
 // components
 import { Avatar } from '@/modules/core/components/avatar';
 import { Button } from '@/modules/core/components/button';
@@ -8,17 +8,13 @@ import { Typography } from '@/modules/core/components/typogrpahy';
 import { BookingForm } from '@/modules/booking/components/booking-form';
 import { BookingTimeSelect } from '@/modules/booking/containers/booking-time-select';
 import { ServiceOnProfessionalSelect } from '@/modules/service/components/service-on-professional-select';
-// utils
-// import { trpc } from '@/modules/core/utils/trpc.utils';
-// import { showToast } from '@/modules/core/providers/toast-provider';
-
 // type
 import { type DialogProps } from '@/modules/core/components/dialog/dialog.interface';
 import { type AvailableBookingTime } from '@/server/types';
 import { type BookingFormValue } from '../booking-form/booking-form.interface';
+import { type ServiceBookingModalProps } from './service-booking-modal.interface';
 // style
 import styles from './service-booking-modal.module.scss';
-import { type ServiceBookingModalProps } from './service-booking-modal.interface';
 
 export const ServiceBookingModal: FC<
   Omit<DialogProps, 'children'> & ServiceBookingModalProps
@@ -35,6 +31,15 @@ export const ServiceBookingModal: FC<
     'service'
   );
 
+  useEffect(() => {
+    if (props.isOpen === false) {
+      setServiceOnProfessional('');
+      setSelectedDay(null);
+      setSelectedTimeRange(null);
+      setStep('service');
+    }
+  }, [props.isOpen]);
+
   const handleNext = () => {
     if (step === 'service') {
       setStep('datetime');
@@ -47,6 +52,7 @@ export const ServiceBookingModal: FC<
     if (step === 'confirmation') {
       setStep('datetime');
 
+      setSelectedDay(null);
       setSelectedTimeRange(null);
     } else if (step === 'datetime') {
       setStep('service');
@@ -64,6 +70,10 @@ export const ServiceBookingModal: FC<
         selectedTimeRange,
         serviceOnProfessional,
       });
+
+      setServiceOnProfessional('');
+      setSelectedDay(null);
+      setSelectedTimeRange(null);
     }
   };
 
