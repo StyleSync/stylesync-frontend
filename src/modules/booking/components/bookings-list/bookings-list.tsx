@@ -1,6 +1,6 @@
 import { type FC } from 'react';
 // components
-import { Spinner } from '@/modules/core/components/spinner';
+
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { BookingInfoCard } from '@/modules/booking/components/booking-info-card';
@@ -10,7 +10,7 @@ import type { BookingsListProps } from './bookings-list.interface';
 
 import styles from './bookings-list.module.scss';
 
-export const BookingsList: FC<BookingsListProps> = ({ groups, loading }) => {
+export const BookingsList: FC<BookingsListProps> = ({ groups }) => {
   return (
     <div className={styles.root}>
       {groups.map((group) => (
@@ -19,32 +19,26 @@ export const BookingsList: FC<BookingsListProps> = ({ groups, loading }) => {
             {group.title}
           </Typography>
           <div className={styles.list}>
-            {loading ? (
-              <div className={styles.spinner}>
-                <Spinner />
-              </div>
-            ) : (
-              <Placeholder
-                isActive={group.list.length === 0}
-                placeholder={
-                  <Typography className={styles.empty} variant='body2'>
-                    List is empty
-                  </Typography>
-                }
-              >
-                {group.list.map((event) => (
-                  <BookingInfoCard
-                    key={event.id}
-                    name={event.name}
-                    serviceName={event.serviceName}
-                    date={event.date}
-                    startTime={event.startTime}
-                    endTime={event.endTime}
-                    variant={group.cardsVariant}
-                  />
-                ))}
-              </Placeholder>
-            )}
+            <Placeholder
+              isActive={group.list.length === 0}
+              placeholder={
+                <Typography className={styles.empty} variant='body2'>
+                  List is empty
+                </Typography>
+              }
+            >
+              {group.list.map((booking) => (
+                <BookingInfoCard
+                  key={booking.id}
+                  name={`${booking.guestFirstName} ${booking.guestLastName}`}
+                  serviceName={booking.serviceProfessional.title}
+                  date={booking.date}
+                  startTime={booking.startTime}
+                  endTime={booking.endTime}
+                  variant={group.cardsVariant}
+                />
+              ))}
+            </Placeholder>
           </div>
         </div>
       ))}

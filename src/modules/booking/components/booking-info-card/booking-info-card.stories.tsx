@@ -16,7 +16,7 @@ export const Base: Story = {
   args: {
     name: 'Tanusha’s Beauty',
     serviceName: ' evening makeup',
-    date: faker.date.future().toString(),
+    date: new Date(faker.date.future().toString()),
   },
   render: (props) => {
     return (

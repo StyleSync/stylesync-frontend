@@ -9,11 +9,14 @@ import { trpc } from '@/modules/core/utils/trpc.utils';
 import { showToast } from '@/modules/core/providers/toast-provider';
 // type
 import { type CreateBookingRequestData } from '../../components/service-booking-modal/service-booking-modal.interface';
+import { type ButtonVariant } from '@/modules/core/components/button/button.interface';
 
 export const CreateBooking = ({
   isLoadingTrigger,
+  btnVariant,
 }: {
-  isLoadingTrigger: boolean;
+  isLoadingTrigger?: boolean;
+  btnVariant?: ButtonVariant;
 }) => {
   const isBookingOpen = useBoolean();
   const isSuccessOpen = useBoolean();
@@ -52,7 +55,7 @@ export const CreateBooking = ({
           showToast({
             variant: 'error',
             title: 'Oops, error',
-            description: 'Oops, error',
+            description: 'Choose another date',
           });
         },
         onSuccess: () => {
@@ -63,8 +66,6 @@ export const CreateBooking = ({
     );
   };
 
-  console.log('sss', bookingCreate.data);
-
   return (
     <>
       <ServiceBookingModal
@@ -73,7 +74,11 @@ export const CreateBooking = ({
         onConfirm={handleConfirm}
         isLoading={bookingCreate.isLoading}
         trigger={
-          <Button variant='primary' text='Book' disabled={isLoadingTrigger} />
+          <Button
+            variant={btnVariant || 'primary'}
+            text='Book'
+            disabled={isLoadingTrigger}
+          />
         }
       />
       <BookingModalSuccess

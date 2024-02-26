@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-
 import { BookingsList } from './bookings-list';
 import { faker } from '@faker-js/faker';
 
@@ -19,14 +18,7 @@ export const Base: Story = {
       {
         id: faker.string.uuid(),
         title: 'Group 1 title',
-        list: [
-          {
-            id: faker.string.uuid(),
-            name: 'Event name',
-            serviceName: 'service name',
-            date: new Date().toISOString(),
-          },
-        ],
+        list: [],
         cardsVariant: 'green',
       },
       {

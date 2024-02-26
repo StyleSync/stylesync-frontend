@@ -1,15 +1,16 @@
 import clsx from 'clsx';
 // components
-import { ProfessionalInfoBigCard } from '@/modules/user/containers/professional-info-big-card';
 import { AboutMe } from '@/modules/user/components/about-me';
 import { GallerySection } from '@/modules/user/components/gallery-section';
 import { UserServices } from '@/modules/user/components/user-services';
 import { ProfileSectionLayout } from '@/modules/user/components/profile-section-layout';
+// containers
+import { ProBookActions } from '@/modules/user/containers/pro-book-actions';
+import { ProfessionalInfoBigCard } from '@/modules/user/containers/professional-info-big-card';
+
 // types
 import type { PageParams } from '@/modules/core/types/next.types';
-
 import styles from './profile.module.scss';
-import { ProBookActions } from '@/modules/user/containers/pro-book-actions';
 
 export default async function Profile({ params }: PageParams<{ id: string }>) {
   return (

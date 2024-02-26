@@ -31,7 +31,7 @@
     }
 
     .avatar {
-      background: rgba(0,0,0,0.05);
+      background: rgba(0, 0, 0, 0.05);
 
       svg {
         color: #fff;
@@ -76,6 +76,7 @@
       padding: utils.spacing(2);
       height: unset;
       flex-direction: column;
+      row-gap: utils.spacing(4);
     }
 
     .general {
@@ -170,7 +171,7 @@
       column-gap: utils.spacing(2);
 
       @include mixins.phone {
-        display: none;
+        column-gap: utils.spacing(2);
       }
     }
   }
