@@ -13,7 +13,10 @@ import { Button } from '@/modules/core/components/button';
 import type { Address } from '@/modules/location/types/address.types';
 import type { UserMarker } from '@/modules/location/components/map/map.interface';
 
-import type { UserLocationSelectFormProps } from './user-location-select-form.interface';
+import type {
+  UserLocationSelectFormProps,
+  UserLocationSelectFormHandle,
+} from './user-location-select-form.interface';
 import styles from './user-location-select-form.module.scss';
 
 const ADDRESS_ZOOM = 17;
@@ -35,10 +38,18 @@ const Map = dynamic(
 );
 
 const UserLocationSelectForm = forwardRef<
-  { getAddress: () => Address | null },
+  UserLocationSelectFormHandle,
   UserLocationSelectFormProps
 >(({ location }, ref) => {
-  const [address, setAddress] = useState<Address | null>(null);
+  const [address, setAddress] = useState<Address | null>(
+    location
+      ? {
+          name: location.name,
+          lat: location.latitude,
+          lng: location.longitude,
+        }
+      : null
+  );
   // refs
   const mapRef = useRef<L.Map>(null);
   // memo
@@ -76,19 +87,6 @@ const UserLocationSelectForm = forwardRef<
   useImperativeHandle(ref, () => ({
     getAddress: () => address,
   }));
-
-  // sync initial state
-  useEffect(() => {
-    if (location) {
-      setAddress({
-        name: location.name,
-        lat: location.latitude,
-        lng: location.longitude,
-      });
-    } else {
-      setAddress(null);
-    }
-  }, [location]);
 
   useEffect(() => {
     if (address) {

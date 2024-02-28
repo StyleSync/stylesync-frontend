@@ -5,6 +5,8 @@ import { UserLocationSelectForm } from '@/modules/location/containers/user-locat
 import { ProfileSettingsTabContentLayout } from '@/modules/user/components/profile-settings-tab-content-layout';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
+import { onQueryRetry } from '@/modules/core/utils/query-retry.utils';
+
 // types
 import type { Address } from '@/modules/location/types/address.types';
 
@@ -18,11 +20,7 @@ export const ProfessionalSettingsLocation: FC = () => {
       },
       {
         enabled: Boolean(me?.professional?.id),
-        retry: (retryCount, error) => {
-          if (error.data?.code === 'NOT_FOUND') return false;
-
-          return retryCount <= 2;
-        },
+        retry: (retryCount, error) => onQueryRetry(retryCount, error),
       }
     );
   // mutations
@@ -42,8 +40,10 @@ export const ProfessionalSettingsLocation: FC = () => {
   const handleSave = useCallback(async () => {
     if (!locationSelectFormRef.current) return;
 
+    // Get the address information from the locationSelectFormRef
     const address = locationSelectFormRef.current.getAddress();
 
+    // If there is no existing location and there is an address, create a new location
     if (!location && address) {
       locationCreate.mutate({
         name: address.name,
@@ -54,6 +54,7 @@ export const ProfessionalSettingsLocation: FC = () => {
       return;
     }
 
+    // If there is an existing location and there is an address, update the existing location
     if (location && address) {
       locationUpdate.mutate({
         id: location.id,
@@ -65,6 +66,7 @@ export const ProfessionalSettingsLocation: FC = () => {
       return;
     }
 
+    // If there is an existing location but no address, delete the existing location
     if (location && !address) {
       locationDelete.mutate({
         id: location.id,

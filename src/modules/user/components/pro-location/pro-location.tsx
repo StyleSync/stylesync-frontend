@@ -1,21 +1,24 @@
 'use client';
 import { type FC } from 'react';
-
-import type { ProLocationProps } from './pro-location.interface';
-import styles from './pro-location.module.scss';
+import clsx from 'clsx';
+// components
+import { Placeholder } from '@/modules/core/components/placeholder';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Map } from '@/modules/location/components/map';
+// utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
-import { Placeholder } from '@/modules/core/components/placeholder';
-import clsx from 'clsx';
+import { onQueryRetry } from '@/modules/core/utils/query-retry.utils';
+
+// type
+import type { ProLocationProps } from './pro-location.interface';
+import styles from './pro-location.module.scss';
 
 export const ProLocation: FC<ProLocationProps> = ({ userId }) => {
   // queries
-  const { data: professional, ...professionalQuery } =
-    trpc.professional.get.useQuery({
-      id: userId,
-      expand: ['user'],
-    });
+  const { data: professional } = trpc.professional.get.useQuery({
+    id: userId,
+    expand: ['user'],
+  });
   const { data: location, ...locationQuery } =
     trpc.location.getByProfessionalId.useQuery(
       {
@@ -23,13 +26,19 @@ export const ProLocation: FC<ProLocationProps> = ({ userId }) => {
       },
       {
         enabled: Boolean(professional),
-        retry: (retryCount, error) => {
-          if (error.data?.code === 'NOT_FOUND') return false;
-
-          return retryCount <= 2;
-        },
+        retry: (retryCount, error) => onQueryRetry(retryCount, error),
       }
     );
+
+  const zoomNum = 17;
+  const markers = location && [
+    { lat: location.latitude, lng: location.longitude },
+  ];
+  const center = location && {
+    lat: location.latitude,
+    lng: location.longitude,
+  };
+  const zoom = location && zoomNum;
 
   return (
     <div className={styles.root}>
@@ -45,19 +54,7 @@ export const ProLocation: FC<ProLocationProps> = ({ userId }) => {
       >
         <Typography className={styles.address}>{location?.name}</Typography>
         <div className={styles.mapContainer}>
-          <Map
-            markers={
-              location
-                ? [{ lat: location.latitude, lng: location.longitude }]
-                : []
-            }
-            center={
-              location
-                ? { lat: location.latitude, lng: location.longitude }
-                : undefined
-            }
-            zoom={location ? 17 : undefined}
-          />
+          <Map markers={markers} center={center} zoom={zoom} />
         </div>
       </Placeholder>
     </div>
