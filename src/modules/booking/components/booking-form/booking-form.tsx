@@ -6,10 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { TextField } from '@/modules/core/components/text-field';
 import { Button } from '@/modules/core/components/button';
 // type
-import type {
-  BookingFormValue,
-  BookingFormProps,
-} from './booking-form.interface';
+import type { BookingFormProps } from './booking-form.interface';
 // styles
 import styles from './booking-form.module.scss';
 
@@ -20,13 +17,15 @@ const defaultValues = {
   comment: '',
 };
 
-const validationSchema: z.Schema<BookingFormValue> = z.object({
+const bookingValidationSchema = z.object({
   name: z.string().min(1),
   lastName: z.string().min(1),
   phone: z.string().regex(/^\+\d{1,3}\d{10}$/, 'Phone number is not valid'),
   email: z.string(),
   comment: z.string(),
 });
+
+export type BookingFormValue = z.infer<typeof bookingValidationSchema>;
 
 export const BookingForm: FC<BookingFormProps> = ({
   onClickBack,
@@ -35,7 +34,7 @@ export const BookingForm: FC<BookingFormProps> = ({
 }) => {
   const form = useForm<BookingFormValue>({
     defaultValues,
-    resolver: zodResolver(validationSchema),
+    resolver: zodResolver(bookingValidationSchema),
   });
 
   return (

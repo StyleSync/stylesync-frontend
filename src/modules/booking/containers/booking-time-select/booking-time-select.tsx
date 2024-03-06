@@ -49,6 +49,10 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
     return [];
   }, [bookingData]);
 
+  const generatedDates = useMemo(() => {
+    return generateDates();
+  }, []);
+
   return (
     <div className={styles.root}>
       <div className={styles.bookingContent}>
@@ -61,7 +65,7 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
         >
           <BookingTimeSelectNavigation selectedDay={selectedDay} />
 
-          {generateDates().map((item, index) => (
+          {generatedDates.map((item, index) => (
             <SwiperSlide className={styles.swiperSlide} key={index}>
               <div
                 className={clsx(styles.dataBox, {
@@ -102,16 +106,17 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
       <div className={styles.timeRangesContainer}>
         {selectedDay && (
           <>
-            {bookingData.isLoading ? (
+            {bookingData.isLoading && (
               <div className={styles.spinnerContainer}>
                 <Spinner size='small' />
                 <Typography className={styles.loadingLabel}>
                   Searching for available time...
                 </Typography>
               </div>
-            ) : (
+            )}
+            {!bookingData.isLoading && (
               <>
-                {bookingAvalibleTimes.length > 0 ? (
+                {bookingAvalibleTimes.length > 0 &&
                   bookingAvalibleTimes.map((interval, index) => (
                     <div
                       key={index}
@@ -135,8 +140,8 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
                         )}`}
                       </Typography>
                     </div>
-                  ))
-                ) : (
+                  ))}
+                {bookingAvalibleTimes.length === 0 && (
                   <Typography className={styles.noAvailableTimeText}>
                     Sorry, <span>no free time</span>, please choose another
                     date.

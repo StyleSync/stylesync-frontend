@@ -49,7 +49,7 @@ export const ServiceOnProfessionalTableRow: FC<
             height={18}
           />
         ) : (
-          <CreateBooking btnVariant='outlined' />
+          <CreateBooking selectedService={data.id} btnVariant='outlined' />
         )}
       </div>
     </div>

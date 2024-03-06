@@ -20,14 +20,14 @@ export const BookingsList: FC<BookingsListProps> = ({ groups }) => {
           </Typography>
           <div className={styles.list}>
             <Placeholder
-              isActive={group.list.length === 0}
+              isActive={group.list?.length === 0}
               placeholder={
                 <Typography className={styles.empty} variant='body2'>
                   List is empty
                 </Typography>
               }
             >
-              {group.list.map((booking) => (
+              {group.list?.map((booking) => (
                 <BookingInfoCard
                   key={booking.id}
                   name={`${booking.guestFirstName} ${booking.guestLastName}`}
