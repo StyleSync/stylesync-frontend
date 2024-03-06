@@ -1,3 +1,4 @@
+import { type FC } from 'react';
 // components
 import { Button } from '@/modules/core/components/button';
 import { BookingModalSuccess } from '../../components/modal-success/modal-successs';
@@ -8,15 +9,13 @@ import { useBoolean } from 'usehooks-ts';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { showToast } from '@/modules/core/providers/toast-provider';
 // type
-import { type CreateBookingRequestData } from '../../components/service-booking-modal/service-booking-modal.interface';
-import { type ButtonVariant } from '@/modules/core/components/button/button.interface';
+import type { CreateBookingRequestData } from '../../components/service-booking-modal/service-booking-modal.interface';
+import type { CreateBookingProps } from './create-booking.interface';
 
-export const CreateBooking = ({
+export const CreateBooking: FC<CreateBookingProps> = ({
   isLoadingTrigger,
   btnVariant,
-}: {
-  isLoadingTrigger?: boolean;
-  btnVariant?: ButtonVariant;
+  selectedService,
 }) => {
   const isBookingOpen = useBoolean();
   const isSuccessOpen = useBoolean();
@@ -69,6 +68,7 @@ export const CreateBooking = ({
   return (
     <>
       <ServiceBookingModal
+        selectedService={selectedService}
         onOpenChange={isBookingOpen.setValue}
         isOpen={isBookingOpen.value}
         onConfirm={handleConfirm}

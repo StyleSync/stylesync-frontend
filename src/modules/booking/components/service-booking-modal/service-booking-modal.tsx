@@ -11,7 +11,7 @@ import { ServiceOnProfessionalSelect } from '@/modules/service/components/servic
 // type
 import { type DialogProps } from '@/modules/core/components/dialog/dialog.interface';
 import { type AvailableBookingTime } from '@/server/types';
-import { type BookingFormValue } from '../booking-form/booking-form.interface';
+import { type BookingFormValue } from '@/modules/booking/components/booking-form/booking-form';
 import { type ServiceBookingModalProps } from './service-booking-modal.interface';
 // style
 import styles from './service-booking-modal.module.scss';
@@ -30,6 +30,12 @@ export const ServiceBookingModal: FC<
   const [step, setStep] = useState<'service' | 'datetime' | 'confirmation'>(
     'service'
   );
+
+  useEffect(() => {
+    if (props.selectedService && props.isOpen) {
+      setServiceOnProfessional(props.selectedService);
+    }
+  }, [props.selectedService, props.isOpen]);
 
   useEffect(() => {
     if (props.isOpen === false) {

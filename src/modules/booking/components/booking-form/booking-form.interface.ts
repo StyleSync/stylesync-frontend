@@ -1,10 +1,4 @@
-export type BookingFormValue = {
-  name: string;
-  lastName?: string;
-  phone: string;
-  email: string;
-  comment: string;
-};
+import { type BookingFormValue } from './booking-form';
 
 export type BookingFormProps = {
   onSubmit: (data: BookingFormValue) => void;

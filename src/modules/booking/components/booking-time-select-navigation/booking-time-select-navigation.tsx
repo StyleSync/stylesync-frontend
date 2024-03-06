@@ -11,12 +11,6 @@ import type { BookingTimeSelectNavigationProps } from './booking-time-select.int
 import styles from './booking-time-select-navigation.module.scss';
 import { format } from 'date-fns';
 
-const selectDate = (
-  <Typography variant='body1' className={styles.selectDate}>
-    Select a date
-  </Typography>
-);
-
 export const BookingTimeSelectNavigation: FC<
   BookingTimeSelectNavigationProps
 > = ({ selectedDay }) => {
@@ -31,6 +25,12 @@ export const BookingTimeSelectNavigation: FC<
 
     return null;
   }, [selectedDay, dates]);
+
+  const selectDate = (
+    <Typography variant='body1' className={styles.selectDate}>
+      Select a date
+    </Typography>
+  );
 
   return (
     <div className={styles.dateNavigation}>

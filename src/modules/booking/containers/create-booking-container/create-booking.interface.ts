@@ -1,6 +1,7 @@
+import { type ButtonVariant } from '@/modules/core/components/button/button.interface';
+
 export type CreateBookingProps = {
-  service: string;
-  price: string;
-  time: string;
-  status: string;
+  isLoadingTrigger?: boolean;
+  btnVariant?: ButtonVariant;
+  selectedService?: string;
 };
