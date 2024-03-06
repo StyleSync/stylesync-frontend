@@ -40,34 +40,33 @@ export const ProfessionalSettingsLocation: FC = () => {
   const handleSave = useCallback(async () => {
     if (!locationSelectFormRef.current) return;
 
-    // Get the address information from the locationSelectFormRef
-    const address = locationSelectFormRef.current.getAddress();
+    const newLocation = locationSelectFormRef.current.getAddress();
 
-    // If there is no existing location and there is an address, create a new location
-    if (!location && address) {
+    // If there is no existing location and there is an newLocation , create a new location
+    if (!location && newLocation) {
       locationCreate.mutate({
-        name: address.name,
-        latitude: address.lat,
-        longitude: address.lng,
+        name: newLocation.name,
+        latitude: newLocation.lat,
+        longitude: newLocation.lng,
       });
 
       return;
     }
 
-    // If there is an existing location and there is an address, update the existing location
-    if (location && address) {
+    // If there is an existing location and there is an newLocation , update the existing location
+    if (location && newLocation) {
       locationUpdate.mutate({
         id: location.id,
-        name: address.name,
-        latitude: address.lat,
-        longitude: address.lng,
+        name: newLocation.name,
+        latitude: newLocation.lat,
+        longitude: newLocation.lng,
       });
 
       return;
     }
 
     // If there is an existing location but no address, delete the existing location
-    if (location && !address) {
+    if (location && !newLocation) {
       locationDelete.mutate({
         id: location.id,
       });

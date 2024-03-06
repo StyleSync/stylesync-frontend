@@ -17,6 +17,7 @@ import { Placeholder } from '@/modules/core/components/placeholder';
 import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
+import { onQueryRetry } from '@/modules/core/utils/query-retry.utils';
 import { getFullName } from '@/modules/user/utils/user.utils';
 
 import type { ProfileInfoBigCardProps } from './professional-info-big-card.interface';
@@ -48,11 +49,7 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
       },
       {
         enabled: Boolean(professional),
-        retry: (retryCount, error) => {
-          if (error.data?.code === 'NOT_FOUND') return false;
-
-          return retryCount <= 2;
-        },
+        retry: (retryCount, error) => onQueryRetry(retryCount, error),
       }
     );
   // state
