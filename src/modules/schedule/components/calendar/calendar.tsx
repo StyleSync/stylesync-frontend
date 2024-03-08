@@ -33,12 +33,23 @@ export const Calendar: FC<CalendarProps> = () => {
   return (
     <div className='mostly-customized'>
       <FullCalendar
+        customButtons={{
+          customButtons: {
+            text: 'Approved',
+          },
+          customButtons2: {
+            text: 'Requested',
+          },
+          customButtons3: {
+            text: 'Past',
+          },
+        }}
         plugins={[timeGridPlugin]}
         initialView='timeGridWeek'
         headerToolbar={{
           left: 'today prev,next',
           center: 'title',
-          right: '',
+          right: 'customButtons customButtons2 customButtons3',
         }}
         dayHeaderFormat={({ date }) => format(date.marker, 'dd E')}
         slotLabelFormat={{

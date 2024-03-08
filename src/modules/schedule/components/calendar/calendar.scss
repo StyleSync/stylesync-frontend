@@ -16,6 +16,13 @@
   display: flex;
   justify-content: left;
   column-gap: utils.spacing(3);
+  .fc-toolbar-chunk:nth-child(2) {
+    flex: 1;
+  }
+  .fc-toolbar-chunk:nth-child(3) {
+    display: flex;
+    column-gap: 15px;
+  }
 }
 
 .fc-theme-standard {
@@ -97,12 +104,31 @@
     }
   }
 
+  .fc-timegrid-col.fc-day-today {
+    background: transparent;
+  }
+
   .fc-timegrid-now-indicator-arrow {
     display: none;
   }
 
   .fc-scroller {
     overflow-y: auto !important;
+  }
+
+  .fc-scroller::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .fc-scroller::-webkit-scrollbar-thumb {
+    width: 8px;
+    background-color: variables.$primary-light-color;
+    border-radius: 10px;
+    border-color: variables.$primary-color !important;
+  }
+
+  .fc-scroller::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
   }
 
   .fc-button-group {
@@ -142,6 +168,108 @@
       }
     }
   }
+
+  .fc-customButtons-button {
+    background-color: #fff;
+    color: black;
+    font-size: 14px;
+    border: transparent;
+    position: relative;
+    pointer-events: none;
+    &::before {
+      position: absolute;
+      content: '';
+      top: 9px;
+      left: -13px;
+      width: 15px;
+      height: 15px;
+      background-color: rgba(38, 201, 103, 1);
+      border-radius: 50%;
+    }
+    &:hover {
+      cursor: default;
+      background-color: #fff;
+      color: black;
+    }
+    &:active {
+      border-color: #fff !important;
+      color: black !important;
+      background-color: transparent !important;
+    }
+    &:focus {
+      box-shadow: none;
+      border-color: #fff !important;
+    }
+  }
+
+  .fc-customButtons2-button {
+    background-color: #fff;
+    color: black;
+    font-size: 14px;
+    border: transparent;
+    position: relative;
+    pointer-events: none;
+
+    &::before {
+      position: absolute;
+      content: '';
+      top: 9px;
+      left: -13px;
+      width: 15px;
+      height: 15px;
+      background-color: rgba(254, 204, 69, 1);
+
+      border-radius: 50%;
+    }
+    &:hover {
+      cursor: default;
+      background-color: #fff;
+      color: black;
+    }
+    &:active {
+      border-color: #fff !important;
+      color: black !important;
+      background-color: transparent !important;
+    }
+    &:focus {
+      box-shadow: none;
+      border-color: #fff !important;
+    }
+  }
+
+  .fc-customButtons3-button {
+    background-color: #fff;
+    color: black;
+    font-size: 14px;
+    border: transparent;
+    position: relative;
+    pointer-events: none;
+
+    &::before {
+      position: absolute;
+      content: '';
+      top: 9px;
+      left: -13px;
+      width: 15px;
+      height: 15px;
+      background-color: rgba(147, 157, 170, 1);
+      border-radius: 50%;
+    }
+    &:hover {
+      cursor: default;
+      background-color: #fff;
+      color: black;
+    }
+    &:active {
+      border-color: #fff !important;
+      color: black !important;
+      background-color: transparent !important;
+    }
+    &:focus {
+      box-shadow: none;
+      border-color: #fff !important;
+    }
+  }
 }
 
 .left-col {
@@ -160,3 +288,9 @@
     background-color: #ffffff;
   }
 }
+
+// .fc-toolbar-chunk {
+//   .custombuttons2 {
+//     background-color: red !important;
+//   }
+// }
