@@ -1,19 +1,24 @@
 @use '@/styles/variables.module';
 @use '@/styles/utils';
+@use '@/styles/mixins';
 
 .info {
   display: flex;
   align-items: center;
   column-gap: utils.spacing(2);
 
+  @include mixins.phone {
+    display: none;
+  }
+
   .avatar {
     background-color: #F4E0E4;
 
     &Skeleton {
-      width: utils.spacing(10);
-      height: utils.spacing(10);
+      width: 70px;
+      height: 70px;
       flex: unset;
-      border-radius: 15%;
+      border-radius: 50%;
       border: 2px solid #fff;
       box-shadow: variables.$main-box-shadow;
     }

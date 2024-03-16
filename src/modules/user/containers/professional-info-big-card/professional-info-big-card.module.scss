@@ -21,13 +21,13 @@
     display: flex;
     align-items: center;
     margin-top: auto;
+    flex-direction: column;
     column-gap: utils.spacing(2);
     padding: utils.spacing(3, 3);
     row-gap: utils.spacing(1);
 
     @include mixins.phone {
       padding: utils.spacing(2);
-      flex-direction: column;
     }
 
     .avatar {
@@ -41,7 +41,7 @@
         width: 80px;
         height: 80px;
         flex: unset;
-        border-radius: 15%;
+        border-radius: 50%;
       }
     }
 

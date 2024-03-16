@@ -30,9 +30,12 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
   const router = useRouter();
   const deviceType = useDeviceType();
   // queries
-  const { data: me } = trpc.user.me.useQuery(undefined, {
-    enabled: session.status === 'authenticated',
-  });
+  const { data: me } = trpc.user.me.useQuery(
+    { expand: ['professional'] },
+    {
+      enabled: session.status === 'authenticated',
+    }
+  );
 
   useEffect(() => {
     router.prefetch('/app/settings');
@@ -116,7 +119,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
               <Avatar
                 className={styles.avatar}
                 url={me?.avatar}
-                fallback={<Emoji name='sunglasses' width={30} height={30} />}
+                fallback={<Emoji name='sunglasses' width={24} height={24} />}
               />
               <Icon name='chevron-bottom' width={12} />
             </button>

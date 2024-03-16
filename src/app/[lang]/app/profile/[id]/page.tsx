@@ -4,7 +4,6 @@ import { ProfessionalInfoBigCard } from '@/modules/user/containers/professional-
 import { AboutMe } from '@/modules/user/components/about-me';
 import { GallerySection } from '@/modules/user/components/gallery-section';
 import { UserServices } from '@/modules/user/components/user-services';
-import { ProfessionalProfileTabs } from '@/modules/user/components/professional-profile-tabs';
 import { ProfileSectionLayout } from '@/modules/user/components/profile-section-layout';
 import { ProLocation } from '@/modules/user/components/pro-location';
 import { ProBookActions } from '@/modules/user/containers/pro-book-actions';
@@ -18,9 +17,6 @@ export default async function Profile({ params }: PageParams<{ id: string }>) {
     <main className={styles.root}>
       <section className={clsx(styles.section, styles.headerSection)}>
         <ProfessionalInfoBigCard userId={params.id} />
-      </section>
-      <section className={clsx(styles.section, styles.tabsSection)}>
-        <ProfessionalProfileTabs />
       </section>
       <div className={styles.divider} />
       <div className={styles.sectionGroup}>

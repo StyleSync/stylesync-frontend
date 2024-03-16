@@ -10,6 +10,10 @@
   width: 100%;
 
   .avatarSelect {
+    margin: 0 auto utils.spacing(1);
+    flex-direction: column;
+    row-gap: utils.spacing(1);
+
     @include mixins.phone {
       margin: 0 auto;
       flex-direction: column;

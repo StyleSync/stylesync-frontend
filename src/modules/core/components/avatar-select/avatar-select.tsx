@@ -2,16 +2,16 @@ import { type FC, useCallback, useRef } from 'react';
 import clsx from 'clsx';
 // components
 import { Avatar } from '@/modules/core/components/avatar';
-import { Emoji } from '@/modules/core/components/emoji';
 import { Button } from '@/modules/core/components/button';
 
-import type { AvatarSelectMobileProps } from './avatar-select.interface';
+import type { AvatarSelectProps } from './avatar-select.interface';
 import styles from './avatar-select.module.scss';
 
-export const AvatarSelect: FC<AvatarSelectMobileProps> = ({
+export const AvatarSelect: FC<AvatarSelectProps> = ({
   style,
   className,
   value,
+  onRemove,
   ...props
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -24,9 +24,9 @@ export const AvatarSelect: FC<AvatarSelectMobileProps> = ({
     <div className={clsx(styles.root, className)} style={style}>
       <Avatar
         className={styles.avatar}
-        size={70}
-        fallback={<Emoji name='sunglasses' width={40} height={40} />}
+        size={80}
         url={value}
+        shape='circle'
         shadow
       />
       <div className={styles.actions}>
@@ -43,6 +43,7 @@ export const AvatarSelect: FC<AvatarSelectMobileProps> = ({
               className={clsx(styles.action, styles.delete)}
               text='Remove'
               variant='danger'
+              onClick={onRemove}
             />
           </>
         )}

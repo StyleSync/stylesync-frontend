@@ -5,6 +5,8 @@ import { prisma } from '@/server/prisma';
 import { Day } from '@prisma/client';
 import { defaultScheduleSelect } from '@/server/selectors/schedule';
 import { getProfessionalFromContext } from '@/server/utils/prisma-utils';
+import { mapDateToDayEnum } from '@/server/utils/helpers';
+import { isAfter, startOfDay } from 'date-fns';
 
 const defaultLimit = 10;
 const maxLimit = 100;
@@ -71,10 +73,28 @@ export const scheduleRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
+      const inputDate = input.date
+        ? startOfDay(new Date(input.date))
+        : input.date;
+
       if (input.isSpecificDay && !input.date) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: `Specific day schedule must have a date`,
+        });
+      }
+
+      if (isAfter(new Date(input.start), new Date(input.end))) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: `End Date should be after Start Date`,
+        });
+      }
+
+      if (input.date && mapDateToDayEnum(input.date) !== input.day) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: `Day and date do not match`,
         });
       }
 
@@ -97,8 +117,28 @@ export const scheduleRouter = router({
         }
       }
 
+      const existingSchedule = await prisma.schedule.findFirst({
+        where: {
+          professionalId: professional.id,
+          isSpecificDay: input.isSpecificDay,
+          day: input.day,
+          date: inputDate,
+        },
+      });
+
+      if (existingSchedule) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: `There is already a schedule for this day`,
+        });
+      }
+
       return prisma.schedule.create({
-        data: { ...input, professionalId: professional.id },
+        data: {
+          ...input,
+          date: inputDate,
+          professionalId: professional.id,
+        },
         select: defaultScheduleSelect,
       });
     }),
@@ -108,18 +148,6 @@ export const scheduleRouter = router({
         id: z.string().min(1, 'Required'),
         start: z.string().datetime().optional(),
         end: z.string().datetime().optional(),
-        day: z
-          .enum([
-            Day.MONDAY,
-            Day.TUESDAY,
-            Day.WEDNESDAY,
-            Day.THURSDAY,
-            Day.FRIDAY,
-            Day.SATURDAY,
-            Day.SUNDAY,
-          ])
-          .optional(),
-        date: z.string().optional(),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -130,6 +158,9 @@ export const scheduleRouter = router({
         select: {
           professionalId: true,
           id: true,
+          date: true,
+          start: true,
+          end: true,
         },
       });
 
@@ -144,6 +175,18 @@ export const scheduleRouter = router({
         throw new TRPCError({
           code: 'FORBIDDEN',
           message: `You dont have permission to update schedule with id '${input.id}'`,
+        });
+      }
+
+      if (
+        isAfter(
+          new Date(input.start ?? schedule.start),
+          new Date(input.end ?? schedule.end)
+        )
+      ) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: `End Date should be after Start Date`,
         });
       }
 

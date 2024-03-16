@@ -7,6 +7,7 @@ import { scheduleRouter } from '@/server/routers/schedule';
 import { breakRouter } from '@/server/routers/break';
 import { portfolioRouter } from '@/server/routers/portfolio';
 import { locationRouter } from '@/server/routers/location';
+import { bookingRouter } from '@/server/routers/booking';
 
 export const appRouter = router({
   user: userRouter,
@@ -17,6 +18,7 @@ export const appRouter = router({
   break: breakRouter,
   portfolio: portfolioRouter,
   location: locationRouter,
+  booking: bookingRouter,
 });
 // export type definition of API
 export type AppRouter = typeof appRouter;

@@ -4,6 +4,8 @@ import { z } from 'zod';
 import { prisma } from '@/server/prisma';
 import { defaultBreakSelect } from '@/server/selectors/break';
 import { checkScheduleBreakChangePermission } from '@/server/utils/prisma-utils';
+import { isAfter } from 'date-fns';
+import { mergeDates } from '@/server/utils/helpers';
 
 const defaultLimit = 10;
 const maxLimit = 100;
@@ -62,6 +64,18 @@ export const breakRouter = router({
     .mutation(async ({ input, ctx }) => {
       await checkScheduleBreakChangePermission(ctx, input.scheduleId);
 
+      if (
+        isAfter(
+          new Date(mergeDates(new Date(), input.start)),
+          new Date(mergeDates(new Date(), input.end))
+        )
+      ) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: `End Date should be after Start Date`,
+        });
+      }
+
       return prisma.break.create({
         data: { ...input },
         select: defaultBreakSelect,
@@ -92,6 +106,18 @@ export const breakRouter = router({
       }
 
       await checkScheduleBreakChangePermission(ctx, scheduleBreak.scheduleId);
+
+      if (
+        isAfter(
+          new Date(mergeDates(new Date(), input.start)),
+          new Date(mergeDates(new Date(), input.end))
+        )
+      ) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: `End Date should be after Start Date`,
+        });
+      }
 
       return prisma.break.update({
         where: { id: input.id },

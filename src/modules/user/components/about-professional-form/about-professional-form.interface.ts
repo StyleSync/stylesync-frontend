@@ -1,9 +1,9 @@
 export type AboutProfessionalFormProps = {
   formId?: string;
   onSubmit?: (
-    data: AboutProfessionalFormValues & { avatar: File | null }
+    data: AboutProfessionalFormValues & { avatar?: File | string | null }
   ) => void;
-  initialValues?: Partial<AboutProfessionalFormValues>;
+  initialValues?: Partial<AboutProfessionalFormValues & { avatar: string }>;
 };
 
 export type AboutProfessionalFormValues = {

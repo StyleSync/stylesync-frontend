@@ -93,7 +93,6 @@ export const useWeekdayScheduleSaveMutation = (
     if (schedule) {
       await scheduleUpdate({
         id: schedule.id,
-        day: schedule.day,
         start: start.toISOString(),
         end: end.toISOString(),
       });

@@ -6,6 +6,7 @@ import { Icon } from '@/modules/core/components/icon';
 
 import type { AvatarProps, AvatarSize } from './avatar.interface';
 import styles from './avatar.module.scss';
+import { useBoolean } from 'usehooks-ts';
 
 const SIZES: Record<AvatarSize, number> = {
   small: 40,
@@ -23,6 +24,8 @@ export const Avatar: FC<AvatarProps> = ({
   className,
 }) => {
   const _size = typeof size === 'number' ? size : SIZES[size];
+  // state
+  const isAvatarLoading = useBoolean(!!url);
 
   return (
     <div
@@ -31,6 +34,7 @@ export const Avatar: FC<AvatarProps> = ({
         styles[shape],
         {
           [styles.shadow]: shadow,
+          [styles.loading]: isAvatarLoading.value,
         },
         className
       )}
@@ -40,15 +44,22 @@ export const Avatar: FC<AvatarProps> = ({
         ...style,
       }}
     >
+      <div
+        className={clsx(styles.skeleton, 'skeleton', {
+          [styles.active]: isAvatarLoading.value,
+        })}
+      />
       {url && (
         <Image
           src={url}
           alt='Avatar'
           width={_size}
           height={_size}
-          style={{
-            objectFit: 'cover',
-          }}
+          className={clsx(styles.image, {
+            [styles.loading]: isAvatarLoading.value,
+          })}
+          onLoadStart={isAvatarLoading.setTrue}
+          onLoadingComplete={isAvatarLoading.setFalse}
         />
       )}
       {!url && fallback && (

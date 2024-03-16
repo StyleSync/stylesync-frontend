@@ -1,6 +1,9 @@
 import type { Context } from '@/server/context';
 import { prisma } from '@/server/prisma';
-import { defaultProfessionalSelect } from '@/server/selectors';
+import {
+  defaultProfessionalSelect,
+  defaultServiceOnProfessionalSelect,
+} from '@/server/selectors';
 import { TRPCError } from '@trpc/server';
 
 export const getProfessionalFromContext = async (ctx: Context) => {
@@ -18,6 +21,24 @@ export const getProfessionalFromContext = async (ctx: Context) => {
   }
 
   return professional;
+};
+
+export const getProfessionalFromServiceOnProfessional = async (
+  serviceOnProfessionalId: string
+) => {
+  const serviceOnProfessional = await prisma.serviceOnProfessional.findUnique({
+    where: { id: serviceOnProfessionalId },
+    select: defaultServiceOnProfessionalSelect,
+  });
+
+  if (!serviceOnProfessional) {
+    throw new TRPCError({
+      code: 'NOT_FOUND',
+      message: `No service on professional with id '${serviceOnProfessionalId}'`,
+    });
+  }
+
+  return serviceOnProfessional.professional;
 };
 
 export const checkScheduleBreakChangePermission = async (

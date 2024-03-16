@@ -1,13 +1,13 @@
 import { type ChangeEvent, useCallback, useMemo, useState } from 'react';
 
-export const useImageInputState = () => {
+export const useImageInputState = (initial?: File | string | null) => {
   // state
-  const [file, setFile] = useState<File | null>(null);
+  const [file, setFile] = useState<File | string | null>(initial ?? null);
   // memo
   const preview = useMemo(() => {
-    if (file) {
-      return URL.createObjectURL(file);
-    }
+    if (file && typeof file === 'object') return URL.createObjectURL(file);
+
+    if (typeof file === 'string') return file;
   }, [file]);
 
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -16,9 +16,14 @@ export const useImageInputState = () => {
     }
   }, []);
 
+  const onRemove = useCallback(() => {
+    setFile(null);
+  }, []);
+
   return {
     file,
     preview,
     onChange,
+    onRemove,
   };
 };
