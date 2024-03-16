@@ -1,11 +1,22 @@
-import { type FC, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import type L from 'leaflet';
 import dynamic from 'next/dynamic';
+import { Button } from '@/modules/core/components/button';
 // types
 import type { Address } from '@/modules/location/types/address.types';
 import type { UserMarker } from '@/modules/location/components/map/map.interface';
 
-import type { UserLocationSelectFormProps } from './user-location-select-form.interface';
+import type {
+  UserLocationSelectFormProps,
+  UserLocationSelectFormHandle,
+} from './user-location-select-form.interface';
 import styles from './user-location-select-form.module.scss';
 
 const ADDRESS_ZOOM = 17;
@@ -26,8 +37,19 @@ const Map = dynamic(
   }
 );
 
-export const UserLocationSelectForm: FC<UserLocationSelectFormProps> = () => {
-  const [address, setAddress] = useState<Address | null>(null);
+const UserLocationSelectForm = forwardRef<
+  UserLocationSelectFormHandle,
+  UserLocationSelectFormProps
+>(({ location }, ref) => {
+  const [address, setAddress] = useState<Address | null>(
+    location
+      ? {
+          name: location.name,
+          lat: location.latitude,
+          lng: location.longitude,
+        }
+      : null
+  );
   // refs
   const mapRef = useRef<L.Map>(null);
   // memo
@@ -62,6 +84,10 @@ export const UserLocationSelectForm: FC<UserLocationSelectFormProps> = () => {
     ];
   }, [address]);
 
+  useImperativeHandle(ref, () => ({
+    getAddress: () => address,
+  }));
+
   useEffect(() => {
     if (address) {
       mapRef.current?.flyTo(
@@ -77,6 +103,10 @@ export const UserLocationSelectForm: FC<UserLocationSelectFormProps> = () => {
     }
   }, [address]);
 
+  const handleClearAddress = () => {
+    setAddress(null);
+  };
+
   return (
     <div className={styles.root}>
       <div className={styles.searchBar}>
@@ -85,10 +115,26 @@ export const UserLocationSelectForm: FC<UserLocationSelectFormProps> = () => {
           onChange={setAddress}
           inputProps={{
             label: 'Address *',
+            endAdornment: (
+              <Button
+                variant='unstyled'
+                icon='close'
+                onClick={handleClearAddress}
+              />
+            ),
           }}
         />
       </div>
-      <Map markers={markers} mapRef={mapRef} />
+      <Map
+        mapRef={mapRef}
+        markers={markers}
+        center={address ? [address.lat, address.lng] : undefined}
+        zoom={address ? ADDRESS_ZOOM : undefined}
+      />
     </div>
   );
-};
+});
+
+UserLocationSelectForm.displayName = 'UserLocationSelectForm';
+
+export { UserLocationSelectForm };

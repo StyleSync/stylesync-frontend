@@ -32,6 +32,14 @@ enum Day {
   SUNDAY
 }
 
+enum BookingStatus {
+  PENDING
+  FINISHED
+  REJECTED
+  CANCELED
+  MISSED
+}
+
 // Next Auth models
 model Account {
   id                String  @id @default(cuid())
@@ -198,11 +206,13 @@ model Booking {
   date                  DateTime
   userId                String?
   user                  User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
-  guestFirstName        String?
+  code                  String                @unique
+  guestFirstName        String
   guestLastName         String?
-  guestPhone            String?
+  guestPhone            String
   guestEmail            String?
-  status                String
+  guestComment          String?
+  status                BookingStatus         @default(PENDING)
   serviceProfessionalId String
   serviceProfessional   ServiceOnProfessional @relation(fields: [serviceProfessionalId], references: [id])
   createdAt             DateTime              @default(now())

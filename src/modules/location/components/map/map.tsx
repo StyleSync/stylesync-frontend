@@ -25,7 +25,13 @@ import styles from './map.module.scss';
 
 const defaultCoordinates = { latitude: 48.3358856, longitude: 31.1788196 };
 
-const Map: FC<MapProps> = ({ markers, showUserPosition = false, ...props }) => {
+const Map: FC<MapProps> = ({
+  center,
+  markers,
+  showUserPosition = false,
+  zoom = 6,
+  ...props
+}) => {
   // state
   const [userPosition, setUserPosition] = useState<null | [number, number]>(
     null
@@ -64,8 +70,10 @@ const Map: FC<MapProps> = ({ markers, showUserPosition = false, ...props }) => {
     <div className={styles.mapContainer}>
       <MapContainer
         ref={combinedRef}
-        center={[defaultCoordinates.latitude, defaultCoordinates.longitude]}
-        zoom={6}
+        center={
+          center || [defaultCoordinates.latitude, defaultCoordinates.longitude]
+        }
+        zoom={zoom}
         scrollWheelZoom
         zoomControl={false}
         data-swipable='true'
