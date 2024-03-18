@@ -11,6 +11,7 @@ import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 // types
+// import type { GalleryImage } from '@/modules/core/components/gallery/gallery.interface';
 import type { ButtonProps } from '@/modules/core/components/button/button.interface';
 import type { ProfessionalGalleryFormProps } from './professional-gallery-form.interface';
 // style
@@ -18,10 +19,10 @@ import styles from './professional-gallery-form.module.scss';
 
 export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
   // state
+  // const [images, setImages] = useState<File[]>([]);
   const isFileUploading = useBoolean();
   const windowSizeType = useDeviceType();
   const isOpenUploadPhotoModal = useBoolean();
-
   // memo
   const buttonProps = useMemo<Partial<ButtonProps>>(() => {
     if (windowSizeType === 'mobile') {
