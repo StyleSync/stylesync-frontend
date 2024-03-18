@@ -49,7 +49,9 @@ export const ServiceBookingModal: FC<
   const handleNext = () => {
     if (step === 'service') {
       setStep('datetime');
-    } else if (step === 'datetime') {
+    }
+
+    if (step === 'datetime') {
       setStep('confirmation');
     }
   };
@@ -57,12 +59,12 @@ export const ServiceBookingModal: FC<
   const handleBack = () => {
     if (step === 'confirmation') {
       setStep('datetime');
-
       setSelectedDay(null);
       setSelectedTimeRange(null);
-    } else if (step === 'datetime') {
-      setStep('service');
+    }
 
+    if (step === 'datetime') {
+      setStep('service');
       setSelectedDay(null);
       setSelectedTimeRange(null);
     }

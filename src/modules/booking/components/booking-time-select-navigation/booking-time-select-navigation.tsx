@@ -17,13 +17,13 @@ export const BookingTimeSelectNavigation: FC<
   const swiper = useSwiper();
   const dates = generateDates();
   const selectedDate = useMemo(() => {
-    if (selectedDay) {
-      return dates.find((item) => {
-        return selectedDay === item;
-      });
+    if (!selectedDay) {
+      return null;
     }
 
-    return null;
+    return dates.find((item) => {
+      return selectedDay === item;
+    });
   }, [selectedDay, dates]);
 
   const selectDate = (

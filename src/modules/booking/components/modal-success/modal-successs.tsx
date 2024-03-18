@@ -1,16 +1,16 @@
 import { type FC } from 'react';
 import { format } from 'date-fns';
-
+import { Currency } from '@prisma/client';
 // components
 import { Button } from '@/modules/core/components/button';
 import { Dialog } from '@/modules/core/components/dialog';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Icon } from '@/modules/core/components/icon';
 import { InfoBox } from '../modal-success-infobox/info-box';
-
+// type
+import { type BookingModalSuccessProps } from './modal-success.interface';
 // style
 import styles from './modal-success.module.scss';
-import { type BookingModalSuccessProps } from './modal-success.interface';
 
 export const BookingModalSuccess: FC<BookingModalSuccessProps> = ({
   bookingData,
@@ -39,22 +39,15 @@ export const BookingModalSuccess: FC<BookingModalSuccessProps> = ({
   const statusSuccess =
     bookingData?.status === 'PENDING' ? 'Requested' : 'Approved';
 
-  let currency = '';
+  const currencies = {
+    [Currency.USD]: '$',
+    [Currency.UAH]: '₴',
+    [Currency.EUR]: '€',
+    default: '',
+  };
 
-  switch (bookingData?.serviceProfessional.currency) {
-    case 'EUR':
-      currency = '€';
-      break;
-    case 'UAH':
-      currency = '₴';
-      break;
-    case 'USD':
-      currency = '$';
-      break;
-    default:
-      currency = '';
-      break;
-  }
+  const currency =
+    currencies[bookingData?.serviceProfessional.currency ?? 'default'];
 
   return (
     <Dialog {...props} classes={{ content: styles.content }}>
