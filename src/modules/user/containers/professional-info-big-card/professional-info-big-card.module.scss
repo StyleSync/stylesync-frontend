@@ -7,7 +7,6 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 270px;
   overflow: hidden;
   border-radius: variables.$border-radius-medium;
   box-shadow: variables.$main-box-shadow;
@@ -21,7 +20,7 @@
     display: flex;
     align-items: center;
     margin-top: auto;
-    flex-direction: column;
+    flex-direction: row;
     column-gap: utils.spacing(2);
     padding: utils.spacing(3, 3);
     row-gap: utils.spacing(1);
@@ -179,6 +178,26 @@
       @include mixins.phone {
         display: none;
       }
+    }
+  }
+
+  .titleContainer {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+  }
+
+  .proBadge {
+    display: flex;
+    padding: 4px 12px;
+    box-shadow: variables.$main-box-shadow;
+    background-color: transparent;
+    border: 1px solid #fee140;
+    width: fit-content;
+    border-radius: variables.$border-radius-small;
+
+    span {
+      color: rgb(255 244 199);
     }
   }
 }
