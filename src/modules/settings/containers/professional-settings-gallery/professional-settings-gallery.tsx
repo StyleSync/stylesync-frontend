@@ -5,16 +5,7 @@ import { ProfessionalGalleryForm } from '@/modules/user/components/professional-
 
 export const ProfessionalSettingsGallery: FC = () => {
   return (
-    <ProfileSettingsTabContentLayout
-      title='Gallery settings'
-      icon='folder'
-      actions={[
-        {
-          text: 'Save',
-          disabled: true,
-        },
-      ]}
-    >
+    <ProfileSettingsTabContentLayout title='Gallery settings' icon='folder'>
       <ProfessionalGalleryForm />
     </ProfileSettingsTabContentLayout>
   );

@@ -148,34 +148,6 @@ const imagesData = [
     src: 'https://c4.staticflickr.com/8/7476/28973628875_069e938525_b.jpg',
     width: 320,
   },
-  {
-    caption: 'Untitled (Jan Vasek - jeshoots.com)',
-    height: 179,
-    original: 'https://c6.staticflickr.com/9/8593/28357129133_f04c73bf1e_b.jpg',
-    src: 'https://c6.staticflickr.com/9/8593/28357129133_f04c73bf1e_b.jpg',
-    width: 320,
-  },
-  {
-    caption: 'Untitled (moveast.me)',
-    height: 215,
-    original: 'https://c6.staticflickr.com/9/8893/28897116141_641b88e342_b.jpg',
-    src: 'https://c6.staticflickr.com/9/8893/28897116141_641b88e342_b.jpg',
-    width: 320,
-  },
-  {
-    caption: 'A photo by 贝莉儿 NG. (unsplash.com)',
-    height: 320,
-    original: 'https://c1.staticflickr.com/9/8056/28354485944_148d6a5fc1_b.jpg',
-    src: 'https://c1.staticflickr.com/9/8056/28354485944_148d6a5fc1_b.jpg',
-    width: 257,
-  },
-  {
-    caption: 'A photo by Matthew Wiebe. (unsplash.com)',
-    height: 320,
-    original: 'https://c7.staticflickr.com/9/8824/28868764222_19f3b30773_b.jpg',
-    src: 'https://c7.staticflickr.com/9/8824/28868764222_19f3b30773_b.jpg',
-    width: 226,
-  },
 ];
 
 const rowsToAdd = 2;

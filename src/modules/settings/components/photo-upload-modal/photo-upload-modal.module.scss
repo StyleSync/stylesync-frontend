@@ -11,7 +11,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 460px;
+  width: 480px;
   padding: utils.spacing(3);
 }
 
@@ -37,4 +37,11 @@
   flex-direction: column;
   row-gap: 30px;
   align-items: center;
+}
+
+.image {
+  border-radius: 21px;
+  object-fit: cover;
+  width: 220px;
+  height: 220px;
 }

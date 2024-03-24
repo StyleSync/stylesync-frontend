@@ -1,5 +1,3 @@
-import type { GalleryProps as ReactGridGalleryProps } from 'react-grid-gallery';
-
 export type GalleryImage = {
   src: string;
   original: string;

@@ -1,3 +1,3 @@
 export type PhotoUploadProps = {
-  onSubmit: () => void;
+  imageId?: string;
 };

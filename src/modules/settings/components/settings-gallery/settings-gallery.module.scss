@@ -1,0 +1,17 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.root {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  row-gap: utils.spacing(1);
+  column-gap: utils.spacing(1);
+}
+
+.imagePreview {
+  border-radius: 21px;
+  object-fit: cover;
+  width: 150px;
+  height: 150px;
+}
