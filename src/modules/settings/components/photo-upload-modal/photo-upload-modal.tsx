@@ -143,6 +143,11 @@ export const PhotoUploadModal: FC<
   useEffect(() => {
     if (!props.isOpen) {
       form.reset();
+    } else if (uploadedPortfolio.data) {
+      form.reset({
+        title: uploadedPortfolio.data.title,
+        comment: uploadedPortfolio.data.description || '',
+      });
     }
 
     if (uploadedPortfolio.data) {
