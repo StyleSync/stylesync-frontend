@@ -4,7 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 // components
 import { Icon } from '@/modules/core/components/icon';
-import { PhotoUploadModal } from '../photo-upload-modal';
+import { PhotoUploadModal } from '@/modules/settings/components/photo-upload-modal';
 // utils
 import { showToast } from '@/modules/core/providers/toast-provider';
 import { trpc } from '@/modules/core/utils/trpc.utils';

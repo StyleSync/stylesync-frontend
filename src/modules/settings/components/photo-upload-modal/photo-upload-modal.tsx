@@ -26,7 +26,6 @@ import { type DialogProps } from '@/modules/core/components/dialog/dialog.interf
 import type { PhotoUploadProps } from './photo-upload-modal.interface';
 // style
 import styles from './photo-upload-modal.module.scss';
-// import { getQueryKey } from '@trpc/react-query';
 
 const defaultValues = {
   title: '',
@@ -61,8 +60,6 @@ export const PhotoUploadModal: FC<
   const uploadMutation = useImageUploadMutation();
   const portfolioCreateMutation = trpc.portfolio.create.useMutation();
   const portfolioUpdateMutation = trpc.portfolio.update.useMutation();
-
-  // const postListKey = getQueryKey(trpc.post.list, undefined, 'query');
 
   const form = useForm<PhotoValue>({
     defaultValues,
@@ -146,7 +143,9 @@ export const PhotoUploadModal: FC<
   useEffect(() => {
     if (!props.isOpen) {
       form.reset();
-    } else if (uploadedPortfolio.data) {
+    }
+
+    if (uploadedPortfolio.data) {
       form.reset({
         title: uploadedPortfolio.data.title,
         comment: uploadedPortfolio.data.description || '',
