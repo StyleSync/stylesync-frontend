@@ -6,7 +6,7 @@ import { Button } from '@/modules/core/components/button';
 import { Dialog } from '@/modules/core/components/dialog';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Icon } from '@/modules/core/components/icon';
-import { InfoBox } from '../modal-success-infobox/info-box';
+import { InfoBox } from '@/modules/booking/components/modal-success-infobox';
 // type
 import { type BookingModalSuccessProps } from './modal-success.interface';
 // style
