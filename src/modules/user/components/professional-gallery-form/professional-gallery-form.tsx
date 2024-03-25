@@ -6,7 +6,6 @@ import { Button } from '@/modules/core/components/button';
 import { SettingsGallery } from '@/modules/settings/components/settings-gallery/settings-gallery';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { PhotoUploadModal } from '@/modules/settings/components/photo-upload-modal';
-
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
@@ -17,11 +16,23 @@ import type { ProfessionalGalleryFormProps } from './professional-gallery-form.i
 import styles from './professional-gallery-form.module.scss';
 
 export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
-  // state
+  const isOpenUploadPhotoModal = useBoolean();
   const isFileUploading = useBoolean();
   const windowSizeType = useDeviceType();
 
-  const isOpenUploadPhotoModal = useBoolean();
+  // query
+  const { data: me } = trpc.user.me.useQuery({
+    expand: ['professional'],
+  });
+
+  const { data: images } = trpc.portfolio.list.useQuery(
+    {
+      professionalId: me?.professional?.id,
+    },
+    {
+      enabled: !!me?.professional?.id,
+    }
+  );
 
   // memo
   const buttonProps = useMemo<Partial<ButtonProps>>(() => {
@@ -38,20 +49,6 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
       icon: 'image',
     };
   }, [windowSizeType]);
-
-  const { data: me } = trpc.user.me.useQuery({
-    expand: ['professional'],
-  });
-
-  // query
-  const { data: images } = trpc.portfolio.list.useQuery(
-    {
-      professionalId: me?.professional?.id,
-    },
-    {
-      enabled: !!me?.professional?.id,
-    }
-  );
 
   return (
     <div className={styles.root}>
