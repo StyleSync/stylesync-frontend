@@ -7,6 +7,7 @@ import { ProfileSectionLayout } from '@/modules/user/components/profile-section-
 import { ProLocation } from '@/modules/user/components/pro-location';
 import { ProBookActions } from '@/modules/user/containers/pro-book-actions';
 // containers
+// containers
 import { ProfessionalInfoBigCard } from '@/modules/user/containers/professional-info-big-card';
 
 // types
