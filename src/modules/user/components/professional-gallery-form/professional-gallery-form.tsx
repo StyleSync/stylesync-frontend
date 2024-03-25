@@ -10,7 +10,6 @@ import { PhotoUploadModal } from '@/modules/settings/components/photo-upload-mod
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
-
 // types
 import type { ButtonProps } from '@/modules/core/components/button/button.interface';
 import type { ProfessionalGalleryFormProps } from './professional-gallery-form.interface';
