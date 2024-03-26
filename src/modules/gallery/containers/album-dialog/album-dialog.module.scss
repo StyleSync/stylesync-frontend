@@ -1,0 +1,18 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  width: 90vw;
+  height: fit-content;
+  row-gap: 2rem;
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .gallery {
+
+  }
+}

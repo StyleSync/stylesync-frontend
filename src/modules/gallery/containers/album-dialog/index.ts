@@ -1,0 +1,1 @@
+export { AlbumDialog } from './album-dialog';
