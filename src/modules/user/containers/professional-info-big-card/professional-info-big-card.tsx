@@ -11,7 +11,7 @@ import { Typography } from '@/modules/core/components/typogrpahy';
 import { Button } from '@/modules/core/components/button';
 import { Icon, type IconName } from '@/modules/core/components/icon';
 import { Avatar } from '@/modules/core/components/avatar';
-import { Tag } from '../../../core/components/tag';
+import { Tag } from '@/modules/core/components/tag';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
 // utils
@@ -92,9 +92,16 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
           isActive={professionalQuery.isLoading}
           placeholder={null}
         >
-          <Typography className={styles.name} variant='title'>
-            {getFullName(professional?.user ?? {})}
-          </Typography>
+          <div className={styles.titleContainer}>
+            <Typography className={styles.name} variant='title' weight='medium'>
+              {getFullName(professional?.user ?? {})}
+            </Typography>
+            <div className={styles.proBadge}>
+              <Typography variant='small' weight='medium'>
+                STYLE PRO
+              </Typography>
+            </div>
+          </div>
         </Placeholder>
       </div>
       <div className={styles.info}>
