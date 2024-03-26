@@ -17,9 +17,13 @@ import { Time } from '@/modules/core/utils/time.utils';
 import type { TimeSelectProps } from './time-select.interface';
 import styles from './time-select.module.scss';
 
+const MINUTES_15 = 15;
+const MINUTES_30 = 30;
+const MINUTES_45 = 45;
+const MINUTES_LIST = [0, MINUTES_15, MINUTES_30, MINUTES_45];
+
 const TIME_ITEM_HEIGHT = 40;
 const HOURS_LIST = range(24);
-const MINUTES_LIST = range(60);
 const BUSY_END_TIMEOUT_DELAY = 200;
 
 const TimeColumn: FC<{

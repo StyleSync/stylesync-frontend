@@ -58,6 +58,7 @@ import CornerIcon from '@/assets/icons/corner.svg?icon';
 import MenuIcon from '@/assets/icons/menu.svg?icon';
 import ShareIcon from '@/assets/icons/share.svg?icon';
 import CommentIcon from '@/assets/icons/comment.svg?icon';
+import SuccessIcon from '@/assets/icons/success.svg?icon';
 
 import type { SVGComponentElement } from './icon.interface';
 
@@ -120,6 +121,7 @@ export const icons = {
   menu: MenuIcon,
   share: ShareIcon,
   comment: CommentIcon,
+  success: SuccessIcon,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;

@@ -1,0 +1,9 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.spinner {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+}

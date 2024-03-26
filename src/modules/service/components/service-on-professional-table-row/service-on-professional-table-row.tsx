@@ -2,16 +2,17 @@ import React, { type FC, useRef } from 'react';
 import clsx from 'clsx';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
-import { Button } from '@/modules/core/components/button';
 import { Icon } from '@/modules/core/components/icon';
+// containers
+import { CreateBooking } from '@/modules/booking/containers/create-booking-container';
 // hooks
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
+import { useRipple } from '@/modules/core/hooks/use-ripple';
 // utils
 import { formatMinutesDuration } from '@/modules/core/utils/time.utils';
-
+// type
 import type { ServiceOnProfessionalTableRowProps } from './service-on-professional-table-row.interface';
 import styles from './service-on-professional-table-row.module.scss';
-import { useRipple } from '@/modules/core/hooks/use-ripple';
 
 export const ServiceOnProfessionalTableRow: FC<
   ServiceOnProfessionalTableRowProps
@@ -48,7 +49,7 @@ export const ServiceOnProfessionalTableRow: FC<
             height={18}
           />
         ) : (
-          <Button variant='outlined' text='Book' />
+          <CreateBooking selectedService={data.id} btnVariant='outlined' />
         )}
       </div>
     </div>
