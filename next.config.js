@@ -55,7 +55,7 @@ const nextConfig = {
     includePaths: [path.join(__dirname, 'styles')],
   },
   images: {
-    domains: ['5tbrgt3t2sc4mnww.public.blob.vercel-storage.com'],
+    domains: ['xt2ksujn9lffn1o7.public.blob.vercel-storage.com'],
   },
 };
 

@@ -27,7 +27,7 @@ export const ExistingAccountTypeSelect: FC<
       },
       {
         onSuccess: () => {
-          router.push('/app/quiz');
+          router.push('/app/onboard');
         },
       }
     );

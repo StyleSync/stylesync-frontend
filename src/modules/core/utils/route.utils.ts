@@ -21,6 +21,6 @@ export const pageGuard = async (config: PageGuardConfig): Promise<void> => {
   }
 
   if (config.require.onboarding && !session.user.onboardingCompleted) {
-    redirect('/app/quiz');
+    redirect('/app/onboard');
   }
 };
