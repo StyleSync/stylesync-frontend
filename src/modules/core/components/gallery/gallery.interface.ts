@@ -1,3 +1,5 @@
+import { type PortfolioExtendedProfessional } from '@/modules/settings/components/settings-gallery/settings-gallery.interface';
+
 export type GalleryImage = {
   src: string;
   original: string;
@@ -7,7 +9,7 @@ export type GalleryImage = {
 };
 
 export type GalleryProps = {
-  images: GalleryImage[];
+  images: PortfolioExtendedProfessional[];
   maxRows?: number;
   rowImagesCount?: number;
 };
