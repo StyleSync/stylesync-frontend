@@ -6,4 +6,7 @@ export const defaultProfessionalSelect =
     facebook: true,
     instagram: true,
     about: true,
+    userId: true,
+    createdAt: true,
+    updatedAt: true,
   });

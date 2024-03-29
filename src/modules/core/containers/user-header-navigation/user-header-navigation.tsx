@@ -57,6 +57,7 @@ export const UserHeaderNavigation: FC<UserHeaderNavigationProps> = () => {
           <Link
             key={link.href}
             href={link.href}
+            prefetch={false}
             className={clsx('link', styles.link, {
               [styles.active]: pathname.endsWith(link.href),
             })}

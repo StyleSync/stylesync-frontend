@@ -2,7 +2,6 @@
 import { type FC, useMemo } from 'react';
 import clsx from 'clsx';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffectOnce } from 'usehooks-ts';
 import { useSession } from 'next-auth/react';
 // components
 import { Button } from '@/modules/core/components/button';
@@ -47,12 +46,6 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
     ],
     [session.data]
   );
-
-  useEffectOnce(() => {
-    userLinks.forEach((link) => {
-      router.prefetch(link.href);
-    });
-  });
 
   if (!me?.professional) {
     return;

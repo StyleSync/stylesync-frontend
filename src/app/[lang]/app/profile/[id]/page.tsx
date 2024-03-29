@@ -13,12 +13,26 @@ import { ProfessionalInfoBigCard } from '@/modules/user/containers/professional-
 // types
 import type { PageParams } from '@/modules/core/types/next.types';
 import styles from './profile.module.scss';
+import { Suspense } from 'react';
 
 export default async function Profile({ params }: PageParams<{ id: string }>) {
   return (
     <main className={styles.root}>
       <section className={clsx(styles.section, styles.headerSection)}>
-        <ProfessionalInfoBigCard userId={params.id} />
+        <Suspense
+          fallback={
+            <div
+              style={{
+                width: '100%',
+                height: 228,
+                backgroundColor: 'rgba(200,200,200,1)',
+                borderRadius: 12,
+              }}
+            />
+          }
+        >
+          <ProfessionalInfoBigCard userId={params.id} />
+        </Suspense>
       </section>
       <div className={styles.divider} />
       <div className={styles.sectionGroup}>
