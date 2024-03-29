@@ -55,9 +55,7 @@ export const Avatar: FC<AvatarProps> = ({
           alt='Avatar'
           width={_size}
           height={_size}
-          className={clsx(styles.image, {
-            [styles.loading]: isAvatarLoading.value,
-          })}
+          className={clsx(styles.image)}
           onLoadStart={isAvatarLoading.setTrue}
           onLoadingComplete={isAvatarLoading.setFalse}
         />

@@ -8,6 +8,7 @@
   flex-direction: column;
   width: 100%;
   overflow: hidden;
+  height: fit-content;
   border-radius: variables.$border-radius-medium;
   box-shadow: variables.$main-box-shadow;
   background: linear-gradient(to right, #fa709a 0%, #fee140 100%);
@@ -16,10 +17,6 @@
   //  from { opacity: 0 }
   //  to { opacity: 1 }
   //}
-
-  @include mixins.phone {
-    height: fit-content;
-  }
 
   .generalInfo {
     display: flex;

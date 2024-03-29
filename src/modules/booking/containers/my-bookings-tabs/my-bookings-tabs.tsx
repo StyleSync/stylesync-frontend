@@ -2,6 +2,8 @@
 import { type FC, useCallback } from 'react';
 // components
 import { Tabs } from '@/modules/core/components/tabs';
+// hooks
+import { useMyBookingsTab } from '@/modules/booking/hooks/use-my-bookings-tab';
 // types
 import type { Tab } from '@/modules/core/components/tabs/tabs.interface';
 
@@ -9,7 +11,6 @@ import type {
   MyBookingsTabsProps,
   MyBookingsTabKey,
 } from './my-bookings-tabs.interface';
-import { useMyBookingsTab } from '@/modules/booking/hooks/use-my-bookings-tab';
 
 const tabs: Tab[] = [
   {

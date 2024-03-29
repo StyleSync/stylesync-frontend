@@ -1,53 +1,68 @@
+import { Suspense } from 'react';
 import clsx from 'clsx';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { ErrorBoundary } from 'react-error-boundary';
 // components
 import { AboutMe } from '@/modules/user/components/about-me';
-import { GallerySection } from '@/modules/user/components/gallery-section';
 import { UserServices } from '@/modules/user/components/user-services';
 import { ProfileSectionLayout } from '@/modules/user/components/profile-section-layout';
 import { ProLocation } from '@/modules/user/components/pro-location';
+import { ServiceTableSkeleton } from '@/modules/service/components/service-table-skeleton';
+// containers
 import { ProBookActions } from '@/modules/user/containers/pro-book-actions';
-// containers
-// containers
 import { ProfessionalInfoBigCard } from '@/modules/user/containers/professional-info-big-card';
 
 // types
 import type { PageParams } from '@/modules/core/types/next.types';
 import styles from './profile.module.scss';
-import { Suspense } from 'react';
 
 export default async function Profile({ params }: PageParams<{ id: string }>) {
+  const session = await getServerSession(authOptions);
+
   return (
     <main className={styles.root}>
       <section className={clsx(styles.section, styles.headerSection)}>
         <Suspense
-          fallback={
-            <div
-              style={{
-                width: '100%',
-                height: 228,
-                backgroundColor: 'rgba(200,200,200,1)',
-                borderRadius: 12,
-              }}
-            />
-          }
+          fallback={<div className='w-full h-[214px] rounded-xl bg-black/10' />}
         >
-          <ProfessionalInfoBigCard userId={params.id} />
+          <ProfessionalInfoBigCard userId={params.id} session={session} />
         </Suspense>
       </section>
       <div className={styles.divider} />
       <div className={styles.sectionGroup}>
         <ProfileSectionLayout title='About me' id='about-me'>
-          <AboutMe userId={params.id} />
+          <Suspense
+            fallback={
+              <div className='flex flex-col gap-y-2'>
+                <div className='skeleton flex h-4 w-[70%] rounded' />
+                <div className='skeleton flex h-4 w-[80%] rounded' />
+                <div className='skeleton flex h-4 w-[50%] rounded' />
+              </div>
+            }
+          >
+            <AboutMe userId={params.id} />
+          </Suspense>
         </ProfileSectionLayout>
         <ProfileSectionLayout title='Services' id='profile-services'>
-          <UserServices userId={params.id} />
+          <Suspense fallback={<ServiceTableSkeleton rows={3} />}>
+            <UserServices userId={params.id} />
+          </Suspense>
         </ProfileSectionLayout>
-        <ProfileSectionLayout title='Location' id='profile-location'>
-          <ProLocation userId={params.id} />
-        </ProfileSectionLayout>
-        <ProfileSectionLayout title='Gallery' id='profile-gallery'>
-          <GallerySection />
-        </ProfileSectionLayout>
+        <ErrorBoundary fallback={null}>
+          <ProfileSectionLayout title='Location' id='profile-location'>
+            <Suspense
+              fallback={
+                <div className='flex flex-col gap-y-4'>
+                  <div className='skeleton w-[60%] rounded h-4' />
+                  <div className='skeleton w-full h-[400px] rounded-xl' />
+                </div>
+              }
+            >
+              <ProLocation userId={params.id} />
+            </Suspense>
+          </ProfileSectionLayout>
+        </ErrorBoundary>
       </div>
       <ProBookActions />
     </main>
