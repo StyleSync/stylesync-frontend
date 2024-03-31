@@ -1,0 +1,22 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.baseCardContainer {
+  display: grid;
+  row-gap: utils.spacing(2.5);
+  overflow: auto;
+}
+
+.root {
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  flex-grow: 1;
+}
+
+.navigationBtns {
+  margin-left: auto;
+}

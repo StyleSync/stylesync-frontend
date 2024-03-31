@@ -1,0 +1,21 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.box {
+  display: flex;
+  justify-content: space-between;
+  .infoContent {
+    color: variables.$dark-color;
+  }
+  .title {
+    color: variables.$grey-color;
+  }
+  .requested {
+    color: #fecc45;
+  }
+
+  .success {
+    color: #26c967;
+  }
+}

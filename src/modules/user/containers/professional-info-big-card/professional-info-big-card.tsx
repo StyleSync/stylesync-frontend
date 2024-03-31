@@ -1,6 +1,5 @@
 'use client';
 import { useMemo, type FC } from 'react';
-
 import Link from 'next/link';
 import clsx from 'clsx';
 import { useBoolean } from 'usehooks-ts';
@@ -14,6 +13,7 @@ import { Avatar } from '@/modules/core/components/avatar';
 import { Tag } from '@/modules/core/components/tag';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
+
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { onQueryRetry } from '@/modules/core/utils/query-retry.utils';
@@ -21,6 +21,7 @@ import { getFullName } from '@/modules/user/utils/user.utils';
 
 import type { ProfileInfoBigCardProps } from './professional-info-big-card.interface';
 import styles from './professional-info-big-card.module.scss';
+import { CreateBooking } from '@/modules/booking/containers/create-booking-container/create-booking';
 
 export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
   userId,
@@ -172,11 +173,7 @@ export const ProfessionalInfoBigCard: FC<ProfileInfoBigCardProps> = ({
               />
             }
           />
-          <Button
-            variant='primary'
-            text='Book'
-            disabled={professionalQuery.isLoading}
-          />
+          <CreateBooking isLoadingTrigger={professionalQuery.isLoading} />
         </div>
       </div>
     </div>

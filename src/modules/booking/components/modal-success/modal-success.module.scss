@@ -1,0 +1,48 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.content {
+  height: 45%;
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 380px;
+  padding: utils.spacing(3);
+}
+
+.iconSuccess {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: utils.spacing(3);
+  margin-top: utils.spacing(1);
+  padding-bottom: utils.spacing(3);
+  border-bottom: 1px dashed #939daa;
+}
+
+.containerInfo {
+  margin-top: utils.spacing(4);
+  display: flex;
+  flex-direction: column;
+  row-gap: utils.spacing(2);
+}
+
+.action {
+  margin-top: utils.spacing(6);
+  display: flex;
+  justify-content: center;
+  column-gap: utils.spacing(2);
+}
+
+.title {
+  color: variables.$grey-color;
+}
+
+.closeBtn {
+  border-color: variables.$grey-color;
+  color: variables.$grey-color;
+  padding: utils.spacing(0, 5);
+}

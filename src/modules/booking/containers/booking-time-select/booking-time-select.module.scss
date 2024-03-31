@@ -1,0 +1,134 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.bookingContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: utils.spacing(4);
+}
+
+.dataBox {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 5px;
+  padding: utils.spacing(1, 2.5);
+  background-color: transparent;
+  border: 1px solid variables.$primary-light-color;
+  border-radius: variables.$border-radius-medium;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: variables.$primary-light-color;
+  }
+}
+.dataBoxCheked {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 5px;
+  color: #fff;
+  padding: utils.spacing(1, 2.5);
+  background-color: variables.$primary-color;
+  border-radius: variables.$border-radius-medium;
+  cursor: pointer;
+}
+
+.dataBoxBooked {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 5px;
+  padding: utils.spacing(1, 2.5);
+  color: #fff;
+  background-color: #fafbfc;
+  border: 1px solid variables.$primary-light-color;
+  border-radius: variables.$border-radius-medium;
+  cursor: pointer;
+}
+
+.infoBooked {
+  color: variables.$grey-color;
+}
+
+.infoCheked {
+  color: #fff;
+}
+
+.timeRangesContainer {
+  display: flex;
+  align-items: center;
+  column-gap: utils.spacing(2);
+  row-gap: utils.spacing(1);
+  flex-wrap: wrap;
+}
+
+.timeBox {
+  padding: 11px 18px;
+  border-radius: variables.$border-radius-medium;
+  background-color: transparent;
+  border: 1px solid variables.$primary-light-color;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: variables.$primary-light-color;
+  }
+}
+
+.timeBoxChecked {
+  background-color: variables.$primary-color;
+  color: #fff;
+}
+
+.timeTextCheced {
+  color: #fff;
+}
+
+// swiper
+.swiper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+  padding-top: 50px;
+}
+
+.swiperSlide {
+  z-index: 3;
+}
+
+.navigationBtns {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.spinnerContainer {
+  margin-top: utils.spacing(2);
+  display: flex;
+  flex: 1;
+  gap: utils.spacing(2);
+  align-items: center;
+  justify-content: center;
+}
+
+.noAvailableTimeText {
+  color: variables.$primary-color;
+  margin-top: utils.spacing(2);
+  display: flex;
+  flex: 1;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  span {
+    color: variables.$error-color;
+  }
+}

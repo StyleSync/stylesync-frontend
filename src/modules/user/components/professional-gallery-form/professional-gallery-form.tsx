@@ -93,6 +93,7 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
         className={clsx('mobileActionBtn', styles.trigger)}
         {...buttonProps}
       />
+
       <input
         className='visibilityHidden'
         ref={fileInputRef}
