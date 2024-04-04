@@ -151,13 +151,6 @@ export const PhotoUploadModal: FC<
         comment: uploadedPortfolio.data.description || '',
       });
     }
-
-    if (uploadedPortfolio.data) {
-      form.reset({
-        title: uploadedPortfolio.data.title,
-        comment: uploadedPortfolio.data.description || '',
-      });
-    }
   }, [props.isOpen, form, uploadedPortfolio.data]);
 
   return (
