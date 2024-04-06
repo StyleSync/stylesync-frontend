@@ -20,7 +20,7 @@ const LocaleUIMap: Record<
 > = {
   en: {
     id: 'en',
-    name: 'United States',
+    name: 'English (US)',
     icon: 'flag-usa',
   },
   uk: {

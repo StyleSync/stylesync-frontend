@@ -109,7 +109,9 @@ export const TextField = forwardRef<
           </label>
         )}
         {endAdornment && (
-          <div className={styles.endAdornment}>{endAdornment}</div>
+          <div className={clsx(styles.endAdornment, classes?.endAdornment)}>
+            {endAdornment}
+          </div>
         )}
         <fieldset className={clsx(styles.fieldset, classes?.fieldset)}>
           <legend className={styles.legend}>
