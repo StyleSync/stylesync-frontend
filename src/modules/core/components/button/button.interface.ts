@@ -8,7 +8,8 @@ export type ButtonVariant =
   | 'secondary'
   | 'outlined'
   | 'danger'
-  | 'unstyled';
+  | 'unstyled'
+  | 'text';
 
 export type ButtonProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,

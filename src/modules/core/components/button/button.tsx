@@ -17,6 +17,7 @@ const RIPPLE_COLORS: Record<ButtonVariant, string> = {
   outlined: styles.rippleOutlinedColor,
   unstyled: styles.rippleSecondaryColor,
   danger: styles.rippleDangerColor,
+  text: 'transparent',
 };
 
 const SPINNER_COLORS: Record<ButtonVariant, string> = {
@@ -25,6 +26,7 @@ const SPINNER_COLORS: Record<ButtonVariant, string> = {
   outlined: styles.spinnerOutlinedColor,
   unstyled: styles.spinnerSecondaryColor,
   danger: styles.spinnerDangerColor,
+  text: styles.spinnerPrimaryColor,
 };
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -64,6 +66,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             [styles.secondary]: variant === 'secondary',
             [styles.outlined]: variant === 'outlined',
             [styles.danger]: variant === 'danger',
+            [styles.text]: variant === 'text',
             [styles.base_textless]: !text,
           },
           className,

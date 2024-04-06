@@ -130,3 +130,21 @@
     color: darken(variables.$error-color, 10%);
   }
 }
+
+.text {
+  background-color: transparent;
+  color: variables.$primary-color;
+  transition: variables.$transition-ultrafast;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px variables.$primary-color;
+  }
+
+  &:hover {
+    color: darken(variables.$primary-color, 15%);
+  }
+
+  &:disabled {
+    color: darken(variables.$primary-color, 10%);
+  }
+}

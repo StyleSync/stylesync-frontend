@@ -9,7 +9,7 @@ export const AppHeader = async () => {
 
   return (
     <Header
-      centralSlot={session && <UserHeaderNavigation userId={session.user.id} />}
+      centralSlot={<UserHeaderNavigation session={session} />}
       rightSlot={<UserMenuBadge session={session} />}
     />
   );

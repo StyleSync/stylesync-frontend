@@ -3,23 +3,27 @@ import type { FC, ReactNode } from 'react';
 import type { PopoverProps } from '@/modules/core/components/popover/popover.interface';
 import type { TypographyProps } from '@/modules/core/components/typogrpahy/typography.interface';
 
-export type DropdownItem = {
+export type DropdownItem<Data = undefined> = {
   id: string;
   text: string;
   icon?: IconName;
   variant?: 'default' | 'danger' | 'primary';
   className?: string;
   disabled?: boolean;
+  data?: Data;
 };
 
-export type DropdownMenuProps = {
-  items: DropdownItem[];
+export type DropdownMenuProps<OptionData = undefined> = {
+  items: DropdownItem<OptionData>[];
   trigger: ReactNode;
   isOpen: boolean;
   onClose: () => void;
   isLoading?: boolean;
-  onSelect?: (item: DropdownItem) => void;
-  render?: FC<DropdownItem>;
+  onSelect?: (item: DropdownItem<OptionData>) => void;
+  render?: FC<DropdownItem<OptionData>>;
   popoverProps?: Partial<Omit<PopoverProps, 'onClose' | 'isOpen' | 'trigger'>>;
   typographyProps?: TypographyProps;
+  classes?: {
+    option?: string;
+  };
 };

@@ -1,5 +1,5 @@
 'use client';
-import { type FC } from 'react';
+import { type FC, useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -9,22 +9,41 @@ import { useIntl } from 'react-intl';
 import { Typography } from '@/modules/core/components/typogrpahy';
 
 import styles from './user-header-navigation.module.scss';
+import type { Session } from 'next-auth';
 
-export const UserHeaderNavigation: FC<{ userId: string }> = ({ userId }) => {
+export const UserHeaderNavigation: FC<{
+  session: Session | null;
+}> = ({ session }) => {
   const intl = useIntl();
-
   const pathname = usePathname();
+  const userLinks = useMemo(() => {
+    const links = [
+      // public links
+      {
+        href: '/app/search-pro',
+        title: 'Find Pro',
+      },
+    ];
 
-  const userLinks = [
-    {
-      href: `/app/profile/${userId}`,
-      title: intl.formatMessage({ id: 'user.header.navigation.profile' }),
-    },
-    {
-      href: '/app/my-bookings',
-      title: intl.formatMessage({ id: 'user.header.navigation.myBookings' }),
-    },
-  ];
+    if (session) {
+      links.unshift(
+        ...[
+          {
+            href: `/app/profile/${session.user.id}`,
+            title: intl.formatMessage({ id: 'user.header.navigation.profile' }),
+          },
+          {
+            href: '/app/my-bookings',
+            title: intl.formatMessage({
+              id: 'user.header.navigation.myBookings',
+            }),
+          },
+        ]
+      );
+    }
+
+    return links;
+  }, [session, intl]);
 
   return (
     <div className={styles.root}>
