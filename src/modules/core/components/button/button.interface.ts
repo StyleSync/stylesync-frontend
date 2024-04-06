@@ -8,7 +8,9 @@ export type ButtonVariant =
   | 'secondary'
   | 'outlined'
   | 'danger'
-  | 'unstyled';
+  | 'unstyled'
+  | 'text'
+  | 'light';
 
 export type ButtonProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
@@ -17,7 +19,7 @@ export type ButtonProps = Omit<
   StylingProps & {
     variant?: ButtonVariant;
     text?: string;
-    icon?: IconName;
+    icon?: IconName | null;
     iconEnd?: IconName;
     rippleColor?: string;
     typographyProps?: Partial<TypographyProps>;

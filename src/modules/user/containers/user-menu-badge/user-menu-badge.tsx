@@ -48,13 +48,17 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
 
   const handleSelect = useCallback(
     ({ id }: DropdownItem) => {
+      if (id === 'profile') {
+        router.push('/app/profile');
+      }
+
       if (id === 'sign-out') {
         void signOut({ callbackUrl: '/' });
       }
 
       isOpen.setFalse();
     },
-    [isOpen]
+    [isOpen, router]
   );
 
   const handleSettingsClick = useCallback(() => {
@@ -67,19 +71,34 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
 
   if (!session) {
     return (
-      <Button
-        text='Sign in'
-        variant='secondary'
-        onClick={() =>
-          signIn(
-            'auth0',
-            {
-              callbackUrl: '/app/profile',
-            },
-            { prompt: 'login' }
-          )
-        }
-      />
+      <div className='flex items-center gap-x-2'>
+        <Button
+          text='Become a Pro'
+          variant='light'
+          onClick={() =>
+            signIn(
+              'auth0',
+              {
+                callbackUrl: '/app/profile',
+              },
+              { prompt: 'login' }
+            )
+          }
+        />
+        <Button
+          text='Sign In'
+          variant='secondary'
+          onClick={() =>
+            signIn(
+              'auth0',
+              {
+                callbackUrl: '/app/profile',
+              },
+              { prompt: 'login' }
+            )
+          }
+        />
+      </div>
     );
   }
 
@@ -101,10 +120,15 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
         </div>
         <DropdownMenu
           items={[
+            // {
+            //   id: 'share',
+            //   text: intl.formatMessage({ id: 'user.menu.budge.share' }),
+            //   icon: 'share',
+            // },
             {
-              id: 'share',
-              text: intl.formatMessage({ id: 'user.menu.budge.share' }),
-              icon: 'share',
+              id: 'profile',
+              text: 'My profile',
+              icon: 'user',
             },
             {
               id: 'sign-out',

@@ -1,15 +1,28 @@
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/modules/auth/constants/auth-server.constants';
+'use client';
 import { UserHeaderNavigation } from '@/modules/core/containers/user-header-navigation/user-header-navigation';
 import { Header } from '@/modules/core/components/header';
 import { UserMenuBadge } from '@/modules/user/containers/user-menu-badge';
+import clsx from 'clsx';
 
-export const AppHeader = async () => {
-  const session = await getServerSession(authOptions);
+import { type AppHeaderProps } from './app-header.interface';
+import type { FC } from 'react';
+import { usePathname } from 'next/navigation';
+
+export const AppHeader: FC<AppHeaderProps> = ({ session }) => {
+  const pathname = usePathname();
 
   return (
     <Header
-      centralSlot={session && <UserHeaderNavigation userId={session.user.id} />}
+      classes={{
+        leftSlot: clsx({
+          '!flex-[unset]': !session || pathname.includes('app/search-pro'),
+        }),
+        centralSlot: clsx({
+          '!pl-14 !max-w-[unset]':
+            !session || pathname.includes('app/search-pro'),
+        }),
+      }}
+      centralSlot={<UserHeaderNavigation session={session} />}
       rightSlot={<UserMenuBadge session={session} />}
     />
   );

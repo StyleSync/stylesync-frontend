@@ -11,7 +11,7 @@ export default async function Home() {
   return (
     <>
       <LandingHeader />
-      <main className=' mt-24 flex flex-col '>
+      <main className='flex flex-col'>
         <IntroSection />
         <ReviewsSection />
         <ServiceCardSection />

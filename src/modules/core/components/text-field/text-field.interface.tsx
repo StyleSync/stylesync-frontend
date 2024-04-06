@@ -14,6 +14,7 @@ type TextFieldGeneralProps = {
     container?: string;
     label?: string;
     fieldset?: string;
+    endAdornment?: string;
   };
   font?: SupportedFonts;
   endAdornment?: ReactNode;

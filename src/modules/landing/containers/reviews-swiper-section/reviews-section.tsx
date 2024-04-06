@@ -110,7 +110,7 @@ export const ReviewsSection = () => {
       <Typography
         variant='title'
         weight='semibold'
-        className='!text-4xl md:!text-5xl text-dark text-center'
+        className='!text-4xl md:!text-5xl !text-black text-center'
       >
         Check Out What They Said
       </Typography>

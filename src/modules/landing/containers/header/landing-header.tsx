@@ -1,40 +1,23 @@
 // components
 import { Header } from '@/modules/core/components/header';
-import { Typography } from '@/modules/core/components/typogrpahy';
 // containers
 import { UserMenuBadge } from '@/modules/user/containers/user-menu-badge';
+import { ProSearchField } from '@/modules/location/components/pro-search-field';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/modules/auth/constants/auth-server.constants';
 
-export const LandingHeader = () => {
+export const LandingHeader = async () => {
+  const session = await getServerSession(authOptions);
+
   return (
     <Header
-      className='!shadow-none'
-      centralSlot={
-        <nav className='hidden sm:grid justify-center'>
-          <ul className=' flex sm:gap-5 md:gap-10'>
-            <li>
-              <a className=' hover:cursor-pointer'>
-                <Typography variant='body1'>Services</Typography>
-              </a>
-            </li>
-            <li>
-              <a className=' hover:cursor-pointer'>
-                <Typography variant='body1'>About Us</Typography>
-              </a>
-            </li>
-            <li>
-              <a className=' hover:cursor-pointer'>
-                <Typography variant='body1'>FAQ</Typography>
-              </a>
-            </li>
-            <li>
-              <a className=' hover:cursor-pointer'>
-                <Typography variant='body1'>Contact</Typography>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      }
-      rightSlot={<UserMenuBadge />}
+      // className='!shadow-none'
+      classes={{
+        leftSlot: '!flex-[unset]',
+        centralSlot: '!pl-14',
+      }}
+      centralSlot={<ProSearchField />}
+      rightSlot={<UserMenuBadge session={session} />}
     />
   );
 };

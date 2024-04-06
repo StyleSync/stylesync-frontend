@@ -1,4 +1,3 @@
-import { type FC } from 'react';
 // components
 import { Icon } from '@/modules/core/components/icon';
 import { Popover } from '@/modules/core/components/popover';
@@ -9,17 +8,18 @@ import styles from './dropdown-menu.module.scss';
 import clsx from 'clsx';
 import { Placeholder } from '@/modules/core/components/placeholder';
 
-export const DropdownMenu: FC<DropdownMenuProps> = ({
+export function DropdownMenu<OptionData = undefined>({
   isOpen,
   onClose,
   onSelect,
   trigger,
   items,
   render,
+  classes,
   popoverProps,
   typographyProps,
   isLoading = false,
-}) => {
+}: DropdownMenuProps<OptionData>) {
   return (
     <Popover
       isOpen={isOpen}
@@ -46,6 +46,7 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({
                 styles.option,
                 { [styles.danger]: item.variant === 'danger' },
                 { [styles.primary]: item.variant === 'primary' },
+                classes?.option,
                 item.className
               )}
               key={item.id}
@@ -72,4 +73,4 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({
       </div>
     </Popover>
   );
-};
+}
