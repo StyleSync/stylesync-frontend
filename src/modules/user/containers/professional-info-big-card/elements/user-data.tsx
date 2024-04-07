@@ -3,13 +3,8 @@ import { Avatar } from '@/modules/core/components/avatar';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { getFullName } from '@/modules/user/utils/user.utils';
 import styles from '@/modules/user/containers/professional-info-big-card/professional-info-big-card.module.scss';
-import type { Prisma } from '@prisma/client';
 
-type UserDataProps = {
-  professional: Prisma.ProfessionalGetPayload<{
-    include: { user: true };
-  }>;
-};
+import type { UserDataProps } from '../professional-info-big-card.interface';
 
 export const UserData: FC<UserDataProps> = ({ professional }) => {
   return (

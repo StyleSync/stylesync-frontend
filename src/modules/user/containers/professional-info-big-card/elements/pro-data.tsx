@@ -1,6 +1,4 @@
 import type { FC } from 'react';
-import type { Session } from 'next-auth';
-import type { Prisma } from '@prisma/client';
 import { useBoolean } from 'usehooks-ts';
 // components
 import { Icon } from '@/modules/core/components/icon';
@@ -12,12 +10,7 @@ import { CreateBooking } from '@/modules/booking/containers/create-booking-conta
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 
-type ProDataProps = {
-  professional: Prisma.ProfessionalGetPayload<{
-    include: { user: true };
-  }>;
-  session: Session | null;
-};
+import type { ProDataProps } from '../professional-info-big-card.interface';
 
 export const ProData: FC<ProDataProps> = ({ professional, session }) => {
   // queries
