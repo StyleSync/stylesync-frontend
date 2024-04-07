@@ -3,6 +3,8 @@
 @use '@/styles/mixins';
 
 .root {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   background-color: variables.$grey-light-color;
   padding-top: variables.$header-height;
@@ -45,6 +47,7 @@
 }
 
 .sectionGroup {
+  flex: 1;
   position: relative;
   background-color: #fff;
   padding-bottom: utils.spacing(10);

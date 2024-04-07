@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { httpBatchLink, getFetch, loggerLink } from '@trpc/client';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { createTRPCReact } from '@trpc/react-query';
+import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental';
 import type { AppRouter } from '@/server/routers/_app';
 const trpc = createTRPCReact<AppRouter>();
 
@@ -22,6 +23,26 @@ const getBaseUrl = () => {
   return `http://localhost:${process.env.PORT ?? defaultPort}`;
 };
 
+function makeQueryClient() {
+  return new QueryClient({
+    /* ...opts */
+  });
+}
+
+let clientQueryClient: QueryClient | undefined;
+
+function getQueryClient() {
+  if (typeof window === 'undefined') {
+    // Server: always make a new query client
+    return makeQueryClient();
+  }
+
+  // Browser: make a new query client if we don't already have one
+  if (!clientQueryClient) clientQueryClient = makeQueryClient();
+
+  return clientQueryClient;
+}
+
 /**
  * Currently TRPC doesn't support Next 13 yet, so we need to use this provider.
  * @link https://github.com/trpc/next-13/tree/3992fb41ec4b1134d596d94007fdea51453445dd for reference
@@ -29,12 +50,7 @@ const getBaseUrl = () => {
 export const TrpcProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [queryClient] = useState(
-    () =>
-      new QueryClient({
-        defaultOptions: { queries: { staleTime: 5000 } },
-      })
-  );
+  const queryClient = getQueryClient();
 
   const [trpcClient] = useState(() =>
     trpc.createClient({
@@ -61,7 +77,7 @@ export const TrpcProvider: React.FC<{ children: React.ReactNode }> = ({
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
-        {children}
+        <ReactQueryStreamedHydration>{children}</ReactQueryStreamedHydration>
         <ReactQueryDevtools />
       </QueryClientProvider>
     </trpc.Provider>

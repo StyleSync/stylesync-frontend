@@ -1,8 +1,8 @@
 'use client';
-import { type FC, useCallback, useEffect } from 'react';
+import { type FC, useCallback } from 'react';
 import { useBoolean } from 'usehooks-ts';
 import clsx from 'clsx';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signIn, signOut } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
 // components
 import { Avatar } from '@/modules/core/components/avatar';
@@ -22,10 +22,9 @@ import type { DropdownItem } from '@/modules/core/components/dropdown-menu/dropd
 import type { UserMenuBadgeProps } from './user-menu-badge.interface';
 import styles from './user-menu-badge.module.scss';
 
-export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
+export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
   // state
   const isOpen = useBoolean();
-  const session = useSession();
   const pathname = usePathname();
   const router = useRouter();
   const deviceType = useDeviceType();
@@ -33,13 +32,9 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
   const { data: me } = trpc.user.me.useQuery(
     { expand: ['professional'] },
     {
-      enabled: session.status === 'authenticated',
+      enabled: !!session,
     }
   );
-
-  useEffect(() => {
-    router.prefetch('/app/settings');
-  }, []);
 
   const handleSelect = useCallback(
     ({ id }: DropdownItem) => {
@@ -60,11 +55,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = () => {
     return <BurgerMenu />;
   }
 
-  if (session.status === 'loading') {
-    return <div className={clsx(styles.skeleton, 'skeleton')} />;
-  }
-
-  if (session.status === 'unauthenticated') {
+  if (!session) {
     return (
       <Button
         text='Sign in'

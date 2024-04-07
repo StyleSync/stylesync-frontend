@@ -1,9 +1,10 @@
 // containers
 import { MyBookingsTabs } from '@/modules/booking/containers/my-bookings-tabs';
 import { MyBookingsContent } from '@/modules/booking/containers/my-bookings-content';
+// utils
+import { pageGuard } from '@/modules/core/utils/route.utils';
 
 import styles from './my-bookings.module.scss';
-import { pageGuard } from '@/modules/core/utils/route.utils';
 
 export default async function MyBookings() {
   await pageGuard({

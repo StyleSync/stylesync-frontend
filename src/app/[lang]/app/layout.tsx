@@ -1,9 +1,7 @@
 import Image from 'next/image';
 // containers
-import { Header } from '@/modules/core/components/header';
-import { UserMenuBadge } from '@/modules/user/containers/user-menu-badge';
-import { UserHeaderNavigation } from '@/modules/core/containers/user-header-navigation';
 import { BottomTabNavigation } from '@/modules/core/containers/bottom-tab-navigation';
+import { AppHeader } from '@/modules/core/containers/app-header';
 // assets
 import Bg from '@/assets/images/bg-1.png';
 // types
@@ -14,10 +12,7 @@ import styles from './app-layout.module.scss';
 export default function AppLayout({ children }: ChildrenProp) {
   return (
     <>
-      <Header
-        centralSlot={<UserHeaderNavigation />}
-        rightSlot={<UserMenuBadge />}
-      />
+      <AppHeader />
       <Image
         className={styles.bg}
         src={Bg.src}

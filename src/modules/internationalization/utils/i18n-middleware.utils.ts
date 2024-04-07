@@ -56,11 +56,7 @@ export const createI18nRedirect = (
   const recommendedLocale = getRecommendedLocale(request);
 
   // `/_next/` and `/api/` are ignored by the watcher, but we need to ignore files in `public` manually.
-  if (
-    ['/manifest.json', '/favicon.ico', '/next.svg', '/vercel.svg'].includes(
-      pathname
-    )
-  ) {
+  if (pathname.includes('/public')) {
     return null;
   }
 
