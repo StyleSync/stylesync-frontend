@@ -23,7 +23,7 @@ export default async function RootLayout({
 
   return (
     <html lang={params.lang}>
-      <body className={fonts.SF_PRO_TEXT.className}>
+      <body className={fonts.INTER.className}>
         <TrpcProvider>
           <IntlProvider locale={params.lang} dictionary={dictionary}>
             <Providers session={params.session}>{children}</Providers>
