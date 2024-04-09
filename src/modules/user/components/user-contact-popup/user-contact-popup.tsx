@@ -7,31 +7,18 @@ import { Button } from '@/modules/core/components/button';
 import type { UserContactPopupProps } from './user-contact-popup.interface';
 import styles from './user-contact-popup.module.scss';
 
-export const UserContactPopup: FC<UserContactPopupProps> = ({ ...props }) => {
-  const handlePhoneClick = () => {
-    if (props.professional && props.professional.user.phone) {
-      window.open(`tel:${props.professional.user.phone}`);
-    }
-  };
-
-  const handleSocialMediaClick = (url?: string | null) => {
-    if (url) {
-      window.open(url, '_blank');
-    }
-  };
-
-  const handleEmailClick = () => {
-    if (props.professional && props.professional.user.email) {
-      location.href = `mailto:${props.professional.user.email}`;
-    }
-  };
-
+export const UserContactPopup: FC<UserContactPopupProps> = ({
+  professional,
+  ...props
+}) => {
   return (
     <Popover {...props} sideOffset={5} side='bottom'>
       <div className={styles.root}>
-        {props.professional && props.professional.user.phone && (
+        {professional && professional.user.phone && (
           <Button
-            onClick={handlePhoneClick}
+            onClick={() => {
+              window.open(`tel:${professional.user.phone}`);
+            }}
             icon='phone'
             className={clsx('focusable', styles.socialBtn, styles.phone)}
             variant='unstyled'
@@ -39,9 +26,13 @@ export const UserContactPopup: FC<UserContactPopupProps> = ({ ...props }) => {
           />
         )}
 
-        {props.professional && props.professional.facebook && (
+        {professional && professional.facebook && (
           <Button
-            onClick={() => handleSocialMediaClick(props.professional.facebook)}
+            onClick={() => {
+              if (professional.facebook) {
+                window.open(professional.facebook, '_blank');
+              }
+            }}
             icon='facebook'
             className={clsx('focusable', styles.socialBtn, styles.facebook)}
             variant='unstyled'
@@ -49,9 +40,13 @@ export const UserContactPopup: FC<UserContactPopupProps> = ({ ...props }) => {
           />
         )}
 
-        {props.professional && props.professional.instagram && (
+        {professional && professional.instagram && (
           <Button
-            onClick={() => handleSocialMediaClick(props.professional.instagram)}
+            onClick={() => {
+              if (professional.instagram) {
+                window.open(professional.instagram, '_blank');
+              }
+            }}
             icon='instagram'
             className={clsx('focusable', styles.socialBtn, styles.instagram)}
             variant='unstyled'
@@ -59,9 +54,13 @@ export const UserContactPopup: FC<UserContactPopupProps> = ({ ...props }) => {
           />
         )}
 
-        {props.professional && props.professional.user.email && (
+        {professional && professional.user.email && (
           <Button
-            onClick={handleEmailClick}
+            onClick={() => {
+              if (professional.user.email) {
+                location.href = `mailto:${professional.user.email}`;
+              }
+            }}
             icon='inbox'
             className={clsx('focusable', styles.socialBtn, styles.mail)}
             variant='unstyled'
