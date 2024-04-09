@@ -57,7 +57,7 @@ export const ProData: FC<ProDataProps> = ({ professional, session }) => {
               />
             }
           />
-          <CreateBooking />
+          <CreateBooking professional={professional} />
         </div>
       )}
     </div>

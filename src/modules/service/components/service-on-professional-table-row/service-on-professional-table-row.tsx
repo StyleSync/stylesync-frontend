@@ -16,7 +16,7 @@ import styles from './service-on-professional-table-row.module.scss';
 
 export const ServiceOnProfessionalTableRow: FC<
   ServiceOnProfessionalTableRowProps
-> = ({ data }) => {
+> = ({ data, session, professional }) => {
   const deviceType = useDeviceType();
   // refs
   const rootRef = useRef<HTMLDivElement>(null);
@@ -41,16 +41,21 @@ export const ServiceOnProfessionalTableRow: FC<
         </Typography>
       </div>
       <div className={clsx(styles.cell, styles.fit)}>
-        {deviceType === 'mobile' ? (
-          <Icon
-            className={styles.chevron}
-            name='chevron-right'
-            width={18}
-            height={18}
-          />
-        ) : (
-          <CreateBooking selectedService={data.id} btnVariant='outlined' />
-        )}
+        {professional.id !== session?.user?.id &&
+          (deviceType === 'mobile' ? (
+            <Icon
+              className={styles.chevron}
+              name='chevron-right'
+              width={18}
+              height={18}
+            />
+          ) : (
+            <CreateBooking
+              professional={professional}
+              selectedService={data.id}
+              btnVariant='outlined'
+            />
+          ))}
       </div>
     </div>
   );

@@ -9,18 +9,20 @@ import {
   sortServiceOnProfessionalGroups,
 } from '@/modules/service/utils/service.utils';
 import { trpc } from '@/modules/core/utils/trpc.utils';
+import type { UserServicesProps } from './user-services.interface';
 
 import styles from './user-services.module.scss';
 
-export const UserServices: FC<{ userId: string }> = ({ userId }) => {
+export const UserServices: FC<UserServicesProps> = ({ userId, session }) => {
   const [professional] = trpc.professional.get.useSuspenseQuery({
     id: userId,
     expand: [],
   });
+
   const [serviceList] = trpc.serviceOnProfessional.list.useSuspenseQuery({
     limit: 10,
     offset: 0,
-    professionalId: professional.id,
+    professionalId: userId,
   });
   const groups = useMemo(() => {
     const _groups = getGroupOfServiceOnProfessionalList(serviceList);
@@ -33,6 +35,8 @@ export const UserServices: FC<{ userId: string }> = ({ userId }) => {
       {groups.length > 0 ? (
         groups.map(({ service, serviceOnProfessionalList }) => (
           <ServicesTable
+            professional={professional}
+            session={session}
             key={service.id}
             service={service}
             serviceOnProfessionalList={serviceOnProfessionalList}

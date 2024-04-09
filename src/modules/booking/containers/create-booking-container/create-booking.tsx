@@ -16,14 +16,13 @@ export const CreateBooking: FC<CreateBookingProps> = ({
   isLoadingTrigger,
   btnVariant,
   selectedService,
+  professional,
 }) => {
   const isBookingOpen = useBoolean();
   const isSuccessOpen = useBoolean();
 
-  // mutations
+  // mutation
   const bookingCreate = trpc.booking.create.useMutation();
-  // query
-  const { data: me } = trpc.user.me.useQuery({ expand: ['professional'] });
 
   const handleConfirm = async ({
     selectedDay,
@@ -39,7 +38,7 @@ export const CreateBooking: FC<CreateBookingProps> = ({
     bookingCreate.mutate(
       {
         ...data,
-        userId: me?.id,
+        userId: professional?.id,
         guestFirstName: name,
         guestLastName: lastName,
         guestPhone: phone,
@@ -68,6 +67,7 @@ export const CreateBooking: FC<CreateBookingProps> = ({
   return (
     <>
       <ServiceBookingModal
+        professional={professional}
         selectedService={selectedService}
         onOpenChange={isBookingOpen.setValue}
         isOpen={isBookingOpen.value}
