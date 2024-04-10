@@ -62,6 +62,27 @@
   column-gap: 10px;
 }
 
+.photos {
+  display: flex;
+  justify-content: space-between;
+}
+
+.contentContainer {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 25px;
+}
+
+.closeBtn {
+  background-color: palevioletred;
+  margin: 0 auto;
+}
+
+// .acardionItem {
+//   border-bottom: 1px solid variables.$primary-light-color;
+// }
+
 .AccordionContent {
   overflow: hidden;
 }
