@@ -20,7 +20,6 @@
   justify-content: space-between;
 }
 
-// labelCard
 .labelContainer {
   display: flex;
   align-items: center;
@@ -51,6 +50,22 @@
   overflow: auto;
   padding-top: utils.spacing(4);
 }
+
+.contentContainer::-webkit-scrollbar {
+  width: 5px;
+}
+
+.contentContainer::-webkit-scrollbar-thumb {
+  width: 8px;
+  background-color: variables.$primary-light-color;
+  border-radius: 10px;
+  border-color: variables.$primary-color !important;
+}
+
+.contentContainer::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
 .navigationBtns {
   margin-top: utils.spacing(2);
   display: flex;

@@ -16,7 +16,7 @@ import styles from './service-on-professional-table-row.module.scss';
 
 export const ServiceOnProfessionalTableRow: FC<
   ServiceOnProfessionalTableRowProps
-> = ({ data, session, professional }) => {
+> = ({ data, isOwn, professional }) => {
   const deviceType = useDeviceType();
   // refs
   const rootRef = useRef<HTMLDivElement>(null);
@@ -41,7 +41,7 @@ export const ServiceOnProfessionalTableRow: FC<
         </Typography>
       </div>
       <div className={clsx(styles.cell, styles.fit)}>
-        {professional.id !== session?.user?.id &&
+        {!isOwn &&
           (deviceType === 'mobile' ? (
             <Icon
               className={styles.chevron}

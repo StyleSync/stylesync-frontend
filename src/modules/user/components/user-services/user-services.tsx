@@ -22,7 +22,7 @@ export const UserServices: FC<UserServicesProps> = ({ userId, session }) => {
   const [serviceList] = trpc.serviceOnProfessional.list.useSuspenseQuery({
     limit: 10,
     offset: 0,
-    professionalId: userId,
+    professionalId: professional.id,
   });
   const groups = useMemo(() => {
     const _groups = getGroupOfServiceOnProfessionalList(serviceList);
@@ -35,8 +35,8 @@ export const UserServices: FC<UserServicesProps> = ({ userId, session }) => {
       {groups.length > 0 ? (
         groups.map(({ service, serviceOnProfessionalList }) => (
           <ServicesTable
+            isOwn={userId === session?.user.id}
             professional={professional}
-            session={session}
             key={service.id}
             service={service}
             serviceOnProfessionalList={serviceOnProfessionalList}

@@ -13,8 +13,8 @@ import styles from './service-table.module.scss';
 export const ServicesTable: FC<ServicesTableProps> = ({
   service,
   serviceOnProfessionalList,
-  session,
   professional,
+  isOwn,
 }) => {
   const intl = useIntl();
 
@@ -29,8 +29,8 @@ export const ServicesTable: FC<ServicesTableProps> = ({
       <div className={styles.content}>
         {serviceOnProfessionalList.map((serviceOnProfessional) => (
           <ServiceOnProfessionalTableRow
+            isOwn={isOwn}
             professional={professional}
-            session={session}
             key={serviceOnProfessional.id}
             data={serviceOnProfessional}
           />
