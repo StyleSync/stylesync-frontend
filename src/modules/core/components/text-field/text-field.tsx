@@ -26,7 +26,7 @@ export const TextField = forwardRef<
       className,
       classes,
       endAdornment,
-      font = 'SF_PRO_TEXT',
+      font = 'INTER',
       variant = 'input',
       ...props
     },

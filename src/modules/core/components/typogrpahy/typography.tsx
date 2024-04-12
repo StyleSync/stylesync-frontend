@@ -15,7 +15,7 @@ const Typography = forwardRef<HTMLElement, TypographyProps>(
       variant = 'body2',
       weight = 'regular',
       As = 'span',
-      font = 'SF_PRO_TEXT',
+      font = 'INTER',
       cutText = false,
     },
     ref
