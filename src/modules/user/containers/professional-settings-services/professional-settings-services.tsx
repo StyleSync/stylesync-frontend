@@ -7,41 +7,16 @@ import { ErrorBox } from '@/modules/core/components/error-box';
 import { ProfessionalServicesForm } from '@/modules/service/containers/professional-services-form';
 // hooks
 import { useServiceOnProfessionalGroups } from '@/modules/service/hooks/use-service-on-professional-groups';
-// utils
-import { showToast } from '@/modules/core/providers/toast-provider';
 
 export const ProfessionalSettingsServices: FC = () => {
-  const {
-    groups,
-    setGroups,
-    isGroupsLoading,
-    isGroupsLoadingError,
-    save,
-    isSaveLoading,
-    isSaveDisabled,
-  } = useServiceOnProfessionalGroups({
-    onSaved: () => {
-      showToast({
-        variant: 'success',
-        title: 'All done!',
-        description: 'Changes has been saved',
-      });
-    },
-  });
+  const { groups, setGroups, isGroupsLoading, isGroupsLoadingError } =
+    useServiceOnProfessionalGroups();
 
   return (
     <ProfileSettingsTabContentLayout
       title='Services settings'
       icon='beauty-service'
       isLoading={isGroupsLoading}
-      actions={[
-        {
-          text: 'Save',
-          isLoading: isSaveLoading,
-          disabled: isSaveDisabled,
-          onClick: save,
-        },
-      ]}
       hideActions={isGroupsLoading || isGroupsLoadingError}
     >
       <Placeholder

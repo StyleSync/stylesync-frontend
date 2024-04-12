@@ -3,18 +3,22 @@ import { v4 } from 'uuid';
 import { useBoolean } from 'usehooks-ts';
 import clsx from 'clsx';
 import { useIntl } from 'react-intl';
+import { useQueryClient } from '@tanstack/react-query';
+import { getQueryKey } from '@trpc/react-query';
 // components
 import { Button } from '@/modules/core/components/button';
-import { Tag } from '../../../core/components/tag';
+import { Tag } from '@/modules/core/components/tag';
 import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
 // containers
 import { ServiceConstructorRow } from '@/modules/service/containers/service-constructor-row';
+import { ServiceOnProfessionalEditForm } from '@/modules/service/components/service-on-professional-edit-form';
+// hooks
+import { useServiceOnProfessionalGroupDelete } from '@/modules/service/hooks/use-service-on-professional-group-delete';
 // types
-import type {
-  ServiceOnProfessional,
-  ServiceOnProfessionalEditableFields,
-} from '@/modules/service/types/service.types';
 import type { IconName } from '@/modules/core/components/icon';
+// utils
+import { showToast } from '@/modules/core/providers/toast-provider';
+import { trpc } from '@/modules/core/utils/trpc.utils';
 
 import type { ServiceConstructorTableProps } from './service-constructor-table.interface';
 import styles from './service-constructor-table.module.scss';
@@ -22,62 +26,43 @@ import styles from './service-constructor-table.module.scss';
 export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
   service,
   serviceOnProfessionalList,
-  onChange,
-  onRemoveClick,
+  onRemove,
 }) => {
+  const queryClient = useQueryClient();
   const intl = useIntl();
   // state
   const isActionsOpen = useBoolean();
-
-  const handleAddClick = useCallback(() => {
-    onChange(service, [
-      ...serviceOnProfessionalList,
-      {
-        service,
-        id: `new__${v4()}`,
-        title: '',
-        duration: 0,
-        price: 0,
-        currency: 'USD',
-      },
-    ]);
-  }, [service, serviceOnProfessionalList, onChange]);
+  const isCreateOpen = useBoolean();
+  // queries
+  const serviceOnProfessionalGroupDelete =
+    useServiceOnProfessionalGroupDelete();
 
   const handleTableRemoveClick = useCallback(() => {
-    onRemoveClick(service);
-  }, [service, onRemoveClick]);
-
-  const handleRowRemove = useCallback(
-    (id: string) => {
-      onChange(
-        service,
-        serviceOnProfessionalList.filter((item) => item.id !== id)
-      );
-    },
-    [service, serviceOnProfessionalList, onChange]
-  );
-
-  const handleRowChange = useCallback(
-    (id: string) => (edited: ServiceOnProfessionalEditableFields) => {
-      const serviceOnProfessional = serviceOnProfessionalList.find(
-        (item) => item.id === id
-      );
-
-      const data: ServiceOnProfessional = serviceOnProfessional
-        ? { ...serviceOnProfessional, ...edited }
-        : {
-            ...edited,
-            id: v4(),
-            service,
-          };
-
-      onChange(service, [
-        ...serviceOnProfessionalList.filter((item) => item.id !== id),
-        data,
-      ]);
-    },
-    [service, serviceOnProfessionalList, onChange]
-  );
+    serviceOnProfessionalGroupDelete.mutate(
+      serviceOnProfessionalList.map((item) => item.id),
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: getQueryKey(trpc.serviceOnProfessional.list),
+          });
+          onRemove(service);
+        },
+        onError: () => {
+          showToast({
+            variant: 'error',
+            title: 'Unable to delete',
+            description: '',
+          });
+        },
+      }
+    );
+  }, [
+    queryClient,
+    service,
+    serviceOnProfessionalGroupDelete,
+    serviceOnProfessionalList,
+    onRemove,
+  ]);
 
   return (
     <div className={styles.root}>
@@ -91,13 +76,14 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
             icon='plus'
             variant='outlined'
             type='button'
-            onClick={handleAddClick}
+            onClick={isCreateOpen.setTrue}
           />
           <Button
             className={styles.remove}
             icon='trash'
             variant='danger'
             type='button'
+            isLoading={serviceOnProfessionalGroupDelete.isLoading}
             onClick={handleTableRemoveClick}
           />
         </div>
@@ -137,10 +123,20 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
         <ServiceConstructorRow
           key={serviceOnProfessional.id}
           data={serviceOnProfessional}
-          onChange={handleRowChange(serviceOnProfessional.id)}
-          onDelete={handleRowRemove}
         />
       ))}
+      <ServiceOnProfessionalEditForm
+        data={{
+          service,
+          id: `new__${v4()}`,
+          title: '',
+          duration: 0,
+          price: 0,
+          currency: 'USD',
+        }}
+        isActive={isCreateOpen.value}
+        onOpenChange={isCreateOpen.setFalse}
+      />
     </div>
   );
 };
