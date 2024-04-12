@@ -38,7 +38,7 @@ export const CreateBooking: FC<CreateBookingProps> = ({
     bookingCreate.mutate(
       {
         ...data,
-        userId: professional?.id,
+        userId: professional.user?.id,
         guestFirstName: name,
         guestLastName: lastName,
         guestPhone: phone,
