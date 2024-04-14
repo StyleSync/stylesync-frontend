@@ -11,17 +11,10 @@ import { useServiceOnProfessionalGroups } from '@/modules/service/hooks/use-serv
 import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboard/pro-onboard.interface';
 
 export const OnboardServices: FC<ProOnboardStepProps> = ({ next, back }) => {
-  const {
-    groups,
-    setGroups,
-    isGroupsLoading,
-    isGroupsLoadingError,
-    save,
-    isSaveLoading,
-    isSaveDisabled,
-  } = useServiceOnProfessionalGroups({
-    onSaved: next,
-  });
+  const { groups, setGroups, isGroupsLoading, isGroupsLoadingError } =
+    useServiceOnProfessionalGroups({
+      onSaved: next,
+    });
 
   return (
     <OnboardLayout
@@ -29,9 +22,7 @@ export const OnboardServices: FC<ProOnboardStepProps> = ({ next, back }) => {
         title: 'Services',
       }}
       nextButtonProps={{
-        isLoading: isSaveLoading,
-        disabled: isSaveDisabled,
-        onClick: save,
+        onClick: next,
       }}
       prevButtonProps={{
         onClick: back,

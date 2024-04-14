@@ -7,23 +7,22 @@ import { TextField } from '@/modules/core/components/text-field';
 import { PriceField } from '@/modules/core/components/price-field';
 import { TimeField } from '@/modules/core/components/time-field';
 import { Button } from '@/modules/core/components/button';
-import { Icon } from '@/modules/core/components/icon';
 import { Dialog } from '@/modules/core/components/dialog';
 import { Typography } from '@/modules/core/components/typogrpahy';
-// hooks
-import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // utils
+import { trpc } from '@/modules/core/utils/trpc.utils';
 import { Time, type TimeValue } from '@/modules/core/utils/time.utils';
-import { isServiceOnProfessionalValid } from '@/modules/service/utils/service.utils';
 // types
 import type { ServiceOnProfessionalEditableFields } from '@/modules/service/types/service.types';
-import type { ChildrenProp } from '@/modules/core/types/react.types';
 
 import type {
   ServiceOnProfessionalEditFormProps,
   ServiceOnProfessionalFormValues,
 } from './service-on-professional-edit-form.interface';
 import styles from './service-on-professional-edit-form.module.scss';
+import { showToast } from '@/modules/core/providers/toast-provider';
+import { useQueryClient } from '@tanstack/react-query';
+import { getQueryKey } from '@trpc/react-query';
 
 const validationSchema = z.object({
   title: z.string().min(1),
@@ -56,39 +55,21 @@ const mapFormValuesToServiceOnProfessional = (
   duration: Time.toMinuteDuration(values.duration as TimeValue),
 });
 
-const FragmentOrDialog: FC<
-  ChildrenProp & { isActive: boolean; onClose: () => void }
-> = ({ children, isActive, onClose }) => {
-  const deviceType = useDeviceType();
-
-  if (deviceType === 'mobile') {
-    return (
-      <Dialog
-        isOpen={isActive}
-        onOpenChange={onClose}
-        classes={{
-          overlay: styles.dialogOverlay,
-          content: styles.dialogContent,
-        }}
-      >
-        {children}
-      </Dialog>
-    );
-  }
-
-  return <>{children}</>;
-};
-
 export const ServiceOnProfessionalEditForm: FC<
   ServiceOnProfessionalEditFormProps
-> = ({ isActive, data, onSubmit, onCancel, onDelete }) => {
-  const deviceType = useDeviceType();
-  const isNew = !isServiceOnProfessionalValid(data);
+> = ({ isActive, data, onOpenChange }) => {
+  const queryClient = useQueryClient();
+  const isNew = data.id.startsWith('new__');
   // form
   const form = useForm<ServiceOnProfessionalFormValues>({
     defaultValues: mapServiceOnProfessionalToFormValues(data),
     resolver: zodResolver(validationSchema),
   });
+  // mutation
+  const serviceOnProfessionalUpdateMutation =
+    trpc.serviceOnProfessional.update.useMutation();
+  const serviceOnProfessionalCreateMutation =
+    trpc.serviceOnProfessional.create.useMutation();
 
   useEffect(() => {
     form.reset(mapServiceOnProfessionalToFormValues(data));
@@ -96,95 +77,153 @@ export const ServiceOnProfessionalEditForm: FC<
 
   const handleSubmit = useCallback(
     (values: ServiceOnProfessionalFormValues) => {
-      onSubmit(mapFormValuesToServiceOnProfessional(values));
+      if (isNew) {
+        serviceOnProfessionalCreateMutation.mutate(
+          {
+            ...mapFormValuesToServiceOnProfessional(values),
+            serviceId: data.service.id,
+          },
+          {
+            onSuccess: () => {
+              onOpenChange(false);
+
+              queryClient.invalidateQueries({
+                queryKey: getQueryKey(trpc.serviceOnProfessional.list),
+              });
+            },
+            onError: (err) => {
+              showToast({
+                variant: 'error',
+                title: err.message,
+                description: '',
+              });
+            },
+          }
+        );
+
+        return;
+      }
+
+      serviceOnProfessionalUpdateMutation.mutate(
+        {
+          ...data,
+          ...mapFormValuesToServiceOnProfessional(values),
+        },
+        {
+          onSuccess: () => {
+            onOpenChange(false);
+
+            queryClient.invalidateQueries({
+              queryKey: getQueryKey(trpc.serviceOnProfessional.list),
+            });
+          },
+          onError: (err) => {
+            showToast({
+              variant: 'error',
+              title: err.message,
+              description: '',
+            });
+          },
+        }
+      );
     },
-    [onSubmit]
+    [
+      isNew,
+      data,
+      serviceOnProfessionalCreateMutation,
+      serviceOnProfessionalUpdateMutation,
+    ]
   );
 
   const handleCancel = useCallback(() => {
-    const formValues = mapServiceOnProfessionalToFormValues(data);
-    const isInitialDataValid = validationSchema.safeParse(formValues).success;
-
-    if (!isInitialDataValid) {
-      onDelete(data.id);
-
-      return;
-    }
-
-    form.reset(formValues);
-    onCancel();
-  }, [data, onCancel, onDelete, form.reset]);
-
-  if (deviceType !== 'mobile' && !isActive) {
-    return;
-  }
+    onOpenChange(false);
+  }, [onOpenChange]);
 
   return (
-    <FragmentOrDialog isActive={isActive} onClose={handleCancel}>
-      <form className={styles.form} onSubmit={form.handleSubmit(handleSubmit)}>
-        <div className={styles.title}>
-          <Icon name='nails' width={18} height={18} />
-          <Typography variant='body1'>
-            {isNew ? 'Create' : 'Edit'} nails service
-          </Typography>
-        </div>
-        <TextField
-          variant='input'
-          label='Service title'
-          autoFocus
-          error={Boolean(form.formState.errors.title)}
-          {...form.register('title')}
-        />
-        <Controller
-          name='price'
-          control={form.control}
-          render={({ field, fieldState }) => (
-            <PriceField
-              price={field.value.value}
-              currency={field.value.currency}
-              onCurrencyChange={(currency) =>
-                field.onChange({
-                  value: form.getValues().price.value,
-                  currency,
-                })
-              }
-              onPriceChange={(price) =>
-                field.onChange({
-                  value: price,
-                  currency: form.getValues().price.currency,
-                })
-              }
-              inputProps={{
-                label: 'Price',
-                error: Boolean(fieldState.error),
-              }}
-            />
-          )}
-        />
-        <Controller
-          name='duration'
-          control={form.control}
-          render={({ field, fieldState }) => (
-            <TimeField
-              value={field.value}
-              onChange={field.onChange}
-              inputProps={{
-                label: 'Duration',
-                error: Boolean(fieldState.error),
-              }}
-            />
-          )}
-        />
-        <div className={styles.actions}>
-          <Button
-            variant='secondary'
-            type='button'
-            text='Cancel'
-            onClick={handleCancel}
+    <Dialog
+      isOpen={isActive}
+      onOpenChange={onOpenChange}
+      classes={{
+        overlay: styles.dialogOverlay,
+        content: styles.dialogContent,
+      }}
+    >
+      <div className='flex flex-col gap-y-10'>
+        <Typography className='text-dark' variant='subtitle'>
+          {isNew ? 'Add' : 'Edit'} service
+        </Typography>
+        <form
+          className='flex flex-col gap-y-6'
+          onSubmit={form.handleSubmit(handleSubmit)}
+        >
+          <TextField
+            variant='input'
+            label='Service title'
+            autoFocus
+            error={Boolean(form.formState.errors.title)}
+            {...form.register('title')}
           />
-          <Button variant='primary' text='Save' type='submit' />
-        </div>
-      </form>
-    </FragmentOrDialog>
+          <div className='flex gap-x-4 pb-4'>
+            <Controller
+              name='duration'
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <TimeField
+                  value={field.value}
+                  onChange={field.onChange}
+                  inputProps={{
+                    label: 'Duration',
+                    error: Boolean(fieldState.error),
+                  }}
+                />
+              )}
+            />
+            <Controller
+              name='price'
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <PriceField
+                  price={field.value.value}
+                  currency={field.value.currency}
+                  onCurrencyChange={(currency) =>
+                    field.onChange({
+                      value: form.getValues().price.value,
+                      currency,
+                    })
+                  }
+                  onPriceChange={(price) =>
+                    field.onChange({
+                      value: price,
+                      currency: form.getValues().price.currency,
+                    })
+                  }
+                  inputProps={{
+                    label: 'Price',
+                    error: Boolean(fieldState.error),
+                  }}
+                />
+              )}
+            />
+          </div>
+          <div className='flex gap-x-2 ml-auto'>
+            <Button
+              variant='secondary'
+              type='button'
+              text='Cancel'
+              onClick={handleCancel}
+            />
+            <Button
+              variant='primary'
+              text='Save'
+              type='submit'
+              isLoading={
+                serviceOnProfessionalUpdateMutation.isLoading ||
+                serviceOnProfessionalCreateMutation.isLoading
+              }
+            />
+          </div>
+        </form>
+      </div>
+    </Dialog>
   );
 };

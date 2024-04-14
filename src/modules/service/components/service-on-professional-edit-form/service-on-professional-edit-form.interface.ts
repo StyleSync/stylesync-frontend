@@ -1,15 +1,10 @@
-import type {
-  ServiceOnProfessional,
-  ServiceOnProfessionalEditableFields,
-} from '@/modules/service/types/service.types';
+import type { ServiceOnProfessional } from '@/modules/service/types/service.types';
 import type { Currency } from '@prisma/client';
 
 export type ServiceOnProfessionalEditFormProps = {
   isActive: boolean;
   data: ServiceOnProfessional;
-  onSubmit: (values: ServiceOnProfessionalEditableFields) => void;
-  onCancel: () => void;
-  onDelete: (id: string) => void;
+  onOpenChange: (isOpen: boolean) => void;
 };
 
 export type ServiceOnProfessionalFormValues = {
