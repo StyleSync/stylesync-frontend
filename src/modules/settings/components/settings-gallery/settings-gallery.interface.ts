@@ -15,6 +15,7 @@ export type GalleryImage = {
   caption?: string;
 };
 
-export type GallerySectionProps = {
-  userId: string;
+export type SettingsGalleryProps = {
+  images: PortfolioExtendedProfessional[];
+  rowImagesCount?: number;
 };

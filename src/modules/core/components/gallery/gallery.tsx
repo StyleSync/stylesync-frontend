@@ -1,10 +1,17 @@
 import { type FC, useCallback, useMemo, useState } from 'react';
+import Image from 'next/image';
+// lightbox
 import Lightbox from 'yet-another-react-lightbox';
 import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
+import Captions from 'yet-another-react-lightbox/plugins/captions';
+import 'yet-another-react-lightbox/plugins/captions.css';
 import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
-
+// components
+import { Typography } from '../typogrpahy';
+// types
 import type { GalleryProps } from './gallery.interface';
+// styles
 import styles from './gallery.module.scss';
 import './gallery.global.scss';
 
@@ -17,11 +24,15 @@ export const Gallery: FC<GalleryProps> = ({
   // memo
   const slides = useMemo(
     () =>
-      images.map(({ original }) => ({
-        src: original,
+      images.map(({ link, description, title }) => ({
+        src: link,
+        origin: link,
+        description,
+        title,
       })),
     [images]
   );
+
   const imagesToDisplay = useMemo(() => {
     if (!maxRows) {
       return images;
@@ -54,7 +65,16 @@ export const Gallery: FC<GalleryProps> = ({
             tabIndex={0}
             onClick={handleImageClick(i)}
           >
-            <img className={styles.image} src={image.src} alt='gallery image' />
+            <div className={styles.container}>
+              <Image
+                className={styles.image}
+                src={image.link}
+                alt={image.title}
+                width={150}
+                height={150}
+              />
+              <Typography className={styles.title}>{image.title}</Typography>
+            </div>
           </div>
         ))}
       </div>
@@ -63,7 +83,7 @@ export const Gallery: FC<GalleryProps> = ({
         open={index >= 0}
         index={index}
         close={() => setIndex(-1)}
-        plugins={[Thumbnails]}
+        plugins={[Thumbnails, Captions]}
         thumbnails={{
           borderRadius: 12,
           imageFit: 'cover',
