@@ -25,9 +25,9 @@ export const BookingInfoCard: FC<BookingInfoCardProps> = ({
   const isOpen = useBoolean();
   // refs
   const rootRef = useRef<HTMLDivElement>(null);
-  const startDate = new Date(startTime); // Start date
+  const startDate = new Date(startTime);
 
-  const endDate = new Date(endTime); // Final date
+  const endDate = new Date(endTime);
 
   // Format start and end dates separately
   const formattedStartTime = format(startDate, 'HH:mm');

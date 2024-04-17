@@ -3,12 +3,33 @@
 
 :root {
   --fc-button-active-bg-color: #c5d8f8;
+  --fc-event-border-color: transparent !important;
 }
 
 .fc-view-harness {
   background-color: #fff;
   box-shadow: variables.$main-box-shadow;
   border-radius: variables.$border-radius-medium;
+}
+
+.fc-timegrid-axis-frame {
+  align-items: center;
+  display: flex;
+  justify-content: center !important;
+  overflow: hidden;
+  padding-top: utils.spacing(2.3);
+}
+
+.fc-timegrid-axis {
+  font-weight: normal;
+}
+
+.fc-col-header-cell.fc-day.fc-day-today {
+  color: variables.$primary-color !important;
+}
+
+.fc.fc-direction-ltr .fc-timegrid-col-events {
+  margin-top: 2px !important;
 }
 
 .fc .fc-toolbar {
@@ -54,6 +75,10 @@
 .fc {
   .fc-timegrid-slot {
     height: utils.spacing(6);
+  }
+
+  .fc-event-border-color {
+    color: red !important;
   }
 
   .fc-toolbar-title {
@@ -110,6 +135,10 @@
 
   .fc-timegrid-now-indicator-arrow {
     display: none;
+  }
+
+  .fc-event.fc-event-start.fc-event-end {
+    height: 98% !important;
   }
 
   .fc-scroller {

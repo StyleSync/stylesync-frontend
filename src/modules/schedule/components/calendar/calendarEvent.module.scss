@@ -1,2 +1,18 @@
 @use '@/styles/variables.module';
 @use '@/styles/utils';
+
+.eventContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: utils.spacing(1);
+  padding: 2px;
+  border-radius: 10px;
+}
+
+.event {
+  border-radius: 6px !important;
+}
+
+.eventText {
+  color: #fff;
+}

@@ -1,62 +1,38 @@
 import { type FC } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import { format } from 'date-fns';
+import { format, getHours, set, getMinutes } from 'date-fns';
 import type { CalendarProps } from './calendar.interface';
-// import { trpc } from '@/modules/core/utils/trpc.utils';
+import { trpc } from '@/modules/core/utils/trpc.utils';
 
 import './calendar.scss';
-// import styles from './calendarEvent.module.scss';
-// import { Typography } from '@/modules/core/components/typogrpahy';
-// import { Avatar } from '@/modules/core/components/avatar';
-
-// const events = [
-//   {
-//     id: '2',
-//     title: 'Событие',
-//     start: new Date(2024, 3, 11, 13, 0, 0),
-//     end: new Date(2024, 3, 11, 14, 0, 0),
-//     // color: '#26c967',
-//   },
-//   {
-//     id: '3',
-//     title: 'Событие',
-//     start: new Date(2024, 3, 12, 13, 0, 0),
-//     end: new Date(2024, 3, 12, 14, 0, 0),
-//     // color: '#26c967',
-//   },
-// ];
-
-// const now = new Date().toISOString();
+import styles from './calendarEvent.module.scss';
+import { Typography } from '@/modules/core/components/typogrpahy';
 
 export const Calendar: FC<CalendarProps> = () => {
-  // queries
-  // const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
+  const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
 
-  // const [upcomingEvents] = trpc.booking.list.useSuspenseQuery({
-  //   expand: ['serviceProfessional'],
-  //   sortField: 'date',
-  //   startDate: now,
-  //   professionalId: me.professional?.id,
-  // });
-  // const [pastEvents] = trpc.booking.list.useSuspenseQuery({
-  //   expand: ['serviceProfessional'],
-  //   sortField: 'date',
-  //   endDate: now,
-  //   professionalId: me.professional?.id,
-  // });
+  const [events] = trpc.booking.list.useSuspenseQuery({
+    expand: ['serviceProfessional'],
+    professionalId: me.professional?.id,
+  });
 
-  // const eventComponents = events.map((event) => (
-  //   <div key={event.id} className={styles.eventContainer}>
-  //     <Avatar shadow size='small' />
-  //     <Typography>{event.title}</Typography>
-  //     <Typography>time</Typography>
-  //   </div>
-  // ));
+  const handleViewMount = ({ el }: { el: HTMLElement }) => {
+    const timeZone = format(new Date(), 'zzzz').replace('GMT', 'GMT ');
+    const timeGridAxis = el.querySelector('.fc-timegrid-axis-frame');
+
+    if (timeGridAxis) {
+      timeGridAxis.innerHTML = `<span style="font-size: 11px">${timeZone}</span>`;
+    }
+  };
 
   return (
     <div className='mostly-customized'>
       <FullCalendar
+        viewDidMount={handleViewMount}
+        eventBackgroundColor='#26c967'
+        plugins={[timeGridPlugin]}
+        initialView='timeGridWeek'
         customButtons={{
           customButtons: {
             text: 'Approved',
@@ -68,8 +44,7 @@ export const Calendar: FC<CalendarProps> = () => {
             text: 'Past',
           },
         }}
-        plugins={[timeGridPlugin]}
-        initialView='timeGridWeek'
+        buttonText={{ today: 'Today' }}
         headerToolbar={{
           left: 'today prev,next',
           center: 'title',
@@ -89,13 +64,49 @@ export const Calendar: FC<CalendarProps> = () => {
         )}
         allDaySlot={false}
         height={'75vh'}
-        buttonText={{ today: 'Today' }}
         nowIndicator
         slotMinTime={'07:00'}
-        eventBackgroundColor='#26c967'
-        eventBorderColor='#26c967'
-        // events={events}
-        // eventContent={eventComponents}
+        events={events.map((event) => ({
+          id: event.id,
+          title: event.serviceProfessional.title,
+          start: set(event.date, {
+            hours: getHours(event.startTime),
+            minutes: getMinutes(event.startTime),
+            seconds: 0,
+            milliseconds: 0,
+          }),
+
+          end: set(event.date, {
+            hours: getHours(event.endTime),
+            minutes: getMinutes(event.endTime),
+            seconds: 0,
+            milliseconds: 0,
+          }),
+
+          className: styles.event,
+        }))}
+        eventContent={({ event }) => {
+          const startTime = format(
+            event.start ? new Date(event.start) : new Date(),
+            'HH:mm'
+          );
+          const endTime = format(
+            event.end ? new Date(event.end) : new Date(),
+            'HH:mm'
+          );
+
+          return (
+            <div key={event.id} className={styles.eventContainer}>
+              {/* TODO: Avatar */}
+              <Typography className={styles.eventText} variant='small'>
+                {event.title}
+              </Typography>
+              <Typography className={styles.eventText}>
+                {startTime} - {endTime}
+              </Typography>
+            </div>
+          );
+        }}
       />
     </div>
   );
