@@ -4,6 +4,7 @@ import type { DialogProps as BaseDialogProps } from '@/modules/core/types/dialog
 
 export type DialogProps = ChildrenProp &
   BaseDialogProps & {
+    isCloseButtonVisible?: boolean;
     trigger?: ReactNode;
     classes?: {
       overlay?: string;

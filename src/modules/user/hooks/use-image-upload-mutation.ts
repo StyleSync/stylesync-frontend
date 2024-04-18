@@ -5,12 +5,16 @@ import type { PutBlobResult } from '@vercel/blob';
 const AVATAR_UPLOAD_CACHE_KEY = 'IMAGE_UPLOAD';
 
 export const useImageUploadMutation = (
-  options?: UseMutationOptions<PutBlobResult, Error, File>
+  options?: UseMutationOptions<
+    PutBlobResult,
+    Error,
+    { name: string; blob: Blob }
+  >
 ) => {
-  return useMutation<PutBlobResult, Error, File>(
+  return useMutation<PutBlobResult, Error, { name: string; blob: Blob }>(
     [AVATAR_UPLOAD_CACHE_KEY],
-    async (file: File) => {
-      return upload(file.name, file, {
+    async (file) => {
+      return upload(file.name, file.blob, {
         access: 'public',
         handleUploadUrl: '/api/portfolio/upload',
       });

@@ -36,6 +36,7 @@ export const Dialog: FC<DialogProps> = ({
   isOpen,
   trigger,
   onOpenChange,
+  isCloseButtonVisible,
   classes,
 }) => {
   const _isOpen = useBoolean();
@@ -75,20 +76,23 @@ export const Dialog: FC<DialogProps> = ({
           <animated.div
             className={clsx(styles.overlay, classes?.overlay)}
             style={overlayAnimationController.springs}
-          />
+          >
+            {isCloseButtonVisible && (
+              <Button
+                className={styles.closeButton}
+                icon='close'
+                variant='unstyled'
+                onClick={() => onOpenChange(false)}
+                rippleColor='#fafbfc'
+              />
+            )}
+          </animated.div>
         </RadixDialog.Overlay>
         <RadixDialog.Content>
           <animated.div
             className={clsx(styles.content, classes?.content)}
             style={contentAnimationController.springs}
           >
-            <Button
-              className={styles.closeButton}
-              icon='close'
-              variant='unstyled'
-              onClick={() => onOpenChange(false)}
-              rippleColor='#fafbfc'
-            />
             {children}
           </animated.div>
         </RadixDialog.Content>

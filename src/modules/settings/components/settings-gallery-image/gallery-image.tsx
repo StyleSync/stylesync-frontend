@@ -4,7 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 // components
 import { Icon } from '@/modules/core/components/icon';
-import { PhotoUploadModal } from '@/modules/settings/components/photo-upload-modal';
+import { PhotoUploadModal } from '@/modules/gallery/containers/photo-upload-modal';
 // utils
 import { showToast } from '@/modules/core/providers/toast-provider';
 import { trpc } from '@/modules/core/utils/trpc.utils';
@@ -71,7 +71,7 @@ export const GalleyImage: FC<GalleryImageProps> = ({ image }) => {
         </div>
       </div>
       <PhotoUploadModal
-        imageId={image.id}
+        portfolioId={image.id}
         onOpenChange={isOpen.setValue}
         isOpen={isOpen.value}
       />
