@@ -35,16 +35,36 @@ export const portfolioRouter = router({
   create: privateProcedure
     .input(
       z.object({
+        albumId: z.string().min(1, 'Required'),
         link: z.string().url('Invalid url'),
         title: z.string().min(1, 'Required').max(maxLargeTextLength),
         description: z.string().max(maxLargeTextLength).optional(),
       })
     )
     .mutation(async ({ input, ctx }) => {
+      const album = await prisma.album.findUnique({
+        where: { id: input.albumId },
+        select: { professionalId: true },
+      });
+
+      if (!album) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `No album found with id '${input.albumId}'`,
+        });
+      }
+
       const professional = await getProfessionalFromContext(ctx);
 
+      if (album.professionalId !== professional.id) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: `You dont have permission to create portfolio for album with id '${input.albumId}'`,
+        });
+      }
+
       return prisma.portfolio.create({
-        data: { ...input, professionalId: professional.id },
+        data: { ...input },
         select: defaultPortfolioSelect,
       });
     }),
@@ -63,7 +83,7 @@ export const portfolioRouter = router({
     .mutation(async ({ input, ctx }) => {
       const portfolioItem = await prisma.portfolio.findUnique({
         where: { id: input.id },
-        select: defaultPortfolioSelect,
+        select: { ...defaultPortfolioSelect, albumId: true },
       });
 
       if (!portfolioItem) {
@@ -73,9 +93,21 @@ export const portfolioRouter = router({
         });
       }
 
+      const album = await prisma.album.findUnique({
+        where: { id: portfolioItem.albumId },
+        select: { professionalId: true },
+      });
+
+      if (!album) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `No album found with id '${portfolioItem.albumId}'`,
+        });
+      }
+
       const professional = await getProfessionalFromContext(ctx);
 
-      if (portfolioItem.professional.id !== professional.id) {
+      if (album.professionalId !== professional.id) {
         throw new TRPCError({
           code: 'FORBIDDEN',
           message: `You dont have permission to update portfolio with id '${input.id}'`,
@@ -97,7 +129,7 @@ export const portfolioRouter = router({
     .mutation(async ({ input, ctx }) => {
       const portfolioItem = await prisma.portfolio.findUnique({
         where: { id: input.id },
-        select: defaultPortfolioSelect,
+        select: { ...defaultPortfolioSelect, albumId: true },
       });
 
       if (!portfolioItem) {
@@ -107,9 +139,21 @@ export const portfolioRouter = router({
         });
       }
 
+      const album = await prisma.album.findUnique({
+        where: { id: portfolioItem.albumId },
+        select: { professionalId: true },
+      });
+
+      if (!album) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `No album found with id '${portfolioItem.albumId}'`,
+        });
+      }
+
       const professional = await getProfessionalFromContext(ctx);
 
-      if (portfolioItem.professional.id !== professional.id) {
+      if (album.professionalId !== professional.id) {
         throw new TRPCError({
           code: 'FORBIDDEN',
           message: `You dont have permission to delete portfolio with id '${input.id}'`,
@@ -126,7 +170,7 @@ export const portfolioRouter = router({
     .input(
       z
         .object({
-          professionalId: z.string().min(1, 'Required').optional(),
+          albumId: z.string().min(1, 'Required').optional(),
           limit: z.number().min(1).max(maxLimit).default(defaultLimit),
           offset: z.number().min(0).default(0),
         })
@@ -135,7 +179,7 @@ export const portfolioRouter = router({
     .query(async ({ input }) => {
       return prisma.portfolio.findMany({
         where: {
-          professionalId: input?.professionalId,
+          albumId: input?.albumId,
         },
         select: defaultPortfolioSelect,
         take: input?.limit ?? defaultLimit,
