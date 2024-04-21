@@ -5,7 +5,8 @@ import clsx from 'clsx';
 import { Button } from '@/modules/core/components/button';
 import { SettingsGallery } from '@/modules/settings/components/settings-gallery/settings-gallery';
 import { Placeholder } from '@/modules/core/components/placeholder';
-import { PhotoUploadModal } from '@/modules/settings/components/photo-upload-modal';
+// containers
+import { PhotoUploadModal } from '@/modules/gallery/containers/photo-upload-modal';
 // hooks
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // utils
@@ -21,7 +22,6 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
   const isFileUploading = useBoolean();
   const windowSizeType = useDeviceType();
   const isOpenUploadPhotoModal = useBoolean();
-
   // memo
   const buttonProps = useMemo<Partial<ButtonProps>>(() => {
     if (windowSizeType === 'mobile') {
@@ -55,8 +55,8 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
   return (
     <div className={styles.root}>
       <PhotoUploadModal
-        onOpenChange={isOpenUploadPhotoModal.setValue}
         isOpen={isOpenUploadPhotoModal.value}
+        onOpenChange={isOpenUploadPhotoModal.setValue}
         trigger={
           <Button
             isLoading={isFileUploading.value}
@@ -65,7 +65,6 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
           />
         }
       />
-
       <Placeholder
         isActive={images?.length === 0}
         placeholder={{

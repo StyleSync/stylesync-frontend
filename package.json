@@ -55,6 +55,7 @@
     "postcss": "8.4.38",
     "prisma": "5.1.1",
     "react": "18.2.0",
+    "react-advanced-cropper": "^0.19.6",
     "react-dom": "18.2.0",
     "react-dropzone": "14.2.3",
     "react-error-boundary": "4.0.13",

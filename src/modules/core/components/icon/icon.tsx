@@ -60,6 +60,7 @@ import ShareIcon from '@/assets/icons/share.svg?icon';
 import CommentIcon from '@/assets/icons/comment.svg?icon';
 import ArrowIncrease from '@/assets/icons/arrow-increase.svg?icon';
 import SuccessIcon from '@/assets/icons/success.svg?icon';
+import MediaIcon from '@/assets/icons/media.svg?icon';
 
 import type { SVGComponentElement } from './icon.interface';
 
@@ -124,6 +125,7 @@ export const icons = {
   comment: CommentIcon,
   success: SuccessIcon,
   'arrow-increase': ArrowIncrease,
+  media: MediaIcon,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;
