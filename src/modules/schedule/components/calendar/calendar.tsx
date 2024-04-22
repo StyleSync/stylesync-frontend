@@ -1,13 +1,17 @@
-import { type FC } from 'react';
+import { useMemo, type FC } from 'react';
+import { format, getHours, set, getMinutes } from 'date-fns';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import { format, getHours, set, getMinutes } from 'date-fns';
+// components
+import { Typography } from '@/modules/core/components/typogrpahy';
+// type
 import type { CalendarProps } from './calendar.interface';
+// utils
+import { getTime } from '@/modules/schedule/utils/get-time';
 import { trpc } from '@/modules/core/utils/trpc.utils';
-
+// styles
 import './calendar.scss';
 import styles from './calendarEvent.module.scss';
-import { Typography } from '@/modules/core/components/typogrpahy';
 
 export const Calendar: FC<CalendarProps> = () => {
   const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
@@ -26,9 +30,30 @@ export const Calendar: FC<CalendarProps> = () => {
     }
   };
 
+  const eventsList = useMemo(() => {
+    return events.map((event) => ({
+      id: event.id,
+      title: event.serviceProfessional.title,
+      start: set(event.date, {
+        hours: getHours(event.startTime),
+        minutes: getMinutes(event.startTime),
+        seconds: 0,
+        milliseconds: 0,
+      }),
+      end: set(event.date, {
+        hours: getHours(event.endTime),
+        minutes: getMinutes(event.endTime),
+        seconds: 0,
+        milliseconds: 0,
+      }),
+      className: styles.event,
+    }));
+  }, [events]);
+
   return (
     <div className='mostly-customized'>
       <FullCalendar
+        events={eventsList}
         viewDidMount={handleViewMount}
         eventBackgroundColor='#26c967'
         plugins={[timeGridPlugin]}
@@ -66,34 +91,9 @@ export const Calendar: FC<CalendarProps> = () => {
         height={'75vh'}
         nowIndicator
         slotMinTime={'07:00'}
-        events={events.map((event) => ({
-          id: event.id,
-          title: event.serviceProfessional.title,
-          start: set(event.date, {
-            hours: getHours(event.startTime),
-            minutes: getMinutes(event.startTime),
-            seconds: 0,
-            milliseconds: 0,
-          }),
-
-          end: set(event.date, {
-            hours: getHours(event.endTime),
-            minutes: getMinutes(event.endTime),
-            seconds: 0,
-            milliseconds: 0,
-          }),
-
-          className: styles.event,
-        }))}
         eventContent={({ event }) => {
-          const startTime = format(
-            event.start ? new Date(event.start) : new Date(),
-            'HH:mm'
-          );
-          const endTime = format(
-            event.end ? new Date(event.end) : new Date(),
-            'HH:mm'
-          );
+          const startTime = getTime(event.start);
+          const endTime = getTime(event.end);
 
           return (
             <div key={event.id} className={styles.eventContainer}>
