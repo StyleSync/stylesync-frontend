@@ -1,0 +1,98 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+
+.root {
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: 1rem;
+  box-shadow: variables.$main-box-shadow;
+  border-radius: variables.$border-radius-medium;
+  row-gap: 0.75rem;
+  cursor: pointer;
+  transition: variables.$transition-ultrafast;
+  border: 2px solid transparent;
+  background-color: #fff;
+
+  &:hover {
+    background-color: variables.$grey-light-color;
+    border-color: variables.$primary-light-color;
+  }
+
+  &_hidden {
+    display: none;
+  }
+
+  &_active {
+    cursor: default;
+
+    &:hover {
+      background-color: #fff;
+      border-color: transparent;
+    }
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 4px;
+
+    .photoCount {
+      color: variables.$grey-color;
+    }
+  }
+
+  .images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+
+    &_active {
+      grid-template-columns: 1fr;
+    }
+
+    .imageWrapper {
+      position: relative;
+      display: flex;
+      aspect-ratio: 1 / 1;
+      background-color: variables.$primary-light-color;
+      border-radius: variables.$border-radius-small;
+      overflow: hidden;
+
+      .image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .meta {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        backdrop-filter: blur(8px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: variables.$border-radius-small;
+        overflow: hidden;
+
+        span {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .closeButton {
+    position: absolute;
+    right: utils.spacing(1);
+    top: utils.spacing(1);
+    color: variables.$grey-color;
+  }
+}

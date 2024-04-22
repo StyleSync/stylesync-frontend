@@ -27,6 +27,25 @@ body, button, input, select, textarea {
   direction: ltr;
 }
 
+// custom scrollbar
+//::-webkit-scrollbar {
+//  width: 6px;
+//  height: 6px;
+//}
+//
+//::-webkit-scrollbar-track {
+//  background: variables.$grey-light-color;
+//}
+//
+//::-webkit-scrollbar-thumb {
+//  background: rgba(0,0,0,.3);
+//  cursor: pointer;
+//}
+//
+//::-webkit-scrollbar-thumb:hover {
+//  background: variables.$grey-color;
+//}
+
 .leaflet-container {
   flex: 1;
   z-index: 0;
