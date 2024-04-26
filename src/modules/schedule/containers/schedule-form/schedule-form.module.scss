@@ -6,16 +6,13 @@
   flex-direction: column;
   width: 100%;
   height: fit-content;
-  border-radius: variables.$border-radius-medium;
-  box-shadow: variables.$main-box-shadow;
   overflow: hidden;
 
   .header {
     display: flex;
     align-items: center;
-    padding: utils.spacing(2, 3);
+    padding: utils.spacing(0, 3, 2);
     column-gap: utils.spacing(2);
-    background-color: #fff;
 
     .cell {
       display: flex;
