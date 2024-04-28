@@ -1,6 +1,6 @@
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/modules/auth/constants/auth-server.constants';
 import { pageGuard } from '@/modules/core/utils/route.utils';
 
 export default async function ProfileRedirect() {
