@@ -1,5 +1,5 @@
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/modules/auth/constants/auth-server.constants';
 import { UserHeaderNavigation } from '@/modules/core/containers/user-header-navigation/user-header-navigation';
 import { Header } from '@/modules/core/components/header';
 import { UserMenuBadge } from '@/modules/user/containers/user-menu-badge';

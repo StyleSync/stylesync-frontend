@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import clsx from 'clsx';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/modules/auth/constants/auth-server.constants';
 import { ErrorBoundary } from 'react-error-boundary';
 // components
 import { AboutMe } from '@/modules/user/components/about-me';
