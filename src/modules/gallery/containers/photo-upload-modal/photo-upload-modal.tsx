@@ -31,12 +31,14 @@ import type {
   PhotoUploadModalProps,
 } from './photo-upload-modal.interface';
 import { Spinner } from '@/modules/core/components/spinner';
+import Image from 'next/image';
 
 export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
   isOpen,
   onOpenChange,
   trigger,
   portfolioId,
+  albumId,
 }) => {
   const queryClient = useQueryClient();
   // queries
@@ -174,6 +176,10 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
             });
 
             queryClient.invalidateQueries({
+              queryKey: getQueryKey(trpc.album.list),
+            });
+
+            queryClient.invalidateQueries({
               queryKey: getQueryKey(trpc.portfolio.list),
             });
 
@@ -199,6 +205,7 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
         title: photoUploadState.file.name,
         link: uploadedImage.url,
         description,
+        albumId: albumId || '',
       },
       {
         onError: () => {
@@ -216,7 +223,11 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
           });
 
           queryClient.invalidateQueries({
-            queryKey: trpc.portfolio.list.getQueryKey(),
+            queryKey: getQueryKey(trpc.portfolio.list),
+          });
+
+          queryClient.invalidateQueries({
+            queryKey: getQueryKey(trpc.album.list),
           });
 
           onOpenChange(false);
@@ -299,9 +310,12 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
             )}
             {photoUploadState.step === 'details' && (
               <div className='w-full h-full bg-black'>
-                <img
+                <Image
                   className='w-full h-full object-contain flex'
                   src={photoUploadState.editedPreview}
+                  width={100}
+                  height={100}
+                  alt='image'
                 />
               </div>
             )}
@@ -313,9 +327,12 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
                   placeholder={<Spinner size='medium' color='#fff' />}
                 >
                   {uploadedPortfolio.data && (
-                    <img
+                    <Image
                       className='w-full h-full object-contain flex'
                       src={uploadedPortfolio.data.link}
+                      width={100}
+                      height={100}
+                      alt='image'
                     />
                   )}
                 </Placeholder>

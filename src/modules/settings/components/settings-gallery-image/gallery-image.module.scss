@@ -11,6 +11,11 @@
   border-radius: variables.$border-radius-medium;
   transition: variables.$transition-fast;
 
+  &_loading {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
   &:focus-visible {
     box-shadow: 0 0 0 2px #fff, 0 0 0 4px variables.$primary-color;
 

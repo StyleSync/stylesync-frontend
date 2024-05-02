@@ -5,29 +5,23 @@ import { AlbumCard } from '@/modules/gallery/components/album-card';
 
 import styles from './gallery-section.module.scss';
 import clsx from 'clsx';
-
-type AlbumData = {
-  id: string;
-  name: string;
-};
-
-const albums: AlbumData[] = [
-  {
-    id: '1',
-    name: 'Mane & Makeup Portfolio',
-  },
-  {
-    id: '2',
-    name: 'Makeup Catalog',
-  },
-  {
-    id: '3',
-    name: 'Just like it :)',
-  },
-];
+import { trpc } from '@/modules/core/utils/trpc.utils';
 
 export const GallerySection = () => {
   const [activeAlbum, setActiveAlbum] = useState<string | null>(null);
+
+  const { data: me } = trpc.user.me.useQuery({
+    expand: ['professional'],
+  });
+
+  const { data: albumsList } = trpc.album.list.useQuery(
+    {
+      professionalId: me?.professional?.id,
+    },
+    {
+      enabled: !!me?.professional?.id,
+    }
+  );
 
   return (
     <>
@@ -36,10 +30,12 @@ export const GallerySection = () => {
           [styles.root_displayAlbum]: !!activeAlbum,
         })}
       >
-        {albums.map((album) => (
+        {albumsList?.map((album) => (
           <AlbumCard
+            isMoreButtonVisible={false}
+            album={album}
             key={album.id}
-            name={album.name}
+            name={album.title}
             isActive={album.id === activeAlbum}
             hidden={!!activeAlbum && album.id !== activeAlbum}
             onClick={() => setActiveAlbum(album.id)}

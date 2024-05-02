@@ -12,4 +12,4 @@ const meta: Meta<typeof AlbumCard> = {
 export default meta;
 type Story = StoryObj<typeof AlbumCard>;
 
-export const Base: Story = {}
+export const Base: Story = {};

@@ -1,5 +1,5 @@
-import type { PortfolioExtendedProfessional } from '../settings-gallery/settings-gallery.interface';
+import { type Portfolio } from '@prisma/client';
 
 export type GalleryImageProps = {
-  image: PortfolioExtendedProfessional;
+  image: Portfolio;
 };

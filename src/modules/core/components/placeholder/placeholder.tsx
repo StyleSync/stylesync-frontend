@@ -17,8 +17,11 @@ const renderPlaceholder = (placeholder: PlaceholderProps['placeholder']) => {
       <div className={styles.illustrationPlaceholder}>
         <Illustration name={placeholder.illustration} width={220} />
         {placeholder.description && (
-          <Typography>{placeholder.description}</Typography>
+          <Typography className={styles.description}>
+            {placeholder.description}
+          </Typography>
         )}
+        {placeholder.action}
       </div>
     );
   }

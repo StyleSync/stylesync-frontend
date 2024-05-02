@@ -19,32 +19,17 @@
   -moz-tap-highlight-color: transparent;
 }
 
-body, button, input, select, textarea {
+body,
+button,
+input,
+select,
+textarea {
   font-synthesis: none;
-  -moz-font-feature-settings: "kern";
+  -moz-font-feature-settings: 'kern';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   direction: ltr;
 }
-
-// custom scrollbar
-//::-webkit-scrollbar {
-//  width: 6px;
-//  height: 6px;
-//}
-//
-//::-webkit-scrollbar-track {
-//  background: variables.$grey-light-color;
-//}
-//
-//::-webkit-scrollbar-thumb {
-//  background: rgba(0,0,0,.3);
-//  cursor: pointer;
-//}
-//
-//::-webkit-scrollbar-thumb:hover {
-//  background: variables.$grey-color;
-//}
 
 .leaflet-container {
   flex: 1;
@@ -78,8 +63,8 @@ body, button, input, select, textarea {
 
 .visibilityHidden {
   position: absolute;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
   width: 1px;
   height: 1px;
   overflow: hidden;

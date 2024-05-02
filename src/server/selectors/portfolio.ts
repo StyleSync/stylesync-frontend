@@ -6,4 +6,7 @@ export const defaultPortfolioSelect =
     title: true,
     description: true,
     link: true,
+    createdAt: true,
+    updatedAt: true,
+    albumId: true,
   });

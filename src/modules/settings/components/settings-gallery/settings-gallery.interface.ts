@@ -1,11 +1,4 @@
-import type { Portfolio, Professional } from '@prisma/client';
-
-export type PortfolioExtendedProfessional = Omit<
-  Portfolio,
-  'professionalId' | 'createdAt' | 'updatedAt'
-> & {
-  professional: Professional;
-};
+import type { Portfolio } from '@prisma/client';
 
 export type GalleryImage = {
   src: string;
@@ -16,6 +9,6 @@ export type GalleryImage = {
 };
 
 export type SettingsGalleryProps = {
-  images: PortfolioExtendedProfessional[];
+  images: Portfolio[];
   rowImagesCount?: number;
 };

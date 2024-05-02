@@ -11,6 +11,7 @@ export type PlaceholderProps = ChildrenProp &
       | {
           illustration: IllustrationName;
           description?: string;
+          action?: ReactNode;
         };
     fadeIn?: boolean;
   };

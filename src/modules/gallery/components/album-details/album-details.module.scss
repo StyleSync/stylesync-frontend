@@ -1,0 +1,30 @@
+@use '@/styles/utils';
+@use '@/styles/mixins';
+@use '@/styles/variables.module';
+
+.root {
+  width: 100%;
+}
+
+.trigger {
+  @include mixins.phone {
+    bottom: utils.spacing(15);
+  }
+}
+
+.content {
+  margin-top: utils.spacing(2);
+}
+
+.btnBack {
+  margin-right: auto;
+}
+
+.spinnerContainer {
+  margin-top: utils.spacing(20);
+  display: flex;
+  flex: 1;
+  gap: utils.spacing(2);
+  align-items: center;
+  justify-content: center;
+}
