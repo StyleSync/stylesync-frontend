@@ -25,6 +25,9 @@ module.exports = {
         green: {
           DEFAULT: '#4bb543',
         },
+        orange: {
+          DEFAULT: '#FA714E',
+        },
       },
       boxShadow: {
         DEFAULT: '0px 4px 15px 0px rgba(37, 74, 165, 0.1)',

@@ -17,8 +17,8 @@ const PAGE_SCROLL_TRIGGER = 5;
 const Header: FC<HeaderProps> & { BottomContent: FC<ChildrenProp> } = ({
   style,
   className,
-  rightSlot,
   centralSlot,
+  rightSlot,
 }) => {
   const isPageScrolled = useBoolean();
 
