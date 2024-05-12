@@ -8,7 +8,6 @@ import { ServiceConstructorTable } from '@/modules/service/containers/service-co
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { sortServiceOnProfessionalGroups } from '@/modules/service/utils/service.utils';
 // types
-import type { ServiceOnProfessional } from '@/modules/service/types/service.types';
 import type { Service } from '@prisma/client';
 
 import type { ProfessionalServicesFormProps } from './professional-services-form.interface';
@@ -32,21 +31,6 @@ export const ProfessionalServicesForm: FC<ProfessionalServicesFormProps> = ({
         ...prev,
         { service, serviceOnProfessionalList: [] },
       ]);
-    },
-    [setServiceOnProfessionalGroups]
-  );
-
-  const handleServiceGroupChange = useCallback(
-    (service: Service, serviceOnProfessionalList: ServiceOnProfessional[]) => {
-      setServiceOnProfessionalGroups((prev) => {
-        return [
-          ...prev.filter((item) => item.service.id !== service.id),
-          {
-            service,
-            serviceOnProfessionalList,
-          },
-        ];
-      });
     },
     [setServiceOnProfessionalGroups]
   );
@@ -82,8 +66,7 @@ export const ProfessionalServicesForm: FC<ProfessionalServicesFormProps> = ({
           <ServiceConstructorTable
             key={group.service.id}
             {...group}
-            onChange={handleServiceGroupChange}
-            onRemoveClick={handleServiceRemove}
+            onRemove={handleServiceRemove}
           />
         ))}
       </Placeholder>

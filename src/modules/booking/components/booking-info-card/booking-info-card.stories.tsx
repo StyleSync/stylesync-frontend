@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { faker } from '@faker-js/faker';
 
 import { BookingInfoCard } from './booking-info-card';
+import { addHours } from 'date-fns';
 
 const meta: Meta<typeof BookingInfoCard> = {
   title: 'Booking/BookingInfoCard',
@@ -16,7 +16,9 @@ export const Base: Story = {
   args: {
     name: 'Tanusha’s Beauty',
     serviceName: ' evening makeup',
-    date: new Date(faker.date.future().toString()),
+    date: new Date(),
+    startTime: new Date(),
+    endTime: addHours(new Date(), 1),
   },
   render: (props) => {
     return (

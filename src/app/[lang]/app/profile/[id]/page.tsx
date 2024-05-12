@@ -1,10 +1,11 @@
 import { Suspense } from 'react';
 import clsx from 'clsx';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/modules/auth/constants/auth-server.constants';
 import { ErrorBoundary } from 'react-error-boundary';
 // components
 import { AboutMe } from '@/modules/user/components/about-me';
+import { GallerySection } from '@/modules/user/components/gallery-section';
 import { UserServices } from '@/modules/user/components/user-services';
 import { ProfileSectionLayout } from '@/modules/user/components/profile-section-layout';
 import { ProLocation } from '@/modules/user/components/pro-location';
@@ -63,6 +64,9 @@ export default async function Profile({ params }: PageParams<{ id: string }>) {
             </Suspense>
           </ProfileSectionLayout>
         </ErrorBoundary>
+        <ProfileSectionLayout title='Gallery' id='profile-gallery'>
+          <GallerySection userId={params.id} />
+        </ProfileSectionLayout>
       </div>
       <ProBookActions />
     </main>

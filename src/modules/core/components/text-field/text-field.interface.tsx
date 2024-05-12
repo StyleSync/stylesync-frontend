@@ -13,6 +13,7 @@ type TextFieldGeneralProps = {
   classes?: {
     container?: string;
     label?: string;
+    fieldset?: string;
   };
   font?: SupportedFonts;
   endAdornment?: ReactNode;

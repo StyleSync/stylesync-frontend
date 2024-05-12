@@ -9,6 +9,13 @@
   background-color: variables.$grey-color;
   z-index: calc(#{variables.$level-dialog-1} - 1);
   opacity: 0;
+
+  .closeButton {
+    position: absolute;
+    right: utils.spacing(2);
+    top: utils.spacing(2);
+    color: #000;
+  }
 }
 
 .content {
@@ -29,12 +36,5 @@
 
   @include mixins.phone {
     width: calc(100% - #{utils.spacing(4)})
-  }
-
-  .closeButton {
-    position: absolute;
-    right: utils.spacing(1);
-    top: utils.spacing(1);
-    color: variables.$grey-color;
   }
 }

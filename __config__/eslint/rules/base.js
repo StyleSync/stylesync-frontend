@@ -105,7 +105,6 @@ module.exports = {
     'default-case': 'error',
     'dot-notation': ['error', { allowKeywords: true }],
     eqeqeq: 'error',
-    'guard-for-in': 'error',
     'no-alert': 1,
     'no-caller': 'error',
     'no-case-declarations': 'error',

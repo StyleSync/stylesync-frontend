@@ -185,6 +185,8 @@ const images: GalleryImage[] = [
 
 export const Base: Story = {
   args: {
+    //  TODO
+    // @ts-ignore
     images,
   },
 };

@@ -27,9 +27,6 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Install Commitlint
-        run: yarn global add @commitlint/cli
-
       - name: Run ESLint
         run: yarn lint
 
@@ -40,4 +37,4 @@ jobs:
         run: yarn tsc --noEmit
 
       - name: Validate commit messages
-        run: echo $(git log -1 --pretty=%B) | commitlint --config commitlint.config.js
+        run: echo $(git log -1 --pretty=%B) | npx commitlint --config commitlint.config.js

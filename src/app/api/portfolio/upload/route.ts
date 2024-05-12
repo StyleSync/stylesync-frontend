@@ -1,7 +1,7 @@
 import { handleUpload, type HandleUploadBody } from '@vercel/blob/client';
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/modules/auth/constants/auth-server.constants';
 import { Role } from '@prisma/client';
 
 type TokenPayload = {

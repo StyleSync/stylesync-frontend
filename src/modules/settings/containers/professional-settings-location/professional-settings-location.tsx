@@ -9,6 +9,7 @@ import { onQueryRetry } from '@/modules/core/utils/query-retry.utils';
 
 // types
 import type { Address } from '@/modules/location/types/address.types';
+import { showToast } from '@/modules/core/providers/toast-provider';
 
 export const ProfessionalSettingsLocation: FC = () => {
   // queries
@@ -44,32 +45,89 @@ export const ProfessionalSettingsLocation: FC = () => {
 
     // If there is no existing location and there is an newLocation , create a new location
     if (!location && newLocation) {
-      locationCreate.mutate({
-        name: newLocation.name,
-        latitude: newLocation.lat,
-        longitude: newLocation.lng,
-      });
+      locationCreate.mutate(
+        {
+          name: newLocation.name,
+          latitude: newLocation.lat,
+          longitude: newLocation.lng,
+        },
+        {
+          onError: () => {
+            showToast({
+              variant: 'error',
+              title: 'OOps, error',
+              description: 'Error',
+            });
+          },
+
+          onSuccess: () => {
+            showToast({
+              variant: 'success',
+              title: 'Good!',
+              description: 'Location added',
+            });
+          },
+        }
+      );
 
       return;
     }
 
     // If there is an existing location and there is an newLocation , update the existing location
     if (location && newLocation) {
-      locationUpdate.mutate({
-        id: location.id,
-        name: newLocation.name,
-        latitude: newLocation.lat,
-        longitude: newLocation.lng,
-      });
+      locationUpdate.mutate(
+        {
+          id: location.id,
+          name: newLocation.name,
+          latitude: newLocation.lat,
+          longitude: newLocation.lng,
+        },
+        {
+          onError: () => {
+            showToast({
+              variant: 'error',
+              title: 'OOps, error',
+              description: 'Error',
+            });
+          },
+
+          onSuccess: () => {
+            showToast({
+              variant: 'success',
+              title: 'Good!',
+              description: 'Location changed',
+            });
+          },
+        }
+      );
 
       return;
     }
 
     // If there is an existing location but no address, delete the existing location
     if (location && !newLocation) {
-      locationDelete.mutate({
-        id: location.id,
-      });
+      locationDelete.mutate(
+        {
+          id: location.id,
+        },
+        {
+          onError: () => {
+            showToast({
+              variant: 'error',
+              title: 'OOps, error',
+              description: 'Error',
+            });
+          },
+
+          onSuccess: () => {
+            showToast({
+              variant: 'success',
+              title: 'Good!',
+              description: 'Location deleted',
+            });
+          },
+        }
+      );
 
       return;
     }
