@@ -1,38 +1,63 @@
-import { type FC } from 'react';
+import { useMemo, type FC } from 'react';
+import { format, getHours, set, getMinutes } from 'date-fns';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import { format } from 'date-fns';
+// components
+import { Typography } from '@/modules/core/components/typogrpahy';
+// type
 import type { CalendarProps } from './calendar.interface';
-
+// utils
+import { getTime } from '@/modules/schedule/utils/get-time';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+// styles
 import './calendar.scss';
-
-// TODO
-// const today = new Date();
-// const events = [
-//   {
-//     id: '2',
-//     title: 'Событие',
-//     start: new Date(2024, 2, 2, 13, 0, 0),
-//     end: new Date(2024, 2, 2, 14, 0, 0),
-//   },
-//   {
-//     id: '3',
-//     title: 'Событие',
-//     start: new Date(2024, 2, 4, 13, 0, 0),
-//     end: new Date(2024, 2, 4, 14, 0, 0),
-//   },
-//   {
-//     id: '4',
-//     title: 'Событие',
-//     start: new Date(2024, 2, 5, 15, 0, 0),
-//     end: new Date(2024, 2, 5, 16, 0, 0),
-//   },
-// ];
+import styles from './calendarEvent.module.scss';
 
 export const Calendar: FC<CalendarProps> = () => {
+  const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
+
+  const [events] = trpc.booking.list.useSuspenseQuery({
+    expand: ['serviceProfessional'],
+    professionalId: me.professional?.id,
+  });
+
+  const handleViewMount = ({ el }: { el: HTMLElement }) => {
+    const timeZone = format(new Date(), 'zzzz').replace('GMT', 'GMT ');
+    const timeGridAxis = el.querySelector('.fc-timegrid-axis-frame');
+
+    if (timeGridAxis) {
+      timeGridAxis.innerHTML = `<span style="font-size: 11px">${timeZone}</span>`;
+    }
+  };
+
+  const eventsList = useMemo(() => {
+    return events.map((event) => ({
+      id: event.id,
+      title: event.serviceProfessional.title,
+      start: set(event.date, {
+        hours: getHours(event.startTime),
+        minutes: getMinutes(event.startTime),
+        seconds: 0,
+        milliseconds: 0,
+      }),
+      end: set(event.date, {
+        hours: getHours(event.endTime),
+        minutes: getMinutes(event.endTime),
+        seconds: 0,
+        milliseconds: 0,
+      }),
+      className: styles.event,
+    }));
+  }, [events]);
+
   return (
     <div className='mostly-customized'>
       <FullCalendar
+        events={eventsList}
+        viewDidMount={handleViewMount}
+        eventBackgroundColor='#26c967'
+        plugins={[timeGridPlugin]}
+        initialView='timeGridWeek'
         customButtons={{
           customButtons: {
             text: 'Approved',
@@ -44,8 +69,7 @@ export const Calendar: FC<CalendarProps> = () => {
             text: 'Past',
           },
         }}
-        plugins={[timeGridPlugin]}
-        initialView='timeGridWeek'
+        buttonText={{ today: 'Today' }}
         headerToolbar={{
           left: 'today prev,next',
           center: 'title',
@@ -64,11 +88,25 @@ export const Calendar: FC<CalendarProps> = () => {
           </div>
         )}
         allDaySlot={false}
-        // events={events}
         height={'75vh'}
-        buttonText={{ today: 'Today' }}
         nowIndicator
         slotMinTime={'07:00'}
+        eventContent={({ event }) => {
+          const startTime = getTime(event.start);
+          const endTime = getTime(event.end);
+
+          return (
+            <div key={event.id} className={styles.eventContainer}>
+              {/* TODO: Avatar */}
+              <Typography className={styles.eventText} variant='small'>
+                {event.title}
+              </Typography>
+              <Typography className={styles.eventText}>
+                {startTime} - {endTime}
+              </Typography>
+            </div>
+          );
+        }}
       />
     </div>
   );

@@ -18,7 +18,7 @@ import styles from './service-booking-modal.module.scss';
 
 export const ServiceBookingModal: FC<
   Omit<DialogProps, 'children'> & ServiceBookingModalProps
-> = ({ onConfirm, isLoading, ...props }) => {
+> = ({ onConfirm, isLoading, professional, ...props }) => {
   // ServiceOnProfessionalSelect
   const [serviceOnProfessional, setServiceOnProfessional] =
     useState<string>('');
@@ -124,6 +124,7 @@ export const ServiceBookingModal: FC<
         <div className={styles.contentContainer}>
           {step === 'service' && (
             <ServiceOnProfessionalSelect
+              professional={professional}
               value={serviceOnProfessional}
               onChange={setServiceOnProfessional}
             />

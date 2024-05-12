@@ -10,18 +10,12 @@ import { type ServiceOnProfessionalSelectProps } from '@/modules/service/compone
 
 export const ServiceOnProfessionalSelect: FC<
   ServiceOnProfessionalSelectProps
-> = ({ value, onChange }) => {
-  const { data: me } = trpc.user.me.useQuery({ expand: ['professional'] });
-  const { data: serviceList } = trpc.serviceOnProfessional.list.useQuery(
-    {
-      limit: 10,
-      offset: 0,
-      professionalId: me?.professional?.id,
-    },
-    {
-      enabled: Boolean(me?.professional?.id),
-    }
-  );
+> = ({ value, onChange, professional }) => {
+  const { data: serviceList } = trpc.serviceOnProfessional.list.useQuery({
+    limit: 10,
+    offset: 0,
+    professionalId: professional?.id,
+  });
 
   return (
     <div className={styles.root}>

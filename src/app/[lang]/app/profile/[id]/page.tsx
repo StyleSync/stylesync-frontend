@@ -47,7 +47,7 @@ export default async function Profile({ params }: PageParams<{ id: string }>) {
         </ProfileSectionLayout>
         <ProfileSectionLayout title='Services' id='profile-services'>
           <Suspense fallback={<ServiceTableSkeleton rows={3} />}>
-            <UserServices userId={params.id} />
+            <UserServices userId={params.id} session={session} />
           </Suspense>
         </ProfileSectionLayout>
         <ErrorBoundary fallback={null}>
