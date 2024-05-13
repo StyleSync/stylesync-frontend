@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 export type PhotoUploadModalProps = DialogProps & {
   trigger?: ReactNode;
   portfolioId?: string;
+  albumId?: string;
 };
 
 export type PhotoUploadModalHeaderProps = {

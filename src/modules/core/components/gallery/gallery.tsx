@@ -24,7 +24,7 @@ export const Gallery: FC<GalleryProps> = ({
   // memo
   const slides = useMemo(
     () =>
-      images.map(({ link, description, title }) => ({
+      images?.map(({ link, description, title }) => ({
         src: link,
         origin: link,
         description,
@@ -58,7 +58,7 @@ export const Gallery: FC<GalleryProps> = ({
             .join(' '),
         }}
       >
-        {imagesToDisplay.map((image, i) => (
+        {imagesToDisplay?.map((image, i) => (
           <div
             className={styles.item}
             key={i}

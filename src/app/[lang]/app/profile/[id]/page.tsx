@@ -65,7 +65,7 @@ export default async function Profile({ params }: PageParams<{ id: string }>) {
           </ProfileSectionLayout>
         </ErrorBoundary>
         <ProfileSectionLayout title='Gallery' id='profile-gallery'>
-          <GallerySection userId={params.id} />
+          <GallerySection />
         </ProfileSectionLayout>
       </div>
       <ProBookActions />

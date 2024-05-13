@@ -4,7 +4,6 @@ import { z } from 'zod';
 import { prisma } from '@/server/prisma';
 import { Role } from '@prisma/client';
 import {
-  defaultPortfolioSelect,
   defaultProfessionalSelect,
   defaultServiceOnProfessionalSelect,
   defaultUserSelect,
@@ -12,6 +11,7 @@ import {
 import { defaultScheduleSelect } from '@/server/selectors/schedule';
 import { defaultLocationSelect } from '@/server/selectors/location';
 import { publicUserSelect } from '@/server/selectors/user';
+import { defaultAlbumSelect } from '@/server/selectors/album';
 
 const maxTextLength = 32;
 const maxLargeTextLength = 140;
@@ -24,9 +24,7 @@ export const professionalRouter = router({
       z.object({
         id: z.string().min(1, 'Required'),
         expand: z
-          .array(
-            z.enum(['portfolios', 'services', 'user', 'schedule', 'location'])
-          )
+          .array(z.enum(['albums', 'services', 'user', 'schedule', 'location']))
           .nullable(),
       })
     )
@@ -35,8 +33,8 @@ export const professionalRouter = router({
         where: { userId: input.id },
         select: {
           ...defaultProfessionalSelect,
-          portfolios: !!input?.expand?.includes('portfolios') && {
-            select: defaultPortfolioSelect,
+          albums: !!input?.expand?.includes('albums') && {
+            select: defaultAlbumSelect,
           },
           services: !!input?.expand?.includes('services') && {
             select: defaultServiceOnProfessionalSelect,

@@ -2,15 +2,23 @@
 @use '@/styles/mixins';
 @use '@/styles/variables.module';
 
+// .root {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   margin: 0 auto;
+// }
+
 .root {
-  display: flex;
-  flex-direction: column;
-  row-gap: utils.spacing(4);
-  flex: 1;
+  width: 100%;
 }
 
-.galleryWrapper {
-  margin: -4px;
+.albumsContainer {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
 }
 
 .imageSelectorDescription {
@@ -33,4 +41,13 @@
   @include mixins.phone {
     bottom: utils.spacing(15);
   }
+}
+
+.spinnerContainer {
+  margin-top: utils.spacing(20);
+  display: flex;
+  flex: 1;
+  gap: utils.spacing(2);
+  align-items: center;
+  justify-content: center;
 }

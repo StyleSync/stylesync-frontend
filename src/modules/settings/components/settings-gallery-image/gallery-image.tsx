@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import Image from 'next/image';
 import { useQueryClient } from '@tanstack/react-query';
+import { getQueryKey } from '@trpc/react-query';
 
 // components
 import { Icon } from '@/modules/core/components/icon';
@@ -14,6 +15,7 @@ import { useBoolean } from 'usehooks-ts';
 import type { GalleryImageProps } from './gallery-image.interface';
 // style
 import styles from './gallery-image.module.scss';
+import clsx from 'clsx';
 
 export const GalleyImage: FC<GalleryImageProps> = ({ image }) => {
   const isOpen = useBoolean();
@@ -43,7 +45,7 @@ export const GalleyImage: FC<GalleryImageProps> = ({ image }) => {
           });
 
           queryClient.invalidateQueries({
-            queryKey: trpc.portfolio.list.getQueryKey(),
+            queryKey: getQueryKey(trpc.portfolio.list),
           });
         },
       }
@@ -52,7 +54,12 @@ export const GalleyImage: FC<GalleryImageProps> = ({ image }) => {
 
   return (
     <>
-      <div className={styles.item} tabIndex={0}>
+      <div
+        className={clsx(styles.item, {
+          [styles.item_loading]: deletePhotoMutation.isLoading,
+        })}
+        tabIndex={0}
+      >
         <Image
           className={styles.image}
           src={image.link}

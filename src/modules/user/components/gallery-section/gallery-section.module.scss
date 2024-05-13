@@ -3,8 +3,13 @@
 @use '@/styles/mixins';
 
 .root {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+
+  &_displayAlbum {
+    grid-template-columns: 1fr;
+  }
 
   .title {
     padding-bottom: utils.spacing(5);

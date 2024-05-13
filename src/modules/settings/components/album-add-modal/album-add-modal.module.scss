@@ -1,0 +1,21 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.content {
+  height: 212px;
+}
+
+.root {
+  width: 512px;
+  display: flex;
+  flex-direction: column;
+  row-gap: utils.spacing(3);
+  padding: utils.spacing(3);
+}
+
+.btns {
+  display: flex;
+  column-gap: utils.spacing(2);
+  margin-left: auto;
+}

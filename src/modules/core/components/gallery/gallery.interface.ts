@@ -1,4 +1,4 @@
-import { type PortfolioExtendedProfessional } from '@/modules/settings/components/settings-gallery/settings-gallery.interface';
+import { type Portfolio } from '@prisma/client';
 
 export type GalleryImage = {
   src: string;
@@ -9,7 +9,7 @@ export type GalleryImage = {
 };
 
 export type GalleryProps = {
-  images: PortfolioExtendedProfessional[];
+  images: Portfolio[];
   maxRows?: number;
   rowImagesCount?: number;
 };
