@@ -47,6 +47,7 @@ export const ProData: FC<ProDataProps> = ({ professional, session }) => {
       {professional.userId !== session?.user?.id && (
         <div className='hidden items-center gap-x-4 sm:flex'>
           <UserContactPopup
+            professional={professional}
             isOpen={isContactOpen.value}
             onClose={isContactOpen.setFalse}
             trigger={
