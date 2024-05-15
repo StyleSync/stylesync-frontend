@@ -35,5 +35,74 @@
   "signIn.social.google": "Sign in with Google",
   "signIn.social.instagram": "Sign in with Instagram",
   "signIn.social.facebook": "Sign in with Facebook",
-  "signIn.header.signUpDescription": "Don’t have an account?"
+  "signIn.header.signUpDescription": "Don't have an account?",
+
+  "button.back": "Back",
+  "button.next": "Next",
+  "button.book": "Book",
+  "button.done": "Done",
+  "button.skip": "Skip",
+  "button.close": "Close",
+  "button.confirm": "Confirm",
+
+  "booking.form.name": "Name*",
+  "booking.form.lastName": "Last name",
+  "booking.form.phone": "Phone*",
+  "booking.form.email": "Email*",
+  "booking.form.comment": "Comment",
+
+  "booking.time.select.title": "Select a date",
+
+  "booking.list.upcomming": "Upcomming",
+  "booking.list.past": "Past",
+  "booking.list.listEmpty": "List is empty",
+
+  "booking.modal.success.title": "Booking successful!",
+  "booking.modal.success.service": "Service",
+  "booking.modal.success.price": "Price",
+  "booking.modal.success.time": "Time",
+  "booking.modal.success.status": "Status",
+  "booking.modal.success.button.myBooking": "My booking",
+  "booking.modal.status.pending": "Requested",
+  "booking.modal.status.approved": "Approved",
+
+  "booking.modal.service.title": "New booking",
+  "booking.modal.service.name": "Tennisha's Beauty",
+  "booking.modal.service.address": "Greyhound Dr, Bradford BD7 1NQ",
+
+  "booking.modal.service.step.service": "Service",
+  "booking.modal.service.step.dataTime": "Date & Time",
+  "booking.modal.service.step.confirmation": "Confirmation",
+
+  "booking.timeSelect.searching": "Searching for available time...",
+  "booking.timeSelect.noAvailableTime": "Sorry, no free time, please choose another date.",
+  "create.booking.toast.error.title": "Oops, error",
+  "create.booking.toast.success.description": "Choose another date",
+
+  "booking.tabs.list": "List",
+  "booking.tabs.calendar": "Calendar",
+
+  "photo.modal.upload.toast.error.title": "Oops, error",
+  "photo.modal.upload.toast.error.description": "Oops",
+  "photo.modal.upload.toast.success.title": "Good!",
+  "photo.modal.upload.toast.success.description": "Photo added",
+  "photo.modal.upload.dropHere": "Drop photos here",
+  "photo.modal.upload.supports": "Supports: PNG, JPG, JPEG, WEBP",
+
+  "location.search.placeholder.typing": "Begin typing your location",
+  "location.search.placeholder.notFound": "Location was not found",
+  "location.search.input.label": "Address *",
+
+  "onboard.about.toast.error.title": "Ooops, something went wrong...",
+  "onboard.about.toast.success.description": "Please review the entered data or try again later :)",
+  "onboard.about.title": "About me",
+  "onboard.errorBox.title": "Connection with server has been interrupted",
+  "onboard.errorBox.description": "Please check your internet connection or try refreshing the page. If the issue persists, please contact our support team for assistance.",
+  "onboard.gallery.title": "Gallery",
+  "onboard.schedule.title": "Schedule",
+  "onboard.services.title": "Services",
+  "onboard.title.toast.title": "Ooops, something went wrong...",
+  "onboard.title.toast.description": "Check your internet connection or try again later :)",
+  "onboard.title.title": "Onboarding",
+  "schedule.break.tags.noBreaks": "No breaks"
 }

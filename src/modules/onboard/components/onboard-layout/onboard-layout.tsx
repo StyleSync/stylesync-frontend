@@ -1,4 +1,6 @@
 import { type FC, Fragment } from 'react';
+import { useIntl } from 'react-intl';
+
 // hooks
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // components
@@ -16,6 +18,8 @@ export const OnboardLayout: FC<OnboardLayoutProps> = ({
   prevButtonProps,
   nextButtonProps,
 }) => {
+  const intl = useIntl();
+
   const deviceType = useDeviceType();
   const ActionsContainer =
     deviceType === 'mobile' ? BottomFixedContent.Item : Fragment;
@@ -33,12 +37,16 @@ export const OnboardLayout: FC<OnboardLayoutProps> = ({
           {prevButtonProps && (
             <Button
               className={styles.action}
-              text='Back'
+              text={intl.formatMessage({ id: 'button.back' })}
               variant='secondary'
               {...prevButtonProps}
             />
           )}
-          <Button className={styles.action} text='Next' {...nextButtonProps} />
+          <Button
+            className={styles.action}
+            text={intl.formatMessage({ id: 'button.next' })}
+            {...nextButtonProps}
+          />
         </div>
       </ActionsContainer>
     </div>

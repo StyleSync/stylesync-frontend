@@ -1,4 +1,6 @@
 import { type FC, useCallback, useId, useMemo } from 'react';
+import { useIntl } from 'react-intl';
+
 // components
 import { ErrorBox } from '@/modules/core/components/error-box';
 import { Placeholder } from '@/modules/core/components/placeholder';
@@ -15,6 +17,8 @@ import { Spinner } from '@/modules/core/components/spinner';
 import { useAvatarUploadMutation } from '@/modules/user/hooks/use-avatar-upload-mutation';
 
 export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
+  const intl = useIntl();
+
   const formId = useId();
   // queries
   const { data: me, ...meQuery } = trpc.user.me.useQuery({
@@ -94,15 +98,27 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
           onError: () => {
             showToast({
               variant: 'error',
-              title: 'Ooops, something went wrong...',
-              description:
-                'Please review the entered data or try again later :)',
+              title: intl.formatMessage({
+                id: 'onboard.about.toast.error.title',
+              }),
+              description: intl.formatMessage({
+                id: 'onboard.about.toast.success.description',
+              }),
             });
           },
         }
       );
     },
-    [me, meQuery, meUpdateAsync, next, professionalCreate, professionalUpdate]
+    [
+      me,
+      meQuery,
+      meUpdateAsync,
+      next,
+      professionalCreate,
+      professionalUpdate,
+      intl,
+      avatarUpload,
+    ]
   );
 
   return (
@@ -128,8 +144,10 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
           isActive={meQuery.isError}
           placeholder={
             <ErrorBox
-              title='Connection with server has been interrupted'
-              description='Please check your internet connection or try refreshing the page. If the issue persists, please contact our support team for assistance.'
+              title={intl.formatMessage({ id: 'onboard.errorBox.title' })}
+              description={intl.formatMessage({
+                id: 'onboard.errorBox.description',
+              })}
               refresh={handleRefresh}
             />
           }

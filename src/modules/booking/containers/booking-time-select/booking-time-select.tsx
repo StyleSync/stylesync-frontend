@@ -2,6 +2,8 @@
 import { useMemo, type FC } from 'react';
 import clsx from 'clsx';
 import { format } from 'date-fns';
+import { useIntl } from 'react-intl';
+
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { generateDates } from '@/modules/core/utils/date.utils';
@@ -27,6 +29,8 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
   setSelectedTimeRange,
   professionalId,
 }) => {
+  const intl = useIntl();
+
   const bookingData = trpc.booking.available.list.useQuery(
     {
       date: selectedDay || '',
@@ -110,7 +114,7 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
               <div className={styles.spinnerContainer}>
                 <Spinner size='small' />
                 <Typography className={styles.loadingLabel}>
-                  Searching for available time...
+                  {intl.formatMessage({ id: 'booking.timeSelect.searching' })}
                 </Typography>
               </div>
             )}
@@ -143,8 +147,9 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
                   ))}
                 {bookingAvalibleTimes.length === 0 && (
                   <Typography className={styles.noAvailableTimeText}>
-                    Sorry, <span>no free time</span>, please choose another
-                    date.
+                    {intl.formatMessage({
+                      id: 'booking.timeSelect.noAvailableTime',
+                    })}
                   </Typography>
                 )}
               </>

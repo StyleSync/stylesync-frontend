@@ -5,9 +5,7 @@ import {
   useState,
   useEffect,
 } from 'react';
-import { useBoolean, useDebounce } from 'usehooks-ts';
-import type { SearchResult } from 'leaflet-geosearch/lib/providers/provider';
-import type { RawResult } from 'leaflet-geosearch/lib/providers/openStreetMapProvider';
+import { useIntl } from 'react-intl';
 // components
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { Icon } from '@/modules/core/components/icon';
@@ -16,8 +14,11 @@ import { Popover } from '@/modules/core/components/popover';
 import { Typography } from '@/modules/core/components/typogrpahy';
 // hooks
 import { useLocationSearchQuery } from '@/modules/location/hooks/use-location-search-query';
-
+import { useBoolean, useDebounce } from 'usehooks-ts';
+// types
 import type { LocationSearchProps } from './location-search.interface';
+import type { SearchResult } from 'leaflet-geosearch/lib/providers/provider';
+import type { RawResult } from 'leaflet-geosearch/lib/providers/openStreetMapProvider';
 import styles from './location-search.module.scss';
 
 const SEARCH_DEBOUNCE_DELAY = 200;
@@ -28,6 +29,8 @@ export const LocationSearch: FC<LocationSearchProps> = ({
   onChange,
   inputProps,
 }) => {
+  const intl = useIntl();
+
   // state
   const isActive = useBoolean();
   const [query, setQuery] = useState(value?.name ?? '');
@@ -78,7 +81,7 @@ export const LocationSearch: FC<LocationSearchProps> = ({
       });
       isActive.setFalse();
     },
-    [isActive.setFalse, onChange]
+    [isActive, onChange]
   );
 
   return (
@@ -105,7 +108,11 @@ export const LocationSearch: FC<LocationSearchProps> = ({
           placeholder={
             <div className={styles.placeholder}>
               <Icon name='info' />
-              <Typography>Begin typing your location</Typography>
+              <Typography>
+                {intl.formatMessage({
+                  id: 'location.search.placeholder.typing',
+                })}
+              </Typography>
             </div>
           }
         >
@@ -114,7 +121,11 @@ export const LocationSearch: FC<LocationSearchProps> = ({
             placeholder={
               <div className={styles.placeholder}>
                 <Icon name='info' />
-                <Typography>Location was not found</Typography>
+                <Typography>
+                  {intl.formatMessage({
+                    id: 'location.search.placeholder.notFound',
+                  })}
+                </Typography>
               </div>
             }
           >

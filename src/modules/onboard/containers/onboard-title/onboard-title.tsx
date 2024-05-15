@@ -3,6 +3,8 @@ import { type FC, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import clsx from 'clsx';
+import { useIntl } from 'react-intl';
+
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Button } from '@/modules/core/components/button';
@@ -16,6 +18,8 @@ import { showToast } from '@/modules/core/providers/toast-provider';
 import styles from './onboard-title.module.scss';
 
 export const OnboardTitle: FC = () => {
+  const intl = useIntl();
+
   const router = useRouter();
   const session = useSession();
   const { active, onboardData } = useOnboard();
@@ -56,23 +60,25 @@ export const OnboardTitle: FC = () => {
         onError: () => {
           showToast({
             variant: 'error',
-            title: 'Ooops, something went wrong...',
-            description: 'Check your internet connection or try again later :)',
+            title: intl.formatMessage({ id: 'onboard.title.toast.title' }),
+            description: intl.formatMessage({
+              id: 'onboard.title.toast.description',
+            }),
           });
         },
       }
     );
-  }, [router, session, me, meUpdate, professionalCreateAsync]);
+  }, [router, session, me, meUpdate, professionalCreateAsync, intl]);
 
   return (
     <div className={styles.root}>
       <div className={clsx('pageContent', styles.info)}>
         <Typography variant='subtitle' weight='medium'>
-          Onboarding
+          {intl.formatMessage({ id: 'onboard.title.title' })}
         </Typography>
         <Button
           className={styles.skip}
-          text='Skip'
+          text={intl.formatMessage({ id: 'button.skip' })}
           variant='outlined'
           disabled={isLoading || meQuery.isError}
           onClick={skip}

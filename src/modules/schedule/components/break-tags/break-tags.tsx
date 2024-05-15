@@ -1,4 +1,6 @@
 import { type FC } from 'react';
+import { useIntl } from 'react-intl';
+
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 
@@ -6,6 +8,8 @@ import type { BreakTagsProps } from './break-tags.interface';
 import styles from './break-tags.module.scss';
 
 export const BreakTags: FC<BreakTagsProps> = ({ breaks, isLoading, error }) => {
+  const intl = useIntl();
+
   if (isLoading) {
     return (
       <div className={styles.breakSkeleton}>
@@ -19,7 +23,11 @@ export const BreakTags: FC<BreakTagsProps> = ({ breaks, isLoading, error }) => {
   }
 
   if (!breaks || breaks.length === 0) {
-    return <Typography>No breaks</Typography>;
+    return (
+      <Typography>
+        {intl.formatMessage({ id: 'schedule.break.tags.noBreaks' })}
+      </Typography>
+    );
   }
 
   return breaks.map(({ timerange }, index) => (

@@ -1,4 +1,6 @@
 import { type FC, useState, useEffect } from 'react';
+import { useIntl } from 'react-intl';
+
 // components
 import { Avatar } from '@/modules/core/components/avatar';
 import { Button } from '@/modules/core/components/button';
@@ -19,6 +21,8 @@ import styles from './service-booking-modal.module.scss';
 export const ServiceBookingModal: FC<
   Omit<DialogProps, 'children'> & ServiceBookingModalProps
 > = ({ onConfirm, isLoading, professional, ...props }) => {
+  const intl = useIntl();
+
   // ServiceOnProfessionalSelect
   const [serviceOnProfessional, setServiceOnProfessional] =
     useState<string>('');
@@ -89,15 +93,19 @@ export const ServiceBookingModal: FC<
     <Dialog {...props} classes={{ content: styles.content }}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <Typography variant='subtitle'>New booking</Typography>
+          <Typography variant='subtitle'>
+            {intl.formatMessage({ id: 'booking.modal.service.title' })}
+          </Typography>
         </div>
         <div className={styles.labelContainer}>
           <Avatar />
 
           <div className={styles.lableDescr}>
-            <Typography variant='body1'>Tennisha’s Beauty</Typography>
+            <Typography variant='body1'>
+              {intl.formatMessage({ id: 'booking.modal.service.name' })}
+            </Typography>
             <Typography className={styles.lableAddress} variant='small'>
-              Greyhound Dr, Bradford BD7 1NQ
+              {intl.formatMessage({ id: 'booking.modal.service.address' })}
             </Typography>
           </div>
         </div>
@@ -105,15 +113,23 @@ export const ServiceBookingModal: FC<
           <Stepper
             steps={[
               {
-                text: 'Service',
+                text: intl.formatMessage({
+                  id: 'booking.modal.service.step.service',
+                }),
                 value: 'service',
               },
               {
-                text: 'Date & Time',
+                text: intl.formatMessage({
+                  id: 'booking.modal.service.step.dataTime',
+                }),
+
                 value: 'datetime',
               },
               {
-                text: 'Confirmation',
+                text: intl.formatMessage({
+                  id: 'booking.modal.service.step.confirmation',
+                }),
+
                 value: 'confirmation',
               },
             ]}
@@ -153,7 +169,9 @@ export const ServiceBookingModal: FC<
               <Button
                 className={styles.buttonRight}
                 onClick={handleNext}
-                text='Next'
+                text={intl.formatMessage({
+                  id: 'button.next',
+                })}
                 variant='outlined'
                 iconEnd='arrow-right'
                 disabled={!serviceOnProfessional}
@@ -165,14 +183,18 @@ export const ServiceBookingModal: FC<
                 <Button
                   className={styles.buttonBack}
                   onClick={handleBack}
-                  text='Back'
+                  text={intl.formatMessage({
+                    id: 'button.back',
+                  })}
                   icon='arrow-left'
                   variant='outlined'
                 />
                 <Button
                   className={styles.buttonNext}
                   onClick={handleNext}
-                  text='Next'
+                  text={intl.formatMessage({
+                    id: 'button.next',
+                  })}
                   variant='outlined'
                   iconEnd='arrow-right'
                   disabled={!selectedTimeRange}

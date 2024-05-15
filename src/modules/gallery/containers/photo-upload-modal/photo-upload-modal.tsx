@@ -5,6 +5,8 @@ import { getQueryKey } from '@trpc/react-query';
 import clsx from 'clsx';
 import { useDropzone } from 'react-dropzone';
 import { animated, useSpringValue } from '@react-spring/web';
+import { useIntl } from 'react-intl';
+
 // components
 import { Dialog } from '@/modules/core/components/dialog';
 import { Typography } from '@/modules/core/components/typogrpahy';
@@ -40,6 +42,8 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
   portfolioId,
   albumId,
 }) => {
+  const intl = useIntl();
+
   const queryClient = useQueryClient();
   // queries
   const { data: me } = trpc.user.me.useQuery({
@@ -291,10 +295,10 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
                 />
                 <div className='flex flex-col gap-y-2 items-center'>
                   <Typography variant='subtitle' className='text-dark'>
-                    Drop photos here
+                    {intl.formatMessage({ id: 'photo.modal.upload.dropHere' })}
                   </Typography>
                   <Typography variant='body2' className='!text-gray'>
-                    Supports: PNG, JPG, JPEG, WEBP
+                    {intl.formatMessage({ id: 'photo.modal.upload.supports' })}
                   </Typography>
                 </div>
                 <Button variant='primary' text='Select from computer' />

@@ -6,6 +6,8 @@ import {
   useRef,
   useState,
 } from 'react';
+import { useIntl } from 'react-intl';
+
 import type L from 'leaflet';
 import dynamic from 'next/dynamic';
 import { Button } from '@/modules/core/components/button';
@@ -41,6 +43,8 @@ const UserLocationSelectForm = forwardRef<
   UserLocationSelectFormHandle,
   UserLocationSelectFormProps
 >(({ location }, ref) => {
+  const intl = useIntl();
+
   const [address, setAddress] = useState<Address | null>(
     location
       ? {
@@ -114,7 +118,7 @@ const UserLocationSelectForm = forwardRef<
           value={address}
           onChange={setAddress}
           inputProps={{
-            label: 'Address *',
+            label: intl.formatMessage({ id: 'location.search.input.label' }),
             endAdornment: (
               <Button
                 variant='unstyled'

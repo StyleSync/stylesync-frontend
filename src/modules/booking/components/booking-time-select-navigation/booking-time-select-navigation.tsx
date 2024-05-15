@@ -1,5 +1,7 @@
 import { useMemo, type FC } from 'react';
 import { useSwiper } from 'swiper/react';
+import { useIntl } from 'react-intl';
+
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Button } from '@/modules/core/components/button';
@@ -14,6 +16,8 @@ import { format } from 'date-fns';
 export const BookingTimeSelectNavigation: FC<
   BookingTimeSelectNavigationProps
 > = ({ selectedDay }) => {
+  const intl = useIntl();
+
   const swiper = useSwiper();
   const dates = generateDates();
   const selectedDate = useMemo(() => {
@@ -28,7 +32,7 @@ export const BookingTimeSelectNavigation: FC<
 
   const selectDate = (
     <Typography variant='body1' className={styles.selectDate}>
-      Select a date
+      {intl.formatMessage({ id: 'booking.time.select.title' })}
     </Typography>
   );
 
