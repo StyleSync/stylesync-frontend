@@ -39,17 +39,23 @@ export const Sidebar: FC<SidebarProps> = ({
             )}
             <div className={styles.links}>
               {group.links.map((link) => (
-                <Button
-                  className={clsx(styles.link, {
-                    [styles.active]: activeLink === link.id,
-                  })}
-                  key={link.id}
-                  icon={link.icon}
-                  text={link.name}
-                  onClick={handleLinkClick(link)}
-                  variant='unstyled'
-                  iconEnd='chevron-right'
-                />
+                <>
+                  {link.renderItem ? (
+                    link.renderItem({})
+                  ) : (
+                    <Button
+                      className={clsx(styles.link, {
+                        [styles.active]: activeLink === link.id,
+                      })}
+                      key={link.id}
+                      icon={link.icon}
+                      text={link.name}
+                      onClick={handleLinkClick(link)}
+                      variant='unstyled'
+                      iconEnd='chevron-right'
+                    />
+                  )}
+                </>
               ))}
             </div>
           </div>

@@ -1,5 +1,7 @@
 'use client';
 import { type FC } from 'react';
+import { useIntl } from 'react-intl';
+
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 // utils
@@ -8,6 +10,8 @@ import { trpc } from '@/modules/core/utils/trpc.utils';
 import styles from './about-me.module.scss';
 
 export const AboutMe: FC<{ userId: string }> = ({ userId }) => {
+  const intl = useIntl();
+
   const [professional] = trpc.professional.get.useSuspenseQuery({
     id: userId,
     expand: ['user'],
@@ -16,7 +20,8 @@ export const AboutMe: FC<{ userId: string }> = ({ userId }) => {
   return (
     <div className={styles.root}>
       <Typography className='w-full max-w-[90%]' variant='body2'>
-        {professional.about || 'No information'}
+        {professional.about ||
+          intl.formatMessage({ id: 'user.about.me.noInfo' })}
       </Typography>
     </div>
   );

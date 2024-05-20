@@ -35,10 +35,10 @@ export const ServiceSelect: FC<ServiceSelectProps> = ({
     }
 
     return {
-      text: 'Add services group',
+      text: formatMessage({ id: 'select.service.add.group' }),
       variant: 'outlined',
     };
-  }, [deviceType]);
+  }, [deviceType, formatMessage]);
   const popoverProps = useMemo<Partial<PopoverProps>>(() => {
     if (deviceType === 'mobile') {
       return {

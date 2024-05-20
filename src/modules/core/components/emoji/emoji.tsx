@@ -4,12 +4,14 @@ import Lottie from 'lottie-react';
 import sunglasses from '@/assets/lottie-files/emoji/emoji-sunglasses.json';
 import heartEyes from '@/assets/lottie-files/emoji/emoji-heart-eyes.json';
 import girl from '@/assets/lottie-files/emoji/girl.json';
+import pen from '@/assets/lottie-files/emoji/pen.json';
 
 // keys
 const emojies = {
   sunglasses,
   'heart-eyes': heartEyes,
   girl,
+  pen,
 } satisfies Record<string, object>;
 
 export type EmojiName = keyof typeof emojies;

@@ -1,1 +1,1 @@
-export { LocaleSwitcher } from './locale-select';
+export { LocaleSelect } from './locale-select';

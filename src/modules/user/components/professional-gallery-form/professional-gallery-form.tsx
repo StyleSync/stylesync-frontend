@@ -1,5 +1,6 @@
 import { type FC, useMemo, useState } from 'react';
-import { useBoolean } from 'usehooks-ts';
+import { useIntl } from 'react-intl';
+
 // components
 import { Button } from '@/modules/core/components/button';
 import { Placeholder } from '@/modules/core/components/placeholder';
@@ -10,6 +11,7 @@ import { Spinner } from '@/modules/core/components/spinner';
 import { Typography } from '@/modules/core/components/typogrpahy';
 // hooks
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
+import { useBoolean } from 'usehooks-ts';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 // types
@@ -21,6 +23,7 @@ import type { Album } from '@prisma/client';
 import styles from './professional-gallery-form.module.scss';
 
 export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
+  const intl = useIntl();
   // state
   const [activeAlbum, setActiveAlbum] = useState<Album | null>(null);
   const [albumToEdit, setAlbunToEdit] = useState<Album | null>(null);
@@ -37,10 +40,12 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
     }
 
     return {
-      text: 'Create album',
+      text: intl.formatMessage({
+        id: 'user.professional.gallery.form.createAlbum',
+      }),
       variant: 'secondary',
     };
-  }, [windowSizeType]);
+  }, [windowSizeType, intl]);
 
   // query
 
@@ -77,7 +82,9 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
         isActive={albumsList?.length === 0}
         placeholder={{
           illustration: 'files',
-          description: 'No albums added',
+          description: intl.formatMessage({
+            id: 'user.professional.gallery.form.noAlbumsAdded',
+          }),
           action: (
             <AlbumAddModal
               onOpenChange={isModalOpen.setValue}
@@ -118,7 +125,9 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
         <div className={styles.spinnerContainer}>
           <Spinner size='medium' />
           <Typography className={styles.loadingLabel}>
-            Download albums...
+            {intl.formatMessage({
+              id: 'user.professional.gallery.form.loadingAlbums',
+            })}
           </Typography>
         </div>
       )}

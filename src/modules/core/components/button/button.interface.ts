@@ -22,4 +22,10 @@ export type ButtonProps = Omit<
     rippleColor?: string;
     typographyProps?: Partial<TypographyProps>;
     isLoading?: boolean;
+    classes?: {
+      root?: string;
+      icon?: string;
+      iconEnd?: string;
+      text?: string;
+    };
   };

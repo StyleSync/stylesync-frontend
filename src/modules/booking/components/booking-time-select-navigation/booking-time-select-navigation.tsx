@@ -11,7 +11,8 @@ import { generateDates } from '@/modules/core/utils/date.utils';
 import type { BookingTimeSelectNavigationProps } from './booking-time-select.interface';
 // style
 import styles from './booking-time-select-navigation.module.scss';
-import { format } from 'date-fns';
+// utils
+import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
 
 export const BookingTimeSelectNavigation: FC<
   BookingTimeSelectNavigationProps
@@ -45,7 +46,7 @@ export const BookingTimeSelectNavigation: FC<
       />
       <Typography variant='body1'>
         {selectedDate
-          ? format(new Date(selectedDate), 'EEEE d MMM')
+          ? formatI18n(new Date(selectedDate), 'EEEE d MMM', intl.locale)
           : selectDate}
       </Typography>
       <Button

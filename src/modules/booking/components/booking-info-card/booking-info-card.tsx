@@ -1,13 +1,16 @@
 import { type FC, useRef } from 'react';
-import { format } from 'date-fns';
 import clsx from 'clsx';
 import { useBoolean } from 'usehooks-ts';
+import { useIntl } from 'react-intl';
+
 // components
 import { Avatar } from '@/modules/core/components/avatar';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
 // hooks
 import { useRipple } from '@/modules/core/hooks/use-ripple';
+// utils
+import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
 
 import type { BookingInfoCardProps } from './booking-info-card.interface';
 
@@ -21,6 +24,8 @@ export const BookingInfoCard: FC<BookingInfoCardProps> = ({
   serviceName,
   variant = 'light',
 }) => {
+  const intl = useIntl();
+
   // state
   const isOpen = useBoolean();
   // refs
@@ -30,10 +35,10 @@ export const BookingInfoCard: FC<BookingInfoCardProps> = ({
   const endDate = new Date(endTime);
 
   // Format start and end dates separately
-  const formattedStartTime = format(startDate, 'HH:mm');
-  const formattedEndTime = format(endDate, 'HH:mm');
+  const formattedStartTime = formatI18n(startDate, 'HH:mm', intl.locale);
+  const formattedEndTime = formatI18n(endDate, 'HH:mm', intl.locale);
 
-  const formattedDate = format(new Date(date), `EEEE, d MMM`);
+  const formattedDate = formatI18n(new Date(date), 'EEEE, d MMM', intl.locale);
 
   useRipple(rootRef);
 

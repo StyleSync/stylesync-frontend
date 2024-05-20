@@ -2,6 +2,8 @@ import { memo, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useIntl } from 'react-intl';
+
 // components
 import { TextField } from '@/modules/core/components/text-field';
 import { AvatarSelect } from '@/modules/core/components/avatar-select';
@@ -36,6 +38,7 @@ const validationSchema: z.Schema<AboutProfessionalFormValues> = z.object({
 
 const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
   ({ initialValues, formId, onSubmit }) => {
+    const intl = useIntl();
     // form
     const { reset, ...form } = useForm<AboutProfessionalFormValues>({
       defaultValues,
@@ -73,13 +76,17 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
             {...form.register('firstName')}
             error={Boolean(form.formState.errors.firstName)}
             variant='input'
-            label='First Name *'
+            label={intl.formatMessage({
+              id: 'user.about.professional.form.firstName',
+            })}
           />
           <TextField
             {...form.register('lastName')}
             error={Boolean(form.formState.errors.lastName)}
             variant='input'
-            label='Last Name *'
+            label={intl.formatMessage({
+              id: 'user.about.professional.form.lastName',
+            })}
           />
         </div>
         <div className={styles.inputsRow}>
@@ -87,14 +94,18 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
             {...form.register('email')}
             error={Boolean(form.formState.errors.email)}
             variant='input'
-            label='Email'
+            label={intl.formatMessage({
+              id: 'user.about.professional.form.email',
+            })}
             disabled
           />
           <TextField
             {...form.register('phone')}
             error={Boolean(form.formState.errors.phone)}
             variant='input'
-            label='Phone'
+            label={intl.formatMessage({
+              id: 'user.about.professional.form.phone',
+            })}
           />
         </div>
         <div className={styles.inputsRow}>
@@ -102,20 +113,26 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
             {...form.register('facebook')}
             error={Boolean(form.formState.errors.facebook)}
             variant='input'
-            label='Facebook'
+            label={intl.formatMessage({
+              id: 'user.about.professional.form.facebook',
+            })}
           />
           <TextField
             {...form.register('instagram')}
             error={Boolean(form.formState.errors.instagram)}
             variant='input'
-            label='Instagram'
+            label={intl.formatMessage({
+              id: 'user.about.professional.form.instagram',
+            })}
           />
         </div>
         <TextField
           {...form.register('about')}
           error={Boolean(form.formState.errors.about)}
           variant='textarea'
-          label='About you'
+          label={intl.formatMessage({
+            id: 'user.about.professional.form.about',
+          })}
           style={{ height: 200, resize: 'none' }}
         />
       </form>

@@ -1,11 +1,12 @@
-import type { ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 import type { IconName } from '@/modules/core/components/icon';
 
 export type SidebarLink = {
   id: string;
-  name: string;
+  name?: string;
   icon?: IconName;
   onClick?: () => void;
+  renderItem?: FC;
 };
 
 export type SidebarLinkGroup = {

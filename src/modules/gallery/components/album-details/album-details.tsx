@@ -1,5 +1,6 @@
 import { type FC, useMemo } from 'react';
 import clsx from 'clsx';
+import { useIntl } from 'react-intl';
 // hooks
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import { useBoolean } from 'usehooks-ts';
@@ -23,6 +24,7 @@ export const AlbumDetails: FC<AlbumDetailsProps> = ({
   onClickClose,
   activeAlbumId,
 }) => {
+  const intl = useIntl();
   const isOpenUploadPhotoModal = useBoolean();
   const windowSizeType = useDeviceType();
   const isFileUploding = useBoolean();
@@ -37,10 +39,10 @@ export const AlbumDetails: FC<AlbumDetailsProps> = ({
     }
 
     return {
-      text: 'Upload image',
+      text: intl.formatMessage({ id: 'album.details.addImage' }),
       variant: 'secondary',
     };
-  }, [windowSizeType]);
+  }, [windowSizeType, intl]);
 
   const { data: album } = trpc.album.get.useQuery({
     id: activeAlbumId,
@@ -68,8 +70,7 @@ export const AlbumDetails: FC<AlbumDetailsProps> = ({
         isActive={imagesList?.length === 0}
         placeholder={{
           illustration: 'files',
-          description: 'No images added',
-
+          description: intl.formatMessage({ id: 'album.details.noImages' }),
           action: (
             <PhotoUploadModal
               albumId={activeAlbumId}
@@ -109,7 +110,7 @@ export const AlbumDetails: FC<AlbumDetailsProps> = ({
             <div className={styles.spinnerContainer}>
               <Spinner size='medium' />
               <Typography className={styles.loadingLabel}>
-                Download images...
+                {intl.formatMessage({ id: 'album.details.dowlandImage' })}
               </Typography>
             </div>
           )}

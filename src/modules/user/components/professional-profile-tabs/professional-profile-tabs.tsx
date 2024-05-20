@@ -1,27 +1,14 @@
 'use client';
-import { type FC, useRef, useState } from 'react';
-import { useIntersectionObserver, useUpdateEffect } from 'usehooks-ts';
+import { type FC, useRef, useState, useMemo } from 'react';
+import { useIntl } from 'react-intl';
 // components
 import { Tabs } from '@/modules/core/components/tabs';
+// hooks
+import { useIntersectionObserver, useUpdateEffect } from 'usehooks-ts';
 // types
 import type { Tab } from '@/modules/core/components/tabs/tabs.interface';
 // constants
 import scssVariables from '@/styles/variables.module.scss';
-
-const tabs: Tab[] = [
-  {
-    key: 'about',
-    name: 'About',
-  },
-  {
-    key: 'services',
-    name: 'Services',
-  },
-  {
-    key: 'gallery',
-    name: 'Gallery',
-  },
-];
 
 const scrollToProfileSection = (tabKey: string) => {
   const sectionElement = document.getElementById(`profile-${tabKey}`);
@@ -40,6 +27,7 @@ const scrollToProfileSection = (tabKey: string) => {
 };
 
 export const ProfessionalProfileTabs: FC = () => {
+  const intl = useIntl();
   // state
   const [value, setValue] = useState('about');
   // refs
@@ -69,6 +57,30 @@ export const ProfessionalProfileTabs: FC = () => {
 
     skipNextScroll.current = false;
   }, [value]);
+
+  const tabs: Tab[] = useMemo(
+    () => [
+      {
+        key: 'about',
+        name: intl.formatMessage({
+          id: 'user.professional.profile.tabs.about',
+        }),
+      },
+      {
+        key: 'services',
+        name: intl.formatMessage({
+          id: 'user.professional.profile.tabs.services',
+        }),
+      },
+      {
+        key: 'gallery',
+        name: intl.formatMessage({
+          id: 'user.professional.profile.tabs.gallery',
+        }),
+      },
+    ],
+    []
+  );
 
   return <Tabs ref={tabsRef} value={value} tabs={tabs} onChange={setValue} />;
 };

@@ -43,7 +43,6 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
   albumId,
 }) => {
   const intl = useIntl();
-
   const queryClient = useQueryClient();
   // queries
   const { data: me } = trpc.user.me.useQuery({
@@ -164,15 +163,23 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
           onError: () => {
             showToast({
               variant: 'error',
-              title: 'Oops, error',
-              description: 'Oops',
+              title: intl.formatMessage({
+                id: 'photo.upload.modal.toast.error.title',
+              }),
+              description: intl.formatMessage({
+                id: 'photo.upload.modal.toast.error.description',
+              }),
             });
           },
           onSuccess: () => {
             showToast({
               variant: 'success',
-              title: 'Good!',
-              description: 'Editing completed',
+              title: intl.formatMessage({
+                id: 'photo.upload.modal.toast.success.title',
+              }),
+              description: intl.formatMessage({
+                id: 'photo.upload.modal.toast.success.description',
+              }),
             });
 
             queryClient.invalidateQueries({
@@ -215,15 +222,23 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
         onError: () => {
           showToast({
             variant: 'error',
-            title: 'Oops, error',
-            description: 'Oops',
+            title: intl.formatMessage({
+              id: 'photo.modal.upload.toast.error.title',
+            }),
+            description: intl.formatMessage({
+              id: 'photo.modal.upload.toast.error.description',
+            }),
           });
         },
         onSuccess: () => {
           showToast({
             variant: 'success',
-            title: 'Good!',
-            description: 'Photo added',
+            title: intl.formatMessage({
+              id: 'photo.modal.upload.toast.success.title',
+            }),
+            description: intl.formatMessage({
+              id: 'photo.modal.upload.toast.success.description',
+            }),
           });
 
           queryClient.invalidateQueries({
@@ -301,7 +316,12 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
                     {intl.formatMessage({ id: 'photo.modal.upload.supports' })}
                   </Typography>
                 </div>
-                <Button variant='primary' text='Select from computer' />
+                <Button
+                  variant='primary'
+                  text={intl.formatMessage({
+                    id: 'button.select.from.computer',
+                  })}
+                />
                 <input {...getInputProps()} />
               </>
             )}

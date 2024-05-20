@@ -40,6 +40,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       rippleColor,
       typographyProps,
       isLoading,
+      classes,
       ...props
     },
     ref
@@ -65,7 +66,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             [styles.danger]: variant === 'danger',
             [styles.base_textless]: !text,
           },
-          className
+          className,
+          classes?.root
         )}
         ref={combinedRef}
         disabled={disabled || isLoading}
@@ -76,13 +78,23 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {!!isLoading && (
           <Spinner size='small' color={SPINNER_COLORS[variant]} />
         )}
-        {!!icon && !isLoading && <Icon className={styles.icon} name={icon} />}
+        {!!icon && !isLoading && (
+          <Icon className={clsx(styles.icon, classes?.icon)} name={icon} />
+        )}
         {!!text && (
-          <Typography className={styles.text} {...typographyProps}>
+          <Typography
+            className={clsx(styles.text, classes?.text)}
+            {...typographyProps}
+          >
             {text}
           </Typography>
         )}
-        {!!iconEnd && <Icon className={styles.icon} name={iconEnd} />}
+        {!!iconEnd && (
+          <Icon
+            className={clsx(styles.icon, classes?.iconEnd)}
+            name={iconEnd}
+          />
+        )}
       </button>
     );
   }

@@ -1,10 +1,9 @@
 import { type FC, useCallback } from 'react';
-import { v4 } from 'uuid';
-import { useBoolean } from 'usehooks-ts';
-import clsx from 'clsx';
 import { useIntl } from 'react-intl';
+import { v4 } from 'uuid';
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
+import clsx from 'clsx';
 // components
 import { Button } from '@/modules/core/components/button';
 import { Tag } from '@/modules/core/components/tag';
@@ -14,6 +13,7 @@ import { ServiceConstructorRow } from '@/modules/service/containers/service-cons
 import { ServiceOnProfessionalEditForm } from '@/modules/service/components/service-on-professional-edit-form';
 // hooks
 import { useServiceOnProfessionalGroupDelete } from '@/modules/service/hooks/use-service-on-professional-group-delete';
+import { useBoolean } from 'usehooks-ts';
 // types
 import type { IconName } from '@/modules/core/components/icon';
 // utils

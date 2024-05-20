@@ -1,5 +1,6 @@
 'use client';
 import { useMemo, type FC } from 'react';
+import { useIntl } from 'react-intl';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { ServicesTable } from '@/modules/service/components/service-table';
@@ -9,11 +10,13 @@ import {
   sortServiceOnProfessionalGroups,
 } from '@/modules/service/utils/service.utils';
 import { trpc } from '@/modules/core/utils/trpc.utils';
+// type
 import type { UserServicesProps } from './user-services.interface';
-
+// style
 import styles from './user-services.module.scss';
 
 export const UserServices: FC<UserServicesProps> = ({ userId, session }) => {
+  const intl = useIntl();
   const [professional] = trpc.professional.get.useSuspenseQuery({
     id: userId,
     expand: [],
@@ -44,7 +47,9 @@ export const UserServices: FC<UserServicesProps> = ({ userId, session }) => {
           />
         ))
       ) : (
-        <Typography className='!text-gray'>No added services</Typography>
+        <Typography className='!text-gray'>
+          {intl.formatMessage({ id: 'user.services.noAdded' })}
+        </Typography>
       )}
     </div>
   );

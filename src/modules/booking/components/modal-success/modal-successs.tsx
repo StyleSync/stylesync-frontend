@@ -1,5 +1,4 @@
 import { type FC } from 'react';
-import { format } from 'date-fns';
 import { Currency } from '@prisma/client';
 import { useIntl } from 'react-intl';
 
@@ -11,6 +10,8 @@ import { Icon } from '@/modules/core/components/icon';
 import { InfoBox } from '@/modules/booking/components/modal-success-infobox';
 // type
 import { type BookingModalSuccessProps } from './modal-success.interface';
+// utils
+import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
 // style
 import styles from './modal-success.module.scss';
 
@@ -26,18 +27,21 @@ export const BookingModalSuccess: FC<BookingModalSuccessProps> = ({
     }
   };
 
-  const formattedDate = format(
+  const formattedDate = formatI18n(
     bookingData?.startTime ? new Date(bookingData?.startTime) : new Date(),
-    `d MMM`
+    `d MMM`,
+    intl.locale
   );
 
-  const formattedStartTime = format(
+  const formattedStartTime = formatI18n(
     bookingData?.startTime ? new Date(bookingData?.startTime) : new Date(),
-    'HH:mm'
+    'HH:mm',
+    intl.locale
   );
-  const formattedEndTime = format(
+  const formattedEndTime = formatI18n(
     bookingData?.endTime ? new Date(bookingData?.endTime) : new Date(),
-    'HH:mm'
+    'HH:mm',
+    intl.locale
   );
 
   const statusSuccess =

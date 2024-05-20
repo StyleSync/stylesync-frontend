@@ -1,5 +1,7 @@
 import { type FC } from 'react';
 import clsx from 'clsx';
+import { useIntl } from 'react-intl';
+
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Icon } from '@/modules/core/components/icon';
@@ -13,6 +15,8 @@ export const ErrorBox: FC<ErrorBoxProps> = ({
   description,
   refresh,
 }) => {
+  const intl = useIntl();
+
   return (
     <div className={styles.root}>
       <Icon className={styles.icon} name='alert-triangle' />
@@ -30,7 +34,7 @@ export const ErrorBox: FC<ErrorBoxProps> = ({
         {!!refresh && (
           <Button
             className={styles.action}
-            text='Refresh'
+            text={intl.formatMessage({ id: 'button.refresh' })}
             icon='refresh-ccw'
             variant='secondary'
             onClick={refresh}
@@ -38,7 +42,7 @@ export const ErrorBox: FC<ErrorBoxProps> = ({
         )}
         <Button
           className={clsx(styles.action, styles.support)}
-          text='Support'
+          text={intl.formatMessage({ id: 'button.support' })}
           icon='shield'
           variant='secondary'
           onClick={refresh}

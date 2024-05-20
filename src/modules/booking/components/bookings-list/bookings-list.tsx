@@ -69,7 +69,7 @@ export const BookingsList: FC<BookingsListProps> = () => {
                   isActive={group.list?.length === 0}
                   placeholder={
                     <Typography className={styles.empty} variant='body2'>
-                      {intl.formatMessage({ id: 'List is empty' })}
+                      {intl.formatMessage({ id: 'booking.list.listEmpty' })}
                     </Typography>
                   }
                 >

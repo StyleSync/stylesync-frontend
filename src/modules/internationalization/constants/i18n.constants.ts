@@ -1,3 +1,7 @@
+import type { Locale as AppLocale } from '@/modules/internationalization/types/i18n.types';
+import type { Locale } from 'date-fns';
+import { enUS, uk } from 'date-fns/locale';
+
 export const i18nConfig = {
   defaultLocale: 'en',
   locales: ['en', 'uk'],
@@ -14,4 +18,9 @@ export const dictionaries = {
     import('@/modules/internationalization/dictionaries/uk.json').then(
       (module) => module.default
     ),
+};
+
+export const dateFnsLocales: Record<AppLocale, Locale> = {
+  en: enUS,
+  uk,
 };

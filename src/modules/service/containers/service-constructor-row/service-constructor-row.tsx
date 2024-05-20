@@ -1,4 +1,7 @@
 import { type FC, useCallback, useRef } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { getQueryKey } from '@trpc/react-query';
+import clsx from 'clsx';
 // components
 import { Button } from '@/modules/core/components/button';
 import { Typography } from '@/modules/core/components/typogrpahy';
@@ -11,12 +14,9 @@ import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { isServiceOnProfessionalValid } from '@/modules/service/utils/service.utils';
-
+// types
 import type { ServiceConstructorRowProps } from './service-constructor-row.interface';
 import styles from './service-constructor-row.module.scss';
-import { useQueryClient } from '@tanstack/react-query';
-import { getQueryKey } from '@trpc/react-query';
-import clsx from 'clsx';
 
 export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
   data,

@@ -2,16 +2,19 @@
 import { type FC } from 'react';
 import { useSession } from 'next-auth/react';
 import { useParams, usePathname } from 'next/navigation';
+import { useIntl } from 'react-intl';
 // components
 import { Button } from '@/modules/core/components/button';
 import { BottomFixedContent } from '@/modules/core/containers/bottom-fixed-content';
 // hooks
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
-
+// type
 import type { ProBookActionsProps } from './pro-book-actions.interface';
+// style
 import styles from './pro-book-actions.module.scss';
 
 export const ProBookActions: FC<ProBookActionsProps> = () => {
+  const intl = useIntl();
   const deviceType = useDeviceType();
   const session = useSession();
   const pathname = usePathname();
@@ -40,8 +43,16 @@ export const ProBookActions: FC<ProBookActionsProps> = () => {
   return (
     <BottomFixedContent.Item orderIndex={1}>
       <div className={styles.root}>
-        <Button className={styles.action} variant='secondary' text='Contact' />
-        <Button className={styles.action} variant='primary' text='Reserve' />
+        <Button
+          className={styles.action}
+          variant='secondary'
+          text={intl.formatMessage({ id: 'button.contact' })}
+        />
+        <Button
+          className={styles.action}
+          variant='primary'
+          text={intl.formatMessage({ id: 'button.reserve' })}
+        />
       </div>
     </BottomFixedContent.Item>
   );

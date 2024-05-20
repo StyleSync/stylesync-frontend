@@ -1,4 +1,6 @@
 import { type FC, useCallback, useRef } from 'react';
+import { useIntl } from 'react-intl';
+
 // containers
 import { UserLocationSelectForm } from '@/modules/location/containers/user-location-select-form';
 // components
@@ -12,6 +14,7 @@ import type { Address } from '@/modules/location/types/address.types';
 import { showToast } from '@/modules/core/providers/toast-provider';
 
 export const ProfessionalSettingsLocation: FC = () => {
+  const intl = useIntl();
   // queries
   const { data: me } = trpc.user.me.useQuery({ expand: ['professional'] });
   const { data: location, ...locationQuery } =
@@ -55,16 +58,24 @@ export const ProfessionalSettingsLocation: FC = () => {
           onError: () => {
             showToast({
               variant: 'error',
-              title: 'OOps, error',
-              description: 'Error',
+              title: intl.formatMessage({
+                id: 'professional.settings.location.toast.error.title.add',
+              }),
+              description: intl.formatMessage({
+                id: 'professional.settings.location.toast.error.description.add',
+              }),
             });
           },
 
           onSuccess: () => {
             showToast({
               variant: 'success',
-              title: 'Good!',
-              description: 'Location added',
+              title: intl.formatMessage({
+                id: 'professional.settings.location.toast.success.title.add',
+              }),
+              description: intl.formatMessage({
+                id: 'professional.settings.location.toast.success.description.add',
+              }),
             });
           },
         }
@@ -86,16 +97,24 @@ export const ProfessionalSettingsLocation: FC = () => {
           onError: () => {
             showToast({
               variant: 'error',
-              title: 'OOps, error',
-              description: 'Error',
+              title: intl.formatMessage({
+                id: 'professional.settings.location.toast.error.title.change',
+              }),
+              description: intl.formatMessage({
+                id: 'professional.settings.location.toast.error.description.change',
+              }),
             });
           },
 
           onSuccess: () => {
             showToast({
               variant: 'success',
-              title: 'Good!',
-              description: 'Location changed',
+              title: intl.formatMessage({
+                id: 'professional.settings.location.toast.error.title.change',
+              }),
+              description: intl.formatMessage({
+                id: 'professional.settings.location.toast.error.description.change',
+              }),
             });
           },
         }
@@ -114,16 +133,24 @@ export const ProfessionalSettingsLocation: FC = () => {
           onError: () => {
             showToast({
               variant: 'error',
-              title: 'OOps, error',
-              description: 'Error',
+              title: intl.formatMessage({
+                id: 'professional.settings.location.toast.error.title.delete',
+              }),
+              description: intl.formatMessage({
+                id: 'professional.settings.location.toast.error.description.delete',
+              }),
             });
           },
 
           onSuccess: () => {
             showToast({
               variant: 'success',
-              title: 'Good!',
-              description: 'Location deleted',
+              title: intl.formatMessage({
+                id: 'professional.settings.location.toast.error.title.delete',
+              }),
+              description: intl.formatMessage({
+                id: 'professional.settings.location.toast.error.description.delete',
+              }),
             });
           },
         }
@@ -135,11 +162,17 @@ export const ProfessionalSettingsLocation: FC = () => {
 
   return (
     <ProfileSettingsTabContentLayout
-      title='Location settings'
+      title={intl.formatMessage({
+        id: 'professional.settings.location.title',
+      })}
       icon='location'
       isLoading={locationQuery.isLoading}
       actions={[
-        { text: 'Save', isLoading: isSaveLoading, onClick: handleSave },
+        {
+          text: intl.formatMessage({ id: 'button.save' }),
+          isLoading: isSaveLoading,
+          onClick: handleSave,
+        },
       ]}
       hideActions={locationQuery.isLoading}
     >
