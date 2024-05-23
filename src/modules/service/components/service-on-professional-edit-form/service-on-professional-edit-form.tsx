@@ -14,7 +14,6 @@ import { trpc } from '@/modules/core/utils/trpc.utils';
 import { Time, type TimeValue } from '@/modules/core/utils/time.utils';
 // types
 import type { ServiceOnProfessionalEditableFields } from '@/modules/service/types/service.types';
-
 import type {
   ServiceOnProfessionalEditFormProps,
   ServiceOnProfessionalFormValues,
@@ -23,6 +22,7 @@ import styles from './service-on-professional-edit-form.module.scss';
 import { showToast } from '@/modules/core/providers/toast-provider';
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
+import { EditorComponent } from '@/modules/core/components/editor/editor';
 
 const validationSchema = z.object({
   title: z.string().min(1),
@@ -205,6 +205,7 @@ export const ServiceOnProfessionalEditForm: FC<
               )}
             />
           </div>
+          <EditorComponent />
           <div className='flex gap-x-2 ml-auto'>
             <Button
               variant='secondary'

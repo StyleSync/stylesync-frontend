@@ -144,3 +144,55 @@ textarea {
     transform: scale(10);
   }
 }
+
+h1.ce-header {
+  @apply text-3xl font-bold;
+}
+
+h2.ce-header {
+  @apply text-2xl font-semibold;
+}
+h3.ce-header {
+  @apply text-xl font-semibold;
+}
+h4.ce-header {
+  @apply text-lg font-semibold;
+}
+h5.ce-header {
+  @apply text-base font-semibold;
+}
+h6.ce-header {
+  @apply text-base font-semibold;
+}
+
+@media (min-width: 651px) {
+  .ce-block__content {
+    max-width: calc(100% - 120px) !important;
+    margin: 0 60px;
+  }
+}
+
+@media (min-width: 651px) {
+  .ce-toolbar__content {
+    width: 0px !important;
+    margin: 0 50px;
+  }
+}
+
+.cdx-block {
+  max-width: 100% !important;
+}
+
+@media (min-width: 651px) {
+  .codex-editor--narrow .ce-toolbox .ce-popover {
+    left: 0;
+    right: 0;
+  }
+}
+
+@media (min-width: 651px) {
+  .codex-editor--narrow .ce-settings .ce-popover {
+    right: 0;
+    left: 0;
+  }
+}
