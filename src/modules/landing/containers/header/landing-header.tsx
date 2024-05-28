@@ -7,8 +7,9 @@ import { UserMenuBadge } from '@/modules/user/containers/user-menu-badge';
 export const LandingHeader = () => {
   return (
     <Header
+      className='!shadow-none'
       centralSlot={
-        <nav className=' hidden sm:grid justify-center'>
+        <nav className='hidden sm:grid justify-center'>
           <ul className=' flex sm:gap-5 md:gap-10'>
             <li>
               <a className=' hover:cursor-pointer'>

@@ -1,60 +1,52 @@
-import Image from 'next/image';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Divider } from '@/modules/core/components/divider';
-
-import x from '@/modules/landing/landing-image/X.png';
-import facebook from '@/modules/landing/landing-image/facebook.png';
-import inst from '@/modules/landing/landing-image/inst.png';
-import logo from '@/modules/landing/landing-image/logo.png';
+import { Icon } from '@/modules/core/components/icon';
 
 export const Footer = () => {
   return (
-    <footer className=' flex flex-col w-full  bg-black '>
-      <div className=' pt-20 pb-11 pl-[100px] pr-[100px]'>
-        <div className=' flex flex-col items-center gap-[30px] lg:flex-row  lg:justify-between   '>
+    <footer className='flex flex-col w-full  bg-black'>
+      <div className='pt-20 pb-11 pl-[100px] pr-[100px]'>
+        <div className='flex flex-col items-center gap-[30px] lg:flex-row  lg:justify-between'>
           <div className=' flex gap-[36px]'>
-            <Typography className=' whitespace-nowrap hover:cursor-pointer'>
+            <Typography className='whitespace-nowrap hover:cursor-pointer hover:!text-white duration-200 !text-[#767A85]'>
               Privacy & Police
             </Typography>
-            <Typography className=' whitespace-nowrap hover:cursor-pointer'>
+            <Typography className='whitespace-nowrap hover:cursor-pointer hover:!text-white duration-200 !text-[#767A85]'>
               Terms & conditions
             </Typography>
           </div>
-          <div className=' lg:mr-[140px]'>
-            <Image width={170} height={44} alt='img' src={logo} />
-          </div>
-          <div className=' flex gap-[24px] justify-end'>
-            <Image
-              className=' hover:cursor-pointer'
+          <Icon
+            className='lg:mr-[140px]'
+            name='logoLanding'
+            width={169}
+            height={40}
+          />
+          <div className='flex gap-[24px] justify-end'>
+            <Icon
+              className='hover:cursor-pointer hover:!text-white duration-200 text-[#767A85]'
+              name='facebookLanding'
               width={30}
               height={30}
-              alt='img'
-              src={facebook}
             />
-            <Image
-              className=' hover:cursor-pointer'
+            <Icon
+              className='hover:cursor-pointer hover:!text-white duration-200 text-[#767A85]'
+              name='xLanding'
               width={30}
               height={30}
-              alt='img'
-              src={x}
             />
-            <Image
-              className=' hover:cursor-pointer'
+            <Icon
+              className='hover:cursor-pointer hover:!text-white duration-200 text-[#767A85]'
+              name='instagramLanding'
               width={30}
               height={30}
-              alt='img'
-              src={inst}
             />
           </div>
         </div>
 
-        <Divider
-          className=' mt-[66px] px-[30px] md:px-[100px]'
-          variant='horizontal'
-        />
+        <Divider className='mt-[66px]' variant='horizontal' />
         <Typography
-          className=' flex justify-center mt-[40px] !text-[#767A85]'
+          className='flex justify-center mt-[40px] !text-[#767A85]'
           variant='body2'
           weight='semibold'
         >

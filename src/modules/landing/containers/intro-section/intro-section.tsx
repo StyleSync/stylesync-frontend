@@ -2,7 +2,7 @@
 
 import { Button } from '@/modules/core/components/button';
 import { Typography } from '@/modules/core/components/typogrpahy';
-import h from '@/modules/landing/landing-image/schedule.png';
+import calendar from '@/modules/landing/landing-image/calendar.png';
 import Image from 'next/image';
 
 export const IntroSection = () => {
@@ -20,12 +20,13 @@ export const IntroSection = () => {
         Find the Perfect Professional for Your Beauty Needs
       </Typography>
       <Button
-        className=' mx-auto !bg-orange !rounded-lg text-white'
+        rippleColor='white'
+        className='mx-auto bg-intro-button rounded-[26px] text-white'
         text='Book Your Appointment Now'
         variant='unstyled'
       />
 
-      <Image width={900} height={500} src={h} alt='img' />
+      <Image width={900} height={500} src={calendar} alt='img' />
     </section>
   );
 };
