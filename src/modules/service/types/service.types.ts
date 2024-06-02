@@ -9,6 +9,7 @@ export type ServiceOnProfessional = {
   price: number;
   currency: Currency;
   service: Service;
+  description: string;
 };
 
 export type ServiceOnProfessionalGroup = {
@@ -18,5 +19,5 @@ export type ServiceOnProfessionalGroup = {
 
 export type ServiceOnProfessionalEditableFields = Pick<
   ServiceOnProfessional,
-  'title' | 'duration' | 'price' | 'currency'
+  'title' | 'duration' | 'price' | 'currency' | 'description'
 >;

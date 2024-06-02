@@ -1,3 +1,5 @@
+'use client';
+
 import { type FC, useCallback, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -33,6 +35,7 @@ const validationSchema = z.object({
     value: z.string().refine((arg) => !isNaN(+arg) && +arg > 0),
     currency: z.string(),
   }),
+  description: z.string().min(1),
 });
 
 const mapServiceOnProfessionalToFormValues = (
@@ -44,6 +47,7 @@ const mapServiceOnProfessionalToFormValues = (
     value: data.price.toString(),
     currency: data.currency,
   },
+  description: data.description,
 });
 
 const mapFormValuesToServiceOnProfessional = (
@@ -53,6 +57,7 @@ const mapFormValuesToServiceOnProfessional = (
   currency: values.price.currency,
   price: +values.price.value,
   duration: Time.toMinuteDuration(values.duration as TimeValue),
+  description: values.description,
 });
 
 export const ServiceOnProfessionalEditForm: FC<
@@ -142,7 +147,17 @@ export const ServiceOnProfessionalEditForm: FC<
   return (
     <Dialog
       isOpen={isActive}
-      onOpenChange={onOpenChange}
+      onOpenChange={(isOpen) => {
+        if (!isOpen && form.formState.isDirty) {
+          const isConfirmed = confirm('you have unsaved changes….');
+
+          if (!isConfirmed) {
+            return;
+          }
+        }
+
+        onOpenChange(isOpen);
+      }}
       classes={{
         overlay: styles.dialogOverlay,
         content: styles.dialogContent,
@@ -205,7 +220,15 @@ export const ServiceOnProfessionalEditForm: FC<
               )}
             />
           </div>
-          <EditorComponent />
+
+          <Controller
+            name='description'
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <EditorComponent value={field.value} onChange={field.onChange} />
+            )}
+          />
+
           <div className='flex gap-x-2 ml-auto'>
             <Button
               variant='secondary'

@@ -1,4 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+'use client';
+
+import React, { type FC, useEffect, useRef, useCallback } from 'react';
 import EditorJS from '@editorjs/editorjs';
 import Delimiter from '@editorjs/delimiter';
 import Header from '@editorjs/header';
@@ -7,16 +9,33 @@ import Marker from '@editorjs/marker';
 import Paragraph from '@editorjs/paragraph';
 import Quote from '@editorjs/quote';
 import Table from '@editorjs/table';
-import Warning from '@editorjs/warning';
+// types
+import { type EditorProps } from './editor';
 
-export const EditorComponent = () => {
+export const EditorComponent: FC<EditorProps> = ({
+  value,
+  onChange,
+  readOnly = false,
+}) => {
   const editorInstance = useRef<EditorJS | null>(null);
+
+  const onSave = useCallback(async () => {
+    if (!editorInstance.current) return;
+
+    const data = await editorInstance.current.save();
+
+    onChange(JSON.stringify(data.blocks));
+  }, [onChange]);
 
   useEffect(() => {
     if (!editorInstance.current) {
       editorInstance.current = new EditorJS({
         holder: 'editorjs',
-        placeholder: "Let's take a note!",
+        placeholder: readOnly ? '' : "Let's take a note!",
+
+        onChange: readOnly ? undefined : onSave,
+        data: JSON.parse(value),
+        readOnly,
 
         tools: {
           header: {
@@ -57,17 +76,11 @@ export const EditorComponent = () => {
             class: Table,
             config: {},
           },
-          warning: {
-            class: Warning,
-            // inlineToolbar: true,
-            config: {
-              // titlePlaceholder: 'Title',
-              // messagePlaceholder: 'Message',
-            },
-          },
         },
       });
     }
+
+    console.log(editorInstance.current);
 
     // Cleanup function to destroy the editor instance when the component unmounts
     return () => {
@@ -76,7 +89,7 @@ export const EditorComponent = () => {
         editorInstance.current = null;
       }
     };
-  }, []);
+  }, [value, onSave, readOnly]);
 
   return (
     <div
