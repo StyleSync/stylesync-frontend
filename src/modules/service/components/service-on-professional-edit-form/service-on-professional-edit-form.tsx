@@ -1,5 +1,3 @@
-'use client';
-
 import { type FC, useCallback, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -24,7 +22,7 @@ import styles from './service-on-professional-edit-form.module.scss';
 import { showToast } from '@/modules/core/providers/toast-provider';
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
-import { EditorComponent } from '@/modules/core/components/editor/editor';
+import { EditorComponent } from '@/modules/core/components/editor';
 
 const validationSchema = z.object({
   title: z.string().min(1),
@@ -163,7 +161,7 @@ export const ServiceOnProfessionalEditForm: FC<
         content: styles.dialogContent,
       }}
     >
-      <div className='flex flex-col gap-y-10'>
+      <div className='flex-col gap-y-10 grid grid-rows-[auto_1fr] h-fit'>
         <Typography className='text-dark' variant='subtitle'>
           {isNew ? 'Add' : 'Edit'} service
         </Typography>
@@ -224,8 +222,13 @@ export const ServiceOnProfessionalEditForm: FC<
           <Controller
             name='description'
             control={form.control}
-            render={({ field, fieldState }) => (
-              <EditorComponent value={field.value} onChange={field.onChange} />
+            render={({ field }) => (
+              <EditorComponent
+                id={data.id}
+                value={field.value}
+                onChange={field.onChange}
+                fixedHeight={400}
+              />
             )}
           />
 

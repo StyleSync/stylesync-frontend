@@ -1,6 +1,3 @@
-// 'use-client';
-
-// import Image from 'next/image';
 import React, { type FC, useRef } from 'react';
 import clsx from 'clsx';
 import * as Accordion from '@radix-ui/react-accordion';
@@ -20,8 +17,6 @@ import styles from './service-on-professional-table-row.module.scss';
 import { Button } from '@/modules/core/components/button';
 import { EditorComponent } from '@/modules/core/components/editor';
 
-// import girl from '@/assets/images/girl.png';
-
 export const ServiceOnProfessionalTableRow: FC<
   ServiceOnProfessionalTableRowProps
 > = ({ data, isOwn, professional }) => {
@@ -34,62 +29,62 @@ export const ServiceOnProfessionalTableRow: FC<
   });
 
   return (
-    <Accordion.Root collapsible type='single'>
-      <Accordion.Item className={styles.acardionItem} value='item-1'>
-        <Accordion.Header>
-          <div className={styles.root} ref={rootRef}>
-            <div className={clsx(styles.cell, styles.vertical, styles.flex75)}>
-              <Typography className={styles.title} variant='body1'>
-                {data.title}
-              </Typography>
-              <Typography className={styles.duration} variant='small'>
-                {formatMinutesDuration(data.duration)}
-              </Typography>
-            </div>
-            <div className={clsx(styles.cell, styles.flex25)}>
-              <Typography className={styles.price} variant='body1'>
-                {data.price} {data.currency}
-              </Typography>
-            </div>
-            <div className={clsx(styles.cell, styles.fit)}>
-              {!isOwn && deviceType === 'mobile' ? (
-                <Icon
-                  className={styles.chevron}
-                  name='chevron-right'
-                  width={18}
-                  height={18}
-                />
-              ) : (
-                <div className={styles.btnRoot}>
-                  <Accordion.Trigger className={styles.AccordionTrigger}>
-                    <Button text='info' variant='primary' />
-                  </Accordion.Trigger>
-
-                  <CreateBooking
-                    professional={professional}
-                    selectedService={data.id}
-                    btnVariant='outlined'
-                  />
-                </div>
-              )}
-            </div>
+    <Accordion.Item className={styles.acardionItem} value={data.id}>
+      <Accordion.Header>
+        <div className={styles.root} ref={rootRef}>
+          <div className={clsx(styles.cell, styles.vertical, styles.flex75)}>
+            <Typography className={styles.title} variant='body1'>
+              {data.title}
+            </Typography>
+            <Typography className={styles.duration} variant='small'>
+              {formatMinutesDuration(data.duration)}
+            </Typography>
           </div>
-        </Accordion.Header>
-        <Accordion.Content className={styles.AccordionContent}>
-          <div className={styles.contentContainer}>
-            {data.description}
-            <EditorComponent readOnly={true} value={data.description} />
-
-            <Accordion.Trigger asChild className={styles.AccordionTrigger}>
-              <Button
-                text='CLOSE'
-                variant='unstyled'
-                className={styles.closeBtn}
+          <div className={clsx(styles.cell, styles.flex25)}>
+            <Typography className={styles.price} variant='body1'>
+              {data.price} {data.currency}
+            </Typography>
+          </div>
+          <div className={clsx(styles.cell, styles.fit)}>
+            {!isOwn && deviceType === 'mobile' ? (
+              <Icon
+                className={styles.chevron}
+                name='chevron-right'
+                width={18}
+                height={18}
               />
-            </Accordion.Trigger>
+            ) : (
+              <div className={styles.btnRoot}>
+                <Accordion.Trigger className={styles.AccordionTrigger}>
+                  <Button
+                    variant='unstyled'
+                    icon='info'
+                    className='!text-gray hover:!text-primary'
+                  />
+                </Accordion.Trigger>
+
+                <CreateBooking
+                  professional={professional}
+                  selectedService={data.id}
+                  btnVariant='outlined'
+                />
+              </div>
+            )}
           </div>
-        </Accordion.Content>
-      </Accordion.Item>
-    </Accordion.Root>
+        </div>
+      </Accordion.Header>
+      <Accordion.Content className={styles.AccordionContent}>
+        <div className={styles.contentContainer}>
+          <EditorComponent readOnly value={data.description} id={data.id} />
+          <Accordion.Trigger asChild className={styles.AccordionTrigger}>
+            <Button
+              text='CLOSE'
+              variant='unstyled'
+              className={styles.closeBtn}
+            />
+          </Accordion.Trigger>
+        </div>
+      </Accordion.Content>
+    </Accordion.Item>
   );
 };
