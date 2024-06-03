@@ -22,6 +22,7 @@
     flex: 1;
 
     .title {
+      max-width: 90%;
       @include mixins.phone {
         font-size: 16px;
       }
@@ -75,13 +76,21 @@
 }
 
 .closeBtn {
-  background-color: palevioletred;
+  background-color: variables.$primary-light-color;
   margin: 0 auto;
+  color: variables.$primary-color;
+  transition: color 0.2s ease, background-color 0.3s ease;
+  &:hover {
+    color: #000;
+  }
 }
 
-// .acardionItem {
-//   border-bottom: 1px solid variables.$primary-light-color;
-// }
+.acardionItem {
+  border-bottom: 1px solid variables.$primary-light-color;
+  &:last-child {
+    border-bottom: none;
+  }
+}
 
 .AccordionContent {
   overflow: hidden;

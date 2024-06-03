@@ -15,7 +15,6 @@
     "chromatic": "npx chromatic --project-token=$STYLESYNC_CHROMATIC_TOKEN"
   },
   "dependencies": {
-    "@editorjs/delimiter": "^1.4.0",
     "@editorjs/editorjs": "^2.29.1",
     "@editorjs/header": "^2.8.1",
     "@editorjs/list": "^1.9.0",
@@ -23,6 +22,7 @@
     "@editorjs/paragraph": "^2.11.4",
     "@editorjs/quote": "^2.6.0",
     "@editorjs/table": "^2.3.0",
+    "@editorjs/underline": "^1.1.0",
     "@editorjs/warning": "^1.4.0",
     "@formatjs/intl-localematcher": "^0.4.0",
     "@fullcalendar/core": "^6.1.9",
@@ -53,6 +53,10 @@
     "clsx": "1.2.1",
     "cookies-next": "2.1.2",
     "date-fns": "2.30.0",
+    "editorjs-change-case": "^0.0.3",
+    "editorjs-strikethrough": "^1.0.0",
+    "editorjs-text-alignment-blocktune": "^1.0.3",
+    "editorjs-text-color-plugin": "^2.0.4",
     "eslint": "8.43.0",
     "eslint-config-next": "13.4.6",
     "leaflet": "1.9.4",

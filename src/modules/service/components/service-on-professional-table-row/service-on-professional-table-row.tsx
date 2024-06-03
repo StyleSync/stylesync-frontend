@@ -56,11 +56,15 @@ export const ServiceOnProfessionalTableRow: FC<
             ) : (
               <div className={styles.btnRoot}>
                 <Accordion.Trigger className={styles.AccordionTrigger}>
-                  <Button
-                    variant='unstyled'
-                    icon='info'
-                    className='!text-gray hover:!text-primary'
-                  />
+                  {data.description && data.description.length > 1 ? (
+                    <Button
+                      variant='unstyled'
+                      icon='info'
+                      className='!text-gray hover:!text-primary '
+                    />
+                  ) : (
+                    <div className='w-[40px]' />
+                  )}
                 </Accordion.Trigger>
 
                 <CreateBooking
@@ -78,7 +82,7 @@ export const ServiceOnProfessionalTableRow: FC<
           <EditorComponent readOnly value={data.description} id={data.id} />
           <Accordion.Trigger asChild className={styles.AccordionTrigger}>
             <Button
-              text='CLOSE'
+              icon='close'
               variant='unstyled'
               className={styles.closeBtn}
             />

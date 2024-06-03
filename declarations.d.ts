@@ -25,8 +25,6 @@ declare module '*.svg?url' {
 //   export default Delimiter;
 // }
 
-declare module '@editorjs/delimiter';
-
 // declare module '@editorjs/header' {
 //   import type {
 //     BlockTool,
@@ -177,3 +175,11 @@ declare module '@editorjs/table';
 // }
 
 declare module '@editorjs/warning';
+
+declare module '@canburaks/text-align-editorjs';
+
+declare module 'editorjs-text-alignment-blocktune';
+declare module 'editorjs-text-color-plugin';
+declare module 'editorjs-change-case';
+declare module 'editorjs-strikethrough';
+declare module '@editorjs/underline';
