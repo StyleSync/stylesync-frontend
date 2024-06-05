@@ -12,7 +12,7 @@ export const ServiceCardSection = () => {
       <Typography
         variant='title'
         weight='semibold'
-        className='!text-4xl md:!text-5xl text-dark text-center px-2 '
+        className='!text-4xl md:!text-5xl text-dark text-center px-2'
       >
         Easily Appointment with patient
       </Typography>
@@ -22,31 +22,31 @@ export const ServiceCardSection = () => {
         team and the patient.
       </Typography>
 
-      <div className='w-full mt-16 relative'>
+      <div className='w-full mt-16'>
         <Swiper
-          className='w-full h-full absolute'
+          className='w-full h-full'
           grabCursor
           slidesOffsetBefore={80}
           slidesOffsetAfter={80}
           breakpoints={{
             320: {
-              slidesPerView: 1.4,
+              slidesPerView: 1.3,
               spaceBetween: 24,
             },
             640: {
-              slidesPerView: 2.4,
+              slidesPerView: 2.3,
               spaceBetween: 16,
             },
             990: {
-              slidesPerView: 3.5,
+              slidesPerView: 3.3,
               spaceBetween: 16,
             },
-            1024: {
-              slidesPerView: 3.5,
-              spaceBetween: 24,
+            1100: {
+              slidesPerView: 3.3,
+              spaceBetween: 16,
             },
-            1350: {
-              slidesPerView: 4.4,
+            1400: {
+              slidesPerView: 4.3,
               spaceBetween: 24,
             },
           }}
