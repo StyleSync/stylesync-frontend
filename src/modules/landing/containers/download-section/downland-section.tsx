@@ -39,7 +39,7 @@ export const DownloandSection = () => {
           minimizes waiting times, and ensures effective communication between
           the dental team and the patient.
         </Typography>
-        <div className='flex items-center justify-center gap-5 md:gap-8'>
+        <div className='flex items-center justify-center gap-5 md:gap-8 z-0'>
           <Icon
             className='hover:cursor-pointer z-[25]'
             name='appleLogoLanding'

@@ -119,7 +119,7 @@ export const ReviewsSection = () => {
           className=' w-full h-full'
           wrapperClass=' !ease-linear'
           slidesPerView={2.4}
-          speed={7000}
+          speed={10000}
           loop
           spaceBetween={20}
           modules={[Autoplay]}
@@ -163,7 +163,7 @@ export const ReviewsSection = () => {
         <Swiper
           className=' w-full h-full'
           wrapperClass=' !ease-linear'
-          speed={7000}
+          speed={10000}
           loop
           modules={[Autoplay]}
           autoplay={{
