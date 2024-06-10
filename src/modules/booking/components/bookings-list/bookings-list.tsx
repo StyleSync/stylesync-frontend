@@ -71,6 +71,8 @@ export const BookingsList: FC<BookingsListProps> = () => {
                 >
                   {group.list?.map((booking) => (
                     <BookingInfoCard
+                      phone={booking.guestPhone}
+                      email={booking.guestEmail}
                       key={booking.id}
                       name={`${booking.guestFirstName} ${booking.guestLastName}`}
                       serviceName={booking.serviceProfessional.title}

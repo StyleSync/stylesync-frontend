@@ -7,4 +7,6 @@ export type BookingInfoCardProps = {
   endTime: Date;
   date: Date;
   variant?: BookingInfoCardVariant;
+  email: string | null;
+  phone: string;
 };

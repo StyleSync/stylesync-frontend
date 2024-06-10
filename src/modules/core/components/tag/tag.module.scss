@@ -4,7 +4,6 @@
 .root {
   display: flex;
   align-items: center;
-  height: 26px;
   width: fit-content;
   column-gap: utils.spacing(0.5);
   border-radius: variables.$border-radius-large;
@@ -15,4 +14,3 @@
     color: variables.$dark-color;
   }
 }
-
