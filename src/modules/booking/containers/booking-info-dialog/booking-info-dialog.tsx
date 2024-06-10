@@ -1,5 +1,4 @@
 import { type FC } from 'react';
-import { faker } from '@faker-js/faker';
 import clsx from 'clsx';
 // components
 import { Avatar } from '@/modules/core/components/avatar';
@@ -41,6 +40,12 @@ const actions = [
 export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
   isOpen,
   onOpenChange,
+  name,
+  serviceName,
+  email,
+  startDate,
+  startTime,
+  phone,
 }) => {
   const deviceType = useDeviceType();
   const DialogComponent = deviceType === 'mobile' ? DialogBottom : Dialog;
@@ -51,17 +56,24 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
         <div className={styles.userInfo}>
           <Avatar url={Girl.src} size='medium' />
           <Typography className={styles.name} variant='subtitle'>
-            {faker.person.fullName()}
+            {name}
           </Typography>
           <Typography className={styles.email} variant='small'>
-            {faker.internet.email()}
+            {email}
           </Typography>
         </div>
         <div className={styles.bookingInfo}>
-          <Tag icon='nails' text='Evening makeup' />
+          <Tag icon='nails' text={serviceName} />
           <div className={styles.time}>
-            <Icon name='calendar' width={18} height={18} />
-            <Typography variant='small'>Friday, 27 Dec at 15:26</Typography>
+            <Icon
+              name='calendar'
+              width={18}
+              height={18}
+              className=' !border-none'
+            />
+            <Typography variant='small'>
+              {startDate} at {startTime}
+            </Typography>
           </div>
         </div>
         <div className={styles.actions}>
@@ -74,6 +86,15 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
               variant={action.variant}
               typographyProps={{
                 weight: 'medium',
+              }}
+              onClick={() => {
+                if (action.id === 'call') {
+                  window.location.href = `tel:${phone}`;
+                }
+
+                if (action.id === 'cancel') {
+                  onOpenChange(false);
+                }
               }}
             />
           ))}

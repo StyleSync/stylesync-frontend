@@ -5,6 +5,7 @@
 .root {
   display: flex;
   flex-direction: column;
+  min-width: 350px;
 
   .userInfo {
     display: flex;
@@ -25,11 +26,12 @@
 
   .bookingInfo {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column-reverse;
+    row-gap: 10px;
     align-items: center;
     column-gap: utils.spacing(4);
     border-bottom: 1px solid rgba(variables.$grey-color, 0.3);
-    padding: utils.spacing(3);
+    padding: utils.spacing(2, 3);
 
     .time {
       display: flex;
