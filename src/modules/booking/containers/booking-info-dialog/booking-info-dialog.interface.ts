@@ -10,4 +10,11 @@ export type Action = {
   variant: VariantType;
 };
 
-export type BookingInfoDialogProps = DialogProps & {};
+export type BookingInfoDialogProps = DialogProps & {
+  name: string;
+  serviceName: string;
+  email: string | null;
+  phone: string;
+  startDate: string;
+  startTime: string;
+};
