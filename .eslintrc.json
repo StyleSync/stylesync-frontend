@@ -5,16 +5,22 @@
     "prettier",
     "plugin:storybook/recommended"
   ],
-  "overrides": [{
-    "files": ["*.stories.ts", "*.stories.tsx"],
-    "rules": {
-      "react-hooks/rules-of-hooks": "off",
-      "no-magic-numbers": "off"
+  "overrides": [
+    {
+      "files": ["*.stories.ts", "*.stories.tsx"],
+      "rules": {
+        "react-hooks/rules-of-hooks": "off",
+        "no-magic-numbers": "off"
+      }
+    },
+    {
+      "files": "scripts/*.js",
+      "rules": {
+        "no-console": "off"
+      }
     }
-  }, {
-    "files": "scripts/*.js",
-    "rules": {
-      "no-console": "off"
-    }
-  }]
+  ],
+  "linterOptions": {
+    "reportUnusedDisableDirectives": true
+  }
 }
