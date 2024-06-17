@@ -17,4 +17,6 @@
 .dialogContent {
   padding: utils.spacing(3, 3);
   z-index: variables.$level-dialog-2;
+  max-width: 540px;
+  width: 100%;
 }

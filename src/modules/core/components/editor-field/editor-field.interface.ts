@@ -4,4 +4,5 @@ export type EditorProps = {
   onChange?: (data: string) => void;
   readOnly?: boolean;
   fixedHeight?: number;
+  label?: string;
 };

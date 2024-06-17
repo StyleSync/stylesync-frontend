@@ -1,7 +1,7 @@
-import { type ServiceOnProfessional } from '@/modules/service/types/service.types';
+import type { ServiceOnProfessionalListItem } from '@/modules/service/types/service.types';
 
 export type BaseCardWithRadioButtonProps = {
   value: string;
-  serviceOnProfessional: ServiceOnProfessional;
+  serviceOnProfessional: ServiceOnProfessionalListItem;
   onClick?: (name: string) => void;
 };

@@ -4,6 +4,8 @@ import * as Accordion from '@radix-ui/react-accordion';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Icon } from '@/modules/core/components/icon';
+import { Button } from '@/modules/core/components/button';
+import { EditorPreview } from '@/modules/core/components/editor-preview';
 // containers
 import { CreateBooking } from '@/modules/booking/containers/create-booking-container';
 // hooks
@@ -11,11 +13,10 @@ import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import { useRipple } from '@/modules/core/hooks/use-ripple';
 // utils
 import { formatMinutesDuration } from '@/modules/core/utils/time.utils';
-// type
+
 import type { ServiceOnProfessionalTableRowProps } from './service-on-professional-table-row.interface';
 import styles from './service-on-professional-table-row.module.scss';
-import { Button } from '@/modules/core/components/button';
-import { EditorComponent } from '@/modules/core/components/editor';
+import { isEditorFieldEmpty } from '@/modules/core/components/editor-field/editor-field';
 
 export const ServiceOnProfessionalTableRow: FC<
   ServiceOnProfessionalTableRowProps
@@ -55,38 +56,33 @@ export const ServiceOnProfessionalTableRow: FC<
               />
             ) : (
               <div className={styles.btnRoot}>
-                <Accordion.Trigger className={styles.AccordionTrigger}>
-                  {data.description && data.description.length > 1 ? (
+                <Accordion.Trigger asChild>
+                  {data.description && !isEditorFieldEmpty(data.description) ? (
                     <Button
                       variant='unstyled'
                       icon='info'
-                      className='!text-gray hover:!text-primary '
+                      className='text-gray hover:!text-primary data-[state=open]:text-primary'
                     />
                   ) : (
                     <div className='w-[40px]' />
                   )}
                 </Accordion.Trigger>
 
-                <CreateBooking
-                  professional={professional}
-                  selectedService={data.id}
-                  btnVariant='outlined'
-                />
+                {!isOwn && (
+                  <CreateBooking
+                    professional={professional}
+                    selectedService={data.id}
+                    btnVariant='outlined'
+                  />
+                )}
               </div>
             )}
           </div>
         </div>
       </Accordion.Header>
       <Accordion.Content className={styles.AccordionContent}>
-        <div className={styles.contentContainer}>
-          <EditorComponent readOnly value={data.description} id={data.id} />
-          <Accordion.Trigger asChild className={styles.AccordionTrigger}>
-            <Button
-              icon='close'
-              variant='unstyled'
-              className={styles.closeBtn}
-            />
-          </Accordion.Trigger>
+        <div className='flex flex-col px-[25px] pt-2 pb-6'>
+          <EditorPreview value={data.description} />
         </div>
       </Accordion.Content>
     </Accordion.Item>

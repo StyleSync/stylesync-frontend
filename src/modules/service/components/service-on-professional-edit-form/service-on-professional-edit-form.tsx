@@ -22,7 +22,7 @@ import styles from './service-on-professional-edit-form.module.scss';
 import { showToast } from '@/modules/core/providers/toast-provider';
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
-import { EditorComponent } from '@/modules/core/components/editor';
+import { EditorField } from '@/modules/core/components/editor-field';
 
 const validationSchema = z.object({
   title: z.string().min(1),
@@ -45,7 +45,7 @@ const mapServiceOnProfessionalToFormValues = (
     value: data.price.toString(),
     currency: data.currency,
   },
-  description: data.description,
+  description: data.description || '',
 });
 
 const mapFormValuesToServiceOnProfessional = (
@@ -55,7 +55,7 @@ const mapFormValuesToServiceOnProfessional = (
   currency: values.price.currency,
   price: +values.price.value,
   duration: Time.toMinuteDuration(values.duration as TimeValue),
-  description: values.description,
+  description: values.description || '',
 });
 
 export const ServiceOnProfessionalEditForm: FC<
@@ -84,6 +84,7 @@ export const ServiceOnProfessionalEditForm: FC<
         serviceOnProfessionalCreateMutation.mutate(
           {
             ...mapFormValuesToServiceOnProfessional(values),
+            description: values.description || '',
             serviceId: data.service.id,
           },
           {
@@ -111,6 +112,7 @@ export const ServiceOnProfessionalEditForm: FC<
         {
           ...data,
           ...mapFormValuesToServiceOnProfessional(values),
+          description: values.description || '',
         },
         {
           onSuccess: () => {
@@ -176,7 +178,7 @@ export const ServiceOnProfessionalEditForm: FC<
             error={Boolean(form.formState.errors.title)}
             {...form.register('title')}
           />
-          <div className='flex gap-x-4 pb-4'>
+          <div className='flex gap-x-4'>
             <Controller
               name='duration'
               control={form.control}
@@ -223,16 +225,17 @@ export const ServiceOnProfessionalEditForm: FC<
             name='description'
             control={form.control}
             render={({ field }) => (
-              <EditorComponent
+              <EditorField
                 id={data.id}
                 value={field.value}
                 onChange={field.onChange}
                 fixedHeight={400}
+                label='Description (optional)'
               />
             )}
           />
 
-          <div className='flex gap-x-2 ml-auto'>
+          <div className='flex gap-x-2 ml-auto mt-2'>
             <Button
               variant='secondary'
               type='button'
