@@ -25,6 +25,7 @@ export const UserServices: FC<UserServicesProps> = ({ userId, session }) => {
     professionalId: professional.id,
   });
   const groups = useMemo(() => {
+    // @ts-ignore
     const _groups = getGroupOfServiceOnProfessionalList(serviceList);
 
     return sortServiceOnProfessionalGroups(_groups);

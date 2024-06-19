@@ -14,7 +14,6 @@ import { trpc } from '@/modules/core/utils/trpc.utils';
 import { Time, type TimeValue } from '@/modules/core/utils/time.utils';
 // types
 import type { ServiceOnProfessionalEditableFields } from '@/modules/service/types/service.types';
-
 import type {
   ServiceOnProfessionalEditFormProps,
   ServiceOnProfessionalFormValues,
@@ -23,6 +22,7 @@ import styles from './service-on-professional-edit-form.module.scss';
 import { showToast } from '@/modules/core/providers/toast-provider';
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
+import { EditorField } from '@/modules/core/components/editor-field';
 
 const validationSchema = z.object({
   title: z.string().min(1),
@@ -33,6 +33,7 @@ const validationSchema = z.object({
     value: z.string().refine((arg) => !isNaN(+arg) && +arg > 0),
     currency: z.string(),
   }),
+  description: z.string().min(1),
 });
 
 const mapServiceOnProfessionalToFormValues = (
@@ -44,6 +45,7 @@ const mapServiceOnProfessionalToFormValues = (
     value: data.price.toString(),
     currency: data.currency,
   },
+  description: data.description || '',
 });
 
 const mapFormValuesToServiceOnProfessional = (
@@ -53,6 +55,7 @@ const mapFormValuesToServiceOnProfessional = (
   currency: values.price.currency,
   price: +values.price.value,
   duration: Time.toMinuteDuration(values.duration as TimeValue),
+  description: values.description || '',
 });
 
 export const ServiceOnProfessionalEditForm: FC<
@@ -81,6 +84,7 @@ export const ServiceOnProfessionalEditForm: FC<
         serviceOnProfessionalCreateMutation.mutate(
           {
             ...mapFormValuesToServiceOnProfessional(values),
+            description: values.description || '',
             serviceId: data.service.id,
           },
           {
@@ -108,6 +112,7 @@ export const ServiceOnProfessionalEditForm: FC<
         {
           ...data,
           ...mapFormValuesToServiceOnProfessional(values),
+          description: values.description || '',
         },
         {
           onSuccess: () => {
@@ -142,13 +147,23 @@ export const ServiceOnProfessionalEditForm: FC<
   return (
     <Dialog
       isOpen={isActive}
-      onOpenChange={onOpenChange}
+      onOpenChange={(isOpen) => {
+        if (!isOpen && form.formState.isDirty) {
+          const isConfirmed = confirm('you have unsaved changes….');
+
+          if (!isConfirmed) {
+            return;
+          }
+        }
+
+        onOpenChange(isOpen);
+      }}
       classes={{
         overlay: styles.dialogOverlay,
         content: styles.dialogContent,
       }}
     >
-      <div className='flex flex-col gap-y-10'>
+      <div className='flex-col gap-y-10 grid grid-rows-[auto_1fr] h-fit'>
         <Typography className='text-dark' variant='subtitle'>
           {isNew ? 'Add' : 'Edit'} service
         </Typography>
@@ -163,7 +178,7 @@ export const ServiceOnProfessionalEditForm: FC<
             error={Boolean(form.formState.errors.title)}
             {...form.register('title')}
           />
-          <div className='flex gap-x-4 pb-4'>
+          <div className='flex gap-x-4'>
             <Controller
               name='duration'
               control={form.control}
@@ -205,7 +220,22 @@ export const ServiceOnProfessionalEditForm: FC<
               )}
             />
           </div>
-          <div className='flex gap-x-2 ml-auto'>
+
+          <Controller
+            name='description'
+            control={form.control}
+            render={({ field }) => (
+              <EditorField
+                id={data.id}
+                value={field.value}
+                onChange={field.onChange}
+                fixedHeight={400}
+                label='Description (optional)'
+              />
+            )}
+          />
+
+          <div className='flex gap-x-2 ml-auto mt-2'>
             <Button
               variant='secondary'
               type='button'

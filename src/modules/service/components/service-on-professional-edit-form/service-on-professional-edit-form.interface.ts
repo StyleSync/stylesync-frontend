@@ -14,4 +14,5 @@ export type ServiceOnProfessionalFormValues = {
     value: string;
     currency: Currency;
   };
+  description: string;
 };

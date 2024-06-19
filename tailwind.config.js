@@ -26,6 +26,9 @@ module.exports = {
           DEFAULT: '#4bb543',
         },
       },
+      boxShadow: {
+        DEFAULT: '0px 4px 15px 0px rgba(37, 74, 165, 0.1)',
+      },
     },
   },
   plugins: [],

@@ -2,6 +2,20 @@
 @use '@/styles/utils';
 
 .root {
+  h1 {
+    font-size: 22px;
+  }
+
+  h2 {}
+
+  h3 {}
+
+  p {
+
+  }
+}
+
+.root {
   display: flex;
   flex-direction: column;
   align-items: center;

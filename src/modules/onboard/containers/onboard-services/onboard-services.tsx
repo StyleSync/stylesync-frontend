@@ -12,9 +12,7 @@ import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboa
 
 export const OnboardServices: FC<ProOnboardStepProps> = ({ next, back }) => {
   const { groups, setGroups, isGroupsLoading, isGroupsLoadingError } =
-    useServiceOnProfessionalGroups({
-      onSaved: next,
-    });
+    useServiceOnProfessionalGroups();
 
   return (
     <OnboardLayout

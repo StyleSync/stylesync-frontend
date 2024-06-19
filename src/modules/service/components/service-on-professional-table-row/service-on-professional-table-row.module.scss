@@ -22,6 +22,7 @@
     flex: 1;
 
     .title {
+      max-width: 90%;
       @include mixins.phone {
         font-size: 16px;
       }
@@ -46,7 +47,7 @@
 
     &.fit {
       flex: unset;
-      width:fit-content;
+      width: fit-content;
     }
 
     &.vertical {
@@ -54,5 +55,60 @@
       row-gap: utils.spacing(1.5);
       align-items: flex-start;
     }
+  }
+}
+
+.btnRoot {
+  display: flex;
+  column-gap: 10px;
+}
+
+.photos {
+  display: flex;
+  justify-content: space-between;
+}
+
+.closeBtn {
+  background-color: variables.$primary-light-color;
+  margin: 0 auto;
+  color: variables.$primary-color;
+  transition: color 0.2s ease, background-color 0.3s ease;
+  &:hover {
+    color: #000;
+  }
+}
+
+.acardionItem {
+  border-bottom: 1px solid variables.$primary-light-color;
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.AccordionContent {
+  overflow: hidden;
+}
+.AccordionContent[data-state='open'] {
+  animation: slideDown 300ms ease-out;
+}
+.AccordionContent[data-state='closed'] {
+  animation: slideUp 300ms ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
   }
 }

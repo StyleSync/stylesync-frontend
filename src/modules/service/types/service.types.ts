@@ -1,6 +1,4 @@
-import type { Service, Currency } from '@prisma/client';
-
-export type SupportedServiceKey = string;
+import type { Service, Currency, Prisma } from '@prisma/client';
 
 export type ServiceOnProfessional = {
   id: string;
@@ -9,7 +7,17 @@ export type ServiceOnProfessional = {
   price: number;
   currency: Currency;
   service: Service;
+  description: string | null;
 };
+
+export type ServiceOnProfessionalList = Omit<
+  Prisma.ServiceOnProfessionalGetPayload<{
+    include: { service: true };
+  }>,
+  'professionalId' | 'serviceId' | 'createdAt' | 'updatedAt'
+>[];
+
+export type ServiceOnProfessionalListItem = ServiceOnProfessionalList[number];
 
 export type ServiceOnProfessionalGroup = {
   service: Service;
@@ -17,6 +25,6 @@ export type ServiceOnProfessionalGroup = {
 };
 
 export type ServiceOnProfessionalEditableFields = Pick<
-  ServiceOnProfessional,
-  'title' | 'duration' | 'price' | 'currency'
+  ServiceOnProfessionalListItem,
+  'title' | 'duration' | 'price' | 'currency' | 'description'
 >;

@@ -32,7 +32,6 @@ export const CreateBooking: FC<CreateBookingProps> = ({
     lastName,
     phone,
     email,
-
     ...data
   }: CreateBookingRequestData) => {
     bookingCreate.mutate(

@@ -1,0 +1,19 @@
+.ql-toolbar.ql-snow {
+  @apply px-[22px] py-4 border-none;
+
+  .ql-picker-options {
+    @apply border-none shadow px-4 py-2 rounded-xl;
+  }
+
+  .ql-picker.ql-expanded .ql-picker-label {
+    @apply border-transparent transition rounded text-dark bg-gray-light;
+  }
+}
+
+.ql-container.ql-snow {
+  @apply border-none;
+
+  .ql-editor {
+    @apply px-[32px] min-h-[200px] pb-6;
+  }
+}
