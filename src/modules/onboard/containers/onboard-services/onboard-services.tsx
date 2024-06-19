@@ -1,4 +1,6 @@
 import { type FC } from 'react';
+import { useIntl } from 'react-intl';
+
 // components
 import { OnboardLayout } from '@/modules/onboard/components/onboard-layout';
 import { ProfessionalServicesForm } from '@/modules/service/containers/professional-services-form';
@@ -11,13 +13,15 @@ import { useServiceOnProfessionalGroups } from '@/modules/service/hooks/use-serv
 import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboard/pro-onboard.interface';
 
 export const OnboardServices: FC<ProOnboardStepProps> = ({ next, back }) => {
+  const intl = useIntl();
+
   const { groups, setGroups, isGroupsLoading, isGroupsLoadingError } =
     useServiceOnProfessionalGroups();
 
   return (
     <OnboardLayout
       meta={{
-        title: 'Services',
+        title: intl.formatMessage({ id: 'onboard.services.title' }),
       }}
       nextButtonProps={{
         onClick: next,
@@ -34,8 +38,10 @@ export const OnboardServices: FC<ProOnboardStepProps> = ({ next, back }) => {
           isActive={isGroupsLoadingError}
           placeholder={
             <ErrorBox
-              title='Connection with server has been interrupted'
-              description='Please check your internet connection or try refreshing the page. If the issue persists, please contact our support team for assistance.'
+              title={intl.formatMessage({ id: 'onboard.errorBox.title' })}
+              description={intl.formatMessage({
+                id: 'onboard.errorBox.description',
+              })}
             />
           }
         >

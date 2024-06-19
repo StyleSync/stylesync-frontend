@@ -1,4 +1,6 @@
 import { type FC } from 'react';
+import { useIntl } from 'react-intl';
+
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Placeholder } from '@/modules/core/components/placeholder';
@@ -17,6 +19,8 @@ import styles from './bookings-list.module.scss';
 const now = new Date().toISOString();
 
 export const BookingsList: FC<BookingsListProps> = () => {
+  const intl = useIntl();
+
   // queries
   const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
 
@@ -40,12 +44,12 @@ export const BookingsList: FC<BookingsListProps> = () => {
   const groups: BookingListGroup[] = [
     {
       id: 'upcomming',
-      title: 'Upcomming',
+      title: intl.formatMessage({ id: 'booking.list.upcomming' }),
       list: upcomingEvents as BookingListType,
     },
     {
       id: 'past',
-      title: 'Past events',
+      title: intl.formatMessage({ id: 'booking.list.past' }),
       hidden: !pastEvents.length,
       list: pastEvents as BookingListType,
     },
@@ -65,7 +69,7 @@ export const BookingsList: FC<BookingsListProps> = () => {
                   isActive={group.list?.length === 0}
                   placeholder={
                     <Typography className={styles.empty} variant='body2'>
-                      List is empty
+                      {intl.formatMessage({ id: 'booking.list.listEmpty' })}
                     </Typography>
                   }
                 >

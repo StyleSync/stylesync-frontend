@@ -1,5 +1,6 @@
 'use client';
 import { type FC, useCallback, useId, useMemo } from 'react';
+import { useIntl } from 'react-intl';
 // components
 import { ProfileSettingsTabContentLayout } from '@/modules/user/components/profile-settings-tab-content-layout';
 import { AboutProfessionalForm } from '@/modules/user/components/about-professional-form';
@@ -13,6 +14,7 @@ import type { AboutProfessionalFormValues } from '@/modules/user/components/abou
 import { useAvatarUploadMutation } from '@/modules/user/hooks/use-avatar-upload-mutation';
 
 export const ProfessionalSettingsAbout: FC = () => {
+  const intl = useIntl();
   const formId = useId();
   // queries
   const { data: me, ...meQuery } = trpc.user.me.useQuery({
@@ -76,29 +78,35 @@ export const ProfessionalSettingsAbout: FC = () => {
           meQuery.refetch();
           showToast({
             variant: 'success',
-            title: 'All done!',
-            description: 'Changes has been saved',
+            title: intl.formatMessage({
+              id: 'professional.settings.about.toast.success.title',
+            }),
+            description: intl.formatMessage({
+              id: 'professional.settings.about.toast.success.description',
+            }),
           });
         })
         .catch(() => {
           showToast({
             variant: 'error',
             title: ERROR_MESSAGE.SOMETHING_WENT_WRONG,
-            description: 'Please review the entered data or try again later',
+            description: intl.formatMessage({
+              id: 'professional.settings.about.toast.error.description',
+            }),
           });
         });
     },
-    [userUpdate, proUpdate, avatarUpload, meQuery]
+    [userUpdate, proUpdate, avatarUpload, meQuery, intl]
   );
 
   return (
     <ProfileSettingsTabContentLayout
-      title='About settings'
+      title={intl.formatMessage({ id: 'professional.settings.about.title' })}
       icon='info'
       isLoading={meQuery.isLoading}
       actions={[
         {
-          text: 'Save',
+          text: intl.formatMessage({ id: 'button.save' }),
           form: formId,
           isLoading: isSaveLoading,
           disabled: !me || !me.professional,

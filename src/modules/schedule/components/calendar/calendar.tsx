@@ -1,7 +1,9 @@
 import { useMemo, type FC } from 'react';
-import { format, getHours, set, getMinutes } from 'date-fns';
+import { getHours, set, getMinutes } from 'date-fns';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import { useIntl } from 'react-intl';
+
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 // type
@@ -9,11 +11,14 @@ import type { CalendarProps } from './calendar.interface';
 // utils
 import { getTime } from '@/modules/schedule/utils/get-time';
 import { trpc } from '@/modules/core/utils/trpc.utils';
+import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
 // styles
 import './calendar.scss';
 import styles from './calendarEvent.module.scss';
 
 export const Calendar: FC<CalendarProps> = () => {
+  const intl = useIntl();
+
   const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
 
   const [events] = trpc.booking.list.useSuspenseQuery({
@@ -22,7 +27,10 @@ export const Calendar: FC<CalendarProps> = () => {
   });
 
   const handleViewMount = ({ el }: { el: HTMLElement }) => {
-    const timeZone = format(new Date(), 'zzzz').replace('GMT', 'GMT ');
+    const timeZone = formatI18n(new Date(), 'zzzz', intl.locale).replace(
+      'GMT',
+      'GMT '
+    );
     const timeGridAxis = el.querySelector('.fc-timegrid-axis-frame');
 
     if (timeGridAxis) {
@@ -60,13 +68,15 @@ export const Calendar: FC<CalendarProps> = () => {
         initialView='timeGridWeek'
         customButtons={{
           customButtons: {
-            text: 'Approved',
+            text: intl.formatMessage({ id: 'calendar.customButtons.approved' }),
           },
           customButtons2: {
-            text: 'Requested',
+            text: intl.formatMessage({
+              id: 'calendar.customButtons.requested',
+            }),
           },
           customButtons3: {
-            text: 'Past',
+            text: intl.formatMessage({ id: 'calendar.customButtons.past' }),
           },
         }}
         buttonText={{ today: 'Today' }}
@@ -75,7 +85,9 @@ export const Calendar: FC<CalendarProps> = () => {
           center: 'title',
           right: 'customButtons customButtons2 customButtons3',
         }}
-        dayHeaderFormat={({ date }) => format(date.marker, 'dd E')}
+        dayHeaderFormat={({ date }) =>
+          formatI18n(date.marker, 'dd E', intl.locale)
+        }
         slotLabelFormat={{
           hour: 'numeric',
           minute: '2-digit',
@@ -84,13 +96,13 @@ export const Calendar: FC<CalendarProps> = () => {
         }}
         slotLabelContent={({ date }) => (
           <div className='left-col'>
-            <span>{format(date, 'hh:mm')}</span>
+            <span>{formatI18n(date, 'hh:mm', intl.locale)}</span>
           </div>
         )}
         allDaySlot={false}
         height={'75vh'}
         nowIndicator
-        slotMinTime={'07:00'}
+        slotMinTime={'06:00'}
         eventContent={({ event }) => {
           const startTime = getTime(event.start);
           const endTime = getTime(event.end);

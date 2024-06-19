@@ -2,6 +2,8 @@ import { type FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useIntl } from 'react-intl';
+
 // components
 import { TextField } from '@/modules/core/components/text-field';
 import { Button } from '@/modules/core/components/button';
@@ -32,6 +34,8 @@ export const BookingForm: FC<BookingFormProps> = ({
   onSubmit,
   isLoading,
 }) => {
+  const intl = useIntl();
+
   const form = useForm<BookingFormValue>({
     defaultValues,
     resolver: zodResolver(bookingValidationSchema),
@@ -43,38 +47,38 @@ export const BookingForm: FC<BookingFormProps> = ({
         {...form.register('name')}
         error={Boolean(form.formState.errors.name)}
         variant='input'
-        label='Name*'
+        label={intl.formatMessage({ id: 'booking.form.name' })}
       />
       <TextField
         {...form.register('lastName')}
         error={Boolean(form.formState.errors.lastName)}
         variant='input'
-        label='Last name'
+        label={intl.formatMessage({ id: 'booking.form.lastName' })}
       />
       <TextField
         {...form.register('phone')}
         error={Boolean(form.formState.errors.phone)}
         variant='input'
-        label='Phone*'
+        label={intl.formatMessage({ id: 'booking.form.phone' })}
       />
       <TextField
         {...form.register('email')}
         error={Boolean(form.formState.errors.email)}
         variant='input'
-        label='Email*'
+        label={intl.formatMessage({ id: 'booking.form.email' })}
       />
       <TextField
         {...form.register('comment')}
         error={Boolean(form.formState.errors.comment)}
         variant='textarea'
-        label='Comment'
+        label={intl.formatMessage({ id: 'booking.form.comment' })}
       />
 
       <div className={styles.btnContainer}>
         <Button
           className={styles.buttonBack}
           onClick={onClickBack}
-          text='Back'
+          text={intl.formatMessage({ id: 'button.back' })}
           icon='arrow-left'
           variant='outlined'
         />
@@ -82,7 +86,7 @@ export const BookingForm: FC<BookingFormProps> = ({
           isLoading={isLoading}
           className={styles.buttonConfirm}
           type='submit'
-          text='Confirm'
+          text={intl.formatMessage({ id: 'button.confirm' })}
           variant='primary'
         />
       </div>

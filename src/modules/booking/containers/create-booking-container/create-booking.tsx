@@ -1,4 +1,6 @@
 import { type FC } from 'react';
+import { useIntl } from 'react-intl';
+
 // components
 import { Button } from '@/modules/core/components/button';
 import { BookingModalSuccess } from '../../components/modal-success/modal-successs';
@@ -18,6 +20,8 @@ export const CreateBooking: FC<CreateBookingProps> = ({
   selectedService,
   professional,
 }) => {
+  const intl = useIntl();
+
   const isBookingOpen = useBoolean();
   const isSuccessOpen = useBoolean();
 
@@ -51,8 +55,12 @@ export const CreateBooking: FC<CreateBookingProps> = ({
         onError: () => {
           showToast({
             variant: 'error',
-            title: 'Oops, error',
-            description: 'Choose another date',
+            title: intl.formatMessage({
+              id: 'create.booking.toast.error.title',
+            }),
+            description: intl.formatMessage({
+              id: 'create.booking.toast.error.description',
+            }),
           });
         },
         onSuccess: () => {
@@ -75,7 +83,9 @@ export const CreateBooking: FC<CreateBookingProps> = ({
         trigger={
           <Button
             variant={btnVariant || 'primary'}
-            text='Book'
+            text={intl.formatMessage({
+              id: 'button.book',
+            })}
             disabled={isLoadingTrigger}
           />
         }

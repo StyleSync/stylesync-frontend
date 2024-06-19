@@ -1,5 +1,6 @@
 import { type FC, useCallback, useRef } from 'react';
 import clsx from 'clsx';
+import { useIntl } from 'react-intl';
 // components
 import { Avatar } from '@/modules/core/components/avatar';
 import { Button } from '@/modules/core/components/button';
@@ -14,6 +15,7 @@ export const AvatarSelect: FC<AvatarSelectProps> = ({
   onRemove,
   ...props
 }) => {
+  const intl = useIntl();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSelectClick = useCallback(() => {
@@ -32,7 +34,11 @@ export const AvatarSelect: FC<AvatarSelectProps> = ({
       <div className={styles.actions}>
         <Button
           className={clsx(styles.action, styles.select)}
-          text={value ? 'Select new avatar' : 'Select avatar'}
+          text={
+            value
+              ? intl.formatMessage({ id: 'button.avatar.select.new' })
+              : intl.formatMessage({ id: 'button.avatar.select' })
+          }
           variant='unstyled'
           onClick={handleSelectClick}
         />
@@ -41,7 +47,7 @@ export const AvatarSelect: FC<AvatarSelectProps> = ({
             <div className={styles.divider} />
             <Button
               className={clsx(styles.action, styles.delete)}
-              text='Remove'
+              text={intl.formatMessage({ id: 'button.remove' })}
               variant='danger'
               onClick={onRemove}
             />

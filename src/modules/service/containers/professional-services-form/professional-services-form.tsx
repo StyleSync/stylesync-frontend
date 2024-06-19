@@ -1,4 +1,6 @@
 import { type FC, useCallback, useMemo } from 'react';
+import { useIntl } from 'react-intl';
+
 // components
 import { ServiceSelect } from '@/modules/service/components/service-select';
 import { Placeholder } from '@/modules/core/components/placeholder';
@@ -17,6 +19,7 @@ export const ProfessionalServicesForm: FC<ProfessionalServicesFormProps> = ({
   serviceOnProfessionalGroups,
   setServiceOnProfessionalGroups,
 }) => {
+  const intl = useIntl();
   const { data: serviceList, ...serviceListQuery } =
     trpc.service.list.useQuery();
   // memo
@@ -58,7 +61,9 @@ export const ProfessionalServicesForm: FC<ProfessionalServicesFormProps> = ({
         isActive={sortedServiceOnProfessionalGroups.length === 0}
         placeholder={{
           illustration: 'folder',
-          description: 'No services added',
+          description: intl.formatMessage({
+            id: 'professional.service.description',
+          }),
         }}
         fadeIn
       >

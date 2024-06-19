@@ -1,11 +1,14 @@
 'use client';
 import { useMemo, type FC } from 'react';
 import clsx from 'clsx';
-import { format } from 'date-fns';
+import { useIntl } from 'react-intl';
+
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { generateDates } from '@/modules/core/utils/date.utils';
 import { formatTime } from '@/modules/core/utils/time.utils';
+import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
+
 // components
 import { BookingTimeSelectNavigation } from '../../components/booking-time-select-navigation';
 import { Spinner } from '@/modules/core/components/spinner';
@@ -27,6 +30,8 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
   setSelectedTimeRange,
   professionalId,
 }) => {
+  const intl = useIntl();
+
   const bookingData = trpc.booking.available.list.useQuery(
     {
       date: selectedDay || '',
@@ -79,7 +84,7 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
                     [styles.infoCheked]: selectedDay === item,
                   })}
                 >
-                  {format(new Date(item), 'EEE')}
+                  {formatI18n(new Date(item), 'EEE', intl.locale)}
                 </Typography>
                 <Typography
                   variant='body2'
@@ -87,7 +92,7 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
                     [styles.infoCheked]: selectedDay === item,
                   })}
                 >
-                  {format(new Date(item), 'd')}
+                  {formatI18n(new Date(item), 'd', intl.locale)}
                 </Typography>
                 <Typography
                   variant='body2'
@@ -95,7 +100,7 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
                     [styles.infoCheked]: selectedDay === item,
                   })}
                 >
-                  {format(new Date(item), 'MMM')}
+                  {formatI18n(new Date(item), 'MMM', intl.locale)}
                 </Typography>
               </div>
             </SwiperSlide>
@@ -110,7 +115,7 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
               <div className={styles.spinnerContainer}>
                 <Spinner size='small' />
                 <Typography className={styles.loadingLabel}>
-                  Searching for available time...
+                  {intl.formatMessage({ id: 'booking.timeSelect.searching' })}
                 </Typography>
               </div>
             )}
@@ -143,8 +148,9 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
                   ))}
                 {bookingAvalibleTimes.length === 0 && (
                   <Typography className={styles.noAvailableTimeText}>
-                    Sorry, <span>no free time</span>, please choose another
-                    date.
+                    {intl.formatMessage({
+                      id: 'booking.timeSelect.noAvailableTime',
+                    })}
                   </Typography>
                 )}
               </>

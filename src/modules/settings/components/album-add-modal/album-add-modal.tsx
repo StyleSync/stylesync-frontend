@@ -1,7 +1,7 @@
 import { useEffect, type FC } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-
+import { useIntl } from 'react-intl';
 // hooks
 import { useForm } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
@@ -17,7 +17,6 @@ import { type DialogProps } from '@/modules/core/components/dialog/dialog.interf
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { showToast } from '@/modules/core/providers/toast-provider';
-
 // styles
 import styles from './album-add-modal.module.scss';
 
@@ -34,6 +33,7 @@ export type albomFormValue = z.infer<typeof albumValidationSchema>;
 export const AlbumAddModal: FC<
   Omit<DialogProps, 'children'> & AlbumAddModalProps
 > = ({ album, ...props }) => {
+  const intl = useIntl();
   const queryClient = useQueryClient();
   // mutations
   const createAlbumMutation = trpc.album.create.useMutation();
@@ -68,15 +68,23 @@ export const AlbumAddModal: FC<
           onError: () => {
             showToast({
               variant: 'error',
-              title: 'Oops, error',
-              description: 'Error',
+              title: intl.formatMessage({
+                id: 'albumAdd.modal.toast.error.title.edit',
+              }),
+              description: intl.formatMessage({
+                id: 'albumAdd.modal.toast.error.description.edit',
+              }),
             });
           },
           onSuccess: () => {
             showToast({
               variant: 'success',
-              title: 'Good!',
-              description: 'Album edit',
+              title: intl.formatMessage({
+                id: 'albumAdd.modal.toast.success.title.edit',
+              }),
+              description: intl.formatMessage({
+                id: 'albumAdd.modal.toast.success.description.edit',
+              }),
             });
 
             queryClient.invalidateQueries({
@@ -94,15 +102,23 @@ export const AlbumAddModal: FC<
         onError: () => {
           showToast({
             variant: 'error',
-            title: 'Oops, error',
-            description: 'Error',
+            title: intl.formatMessage({
+              id: 'albumAdd.modal.toast.error.title.add',
+            }),
+            description: intl.formatMessage({
+              id: 'albumAdd.modal.toast.error.description.add',
+            }),
           });
         },
         onSuccess: () => {
           showToast({
             variant: 'success',
-            title: 'Good!',
-            description: 'Album added',
+            title: intl.formatMessage({
+              id: 'albumAdd.modal.toast.success.title.add',
+            }),
+            description: intl.formatMessage({
+              id: 'albumAdd.modal.toast.success.description.add',
+            }),
           });
 
           queryClient.invalidateQueries({
@@ -124,12 +140,17 @@ export const AlbumAddModal: FC<
   return (
     <Dialog {...props} classes={{ content: styles.content }}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className={styles.root}>
-        <Typography variant='subtitle'>
-          {album ? 'Edit album' : 'Add album'}
-        </Typography>
-
+        <div className='flex items-center gap-3'>
+          <Typography variant='subtitle'>
+            {intl.formatMessage({
+              id: album
+                ? 'albumAdd.modal.title.edit'
+                : 'albumAdd.modal.title.add',
+            })}
+          </Typography>
+        </div>
         <TextField
-          label='Album title'
+          label={intl.formatMessage({ id: 'albumAdd.modal.label.input' })}
           variant='input'
           {...form.register('title')}
         />
@@ -137,14 +158,14 @@ export const AlbumAddModal: FC<
           <Button
             onClick={handleCloseClick}
             variant='secondary'
-            text='Cansel'
+            text={intl.formatMessage({ id: 'button.cancel' })}
           />
           <Button
             isLoading={
               createAlbumMutation.isLoading || renameAlbumMutation.isLoading
             }
             type='submit'
-            text='Save'
+            text={intl.formatMessage({ id: 'button.save' })}
           />
         </div>
       </form>

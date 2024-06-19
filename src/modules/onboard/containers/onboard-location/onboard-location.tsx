@@ -1,5 +1,7 @@
 import { type FC, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import { useIntl } from 'react-intl';
+
 // components
 import { OnboardLayout } from '@/modules/onboard/components/onboard-layout';
 // containers
@@ -8,6 +10,8 @@ import { UserLocationSelectForm } from '@/modules/location/containers/user-locat
 import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboard/pro-onboard.interface';
 
 export const OnboardLocation: FC<ProOnboardStepProps> = ({ back }) => {
+  const intl = useIntl();
+
   const router = useRouter();
 
   const handleSubmit = useCallback(() => {
@@ -19,7 +23,7 @@ export const OnboardLocation: FC<ProOnboardStepProps> = ({ back }) => {
       meta={{ title: 'Location' }}
       nextButtonProps={{
         onClick: handleSubmit,
-        text: 'Done',
+        text: intl.formatMessage({ id: 'button.done' }),
       }}
       prevButtonProps={{
         onClick: back,

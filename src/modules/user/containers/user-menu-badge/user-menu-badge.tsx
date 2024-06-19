@@ -4,6 +4,7 @@ import { useBoolean } from 'usehooks-ts';
 import clsx from 'clsx';
 import { signIn, signOut } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
+import { useIntl } from 'react-intl';
 // components
 import { Avatar } from '@/modules/core/components/avatar';
 import { Emoji } from '@/modules/core/components/emoji';
@@ -18,11 +19,11 @@ import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 // types
 import type { DropdownItem } from '@/modules/core/components/dropdown-menu/dropdown-menu.interface';
-
 import type { UserMenuBadgeProps } from './user-menu-badge.interface';
 import styles from './user-menu-badge.module.scss';
 
 export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
+  const intl = useIntl();
   // state
   const isOpen = useBoolean();
   const pathname = usePathname();
@@ -88,12 +89,12 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
           items={[
             {
               id: 'share',
-              text: 'Share profile',
+              text: intl.formatMessage({ id: 'user.menu.budge.share' }),
               icon: 'share',
             },
             {
               id: 'sign-out',
-              text: 'Sign out',
+              text: intl.formatMessage({ id: 'user.menu.budge.signOut' }),
               icon: 'log-out',
               variant: 'danger',
             },

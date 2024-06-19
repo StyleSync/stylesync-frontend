@@ -4,6 +4,8 @@ import { useBoolean } from 'usehooks-ts';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { useIntl } from 'react-intl';
+
 // components
 import { Button } from '@/modules/core/components/button';
 import { Typography } from '@/modules/core/components/typogrpahy';
@@ -57,6 +59,8 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
   dailySchedule,
   onUpdate,
 }) => {
+  const intl = useIntl();
+
   const queryClient = useQueryClient();
   // state
   const isEdit = useBoolean();
@@ -102,7 +106,9 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
         onError: (error) => {
           showToast({
             variant: 'error',
-            title: "Oops! Data hasn't been saved",
+            title: intl.formatMessage({
+              id: 'schedule.select.toast.error.title',
+            }),
             description: error.message,
           });
         },
@@ -161,7 +167,7 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
         })),
       }));
     }
-  }, [form.reset, isEdit.value, scheduleBreaks]);
+  }, [form.reset, isEdit.value, scheduleBreaks, form]);
 
   const handleSubmit = useCallback(
     async (values: Omit<DailySchedule, 'isActive'>) => {
@@ -190,7 +196,9 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
           </div>
           <div className={clsx(styles.cell)}>
             <Typography>
-              {isDayOff.value ? 'Day off' : form.getValues().workHours}
+              {isDayOff.value
+                ? intl.formatMessage({ id: 'schedule.day.off' })
+                : form.getValues().workHours}
             </Typography>
           </div>
           <div className={clsx(styles.cell, styles.tags)}>
@@ -227,7 +235,9 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
                 onChange={isDayOff.toggle}
                 size='small'
               />
-              <Typography variant='small'>Day off</Typography>
+              <Typography variant='small'>
+                {intl.formatMessage({ id: 'schedule.day.off' })}
+              </Typography>
             </label>
           </div>
           <div

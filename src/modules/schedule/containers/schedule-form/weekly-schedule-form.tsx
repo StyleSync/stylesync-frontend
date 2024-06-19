@@ -1,6 +1,8 @@
 import { type FC, useCallback } from 'react';
 import clsx from 'clsx';
 import { useQueryClient } from '@tanstack/react-query';
+import { useIntl } from 'react-intl';
+
 // containers
 import { DayScheduleSelect } from '@/modules/schedule/containers/day-schedule-select';
 // components
@@ -18,6 +20,8 @@ import type { WeeklyScheduleFormProps } from './schedule-form.interface';
 import styles from './schedule-form.module.scss';
 
 export const WeeklyScheduleForm: FC<WeeklyScheduleFormProps> = () => {
+  const intl = useIntl();
+
   const queryClient = useQueryClient();
   // queries
   const { data: me } = trpc.user.me.useQuery({ expand: ['professional'] });
@@ -52,8 +56,10 @@ export const WeeklyScheduleForm: FC<WeeklyScheduleFormProps> = () => {
         isActive={weekScheduleQuery.isError}
         placeholder={
           <ErrorBox
-            title='Connection with server has been interrupted'
-            description='Please check your internet connection or try refreshing the page. If the issue persists, please contact our support team for assistance.'
+            title={intl.formatMessage({ id: 'schedule.form.errorBox.title' })}
+            description={intl.formatMessage({
+              id: 'schedule.form.errorBox.description',
+            })}
           />
         }
       >
@@ -61,15 +67,21 @@ export const WeeklyScheduleForm: FC<WeeklyScheduleFormProps> = () => {
           <div className={styles.header}>
             <div className={styles.cell}>
               <Icon name='calendar' />
-              <Typography weight='medium'>Day</Typography>
+              <Typography weight='medium'>
+                {intl.formatMessage({ id: 'schedule.form.day' })}
+              </Typography>
             </div>
             <div className={styles.cell}>
               <Icon name='time' />
-              <Typography weight='medium'>Working hours</Typography>
+              <Typography weight='medium'>
+                {intl.formatMessage({ id: 'schedule.form.working.hours' })}
+              </Typography>
             </div>
             <div className={styles.cell}>
               <Icon name='alarm' />
-              <Typography weight='medium'>Breaks</Typography>
+              <Typography weight='medium'>
+                {intl.formatMessage({ id: 'schedule.form.breaks' })}
+              </Typography>
             </div>
             <div className={clsx(styles.cell, styles.actions)} />
           </div>

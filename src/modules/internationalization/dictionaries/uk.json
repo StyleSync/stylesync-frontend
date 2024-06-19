@@ -35,5 +35,218 @@
   "signIn.social.google": "Увійти через Google",
   "signIn.social.instagram": "Увійти через Instagram",
   "signIn.social.facebook": "Увійти через Facebook",
-  "signIn.header.signUpDescription": "Не маєте аккаунту?"
+  "signIn.header.signUpDescription": "Не маєте аккаунту?",
+
+  "booking.form.name": "Ім'я*",
+  "booking.form.lastName": "Прізвище",
+  "booking.form.phone": "Телефон*",
+  "booking.form.email": "Електронна пошта*",
+  "booking.form.comment": "Коментар",
+
+  "booking.time.select.title": "Оберіть дату",
+
+  "booking.list.upcomming": "Майбутні",
+  "booking.list.past": "Минулі",
+  "booking.list.listEmpty": "Список порожній",
+
+  "booking.modal.success.title": "Бронювання успішне!",
+  "booking.modal.success.service": "Послуга",
+  "booking.modal.success.price": "Ціна",
+  "booking.modal.success.time": "Час",
+  "booking.modal.success.status": "Статус",
+  "booking.modal.success.button.myBooking": "Моє бронювання",
+  "booking.modal.status.pending": "Запитано",
+  "booking.modal.status.approved": "Підтверджено",
+
+  "booking.modal.service.title": "Нове бронювання",
+  "booking.modal.service.name": "Tennisha's Beauty",
+  "booking.modal.service.address": "Greyhound Dr, Bradford BD7 1NQ",
+
+  "booking.modal.service.step.service": "Послуга",
+  "booking.modal.service.step.dataTime": "Дата та час",
+  "booking.modal.service.step.confirmation": "Підтвердження",
+
+  "booking.timeSelect.searching": "Пошук доступного часу...",
+  "booking.timeSelect.noAvailableTime": "Вибачте, немає вільного часу, будь ласка, оберіть іншу дату.",
+  "create.booking.toast.error.title": "Ой, помилка",
+  "create.booking.toast.success.description": "Оберіть іншу дату",
+
+  "booking.tabs.list": "Список",
+  "booking.tabs.calendar": "Календар",
+
+  "photo.modal.upload.toast.error.title": "Ой, помилка",
+  "photo.modal.upload.toast.error.description": "Ой",
+  "photo.modal.upload.toast.success.title": "Добре!",
+  "photo.modal.upload.toast.success.description": "Фото додано",
+  "photo.modal.upload.dropHere": "Перетягніть фото сюди",
+  "photo.modal.upload.supports": "Підтримує: PNG, JPG, JPEG, WEBP",
+
+  "location.search.placeholder.typing": "Почніть вводити ваше місцезнаходження",
+  "location.search.placeholder.notFound": "Місцезнаходження не знайдено",
+  "location.search.input.label": "Адреса *",
+
+  "onboard.about.toast.error.title": "Ой, щось пішло не так...",
+  "onboard.about.toast.success.description": "Будь ласка, перевірте введені дані або спробуйте пізніше :)",
+  "onboard.about.title": "Про мене",
+  "onboard.errorBox.title": "Зв'язок з сервером було перервано",
+  "onboard.errorBox.description": "Будь ласка, перевірте своє підключення до інтернету або спробуйте оновити сторінку. Якщо проблема залишається, будь ласка, зверніться до нашої служби підтримки для отримання допомоги.",
+  "onboard.gallery.title": "Галерея",
+  "onboard.schedule.title": "Розклад",
+  "onboard.services.title": "Послуги",
+  "onboard.title.toast.title": "Ой, щось пішло не так...",
+  "onboard.title.toast.description": "Перевірте своє підключення до інтернету або спробуйте пізніше :)",
+  "onboard.title.title": "Адаптація",
+  "schedule.break.tags.noBreaks": "Без перерв",
+
+  "calendar.customButtons.approved": "Підтверджено",
+  "calendar.customButtons.requested": "Запитано",
+  "calendar.customButtons.past": "Минулі",
+
+  "schedule.select.toast.error.title": "Ой! Дані не збережено",
+  "schedule.day.off": "Вихідний",
+  "schedule.form.errorBox.title": "Зв'язок з сервером було перервано",
+  "schedule.form.errorBox.description": "Будь ласка, перевірте своє підключення до інтернету або спробуйте оновити сторінку. Якщо проблема залишається, будь ласка, зверніться до нашої служби підтримки для отримання допомоги.",
+  "schedule.form.day": "День",
+  "schedule.form.working.hours": "Робочі години",
+  "schedule.form.breaks": "Перерви",
+
+  "serviceOn.professional.edit.form.add": "Додати",
+  "serviceOn.professional.edit.form.service": "сервіс",
+
+  "serviceOn.professional.edit.form.edit": "Редагувати",
+  "serviceOn.professional.edit.input.title": "Назва послуги",
+  "serviceOn.professional.edit.duration.label": "Тривалість",
+  "serviceOn.professional.edit.price.label": "Ціна",
+
+  "select.service.add.group": "Додати групу послуг",
+  "professional.service.description": "Послуги не додані",
+
+  "albumAdd.modal.toast.error.title.edit": "Ой, помилка",
+  "albumAdd.modal.toast.error.description.edit": "Помилка",
+  "albumAdd.modal.toast.success.title.edit": "Добре!",
+  "albumAdd.modal.toast.success.description.edit": "Альбом відредаговано",
+  "albumAdd.modal.toast.error.title.add": "Ой, помилка",
+  "albumAdd.modal.toast.error.description.add": "Помилка",
+  "albumAdd.modal.toast.success.title.add": "Добре!",
+  "albumAdd.modal.toast.success.description.add": "Альбом додано",
+
+  "albumAdd.modal.title.edit": "Змінити",
+  "albumAdd.modal.title.add": "Додати",
+
+  "albumAdd.modal.label.input": "Назва альбому",
+
+  "galleryImage.toast.error.title": "Ой, помилка",
+  "galleryImage.toast.error.description": "Помилка",
+  "galleryImage.toast.success.title": "Добре!",
+  "galleryImage.toast.success.description.delete": "Фото видалено",
+
+  "professional.settings.location.toast.error.title.add": "Ой, помилка",
+  "professional.settings.location.toast.error.description.add": "Помилка",
+  "professional.settings.location.toast.success.title.add": "Добре!",
+  "professional.settings.location.toast.success.description.add": "Місцезнаходження додано",
+
+  "professional.settings.location.toast.error.title.change": "Ой, помилка",
+  "professional.settings.location.toast.error.description.change": "Помилка",
+  "professional.settings.location.toast.success.title.change": "Добре!",
+  "professional.settings.location.toast.success.description.change": "Місцезнаходження змінено",
+
+  "professional.settings.location.toast.error.title.delete": "Ой, помилка",
+  "professional.settings.location.toast.error.description.delete": "Помилка",
+  "professional.settings.location.toast.success.title.delete": "Добре!",
+  "professional.settings.location.toast.success.description.delete": "Місцезнаходження видалено",
+
+  "professional.settings.location.title": "Налаштування місцезнаходження",
+
+  "professional.settings.sidebar.profile": "Профіль",
+  "professional.settings.sidebar.services": "Послуги",
+  "professional.settings.sidebar.schedule": "Розклад",
+  "professional.settings.sidebar.about": "Про себе",
+  "professional.settings.sidebar.gallery": "Галерея",
+  "professional.settings.sidebar.location": "Місцезнаходження",
+  "professional.settings.sidebar.app": "Додаток",
+
+  "professional.settings.services.title": "Налаштування послуг",
+  "professional.settings.services.errorBox.title": "Зв'язок з сервером було перервано",
+  "professional.settings.services.errorBox.description": "Будь ласка, перевірте своє підключення до інтернету або спробуйте оновити сторінку. Якщо проблема залишається, будь ласка, зверніться до нашої служби підтримки для отримання допомоги.",
+
+  "professional.settings.schedule.title": "Налаштування розкладу",
+  "professional.settings.about.title": "Налаштування про себе",
+
+  "professional.settings.about.toast.error.description": "Будь ласка, перевірте введені дані або спробуйте пізніше",
+  "professional.settings.about.toast.success.title": "Все готово!",
+  "professional.settings.about.toast.success.description": "Зміни збережено",
+
+  "user.about.me.noInfo": "Немає інформації",
+
+  "user.about.professional.form.firstName": "Ім'я *",
+  "user.about.professional.form.lastName": "Прізвище *",
+  "user.about.professional.form.email": "Електронна пошта",
+  "user.about.professional.form.phone": "Телефон",
+  "user.about.professional.form.facebook": "Facebook",
+  "user.about.professional.form.instagram": "Instagram",
+  "user.about.professional.form.about": "Про себе",
+
+  "user.professional.gallery.form.noAlbumsAdded": "Альбомів не додано",
+  "user.professional.gallery.form.loadingAlbums": "Завантаження альбомів...",
+  "user.professional.gallery.form.createAlbum": "Створити альбом",
+
+  "user.professional.profile.tabs.about": "Про себе",
+  "user.professional.profile.tabs.services": "Послуги",
+  "user.professional.profile.tabs.gallery": "Галерея",
+
+  "user.services.noAdded": "Послуги не додано",
+
+  "frofile.error.boundary.title": "Профіль не знайдено",
+  "frofile.error.boundary.description": "Цей профіль було видалено або ще не створено.",
+
+  "user.menu.budge.share": "Поділитися профілем",
+  "user.menu.budge.signOut": "Вийти",
+
+  "button.save": "Зберегти",
+  "button.back": "Назад",
+  "button.next": "Далі",
+  "button.book": "Забронювати",
+  "button.done": "Готово",
+  "button.skip": "Пропустити",
+  "button.close": "Закрити",
+  "button.cancel": "Скасувати",
+  "button.confirm": "Підтвердити",
+  "button.contact": "Контакт",
+  "button.reserve": "Зарезервувати",
+  "button.remove": "Видалити",
+  "button.avatar.select.new": "Вибрати новий аватар",
+  "button.avatar.select": "Вибрати аватар",
+  "button.refresh": "Оновити",
+  "button.support": "Підтримка",
+  "button.select.from.computer": "Вибрати з комп'ютера",
+
+  "bookingInfo.dialog.actions.call": "Дзвінок",
+  "bookingInfo.dialog.actions.reschedule": "Перепланувати",
+  "bookingInfo.dialog.actions.cancel": "Скасувати бронювання",
+
+  "album.card.toast.error.title": "Помилка",
+  "album.card.toast.error.description": "Виникла помилка",
+  "album.card.toast.success.title": "Відмінно!",
+  "album.card.toast.success.description": "Альбом видалено",
+
+  "album.card.menu.rename": "Перейменувати альбом",
+  "album.card.menu.delete": "Видалити альбом",
+  "album.card.photoCount": "фото",
+
+  "album.details.noImages": "Фотографії відсутні",
+  "album.details.dowlandImage": "Завантаження фотографій",
+  "album.details.addImage": "Завантажити фото",
+
+  "photo.upload.modal.toast.error.title": "Помилка",
+  "photo.upload.modal.toast.error.description": "Виникла помилка",
+  "photo.upload.modal.toast.success.title": "Відмінно!",
+  "photo.upload.modal.toast.success.description": "Редагування завершено",
+
+  "photo.upload.modal.header.select": "Вибрати нове фото",
+  "photo.upload.modal.header.crop": "Обрізати",
+  "photo.upload.modal.header.details": "Завантажити нове фото",
+  "photo.upload.modal.header.preview": "Показати фото",
+
+  "user.header.navigation.profile": "Профіль",
+  "user.header.navigation.myBookings": "Мої бронювання"
 }

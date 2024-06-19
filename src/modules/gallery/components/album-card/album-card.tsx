@@ -1,6 +1,7 @@
 import React, { type FC, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import clsx from 'clsx';
+import { useIntl } from 'react-intl';
 // hooks
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
@@ -33,6 +34,7 @@ export const AlbumCard: FC<AlbumCardProps> = ({
   onEditClick,
   isMoreButtonVisible,
 }) => {
+  const intl = useIntl();
   const rootRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
   const isAlbumModalOpen = useBoolean();
@@ -57,15 +59,23 @@ export const AlbumCard: FC<AlbumCardProps> = ({
             onError: () => {
               showToast({
                 variant: 'error',
-                title: 'OOps, error',
-                description: 'Error',
+                title: intl.formatMessage({
+                  id: 'album.card.toast.error.title',
+                }),
+                description: intl.formatMessage({
+                  id: 'album.card.toast.error.description',
+                }),
               });
             },
             onSuccess: () => {
               showToast({
                 variant: 'success',
-                title: 'Good!',
-                description: 'Album deleted',
+                title: intl.formatMessage({
+                  id: 'album.card.toast.success.title',
+                }),
+                description: intl.formatMessage({
+                  id: 'album.card.toast.success.description',
+                }),
               });
 
               queryClient.invalidateQueries({
@@ -85,7 +95,7 @@ export const AlbumCard: FC<AlbumCardProps> = ({
         onEditClick(album);
       }
     },
-    [deleteAlbumMutation, queryClient, album, onEditClick, isOpenDropMenu]
+    [deleteAlbumMutation, queryClient, album, onEditClick, isOpenDropMenu, intl]
   );
 
   return (
@@ -123,13 +133,13 @@ export const AlbumCard: FC<AlbumCardProps> = ({
                   id: 'rename',
                   variant: 'primary',
                   icon: 'pencil',
-                  text: 'Rename album',
+                  text: intl.formatMessage({ id: 'album.card.menu.rename' }),
                 },
                 {
                   id: 'delete',
                   variant: 'danger',
                   icon: 'trash',
-                  text: 'Delete album',
+                  text: intl.formatMessage({ id: 'album.card.menu.delete' }),
                 },
               ]}
             />
@@ -140,7 +150,8 @@ export const AlbumCard: FC<AlbumCardProps> = ({
           variant='body2'
           weight='medium'
         >
-          {album?.portfolios.length} photo
+          {album?.portfolios.length}{' '}
+          {intl.formatMessage({ id: 'album.card.photoCount' })}
         </Typography>
       </div>
       {isActive && (

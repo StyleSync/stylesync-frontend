@@ -1,6 +1,8 @@
-import { type FC } from 'react';
+import { type FC, useMemo } from 'react';
 import { faker } from '@faker-js/faker';
 import clsx from 'clsx';
+import { useIntl } from 'react-intl';
+
 // components
 import { Avatar } from '@/modules/core/components/avatar';
 import { Typography } from '@/modules/core/components/typogrpahy';
@@ -14,36 +16,45 @@ import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // assets
 import Girl from '@/assets/images/girl.png';
 
-import type { BookingInfoDialogProps } from './booking-info-dialog.interface';
+import type {
+  BookingInfoDialogProps,
+  Action,
+} from './booking-info-dialog.interface';
 import styles from './booking-info-dialog.module.scss';
-
-const actions = [
-  {
-    id: 'call',
-    text: 'Call',
-    icon: 'phone',
-    variant: 'secondary',
-  },
-  {
-    id: 'reschedule',
-    text: 'Reschedule',
-    icon: 'time',
-    variant: 'secondary',
-  },
-  {
-    id: 'cancel',
-    text: 'Cancel reservation',
-    icon: 'close',
-    variant: 'danger',
-  },
-] as const;
 
 export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
   isOpen,
   onOpenChange,
 }) => {
+  const intl = useIntl();
   const deviceType = useDeviceType();
   const DialogComponent = deviceType === 'mobile' ? DialogBottom : Dialog;
+
+  const actions: Action[] = useMemo(
+    () => [
+      {
+        id: 'call',
+        text: intl.formatMessage({ id: 'bookingInfo.dialog.actions.call' }),
+        icon: 'phone',
+        variant: 'secondary',
+      },
+      {
+        id: 'reschedule',
+        text: intl.formatMessage({
+          id: 'bookingInfo.dialog.actions.reschedule',
+        }),
+        icon: 'time',
+        variant: 'secondary',
+      },
+      {
+        id: 'cancel',
+        text: intl.formatMessage({ id: 'bookingInfo.dialog.actions.cancel' }),
+        icon: 'close',
+        variant: 'danger',
+      },
+    ],
+    []
+  );
 
   return (
     <DialogComponent isOpen={isOpen} onOpenChange={onOpenChange}>

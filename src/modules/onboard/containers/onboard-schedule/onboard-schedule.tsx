@@ -1,4 +1,6 @@
 import { type FC, useState } from 'react';
+import { useIntl } from 'react-intl';
+
 // components
 import { OnboardLayout } from '@/modules/onboard/components/onboard-layout';
 // containers
@@ -10,12 +12,14 @@ import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboa
 import type { WeeklySchedule } from '@/modules/schedule/types/schedule.types';
 
 export const OnboardSchedule: FC<ProOnboardStepProps> = ({ next, back }) => {
+  const intl = useIntl();
+
   const [schedule, setSchedule] = useState<WeeklySchedule>(emptySchedule);
 
   return (
     <OnboardLayout
       meta={{
-        title: 'Schedule',
+        title: intl.formatMessage({ id: 'onboard.schedule.title' }),
       }}
       nextButtonProps={{
         onClick: next,

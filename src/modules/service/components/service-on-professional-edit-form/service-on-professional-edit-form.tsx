@@ -2,6 +2,8 @@ import { type FC, useCallback, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useIntl } from 'react-intl';
+
 // components
 import { TextField } from '@/modules/core/components/text-field';
 import { PriceField } from '@/modules/core/components/price-field';
@@ -61,6 +63,7 @@ const mapFormValuesToServiceOnProfessional = (
 export const ServiceOnProfessionalEditForm: FC<
   ServiceOnProfessionalEditFormProps
 > = ({ isActive, data, onOpenChange }) => {
+  const intl = useIntl();
   const queryClient = useQueryClient();
   const isNew = data.id.startsWith('new__');
   // form
@@ -165,7 +168,14 @@ export const ServiceOnProfessionalEditForm: FC<
     >
       <div className='flex-col gap-y-10 grid grid-rows-[auto_1fr] h-fit'>
         <Typography className='text-dark' variant='subtitle'>
-          {isNew ? 'Add' : 'Edit'} service
+          {isNew
+            ? intl.formatMessage({ id: 'serviceOn.professional.edit.form.add' })
+            : intl.formatMessage({
+                id: 'serviceOn.professional.edit.form.edit',
+              })}{' '}
+          {intl.formatMessage({
+            id: 'serviceOn.professional.edit.form.service',
+          })}
         </Typography>
         <form
           className='flex flex-col gap-y-6'
@@ -173,7 +183,9 @@ export const ServiceOnProfessionalEditForm: FC<
         >
           <TextField
             variant='input'
-            label='Service title'
+            label={intl.formatMessage({
+              id: 'serviceOn.professional.edit.input.title',
+            })}
             autoFocus
             error={Boolean(form.formState.errors.title)}
             {...form.register('title')}
@@ -187,7 +199,9 @@ export const ServiceOnProfessionalEditForm: FC<
                   value={field.value}
                   onChange={field.onChange}
                   inputProps={{
-                    label: 'Duration',
+                    label: intl.formatMessage({
+                      id: 'serviceOn.professional.edit.duration.label',
+                    }),
                     error: Boolean(fieldState.error),
                   }}
                 />
@@ -213,7 +227,9 @@ export const ServiceOnProfessionalEditForm: FC<
                     })
                   }
                   inputProps={{
-                    label: 'Price',
+                    label: intl.formatMessage({
+                      id: 'serviceOn.professional.edit.price.label',
+                    }),
                     error: Boolean(fieldState.error),
                   }}
                 />
@@ -239,12 +255,12 @@ export const ServiceOnProfessionalEditForm: FC<
             <Button
               variant='secondary'
               type='button'
-              text='Cancel'
+              text={intl.formatMessage({ id: 'button.cancel' })}
               onClick={handleCancel}
             />
             <Button
               variant='primary'
-              text='Save'
+              text={intl.formatMessage({ id: 'button.save' })}
               type='submit'
               isLoading={
                 serviceOnProfessionalUpdateMutation.isLoading ||

@@ -1,6 +1,8 @@
 'use client';
 import { type FC, useMemo, type ReactNode } from 'react';
 import clsx from 'clsx';
+import { useIntl } from 'react-intl';
+
 // components
 import { Sidebar } from '@/modules/core/components/sidebar';
 import { Avatar } from '@/modules/core/components/avatar';
@@ -17,53 +19,11 @@ import type { SidebarLinkGroup } from '@/modules/core/components/sidebar/sidebar
 
 import type { UserSettingsSidebarProps } from './professional-settings-sidebar.interface';
 import styles from './professional-settings-sidebar.module.scss';
-
-const linkGroups: SidebarLinkGroup[] = [
-  {
-    id: 'profile',
-    title: 'Profile',
-    links: [
-      {
-        id: 'services',
-        name: 'Services',
-        icon: 'beauty-service',
-      },
-      {
-        id: 'schedule',
-        name: 'Schedule',
-        icon: 'calendar',
-      },
-      {
-        id: 'about',
-        name: 'About',
-        icon: 'info',
-      },
-      {
-        id: 'gallery',
-        name: 'Gallery',
-        icon: 'folder',
-      },
-      {
-        id: 'location',
-        name: 'Location',
-        icon: 'location',
-      },
-    ],
-  },
-  {
-    id: 'app',
-    title: 'Application',
-    links: [
-      {
-        id: 'language',
-        name: 'Language',
-        icon: 'flag-ukraine',
-      },
-    ],
-  },
-];
+import { LocaleSelect } from '@/modules/internationalization/components/locale-select';
 
 export const ProfessionalSettingsSidebar: FC<UserSettingsSidebarProps> = () => {
+  const intl = useIntl();
+
   const { active, defaultTab, set } = useSettingsNavigation();
   const deviceType = useDeviceType();
   // queries
@@ -71,6 +31,68 @@ export const ProfessionalSettingsSidebar: FC<UserSettingsSidebarProps> = () => {
     expand: ['professional'],
   });
   // memo
+  const linkGroups: SidebarLinkGroup[] = useMemo(
+    () => [
+      {
+        id: 'profile',
+        title: intl.formatMessage({
+          id: 'professional.settings.sidebar.profile',
+        }),
+        links: [
+          {
+            id: 'services',
+            name: intl.formatMessage({
+              id: 'professional.settings.sidebar.services',
+            }),
+            icon: 'beauty-service',
+          },
+          {
+            id: 'schedule',
+            name: intl.formatMessage({
+              id: 'professional.settings.sidebar.schedule',
+            }),
+            icon: 'calendar',
+          },
+          {
+            id: 'about',
+            name: intl.formatMessage({
+              id: 'professional.settings.sidebar.about',
+            }),
+            icon: 'info',
+          },
+          {
+            id: 'gallery',
+            name: intl.formatMessage({
+              id: 'professional.settings.sidebar.gallery',
+            }),
+            icon: 'folder',
+          },
+          {
+            id: 'location',
+            name: intl.formatMessage({
+              id: 'professional.settings.sidebar.location',
+            }),
+            icon: 'location',
+          },
+        ],
+      },
+      {
+        id: 'app',
+        title: intl.formatMessage({ id: 'professional.settings.sidebar.app' }),
+        links: [
+          {
+            id: 'language',
+            icon: 'flag-ukraine',
+            renderItem: () => {
+              return <LocaleSelect />;
+            },
+          },
+        ],
+      },
+    ],
+    [intl]
+  );
+
   const topSlot = useMemo<ReactNode[] | undefined>(() => {
     if (deviceType === 'mobile') {
       return;

@@ -1,4 +1,5 @@
 import { type FC } from 'react';
+import { useIntl } from 'react-intl';
 // components
 import { ProfileSettingsTabContentLayout } from '@/modules/user/components/profile-settings-tab-content-layout';
 import { Placeholder } from '@/modules/core/components/placeholder';
@@ -9,12 +10,13 @@ import { ProfessionalServicesForm } from '@/modules/service/containers/professio
 import { useServiceOnProfessionalGroups } from '@/modules/service/hooks/use-service-on-professional-groups';
 
 export const ProfessionalSettingsServices: FC = () => {
+  const intl = useIntl();
   const { groups, setGroups, isGroupsLoading, isGroupsLoadingError } =
     useServiceOnProfessionalGroups();
 
   return (
     <ProfileSettingsTabContentLayout
-      title='Services settings'
+      title={intl.formatMessage({ id: 'professional.settings.services.title' })}
       icon='beauty-service'
       isLoading={isGroupsLoading}
       hideActions={isGroupsLoading || isGroupsLoadingError}
@@ -23,8 +25,12 @@ export const ProfessionalSettingsServices: FC = () => {
         isActive={isGroupsLoadingError}
         placeholder={
           <ErrorBox
-            title='Connection with server has been interrupted'
-            description='Please check your internet connection or try refreshing the page. If the issue persists, please contact our support team for assistance.'
+            title={intl.formatMessage({
+              id: 'professional.settings.services.errorBox.title',
+            })}
+            description={intl.formatMessage({
+              id: 'professional.settings.services.errorBox.description',
+            })}
           />
         }
       >

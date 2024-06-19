@@ -1,4 +1,6 @@
-import type { FC } from 'react';
+import { type FC, useMemo } from 'react';
+import { useIntl } from 'react-intl';
+
 // components
 import { Button } from '@/modules/core/components/button';
 import { Typography } from '@/modules/core/components/typogrpahy';
@@ -8,21 +10,6 @@ import type {
   PhotoUploadStep,
 } from '../photo-upload-modal.interface';
 
-const metadata: Record<PhotoUploadStep, { title: string }> = {
-  select: {
-    title: 'Select new photo',
-  },
-  crop: {
-    title: 'Crop',
-  },
-  details: {
-    title: 'Upload new photo',
-  },
-  preview: {
-    title: 'Display photo',
-  },
-};
-
 export const PhotoUploadModalHeader: FC<PhotoUploadModalHeaderProps> = ({
   state,
   onBackClick,
@@ -30,6 +17,27 @@ export const PhotoUploadModalHeader: FC<PhotoUploadModalHeaderProps> = ({
   onSaveClick,
   isSaveLoading,
 }) => {
+  const intl = useIntl();
+
+  // memo
+  const metadata: Record<PhotoUploadStep, { title: string }> = useMemo(
+    () => ({
+      select: {
+        title: intl.formatMessage({ id: 'photo.upload.modal.header.select' }),
+      },
+      crop: {
+        title: intl.formatMessage({ id: 'photo.upload.modal.header.crop' }),
+      },
+      details: {
+        title: intl.formatMessage({ id: 'photo.upload.modal.header.details' }),
+      },
+      preview: {
+        title: intl.formatMessage({ id: 'photo.upload.modal.header.preview' }),
+      },
+    }),
+    [intl]
+  );
+
   const { title } = metadata[state.step];
 
   return (

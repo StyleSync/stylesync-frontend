@@ -35,5 +35,217 @@
   "signIn.social.google": "Sign in with Google",
   "signIn.social.instagram": "Sign in with Instagram",
   "signIn.social.facebook": "Sign in with Facebook",
-  "signIn.header.signUpDescription": "Don’t have an account?"
+  "signIn.header.signUpDescription": "Don't have an account?",
+
+  "booking.form.name": "Name*",
+  "booking.form.lastName": "Last name",
+  "booking.form.phone": "Phone*",
+  "booking.form.email": "Email*",
+  "booking.form.comment": "Comment",
+
+  "booking.time.select.title": "Select a date",
+
+  "booking.list.upcomming": "Upcomming",
+  "booking.list.past": "Past",
+  "booking.list.listEmpty": "List is empty",
+
+  "booking.modal.success.title": "Booking successful!",
+  "booking.modal.success.service": "Service",
+  "booking.modal.success.price": "Price",
+  "booking.modal.success.time": "Time",
+  "booking.modal.success.status": "Status",
+  "booking.modal.success.button.myBooking": "My booking",
+  "booking.modal.status.pending": "Requested",
+  "booking.modal.status.approved": "Approved",
+
+  "booking.modal.service.title": "New booking",
+  "booking.modal.service.name": "Tennisha's Beauty",
+  "booking.modal.service.address": "Greyhound Dr, Bradford BD7 1NQ",
+
+  "booking.modal.service.step.service": "Service",
+  "booking.modal.service.step.dataTime": "Date & Time",
+  "booking.modal.service.step.confirmation": "Confirmation",
+
+  "booking.timeSelect.searching": "Searching for available time...",
+  "booking.timeSelect.noAvailableTime": "Sorry, no free time, please choose another date.",
+  "create.booking.toast.error.title": "Oops, error",
+  "create.booking.toast.success.description": "Choose another date",
+
+  "booking.tabs.list": "List",
+  "booking.tabs.calendar": "Calendar",
+
+  "photo.modal.upload.toast.error.title": "Oops, error",
+  "photo.modal.upload.toast.error.description": "Oops",
+  "photo.modal.upload.toast.success.title": "Good!",
+  "photo.modal.upload.toast.success.description": "Photo added",
+  "photo.modal.upload.dropHere": "Drop photos here",
+  "photo.modal.upload.supports": "Supports: PNG, JPG, JPEG, WEBP",
+
+  "location.search.placeholder.typing": "Begin typing your location",
+  "location.search.placeholder.notFound": "Location was not found",
+  "location.search.input.label": "Address *",
+
+  "onboard.about.toast.error.title": "Ooops, something went wrong...",
+  "onboard.about.toast.success.description": "Please review the entered data or try again later :)",
+  "onboard.about.title": "About me",
+  "onboard.errorBox.title": "Connection with server has been interrupted",
+  "onboard.errorBox.description": "Please check your internet connection or try refreshing the page. If the issue persists, please contact our support team for assistance.",
+  "onboard.gallery.title": "Gallery",
+  "onboard.schedule.title": "Schedule",
+  "onboard.services.title": "Services",
+  "onboard.title.toast.title": "Ooops, something went wrong...",
+  "onboard.title.toast.description": "Check your internet connection or try again later :)",
+  "onboard.title.title": "Onboarding",
+  "schedule.break.tags.noBreaks": "No breaks",
+
+  "calendar.customButtons.approved": "Approved",
+  "calendar.customButtons.requested": "Requested",
+  "calendar.customButtons.past": "Past",
+
+  "schedule.select.toast.error.title": "Oops! Data hasn't been saved",
+  "schedule.day.off": "Day off",
+  "schedule.form.errorBox.title": "Connection with server has been interrupted",
+  "schedule.form.errorBox.description": "Please check your internet connection or try refreshing the page. If the issue persists, please contact our support team for assistance.",
+  "schedule.form.day": "Day",
+  "schedule.form.working.hours": "Working hours",
+  "schedule.form.breaks": "Breaks",
+
+  "serviceOn.professional.edit.form.add": "Add",
+  "serviceOn.professional.edit.form.service": "service",
+  "serviceOn.professional.edit.form.edit": "Edit",
+  "serviceOn.professional.edit.input.title": "Service title",
+  "serviceOn.professional.edit.duration.label": "Duration",
+  "serviceOn.professional.edit.price.label": "Price",
+
+  "select.service.add.group": "Add services group",
+  "professional.service.description": "No services added",
+
+  "albumAdd.modal.toast.error.title.edit": "Oops, error",
+  "albumAdd.modal.toast.error.description.edit": "Error",
+  "albumAdd.modal.toast.success.title.edit": "Good!",
+  "albumAdd.modal.toast.success.description.edit": "Album edit",
+  "albumAdd.modal.toast.error.title.add": "Oops, error",
+  "albumAdd.modal.toast.error.description.add": "Error",
+  "albumAdd.modal.toast.success.title.add": "Good!",
+  "albumAdd.modal.toast.success.description.add": "Album added",
+
+  "albumAdd.modal.title.edit": "Add album",
+  "albumAdd.modal.title.add": "Edit album",
+  "albumAdd.modal.label.input": "Album title",
+
+  "galleryImage.toast.error.title": "Oops, error",
+  "galleryImage.toast.error.description": "Error",
+  "galleryImage.toast.success.title": "Good!",
+  "galleryImage.toast.success.description.delete": "Photo deleted",
+
+  "professional.settings.location.toast.error.title.add": "OOps, error",
+  "professional.settings.location.toast.error.description.add": "Error",
+  "professional.settings.location.toast.success.title.add": "Good!",
+  "professional.settings.location.toast.success.description.add": "Location added",
+
+  "professional.settings.location.toast.error.title.change": "OOps, error",
+  "professional.settings.location.toast.error.description.change": "Error",
+  "professional.settings.location.toast.success.title.change": "Good!",
+  "professional.settings.location.toast.success.description.change": "Location changed",
+
+  "professional.settings.location.toast.error.title.delete": "OOps, error",
+  "professional.settings.location.toast.error.description.delete": "Error",
+  "professional.settings.location.toast.success.title.delete": "Good!",
+  "professional.settings.location.toast.success.description.delete": "Location deleted",
+
+  "professional.settings.location.title": "Location settings",
+
+  "professional.settings.sidebar.profile": "Profile",
+  "professional.settings.sidebar.services": "Services",
+  "professional.settings.sidebar.schedule": "Schedule",
+  "professional.settings.sidebar.about": "About",
+  "professional.settings.sidebar.gallery": "Gallery",
+  "professional.settings.sidebar.location": "Location",
+  "professional.settings.sidebar.app": "Application",
+
+  "professional.settings.services.title": "Services settings",
+  "professional.settings.services.errorBox.title": "Connection with server has been interrupted",
+  "professional.settings.services.errorBox.description": "Please check your internet connection or try refreshing the page. If the issue persists, please contact our support team for assistance.",
+
+  "professional.settings.schedule.title": "Schedule settings",
+  "professional.settings.about.title": "About settings",
+
+  "professional.settings.about.toast.error.description": "Please review the entered data or try again later",
+  "professional.settings.about.toast.success.title": "All done!",
+  "professional.settings.about.toast.success.description": "Changes has been saved",
+
+  "user.about.me.noInfo": "No information",
+
+  "user.about.professional.form.firstName": "First Name *",
+  "user.about.professional.form.lastName": "Last Name *",
+  "user.about.professional.form.email": "Email",
+  "user.about.professional.form.phone": "Phone",
+  "user.about.professional.form.facebook": "Facebook",
+  "user.about.professional.form.instagram": "Instagram",
+  "user.about.professional.form.about": "About you",
+
+  "user.professional.gallery.form.noAlbumsAdded": "No albums added",
+  "user.professional.gallery.form.loadingAlbums": "Download albums...",
+  "user.professional.gallery.form.createAlbum": "Create album",
+
+  "user.professional.profile.tabs.about": "About",
+  "user.professional.profile.tabs.services": "Services",
+  "user.professional.profile.tabs.gallery": "Gallery",
+
+  "user.services.noAdded": "No added services",
+
+  "frofile.error.boundary.title": "Profile not found",
+  "frofile.error.boundary.description": "This profile has either been deleted or not been created yet.",
+
+  "user.menu.budge.share": "Share profile",
+  "user.menu.budge.signOut": "Sign out",
+
+  "button.save": "Save",
+  "button.back": "Back",
+  "button.next": "Next",
+  "button.book": "Book",
+  "button.done": "Done",
+  "button.skip": "Skip",
+  "button.close": "Close",
+  "button.cancel": "Cancel",
+  "button.confirm": "Confirm",
+  "button.contact": "Contact",
+  "button.reserve": "Reserve",
+  "button.select.from.computer": "Select from computer",
+
+  "button.remove": "Remove",
+  "buttom.avatar.select.new": "Select new avatar",
+  "button.avatar.select": "Select avatar",
+  "button.refresh": "Refresh",
+  "button.support": "Support",
+
+  "bookingInfo.dialog.actions.call": "Call",
+  "bookingInfo.dialog.actions.reschedule": "Reschedule",
+  "bookingInfo.dialog.actions.cancel": "Cancel reservation",
+
+  "album.card.toast.error.title": "OOps, error",
+  "album.card.toast.error.description": "Error",
+  "album.card.toast.success.title": "Good!",
+  "album.card.toast.success.description": "Album deleted",
+
+  "album.card.menu.rename": "Rename album",
+  "album.card.menu.delete": "Delete album",
+  "album.card.photoCount": "photo",
+
+  "album.details.noImages": "No images added",
+  "album.details.dowlandImage": "Download images...",
+  "album.details.addImage": "Upload image",
+
+  "photo.upload.modal.toast.error.title": "Oops, error",
+  "photo.upload.modal.toast.error.description": "Oops",
+  "photo.upload.modal.toast.success.title": "Good!",
+  "photo.upload.modal.toast.success.description": "Editing completed",
+
+  "photo.upload.modal.header.select": "Select new photo",
+  "photo.upload.modal.header.crop": "Crop",
+  "photo.upload.modal.header.details": "Upload new photo",
+  "photo.upload.modal.header.preview": "Display photo",
+
+  "user.header.navigation.profile": "Profile",
+  "user.header.navigation.myBookings": "My bookings"
 }

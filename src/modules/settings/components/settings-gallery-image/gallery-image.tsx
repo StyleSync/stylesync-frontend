@@ -2,6 +2,7 @@ import type { FC } from 'react';
 import Image from 'next/image';
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
+import { useIntl } from 'react-intl';
 
 // components
 import { Icon } from '@/modules/core/components/icon';
@@ -18,6 +19,7 @@ import styles from './gallery-image.module.scss';
 import clsx from 'clsx';
 
 export const GalleyImage: FC<GalleryImageProps> = ({ image }) => {
+  const intl = useIntl();
   const isOpen = useBoolean();
   // mutation
   const deletePhotoMutation = trpc.portfolio.delete.useMutation();
@@ -33,15 +35,23 @@ export const GalleyImage: FC<GalleryImageProps> = ({ image }) => {
         onError: () => {
           showToast({
             variant: 'error',
-            title: 'Oops, error',
-            description: 'Oops',
+            title: intl.formatMessage({
+              id: 'galleryImage.toast.error.title',
+            }),
+            description: intl.formatMessage({
+              id: 'galleryImage.toast.error.description',
+            }),
           });
         },
         onSuccess: () => {
           showToast({
             variant: 'success',
-            title: 'Good!',
-            description: 'Photo deleted',
+            title: intl.formatMessage({
+              id: 'galleryImage.toast.success.title',
+            }),
+            description: intl.formatMessage({
+              id: 'galleryImage.toast.success.description.delete',
+            }),
           });
 
           queryClient.invalidateQueries({
