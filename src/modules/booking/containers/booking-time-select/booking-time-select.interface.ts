@@ -5,5 +5,5 @@ export type BookingTimeSelectProps = {
   setSelectedDay: (date: string | null) => void;
   selectedTimeRange: AvailableBookingTime | null;
   setSelectedTimeRange: (timeRange: AvailableBookingTime | null) => void;
-  professionalId: string;
+  serviceOnProfessionalId?: string;
 };

@@ -1,4 +1,4 @@
-import { type FC } from 'react';
+import { type FC, useCallback } from 'react';
 
 import { RadioButton } from '@/modules/core/components/radio-button';
 import { BaseCardWithRadioButton } from '@/modules/booking/components/booking-card-radio-button';
@@ -17,10 +17,25 @@ export const ServiceOnProfessionalSelect: FC<
     professionalId: professional?.id,
   });
 
+  const handleChange = useCallback(
+    (id: string) => {
+      const serviceOnProfessional = serviceList?.find((item) => item.id === id);
+
+      if (serviceOnProfessional) {
+        onChange(serviceOnProfessional);
+      }
+    },
+    [serviceList, onChange]
+  );
+
   return (
     <div className={styles.root}>
       <div className={styles.content}>
-        <RadioButton.Group value={value} onChange={onChange} name='cards'>
+        <RadioButton.Group
+          value={value?.id || null}
+          onChange={handleChange}
+          name='cards'
+        >
           <div className={styles.baseCardContainer}>
             {serviceList?.map((service) => (
               <BaseCardWithRadioButton

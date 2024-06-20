@@ -1,18 +1,22 @@
-import type { FC } from 'react';
+import { useContext, type FC } from 'react';
 import { useBoolean } from 'usehooks-ts';
+import { useIntl } from 'react-intl';
 // components
 import { Icon } from '@/modules/core/components/icon';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
 import { Button } from '@/modules/core/components/button';
-// containers
-import { CreateBooking } from '@/modules/booking/containers/create-booking-container';
+// context
+import { BookingContext } from '@/modules/booking/providers/booking-provider';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 
 import type { ProDataProps } from '../professional-info-big-card.interface';
 
 export const ProData: FC<ProDataProps> = ({ professional, session }) => {
+  const intl = useIntl();
+  // context
+  const { book } = useContext(BookingContext);
   // queries
   const [serviceOnProfessionalList] =
     trpc.serviceOnProfessional.list.useSuspenseQuery({
@@ -58,7 +62,15 @@ export const ProData: FC<ProDataProps> = ({ professional, session }) => {
               />
             }
           />
-          <CreateBooking professional={professional} />
+          <Button
+            variant='primary'
+            onClick={() => {
+              book();
+            }}
+            text={intl.formatMessage({
+              id: 'button.book',
+            })}
+          />
         </div>
       )}
     </div>

@@ -37,11 +37,12 @@
   "signIn.social.facebook": "Увійти через Facebook",
   "signIn.header.signUpDescription": "Не маєте аккаунту?",
 
-  "booking.form.name": "Ім'я*",
+  "booking.form.name": "Ім'я *",
   "booking.form.lastName": "Прізвище",
-  "booking.form.phone": "Телефон*",
+  "booking.form.phone": "Телефон *",
   "booking.form.email": "Електронна пошта*",
   "booking.form.comment": "Коментар",
+  "booking.metadata.fillPersonalInfo": "Будь ласка, заповніть наступну інформацію для підтвердження бронювання",
 
   "booking.time.select.title": "Оберіть дату",
 
@@ -59,8 +60,6 @@
   "booking.modal.status.approved": "Підтверджено",
 
   "booking.modal.service.title": "Нове бронювання",
-  "booking.modal.service.name": "Tennisha's Beauty",
-  "booking.modal.service.address": "Greyhound Dr, Bradford BD7 1NQ",
 
   "booking.modal.service.step.service": "Послуга",
   "booking.modal.service.step.dataTime": "Дата та час",

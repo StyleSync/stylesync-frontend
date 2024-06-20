@@ -40,7 +40,6 @@ export const UserServices: FC<UserServicesProps> = ({ userId, session }) => {
         groups.map(({ service, serviceOnProfessionalList }) => (
           <ServicesTable
             isOwn={userId === session?.user.id}
-            professional={professional}
             key={service.id}
             service={service}
             serviceOnProfessionalList={serviceOnProfessionalList}

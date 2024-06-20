@@ -1,33 +1,56 @@
-import { type FC } from 'react';
-import { useIntl } from 'react-intl';
-
-// components
-import { Button } from '@/modules/core/components/button';
-import { BookingModalSuccess } from '../../components/modal-success/modal-successs';
-import { ServiceBookingModal } from '../../components/service-booking-modal';
-// hooks
-import { useBoolean } from 'usehooks-ts';
-// utils
+'use client';
+import {
+  createContext,
+  type FC,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import type { ChildrenProp } from '@/modules/core/types/react.types';
 import { trpc } from '@/modules/core/utils/trpc.utils';
+import { useIntl } from 'react-intl';
+import { useBoolean } from 'usehooks-ts';
+// components
+import { ServiceBookingModal } from '@/modules/booking/components/service-booking-modal';
+import { BookingModalSuccess } from '@/modules/booking/components/modal-success';
+// types
+import type { CreateBookingRequestData } from '@/modules/booking/components/service-booking-modal/service-booking-modal.interface';
+import type { ServiceOnProfessionalListItem } from '@/modules/service/types/service.types';
+// utils
 import { showToast } from '@/modules/core/providers/toast-provider';
 import { mapDateToDayEnum } from '@/modules/core/utils/date.utils';
-// type
-import type { CreateBookingRequestData } from '../../components/service-booking-modal/service-booking-modal.interface';
-import type { CreateBookingProps } from './create-booking.interface';
 
-export const CreateBooking: FC<CreateBookingProps> = ({
-  isLoadingTrigger,
-  btnVariant,
-  selectedService,
-  professional,
+type BookingContextValues = {
+  book: (serviceOnProfessional?: ServiceOnProfessionalListItem) => void;
+};
+
+export const BookingContext = createContext<BookingContextValues>({
+  book: () => {},
+});
+
+export const BookingProvider: FC<ChildrenProp & { userId: string }> = ({
+  children,
+  userId,
 }) => {
   const intl = useIntl();
-
   const isBookingOpen = useBoolean();
   const isSuccessOpen = useBoolean();
+  // state
+  const [selectedServiceOnProfessional, setSelectedServiceOnProfessional] =
+    useState<ServiceOnProfessionalListItem | null>(null);
 
-  // mutation
+  const [professional] = trpc.professional.get.useSuspenseQuery({
+    id: userId,
+    expand: ['user'],
+  });
+
   const bookingCreate = trpc.booking.create.useMutation();
+
+  useEffect(() => {
+    if (!isBookingOpen.value) {
+      setSelectedServiceOnProfessional(null);
+    }
+  }, [isBookingOpen.value]);
 
   const handleConfirm = async ({
     selectedDay,
@@ -73,30 +96,38 @@ export const CreateBooking: FC<CreateBookingProps> = ({
     );
   };
 
+  const book = useCallback(
+    (serviceOnProfessional?: ServiceOnProfessionalListItem) => {
+      if (serviceOnProfessional) {
+        setSelectedServiceOnProfessional(serviceOnProfessional);
+      }
+
+      isBookingOpen.setTrue();
+      isSuccessOpen.setFalse();
+    },
+    [isBookingOpen, isSuccessOpen]
+  );
+
   return (
-    <>
+    <BookingContext.Provider
+      value={{
+        book,
+      }}
+    >
+      {children}
       <ServiceBookingModal
         professional={professional}
-        selectedService={selectedService}
+        selectedService={selectedServiceOnProfessional}
         onOpenChange={isBookingOpen.setValue}
         isOpen={isBookingOpen.value}
         onConfirm={handleConfirm}
         isLoading={bookingCreate.isLoading}
-        trigger={
-          <Button
-            variant={btnVariant || 'primary'}
-            text={intl.formatMessage({
-              id: 'button.book',
-            })}
-            disabled={isLoadingTrigger}
-          />
-        }
       />
       <BookingModalSuccess
         isOpen={isSuccessOpen.value}
         onOpenChange={isSuccessOpen.setValue}
         bookingData={bookingCreate.data}
       />
-    </>
+    </BookingContext.Provider>
   );
 };

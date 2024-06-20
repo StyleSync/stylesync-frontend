@@ -1,4 +1,3 @@
-'use client';
 import { useMemo, type FC } from 'react';
 import clsx from 'clsx';
 import { useIntl } from 'react-intl';
@@ -31,22 +30,21 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
   setSelectedDay,
   selectedTimeRange,
   setSelectedTimeRange,
-  professionalId,
+  serviceOnProfessionalId,
 }) => {
   const intl = useIntl();
 
   const bookingData = trpc.booking.available.list.useQuery(
     {
       date: selectedDay || '',
-      serviceOnProfessionalId: professionalId,
+      serviceOnProfessionalId: serviceOnProfessionalId || '',
       day: mapDateToDayEnum(selectedDay || ''),
     },
-    { enabled: !!selectedDay }
+    { enabled: !!selectedDay && !!serviceOnProfessionalId, retry: false }
   );
 
   const handleDayChoose = (date: string) => {
     setSelectedDay(date);
-
     setSelectedTimeRange(null);
   };
 
@@ -73,7 +71,6 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
           className={styles.swiper}
         >
           <BookingTimeSelectNavigation selectedDay={selectedDay} />
-
           {generatedDates.map((item, index) => (
             <SwiperSlide className={styles.swiperSlide} key={index}>
               <div
@@ -82,28 +79,13 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
                 })}
                 onClick={() => handleDayChoose(item)}
               >
-                <Typography
-                  variant='body2'
-                  className={clsx(styles.info, {
-                    [styles.infoCheked]: selectedDay === item,
-                  })}
-                >
+                <Typography variant='body2' className='!text-inherit'>
                   {formatI18n(new Date(item), 'EEE', intl.locale)}
                 </Typography>
-                <Typography
-                  variant='body2'
-                  className={clsx(styles.info, {
-                    [styles.infoCheked]: selectedDay === item,
-                  })}
-                >
+                <Typography variant='body2' className='!text-inherit'>
                   {formatI18n(new Date(item), 'd', intl.locale)}
                 </Typography>
-                <Typography
-                  variant='body2'
-                  className={clsx(styles.info, {
-                    [styles.infoCheked]: selectedDay === item,
-                  })}
-                >
+                <Typography variant='body2' className='!text-inherit'>
                   {formatI18n(new Date(item), 'MMM', intl.locale)}
                 </Typography>
               </div>
@@ -136,14 +118,7 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
                       })}
                       onClick={() => setSelectedTimeRange(interval)}
                     >
-                      <Typography
-                        className={clsx(styles.timeText, {
-                          [styles.timeTextCheced]:
-                            selectedTimeRange?.startTime ===
-                              interval.startTime &&
-                            selectedTimeRange.endTime === interval.endTime,
-                        })}
-                      >
+                      <Typography className='!text-inherit'>
                         {`${formatTime(interval.startTime)} - ${formatTime(
                           interval.endTime
                         )}`}

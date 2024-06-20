@@ -1,36 +1,40 @@
-import { type FC, useState, useEffect } from 'react';
+import { type FC, useState, useEffect, useCallback, useId } from 'react';
 import { useIntl } from 'react-intl';
 
 // components
 import { Avatar } from '@/modules/core/components/avatar';
-import { Button } from '@/modules/core/components/button';
-import { Dialog } from '@/modules/core/components/dialog';
-import { Stepper } from '@/modules/core/components/stepper';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { BookingForm } from '@/modules/booking/components/booking-form';
 import { BookingTimeSelect } from '@/modules/booking/containers/booking-time-select';
 import { ServiceOnProfessionalSelect } from '@/modules/service/components/service-on-professional-select';
+import { DialogWizard } from '@/modules/core/components/dialog-wizard';
 // type
 import { type DialogProps } from '@/modules/core/components/dialog/dialog.interface';
 import { type AvailableBookingTime } from '@/server/types';
 import { type BookingFormValue } from '@/modules/booking/components/booking-form/booking-form';
 import { type ServiceBookingModalProps } from './service-booking-modal.interface';
-// style
-import styles from './service-booking-modal.module.scss';
+// assets
+import Bg from '@/assets/images/bg-1.png';
+import Image from 'next/image';
+import { getFullName } from '@/modules/user/utils/user.utils';
+import type { ServiceOnProfessionalListItem } from '@/modules/service/types/service.types';
+import { Icon, type IconName } from '@/modules/core/components/icon';
+import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
+import { startOfToday } from 'date-fns';
 
 export const ServiceBookingModal: FC<
   Omit<DialogProps, 'children'> & ServiceBookingModalProps
 > = ({ onConfirm, isLoading, professional, ...props }) => {
   const intl = useIntl();
-
-  // ServiceOnProfessionalSelect
+  const confirmationFormId = useId();
+  // state
   const [serviceOnProfessional, setServiceOnProfessional] =
-    useState<string>('');
-  // BookingTimeSelect
-  const [selectedDay, setSelectedDay] = useState<string | null>(null);
+    useState<ServiceOnProfessionalListItem | null>(null);
+  const [selectedDay, setSelectedDay] = useState<string | null>(
+    startOfToday().toISOString()
+  );
   const [selectedTimeRange, setSelectedTimeRange] =
     useState<null | AvailableBookingTime>(null);
-  // steps
   const [step, setStep] = useState<'service' | 'datetime' | 'confirmation'>(
     'service'
   );
@@ -42,37 +46,41 @@ export const ServiceBookingModal: FC<
   }, [props.selectedService, props.isOpen]);
 
   useEffect(() => {
-    if (props.isOpen === false) {
-      setServiceOnProfessional('');
-      setSelectedDay(null);
+    if (!props.isOpen) {
+      setServiceOnProfessional(null);
+      setSelectedDay(startOfToday().toISOString());
       setSelectedTimeRange(null);
       setStep('service');
     }
   }, [props.isOpen]);
 
-  const handleNext = () => {
-    if (step === 'service') {
-      setStep('datetime');
-    }
+  const handleNext = useCallback(() => {
+    setStep((prevState) => {
+      if (prevState === 'service') {
+        return 'datetime';
+      }
 
-    if (step === 'datetime') {
-      setStep('confirmation');
-    }
-  };
+      if (prevState === 'datetime') {
+        return 'confirmation';
+      }
 
-  const handleBack = () => {
-    if (step === 'confirmation') {
-      setStep('datetime');
-      setSelectedDay(null);
-      setSelectedTimeRange(null);
-    }
+      return prevState;
+    });
+  }, []);
 
-    if (step === 'datetime') {
-      setStep('service');
-      setSelectedDay(null);
-      setSelectedTimeRange(null);
-    }
-  };
+  const handleBack = useCallback(() => {
+    setStep((prevState) => {
+      if (prevState === 'confirmation') {
+        return 'datetime';
+      }
+
+      if (prevState === 'datetime') {
+        return 'service';
+      }
+
+      return prevState;
+    });
+  }, []);
 
   const handleConfirm = (data: BookingFormValue) => {
     if (serviceOnProfessional && selectedDay && selectedTimeRange) {
@@ -80,64 +88,105 @@ export const ServiceBookingModal: FC<
         ...data,
         selectedDay,
         selectedTimeRange,
-        serviceOnProfessional,
+        serviceOnProfessional: serviceOnProfessional.id,
       });
-
-      setServiceOnProfessional('');
-      setSelectedDay(null);
-      setSelectedTimeRange(null);
     }
   };
 
   return (
-    <Dialog {...props} classes={{ content: styles.content }}>
-      <div className={styles.container}>
-        <div className={styles.header}>
-          <Typography variant='subtitle'>
-            {intl.formatMessage({ id: 'booking.modal.service.title' })}
-          </Typography>
-        </div>
-        <div className={styles.labelContainer}>
-          <Avatar />
-
-          <div className={styles.lableDescr}>
-            <Typography variant='body1'>
-              {intl.formatMessage({ id: 'booking.modal.service.name' })}
-            </Typography>
-            <Typography className={styles.lableAddress} variant='small'>
-              {intl.formatMessage({ id: 'booking.modal.service.address' })}
-            </Typography>
+    <DialogWizard
+      activeStepId={step}
+      steps={[
+        {
+          id: 'service',
+          title: 'Choose a service',
+          isNext: true,
+          nextBtnProps: {
+            disabled: !serviceOnProfessional,
+          },
+        },
+        {
+          id: 'datetime',
+          title: 'Select time',
+          isNext: true,
+          isBack: true,
+          nextBtnProps: {
+            disabled: !selectedDay || !selectedTimeRange,
+          },
+        },
+        {
+          id: 'confirmation',
+          title: 'Confirm booking',
+          isNext: true,
+          isBack: true,
+          nextBtnProps: {
+            text: 'Book',
+            form: confirmationFormId,
+            type: 'submit',
+          },
+        },
+      ]}
+      onNext={handleNext}
+      onBack={handleBack}
+      isNextLoading={isLoading}
+      {...props}
+      classes={{ content: 'h-full' }}
+    >
+      <div className='flex relative flex-col flex-1 w-[620px] gap-y-6'>
+        <Image
+          className='absolute top-0 left-0 w-full h-[120px] opacity-20'
+          src={Bg.src}
+          width={Bg.width}
+          height={Bg.height}
+          blurDataURL={Bg.blurDataURL}
+          alt='booking bg'
+        />
+        <div className='flex justify-between px-6 pt-6 z-10'>
+          <div className='flex gap-x-3 w-fit items-center'>
+            <Avatar url={professional.user?.avatar} shadow />
+            <div className='flex flex-col gap-y-1'>
+              <Typography variant='body2' weight='bold'>
+                {getFullName(professional.user || {})}
+              </Typography>
+              <Typography
+                variant='small'
+                weight='semibold'
+                className='!text-gray'
+              >
+                Address line
+              </Typography>
+            </div>
           </div>
+          {step !== 'service' && (
+            <div className='flex flex-col items-end gap-y-1'>
+              {serviceOnProfessional && (
+                <span className='text-sm font-medium !text-dark'>
+                  <Icon
+                    name={serviceOnProfessional.service.icon as IconName}
+                    width={17}
+                    height={17}
+                    className='inline mr-2'
+                  />
+                  {serviceOnProfessional.title}
+                </span>
+              )}
+              {step === 'confirmation' && selectedDay && (
+                <Typography
+                  variant='small'
+                  weight='bold'
+                  className='!text-gray'
+                >
+                  {formatI18n(
+                    new Date(selectedDay),
+                    'dd MMM yyyy',
+                    intl.locale
+                  )}
+                </Typography>
+              )}
+            </div>
+          )}
         </div>
-        <div className={styles.stepper}>
-          <Stepper
-            steps={[
-              {
-                text: intl.formatMessage({
-                  id: 'booking.modal.service.step.service',
-                }),
-                value: 'service',
-              },
-              {
-                text: intl.formatMessage({
-                  id: 'booking.modal.service.step.dataTime',
-                }),
-
-                value: 'datetime',
-              },
-              {
-                text: intl.formatMessage({
-                  id: 'booking.modal.service.step.confirmation',
-                }),
-
-                value: 'confirmation',
-              },
-            ]}
-            value={step}
-          />
-        </div>
-
-        <div className={styles.contentContainer}>
+        <div className='bg-white relative px-6 shadow pt-6 flex-1 z-10'>
           {step === 'service' && (
             <ServiceOnProfessionalSelect
               professional={professional}
@@ -151,59 +200,14 @@ export const ServiceBookingModal: FC<
               setSelectedDay={setSelectedDay}
               selectedTimeRange={selectedTimeRange}
               setSelectedTimeRange={setSelectedTimeRange}
-              professionalId={serviceOnProfessional}
+              serviceOnProfessionalId={serviceOnProfessional?.id}
             />
           )}
           {step === 'confirmation' && (
-            <BookingForm
-              isLoading={isLoading}
-              onSubmit={handleConfirm}
-              onClickBack={handleBack}
-            />
+            <BookingForm onSubmit={handleConfirm} formId={confirmationFormId} />
           )}
         </div>
-
-        {step !== 'confirmation' && (
-          <div className={styles.navigationBtns}>
-            {step === 'service' && (
-              <Button
-                className={styles.buttonRight}
-                onClick={handleNext}
-                text={intl.formatMessage({
-                  id: 'button.next',
-                })}
-                variant='outlined'
-                iconEnd='arrow-right'
-                disabled={!serviceOnProfessional}
-              />
-            )}
-
-            {step === 'datetime' && (
-              <>
-                <Button
-                  className={styles.buttonBack}
-                  onClick={handleBack}
-                  text={intl.formatMessage({
-                    id: 'button.back',
-                  })}
-                  icon='arrow-left'
-                  variant='outlined'
-                />
-                <Button
-                  className={styles.buttonNext}
-                  onClick={handleNext}
-                  text={intl.formatMessage({
-                    id: 'button.next',
-                  })}
-                  variant='outlined'
-                  iconEnd='arrow-right'
-                  disabled={!selectedTimeRange}
-                />
-              </>
-            )}
-          </div>
-        )}
       </div>
-    </Dialog>
+    </DialogWizard>
   );
 };
