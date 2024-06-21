@@ -28,6 +28,7 @@ module.exports = {
       },
       boxShadow: {
         DEFAULT: '0px 4px 15px 0px rgba(37, 74, 165, 0.1)',
+        accentShadow: '0 18px 30px 0 rgba(37, 74, 165, 0.15)',
       },
     },
   },
