@@ -27,6 +27,35 @@ const defaultLimit = 10;
 const maxLimit = 100;
 
 export const bookingRouter = router({
+  getByCode: publicProcedure
+    .input(
+      z.object({
+        code: z.string().min(1, 'Required'),
+        expand: z.array(z.enum(['serviceProfessional'])).optional(),
+      })
+    )
+    .query(async ({ input }) => {
+      const booking = await prisma.booking.findUnique({
+        where: { code: input.code },
+        select: {
+          ...defaultBookingSelect,
+          serviceProfessional: !!input.expand?.includes(
+            'serviceProfessional'
+          ) && {
+            select: defaultServiceOnProfessionalSelect,
+          },
+        },
+      });
+
+      if (!booking) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `No booking found with code '${input.code}'`,
+        });
+      }
+
+      return booking;
+    }),
   get: publicProcedure
     .input(
       z.object({
@@ -333,6 +362,7 @@ export const bookingRouter = router({
         },
         select: {
           ...defaultBookingSelect,
+          code: true,
           serviceProfessional: { select: defaultServiceOnProfessionalSelect },
         },
       });
