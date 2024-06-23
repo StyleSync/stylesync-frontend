@@ -16,12 +16,11 @@ import {
   getPossibleBookingTimes,
   isTimeWithinPeriods,
   isTimeWithinSchedule,
-  mapDateToDayEnum,
   mergeDates,
 } from '@/server/utils/helpers';
 import type { AvailableBookingTime } from '@/server/types';
-import { BookingStatus } from '@prisma/client';
-import { endOfDay, isAfter, startOfDay } from 'date-fns';
+import { BookingStatus, Day } from '@prisma/client';
+import { addHours, endOfDay, isAfter, startOfDay } from 'date-fns';
 
 const maxLargeTextLength = 140;
 const defaultLimit = 10;
@@ -63,6 +62,15 @@ export const bookingRouter = router({
         z.object({
           serviceOnProfessionalId: z.string().min(1, 'Required'),
           date: z.string().datetime(),
+          day: z.enum([
+            Day.MONDAY,
+            Day.TUESDAY,
+            Day.WEDNESDAY,
+            Day.THURSDAY,
+            Day.FRIDAY,
+            Day.SATURDAY,
+            Day.SUNDAY,
+          ]),
         })
       )
       .query(async ({ input }) => {
@@ -88,25 +96,28 @@ export const bookingRouter = router({
         );
 
         // first we check if we have specific schedule for the day
-        const specificDaySchedule = await prisma.schedule.findFirst({
-          where: {
-            professionalId: professional.id,
-            isSpecificDay: true,
-            day: mapDateToDayEnum(input.date),
-          },
-          select: defaultScheduleSelect,
-        });
+        // temporary commented out as we don't have specific day schedule yet
+        // const specificDaySchedule = await prisma.schedule.findFirst({
+        //   where: {
+        //     professionalId: professional.id,
+        //     isSpecificDay: true,
+        //     day: input.day,
+        //   },
+        //   select: defaultScheduleSelect,
+        // });
 
         const defaultDaySchedule = await prisma.schedule.findFirst({
           where: {
             professionalId: professional.id,
             isSpecificDay: false,
-            day: mapDateToDayEnum(input.date),
+            day: input.day,
           },
           select: defaultScheduleSelect,
         });
 
-        const currentDaySchedule = specificDaySchedule ?? defaultDaySchedule;
+        // commented out until we return specific day schedule
+        // const currentDaySchedule = specificDaySchedule ?? defaultDaySchedule;
+        const currentDaySchedule = defaultDaySchedule;
 
         if (!currentDaySchedule) {
           throw new TRPCError({
@@ -131,8 +142,8 @@ export const bookingRouter = router({
               in: allServiceOnProfessional.map((s) => s.id),
             },
             date: {
-              gte: startOfDay(new Date(input.date)),
-              lte: endOfDay(new Date(input.date)),
+              gte: new Date(input.date),
+              lte: addHours(new Date(input.date), 24),
             },
           },
           select: {
@@ -143,7 +154,8 @@ export const bookingRouter = router({
 
         const possibleBookingTime = getPossibleBookingTimes(
           currentDaySchedule,
-          serviceOnProfessional.duration
+          serviceOnProfessional.duration,
+          input.date
         );
 
         for (const time of possibleBookingTime) {
@@ -187,6 +199,15 @@ export const bookingRouter = router({
           .max(maxLargeTextLength)
           .optional(),
         serviceProfessionalId: z.string().min(1, 'Required'),
+        day: z.enum([
+          Day.MONDAY,
+          Day.TUESDAY,
+          Day.WEDNESDAY,
+          Day.THURSDAY,
+          Day.FRIDAY,
+          Day.SATURDAY,
+          Day.SUNDAY,
+        ]),
       })
     )
     .mutation(async ({ input }) => {
@@ -210,62 +231,64 @@ export const bookingRouter = router({
         });
       }
 
+      // For now we won't have specific day schedule
       // first we check if we have specific schedule for the day
-      const specificDaySchedule = await prisma.schedule.findFirst({
+      // const specificDaySchedule = await prisma.schedule.findFirst({
+      //   where: {
+      //     professionalId: professional.id,
+      //     isSpecificDay: true,
+      //     date: startOfDay(new Date(input.date)),
+      //   },
+      //   select: defaultScheduleSelect,
+      // });
+      //
+      // if (
+      //   specificDaySchedule &&
+      //   !isTimeWithinSchedule(
+      //     input.startTime,
+      //     input.endTime,
+      //     specificDaySchedule
+      //   )
+      // ) {
+      //   throw new TRPCError({
+      //     code: 'BAD_REQUEST',
+      //     message: `Time is not within specific schedule`,
+      //   });
+      // }
+
+      // For now disabled if
+      // next we check default schedule for the day
+      // if (!specificDaySchedule) {
+      const selectedDaySchedule = await prisma.schedule.findFirst({
         where: {
           professionalId: professional.id,
-          isSpecificDay: true,
-          date: startOfDay(new Date(input.date)),
+          isSpecificDay: false,
+          day: input.day,
         },
         select: defaultScheduleSelect,
       });
 
       if (
-        specificDaySchedule &&
+        selectedDaySchedule &&
         !isTimeWithinSchedule(
           input.startTime,
           input.endTime,
-          specificDaySchedule
+          selectedDaySchedule
         )
       ) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
-          message: `Time is not within specific schedule`,
+          message: `Time is not within schedule`,
         });
       }
 
-      // next we check default schedule for the day
-      if (!specificDaySchedule) {
-        const selectedDaySchedule = await prisma.schedule.findFirst({
-          where: {
-            professionalId: professional.id,
-            isSpecificDay: false,
-            day: mapDateToDayEnum(input.date),
-          },
-          select: defaultScheduleSelect,
+      if (!selectedDaySchedule) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: `This is a day off`,
         });
-
-        if (
-          selectedDaySchedule &&
-          !isTimeWithinSchedule(
-            input.startTime,
-            input.endTime,
-            selectedDaySchedule
-          )
-        ) {
-          throw new TRPCError({
-            code: 'BAD_REQUEST',
-            message: `Time is not within schedule`,
-          });
-        }
-
-        if (!selectedDaySchedule) {
-          throw new TRPCError({
-            code: 'BAD_REQUEST',
-            message: `This is a day off`,
-          });
-        }
       }
+      // }
 
       // next we check if our booking is at the same time as another booking
       const allServices = await prisma.serviceOnProfessional.findMany({
@@ -281,8 +304,8 @@ export const bookingRouter = router({
         where: {
           serviceProfessionalId: { in: servicesIds },
           date: {
-            gte: startOfDay(new Date(input.date)),
-            lte: endOfDay(new Date(input.date)),
+            gte: new Date(input.date),
+            lte: addHours(new Date(input.date), 24),
           },
         },
       });
@@ -298,9 +321,12 @@ export const bookingRouter = router({
 
       const inputDate = mergeDates(input.date, input.startTime);
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { day, ...createData } = input;
+
       const booking = await prisma.booking.create({
         data: {
-          ...input,
+          ...createData,
           status: BookingStatus.PENDING,
           date: inputDate,
           code: uniqueString(),
