@@ -115,9 +115,21 @@ export const bookingRouter = router({
           });
         }
 
+        const allServiceOnProfessional =
+          await prisma.serviceOnProfessional.findMany({
+            where: {
+              professionalId: professional.id,
+            },
+            select: {
+              id: true,
+            },
+          });
+
         const bookings = await prisma.booking.findMany({
           where: {
-            serviceProfessionalId: serviceOnProfessional.id,
+            serviceProfessionalId: {
+              in: allServiceOnProfessional.map((s) => s.id),
+            },
             date: {
               gte: startOfDay(new Date(input.date)),
               lte: endOfDay(new Date(input.date)),
