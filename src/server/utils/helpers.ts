@@ -1,4 +1,4 @@
-import { getDay } from 'date-fns';
+import { addMinutes, getDay, isBefore, isSameDay } from 'date-fns';
 import { type Break, Day, type Schedule } from '@prisma/client';
 import type { AvailableBookingTime } from '@/server/types';
 
@@ -61,6 +61,13 @@ export const isTimeWithinSchedule = (
       new Date(breakTime.end).getSeconds()
     );
 
+    if (
+      !isSameDay(new Date(breakTime.start), new Date(breakTime.end)) &&
+      isSameDay(new Date(startTime), new Date(endTime))
+    ) {
+      breakEndTime.setDate(new Date(breakEndTime).getDate() + 1);
+    }
+
     if (inputStartTime < breakEndTime && inputEndTime > breakStartTime) {
       return false; // Return false if input times fall within a break
     }
@@ -89,34 +96,50 @@ export const isTimeWithinPeriods = (
   return false;
 };
 
-const defaultPeriodMinutes = 15;
-const millisecondMultiplier = 1000;
-const defaultPeriod = defaultPeriodMinutes * 60 * millisecondMultiplier; // 15 minutes in milliseconds
+const defaultPeriod = 15; // minutes;
 
 export const getPossibleBookingTimes = (
   currentDaySchedule: Pick<Schedule, 'start' | 'end'>,
-  duration: number,
+  duration: number, // in minutes
+  requestedDate: string,
   period: number = defaultPeriod
 ): AvailableBookingTime[] => {
   const availableTimeList: AvailableBookingTime[] = [];
-  const durationInMilliseconds = duration * 60 * millisecondMultiplier;
+  const requestedDateObj = new Date(requestedDate);
   let iteration = 0;
 
   let startTime = new Date(currentDaySchedule.start);
   const endTime = new Date(currentDaySchedule.end);
 
-  while (startTime.getTime() + period <= endTime.getTime() && iteration < 100) {
+  if (isSameDay(startTime, endTime)) {
+    startTime.setFullYear(requestedDateObj.getFullYear());
+    startTime.setMonth(requestedDateObj.getMonth());
+    startTime.setDate(requestedDateObj.getDate());
+    endTime.setFullYear(requestedDateObj.getFullYear());
+    endTime.setMonth(requestedDateObj.getMonth());
+    endTime.setDate(requestedDateObj.getDate());
+  } else {
+    startTime.setFullYear(requestedDateObj.getFullYear());
+    startTime.setMonth(requestedDateObj.getMonth());
+    startTime.setDate(requestedDateObj.getDate());
+    endTime.setFullYear(requestedDateObj.getFullYear());
+    endTime.setMonth(requestedDateObj.getMonth());
+    endTime.setDate(requestedDateObj.getDate() + 1);
+  }
+
+  while (
+    isBefore(addMinutes(startTime, duration), endTime) &&
+    iteration < 100
+  ) {
     const bookingTime: AvailableBookingTime = {
       startTime: startTime.toISOString(),
-      endTime: new Date(
-        startTime.getTime() + durationInMilliseconds
-      ).toISOString(),
+      endTime: new Date(addMinutes(startTime, duration)).toISOString(),
     };
 
     availableTimeList.push(bookingTime);
 
     // Increment the start time by the period
-    startTime = new Date(startTime.getTime() + period);
+    startTime = new Date(addMinutes(startTime, period));
     iteration += 1;
   }
 

@@ -5,7 +5,10 @@ import { useIntl } from 'react-intl';
 
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
-import { generateDates } from '@/modules/core/utils/date.utils';
+import {
+  generateDates,
+  mapDateToDayEnum,
+} from '@/modules/core/utils/date.utils';
 import { formatTime } from '@/modules/core/utils/time.utils';
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
 
@@ -36,6 +39,7 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
     {
       date: selectedDay || '',
       serviceOnProfessionalId: professionalId,
+      day: mapDateToDayEnum(selectedDay || ''),
     },
     { enabled: !!selectedDay }
   );

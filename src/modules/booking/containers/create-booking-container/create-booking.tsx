@@ -10,6 +10,7 @@ import { useBoolean } from 'usehooks-ts';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { showToast } from '@/modules/core/providers/toast-provider';
+import { mapDateToDayEnum } from '@/modules/core/utils/date.utils';
 // type
 import type { CreateBookingRequestData } from '../../components/service-booking-modal/service-booking-modal.interface';
 import type { CreateBookingProps } from './create-booking.interface';
@@ -50,6 +51,7 @@ export const CreateBooking: FC<CreateBookingProps> = ({
         startTime: selectedTimeRange.startTime,
         endTime: selectedTimeRange.endTime,
         serviceProfessionalId: serviceOnProfessional,
+        day: mapDateToDayEnum(selectedDay),
       },
       {
         onError: () => {
