@@ -1,4 +1,4 @@
-import React, { type FC, useRef } from 'react';
+import React, { type FC, useContext, useRef } from 'react';
 import clsx from 'clsx';
 import * as Accordion from '@radix-ui/react-accordion';
 // components
@@ -6,8 +6,6 @@ import { Typography } from '@/modules/core/components/typogrpahy';
 import { Icon } from '@/modules/core/components/icon';
 import { Button } from '@/modules/core/components/button';
 import { EditorPreview } from '@/modules/core/components/editor-preview';
-// containers
-import { CreateBooking } from '@/modules/booking/containers/create-booking-container';
 // hooks
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import { useRipple } from '@/modules/core/hooks/use-ripple';
@@ -17,11 +15,15 @@ import { formatMinutesDuration } from '@/modules/core/utils/time.utils';
 import type { ServiceOnProfessionalTableRowProps } from './service-on-professional-table-row.interface';
 import styles from './service-on-professional-table-row.module.scss';
 import { isEditorFieldEmpty } from '@/modules/core/components/editor-field/editor-field';
+import { useIntl } from 'react-intl';
+import { BookingContext } from '@/modules/booking/providers/booking-provider';
 
 export const ServiceOnProfessionalTableRow: FC<
   ServiceOnProfessionalTableRowProps
-> = ({ data, isOwn, professional }) => {
+> = ({ data, isOwn }) => {
+  const intl = useIntl();
   const deviceType = useDeviceType();
+  const { book } = useContext(BookingContext);
   // refs
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -69,10 +71,14 @@ export const ServiceOnProfessionalTableRow: FC<
                 </Accordion.Trigger>
 
                 {!isOwn && (
-                  <CreateBooking
-                    professional={professional}
-                    selectedService={data.id}
-                    btnVariant='outlined'
+                  <Button
+                    variant='outlined'
+                    text={intl.formatMessage({
+                      id: 'button.book',
+                    })}
+                    onClick={() => {
+                      book(data);
+                    }}
                   />
                 )}
               </div>

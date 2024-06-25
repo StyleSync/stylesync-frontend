@@ -3,10 +3,8 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useIntl } from 'react-intl';
-
 // components
 import { TextField } from '@/modules/core/components/text-field';
-import { Button } from '@/modules/core/components/button';
 // type
 import type { BookingFormProps } from './booking-form.interface';
 // styles
@@ -21,19 +19,15 @@ const defaultValues = {
 
 const bookingValidationSchema = z.object({
   name: z.string().min(1),
-  lastName: z.string().min(1),
+  lastName: z.string(),
   phone: z.string().regex(/^\+\d{1,3}\d{10}$/, 'Phone number is not valid'),
-  email: z.string(),
+  email: z.string().email().or(z.literal('')),
   comment: z.string(),
 });
 
 export type BookingFormValue = z.infer<typeof bookingValidationSchema>;
 
-export const BookingForm: FC<BookingFormProps> = ({
-  onClickBack,
-  onSubmit,
-  isLoading,
-}) => {
+export const BookingForm: FC<BookingFormProps> = ({ onSubmit, formId }) => {
   const intl = useIntl();
 
   const form = useForm<BookingFormValue>({
@@ -42,7 +36,14 @@ export const BookingForm: FC<BookingFormProps> = ({
   });
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className={styles.root}>
+    <form
+      id={formId}
+      onSubmit={form.handleSubmit(onSubmit)}
+      className={styles.root}
+    >
+      <span className='text-gray text-xs'>
+        {intl.formatMessage({ id: 'booking.metadata.fillPersonalInfo' })}
+      </span>
       <TextField
         {...form.register('name')}
         error={Boolean(form.formState.errors.name)}
@@ -71,25 +72,12 @@ export const BookingForm: FC<BookingFormProps> = ({
         {...form.register('comment')}
         error={Boolean(form.formState.errors.comment)}
         variant='textarea'
+        classes={{
+          container: 'flex-1 flex',
+        }}
+        className='flex-1 resize-none'
         label={intl.formatMessage({ id: 'booking.form.comment' })}
       />
-
-      <div className={styles.btnContainer}>
-        <Button
-          className={styles.buttonBack}
-          onClick={onClickBack}
-          text={intl.formatMessage({ id: 'button.back' })}
-          icon='arrow-left'
-          variant='outlined'
-        />
-        <Button
-          isLoading={isLoading}
-          className={styles.buttonConfirm}
-          type='submit'
-          text={intl.formatMessage({ id: 'button.confirm' })}
-          variant='primary'
-        />
-      </div>
     </form>
   );
 };

@@ -1,4 +1,4 @@
-import { eachDayOfInterval, getDay } from 'date-fns';
+import { eachDayOfInterval, getDay, startOfDay } from 'date-fns';
 import { Day } from '@prisma/client';
 
 export const generateDates = () => {
@@ -9,9 +9,8 @@ export const generateDates = () => {
     new Date().setDate(currentDate.getDate() + numberOfDays)
   );
   const daysOfWeek = eachDayOfInterval({ start: currentDate, end: endOfWeek });
-  const result = daysOfWeek.map((item) => item.toISOString());
 
-  return result;
+  return daysOfWeek.map((item) => startOfDay(item).toISOString());
 };
 
 export const mapDateToDayEnum = (dateString: string) => {

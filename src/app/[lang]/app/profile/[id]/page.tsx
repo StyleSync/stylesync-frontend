@@ -17,59 +17,62 @@ import { ProfessionalInfoBigCard } from '@/modules/user/containers/professional-
 // types
 import type { PageParams } from '@/modules/core/types/next.types';
 import styles from './profile.module.scss';
+import { BookingProvider } from '@/modules/booking/providers/booking-provider';
 
 export default async function Profile({ params }: PageParams<{ id: string }>) {
   const session = await getServerSession(authOptions);
 
   return (
-    <main className={styles.root}>
-      <section className={clsx(styles.section, styles.headerSection)}>
-        <Suspense
-          fallback={<div className='w-full h-[214px] rounded-xl bg-black/10' />}
-        >
-          <ProfessionalInfoBigCard userId={params.id} session={session} />
-        </Suspense>
-      </section>
-      <div className={styles.divider} />
-      <div className={styles.sectionGroup}>
-        <ProfileSectionLayout title='About me' id='about-me'>
+    <BookingProvider userId={params.id}>
+      <main className={styles.root}>
+        <section className={clsx(styles.section, styles.headerSection)}>
           <Suspense
             fallback={
-              <div className='flex flex-col gap-y-2'>
-                <div className='skeleton flex h-4 w-[70%] rounded' />
-                <div className='skeleton flex h-4 w-[80%] rounded' />
-                <div className='skeleton flex h-4 w-[50%] rounded' />
-              </div>
+              <div className='w-full h-[214px] rounded-xl bg-black/10' />
             }
           >
-            <AboutMe userId={params.id} />
+            <ProfessionalInfoBigCard userId={params.id} session={session} />
           </Suspense>
-        </ProfileSectionLayout>
-        <ProfileSectionLayout title='Services' id='profile-services'>
-          <Suspense fallback={<ServiceTableSkeleton rows={3} />}>
-            <UserServices userId={params.id} session={session} />
-          </Suspense>
-        </ProfileSectionLayout>
-        <ErrorBoundary fallback={null}>
-          <ProfileSectionLayout title='Location' id='profile-location'>
+        </section>
+        <div className={styles.divider} />
+        <div className={styles.sectionGroup}>
+          <ProfileSectionLayout title='About me' id='about-me'>
             <Suspense
               fallback={
-                <div className='flex flex-col gap-y-4'>
-                  <div className='skeleton w-[60%] rounded h-4' />
-                  <div className='skeleton w-full h-[400px] rounded-xl' />
+                <div className='flex flex-col gap-y-2'>
+                  <div className='skeleton flex h-4 w-[70%] rounded' />
+                  <div className='skeleton flex h-4 w-[80%] rounded' />
+                  <div className='skeleton flex h-4 w-[50%] rounded' />
                 </div>
               }
             >
-              <ProLocation userId={params.id} />
+              <AboutMe userId={params.id} />
             </Suspense>
           </ProfileSectionLayout>
-        </ErrorBoundary>
-        <ProfileSectionLayout title='Gallery' id='profile-gallery'>
+          <ProfileSectionLayout title='Services' id='profile-services'>
+            <Suspense fallback={<ServiceTableSkeleton rows={3} />}>
+              <UserServices userId={params.id} session={session} />
+            </Suspense>
+          </ProfileSectionLayout>
+          <ErrorBoundary fallback={null}>
+            <ProfileSectionLayout title='Location' id='profile-location'>
+              <Suspense
+                fallback={
+                  <div className='flex flex-col gap-y-4'>
+                    <div className='skeleton w-[60%] rounded h-4' />
+                    <div className='skeleton w-full h-[400px] rounded-xl' />
+                  </div>
+                }
+              >
+                <ProLocation userId={params.id} />
+              </Suspense>
+            </ProfileSectionLayout>
+          </ErrorBoundary>
           <GallerySection />
-        </ProfileSectionLayout>
-      </div>
-      <ProBookActions />
-    </main>
+        </div>
+        <ProBookActions />
+      </main>
+    </BookingProvider>
   );
 }
 

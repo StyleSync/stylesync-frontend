@@ -37,11 +37,12 @@
   "signIn.social.facebook": "Sign in with Facebook",
   "signIn.header.signUpDescription": "Don't have an account?",
 
-  "booking.form.name": "Name*",
+  "booking.form.name": "Name *",
   "booking.form.lastName": "Last name",
-  "booking.form.phone": "Phone*",
-  "booking.form.email": "Email*",
+  "booking.form.phone": "Phone *",
+  "booking.form.email": "Email",
   "booking.form.comment": "Comment",
+  "booking.metadata.fillPersonalInfo": "Please complete the following information to confirm your booking",
 
   "booking.time.select.title": "Select a date",
 
@@ -59,8 +60,6 @@
   "booking.modal.status.approved": "Approved",
 
   "booking.modal.service.title": "New booking",
-  "booking.modal.service.name": "Tennisha's Beauty",
-  "booking.modal.service.address": "Greyhound Dr, Bradford BD7 1NQ",
 
   "booking.modal.service.step.service": "Service",
   "booking.modal.service.step.dataTime": "Date & Time",

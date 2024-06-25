@@ -31,28 +31,24 @@ export const BookingTimeSelectNavigation: FC<
     });
   }, [selectedDay, dates]);
 
-  const selectDate = (
-    <Typography variant='body1' className={styles.selectDate}>
-      {intl.formatMessage({ id: 'booking.time.select.title' })}
-    </Typography>
-  );
-
   return (
     <div className={styles.dateNavigation}>
       <Button
         onClick={() => swiper.slidePrev()}
         icon='arrow-left'
         variant='unstyled'
+        className='hover:text-primary transition'
       />
-      <Typography variant='body1'>
+      <Typography variant='body1' className='min-w-[150px] text-center'>
         {selectedDate
           ? formatI18n(new Date(selectedDate), 'EEEE d MMM', intl.locale)
-          : selectDate}
+          : intl.formatMessage({ id: 'booking.time.select.title' })}
       </Typography>
       <Button
         onClick={() => swiper.slideNext()}
         icon='arrow-right'
         variant='unstyled'
+        className='hover:text-primary transition'
       />
     </div>
   );

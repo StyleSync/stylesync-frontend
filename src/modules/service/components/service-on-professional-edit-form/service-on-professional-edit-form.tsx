@@ -35,7 +35,7 @@ const validationSchema = z.object({
     value: z.string().refine((arg) => !isNaN(+arg) && +arg > 0),
     currency: z.string(),
   }),
-  description: z.string().min(1),
+  description: z.string(),
 });
 
 const mapServiceOnProfessionalToFormValues = (

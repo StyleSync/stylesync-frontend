@@ -25,9 +25,12 @@
   border: 1px solid variables.$primary-light-color;
   border-radius: variables.$border-radius-medium;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
+
   &:hover {
-    background-color: variables.$primary-light-color;
+    border-color: variables.$primary-color;
+    color: variables.$primary-color;
+    //background-color: variables.$primary-light-color;
   }
 }
 .dataBoxCheked {
@@ -35,9 +38,10 @@
   flex-direction: column;
   align-items: center;
   row-gap: 5px;
-  color: #fff;
+  color: #fff !important;
   padding: utils.spacing(1, 2.5);
-  background-color: variables.$primary-color;
+  background-color: variables.$primary-color !important;
+  border-color: variables.$primary-color;
   border-radius: variables.$border-radius-medium;
   cursor: pointer;
 }
@@ -59,10 +63,6 @@
   color: variables.$grey-color;
 }
 
-.infoCheked {
-  color: #fff;
-}
-
 .timeRangesContainer {
   display: flex;
   align-items: center;
@@ -77,15 +77,19 @@
   background-color: transparent;
   border: 1px solid variables.$primary-light-color;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: 0.2s;
+
   &:hover {
-    background-color: variables.$primary-light-color;
+    border-color: variables.$primary-color;
+    color: variables.$primary-color;
+    //background-color: variables.$primary-light-color;
   }
 }
 
 .timeBoxChecked {
-  background-color: variables.$primary-color;
-  color: #fff;
+  background-color: variables.$primary-color !important;
+  color: #fff !important;
+  border-color: variables.$primary-color;
 }
 
 .timeTextCheced {

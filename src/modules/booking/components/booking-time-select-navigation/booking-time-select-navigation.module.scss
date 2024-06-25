@@ -19,20 +19,6 @@
   position: relative;
   color: variables.$grey-color;
   transition: color 0.3s;
-  &:hover {
-    color: variables.$primary-color;
-  }
-}
-
-.selectDate::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 1px;
-  background-color: variables.$primary-color;
-  animation: lineAnimation 1s forwards;
 }
 
 @keyframes lineAnimation {
