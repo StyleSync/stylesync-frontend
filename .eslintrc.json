@@ -19,8 +19,5 @@
         "no-console": "off"
       }
     }
-  ],
-  "linterOptions": {
-    "reportUnusedDisableDirectives": true
-  }
+  ]
 }
