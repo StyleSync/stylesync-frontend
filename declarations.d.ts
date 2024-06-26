@@ -11,3 +11,5 @@ declare module '*.svg?url' {
 
   export default content;
 }
+
+declare module '@radix-ui/react-accordion';

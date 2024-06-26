@@ -19,9 +19,7 @@ export function useQueryParams<T = {}>() {
     const search = urlSearchParams.toString();
     const query = search ? `?${search}` : '';
 
-    router.push(`${pathname}${query}`, {
-      shallow: true,
-    });
+    router.push(`${pathname}${query}`);
   }
 
   function clearQueryParams(params: (keyof T)[]) {

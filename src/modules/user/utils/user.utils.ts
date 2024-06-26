@@ -7,7 +7,7 @@
  */
 
 export const getFullName = <
-  T extends { firstName?: string | null; lastName?: string | null }
+  T extends { firstName?: string | null; lastName?: string | null },
 >(
   data: T
 ) => {

@@ -1,8 +1,8 @@
-import { type FC, Fragment, useCallback, useEffect, useRef } from 'react';
+import { type FC, Fragment, useCallback, useRef } from 'react';
 import clsx from 'clsx';
 import * as RPopover from '@radix-ui/react-popover';
 import { Transition } from 'react-transition-group';
-import { useElementSize } from 'usehooks-ts';
+import { useResizeObserver } from 'usehooks-ts';
 import { type PointerDownOutsideEvent } from '@radix-ui/react-dismissable-layer';
 
 import type { PopoverProps } from './popover.interface';
@@ -28,15 +28,18 @@ export const Popover: FC<PopoverProps> = ({
   const popperRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
   // state
-  const [setTriggerRef, { width }] = useElementSize();
+  const { width } = useResizeObserver({
+    ref: popperRef,
+  });
+
   // refs
   const { current: PortalOrFragment } = useRef(
     disablePortal ? Fragment : RPopover.Portal
   );
 
-  useEffect(() => {
-    setTriggerRef(triggerRef.current);
-  }, [setTriggerRef]);
+  // useEffect(() => {
+  //   setTriggerRef(triggerRef.current);
+  // }, [setTriggerRef]);
 
   const handlePointerDownOutside = useCallback(
     (e: PointerDownOutsideEvent) => {
