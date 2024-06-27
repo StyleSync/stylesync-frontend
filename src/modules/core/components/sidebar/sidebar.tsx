@@ -26,9 +26,7 @@ export const Sidebar: FC<SidebarProps> = ({
   return (
     <div className={styles.root}>
       <Icon className={styles.corner} name='corner' />
-      {slots?.top?.map((slot, i) => (
-        <Fragment key={i}>{slot}</Fragment>
-      ))}
+      {slots?.top?.map((slot, i) => <Fragment key={i}>{slot}</Fragment>)}
       <div className={styles.groups}>
         {linkGroups.map((group) => (
           <div key={group.id} className={styles.group}>
@@ -61,9 +59,7 @@ export const Sidebar: FC<SidebarProps> = ({
           </div>
         ))}
       </div>
-      {slots?.bottom?.map((slot) => (
-        <>{slot}</>
-      ))}
+      {slots?.bottom?.map((slot) => <>{slot}</>)}
     </div>
   );
 };

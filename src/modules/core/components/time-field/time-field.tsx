@@ -6,7 +6,7 @@ import {
   useState,
   useEffect,
 } from 'react';
-import { useBoolean, useUpdateEffect } from 'usehooks-ts';
+import { useBoolean } from 'usehooks-ts';
 import { Transition } from 'react-transition-group';
 // components
 import { TextField } from '@/modules/core/components/text-field';
@@ -15,7 +15,7 @@ import { Popover } from '@/modules/core/components/popover';
 import { Button } from '@/modules/core/components/button';
 // utils
 import { Time } from '@/modules/core/utils/time.utils';
-
+import { useUpdateEffect } from '@/modules/core/hooks/use-update-effect';
 import type { TimeFieldProps } from './time-field.interface';
 import styles from './time-field.module.scss';
 import clsx from 'clsx';

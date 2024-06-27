@@ -4,7 +4,8 @@ import { useIntl } from 'react-intl';
 // components
 import { Tabs } from '@/modules/core/components/tabs';
 // hooks
-import { useIntersectionObserver, useUpdateEffect } from 'usehooks-ts';
+import { useIntersectionObserver } from 'usehooks-ts';
+import { useUpdateEffect } from '@/modules/core/hooks/use-update-effect';
 // types
 import type { Tab } from '@/modules/core/components/tabs/tabs.interface';
 // constants
@@ -34,6 +35,8 @@ export const ProfessionalProfileTabs: FC = () => {
   const tabsRef = useRef<HTMLDivElement | null>(null);
   const skipNextScroll = useRef<boolean>(false);
   // observers
+  // Todo:
+  // @ts-ignore
   const entry = useIntersectionObserver(tabsRef, {});
 
   const isVisible = !!entry?.isIntersecting;
