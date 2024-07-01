@@ -61,7 +61,12 @@ import CommentIcon from '@/assets/icons/comment.svg?icon';
 import ArrowIncrease from '@/assets/icons/arrow-increase.svg?icon';
 import SuccessIcon from '@/assets/icons/success.svg?icon';
 import MediaIcon from '@/assets/icons/media.svg?icon';
-
+import InstagramLanding from '@/assets/icons/instagram-landing.svg?icon';
+import XLanding from '@/assets/icons/x-landing.svg?icon';
+import FacebookLanding from '@/assets/icons/facebook-landing.svg?icon';
+import LogoLanding from '@/assets/icons/logo-landing.svg?icon';
+import AppleLogoLanding from '@/assets/icons/apple-logo-landing.svg?icon';
+import GoogleLogoLanding from '@/assets/icons/google-play-logo.svg?icon';
 import type { SVGComponentElement } from './icon.interface';
 
 export const icons = {
@@ -123,6 +128,12 @@ export const icons = {
   menu: MenuIcon,
   share: ShareIcon,
   comment: CommentIcon,
+  facebookLanding: FacebookLanding,
+  xLanding: XLanding,
+  instagramLanding: InstagramLanding,
+  logoLanding: LogoLanding,
+  appleLogoLanding: AppleLogoLanding,
+  googleLogoLanding: GoogleLogoLanding,
   success: SuccessIcon,
   'arrow-increase': ArrowIncrease,
   media: MediaIcon,

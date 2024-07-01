@@ -25,10 +25,18 @@ module.exports = {
         green: {
           DEFAULT: '#4bb543',
         },
+        orange: {
+          DEFAULT: '#FA714E',
+        },
       },
       boxShadow: {
         DEFAULT: '0px 4px 15px 0px rgba(37, 74, 165, 0.1)',
       },
+    },
+    backgroundImage: {
+      'service-card':
+        'linear-gradient(270deg, rgba(205, 160, 160, 0) 0%, #675050 100%)',
+      'intro-button': 'linear-gradient(90deg, #FA719A 0%, #FDA571 100%)',
     },
   },
   plugins: [],

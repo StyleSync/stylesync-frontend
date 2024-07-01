@@ -14,7 +14,7 @@
   --webkit-backdrop-filter: saturate(180%) blur(20px);
   box-shadow: variables.$main-box-shadow;
   padding: utils.spacing(2, 4);
-  z-index: 1;
+  z-index: 20;
   transition: variables.$transition-medium;
 
   @include mixins.tablet {
@@ -51,7 +51,7 @@
   .centralSlot {
     width: 100%;
     max-width: 968px;
-    padding: utils.spacing(0,3);
+    padding: utils.spacing(0, 3);
   }
 
   .rightSlot {
