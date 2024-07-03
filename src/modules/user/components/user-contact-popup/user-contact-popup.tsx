@@ -14,7 +14,7 @@ export const UserContactPopup: FC<UserContactPopupProps> = ({
   return (
     <Popover {...props} sideOffset={5} side='bottom'>
       <div className={styles.root}>
-        {professional && professional.user.phone && (
+        {professional && professional.user?.phone && (
           <Button
             onClick={() => {
               window.open(`tel:${professional.user.phone}`);
@@ -54,7 +54,7 @@ export const UserContactPopup: FC<UserContactPopupProps> = ({
           />
         )}
 
-        {professional && professional.user.email && (
+        {professional && professional.user?.email && (
           <Button
             onClick={() => {
               if (professional.user.email) {

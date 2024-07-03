@@ -7,10 +7,10 @@ import { LandingHeader } from '@/modules/landing/containers/header/landing-heade
 
 export default function BookingDetailsPage() {
   return (
-    <main className='flex flex-col '>
+    <div className='flex flex-col justify-between h-screen '>
       <LandingHeader />
       <BookingPreview />
       <Footer />
-    </main>
+    </div>
   );
 }

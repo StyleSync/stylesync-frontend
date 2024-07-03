@@ -1,6 +1,7 @@
 import { type FC } from 'react';
 import { Currency } from '@prisma/client';
 import { useIntl } from 'react-intl';
+import { useRouter } from 'next/navigation';
 
 // components
 import { Button } from '@/modules/core/components/button';
@@ -20,6 +21,8 @@ export const BookingModalSuccess: FC<BookingModalSuccessProps> = ({
   ...props
 }) => {
   const intl = useIntl();
+  // route
+  const router = useRouter();
 
   const handleModalClose = () => {
     if (props.onOpenChange) {
@@ -97,7 +100,9 @@ export const BookingModalSuccess: FC<BookingModalSuccessProps> = ({
             className={styles.closeBtn}
           />
           <Button
+            onClick={() => router.push(`/bookings/${bookingData?.code}`)}
             variant='outlined'
+            type='button'
             text={intl.formatMessage({
               id: 'booking.modal.success.button.myBooking',
             })}
