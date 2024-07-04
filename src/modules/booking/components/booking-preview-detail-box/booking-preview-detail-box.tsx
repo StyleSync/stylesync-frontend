@@ -15,7 +15,7 @@ export const BookingDetailBox: FC<BookingDetailProps> = ({
       {label}
     </Typography>
     <div className='flex gap-4 items-center'>
-      {avatar && <Avatar />}
+      {avatar && <Avatar url={avatar} />}
       <Typography variant='body1' weight='medium' className='!text-dark'>
         {value}
       </Typography>

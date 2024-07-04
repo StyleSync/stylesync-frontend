@@ -1,17 +1,19 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import { useParams } from 'next/navigation';
-import { format } from 'date-fns';
 import dynamic from 'next/dynamic';
 import getDistance from 'geolib/es/getDistance';
-import { useBoolean } from 'usehooks-ts';
+import { createEvent, type EventAttributes } from 'ics';
+import { getHours, getMinutes, format } from 'date-fns';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { BookingDetailBox } from '@/modules/booking/components/booking-preview-detail-box/booking-preview-detail-box';
 import { Button } from '@/modules/core/components/button';
 import { Spinner } from '@/modules/core/components/spinner';
 import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
+// hooks
+import { useBoolean } from 'usehooks-ts';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { formatDuration } from '@/modules/core/utils/time.utils';
@@ -27,6 +29,7 @@ const Map = dynamic(
   }
 );
 
+const MILLISECONDS_IN_MINUTE = 60000;
 const MILLISECONDS_IN_SECOND = 1000;
 const SECONDS_IN_MINUTE = 60;
 const MINUTES_IN_HOUR = 60;
@@ -125,26 +128,93 @@ export const BookingPreview = () => {
   // Calculate the percentage of time passed
   const percents = (daysWaited * 100) / daysRemaining;
 
+  const startEventTime = bookingDetails.data?.startTime
+    ? new Date(bookingDetails.data?.startTime).getTime() -
+      new Date().getTimezoneOffset() * MILLISECONDS_IN_MINUTE
+    : new Date().getTime();
+
+  const event: EventAttributes = useMemo(() => {
+    return {
+      start: startEventTime,
+
+      duration: {
+        hours: bookingDetails.data?.serviceProfessional.duration
+          ? getHours(bookingDetails.data?.serviceProfessional.duration)
+          : 0,
+        minutes: bookingDetails.data?.serviceProfessional.duration
+          ? getMinutes(bookingDetails.data?.serviceProfessional.duration)
+          : 0,
+      },
+      title: `${bookingDetails.data?.serviceProfessional.title}`,
+      location: `${location?.name}`,
+      organizer: {
+        name: `${professional.data?.user.firstName}`,
+        email: `${professional.data?.user?.email}`,
+      },
+      attendees: [
+        {
+          name: `${bookingDetails.data?.guestFirstName} ${bookingDetails.data?.guestLastName}`,
+          email: `${bookingDetails.data?.guestEmail}`,
+          partstat: 'ACCEPTED',
+          role: 'REQ-PARTICIPANT',
+        },
+      ],
+    };
+  }, [professional, professional.data, bookingDetails.data, location?.name]);
+
+  const handleDownloadIcs = useCallback(async () => {
+    const filename = 'ExampleEvent.ics';
+    const file: File = await new Promise((resolve, reject) => {
+      createEvent(event, (error, value) => {
+        if (error) {
+          reject(error);
+        }
+
+        resolve(new File([value], filename, { type: 'text/calendar' }));
+      });
+    });
+    const url = URL.createObjectURL(file);
+
+    // trying to assign the file URL to a window could cause cross-site
+    // issues so this is a workaround using HTML5
+    const anchor = document.createElement('a');
+
+    anchor.href = url;
+    anchor.download = filename;
+
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+
+    URL.revokeObjectURL(url);
+  }, [event]);
+
   if (bookingDetails.isLoading) {
     return (
-      <div className='mt-[220px] mx-auto'>
+      <div className='mt-[190px] mx-auto'>
         <Spinner size='large' />
       </div>
     );
   }
 
   return (
-    <main className=' w-full max-w-[950px] flex flex-col flex-1 mx-auto px-[15px] mt-28 mb-20'>
+    <main className='w-full max-w-[950px] flex flex-col flex-1 mx-auto px-[15px] mt-28 mb-20'>
       <Typography className='mx-auto !text-[24px] text-center'>
-        Booking №{code}
+        Booking № 20
       </Typography>
       <div className='flex w-full mt-12'>
         <div className='flex flex-col gap-4 flex-1'>
-          <BookingDetailBox
-            label='Specialist'
-            value={`${professional.data?.user?.firstName} ${professional.data?.user?.lastName}`}
-            avatar={professional.data?.user?.avatar || ''}
-          />
+          <a
+            target='_blank'
+            href={`/app/profile/${professional.data?.userId}`}
+            rel='noreferrer'
+          >
+            <BookingDetailBox
+              label='Specialist'
+              value={`${professional.data?.user?.firstName} ${professional.data?.user?.lastName}`}
+              avatar={professional.data?.user?.avatar || ''}
+            />
+          </a>
 
           <div className='flex flex-col gap-3'>
             <BookingDetailBox
@@ -152,6 +222,7 @@ export const BookingPreview = () => {
               value={bookingDetails.data?.serviceProfessional?.title || ''}
             />
           </div>
+
           <div className='flex flex-col gap-3'>
             <BookingDetailBox
               label='Price'
@@ -187,15 +258,7 @@ export const BookingPreview = () => {
             </div>
           </div>
         </div>
-        <div
-          style={{
-            position: 'relative',
-            width: '120px',
-            height: '120px',
-            marginTop: '66px',
-            marginRight: '20px',
-          }}
-        >
+        <div className='relative w-[120px] h-[120px] mt-[66px] ml-5'>
           <CircularProgressbar
             strokeWidth={3}
             value={percents}
@@ -204,19 +267,7 @@ export const BookingPreview = () => {
               trailColor: '#d8e6fc',
             })}
           />
-          <div
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexDirection: 'column',
-            }}
-          >
+          <div className='absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center flex-col'>
             <Typography>Залишилось</Typography>
             <Typography weight='semibold'>{`${daysRemaining} д.`}</Typography>
           </div>
@@ -225,7 +276,7 @@ export const BookingPreview = () => {
       <div className='flex gap-4 mt-12'>
         <UserContactPopup
           // @ts-ignore
-          professional={bookingDetails.data?.serviceProfessional?.professional}
+          professional={professional.data}
           isOpen={isContactOpen.value}
           onClose={isContactOpen.setFalse}
           trigger={
@@ -236,7 +287,11 @@ export const BookingPreview = () => {
             />
           }
         />
-        <Button variant='outlined' text='Add to calendar' />
+        <Button
+          variant='outlined'
+          text='Add to calendar'
+          onClick={handleDownloadIcs}
+        />
       </div>
       <div className='flex flex-col gap-5 h-[400px] w-full mt-12'>
         <div className='flex gap-5'>
