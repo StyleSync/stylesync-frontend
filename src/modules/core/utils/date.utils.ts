@@ -15,7 +15,7 @@ export const generateDates = () => {
 
 export const mapDateToDayEnum = (dateString: string) => {
   const dayNumber = getDay(new Date(dateString));
-  const dayMap = {
+  const dayMap: Record<number, Day> = {
     0: Day.SUNDAY,
     1: Day.MONDAY,
     2: Day.TUESDAY,

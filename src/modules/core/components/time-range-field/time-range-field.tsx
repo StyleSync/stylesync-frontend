@@ -6,7 +6,8 @@ import {
   useState,
   useEffect,
 } from 'react';
-import { useBoolean, useUpdateEffect } from 'usehooks-ts';
+import { useBoolean } from 'usehooks-ts';
+import { useUpdateEffect } from '@/modules/core/hooks/use-update-effect';
 import clsx from 'clsx';
 // components
 import { Popover } from '@/modules/core/components/popover';
