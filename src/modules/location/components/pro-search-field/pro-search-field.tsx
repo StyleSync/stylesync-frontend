@@ -34,10 +34,10 @@ export const ProSearchField: FC<ProSearchFieldProps> = () => {
 
   return (
     <div className='flex-1 w-fit focus-within:border-primary border-gray-light transition border h-[40px] rounded-3xl items-center flex'>
-      <div className='flex items-center min-w-[250px]'>
+      <div className='flex items-center min-w-[50px] md:min-w-[250px]'>
         <input
           placeholder='Search nearby'
-          className='text-sm outline-none pl-6 bg-transparent'
+          className='text-sm outline-none pl-6 bg-transparent w-full'
         />
       </div>
       <div className='h-[18px] w-[1px] bg-gray-light' />
@@ -46,7 +46,7 @@ export const ProSearchField: FC<ProSearchFieldProps> = () => {
         onClose={isCitySearchOpen.setFalse}
         trigger={
           <div
-            className='flex items-center pl-6 pr-8 cursor-pointer text-dark hover:text-black min-w-[250px] transition'
+            className='flex items-center pl-6 pr-8 cursor-pointer text-dark hover:text-black min-w-[50px] md:min-w-[250px] transition'
             onClick={isCitySearchOpen.toggle}
           >
             <Icon

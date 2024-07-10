@@ -17,9 +17,9 @@ export const ProfessionalSearchCard: FC<ProfessionalSearchCardProps> = ({
   return (
     <div
       onClick={() => router.push(`/app/profile/${professional.user.id}`)}
-      className='shadow hover:shadow-accentShadow rounded-xl overflow-hidden flex flex-col justify-between bg-white gap-y-0 transition cursor-pointer'
+      className='shadow hover:shadow-accentShadow rounded-xl overflow-hidden flex flex-col justify-between bg-white gap-y-0 transition cursor-pointer h-fit pb-3'
     >
-      <div className='gap-x-4 flex flex-col relative'>
+      <div className='gap-x-4 flex flex-col relative object-fill'>
         <Avatar
           url={professional.user.avatar}
           size={200}

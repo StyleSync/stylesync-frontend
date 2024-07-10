@@ -70,6 +70,7 @@ import AppleLogoLanding from '@/assets/icons/apple-logo-landing.svg?icon';
 import GoogleLogoLanding from '@/assets/icons/google-play-logo.svg?icon';
 import Fitness from '@/assets/icons/fitness.svg?icon';
 import FaceMassage from '@/assets/icons/face-massage.svg?icon';
+import Filter from '@/assets/icons/filter.svg?icon';
 
 import type { SVGComponentElement } from './icon.interface';
 
@@ -144,6 +145,7 @@ export const icons = {
   search: SearchIcon,
   fitness: Fitness,
   faceMassage: FaceMassage,
+  filter: Filter,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;

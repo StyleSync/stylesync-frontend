@@ -18,7 +18,7 @@ export const AppHeader: FC<AppHeaderProps> = ({ session }) => {
           '!flex-[unset]': !session || pathname.includes('app/search-pro'),
         }),
         centralSlot: clsx({
-          '!pl-14 !max-w-[unset]':
+          '!pl-14 !max-w-[unset] hidden md:block':
             !session || pathname.includes('app/search-pro'),
         }),
       }}
