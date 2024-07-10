@@ -173,6 +173,11 @@
   "professional.settings.about.toast.success.title": "All done!",
   "professional.settings.about.toast.success.description": "Changes has been saved",
 
+  "professional.settings.profileRequirements.title": "Complete your profile",
+  "professional.settings.profileRequirements.profileData": "Fill in your profile data, including your phone number and avatar",
+  "professional.settings.profileRequirements.services": "Provide at least 1 service",
+  "professional.settings.profileRequirements.schedule": "Setup your schedule",
+
   "user.about.me.noInfo": "No information",
 
   "user.about.professional.form.firstName": "First Name *",
