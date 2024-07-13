@@ -14,7 +14,7 @@ export const LandingHeader = async () => {
       // className='!shadow-none'
       classes={{
         leftSlot: '!flex-[unset]',
-        centralSlot: '!pl-14',
+        centralSlot: '!pl-14 hidden lg:block',
       }}
       centralSlot={<ProSearchField />}
       rightSlot={<UserMenuBadge session={session} />}
