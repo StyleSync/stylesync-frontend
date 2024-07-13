@@ -5,7 +5,7 @@ import { Icon } from '@/modules/core/components/icon';
 
 export const Footer = () => {
   return (
-    <footer className='flex flex-col w-full bg-[#0F1019]'>
+    <footer className='relative z-10 flex flex-col w-full bg-[#0F1019]'>
       <div className='pt-20 pb-11 pl-[100px] pr-[100px]'>
         <div className='flex flex-col items-center gap-[30px] lg:flex-row  lg:justify-between'>
           <div className=' flex gap-[36px]'>

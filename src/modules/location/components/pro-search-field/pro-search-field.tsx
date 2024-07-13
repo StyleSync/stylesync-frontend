@@ -33,7 +33,7 @@ export const ProSearchField: FC<ProSearchFieldProps> = () => {
   }, [isCitySearchOpen.value]);
 
   return (
-    <div className='w-fit focus-within:border-primary border-gray lg:border-gray-light transition border h-[40px] rounded-3xl items-center flex'>
+    <div className='w-fit focus-within:border-primary focus-within:bg-white bg-white/50 border-gray lg:border-gray-light transition border h-[40px] rounded-3xl items-center flex'>
       <div className='flex items-center min-w-[50px] md:min-w-[250px]'>
         <input
           placeholder='Search nearby'
