@@ -2,7 +2,7 @@ import { privateProcedure, publicProcedure, router } from '../trpc-helpers';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { prisma } from '@/server/prisma';
-import { Role } from '@prisma/client';
+import { Day, Role } from '@prisma/client';
 import {
   defaultProfessionalSelect,
   defaultServiceOnProfessionalSelect,
@@ -134,15 +134,102 @@ export const professionalRouter = router({
       z.object({
         limit: z.number().min(1).max(maxLimit).default(defaultLimit),
         offset: z.number().min(0).default(0),
+        serviceIds: z.array(z.string()).optional(),
+        day: z
+          .enum([
+            Day.MONDAY,
+            Day.TUESDAY,
+            Day.WEDNESDAY,
+            Day.THURSDAY,
+            Day.FRIDAY,
+            Day.SATURDAY,
+            Day.SUNDAY,
+          ])
+          .optional(),
+        query: z.string().optional(),
+        latitude: z.number().optional(),
+        longitude: z.number().optional(),
+        precision: z.number().optional(),
       })
     )
     .query(async ({ input }) => {
+      const defaultPrecision = 0.3;
+      const precision = input.precision || defaultPrecision;
+
       return prisma.professional.findMany({
         select: {
           ...defaultProfessionalSelect,
           user: {
             select: defaultUserSelect,
           },
+        },
+        where: {
+          OR: [
+            {
+              user: {
+                firstName: {
+                  contains: input.query,
+                  mode: 'insensitive',
+                },
+              },
+            },
+            {
+              user: {
+                lastName: {
+                  contains: input.query,
+                  mode: 'insensitive',
+                },
+              },
+            },
+            {
+              services: {
+                some: {
+                  title: {
+                    contains: input.query,
+                    mode: 'insensitive',
+                  },
+                },
+              },
+            },
+          ],
+          ...(input.serviceIds && {
+            services: {
+              some: {
+                serviceId: {
+                  in: input.serviceIds,
+                },
+              },
+            },
+          }),
+          ...(input.day && {
+            schedule: {
+              some: {
+                isSpecificDay: false,
+                day: input.day,
+              },
+            },
+          }),
+          ...(input.latitude &&
+            input.longitude && {
+              AND: [
+                {
+                  location: {
+                    latitude: {
+                      gte: input.latitude - precision,
+                      lte: input.latitude + precision,
+                    },
+                  },
+                },
+                {
+                  location: {
+                    longitude: {
+                      gte: input.longitude - precision,
+                      lte: input.longitude + precision,
+                    },
+                  },
+                },
+              ],
+            }),
         },
         take: input.limit,
         skip: input.offset,
