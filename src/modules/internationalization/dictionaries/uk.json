@@ -175,6 +175,11 @@
   "professional.settings.about.toast.success.title": "Все готово!",
   "professional.settings.about.toast.success.description": "Зміни збережено",
 
+  "professional.settings.profileRequirements.title": "Заповніть свій профіль",
+  "professional.settings.profileRequirements.profileData": "Заповніть дані свого профілю, включаючи номер телефону та фото",
+  "professional.settings.profileRequirements.services": "Вкажіть одну чи більше послуг",
+  "professional.settings.profileRequirements.schedule": "Налаштуйте свій розклад",
+
   "user.about.me.noInfo": "Немає інформації",
 
   "user.about.professional.form.firstName": "Ім'я *",

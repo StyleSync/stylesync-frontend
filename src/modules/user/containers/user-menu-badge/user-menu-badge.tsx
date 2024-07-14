@@ -36,6 +36,15 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
       enabled: !!session,
     }
   );
+  const { data: profileCompletionStatus } =
+    trpc.professional.getProfileCompletionStatus.useQuery(
+      {
+        id: session?.user?.id || '',
+      },
+      {
+        enabled: !!session,
+      }
+    );
 
   const handleSelect = useCallback(
     ({ id }: DropdownItem) => {
@@ -77,14 +86,19 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
   return (
     <>
       <div className={styles.root}>
-        <Button
-          className={clsx(styles.iconButton, {
-            [styles.active]: pathname.includes('/settings'),
-          })}
-          onClick={handleSettingsClick}
-          icon='settings'
-          variant='secondary'
-        />
+        <div className='flex w-fit h-fit relative'>
+          <Button
+            className={clsx(styles.iconButton, {
+              [styles.active]: pathname.includes('/settings'),
+            })}
+            onClick={handleSettingsClick}
+            icon='settings'
+            variant='secondary'
+          />
+          {profileCompletionStatus?.isAllCompleted === false && (
+            <div className='absolute -top-0 -right-0 w-2 h-2 rounded-full bg-primary' />
+          )}
+        </div>
         <DropdownMenu
           items={[
             {

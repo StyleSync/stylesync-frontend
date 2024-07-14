@@ -14002,6 +14002,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-circular-progressbar@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "react-circular-progressbar@npm:2.1.0"
+  peerDependencies:
+    react: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/4019235abdf588baa97491fb53e258e83e467aecce14672120bca687719fa025efd4a3b63b44c7a59867ebba547ee6edf035f3b883585d46332c5334cf505c85
+  languageName: node
+  linkType: hard
+
 "react-colorful@npm:^5.1.2":
   version: 5.6.1
   resolution: "react-colorful@npm:5.6.1"
@@ -15827,6 +15836,7 @@ __metadata:
     prisma: "npm:5.1.1"
     react: "npm:18.3.1"
     react-advanced-cropper: "npm:0.19.6"
+    react-circular-progressbar: "npm:^2.1.0"
     react-dom: "npm:18.3.1"
     react-dropzone: "npm:14.2.3"
     react-error-boundary: "npm:4.0.13"
