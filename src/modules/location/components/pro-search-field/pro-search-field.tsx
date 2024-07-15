@@ -1,27 +1,35 @@
 'use client';
-import { type FC, useEffect, useState } from 'react';
+import {
+  type FC,
+  type ChangeEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 // components
 import { Icon } from '@/modules/core/components/icon';
 import { Button } from '@/modules/core/components/button';
 
 import type { ProSearchFieldProps } from './pro-search-field.interface';
-import { useBrowserLocationDetails } from '@/modules/location/hooks/use-browser-location-details';
 import { Popover } from '@/modules/core/components/popover';
 import { TextField } from '@/modules/core/components/text-field';
 import { useBoolean } from 'usehooks-ts';
 import { useGeocodingSuggestionsQuery } from '@/modules/location/hooks/use-geocoding-suggestions-query';
-import type { GeocodingFeature } from '@mapbox/search-js-core';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
+import { ProfessionalSearchContext } from '@/modules/user/providers/professional-search-provider';
 
 export const ProSearchField: FC<ProSearchFieldProps> = () => {
   const router = useRouter();
+  // context
+  const { place, searchQuery, onSearchQueryChange, onPlaceChange } = useContext(
+    ProfessionalSearchContext
+  );
   // state
   const isCitySearchOpen = useBoolean();
-  const [city, setCity] = useState<null | GeocodingFeature>(null);
   const [citySearchQuery, setCitySearchQuery] = useState('');
   // queries
-  const browserLocationDetails = useBrowserLocationDetails();
   const placeSuggestions = useGeocodingSuggestionsQuery(citySearchQuery, {
     types: 'place',
   });
@@ -32,10 +40,19 @@ export const ProSearchField: FC<ProSearchFieldProps> = () => {
     }
   }, [isCitySearchOpen.value]);
 
+  const handleSearchChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      onSearchQueryChange(e.target.value);
+    },
+    [onSearchQueryChange]
+  );
+
   return (
     <div className='w-fit focus-within:border-primary focus-within:bg-white bg-white/50 border-gray lg:border-gray-light transition border h-[40px] rounded-3xl items-center flex'>
       <div className='flex items-center min-w-[50px] md:min-w-[250px]'>
         <input
+          value={searchQuery}
+          onChange={handleSearchChange}
           placeholder='Search nearby'
           className='text-base placeholder:text-sm md:text-sm outline-none pl-6 pr-2 bg-transparent w-full'
         />
@@ -56,9 +73,7 @@ export const ProSearchField: FC<ProSearchFieldProps> = () => {
               className='text-inherit shrink-0'
             />
             <span className='text-sm text-inherit ml-3 mr-2 truncate flex-1'>
-              {city?.properties.full_address ||
-                browserLocationDetails.place?.properties?.full_address ||
-                'Select your city'}
+              {place?.properties.full_address || 'Select your city'}
             </span>
             <Icon
               name='chevron-bottom'
@@ -90,7 +105,7 @@ export const ProSearchField: FC<ProSearchFieldProps> = () => {
                 <button
                   key={feature.id}
                   onClick={() => {
-                    setCity(feature);
+                    onPlaceChange(feature);
                     isCitySearchOpen.setFalse();
                   }}
                   className='flex items-center bg-transparent text-left text-sm py-3 transition rounded-md px-4 gap-y-2 hover:bg-primary-light hover:text-primary'

@@ -1,11 +1,7 @@
 'use client';
-import { useState, type FC } from 'react';
-import { useTransition, animated } from '@react-spring/web';
+import { useContext, useMemo } from 'react';
 import clsx from 'clsx';
 // components
-import { Typography } from '@/modules/core/components/typogrpahy';
-import { Checkbox } from '@/modules/core/components/checkbox';
-import { DateSelect } from '@/modules/core/components/date-select';
 import { Button } from '@/modules/core/components/button';
 import { ProSearchField } from '@/modules/location/components/pro-search-field';
 // hooks
@@ -16,67 +12,56 @@ import { ProfessionalSearchCard } from '@/modules/user/containers/professional-s
 import { trpc } from '@/modules/core/utils/trpc.utils';
 // styles
 import styles from './search-pro.module.scss';
-import type { ChildrenProp } from '@/modules/core/types/react.types';
-import { useDeviceType } from '@/modules/core/hooks/use-device-type';
-import { DialogFullScreen } from '@/modules/core/components/dialog-full-screen';
 import { Footer } from '@/modules/landing/containers/footer/footer';
-
-const FilterWrapper: FC<
-  ChildrenProp & {
-    isActive: boolean;
-    onActiveChange: (isActive: boolean) => void;
-  }
-> = ({ children, isActive, onActiveChange }) => {
-  const deviceType = useDeviceType();
-  const transitions = useTransition(isActive, {
-    from: { transform: 'translateX(100%)', opacity: 0 },
-    enter: { transform: 'translateX(0%)', opacity: 1 },
-    leave: { transform: 'translateX(100%)', opacity: 0 },
-    config: { tension: 330, friction: 30 },
-  });
-
-  if (deviceType === 'mobile' || deviceType === 'tablet') {
-    return (
-      <DialogFullScreen
-        isOpen={isActive}
-        onOpenChange={onActiveChange}
-        closeOnOutsideClick
-        classes={{
-          content: 'max-w-[300px]',
-        }}
-      >
-        {children}
-      </DialogFullScreen>
-    );
-  }
-
-  return (
-    <>
-      {transitions(
-        (style, item) =>
-          item && (
-            <animated.div
-              style={style}
-              className='w-[300px] rounded-lg h-fit bg-white shadow sticky right-0 md:top-[150px] top-[120px]'
-            >
-              {children}
-            </animated.div>
-          )
-      )}
-    </>
-  );
-};
+import { ProfessionalSearchContext } from '@/modules/user/providers/professional-search-provider';
+import type { BBox } from 'geojson';
+import { bboxLargestSideInKm } from '@/modules/location/utils/bbox.utils';
+import { ProSearchFilter } from '@/modules/user/containers/pro-search-filter';
+import { mapDateToDayEnum } from '@/modules/core/utils/date.utils';
 
 export default function SearchProPage() {
-  const { data: professionalList } = trpc.professional.list.useQuery({
-    limit: 6,
-  });
-  // state
-  const [date, setDate] = useState<null | Date>(null);
+  // context
+  const {
+    date,
+    place,
+    selectedServices: { isAll, selectedServices },
+    searchQuery,
+  } = useContext(ProfessionalSearchContext);
+  // memo
+  const queryFilter = useMemo<
+    Parameters<typeof trpc.professional.list.useQuery>[0]
+  >(() => {
+    const res: Parameters<typeof trpc.professional.list.useQuery>[0] = {
+      limit: 6,
+      query: searchQuery,
+    };
 
-  const isFilterActive = useBoolean(false);
+    if (date) {
+      res.day = mapDateToDayEnum(date);
+    }
 
-  const services = ['All', 'Makeup', 'Fitness', 'Hair', 'Nails', 'Massage'];
+    if (place) {
+      const placeSizeKm = bboxLargestSideInKm(place.properties.bbox as BBox);
+      const minPlaceSizeKm = 30;
+
+      res.longitude = place.properties.coordinates.longitude;
+      res.latitude = place.properties.coordinates.latitude;
+
+      if (placeSizeKm > minPlaceSizeKm) {
+        res.precision = Math.round(placeSizeKm);
+      }
+    }
+
+    if (!isAll && selectedServices.length > 0) {
+      res.serviceIds = selectedServices;
+    }
+
+    return res;
+  }, [isAll, date, place, searchQuery, selectedServices]);
+  // query
+  const { data: professionalList, isLoading } =
+    trpc.professional.list.useQuery(queryFilter);
+  const isFilterActive = useBoolean(true);
 
   return (
     <>
@@ -88,10 +73,16 @@ export default function SearchProPage() {
             </div>
 
             <div className='flex flex-row items-center gap-x-4 mt-6 lg:mt-0'>
-              <span className='text-dark text-base lg:text-xl font-medium'>
-                We found{' '}
-                <span className='text-primary'>6 pro&apos;s for you</span>
-              </span>
+              {isLoading ? (
+                <div className='skeleton w-[250px] h-5 rounded' />
+              ) : (
+                <span className='text-dark text-base lg:text-xl font-medium'>
+                  We found{' '}
+                  <span className='text-primary'>
+                    {professionalList?.length} pro&apos;s for you
+                  </span>
+                </span>
+              )}
 
               <Button
                 variant='light'
@@ -105,73 +96,42 @@ export default function SearchProPage() {
               />
             </div>
             <div className='flex flex-1 gap-x-8 mt-4 lg:mt-8'>
-              <div className='flex-1 grid [grid-template-columns:repeat(auto-fit,_minmax(230px,1fr))] gap-6'>
-                {professionalList?.map((pro) => (
-                  // @ts-ignore todo: Will be fixed later. Expected different api query with different response.
-                  <ProfessionalSearchCard professional={pro} key={pro.id} />
-                ))}
+              <div className='relative flex-1 transition grid [grid-template-rows:max-content] [grid-template-columns:repeat(auto-fill,_minmax(240px,1fr))] gap-6'>
+                {isLoading ? (
+                  <>
+                    <div className='skeleton w-full h-[337px] rounded-xl' />
+                    <div className='skeleton w-full h-[337px] rounded-xl' />
+                    <div className='skeleton w-full h-[337px] rounded-xl' />
+                  </>
+                ) : (
+                  <>
+                    {professionalList && professionalList.length ? (
+                      professionalList.map((pro) => (
+                        <ProfessionalSearchCard
+                          // @ts-ignore todo: Will be fixed later. Expected different api query with different response.
+                          professional={pro}
+                          key={pro.id}
+                        />
+                      ))
+                    ) : (
+                      <div className='absolute top-0 left-0 w-full h-full flex flex-col gap-y-4'>
+                        <span className='text-dark text-xl font-medium'>
+                          {/* На жаль у місті Київ нічого не знайдено! */}
+                          Unfortunately, nothing was found in the city of Kyiv!
+                        </span>
+                        <span className='text-gray text-sm font-medium'>
+                          {/* Спробуйте вказати інші параметри пошуку. */}
+                          Try specifying different search parameters.
+                        </span>
+                      </div>
+                    )}
+                  </>
+                )}
               </div>
-              <FilterWrapper
-                isActive={isFilterActive.value}
-                onActiveChange={isFilterActive.setValue}
-              >
-                <div className='flex flex-col w-full gap-y-10 md:min-h-0 min-h-[100%] h-fit z-10 md:py-6 py-8 px-6'>
-                  <div className='flex flex-col w-full gap-y-6'>
-                    <Typography
-                      variant='body1'
-                      className='text-dark !text-sm !font-medium'
-                    >
-                      Services for Search
-                    </Typography>
-                    <div className='flex flex-col gap-y-1'>
-                      {services.map((service) => (
-                        <div
-                          key={service}
-                          className='flex items-center gap-x-1'
-                        >
-                          <Checkbox value={false} size='small' />
-                          <span>{service}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className='flex flex-col w-full gap-y-6'>
-                    <Typography
-                      variant='body2'
-                      weight='medium'
-                      className='!text-dark !text-sm'
-                    >
-                      Date for Booking Availability
-                    </Typography>
-                    <DateSelect
-                      value={date}
-                      onChange={setDate}
-                      placeholder='All dates'
-                      triggerProps={{
-                        classes: {
-                          root: clsx('!w-full !justify-between', {
-                            '!border-gray !text-gray hover:!border-primary hover:!text-primary':
-                              !date,
-                          }),
-                        },
-                      }}
-                    />
-                  </div>
-                  <div className='flex w-full gap-x-4 mt-auto'>
-                    <Button
-                      text='Clear All'
-                      variant='outlined'
-                      className='!w-full'
-                    />
-                    <Button
-                      text='Apply Filters'
-                      variant='primary'
-                      className='!w-full md:!hidden'
-                      onClick={isFilterActive.setFalse}
-                    />
-                  </div>
-                </div>
-              </FilterWrapper>
+              <ProSearchFilter
+                isOpen={isFilterActive.value}
+                onOpenChange={isFilterActive.setValue}
+              />
             </div>
           </div>
         </section>

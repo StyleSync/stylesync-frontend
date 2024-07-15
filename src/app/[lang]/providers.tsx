@@ -6,6 +6,7 @@ import { ToastProvider } from '@/modules/core/providers/toast-provider';
 import { BottomFixedContent } from '@/modules/core/containers/bottom-fixed-content';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { ProfessionalSearchProvider } from '@/modules/user/providers/professional-search-provider';
 
 export const Providers = ({
   session,
@@ -14,7 +15,9 @@ export const Providers = ({
   <SessionProvider session={session}>
     <BottomFixedContent>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <ToastProvider>{children}</ToastProvider>
+        <ToastProvider>
+          <ProfessionalSearchProvider>{children}</ProfessionalSearchProvider>
+        </ToastProvider>
       </LocalizationProvider>
     </BottomFixedContent>
   </SessionProvider>
