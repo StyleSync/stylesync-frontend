@@ -235,4 +235,71 @@ export const professionalRouter = router({
         skip: input.offset,
       });
     }),
+  getProfileCompletionStatus: publicProcedure
+    .input(
+      z.object({
+        id: z.string().min(1, 'Required'),
+      })
+    )
+    .query(async ({ input }) => {
+      const professional = await prisma.professional.findUnique({
+        where: { userId: input.id },
+        select: {
+          ...defaultProfessionalSelect,
+          services: {
+            select: defaultServiceOnProfessionalSelect,
+          },
+          user: {
+            select: publicUserSelect,
+          },
+          schedule: {
+            select: defaultScheduleSelect,
+            take: 7,
+            where: { isSpecificDay: false },
+          },
+        },
+      });
+
+      const requirements: {
+        requirementCompleted: boolean;
+        requirementTitle: string;
+      }[] = [];
+
+      if (!professional) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `No professional for user with id '${input.id}'`,
+        });
+      }
+
+      // profile data requirement
+      requirements.push({
+        requirementCompleted:
+          !!professional.user.phone && !!professional.user.avatar,
+        requirementTitle:
+          'professional.settings.profileRequirements.profileData',
+      });
+
+      // at least 1 service requirement
+      requirements.push({
+        requirementCompleted: professional.services.length > 0,
+        requirementTitle: 'professional.settings.profileRequirements.services',
+      });
+
+      // schedule
+      requirements.push({
+        requirementCompleted: professional.schedule.length > 0,
+        requirementTitle: 'professional.settings.profileRequirements.schedule',
+      });
+
+      return {
+        requirements,
+        completedCount: requirements.filter(
+          (requirement) => requirement.requirementCompleted
+        ).length,
+        isAllCompleted: requirements.every(
+          (requirement) => requirement.requirementCompleted
+        ),
+      };
+    }),
 });
