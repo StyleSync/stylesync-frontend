@@ -5,16 +5,9 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  border-radius: variables.$border-radius-medium;
   overflow: hidden;
-  box-shadow: variables.$main-box-shadow;
   width: 100%;
   z-index: 1;
-
-  svg {
-    position: relative;
-    width: 100%;
-  }
 }
 
 .content {

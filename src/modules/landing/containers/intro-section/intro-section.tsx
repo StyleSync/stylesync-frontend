@@ -28,7 +28,7 @@ export const IntroSection = () => {
         </Typography>
         <Button
           rippleColor='rgba(255,255,255,0.3)'
-          className='mx-auto bg-intro-button transition mt-7 rounded-[26px] !h-[52px] text-white shadow-colour hover:shadow-[#FC858C]/40'
+          className='mx-auto bg-gradient-to-r z-10 from-[#FA719A] to-[#FDA571] transition mt-7 rounded-[26px] !h-[52px] text-white shadow-accentShadow shadow-orange/20 hover:shadow-[#FC858C]/30'
           classes={{
             text: '!text-base',
           }}
@@ -65,14 +65,14 @@ export const IntroSection = () => {
           />
 
           <div className='flex flex-col justify-center w-fit h-full pt-8'>
-            <div className='w-[80px] h-[80px] rounded-full bg-[#F9DFE6] border-[3px] border-white flex items-center justify-center shadow'>
-              <Icon name='makeup' width={38} height={38} />
+            <div className='w-[80px] h-[80px] rounded-full bg-[#FFE5DB] border-[3px] border-white flex items-center justify-center shadow'>
+              <Icon name='skincare' width={38} height={38} />
             </div>
             <div className='mt-8 ml-[100px] w-[80px] h-[80px] rounded-full bg-[#CEF9F6] border-[3px] border-white flex items-center justify-center shadow'>
               <Icon name='faceMassage' width={38} height={38} />
             </div>
-            <div className='mt-8 ml-[30px] w-[80px] h-[80px] rounded-full bg-[#EDDFFF] border-[3px] border-white flex items-center justify-center shadow'>
-              <Icon name='nails' width={38} height={38} />
+            <div className='mt-8 ml-[30px] w-[80px] h-[80px] rounded-full bg-[#FFEBCE] border-[3px] border-white flex items-center justify-center shadow'>
+              <Icon name='eyebrows' width={38} height={38} />
             </div>
           </div>
         </div>

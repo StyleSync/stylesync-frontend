@@ -61,7 +61,7 @@ export default function SearchProPage() {
   // query
   const { data: professionalList, isLoading } =
     trpc.professional.list.useQuery(queryFilter);
-  const isFilterActive = useBoolean(true);
+  const isFilterActive = useBoolean();
 
   return (
     <>

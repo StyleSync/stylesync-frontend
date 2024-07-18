@@ -71,6 +71,8 @@ import GoogleLogoLanding from '@/assets/icons/google-play-logo.svg?icon';
 import Fitness from '@/assets/icons/fitness.svg?icon';
 import FaceMassage from '@/assets/icons/face-massage.svg?icon';
 import Filter from '@/assets/icons/filter.svg?icon';
+import Eyebrows from '@/assets/icons/eyebrows.svg?icon';
+import Skincare from '@/assets/icons/skincare.svg?icon';
 
 import type { SVGComponentElement } from './icon.interface';
 
@@ -146,6 +148,8 @@ export const icons = {
   fitness: Fitness,
   faceMassage: FaceMassage,
   filter: Filter,
+  eyebrows: Eyebrows,
+  skincare: Skincare,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;

@@ -78,7 +78,7 @@ export const TrpcProvider: React.FC<{ children: React.ReactNode }> = ({
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
         <ReactQueryStreamedHydration>{children}</ReactQueryStreamedHydration>
-        <ReactQueryDevtools />
+        {/* <ReactQueryDevtools /> */}
       </QueryClientProvider>
     </trpc.Provider>
   );
