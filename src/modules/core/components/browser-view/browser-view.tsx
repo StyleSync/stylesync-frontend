@@ -38,12 +38,7 @@ export const BrowserView: FC<BrowserViewProps> = ({
           {siteName}
         </span>
       </div>
-      <div className='absolute top-[6.5%] left-[11.1%] flex bg-[#F1F3F4] z-10 w-fit pr-5 h-fit'>
-        {/* <span className='font-medium' style={{ fontSize }}> */}
-        {/*   <span className='text-gray-accent'>https://</span> */}
-        {/*   <span className='text-dark'>{siteUrl}</span> */}
-        {/* </span> */}
-      </div>
+      <div className='absolute top-[6.5%] left-[11.1%] flex bg-[#F1F3F4] z-10 w-fit pr-5 h-fit' />
       <div className={styles.content}>
         <div className={styles.ratio} />
         <Image

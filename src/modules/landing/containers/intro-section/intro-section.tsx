@@ -6,9 +6,11 @@ import picture from '@/assets/images/Banner picture.png';
 import Image from 'next/image';
 import { Icon } from '@/modules/core/components/icon';
 import { useRouter } from 'next/navigation';
+import { useIntl } from 'react-intl';
 
 export const IntroSection = () => {
   const router = useRouter();
+  const intl = useIntl();
 
   return (
     <section className='w-full h-screen flex flex-col sm:pt-[72px] pt-[58px]'>
@@ -18,24 +20,24 @@ export const IntroSection = () => {
           variant='title'
           weight='semibold'
         >
-          Discover Your Style with StyleSync
+          {intl.formatMessage({ id: 'pages.landing.intro.title' })}
         </Typography>
         <Typography
           variant='body1'
           className='text-center !text-gray-accent px-2 mt-6'
         >
-          Find the Perfect Professional for Your Beauty Needs
+          {intl.formatMessage({ id: 'pages.landing.intro.subtitle' })}
         </Typography>
         <Button
           rippleColor='rgba(255,255,255,0.3)'
           className='mx-auto bg-gradient-to-r z-10 from-[#FA719A] to-[#FDA571] transition mt-7 rounded-[26px] !h-[52px] text-white shadow-accentShadow shadow-orange/20 hover:shadow-[#FC858C]/30'
           classes={{
-            text: '!text-base',
+            text: '!text-base !font-semibold',
           }}
           onClick={() => {
             router.push('/app/search-pro');
           }}
-          text='Book Your Appointment Now'
+          text={intl.formatMessage({ id: 'pages.landing.intro.book' })}
           variant='unstyled'
         />
       </div>

@@ -7,7 +7,9 @@
   "general.credentials.password": "Password",
   "general.conjunction.and": "and",
   "general.conjunction.or": "or",
+
   "general.time.duration": "{numHours, plural, \n=1 {hour} \nother {hours}\n}",
+
   "general.service.makeup": "Makeup",
   "general.service.hair": "Hair",
   "general.service.nails": "Nails",
@@ -15,6 +17,7 @@
   "general.service.skincare": "Skincare",
   "general.service.eyebrows": "Eyebrows",
   "general.service.massage": "Massage",
+
   "validation.password.oneUppercaseChar": "One uppercase character",
   "validation.password.oneLowercaseChar": "One lowercase character",
   "validation.password.minLength": "{length} characters minimum",
@@ -40,6 +43,10 @@
   "signIn.social.instagram": "Sign in with Instagram",
   "signIn.social.facebook": "Sign in with Facebook",
   "signIn.header.signUpDescription": "Don't have an account?",
+
+  "header.proSearch.placeholder": "Search nearby",
+  "header.proSearch.selectYourCity": "Select your city",
+  "header.proSearch.findYourCity": "Find your city",
 
   "booking.form.name": "Name *",
   "booking.form.lastName": "Last name",
@@ -164,7 +171,7 @@
   "professional.settings.sidebar.about": "About",
   "professional.settings.sidebar.gallery": "Gallery",
   "professional.settings.sidebar.location": "Location",
-  "professional.settings.sidebar.app": "Application",
+  "professional.settings.sidebar.language": "Language",
 
   "professional.settings.services.title": "Services settings",
   "professional.settings.services.errorBox.title": "Connection with server has been interrupted",
@@ -255,5 +262,21 @@
   "photo.upload.modal.header.preview": "Display photo",
 
   "user.header.navigation.profile": "Profile",
-  "user.header.navigation.myBookings": "My bookings"
+  "user.header.navigation.myBookings": "My bookings",
+  "user.header.navigation.search": "Search",
+
+  "pages.searchPro.noFound.title": "Unfortunately, nothing was found in the city of Kyiv!",
+  "pages.searchPro.noFound.description": "Try specifying different search parameters",
+
+  "pages.landing.intro.title": "Discover Your Style with StyleSync",
+  "pages.landing.intro.subtitle": "Find the Perfect Professional for Your Beauty Needs",
+  "pages.landing.intro.book": "Book Your Appointment Now",
+  "pages.landing.features.booking.title": "Effortless Booking Features for Your Convenience",
+  "pages.landing.features.booking.description": "Enjoy seamless and hassle-free booking with our advanced features designed to save you time and simplify your experience",
+  "pages.landing.features.forPro.title": "Achieve Professional Success with StyleSync",
+  "pages.landing.features.forPro.description": "Join StyleSync to ensure reliable online booking, automated processes, and effective promotion, empowering your professional growth",
+  "pages.landing.services.title": "Discover Beauty Services Near You",
+  "pages.landing.services.description": "Experience top-tier beauty and wellness services, from makeup and hair to personalized fitness, all designed to ensure a seamless and efficient appointment.",
+  "pages.landing.mobileApp.title": "StyleSync Mobile App",
+  "pages.landing.mobileApp.description": "Manage bookings, automate processes, and promote your services on-the-go with our user-friendly mobile app"
 }

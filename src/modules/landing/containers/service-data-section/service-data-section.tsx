@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-
+import { useIntl } from 'react-intl';
 // components
 import { Button } from '@/modules/core/components/button';
 import ServicesSettingsScreenshot from '@/assets/images/services-settings-screenshot.png';
@@ -12,6 +12,8 @@ import { IphoneLayout } from '@/modules/core/components/iphone-layout';
 import { BrowserView } from '@/modules/core/components/browser-view';
 
 export const ServiceDataSection = () => {
+  const intl = useIntl();
+
   return (
     <section className='w-full px-[30px] md:px-[80px]  py-[60px]'>
       <div className='relative px-14  md:px-[80px] py-[50px]  md:py-[100px] rounded-3xl flex flex-col gap-[70px] md:gap-[100px] z-10'>
@@ -25,13 +27,16 @@ export const ServiceDataSection = () => {
         <div className='flex flex-col sm:grid sm:grid-cols-2 gap-12 lg:gap-16'>
           <div className='flex flex-col gap-10 pt-14'>
             <span className='max-w-[557px] text-4xl lg:text-5xl !text-black font-semibold'>
-              Effortless Booking Features for Your Convenience
+              {intl.formatMessage({
+                id: 'pages.landing.features.booking.title',
+              })}
             </span>
             <span className='text-base max-w-[550px] !text-dark'>
-              Enjoy seamless and hassle-free booking with our advanced features
-              designed to save you time and simplify your experience
+              {intl.formatMessage({
+                id: 'pages.landing.features.booking.description',
+              })}
             </span>
-            <Button text='Book Now' variant='outlined' className='' />
+            <Button text='Book Now' variant='outlined' />
           </div>
           <div className='flex items-end flex-1'>
             <IphoneLayout
@@ -65,12 +70,14 @@ export const ServiceDataSection = () => {
           </div>
           <div className='flex flex-col gap-10 pt-14'>
             <span className='max-w-[557px] text-4xl lg:text-5xl text-black font-semibold'>
-              Achieve Professional Success with StyleSync
+              {intl.formatMessage({
+                id: 'pages.landing.features.forPro.title',
+              })}
             </span>
             <span className='text-base max-w-[550px] !text-dark'>
-              Join StyleSync to ensure reliable online booking, automated
-              processes, and effective promotion, empowering your professional
-              growth
+              {intl.formatMessage({
+                id: 'pages.landing.features.forPro.description',
+              })}
             </span>
             <Button text='Become a Pro Now' variant='outlined' />
           </div>

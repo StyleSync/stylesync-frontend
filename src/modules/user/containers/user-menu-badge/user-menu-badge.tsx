@@ -120,11 +120,6 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
         </div>
         <DropdownMenu
           items={[
-            // {
-            //   id: 'share',
-            //   text: intl.formatMessage({ id: 'user.menu.budge.share' }),
-            //   icon: 'share',
-            // },
             {
               id: 'profile',
               text: 'My profile',

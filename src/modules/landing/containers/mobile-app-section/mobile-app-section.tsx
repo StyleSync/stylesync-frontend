@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
@@ -8,8 +9,11 @@ import google from '@/modules/landing/landing-image/google-play-badge.png';
 import { IphoneLayout } from '@/modules/core/components/iphone-layout';
 import Screenshot from '@/assets/images/screenshot.png';
 import Screenshot2 from '@/assets/images/screenshot2.png';
+import { useIntl } from 'react-intl';
 
 export const MobileAppSection = () => {
+  const intl = useIntl();
+
   return (
     <section className='relative w-full flex flex-col justify-center items-center mt-20 p-3'>
       <Image
@@ -30,14 +34,13 @@ export const MobileAppSection = () => {
           weight='semibold'
           className='!text-4xl md:!text-5xl !text-black text-center'
         >
-          StyleSync Mobile App
+          {intl.formatMessage({ id: 'pages.landing.mobileApp.title' })}
         </Typography>
         <Typography
           variant='body1'
           className='text-center !text-gray-accent max-w-[820px] px-2'
         >
-          Manage bookings, automate processes, and promote your services
-          on-the-go with our user-friendly mobile app
+          {intl.formatMessage({ id: 'pages.landing.mobileApp.description' })}
         </Typography>
         <div className='flex items-center justify-center gap-5 md:gap-8 z-0'>
           <Icon

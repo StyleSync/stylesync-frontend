@@ -11,7 +11,6 @@ export const LandingHeader = async () => {
 
   return (
     <Header
-      // className='!shadow-none'
       classes={{
         leftSlot: '!flex-[unset]',
         centralSlot: '!pl-14 hidden lg:block',

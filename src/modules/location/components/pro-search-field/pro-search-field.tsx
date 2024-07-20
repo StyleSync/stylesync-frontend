@@ -19,8 +19,10 @@ import { useGeocodingSuggestionsQuery } from '@/modules/location/hooks/use-geoco
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { ProfessionalSearchContext } from '@/modules/user/providers/professional-search-provider';
+import { useIntl } from 'react-intl';
 
 export const ProSearchField: FC<ProSearchFieldProps> = () => {
+  const intl = useIntl();
   const router = useRouter();
   // context
   const { place, searchQuery, onSearchQueryChange, onPlaceChange } = useContext(
@@ -53,7 +55,9 @@ export const ProSearchField: FC<ProSearchFieldProps> = () => {
         <input
           value={searchQuery}
           onChange={handleSearchChange}
-          placeholder='Search nearby'
+          placeholder={intl.formatMessage({
+            id: 'header.proSearch.placeholder',
+          })}
           className='text-base placeholder:text-sm md:text-sm outline-none pl-6 pr-2 bg-transparent w-full'
         />
       </div>
@@ -73,7 +77,10 @@ export const ProSearchField: FC<ProSearchFieldProps> = () => {
               className='text-inherit shrink-0'
             />
             <span className='text-sm text-inherit ml-3 mr-2 truncate flex-1'>
-              {place?.properties.full_address || 'Select your city'}
+              {place?.properties.full_address ||
+                intl.formatMessage({
+                  id: 'header.proSearch.selectYourCity',
+                })}
             </span>
             <Icon
               name='chevron-bottom'
@@ -93,7 +100,9 @@ export const ProSearchField: FC<ProSearchFieldProps> = () => {
           <TextField
             variant='input'
             className='!h-[40px] !text-sm !px-6 flex-1'
-            placeholder='Find your city'
+            placeholder={intl.formatMessage({
+              id: 'header.proSearch.findYourCity',
+            })}
             value={citySearchQuery}
             onChange={(e) => {
               setCitySearchQuery(e.target.value);

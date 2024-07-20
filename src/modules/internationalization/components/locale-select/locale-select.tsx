@@ -55,7 +55,7 @@ export const LocaleSelect = () => {
       trigger={
         <Button
           icon={currentLocale.icon}
-          text='Language'
+          text={currentLocale.name}
           onClick={isOpen.toggle}
           variant='unstyled'
           iconEnd='chevron-bottom'

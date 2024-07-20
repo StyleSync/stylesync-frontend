@@ -36,7 +36,9 @@ export const UserHeaderNavigation: FC<{
         {
           icon: 'search',
           href: '/app/search-pro',
-          title: 'Find Pro',
+          title: intl.formatMessage({
+            id: 'user.header.navigation.search',
+          }),
         },
       ];
     }

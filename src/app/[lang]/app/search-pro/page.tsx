@@ -18,8 +18,10 @@ import type { BBox } from 'geojson';
 import { bboxLargestSideInKm } from '@/modules/location/utils/bbox.utils';
 import { ProSearchFilter } from '@/modules/user/containers/pro-search-filter';
 import { mapDateToDayEnum } from '@/modules/core/utils/date.utils';
+import { useIntl } from 'react-intl';
 
 export default function SearchProPage() {
+  const intl = useIntl();
   // context
   const {
     date,
@@ -116,12 +118,15 @@ export default function SearchProPage() {
                     ) : (
                       <div className='absolute top-0 left-0 w-full h-full flex flex-col gap-y-4'>
                         <span className='text-dark text-xl font-medium'>
+                          {intl.formatMessage({
+                            id: 'pages.searchPro.noFound.title',
+                          })}
                           {/* На жаль у місті Київ нічого не знайдено! */}
-                          Unfortunately, nothing was found in the city of Kyiv!
                         </span>
                         <span className='text-gray text-sm font-medium'>
-                          {/* Спробуйте вказати інші параметри пошуку. */}
-                          Try specifying different search parameters.
+                          {intl.formatMessage({
+                            id: 'pages.searchPro.noFound.description',
+                          })}
                         </span>
                       </div>
                     )}
