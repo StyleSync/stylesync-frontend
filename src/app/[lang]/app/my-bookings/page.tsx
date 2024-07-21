@@ -16,13 +16,11 @@ export default async function MyBookings() {
 
   return (
     <div className={styles.root}>
-      <section className='pageContent'>
+      <section className='px-8'>
         <MyBookingsTabs />
       </section>
-      <section className={styles.pageContent}>
-        <div className='pageContent'>
-          <MyBookingsContent />
-        </div>
+      <section className='relative flex flex-1 w-full shadow bg-white px-8'>
+        <MyBookingsContent />
       </section>
     </div>
   );

@@ -1,11 +1,10 @@
+'use client';
 import { useMemo, type FC } from 'react';
 import { getHours, set, getMinutes } from 'date-fns';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { useIntl } from 'react-intl';
 
-// components
-import { Typography } from '@/modules/core/components/typogrpahy';
 // type
 import type { CalendarProps } from './calendar.interface';
 // utils
@@ -15,6 +14,7 @@ import { formatI18n } from '@/modules/internationalization/utils/data-fns-intern
 // styles
 import './calendar.scss';
 import styles from './calendarEvent.module.scss';
+import { Icon } from '@/modules/core/components/icon';
 
 export const Calendar: FC<CalendarProps> = () => {
   const intl = useIntl();
@@ -63,7 +63,6 @@ export const Calendar: FC<CalendarProps> = () => {
       <FullCalendar
         events={eventsList}
         viewDidMount={handleViewMount}
-        eventBackgroundColor='#26c967'
         plugins={[timeGridPlugin]}
         initialView='timeGridWeek'
         customButtons={{
@@ -100,6 +99,7 @@ export const Calendar: FC<CalendarProps> = () => {
           </div>
         )}
         allDaySlot={false}
+        eventClassNames={() => 'bg-green-light'}
         height={'75vh'}
         nowIndicator
         slotMinTime={'06:00'}
@@ -109,13 +109,18 @@ export const Calendar: FC<CalendarProps> = () => {
 
           return (
             <div key={event.id} className={styles.eventContainer}>
-              {/* TODO: Avatar */}
-              <Typography className={styles.eventText} variant='small'>
-                {event.title}
-              </Typography>
-              <Typography className={styles.eventText}>
-                {startTime} - {endTime}
-              </Typography>
+              <span className='text-dark'>{event.title}</span>
+              <div className='flex items-center gap-x-1'>
+                <Icon
+                  name='time'
+                  width={16}
+                  height={16}
+                  className='text-gray'
+                />
+                <span className='text-gray font-medium text-sm'>
+                  {startTime} - {endTime}
+                </span>
+              </div>
             </div>
           );
         }}
