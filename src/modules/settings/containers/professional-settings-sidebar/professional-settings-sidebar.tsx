@@ -78,7 +78,9 @@ export const ProfessionalSettingsSidebar: FC<UserSettingsSidebarProps> = () => {
       },
       {
         id: 'app',
-        title: intl.formatMessage({ id: 'professional.settings.sidebar.app' }),
+        title: intl.formatMessage({
+          id: 'professional.settings.sidebar.language',
+        }),
         links: [
           {
             id: 'language',

@@ -19,6 +19,7 @@ const Header: FC<HeaderProps> & { BottomContent: FC<ChildrenProp> } = ({
   className,
   centralSlot,
   rightSlot,
+  classes,
 }) => {
   const isPageScrolled = useBoolean();
 
@@ -41,14 +42,18 @@ const Header: FC<HeaderProps> & { BottomContent: FC<ChildrenProp> } = ({
       )}
       style={style}
     >
-      <div className={styles.content}>
-        <div className={styles.leftSlot}>
+      <div className={clsx(styles.content, classes?.content)}>
+        <div className={clsx(styles.leftSlot, classes?.leftSlot)}>
           <Link href='/'>
             <Icon className={styles.logo} name='stylesync-logo' width={150} />
           </Link>
         </div>
-        <div className={styles.centralSlot}>{centralSlot}</div>
-        <div className={styles.rightSlot}>{rightSlot}</div>
+        <div className={clsx(styles.centralSlot, classes?.centralSlot)}>
+          {centralSlot}
+        </div>
+        <div className={clsx(styles.rightSlot, classes?.rightSlot)}>
+          {rightSlot}
+        </div>
       </div>
       <div id='header-bottom-node' />
     </header>
