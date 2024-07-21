@@ -8,8 +8,11 @@
 
 .fc-view-harness {
   background-color: #fff;
-  box-shadow: variables.$main-box-shadow;
+  //box-shadow: variables.$main-box-shadow;
   border-radius: variables.$border-radius-medium;
+}
+.fc .fc-scrollgrid-section-liquid > td {
+  background: linear-gradient(to bottom, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0) 20%);
 }
 
 .fc-timegrid-axis-frame {

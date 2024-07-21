@@ -15,6 +15,7 @@ const defaultValues = {
   name: '',
   lastName: '',
   phone: '',
+  email: '',
   comment: '',
   email: '',
 };
