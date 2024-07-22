@@ -92,6 +92,7 @@ export const ServiceSelect: FC<ServiceSelectProps> = ({
       popoverProps={{
         followTriggerWidth: true,
         disablePortal: true,
+        align: 'start',
         ...popoverProps,
       }}
     />

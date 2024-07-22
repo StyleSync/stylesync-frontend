@@ -8,11 +8,15 @@ import Bg from '@/assets/images/bg-1.png';
 import type { ChildrenProp } from '@/modules/core/types/react.types';
 
 import styles from './app-layout.module.scss';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/modules/auth/constants/auth-server.constants';
 
-export default function AppLayout({ children }: ChildrenProp) {
+export default async function AppLayout({ children }: ChildrenProp) {
+  const session = await getServerSession(authOptions);
+
   return (
     <>
-      <AppHeader />
+      <AppHeader session={session} />
       <Image
         className={styles.bg}
         src={Bg.src}

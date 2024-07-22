@@ -15,5 +15,10 @@ type Story = StoryObj<typeof BrowserView>;
 export const Base: Story = {
   args: {
     image: AboutProPreview,
+    meta: {
+      siteIcon: 'google-logo',
+      siteName: 'StyleSync',
+      siteUrl: 'stylesync.com',
+    },
   },
 };

@@ -8,11 +8,13 @@
   rippleSecondaryColor: lighten(variables.$primary-color, 30%);
   rippleOutlinedColor: lighten(variables.$primary-color, 30%);
   rippleDangerColor: lighten(variables.$error-color, 20%);
+  rippleLightColor: variables.$primary-light-color;
   // spinner
   spinnerPrimaryColor: #fff;
   spinnerSecondaryColor: variables.$primary-color;
   spinnerOutlinedColor: variables.$primary-color;
   spinnerDangerColor: variables.$error-color;
+  spinnerLightColor: variables.$dark-color;
 }
 
 .base {
@@ -128,5 +130,42 @@
   &:disabled {
     border-color: darken(variables.$error-color, 10%);
     color: darken(variables.$error-color, 10%);
+  }
+}
+
+.textVariant {
+  background-color: transparent;
+  color: variables.$primary-color;
+  transition: variables.$transition-ultrafast;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px variables.$primary-color;
+  }
+
+  &:hover {
+    color: darken(variables.$primary-color, 15%);
+  }
+
+  &:disabled {
+    color: darken(variables.$primary-color, 10%);
+  }
+}
+
+.light {
+  background-color: #fff;
+  color: variables.$dark-color;
+  transition: variables.$transition-ultrafast;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px variables.$dark-color;
+  }
+
+  &:hover {
+    color: variables.$primary-color;
+    border-color: variables.$primary-light-color;
+  }
+
+  &:disabled {
+    color: darken(variables.$grey-color, 10%);
   }
 }

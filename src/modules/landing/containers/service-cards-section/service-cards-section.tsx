@@ -5,22 +5,23 @@ import { Typography } from '@/modules/core/components/typogrpahy';
 import { ServiceCard } from '@/modules/landing/components/service-card/service-card';
 import 'swiper/css';
 import { services } from './service-data';
+import { useIntl } from 'react-intl';
 
 export const ServiceCardSection = () => {
+  const intl = useIntl();
+
   return (
     <section className='mt-24 flex flex-col items-center z-0'>
       <Typography
         variant='title'
         weight='semibold'
-        className='!text-4xl md:!text-5xl text-dark text-center px-2'
+        className='!text-4xl md:!text-5xl !text-black text-center px-2'
       >
-        Easily Appointment with patient
+        {intl.formatMessage({ id: 'pages.landing.services.title' })}
       </Typography>
-      <Typography className='text-center !text-gray max-w-[820px] mt-5 px-2'>
-        An efficient dental appointment is one that is well-organized, minimizes
-        waiting times, and ensures effective communication between the dental
-        team and the patient.
-      </Typography>
+      <span className='text-center text-base !text-gray-accent max-w-[820px] mt-10 px-2'>
+        {intl.formatMessage({ id: 'pages.landing.services.description' })}
+      </span>
 
       <div className='w-full mt-16'>
         <Swiper
@@ -52,12 +53,8 @@ export const ServiceCardSection = () => {
           }}
         >
           {services.map((card, index) => (
-            <SwiperSlide className='w-full h-full' key={index}>
-              <ServiceCard
-                image={card.image}
-                title={card.title}
-                services={card.services}
-              />
+            <SwiperSlide className='w-full h-full pb-14 pt-4' key={index}>
+              <ServiceCard image={card.image} title={card.title} />
             </SwiperSlide>
           ))}
         </Swiper>

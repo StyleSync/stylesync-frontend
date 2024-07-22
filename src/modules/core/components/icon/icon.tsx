@@ -60,6 +60,7 @@ import ShareIcon from '@/assets/icons/share.svg?icon';
 import CommentIcon from '@/assets/icons/comment.svg?icon';
 import ArrowIncrease from '@/assets/icons/arrow-increase.svg?icon';
 import SuccessIcon from '@/assets/icons/success.svg?icon';
+import SearchIcon from '@/assets/icons/search.svg?icon';
 import MediaIcon from '@/assets/icons/media.svg?icon';
 import InstagramLanding from '@/assets/icons/instagram-landing.svg?icon';
 import XLanding from '@/assets/icons/x-landing.svg?icon';
@@ -67,6 +68,12 @@ import FacebookLanding from '@/assets/icons/facebook-landing.svg?icon';
 import LogoLanding from '@/assets/icons/logo-landing.svg?icon';
 import AppleLogoLanding from '@/assets/icons/apple-logo-landing.svg?icon';
 import GoogleLogoLanding from '@/assets/icons/google-play-logo.svg?icon';
+import Fitness from '@/assets/icons/fitness.svg?icon';
+import FaceMassage from '@/assets/icons/face-massage.svg?icon';
+import Filter from '@/assets/icons/filter.svg?icon';
+import Eyebrows from '@/assets/icons/eyebrows.svg?icon';
+import Skincare from '@/assets/icons/skincare.svg?icon';
+
 import type { SVGComponentElement } from './icon.interface';
 
 export const icons = {
@@ -137,6 +144,12 @@ export const icons = {
   success: SuccessIcon,
   'arrow-increase': ArrowIncrease,
   media: MediaIcon,
+  search: SearchIcon,
+  fitness: Fitness,
+  faceMassage: FaceMassage,
+  filter: Filter,
+  eyebrows: Eyebrows,
+  skincare: Skincare,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;

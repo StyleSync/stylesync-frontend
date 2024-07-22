@@ -7,10 +7,17 @@
   "general.credentials.password": "Пароль",
   "general.conjunction.and": "і",
   "general.conjunction.or": "або",
+
   "general.time.duration": "{numHours, plural, \n=1 {hour} \nother {hours}\n}",
+
   "general.service.makeup": "Макіяж",
   "general.service.hair": "Волосся",
   "general.service.nails": "Нігті",
+  "general.service.fitness": "Фітнес",
+  "general.service.skincare": "Догляд за шкірою",
+  "general.service.eyebrows": "Брови",
+  "general.service.massage": "Масаж",
+
   "validation.password.oneUppercaseChar": "Одна велика буква",
   "validation.password.oneLowercaseChar": "One мала буква",
   "validation.password.minLength": "Мінімум {length} символів",
@@ -36,6 +43,10 @@
   "signIn.social.instagram": "Увійти через Instagram",
   "signIn.social.facebook": "Увійти через Facebook",
   "signIn.header.signUpDescription": "Не маєте аккаунту?",
+
+  "header.proSearch.placeholder": "Пошук",
+  "header.proSearch.selectYourCity": "Вибрати місто",
+  "header.proSearch.findYourCity": "Знайдіть своє місто",
 
   "booking.form.name": "Ім'я *",
   "booking.form.lastName": "Прізвище",
@@ -162,7 +173,7 @@
   "professional.settings.sidebar.about": "Про себе",
   "professional.settings.sidebar.gallery": "Галерея",
   "professional.settings.sidebar.location": "Місцезнаходження",
-  "professional.settings.sidebar.app": "Додаток",
+  "professional.settings.sidebar.language": "Мова",
 
   "professional.settings.services.title": "Налаштування послуг",
   "professional.settings.services.errorBox.title": "Зв'язок з сервером було перервано",
@@ -252,5 +263,21 @@
   "photo.upload.modal.header.preview": "Показати фото",
 
   "user.header.navigation.profile": "Профіль",
-  "user.header.navigation.myBookings": "Мої бронювання"
+  "user.header.navigation.myBookings": "Мої бронювання",
+  "user.header.navigation.search": "Пошук",
+
+  "pages.searchPro.noFound.title": "На жаль у місті Київ нічого не знайдено!",
+  "pages.searchPro.noFound.description": "Спробуйте вказати інші параметри пошуку",
+
+  "pages.landing.intro.title": "Відкрийте новий стиль з StyleSync",
+  "pages.landing.intro.subtitle": "Оберіть Найкращого Спеціаліста для Ваших б'юті-потреб",
+  "pages.landing.intro.book": "Забронювати візит зараз",
+  "pages.landing.features.booking.title": "Зручне бронювання для вашого комфорту",
+  "pages.landing.features.booking.description": "Насолоджуйтесь легким і простим бронюванням завдяки нашим функціям, розробленим для економії вашого часу та спрощеним пошуком",
+  "pages.landing.features.forPro.title": "Досягайте професійного успіху разом із StyleSync",
+  "pages.landing.features.forPro.description": "Приєднуйтесь до StyleSync, щоб забезпечити надійне онлайн-бронювання, автоматизовані процеси та ефективне просування, що сприятиме вашому професійному зростанню.",
+  "pages.landing.services.title": "Б'юті-послуги Поблизу",
+  "pages.landing.services.description": "Отримайте високий рівень послуг у сфері краси та здоров'я: від макіяжу та зачісок до індивідуальних фітнес-програм",
+  "pages.landing.mobileApp.title": "Мобільний додаток StyleSync",
+  "pages.landing.mobileApp.description": "Керуйте бронюваннями, автоматизуйте процеси та просувайте свої послуги в будь-який час за допомогою нашого мобільного додатку"
 }

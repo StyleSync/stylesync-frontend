@@ -13,8 +13,8 @@ export const generateDates = () => {
   return daysOfWeek.map((item) => startOfDay(item).toISOString());
 };
 
-export const mapDateToDayEnum = (dateString: string) => {
-  const dayNumber = getDay(new Date(dateString));
+export const mapDateToDayEnum = (date: string | number | Date) => {
+  const dayNumber = getDay(new Date(date));
   const dayMap: Record<number, Day> = {
     0: Day.SUNDAY,
     1: Day.MONDAY,

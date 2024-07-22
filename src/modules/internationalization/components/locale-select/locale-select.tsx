@@ -20,7 +20,7 @@ const LocaleUIMap: Record<
 > = {
   en: {
     id: 'en',
-    name: 'United States',
+    name: 'English (US)',
     icon: 'flag-usa',
   },
   uk: {
@@ -55,7 +55,7 @@ export const LocaleSelect = () => {
       trigger={
         <Button
           icon={currentLocale.icon}
-          text='Language'
+          text={currentLocale.name}
           onClick={isOpen.toggle}
           variant='unstyled'
           iconEnd='chevron-bottom'

@@ -26,7 +26,7 @@ export const ProData: FC<ProDataProps> = ({ professional, session }) => {
   const isContactOpen = useBoolean();
 
   return (
-    <div className='flex items-center justify-between w-full bg-white py-5 px-6'>
+    <div className='flex items-center z-10 justify-between w-full bg-white py-5 px-6'>
       <div className='flex flex-col gap-y-3'>
         <div className='flex w-fit items-center gap-x-2 text-dark'>
           <Icon name='menu' className='w-4 h-4 !text-gray' />
