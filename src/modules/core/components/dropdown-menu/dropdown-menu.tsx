@@ -1,4 +1,5 @@
 // components
+import type { IconName } from '@/modules/core/components/icon';
 import { Icon } from '@/modules/core/components/icon';
 import { Popover } from '@/modules/core/components/popover';
 import { Typography } from '@/modules/core/components/typogrpahy';
@@ -61,9 +62,16 @@ export function DropdownMenu<OptionData = undefined>({
                 render(item)
               ) : (
                 <>
-                  {item.icon && (
-                    <Icon name={item.icon} width={20} height={20} />
-                  )}
+                  {item.icon &&
+                    (typeof item.icon === 'string' ? (
+                      <Icon
+                        name={item.icon as IconName}
+                        width={20}
+                        height={20}
+                      />
+                    ) : (
+                      <>{item.icon}</>
+                    ))}
                   <Typography {...typographyProps}>{item.text}</Typography>
                 </>
               )}

@@ -18,6 +18,7 @@ export const Popover: FC<PopoverProps> = ({
   align,
   alignOffset,
   side,
+  classes,
   sideOffset = 5,
   followTriggerWidth = false,
   disableAutofocus = false,
@@ -31,15 +32,10 @@ export const Popover: FC<PopoverProps> = ({
   const { width } = useResizeObserver({
     ref: popperRef,
   });
-
   // refs
   const { current: PortalOrFragment } = useRef(
     disablePortal ? Fragment : RPopover.Portal
   );
-
-  // useEffect(() => {
-  //   setTriggerRef(triggerRef.current);
-  // }, [setTriggerRef]);
 
   const handlePointerDownOutside = useCallback(
     (e: PointerDownOutsideEvent) => {
@@ -75,7 +71,8 @@ export const Popover: FC<PopoverProps> = ({
               className={clsx(
                 styles.content,
                 { [styles.backgroundBlurEffect]: backgroundBlurEffect },
-                styles[status]
+                styles[status],
+                classes?.content
               )}
               style={{
                 minWidth:

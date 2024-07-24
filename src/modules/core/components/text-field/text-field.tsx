@@ -25,6 +25,7 @@ export const TextField = forwardRef<
       error,
       className,
       classes,
+      startAdornment,
       endAdornment,
       font = 'INTER',
       variant = 'input',
@@ -67,6 +68,9 @@ export const TextField = forwardRef<
           classes?.container
         )}
       >
+        {startAdornment && (
+          <div className={clsx(styles.startAdornment)}>{startAdornment}</div>
+        )}
         {isInputProps(variant, props) && (
           <input
             ref={combinedRefs as ForwardedRef<HTMLInputElement>}

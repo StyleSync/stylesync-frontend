@@ -6,7 +6,7 @@ import type { TypographyProps } from '@/modules/core/components/typogrpahy/typog
 export type DropdownItem<Data = undefined> = {
   id: string;
   text: string;
-  icon?: IconName;
+  icon?: IconName | ReactNode;
   variant?: 'default' | 'danger' | 'primary';
   className?: string;
   disabled?: boolean;
