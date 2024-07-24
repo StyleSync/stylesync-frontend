@@ -1,10 +1,9 @@
-'use client';
 import { useMemo, type FC } from 'react';
 import { getHours, set, getMinutes } from 'date-fns';
-import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { useIntl } from 'react-intl';
-
+// components
+import { Icon } from '@/modules/core/components/icon';
 // type
 import type { CalendarProps } from './calendar.interface';
 // utils
@@ -12,8 +11,14 @@ import { getTime } from '@/modules/schedule/utils/get-time';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
 // styles
-import './calendar.scss';
 import styles from './calendarEvent.module.scss';
+
+import './calendar.scss';
+import dynamic from 'next/dynamic';
+
+const FullCalendar = dynamic(() => import('@fullcalendar/react'), {
+  ssr: false,
+});
 import { weekdays } from '@/modules/schedule/constants/schedule.constants';
 import type { EventInput } from '@fullcalendar/core';
 import { Icon } from '@/modules/core/components/icon';
@@ -86,31 +91,18 @@ export const Calendar: FC<CalendarProps> = () => {
   }, [events]);
 
   return (
-    <div className='mostly-customized'>
+    <div className='w-full'>
       <FullCalendar
         businessHours={businessHours}
         events={eventsList}
         viewDidMount={handleViewMount}
         plugins={[timeGridPlugin]}
         initialView='timeGridWeek'
-        customButtons={{
-          customButtons: {
-            text: intl.formatMessage({ id: 'calendar.customButtons.approved' }),
-          },
-          customButtons2: {
-            text: intl.formatMessage({
-              id: 'calendar.customButtons.requested',
-            }),
-          },
-          customButtons3: {
-            text: intl.formatMessage({ id: 'calendar.customButtons.past' }),
-          },
-        }}
         buttonText={{ today: 'Today' }}
         headerToolbar={{
-          left: 'today prev,next',
-          center: 'title',
-          right: 'customButtons customButtons2 customButtons3',
+          left: 'title',
+          center: 'prev,next',
+          right: '',
         }}
         dayHeaderFormat={({ date }) =>
           formatI18n(date.marker, 'dd E', intl.locale)
@@ -127,7 +119,9 @@ export const Calendar: FC<CalendarProps> = () => {
           </div>
         )}
         allDaySlot={false}
-        eventClassNames={() => 'bg-green-light'}
+        eventClassNames={() =>
+          '!bg-green-light py-2 cursor-pointer hover:saturate-[1.6] hover:shadow hover:border hover:border-green transition'
+        }
         height={'75vh'}
         nowIndicator
         eventContent={({ event }) => {
@@ -135,19 +129,27 @@ export const Calendar: FC<CalendarProps> = () => {
           const endTime = getTime(event.end);
 
           return (
-            <div key={event.id} className={styles.eventContainer}>
-              <span className='text-dark'>{event.title}</span>
+            <div
+              key={event.id}
+              className='relative flex flex-col border-l-[3px] border-green pl-3 gap-y-1'
+            >
+              <div className='flex'>
+                <span className='text-base font-medium text-black truncate'>
+                  {event.title}
+                </span>
+              </div>
               <div className='flex items-center gap-x-1'>
                 <Icon
                   name='time'
                   width={16}
                   height={16}
-                  className='text-gray'
+                  className='text-gray-accent'
                 />
-                <span className='text-gray font-medium text-sm'>
+                <span className='text-gray-accent font-medium text-sm'>
                   {startTime} - {endTime}
                 </span>
               </div>
+              <div className='w-1 h-full bg-green absolute top-0 -left-1 rounded-full' />
             </div>
           );
         }}

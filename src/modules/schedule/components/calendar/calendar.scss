@@ -2,29 +2,28 @@
 @use '@/styles/utils';
 
 :root {
-  --fc-button-active-bg-color: #c5d8f8;
+  --fc-button-active-bg-color: #c5d8f8 !important;
   --fc-event-border-color: transparent !important;
 }
 
 .fc-view-harness {
-  background-color: #fff;
-  //box-shadow: variables.$main-box-shadow;
-  border-radius: variables.$border-radius-medium;
+  background-color: #fff !important;
+  border-radius: variables.$border-radius-medium !important;
 }
 .fc .fc-scrollgrid-section-liquid > td {
-  background: linear-gradient(to bottom, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0) 20%);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0) 20%) !important;
 }
 
 .fc-timegrid-axis-frame {
-  align-items: center;
-  display: flex;
+  align-items: center !important;
+  display: flex !important;
   justify-content: center !important;
-  overflow: hidden;
-  padding-top: utils.spacing(2.3);
+  overflow: hidden !important;
+  padding-top: utils.spacing(2.3) !important;
 }
 
 .fc-timegrid-axis {
-  font-weight: normal;
+  font-weight: normal !important;
 }
 
 .fc-col-header-cell.fc-day.fc-day-today {
@@ -36,48 +35,49 @@
 }
 
 .fc .fc-toolbar {
-  align-items: center;
-  display: flex;
-  justify-content: left;
-  column-gap: utils.spacing(3);
+  align-items: center !important;
+  display: flex !important;
+  justify-content: left !important;
+  column-gap: utils.spacing(3) !important;
+
   .fc-toolbar-chunk:nth-child(2) {
-    flex: 1;
+    flex: 1 !important;
   }
   .fc-toolbar-chunk:nth-child(3) {
-    display: flex;
-    column-gap: 15px;
+    display: flex !important;
+    column-gap: 15px !important;
   }
 }
 
 .fc-theme-standard {
   td {
-    border-color: #edf4fc;
+    border-color: #edf4fc !important;
   }
 
   th {
-    border-color: #edf4fc;
+    border-color: #edf4fc !important;
 
     .fc-scrollgrid-sync-inner {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 50px;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      height: 50px !important;
 
       a {
-        font-size: 16px;
-        font-weight: 400;
+        font-size: 16px !important;
+        font-weight: 400 !important;
       }
     }
   }
 
   .fc-scrollgrid {
-    border: none;
+    border: none !important;
   }
 }
 
 .fc {
   .fc-timegrid-slot {
-    height: utils.spacing(6);
+    height: utils.spacing(6) !important;
   }
 
   .fc-event-border-color {
@@ -85,41 +85,29 @@
   }
 
   .fc-toolbar-title {
-    font-size: 18px;
-    font-weight: 500;
-    color: variables.$dark-color;
+    font-size: 18px !important;
+    font-weight: 500 !important;
+    color: variables.$dark-color !important;
   }
 
   .fc-timegrid-slot-label-cushion {
-    font-size: 14px;
-    color: variables.$dark-color;
+    font-size: 14px !important;
+    color: variables.$dark-color !important;
   }
 
   .fc-toolbar-chunk:last-child {
-    margin-left: utils.spacing(2);
+    margin-left: utils.spacing(2) !important;
   }
 
   .fc-today-button {
-    color: variables.$primary-color;
-    background-color: variables.$primary-light-color;
-    border-radius: 12px !important;
-    border: none;
-
-    &:hover {
-      background-color: darken(variables.$primary-light-color, 2%);
-      color: variables.$primary-color;
-    }
-
-    &:disabled {
-      background-color: transparent;
-      color: variables.$primary-color;
-    }
+    display: none !important;
   }
 
   .fc-timegrid-now-indicator-line {
-    border-color: rgba(239, 0, 0, 1);
-    border-width: 2px 0px 0px;
-    position: relative;
+    border-color: rgba(239, 0, 0, 1) !important;
+    border-width: 2px 0 0 !important;
+    position: relative !important;
+
     &:after {
       position: absolute;
       content: '';
@@ -133,7 +121,7 @@
   }
 
   .fc-timegrid-col.fc-day-today {
-    background: transparent;
+    background: transparent !important;
   }
 
   .fc-timegrid-now-indicator-arrow {
@@ -153,61 +141,62 @@
   }
 
   .fc-scroller::-webkit-scrollbar-thumb {
-    width: 8px;
-    background-color: variables.$primary-light-color;
-    border-radius: 10px;
+    width: 8px !important;
+    background-color: variables.$primary-light-color !important;
+    border-radius: 10px !important;
     border-color: variables.$primary-color !important;
   }
 
   .fc-scroller::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
+    background-color: #f1f1f1 !important;
   }
 
   .fc-button-group {
     .fc-button-primary {
-      background-color: variables.$primary-light-color;
-      border: none;
+      background-color: transparent !important;
+      border: 1px solid variables.$primary-color !important;
       border-radius: 50% !important;
-      width: 36px;
-      height: 36px;
-      margin: 0 8px;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      outline: none;
-      transition: variables.$transition-ultrafast;
+      width: 2rem !important;
+      height: 2rem !important;
+      margin: 0 8px !important;
+      padding: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      outline: none !important;
+      transition: variables.$transition-ultrafast !important;
 
       &:hover {
-        background-color: darken(variables.$primary-light-color, 2%);
+        background-color: darken(variables.$primary-light-color, 2%) !important;
       }
 
       &:active {
-        box-shadow: none;
+        box-shadow: none !important;
       }
 
       &:focus {
-        box-shadow: none;
+        box-shadow: none !important;
       }
 
       &:focus-visible {
-        box-shadow: 0 0 0 2px #fff, 0 0 0 4px variables.$primary-color;
+        box-shadow: 0 0 0 2px #fff, 0 0 0 4px variables.$primary-color !important;
       }
 
       .fc-icon {
-        color: variables.$primary-color;
-        font-size: 18px;
+        color: variables.$primary-color !important;
+        font-size: 18px !important;
       }
     }
   }
 
   .fc-customButtons-button {
-    background-color: #fff;
-    color: black;
-    font-size: 14px;
-    border: transparent;
-    position: relative;
-    pointer-events: none;
+    background-color: #fff !important;
+    color: black !important;
+    font-size: 14px !important;
+    border: transparent !important;
+    position: relative !important;
+    pointer-events: none !important;
+
     &::before {
       position: absolute;
       content: '';
@@ -219,9 +208,9 @@
       border-radius: 50%;
     }
     &:hover {
-      cursor: default;
-      background-color: #fff;
-      color: black;
+      cursor: default !important;
+      background-color: #fff !important;
+      color: black !important;
     }
     &:active {
       border-color: #fff !important;
@@ -235,12 +224,12 @@
   }
 
   .fc-customButtons2-button {
-    background-color: #fff;
-    color: black;
-    font-size: 14px;
-    border: transparent;
-    position: relative;
-    pointer-events: none;
+    background-color: #fff !important;
+    color: black !important;
+    font-size: 14px !important;
+    border: transparent !important;
+    position: relative !important;
+    pointer-events: none !important;
 
     &::before {
       position: absolute;
@@ -254,9 +243,9 @@
       border-radius: 50%;
     }
     &:hover {
-      cursor: default;
-      background-color: #fff;
-      color: black;
+      cursor: default !important;
+      background-color: #fff !important;
+      color: black !important;
     }
     &:active {
       border-color: #fff !important;
@@ -264,60 +253,72 @@
       background-color: transparent !important;
     }
     &:focus {
-      box-shadow: none;
+      box-shadow: none !important;
       border-color: #fff !important;
     }
   }
 
   .fc-customButtons3-button {
-    background-color: #fff;
-    color: black;
-    font-size: 14px;
-    border: transparent;
-    position: relative;
-    pointer-events: none;
+    background-color: #fff !important;
+    color: black !important;
+    font-size: 14px !important;
+    border: transparent !important;
+    position: relative !important;
+    pointer-events: none !important;
 
     &::before {
-      position: absolute;
-      content: '';
-      top: 9px;
-      left: -13px;
-      width: 15px;
-      height: 15px;
-      background-color: rgba(147, 157, 170, 1);
-      border-radius: 50%;
+      position: absolute !important;
+      content: '' !important;
+      top: 9px !important;
+      left: -13px !important;
+      width: 15px !important;
+      height: 15px !important;
+      background-color: rgba(147, 157, 170, 1) !important;
+      border-radius: 50% !important;
     }
+
     &:hover {
-      cursor: default;
-      background-color: #fff;
-      color: black;
+      cursor: default !important;
+      background-color: #fff !important;
+      color: black !important;
     }
+
     &:active {
       border-color: #fff !important;
       color: black !important;
       background-color: transparent !important;
     }
+
     &:focus {
-      box-shadow: none;
+      box-shadow: none !important;
       border-color: #fff !important;
     }
   }
 }
 
 .left-col {
-  width: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
+  width: 70px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+
   &::after {
-    position: absolute;
-    content: '';
-    bottom: -16px;
-    left: 0;
-    width: 106%;
-    height: 1px;
-    background-color: #ffffff;
+    position: absolute !important;
+    content: '' !important;
+    bottom: -16px !important;
+    left: 0 !important;
+    width: 106% !important;
+    height: 1px !important;
+    background-color: #ffffff !important;
+  }
+}
+
+.fc .fc-timegrid-now-indicator-line {
+  border-color: variables.$primary-color !important;
+
+  &::after {
+    background-color: variables.$primary-color !important;
   }
 }
 
