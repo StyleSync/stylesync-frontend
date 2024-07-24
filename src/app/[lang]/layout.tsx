@@ -14,6 +14,7 @@ import type { PageParams } from '@/modules/core/types/next.types';
 import { fonts } from '@/styles/fonts';
 
 import '@/styles/globals.scss';
+import '@/modules/schedule/components/calendar/calendar.scss';
 
 export default async function RootLayout({
   children,
