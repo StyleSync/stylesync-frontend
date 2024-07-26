@@ -63,7 +63,7 @@ export const BookingPreview = () => {
 
   // queries
   const bookingDetails = trpc.booking.getByCode.useQuery({
-    code,
+    code: Array.isArray(code) ? code[0] : code,
     expand: ['serviceProfessional'],
   });
 

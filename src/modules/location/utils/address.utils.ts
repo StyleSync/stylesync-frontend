@@ -1,5 +1,5 @@
 export const getAddressGoogleLink = <
-  T extends { latitude?: string; longitude?: string }
+  T extends { latitude?: string; longitude?: string },
 >(
   address?: T
 ) => {
