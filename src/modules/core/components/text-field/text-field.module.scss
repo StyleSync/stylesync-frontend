@@ -18,7 +18,8 @@
     }
   }
 
-  &:focus-within, &.active {
+  &:focus-within,
+  &.active {
     label {
       transform: translate(0, -40%) scale(0.8);
       top: 0;
@@ -117,7 +118,9 @@
   pointer-events: none;
   transform: translate(0, -50%) scale(1);
   transform-origin: top left;
-  transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, color 0.3s ease;
+  transition:
+    200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
+    color 0.3s ease;
   color: variables.$grey-color;
   font-size: 14px;
   line-height: 18px;
@@ -127,12 +130,29 @@
   border-radius: 4px;
 }
 
+.labelStartAdornment {
+  .input {
+    padding-left: 10px;
+  }
+  .label {
+    left: 100px;
+  }
+  &:focus-within,
+  &.active {
+    label {
+      transform: translate(-75px, -40%) scale(0.8);
+      top: 0;
+    }
+  }
+}
+
 .textAreaLabel {
   top: utils.spacing(2);
   transform: translate(0, 0) scale(1);
 }
 
-.startAdornment {}
+.startAdornment {
+}
 
 .endAdornment {
   position: absolute;

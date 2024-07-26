@@ -12,4 +12,4 @@ const meta: Meta<typeof PhoneField> = {
 export default meta;
 type Story = StoryObj<typeof PhoneField>;
 
-export const Base: Story = {}
+export const Base: Story = {};

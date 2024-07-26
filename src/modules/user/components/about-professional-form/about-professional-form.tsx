@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useIntl } from 'react-intl';
@@ -7,6 +7,8 @@ import { useIntl } from 'react-intl';
 // components
 import { TextField } from '@/modules/core/components/text-field';
 import { AvatarSelect } from '@/modules/core/components/avatar-select';
+import { PhoneField } from '@/modules/core/components/phone-field';
+
 // hooks
 import { useImageInputState } from '@/modules/core/hooks/use-image-input-state';
 
@@ -99,13 +101,21 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
             })}
             disabled
           />
-          <TextField
-            {...form.register('phone')}
-            error={Boolean(form.formState.errors.phone)}
-            variant='input'
-            label={intl.formatMessage({
-              id: 'user.about.professional.form.phone',
-            })}
+          <Controller
+            control={form.control}
+            name='phone'
+            render={({ field }) => {
+              return (
+                <PhoneField
+                  error={Boolean(form.formState.errors.phone)}
+                  label={intl.formatMessage({
+                    id: 'user.about.professional.form.phone',
+                  })}
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              );
+            }}
           />
         </div>
         <div className={styles.inputsRow}>

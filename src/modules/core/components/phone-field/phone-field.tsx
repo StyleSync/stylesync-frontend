@@ -1,55 +1,72 @@
 import { type FC } from 'react';
-
-// components
-import { TextField } from '@/modules/core/components/text-field';
-
-import type { PhoneFieldProps } from './phone-field.interface';
+import { useBoolean } from 'usehooks-ts';
 import {
   defaultCountries,
   FlagImage,
   usePhoneInput,
+  parseCountry,
 } from 'react-international-phone';
-import { Icon } from '@/modules/core/components/icon';
-import { useBoolean } from 'usehooks-ts';
-import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
 
-export const PhoneField: FC<PhoneFieldProps> = () => {
+// components
+import { TextField } from '@/modules/core/components/text-field';
+import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
+import { Icon } from '@/modules/core/components/icon';
+// types
+import type { PhoneFieldProps } from './phone-field.interface';
+
+export const PhoneField: FC<PhoneFieldProps> = ({
+  label,
+  onChange,
+  value,
+  error,
+}) => {
   const isOpen = useBoolean();
-  const {
-    inputValue,
-    phone,
-    country,
-    setCountry,
-    handlePhoneValueChange,
-    inputRef,
-  } = usePhoneInput({
-    defaultCountry: 'us',
-    value: '+1 (234)',
-    // onChange: ({ phone, inputValue, country }) => {
-    //   // make something on change
-    // },
+
+  const { inputValue, country, setCountry, handlePhoneValueChange, inputRef } =
+    usePhoneInput({
+      defaultCountry: 'ua',
+      value,
+      onChange: ({ phone }) => {
+        if (onChange) {
+          onChange(phone);
+        }
+      },
+    });
+
+  // exclude rusia, Belarus, Iran,  and Iraq.
+  const countries = defaultCountries.filter((terorist) => {
+    const { iso2 } = parseCountry(terorist);
+
+    return iso2 !== 'ru' && iso2 !== 'ir' && iso2 !== 'by' && iso2 !== 'iq';
   });
 
   return (
     <TextField
+      error={error}
+      label={label}
+      value={inputValue}
       ref={inputRef}
       variant='input'
+      onChange={handlePhoneValueChange}
       startAdornment={
         <DropdownMenu
           isOpen={isOpen.value}
           onClose={isOpen.setFalse}
           trigger={
             <div
-              className='border-r cursor-pointer border-primary-light px-3 flex items-center gap-x-1'
+              className='border-r cursor-pointer border-primary-light pl-8 pr-5 flex items-center gap-x-2'
               onClick={isOpen.setTrue}
             >
               <FlagImage iso2={country.iso2} size='30px' />
-              <Icon name='chevron-bottom' className='!w-4 !h-4 shrink-0' />
+              <Icon
+                name='chevron-bottom'
+                className='!w-[24px] !h-[12px] shrink-0 text-gray'
+              />
             </div>
           }
-          items={defaultCountries.map((item) => ({
+          items={countries.map((item) => ({
             id: item[1],
-            text: item[0],
+            text: `${item[0]} +${item[2]}`,
             icon: <FlagImage size={20} iso2={item[1]} />,
           }))}
           onSelect={({ id }) => {

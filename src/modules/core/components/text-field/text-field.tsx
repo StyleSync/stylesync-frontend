@@ -65,6 +65,7 @@ export const TextField = forwardRef<
           styles.root,
           { [styles.active]: hasText.value },
           { [styles.error]: error },
+          { [styles.labelStartAdornment]: startAdornment },
           classes?.container
         )}
       >
