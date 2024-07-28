@@ -8,7 +8,7 @@ import { createEvent, type EventAttributes } from 'ics';
 import { getHours, getMinutes, format } from 'date-fns';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
-import { BookingDetailBox } from '@/modules/booking/components/booking-preview-detail-box/booking-preview-detail-box';
+import { BookingPreviewDetailBox } from '@/modules/booking/components/booking-preview-detail-box/booking-preview-detail-box';
 import { Button } from '@/modules/core/components/button';
 import { Spinner } from '@/modules/core/components/spinner';
 import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
@@ -209,7 +209,7 @@ export const BookingPreview = () => {
             href={`/app/profile/${professional.data?.userId}`}
             rel='noreferrer'
           >
-            <BookingDetailBox
+            <BookingPreviewDetailBox
               label='Specialist'
               value={`${professional.data?.user?.firstName} ${professional.data?.user?.lastName}`}
               avatar={professional.data?.user?.avatar || ''}
@@ -217,21 +217,21 @@ export const BookingPreview = () => {
           </a>
 
           <div className='flex flex-col gap-3'>
-            <BookingDetailBox
+            <BookingPreviewDetailBox
               label='Title'
               value={bookingDetails.data?.serviceProfessional?.title || ''}
             />
           </div>
 
           <div className='flex flex-col gap-3'>
-            <BookingDetailBox
+            <BookingPreviewDetailBox
               label='Price'
               value={`${bookingDetails.data?.serviceProfessional?.price} ${bookingDetails.data?.serviceProfessional?.currency}`}
             />
           </div>
           <div className='flex gap-6'>
             <div className='flex flex-col gap-3'>
-              <BookingDetailBox
+              <BookingPreviewDetailBox
                 label='Start time'
                 value={
                   bookingDetails?.data
@@ -244,7 +244,7 @@ export const BookingPreview = () => {
               />
             </div>
             <div className='flex flex-col gap-3'>
-              <BookingDetailBox
+              <BookingPreviewDetailBox
                 label='Duration'
                 value={
                   bookingDetails.data?.serviceProfessional.duration !==
