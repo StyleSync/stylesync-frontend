@@ -1,11 +1,11 @@
 import { type FC } from 'react';
-
+// components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Avatar } from '@/modules/core/components/avatar';
+// type
+import type { BookingPreviewDetailProps } from './booking-preview-detail-box.interface';
 
-import type { BookingDetailProps } from './booking-preview-detail-box.interface';
-
-export const BookingDetailBox: FC<BookingDetailProps> = ({
+export const BookingPreviewDetailBox: FC<BookingPreviewDetailProps> = ({
   label,
   value,
   avatar,
