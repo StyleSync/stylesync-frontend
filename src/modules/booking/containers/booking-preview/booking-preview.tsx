@@ -1,10 +1,7 @@
 'use client';
-import { useEffect, useState, useMemo, useCallback } from 'react';
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import dynamic from 'next/dynamic';
 import getDistance from 'geolib/es/getDistance';
-import { createEvent, type EventAttributes } from 'ics';
 import { getHours, getMinutes, format } from 'date-fns';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
@@ -12,6 +9,9 @@ import { BookingPreviewDetailBox } from '@/modules/booking/components/booking-pr
 import { Button } from '@/modules/core/components/button';
 import { Spinner } from '@/modules/core/components/spinner';
 import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
+import { DownloadIcsButton } from '@/modules/booking/components/download-ics-button';
+import { BookingPreviewProgressbar } from '@/modules/booking/components/booking-preview-progressbar';
+import { BookingPreviewMap } from '@/modules/booking/components/booking-preview-map';
 // hooks
 import { useBoolean } from 'usehooks-ts';
 // utils
@@ -22,18 +22,7 @@ import { getAddressGoogleLink } from '@/modules/location/utils/address.utils';
 // style
 import 'react-circular-progressbar/dist/styles.css';
 
-const Map = dynamic(
-  () => import('@/modules/location/components/map').then((res) => res.Map),
-  {
-    ssr: false,
-  }
-);
-
 const MILLISECONDS_IN_MINUTE = 60000;
-const MILLISECONDS_IN_SECOND = 1000;
-const SECONDS_IN_MINUTE = 60;
-const MINUTES_IN_HOUR = 60;
-const HOURS_IN_DAY = 24;
 
 export const BookingPreview = () => {
   const params = useParams();
@@ -91,6 +80,11 @@ export const BookingPreview = () => {
     }
   );
 
+  const startEventTime = bookingDetails.data?.startTime
+    ? new Date(bookingDetails.data?.startTime).getTime() -
+      new Date().getTimezoneOffset() * MILLISECONDS_IN_MINUTE
+    : new Date().getTime();
+
   // map
   const zoomNum = 17;
   const markers = location && [
@@ -101,93 +95,6 @@ export const BookingPreview = () => {
     lng: location.longitude,
   };
   const zoom = location && zoomNum;
-
-  // progress
-  const createdAt = new Date(bookingDetails.data?.createdAt || '');
-  const currentDate = new Date();
-  const startDate = new Date(bookingDetails.data?.startTime || '');
-
-  // Calculate the number of days remaining until the service date
-  const daysRemaining = Math.ceil(
-    (startDate.getTime() - currentDate.getTime()) /
-      (MILLISECONDS_IN_SECOND *
-        SECONDS_IN_MINUTE *
-        MINUTES_IN_HOUR *
-        HOURS_IN_DAY)
-  );
-
-  // Calculate the number of days that have passed since the reservation was created
-  const daysWaited = Math.ceil(
-    (currentDate.getTime() - createdAt.getTime()) /
-      (MILLISECONDS_IN_SECOND *
-        SECONDS_IN_MINUTE *
-        MINUTES_IN_HOUR *
-        HOURS_IN_DAY)
-  );
-
-  // Calculate the percentage of time passed
-  const percents = (daysWaited * 100) / daysRemaining;
-
-  const startEventTime = bookingDetails.data?.startTime
-    ? new Date(bookingDetails.data?.startTime).getTime() -
-      new Date().getTimezoneOffset() * MILLISECONDS_IN_MINUTE
-    : new Date().getTime();
-
-  const event: EventAttributes = useMemo(() => {
-    return {
-      start: startEventTime,
-
-      duration: {
-        hours: bookingDetails.data?.serviceProfessional.duration
-          ? getHours(bookingDetails.data?.serviceProfessional.duration)
-          : 0,
-        minutes: bookingDetails.data?.serviceProfessional.duration
-          ? getMinutes(bookingDetails.data?.serviceProfessional.duration)
-          : 0,
-      },
-      title: `${bookingDetails.data?.serviceProfessional.title}`,
-      location: `${location?.name}`,
-      organizer: {
-        name: `${professional.data?.user.firstName}`,
-        email: `${professional.data?.user?.email}`,
-      },
-      attendees: [
-        {
-          name: `${bookingDetails.data?.guestFirstName} ${bookingDetails.data?.guestLastName}`,
-          email: `${bookingDetails.data?.guestEmail}`,
-          partstat: 'ACCEPTED',
-          role: 'REQ-PARTICIPANT',
-        },
-      ],
-    };
-  }, [professional, professional.data, bookingDetails.data, location?.name]);
-
-  const handleDownloadIcs = useCallback(async () => {
-    const filename = 'ExampleEvent.ics';
-    const file: File = await new Promise((resolve, reject) => {
-      createEvent(event, (error, value) => {
-        if (error) {
-          reject(error);
-        }
-
-        resolve(new File([value], filename, { type: 'text/calendar' }));
-      });
-    });
-    const url = URL.createObjectURL(file);
-
-    // trying to assign the file URL to a window could cause cross-site
-    // issues so this is a workaround using HTML5
-    const anchor = document.createElement('a');
-
-    anchor.href = url;
-    anchor.download = filename;
-
-    document.body.appendChild(anchor);
-    anchor.click();
-    document.body.removeChild(anchor);
-
-    URL.revokeObjectURL(url);
-  }, [event]);
 
   if (bookingDetails.isLoading) {
     return (
@@ -258,20 +165,13 @@ export const BookingPreview = () => {
             </div>
           </div>
         </div>
-        <div className='relative w-[120px] h-[120px] mt-[66px] ml-5'>
-          <CircularProgressbar
-            strokeWidth={3}
-            value={percents}
-            styles={buildStyles({
-              pathColor: '#64e841',
-              trailColor: '#d8e6fc',
-            })}
+
+        {bookingDetails.data && (
+          <BookingPreviewProgressbar
+            createdAt={bookingDetails.data?.createdAt}
+            startTime={bookingDetails.data?.startTime}
           />
-          <div className='absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center flex-col'>
-            <Typography>Залишилось</Typography>
-            <Typography weight='semibold'>{`${daysRemaining} д.`}</Typography>
-          </div>
-        </div>
+        )}
       </div>
       <div className='flex gap-4 mt-12'>
         <UserContactPopup
@@ -287,10 +187,26 @@ export const BookingPreview = () => {
             />
           }
         />
-        <Button
-          variant='outlined'
-          text='Add to calendar'
-          onClick={handleDownloadIcs}
+        <DownloadIcsButton
+          startEventTime={startEventTime}
+          duration={{
+            hours: bookingDetails.data?.serviceProfessional.duration
+              ? getHours(bookingDetails.data?.serviceProfessional.duration)
+              : 0,
+            minutes: bookingDetails.data?.serviceProfessional.duration
+              ? getMinutes(bookingDetails.data?.serviceProfessional.duration)
+              : 0,
+          }}
+          title={bookingDetails.data?.serviceProfessional.title || ''}
+          location={location?.name || ''}
+          organizer={{
+            name: professional.data?.user.firstName || '',
+            email: professional.data?.user?.email || '',
+          }}
+          attendee={{
+            name: `${bookingDetails.data?.guestFirstName} ${bookingDetails.data?.guestLastName}`,
+            email: bookingDetails.data?.guestEmail || '',
+          }}
         />
       </div>
       <div className='flex flex-col gap-5 h-[400px] w-full mt-12'>
@@ -306,7 +222,7 @@ export const BookingPreview = () => {
             м
           </Typography>
         </div>
-        <Map zoom={zoom} center={center} markers={markers} />
+        <BookingPreviewMap markers={markers} zoom={zoom} center={center} />
       </div>
       <Button
         onClick={() => {
