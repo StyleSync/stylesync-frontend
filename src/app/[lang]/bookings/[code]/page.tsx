@@ -1,5 +1,3 @@
-'use client';
-
 // containers
 import { BookingPreview } from '@/modules/booking/containers/booking-preview/booking-preview';
 import { Footer } from '@/modules/landing/containers/footer/footer';
