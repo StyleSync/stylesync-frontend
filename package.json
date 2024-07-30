@@ -70,7 +70,7 @@
     "react-error-boundary": "4.0.13",
     "react-grid-gallery": "1.0.0",
     "react-hook-form": "7.51.5",
-    "react-international-phone": "^4.3.0",
+    "react-international-phone": "4.3.0",
     "react-intl": "6.6.8",
     "react-leaflet": "4.2.1",
     "react-quill": "^2.0.0",

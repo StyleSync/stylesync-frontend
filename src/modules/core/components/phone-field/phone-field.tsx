@@ -1,16 +1,13 @@
 import { type FC } from 'react';
 import { useBoolean } from 'usehooks-ts';
-import {
-  defaultCountries,
-  FlagImage,
-  usePhoneInput,
-  parseCountry,
-} from 'react-international-phone';
+import { FlagImage, usePhoneInput } from 'react-international-phone';
 
 // components
 import { TextField } from '@/modules/core/components/text-field';
 import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
 import { Icon } from '@/modules/core/components/icon';
+// constants
+import { countries } from '@/modules/core/constants/country.constants';
 // types
 import type { PhoneFieldProps } from './phone-field.interface';
 
@@ -32,13 +29,6 @@ export const PhoneField: FC<PhoneFieldProps> = ({
         }
       },
     });
-
-  // exclude rusia, Belarus, Iran,  and Iraq.
-  const countries = defaultCountries.filter((terorist) => {
-    const { iso2 } = parseCountry(terorist);
-
-    return iso2 !== 'ru' && iso2 !== 'ir' && iso2 !== 'by' && iso2 !== 'iq';
-  });
 
   return (
     <TextField
