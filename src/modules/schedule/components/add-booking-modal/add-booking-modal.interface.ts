@@ -1,10 +1,11 @@
-import { type AvailableBookingTime } from '@/server/types';
+import type { TimeValue } from '@/modules/core/utils/time.utils';
 
 export type AddBookingRequestData = {
   serviceOnProfessional: string;
   selectedDay: string;
-  startTime: AvailableBookingTime;
-  duration: string;
+  date: Date;
+  startTime: TimeValue;
+  duration: TimeValue;
   name: string;
   lastName: string;
   phone: string;

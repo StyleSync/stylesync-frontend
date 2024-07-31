@@ -1,4 +1,4 @@
-import { type FC, useState } from 'react';
+import { type FC } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useIntl } from 'react-intl';
 import { z } from 'zod';
@@ -14,13 +14,12 @@ import { DateSelect } from '@/modules/core/components/date-select';
 import { Time, type TimeValue } from '@/modules/core/utils/time.utils';
 // type
 import { type DialogProps } from '@/modules/core/components/dialog/dialog.interface';
-//styles
+// styles
 import styles from './add-booking-modal.module.scss';
 import { mapDateToDayEnum } from '@/modules/core/utils/date.utils';
 import { showToast } from '@/modules/core/providers/toast-provider';
 import { trpc } from '@/modules/core/utils/trpc.utils';
-import { add } from 'date-fns';
-import { type AddBookingRequestData } from './add-booking-modal.interface';
+import { add, set } from 'date-fns';
 
 const defaultValues = {
   serviceName: '',
@@ -35,7 +34,7 @@ const defaultValues = {
 
 const bookingValidationSchema = z.object({
   serviceName: z.string().min(1),
-  date: z.string(),
+  date: z.date(),
   startTime: z.string(),
   duration: z
     .string()
@@ -47,6 +46,8 @@ const bookingValidationSchema = z.object({
   guestEmail: z.string().email().or(z.literal('')),
   description: z.string(),
 });
+
+// Do not infer type in this place.
 export type AddBookingValue = z.infer<typeof bookingValidationSchema>;
 
 export const AddBookingModal: FC<Omit<DialogProps, 'children'>> = ({
@@ -67,40 +68,38 @@ export const AddBookingModal: FC<Omit<DialogProps, 'children'>> = ({
     }
   };
 
-  const [date, setDate] = useState(new Date());
-
   const bookingCreate = trpc.booking.create.useMutation();
 
   const handleConfirm = async ({
-    selectedDay,
-    serviceOnProfessional,
     startTime,
     duration,
-    name,
-    lastName,
-    phone,
-    email,
-    ...data
-  }: AddBookingRequestData) => {
-    // errors
-    const endTime = add(startTime, {
-      hours: new Time(duration).getHours(),
-      minutes: new Time(duration).getMinutes(),
+    date,
+    guestEmail,
+    guestPhone,
+    guestName,
+    serviceName,
+  }: AddBookingValue) => {
+    const _startTime = set(date, {
+      hours: new Time(startTime as TimeValue).getHours(),
+      minutes: new Time(startTime as TimeValue).getMinutes(),
+    });
+    const _endTime = add(date, {
+      hours: new Time(duration as TimeValue).getHours(),
+      minutes: new Time(duration as TimeValue).getMinutes(),
     });
 
     bookingCreate.mutate(
       {
-        ...data,
         userId: me.professional?.userId,
-        guestFirstName: name,
-        guestLastName: lastName,
-        guestPhone: phone,
-        guestEmail: email,
-        date: selectedDay,
-        startTime: startTime.startTime,
-        endTime: endTime.toISOString(),
-        serviceProfessionalId: serviceOnProfessional,
-        day: mapDateToDayEnum(selectedDay),
+        guestFirstName: guestName,
+        guestPhone,
+        guestEmail,
+        date: date.toISOString(),
+        startTime: _startTime.toISOString(),
+        endTime: _endTime.toISOString(),
+        // todo: add dropdown to select service on professional (instead of service name field)
+        serviceProfessionalId: serviceName,
+        day: mapDateToDayEnum(date),
       },
       {
         onError: () => {
@@ -133,7 +132,7 @@ export const AddBookingModal: FC<Omit<DialogProps, 'children'>> = ({
     <Dialog {...props} classes={{ content: styles.content }}>
       <form
         onSubmit={form.handleSubmit(handleConfirm)}
-        className='w-[552px] p-6 flex flex-col gap-[40px]'
+        className='flex w-[552px] flex-col gap-[40px] p-6'
       >
         <Typography variant='subtitle'>
           {intl.formatMessage({ id: 'add.booking.modal.title' })}
@@ -145,25 +144,19 @@ export const AddBookingModal: FC<Omit<DialogProps, 'children'>> = ({
             error={Boolean(form.formState.errors.serviceName)}
             variant='input'
           />
-          {/* <DateSelect value={date} onChange={() => setDate} /> */}
+          <Controller
+            control={form.control}
+            name='date'
+            render={({ field }) => (
+              <DateSelect value={field.value} onChange={field.onChange} />
+            )}
+          />
           {/* <TextField
             label={intl.formatMessage({ id: 'add.booking.modal.form.date' })}
             {...form.register('date')}
             error={Boolean(form.formState.errors.date)}
             variant='input'
           /> */}
-          <Controller
-            name='date'
-            control={form.control}
-            defaultValue={new Date().toISOString()}
-            render={({ field }) => (
-              <DateSelect
-              // errors
-              // value={new Date(field.value)}
-              // onChange={(date) => field.onChange(date.toISOString())}
-              />
-            )}
-          />
 
           <div className='flex gap-4'>
             <Controller
@@ -217,7 +210,7 @@ export const AddBookingModal: FC<Omit<DialogProps, 'children'>> = ({
             style={{ height: 200, resize: 'none' }}
           />
         </div>
-        <div className='flex gap-4 ml-auto'>
+        <div className='ml-auto flex gap-4'>
           <Button
             variant='secondary'
             text={intl.formatMessage({ id: 'button.cancel' })}
