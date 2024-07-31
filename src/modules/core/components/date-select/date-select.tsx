@@ -38,6 +38,7 @@ export const DateSelect: FC<DateSelectProps> = ({
           iconEnd='calendar'
           onClick={isOpen.setTrue}
           {...triggerProps}
+          className=' !w-full'
         />
       }
       align='center'
