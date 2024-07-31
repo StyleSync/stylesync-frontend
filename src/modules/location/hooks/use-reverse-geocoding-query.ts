@@ -6,7 +6,7 @@ const CITY_BY_LOCATION_CACHE_KEY = 'CITY_BY_LOCATION';
 
 export const useReverseGeocodingQuery = (lngLat?: LngLatLike | null) => {
   const geocodingCore = useGeocodingCore({
-    accessToken: process.env.MAPBOX_TOKEN,
+    accessToken: process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
   });
 
   return useQuery({

@@ -9,7 +9,7 @@ export const useGeocodingSuggestionsQuery = (
   optionsArg?: Partial<GeocodingOptions>
 ) => {
   const geocodingCore = useGeocodingCore({
-    accessToken: process.env.MAPBOX_TOKEN,
+    accessToken: process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
   });
 
   return useQuery({
