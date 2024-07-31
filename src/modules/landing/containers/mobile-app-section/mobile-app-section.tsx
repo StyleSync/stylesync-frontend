@@ -15,16 +15,16 @@ export const MobileAppSection = () => {
   const intl = useIntl();
 
   return (
-    <section className='relative w-full flex flex-col justify-center items-center mt-20 p-3'>
+    <section className='relative flex w-full flex-col items-center justify-center p-3 sm:mt-12 lg:mt-20'>
       <Image
-        className='absolute w-full h-full top-0 left-0 z-0'
+        className='absolute left-0 top-0 z-0 aspect-square h-full w-full max-w-full'
         src={net}
         alt='img'
-        width={1000}
-        height={1000}
+        width={net.width}
+        height={net.width}
       />
       <div
-        className='absolute bottom-0 left-0 w-full h-[400px] z-20'
+        className='absolute bottom-0 left-0 z-20 hidden h-[400px] w-full max-w-full sm:flex'
         style={{
           background: 'linear-gradient(180deg, transparent 0%, white 70%)',
         }}
@@ -32,25 +32,25 @@ export const MobileAppSection = () => {
       <div className='flex flex-col gap-5'>
         <Typography
           weight='semibold'
-          className='!text-4xl md:!text-5xl !text-black text-center'
+          className='text-center !text-4xl !text-black md:!text-5xl'
         >
           {intl.formatMessage({ id: 'pages.landing.mobileApp.title' })}
         </Typography>
         <Typography
           variant='body1'
-          className='text-center !text-gray-accent max-w-[820px] px-2'
+          className='max-w-[820px] px-2 text-center !text-gray-accent'
         >
           {intl.formatMessage({ id: 'pages.landing.mobileApp.description' })}
         </Typography>
-        <div className='flex items-center justify-center gap-5 md:gap-8 z-0'>
+        <div className='z-0 flex items-center justify-center gap-5 md:gap-8'>
           <Icon
-            className='hover:cursor-pointer z-[25]'
+            className='z-[25] hover:cursor-pointer'
             name='appleLogoLanding'
             width={150}
             height={60}
           />
           <Image
-            className='w-[170px] h-[75px] hover:cursor-pointer z-[25]'
+            className='z-[25] h-[75px] w-[170px] hover:cursor-pointer'
             src={google.src}
             alt='image'
             width={google.width}
@@ -58,23 +58,20 @@ export const MobileAppSection = () => {
           />
         </div>
       </div>
-      <div className='relative mt-[104px]'>
-        <div className='absolute bg-[#F9F9F9] left-1/2 bottom-0 -translate-x-1/2 w-[750px] h-[750px] rounded-full -z-10' />
-        <div className='flex items-end justify-center'>
+      <div className='relative mt-[104px] w-full'>
+        <div className='absolute bottom-0 left-1/2 -z-10 aspect-square w-[750px] max-w-full -translate-x-1/2 rounded-full bg-[#F9F9F9]' />
+        <div className='mx-auto flex aspect-[16/9] w-full max-w-[1180px] items-end justify-center'>
           <IphoneLayout
             imageUrl={Screenshot.src}
-            height={700}
-            className='relative left-[150px] top-[50px]'
+            className='relative left-[13%] h-full'
           />
           <IphoneLayout
             imageUrl={Screenshot2.src}
-            height={700}
-            className='z-10'
+            className='relative z-10 h-full scale-110'
           />
           <IphoneLayout
             imageUrl={Screenshot.src}
-            height={700}
-            className='relative right-[150px] top-[50px]'
+            className='relative right-[13%] h-full'
           />
         </div>
         {/* <Image */}

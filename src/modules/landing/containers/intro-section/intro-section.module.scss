@@ -1,0 +1,52 @@
+.bubblesGroup {
+  @apply flex-col justify-center w-fit h-full pt-8 hidden md:flex;
+
+
+  &:first-child {
+    div {
+      @apply mt-8;
+
+      @media (max-height: 900px) {
+        @apply mt-4 w-[60px] h-[60px];
+      }
+
+      &:nth-child(1) {
+        @apply bg-[#F9DFE6] mt-0;
+      }
+
+      &:nth-child(2) {
+        @apply bg-[#E9F3FD] ml-[90px];
+      }
+
+      &:nth-child(3) {
+        @apply bg-[#FFEBCE] -ml-8;
+      }
+
+      &:nth-child(4) {
+        @apply bg-[#EDDFFF] ml-[100px];
+      }
+    }
+  }
+
+  &:last-child {
+    div {
+      @apply mt-8;
+
+      @media (max-height: 900px) {
+        @apply mt-4 w-[70px] h-[70px];
+      }
+
+      &:nth-child(1) {
+        @apply bg-[#FFE5DB] mt-0;
+      }
+
+      &:nth-child(2) {
+        @apply bg-[#CEF9F6] ml-[100px];
+      }
+
+      &:nth-child(3) {
+        @apply bg-[#FFEBCE] ml-[30px];
+      }
+    }
+  }
+}

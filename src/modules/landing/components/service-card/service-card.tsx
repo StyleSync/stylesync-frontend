@@ -7,21 +7,21 @@ import Image from 'next/image';
 
 export const ServiceCard: FC<ServiceCardProps> = ({ title, image }) => {
   return (
-    <div className='relative rounded-[20px] z-10 overflow-hidden h-[200px] shadow hover:shadow-accentShadow flex items-center justify-center hover:scale-105 transition hover:z-10'>
+    <div className='relative z-10 flex aspect-[14/8] w-full items-center justify-center overflow-hidden rounded-[20px] shadow transition hover:z-10 hover:scale-105 hover:shadow-accentShadow'>
       <div className='relative z-40 flex items-center'>
         <Typography
-          className='!text-white !text-3xl whitespace-nowrap'
+          className='whitespace-nowrap !text-3xl !text-white'
           variant='subtitle'
           weight='semibold'
         >
           {title}
         </Typography>
       </div>
-      <div className='absolute top-1 opacity-50 left-1 w-[calc(100%-0.5rem)] h-[calc(100%-0.5rem)] bg-gradient-to-t z-20 from-[#111111] from-15% to-transparent rounded-[16px]' />
-      <div className='absolute top-0 left-0 opacity-50 w-full h-full bg-gradient-to-r z-30 from-[#675050] from-15% to-transparent' />
+      <div className='absolute left-1 top-1 z-20 h-[calc(100%-0.5rem)] w-[calc(100%-0.5rem)] rounded-[16px] bg-gradient-to-t from-[#111111] from-15% to-transparent opacity-50' />
+      <div className='absolute left-0 top-0 z-30 h-full w-full bg-gradient-to-r from-[#675050] from-15% to-transparent opacity-50' />
       {image && (
         <Image
-          className='absolute left-1 top-1 object-cover w-[calc(100%-0.5rem)] h-[calc(100%-0.5rem)] z-10 rounded-[16px]'
+          className='absolute left-1 top-1 z-10 h-[calc(100%-0.5rem)] w-[calc(100%-0.5rem)] rounded-[16px] object-cover'
           src={image}
           alt='image'
           width={600}
