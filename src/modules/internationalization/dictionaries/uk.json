@@ -281,6 +281,20 @@
   "pages.landing.mobileApp.title": "Мобільний додаток StyleSync",
   "pages.landing.mobileApp.description": "Керуйте бронюваннями, автоматизуйте процеси та просувайте свої послуги в будь-який час за допомогою нашого мобільного додатку",
 
+  "add.booking.modal.title": "Додати бронювання вручну",
+  "add.booking.modal.form.service": "Назва послуги *",
+  "add.booking.modal.form.date": "Дата *",
+  "add.booking.modal.form.duration": "Тривалість *",
+  "add.booking.modal.form.guest.name": "Ім'я гостя *",
+  "add.booking.modal.form.guest.phone": "Номер телефону гостя *",
+  "add.booking.modal.form.guest.email": "Електронна пошта гостя *",
+  "add.booking.modal.form.description": "Тривалість *",
+
+  "add.booking.modal.toast.error.title": "Помилка",
+  "add.booking.modal.toast.error.description": "Виникла помилка",
+  "add.booking.modal.toast.success.title": "Відмінно!",
+  "add.booking.modal.toast.success.description": "Подію додано"
+
   "progressbar.title": "Залишилось",
   "progressbar.days": "д"
 }

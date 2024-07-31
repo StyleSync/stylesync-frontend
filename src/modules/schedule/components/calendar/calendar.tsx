@@ -1,20 +1,27 @@
 import { useMemo, type FC } from 'react';
-import { getHours, set, getMinutes } from 'date-fns';
+import { getHours, set, getMinutes, add } from 'date-fns';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { useIntl } from 'react-intl';
 // components
 import { Icon } from '@/modules/core/components/icon';
+import { AddBookingModal } from '@/modules/schedule/components/add-booking-modal';
 // type
 import type { CalendarProps } from './calendar.interface';
+import type { CreateBookingRequestData } from '@/modules/booking/components/service-booking-modal/service-booking-modal.interface';
+
 // utils
 import { getTime } from '@/modules/schedule/utils/get-time';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
+
 // styles
 import styles from './calendarEvent.module.scss';
+import { useBoolean } from 'usehooks-ts';
 
 import './calendar.scss';
 import dynamic from 'next/dynamic';
+import { Button } from '@/modules/core/components/button';
+import { Time } from '@/modules/core/utils/time.utils';
 
 const FullCalendar = dynamic(() => import('@fullcalendar/react'), {
   ssr: false,
@@ -25,6 +32,7 @@ import { Icon } from '@/modules/core/components/icon';
 
 export const Calendar: FC<CalendarProps> = () => {
   const intl = useIntl();
+  const isOpenAddBookingModal = useBoolean();
 
   const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
 
@@ -92,6 +100,14 @@ export const Calendar: FC<CalendarProps> = () => {
 
   return (
     <div className='w-full'>
+      <AddBookingModal
+        onOpenChange={isOpenAddBookingModal.setValue}
+        isOpen={isOpenAddBookingModal.value}
+        trigger={
+          <Button text='Add event' className='absolute right-[36px] top-8' />
+        }
+      />
+
       <FullCalendar
         businessHours={businessHours}
         events={eventsList}
