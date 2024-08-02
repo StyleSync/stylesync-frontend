@@ -29,7 +29,15 @@ export const MyBookingsContent = () => {
           <BookingsList />
         </Suspense>
       )}
-      {activeTab === 'calendar' && <Calendar />}
+      {activeTab === 'calendar' && (
+        <Suspense fallback={<div />}>
+          <div className='flex w-full'>
+            <div className='flex-1'>
+              <Calendar />
+            </div>
+          </div>
+        </Suspense>
+      )}
     </div>
   );
 };
