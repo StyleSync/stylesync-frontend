@@ -16,4 +16,7 @@ export type PopoverProps = ChildrenProp & {
   disableAutofocus?: boolean;
   disablePortal?: boolean;
   backgroundBlurEffect?: boolean;
+  classes?: {
+    content?: string;
+  };
 };
