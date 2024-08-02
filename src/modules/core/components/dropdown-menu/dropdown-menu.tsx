@@ -1,12 +1,13 @@
+import clsx from 'clsx';
 // components
 import { Icon } from '@/modules/core/components/icon';
 import { Popover } from '@/modules/core/components/popover';
 import { Typography } from '@/modules/core/components/typogrpahy';
+import { Placeholder } from '@/modules/core/components/placeholder';
 
+// types
 import type { DropdownMenuProps } from './dropdown-menu.interface';
 import styles from './dropdown-menu.module.scss';
-import clsx from 'clsx';
-import { Placeholder } from '@/modules/core/components/placeholder';
 
 export function DropdownMenu<OptionData = undefined>({
   isOpen,
@@ -61,6 +62,7 @@ export function DropdownMenu<OptionData = undefined>({
                 render(item)
               ) : (
                 <>
+                  {item.startSlot}
                   {item.icon && (
                     <Icon name={item.icon} width={20} height={20} />
                   )}

@@ -17,6 +17,7 @@ type TextFieldGeneralProps = {
     endAdornment?: string;
   };
   font?: SupportedFonts;
+  startAdornment?: ReactNode;
   endAdornment?: ReactNode;
 };
 

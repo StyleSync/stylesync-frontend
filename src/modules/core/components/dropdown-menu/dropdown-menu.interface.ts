@@ -7,6 +7,7 @@ export type DropdownItem<Data = undefined> = {
   id: string;
   text: string;
   icon?: IconName;
+  startSlot?: ReactNode;
   variant?: 'default' | 'danger' | 'primary';
   className?: string;
   disabled?: boolean;

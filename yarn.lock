@@ -14635,6 +14635,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-international-phone@npm:4.3.0":
+  version: 4.3.0
+  resolution: "react-international-phone@npm:4.3.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/91b47d65426c678a578e390de3a78b0da21c0c3786e44a0210bd38740f2500a3408ad0b2f7826a70909072e635a9e95f46cabba660141f27be54504f9a1009be
+  languageName: node
+  linkType: hard
+
 "react-intl@npm:6.6.8":
   version: 6.6.8
   resolution: "react-intl@npm:6.6.8"
@@ -16374,6 +16383,7 @@ __metadata:
     react-error-boundary: "npm:4.0.13"
     react-grid-gallery: "npm:1.0.0"
     react-hook-form: "npm:7.51.5"
+    react-international-phone: "npm:4.3.0"
     react-intl: "npm:6.6.8"
     react-leaflet: "npm:4.2.1"
     react-quill: "npm:^2.0.0"

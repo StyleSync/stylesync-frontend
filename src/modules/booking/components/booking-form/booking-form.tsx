@@ -1,10 +1,11 @@
 import { type FC } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useIntl } from 'react-intl';
 // components
 import { TextField } from '@/modules/core/components/text-field';
+import { PhoneField } from '@/modules/core/components/phone-field';
 // type
 import type { BookingFormProps } from './booking-form.interface';
 // styles
@@ -56,11 +57,20 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit, formId }) => {
         variant='input'
         label={intl.formatMessage({ id: 'booking.form.lastName' })}
       />
-      <TextField
-        {...form.register('phone')}
-        error={Boolean(form.formState.errors.phone)}
-        variant='input'
-        label={intl.formatMessage({ id: 'booking.form.phone' })}
+
+      <Controller
+        control={form.control}
+        name='phone'
+        render={({ field }) => {
+          return (
+            <PhoneField
+              error={Boolean(form.formState.errors.phone)}
+              label={intl.formatMessage({ id: 'booking.form.phone' })}
+              value={field.value}
+              onChange={field.onChange}
+            />
+          );
+        }}
       />
       <TextField
         {...form.register('email')}
