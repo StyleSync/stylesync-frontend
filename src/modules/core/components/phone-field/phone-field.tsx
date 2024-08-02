@@ -1,7 +1,6 @@
 import { type FC } from 'react';
 import { useBoolean } from 'usehooks-ts';
 import { FlagImage, usePhoneInput } from 'react-international-phone';
-
 // components
 import { TextField } from '@/modules/core/components/text-field';
 import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
@@ -57,7 +56,7 @@ export const PhoneField: FC<PhoneFieldProps> = ({
           items={countries.map((item) => ({
             id: item[1],
             text: `${item[0]} +${item[2]}`,
-            icon: <FlagImage size={20} iso2={item[1]} />,
+            startSlot: <FlagImage size={20} iso2={item[1]} />,
           }))}
           onSelect={({ id }) => {
             setCountry(id);
