@@ -20,6 +20,7 @@ export const BookingModalSuccess: FC<BookingModalSuccessProps> = ({
   ...props
 }) => {
   const intl = useIntl();
+  // route
 
   const handleModalClose = () => {
     if (props.onOpenChange) {
@@ -97,7 +98,11 @@ export const BookingModalSuccess: FC<BookingModalSuccessProps> = ({
             className={styles.closeBtn}
           />
           <Button
+            onClick={() =>
+              window.open(`/bookings/${bookingData?.code}`, '_blank')
+            }
             variant='outlined'
+            type='button'
             text={intl.formatMessage({
               id: 'booking.modal.success.button.myBooking',
             })}
