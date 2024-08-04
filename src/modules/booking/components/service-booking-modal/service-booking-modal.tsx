@@ -8,6 +8,8 @@ import { BookingForm } from '@/modules/booking/components/booking-form';
 import { BookingTimeSelect } from '@/modules/booking/containers/booking-time-select';
 import { ServiceOnProfessionalSelect } from '@/modules/service/components/service-on-professional-select';
 import { DialogWizard } from '@/modules/core/components/dialog-wizard';
+// utils
+import { onQueryRetry } from '@/modules/core/utils/query-retry.utils';
 // type
 import { type DialogProps } from '@/modules/core/components/dialog/dialog.interface';
 import { type AvailableBookingTime } from '@/server/types';
@@ -21,6 +23,7 @@ import type { ServiceOnProfessionalListItem } from '@/modules/service/types/serv
 import { Icon, type IconName } from '@/modules/core/components/icon';
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
 import { startOfToday } from 'date-fns';
+import { trpc } from '@/modules/core/utils/trpc.utils';
 
 export const ServiceBookingModal: FC<
   Omit<DialogProps, 'children'> & ServiceBookingModalProps
@@ -53,6 +56,16 @@ export const ServiceBookingModal: FC<
       setStep('service');
     }
   }, [props.isOpen]);
+
+  const { data: location } = trpc.location.getByProfessionalId.useQuery(
+    {
+      id: professional.id || '',
+    },
+    {
+      retry: (retryCount, error) => onQueryRetry(retryCount, error),
+      enabled: !!professional.id,
+    }
+  );
 
   const handleNext = useCallback(() => {
     setStep((prevState) => {
@@ -153,7 +166,7 @@ export const ServiceBookingModal: FC<
                 weight='semibold'
                 className='!text-gray'
               >
-                Address line
+                {location?.name}
               </Typography>
             </div>
           </div>

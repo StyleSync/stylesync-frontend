@@ -36,6 +36,6 @@
   opacity: 0;
 
   @include mixins.phone {
-    width: calc(100% - #{utils.spacing(4)})
+    width: calc(100% - #{utils.spacing(4)});
   }
 }
