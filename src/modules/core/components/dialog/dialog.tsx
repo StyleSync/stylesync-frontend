@@ -1,4 +1,4 @@
-import React, { type FC, useEffect } from 'react';
+import React, { type FC, useEffect, useCallback } from 'react';
 import * as RadixDialog from '@radix-ui/react-dialog';
 import {
   Controller,
@@ -38,6 +38,7 @@ export const Dialog: FC<DialogProps> = ({
   onOpenChange,
   isCloseButtonVisible,
   classes,
+  disableAutofocus,
 }) => {
   const _isOpen = useBoolean();
 
@@ -68,6 +69,16 @@ export const Dialog: FC<DialogProps> = ({
     }
   }, [isOpen, _isOpen]);
 
+  const handleOpenAutoFocus = useCallback(
+    (e: Event) => {
+      if (disableAutofocus) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    },
+    [disableAutofocus]
+  );
+
   return (
     <RadixDialog.Root open={_isOpen.value} onOpenChange={onOpenChange}>
       {trigger && <RadixDialog.Trigger asChild>{trigger}</RadixDialog.Trigger>}
@@ -88,7 +99,7 @@ export const Dialog: FC<DialogProps> = ({
             )}
           </animated.div>
         </RadixDialog.Overlay>
-        <RadixDialog.Content>
+        <RadixDialog.Content onOpenAutoFocus={handleOpenAutoFocus}>
           <animated.div
             className={clsx(styles.content, classes?.content)}
             style={contentAnimationController.springs}

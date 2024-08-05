@@ -234,6 +234,7 @@
   "button.refresh": "Оновити",
   "button.support": "Підтримка",
   "button.select.from.computer": "Вибрати з комп'ютера",
+  "button.add.event": "Додати івент",
 
   "bookingInfo.dialog.actions.call": "Дзвінок",
   "bookingInfo.dialog.actions.reschedule": "Перепланувати",
@@ -284,7 +285,7 @@
   "add.booking.modal.title": "Додати бронювання вручну",
   "add.booking.modal.form.service": "Назва послуги *",
   "add.booking.modal.form.date": "Дата *",
-  "add.booking.modal.form.duration": "Тривалість *",
+  "add.booking.modal.form.start.time": "Час початку *",
   "add.booking.modal.form.guest.name": "Ім'я гостя *",
   "add.booking.modal.form.guest.phone": "Номер телефону гостя *",
   "add.booking.modal.form.guest.email": "Електронна пошта гостя *",

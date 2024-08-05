@@ -1,11 +1,12 @@
 import { defaultCountries, parseCountry } from 'react-international-phone';
 
-// exclude  Belarus, rusia, Iran, Iraq, Venezuela, Cuba, Nicaragua, Eritrea, Syria, Myanmar, Zimbabwe, Congo,Uganda,Kingdom of Eswatini, China and North Korea
+// exclude  afganistan, Belarus, rusia, Iran, Iraq, Venezuela, Cuba, Nicaragua, Eritrea, Syria, Myanmar, Zimbabwe, Congo,Uganda,Kingdom of Eswatini, China and North Korea
 export const countries = defaultCountries.filter((terorist) => {
   const { iso2 } = parseCountry(terorist);
 
   return (
     iso2 !== 'ru' &&
+    iso2 !== 'af' &&
     iso2 !== 'ir' &&
     iso2 !== 'by' &&
     iso2 !== 'iq' &&

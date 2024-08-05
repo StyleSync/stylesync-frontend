@@ -73,6 +73,7 @@ import FaceMassage from '@/assets/icons/face-massage.svg?icon';
 import Filter from '@/assets/icons/filter.svg?icon';
 import Eyebrows from '@/assets/icons/eyebrows.svg?icon';
 import Skincare from '@/assets/icons/skincare.svg?icon';
+import ViewList from '@/assets/icons/view-list.svg?icon';
 
 import type { SVGComponentElement } from './icon.interface';
 
@@ -150,6 +151,7 @@ export const icons = {
   filter: Filter,
   eyebrows: Eyebrows,
   skincare: Skincare,
+  viewList: ViewList,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;

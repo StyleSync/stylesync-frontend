@@ -76,7 +76,10 @@ export const Calendar: FC<CalendarProps> = () => {
         onOpenChange={isOpenAddBookingModal.setValue}
         isOpen={isOpenAddBookingModal.value}
         trigger={
-          <Button text='Add event' className='absolute right-[36px] top-8' />
+          <Button
+            text={intl.formatMessage({ id: 'button.add.event' })}
+            className='absolute right-[36px] top-8'
+          />
         }
       />
 

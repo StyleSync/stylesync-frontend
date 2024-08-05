@@ -233,6 +233,7 @@
   "button.avatar.select": "Select avatar",
   "button.refresh": "Refresh",
   "button.support": "Support",
+  "button.add.event": "Add event",
 
   "bookingInfo.dialog.actions.call": "Call",
   "bookingInfo.dialog.actions.reschedule": "Reschedule",
@@ -283,7 +284,7 @@
   "add.booking.modal.title": "Add reservation manually",
   "add.booking.modal.form.service": "Service Name *",
   "add.booking.modal.form.date": "Date *",
-  "add.booking.modal.form.duration": "Duration *",
+  "add.booking.modal.form.start.time": "Start time *",
   "add.booking.modal.form.guest.name": "Guest name * *",
   "add.booking.modal.form.guest.phone": "Guest phone number *",
   "add.booking.modal.form.guest.email": "Guest email *",

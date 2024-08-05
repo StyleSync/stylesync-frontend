@@ -10,4 +10,5 @@ export type DialogProps = ChildrenProp &
       overlay?: string;
       content?: string;
     };
+    disableAutofocus?: boolean;
   };
