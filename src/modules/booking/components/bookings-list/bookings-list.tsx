@@ -55,6 +55,14 @@ export const BookingsList: FC<BookingsListProps> = () => {
     },
   ];
 
+  const renderName = (firstName: string, lastName: string | null) => {
+    if (!lastName) {
+      return firstName;
+    }
+
+    return `${firstName} ${lastName}`;
+  };
+
   return (
     <div className={styles.root}>
       {groups.map(
@@ -76,7 +84,10 @@ export const BookingsList: FC<BookingsListProps> = () => {
                   {group.list?.map((booking) => (
                     <BookingInfoCard
                       key={booking.id}
-                      name={`${booking.guestFirstName} ${booking.guestLastName}`}
+                      name={renderName(
+                        booking.guestFirstName,
+                        booking.guestLastName
+                      )}
                       serviceName={booking.serviceProfessional.title}
                       date={booking.date}
                       startTime={booking.startTime}

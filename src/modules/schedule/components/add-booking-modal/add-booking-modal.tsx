@@ -1,4 +1,4 @@
-import { type FC, useState, useEffect } from 'react';
+import { type FC, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useIntl } from 'react-intl';
 import { z } from 'zod';
@@ -17,9 +17,12 @@ import { Icon } from '@/modules/core/components/icon';
 import { PhoneField } from '@/modules/core/components/phone-field';
 
 // utils
-import { Time, type TimeValue } from '@/modules/core/utils/time.utils';
+import {
+  Time,
+  type TimeValue,
+  formatDuration,
+} from '@/modules/core/utils/time.utils';
 import { trpc } from '@/modules/core/utils/trpc.utils';
-
 // type
 import { type DialogProps } from '@/modules/core/components/dialog/dialog.interface';
 // styles
@@ -27,12 +30,11 @@ import styles from './add-booking-modal.module.scss';
 import { mapDateToDayEnum } from '@/modules/core/utils/date.utils';
 import { showToast } from '@/modules/core/providers/toast-provider';
 import { add, set } from 'date-fns';
-import { ServiceOnProfessional } from '@/modules/service/types/service.types';
+import type { ServiceOnProfessional } from '@/modules/service/types/service.types';
 
 const defaultValues = {
   date: new Date(),
   startTime: '',
-  // duration: '',
   guestName: '',
   guestEmail: '',
   guestPhone: '',
@@ -42,9 +44,6 @@ const defaultValues = {
 const bookingValidationSchema = z.object({
   date: z.date(),
   startTime: z.string(),
-  duration: z
-    .string()
-    .refine((arg) => Time.toMinuteDuration(arg as TimeValue) > 0),
   guestName: z.string(),
   guestPhone: z
     .string()
@@ -95,20 +94,22 @@ export const AddBookingModal: FC<Omit<DialogProps, 'children'>> = ({
 
   const handleConfirm = async ({
     startTime,
-    duration,
     date,
     guestEmail,
     guestPhone,
     guestName,
-    // serviceName,
   }: AddBookingValue) => {
+    if (!service) return;
+
     const _startTime = set(date, {
       hours: new Time(startTime as TimeValue).getHours(),
       minutes: new Time(startTime as TimeValue).getMinutes(),
     });
     const _endTime = add(date, {
-      hours: new Time(duration as TimeValue).getHours(),
-      minutes: new Time(duration as TimeValue).getMinutes(),
+      hours: new Time(formatDuration(service.duration) as TimeValue).getHours(),
+      minutes: new Time(
+        formatDuration(service.duration) as TimeValue
+      ).getMinutes(),
     });
 
     bookingCreate.mutate(
@@ -120,7 +121,6 @@ export const AddBookingModal: FC<Omit<DialogProps, 'children'>> = ({
         date: date.toISOString(),
         startTime: _startTime.toISOString(),
         endTime: _endTime.toISOString(),
-        // todo: add dropdown to select service on professional (instead of service name field)
         serviceProfessionalId: service?.id || '',
         day: mapDateToDayEnum(date),
       },
@@ -146,12 +146,11 @@ export const AddBookingModal: FC<Omit<DialogProps, 'children'>> = ({
               id: 'add.booking.modal.toast.success.description',
             }),
           });
+          props.onOpenChange(false);
         },
       }
     );
   };
-
-  //
 
   return (
     <Dialog {...props} classes={{ content: styles.content }} disableAutofocus>
