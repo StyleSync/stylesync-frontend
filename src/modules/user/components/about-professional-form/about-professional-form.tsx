@@ -28,13 +28,21 @@ const defaultValues: AboutProfessionalFormValues = {
   about: '',
 };
 
+const phoneRegex = /^(\+\d{1,3}[- ]?)?\d{10}$/;
+
+const facebookUrlRegex =
+  /^(?:https?:\/\/)?(?:www\.)?(?:mbasic\.facebook|m\.facebook|facebook|fb)\.(?:com|me)\/(?:profile\.php\?id=\d+|pages\/\d+\/[\w-]+|[\w-]+)?\/?$/i;
+
+const instagramRegex =
+  /^(?:https?:\/\/)?(?:www\.)?instagram\.com\/(?:p|reel|tv|stories|[\w._-]+)(?:\/[a-zA-Z0-9_-]+)?\/?$/i;
+
 const validationSchema: z.Schema<AboutProfessionalFormValues> = z.object({
   firstName: z.string().min(1),
   lastName: z.string().min(1),
-  phone: z.string(),
+  phone: z.string().regex(phoneRegex, 'Invalid phone number'),
   email: z.string(),
-  facebook: z.string(),
-  instagram: z.string(),
+  facebook: z.string().regex(facebookUrlRegex, 'Invalid Facebook URL').max(100),
+  instagram: z.string().regex(instagramRegex, 'Invalid Instagram URL').max(100),
   about: z.string(),
 });
 
@@ -107,7 +115,7 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
             render={({ field }) => {
               return (
                 <PhoneField
-                  error={Boolean(form.formState.errors.phone)}
+                  error={form.formState.errors.phone?.message}
                   label={intl.formatMessage({
                     id: 'user.about.professional.form.phone',
                   })}
@@ -121,7 +129,7 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
         <div className={styles.inputsRow}>
           <TextField
             {...form.register('facebook')}
-            error={Boolean(form.formState.errors.facebook)}
+            error={form.formState.errors.facebook?.message}
             variant='input'
             label={intl.formatMessage({
               id: 'user.about.professional.form.facebook',
@@ -129,7 +137,7 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
           />
           <TextField
             {...form.register('instagram')}
-            error={Boolean(form.formState.errors.instagram)}
+            error={form.formState.errors.instagram?.message}
             variant='input'
             label={intl.formatMessage({
               id: 'user.about.professional.form.instagram',

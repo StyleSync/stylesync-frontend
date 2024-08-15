@@ -9,12 +9,13 @@ type Variant = 'input' | 'textarea';
 
 type TextFieldGeneralProps = {
   label?: string;
-  error?: boolean;
+  error?: boolean | string;
   classes?: {
     container?: string;
     label?: string;
     fieldset?: string;
     endAdornment?: string;
+    errorText?: string;
   };
   font?: SupportedFonts;
   startAdornment?: ReactNode;

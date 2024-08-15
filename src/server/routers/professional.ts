@@ -13,7 +13,7 @@ import { defaultLocationSelect } from '@/server/selectors/location';
 import { publicUserSelect } from '@/server/selectors/user';
 import { defaultAlbumSelect } from '@/server/selectors/album';
 
-const maxTextLength = 32;
+const maxTextLength = 50;
 const maxLargeTextLength = 140;
 const defaultLimit = 10;
 const maxLimit = 100;

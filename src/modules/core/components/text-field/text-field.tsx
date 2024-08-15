@@ -64,7 +64,7 @@ export const TextField = forwardRef<
         className={clsx(
           styles.root,
           { [styles.active]: hasText.value },
-          { [styles.error]: error },
+          { [styles.error]: !!error },
           { [styles.labelStartAdornment]: startAdornment },
           classes?.container
         )}
@@ -123,6 +123,15 @@ export const TextField = forwardRef<
             {!!label && <Typography>{label}</Typography>}
           </legend>
         </fieldset>
+
+        {typeof error === 'string' && (
+          <Typography
+            variant='small'
+            className={clsx(styles.errorText, classes?.errorText)}
+          >
+            {error}
+          </Typography>
+        )}
       </div>
     );
   }
