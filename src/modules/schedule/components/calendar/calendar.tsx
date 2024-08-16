@@ -15,16 +15,28 @@ import { formatI18n } from '@/modules/internationalization/utils/data-fns-intern
 // styles
 import './calendar.scss';
 import styles from './calendarEvent.module.scss';
+import { weekdays } from '@/modules/schedule/constants/schedule.constants';
+import type { EventInput } from '@fullcalendar/core';
 
 export const Calendar: FC<CalendarProps> = () => {
   const intl = useIntl();
 
   const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
 
+  // queries
   const [events] = trpc.booking.list.useSuspenseQuery({
     expand: ['serviceProfessional'],
     professionalId: me.professional?.id,
   });
+
+  const { data: weekSchedule } = trpc.schedule.getWeekSchedule.useQuery(
+    {
+      professionalId: me?.professional?.id ?? '',
+    },
+    {
+      enabled: Boolean(me?.professional),
+    }
+  );
 
   const handleViewMount = ({ el }: { el: HTMLElement }) => {
     const timeZone = formatI18n(new Date(), 'zzzz', intl.locale).replace(
@@ -37,6 +49,21 @@ export const Calendar: FC<CalendarProps> = () => {
       timeGridAxis.innerHTML = `<span style="font-size: 11px">${timeZone}</span>`;
     }
   };
+
+  const businessHours: EventInput[] = useMemo(() => {
+    if (!weekSchedule) return [];
+
+    return weekSchedule.map((schedule) => {
+      const dayOfWeek =
+        weekdays.findIndex((weekDay) => weekDay === schedule.day) + 1;
+
+      return {
+        daysOfWeek: [dayOfWeek],
+        startTime: formatI18n(schedule.start, 'H:mm', intl.locale),
+        endTime: formatI18n(schedule.end, 'H:mm', intl.locale),
+      };
+    });
+  }, [weekSchedule, intl.locale]);
 
   const eventsList = useMemo(() => {
     return events.map((event) => ({
@@ -61,6 +88,7 @@ export const Calendar: FC<CalendarProps> = () => {
   return (
     <div className='mostly-customized'>
       <FullCalendar
+        businessHours={businessHours}
         events={eventsList}
         viewDidMount={handleViewMount}
         eventBackgroundColor='#26c967'
@@ -96,7 +124,7 @@ export const Calendar: FC<CalendarProps> = () => {
         }}
         slotLabelContent={({ date }) => (
           <div className='left-col'>
-            <span>{formatI18n(date, 'hh:mm', intl.locale)}</span>
+            <span>{formatI18n(date, 'H:mm', intl.locale)}</span>
           </div>
         )}
         allDaySlot={false}
