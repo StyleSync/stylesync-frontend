@@ -130,7 +130,6 @@ export const Calendar: FC<CalendarProps> = () => {
         allDaySlot={false}
         height={'75vh'}
         nowIndicator
-        slotMinTime={'06:00'}
         eventContent={({ event }) => {
           const startTime = getTime(event.start);
           const endTime = getTime(event.end);
