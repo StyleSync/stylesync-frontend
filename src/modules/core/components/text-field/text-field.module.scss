@@ -163,11 +163,8 @@
 
 .errorText {
   position: absolute;
-  color: #d32f2f;
+  color: variables.$error-color;
   font-size: 12px;
   top: 50px;
   left: 33px;
-}
-
-.textFieldError {
 }

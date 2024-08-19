@@ -7,11 +7,12 @@ import { AboutProfessionalForm } from '@/modules/user/components/about-professio
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { showToast } from '@/modules/core/providers/toast-provider';
+// hooks
+import { useAvatarUploadMutation } from '@/modules/user/hooks/use-avatar-upload-mutation';
 // constants
 import { ERROR_MESSAGE } from '@/modules/core/constants/error-messages.constants';
 // types
 import type { AboutProfessionalFormValues } from '@/modules/user/components/about-professional-form/about-professional-form.interface';
-import { useAvatarUploadMutation } from '@/modules/user/hooks/use-avatar-upload-mutation';
 
 export const ProfessionalSettingsAbout: FC = () => {
   const intl = useIntl();
@@ -36,9 +37,9 @@ export const ProfessionalSettingsAbout: FC = () => {
       lastName: me?.lastName ?? undefined,
       phone: me?.phone ?? undefined,
       email: me?.email ?? undefined,
-      about: me?.professional?.about ?? undefined,
-      instagram: me?.professional?.instagram ?? undefined,
-      facebook: me?.professional?.facebook ?? undefined,
+      about: me?.professional?.about ?? '',
+      instagram: me?.professional?.instagram ?? '',
+      facebook: me?.professional?.facebook ?? '',
     }),
     [me]
   );
@@ -69,13 +70,12 @@ export const ProfessionalSettingsAbout: FC = () => {
           phone: values.phone || undefined,
         }),
         proUpdate.mutateAsync({
-          about: values.about || undefined,
-          instagram: values.instagram || undefined,
-          facebook: values.facebook || undefined,
+          about: values.about || '',
+          instagram: values.instagram || '',
+          facebook: values.facebook || '',
         }),
       ])
         .then(() => {
-          meQuery.refetch();
           showToast({
             variant: 'success',
             title: intl.formatMessage({

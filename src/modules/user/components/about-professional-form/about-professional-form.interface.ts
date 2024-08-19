@@ -11,7 +11,7 @@ export type AboutProfessionalFormValues = {
   lastName: string;
   phone: string;
   email: string;
-  facebook: string;
-  instagram: string;
-  about: string;
+  facebook?: string;
+  instagram?: string;
+  about?: string;
 };
