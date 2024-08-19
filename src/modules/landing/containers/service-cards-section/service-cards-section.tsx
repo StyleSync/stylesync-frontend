@@ -9,14 +9,25 @@ import { useIntl } from 'react-intl';
 import { useWindowSize } from 'usehooks-ts';
 import { useMemo } from 'react';
 
+const windowSizes = {
+  md: 800,
+  xl: 1400,
+};
+
+const slidesToDisplayAmount = {
+  default: 1.3,
+  md: 3,
+  xl: 4,
+};
+
 const getSlidesToDisplay = (windowWidth: number): number => {
-  if (windowWidth >= 1400) {
-    return 4;
-  } else if (windowWidth >= 800) {
-    return 3;
+  if (windowWidth >= windowSizes.xl) {
+    return slidesToDisplayAmount.xl;
+  } else if (windowWidth >= windowSizes.md) {
+    return slidesToDisplayAmount.md;
   }
 
-  return 1.3;
+  return slidesToDisplayAmount.default;
 };
 
 export const ServiceCardSection = () => {
@@ -24,16 +35,25 @@ export const ServiceCardSection = () => {
   const windowSize = useWindowSize();
   // memo
   const dynamicSwiperProps = useMemo<Partial<SwiperProps>>(() => {
-    const offset = windowSize.width >= 1024 ? 80 : 24;
-    const spaceBetween = windowSize.width >= 1024 ? 24 : 16;
+    const offsetValues = {
+      default: 24,
+      md: 80,
+    };
+    const spaceValues = {
+      default: 16,
+      md: 24,
+    };
+
+    const offset =
+      windowSize.width >= 1024 ? offsetValues.md : offsetValues.default;
+    const spaceBetween =
+      windowSize.width >= 1024 ? spaceValues.md : spaceValues.default;
     const slidesToDisplay = getSlidesToDisplay(windowSize.width);
     const slideWidth =
       (windowSize.width - offset * 2 - (slidesToDisplay - 1) * spaceBetween) /
       slidesToDisplay;
     const slideOffset = (offset * 2 - spaceBetween / 2) / slideWidth;
     const slidesPerView = slidesToDisplay + slideOffset;
-
-    console.log({ slidesPerView });
 
     return {
       slidesOffsetAfter: offset,
