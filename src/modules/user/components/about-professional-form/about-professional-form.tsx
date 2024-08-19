@@ -74,6 +74,7 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
           onRemove={avatar.onRemove}
         />
         <div className={styles.inputsRow}>
+          ya
           <TextField
             {...form.register('firstName')}
             error={Boolean(form.formState.errors.firstName)}
