@@ -42,7 +42,7 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit, formId }) => {
       onSubmit={form.handleSubmit(onSubmit)}
       className={styles.root}
     >
-      <span className='text-gray text-xs'>
+      <span className='text-xs text-gray'>
         {intl.formatMessage({ id: 'booking.metadata.fillPersonalInfo' })}
       </span>
       <TextField

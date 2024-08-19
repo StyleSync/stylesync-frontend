@@ -145,17 +145,17 @@ export const ServiceBookingModal: FC<
       {...props}
       classes={{ content: 'h-full' }}
     >
-      <div className='flex relative flex-col flex-1 w-[620px] gap-y-6'>
+      <div className='relative flex w-[620px] flex-1 flex-col gap-y-6'>
         <Image
-          className='absolute top-0 left-0 w-full h-[120px] opacity-20'
+          className='absolute left-0 top-0 h-[120px] w-full opacity-20'
           src={Bg.src}
           width={Bg.width}
           height={Bg.height}
           blurDataURL={Bg.blurDataURL}
           alt='booking bg'
         />
-        <div className='flex justify-between px-6 pt-6 z-10'>
-          <div className='flex gap-x-3 w-fit items-center'>
+        <div className='z-10 flex justify-between px-6 pt-6'>
+          <div className='flex w-fit items-center gap-x-3'>
             <Avatar url={professional.user?.avatar} shadow />
             <div className='flex flex-col gap-y-1'>
               <Typography variant='body2' weight='bold'>
@@ -178,7 +178,7 @@ export const ServiceBookingModal: FC<
                     name={serviceOnProfessional.service.icon as IconName}
                     width={17}
                     height={17}
-                    className='inline mr-2'
+                    className='mr-2 inline'
                   />
                   {serviceOnProfessional.title}
                 </span>
@@ -199,7 +199,7 @@ export const ServiceBookingModal: FC<
             </div>
           )}
         </div>
-        <div className='bg-white relative px-6 shadow pt-6 flex-1 z-10'>
+        <div className='relative z-10 flex-1 bg-white px-6 pt-6 shadow'>
           {step === 'service' && (
             <ServiceOnProfessionalSelect
               professional={professional}

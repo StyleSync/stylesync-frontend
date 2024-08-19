@@ -28,7 +28,7 @@ export const EditorField: FC<EditorProps> = ({
 
   return (
     <div
-      className='flex flex-col relative rounded-3xl mt-2 gap-y-2'
+      className='relative mt-2 flex flex-col gap-y-2 rounded-3xl'
       ref={rootRef}
     >
       <div className={clsx('flex w-full', {})}>
@@ -37,7 +37,7 @@ export const EditorField: FC<EditorProps> = ({
           value={value}
           readOnly={false}
           onChange={onChange}
-          className='w-full h-fit'
+          className='h-fit w-full'
         />
       </div>
       {label && <label className={clsx(styles.label)}>{label}</label>}

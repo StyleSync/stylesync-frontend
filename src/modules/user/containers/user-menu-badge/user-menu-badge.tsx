@@ -105,7 +105,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
   return (
     <>
       <div className={styles.root}>
-        <div className='flex w-fit h-fit relative'>
+        <div className='relative flex h-fit w-fit'>
           <Button
             className={clsx(styles.iconButton, {
               [styles.active]: pathname.includes('/settings'),
@@ -115,7 +115,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
             variant='secondary'
           />
           {profileCompletionStatus?.isAllCompleted === false && (
-            <div className='absolute -top-0 -right-0 w-2 h-2 rounded-full bg-primary' />
+            <div className='absolute -right-0 -top-0 h-2 w-2 rounded-full bg-primary' />
           )}
         </div>
         <DropdownMenu

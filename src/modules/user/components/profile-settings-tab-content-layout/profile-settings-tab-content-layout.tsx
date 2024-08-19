@@ -71,7 +71,7 @@ export const ProfileSettingsTabContentLayout: FC<
           {title}
         </Typography>
       </div>
-      <div className='flex-1 flex gap-x-6'>
+      <div className='flex flex-1 gap-x-6'>
         <div className={styles.content}>
           <div className={styles.scrolledContent}>
             <Placeholder
@@ -93,13 +93,13 @@ export const ProfileSettingsTabContentLayout: FC<
           )}
         </div>
         {profileCompletionStatus && !profileCompletionStatus.isAllCompleted && (
-          <div className='w-[300px] bg-white shadow rounded-[20px] p-8 flex flex-col gap-y-6'>
-            <span className='text-dark text-base font-medium'>
+          <div className='flex w-[300px] flex-col gap-y-6 rounded-[20px] bg-white p-8 shadow'>
+            <span className='text-base font-medium text-dark'>
               {intl.formatMessage({
                 id: 'professional.settings.profileRequirements.title',
               })}
             </span>
-            <div className='w-[70%] mx-auto'>
+            <div className='mx-auto w-[70%]'>
               <CircularProgressbar
                 strokeWidth={6}
                 value={
@@ -132,9 +132,9 @@ export const ProfileSettingsTabContentLayout: FC<
                       name={requirementCompleted ? 'check-mark' : 'close'}
                       width={18}
                       color='inherit'
-                      className='shrink-0 mt-[2px]'
+                      className='mt-[2px] shrink-0'
                     />
-                    <span className='text-inherit text-sm font-medium'>
+                    <span className='text-sm font-medium text-inherit'>
                       {intl.formatMessage({ id: requirementTitle })}
                     </span>
                   </div>

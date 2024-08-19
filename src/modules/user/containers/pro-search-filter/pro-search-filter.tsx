@@ -50,7 +50,7 @@ const FilterWrapper: FC<
           item && (
             <animated.div
               style={style}
-              className='w-[300px] rounded-lg h-fit bg-white shadow sticky right-0 md:top-[100px] top-[120px]'
+              className='sticky right-0 top-[120px] h-fit w-[300px] rounded-lg bg-white shadow md:top-[100px]'
             >
               {children}
             </animated.div>
@@ -102,11 +102,11 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
 
   return (
     <FilterWrapper isActive={isOpen} onActiveChange={onOpenChange}>
-      <div className='flex flex-col w-full gap-y-10 md:min-h-0 min-h-[100%] h-fit z-10 md:py-6 py-8 px-6'>
-        <div className='flex flex-col w-full gap-y-6'>
+      <div className='z-10 flex h-fit min-h-[100%] w-full flex-col gap-y-10 px-6 py-8 md:min-h-0 md:py-6'>
+        <div className='flex w-full flex-col gap-y-6'>
           <Typography
             variant='body1'
-            className='text-dark !text-sm !font-medium'
+            className='!text-sm !font-medium text-dark'
           >
             Services for Search
           </Typography>
@@ -153,11 +153,11 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
             })}
           </div>
         </div>
-        <div className='flex flex-col w-full gap-y-6'>
+        <div className='flex w-full flex-col gap-y-6'>
           <Typography
             variant='body2'
             weight='medium'
-            className='!text-dark !text-sm'
+            className='!text-sm !text-dark'
           >
             Date for Booking Availability
           </Typography>
@@ -175,7 +175,7 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
             }}
           />
         </div>
-        <div className='flex w-full gap-x-4 mt-auto'>
+        <div className='mt-auto flex w-full gap-x-4'>
           <Button text='Clear All' variant='outlined' className='!w-full' />
           <Button
             text='Apply Filters'

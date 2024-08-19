@@ -166,7 +166,7 @@ export const ServiceOnProfessionalEditForm: FC<
         content: styles.dialogContent,
       }}
     >
-      <div className='flex-col gap-y-10 grid grid-rows-[auto_1fr] h-fit'>
+      <div className='grid h-fit grid-rows-[auto_1fr] flex-col gap-y-10'>
         <Typography className='text-dark' variant='subtitle'>
           {isNew
             ? intl.formatMessage({ id: 'serviceOn.professional.edit.form.add' })
@@ -251,7 +251,7 @@ export const ServiceOnProfessionalEditForm: FC<
             )}
           />
 
-          <div className='flex gap-x-2 ml-auto mt-2'>
+          <div className='ml-auto mt-2 flex gap-x-2'>
             <Button
               variant='secondary'
               type='button'

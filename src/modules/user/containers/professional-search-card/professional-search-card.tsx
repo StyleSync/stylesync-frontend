@@ -17,27 +17,27 @@ export const ProfessionalSearchCard: FC<ProfessionalSearchCardProps> = ({
   return (
     <div
       onClick={() => router.push(`/app/profile/${professional.user.id}`)}
-      className='shadow hover:shadow-accentShadow rounded-xl overflow-hidden flex flex-col justify-between bg-white gap-y-0 transition cursor-pointer w-full h-fit pb-6'
+      className='flex h-fit w-full cursor-pointer flex-col justify-between gap-y-0 overflow-hidden rounded-xl bg-white pb-6 shadow transition hover:shadow-accentShadow'
     >
-      <div className='gap-x-4 flex flex-col relative object-fill'>
+      <div className='relative flex flex-col gap-x-4 object-fill'>
         <Avatar
           url={professional.user.avatar}
           size={200}
           shape='rect'
-          className='z-10 !rounded-none !border-none !w-full'
+          className='z-10 !w-full !rounded-none !border-none'
         />
-        <div className='flex flex-col justify-center gap-y-6 z-10 px-4 pt-6'>
+        <div className='z-10 flex flex-col justify-center gap-y-6 px-4 pt-6'>
           <div className='flex items-center gap-x-2'>
             <Typography variant='body1' weight='medium'>
               {getFullName(professional.user)}
             </Typography>
-            <div className='w-[14px] h-[14px] bg-dark rounded-full flex items-center justify-center'>
+            <div className='flex h-[14px] w-[14px] items-center justify-center rounded-full bg-dark'>
               <Icon name='check-mark' color='#fff' />
             </div>
           </div>
           <div className='flex flex-col gap-y-3'>
             <div className='flex w-fit items-center gap-x-2 text-dark'>
-              <Icon name='location' className='w-4 h-4 !text-gray' />
+              <Icon name='location' className='h-4 w-4 !text-gray' />
               <Typography variant='body2' className='!text-inherit'>
                 Ukraine, Kiev
               </Typography>
@@ -50,7 +50,7 @@ export const ProfessionalSearchCard: FC<ProfessionalSearchCardProps> = ({
             {/*   </Typography> */}
             {/* </div> */}
             <div className='flex w-fit items-center gap-x-2 text-dark'>
-              <Icon name='beauty-service' className='w-4 h-4 !text-gray' />
+              <Icon name='beauty-service' className='h-4 w-4 !text-gray' />
               <Typography variant='body2' className='!text-inherit'>
                 Makeup, hair, nails
               </Typography>

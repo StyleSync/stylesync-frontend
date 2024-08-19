@@ -50,15 +50,15 @@ export const ProSearchField: FC<ProSearchFieldProps> = () => {
   );
 
   return (
-    <div className='w-fit focus-within:border-primary focus-within:bg-white bg-white/50 border-gray lg:border-gray-light transition border h-[40px] rounded-3xl items-center flex'>
-      <div className='flex items-center min-w-[50px] md:min-w-[250px]'>
+    <div className='flex h-[40px] w-fit items-center rounded-3xl border border-gray bg-white/50 transition focus-within:border-primary focus-within:bg-white lg:border-gray-light'>
+      <div className='flex min-w-[50px] items-center md:min-w-[250px]'>
         <input
           value={searchQuery}
           onChange={handleSearchChange}
           placeholder={intl.formatMessage({
             id: 'header.proSearch.placeholder',
           })}
-          className='text-base placeholder:text-sm md:text-sm outline-none pl-6 pr-2 bg-transparent w-full'
+          className='w-full bg-transparent pl-6 pr-2 text-base outline-none placeholder:text-sm md:text-sm'
         />
       </div>
       <div className='h-[18px] w-[1px] bg-gray-light' />
@@ -67,16 +67,16 @@ export const ProSearchField: FC<ProSearchFieldProps> = () => {
         onClose={isCitySearchOpen.setFalse}
         trigger={
           <div
-            className='flex items-center pl-6 pr-8 cursor-pointer text-dark hover:text-black min-w-[50px] md:min-w-[250px] transition'
+            className='flex min-w-[50px] cursor-pointer items-center pl-6 pr-8 text-dark transition hover:text-black md:min-w-[250px]'
             onClick={isCitySearchOpen.toggle}
           >
             <Icon
               name='location'
               width={16}
               height={16}
-              className='text-inherit shrink-0'
+              className='shrink-0 text-inherit'
             />
-            <span className='text-sm text-inherit ml-3 mr-2 truncate flex-1'>
+            <span className='ml-3 mr-2 flex-1 truncate text-sm text-inherit'>
               {place?.properties.full_address ||
                 intl.formatMessage({
                   id: 'header.proSearch.selectYourCity',
@@ -86,7 +86,7 @@ export const ProSearchField: FC<ProSearchFieldProps> = () => {
               name='chevron-bottom'
               width={14}
               height={14}
-              className={clsx('text-inherit transition shrink-0', {
+              className={clsx('shrink-0 text-inherit transition', {
                 'rotate-180': isCitySearchOpen.value,
               })}
             />
@@ -96,10 +96,10 @@ export const ProSearchField: FC<ProSearchFieldProps> = () => {
         align='start'
         backgroundBlurEffect={false}
       >
-        <div className='w-[300px] p-2 flex flex-col gap-y-4'>
+        <div className='flex w-[300px] flex-col gap-y-4 p-2'>
           <TextField
             variant='input'
-            className='!h-[40px] !text-sm !px-6 flex-1'
+            className='!h-[40px] flex-1 !px-6 !text-sm'
             placeholder={intl.formatMessage({
               id: 'header.proSearch.findYourCity',
             })}
@@ -109,7 +109,7 @@ export const ProSearchField: FC<ProSearchFieldProps> = () => {
             }}
           />
           {placeSuggestions.data && (
-            <div className='flex flex-col w-full gap-y-2'>
+            <div className='flex w-full flex-col gap-y-2'>
               {placeSuggestions.data?.features.map((feature) => (
                 <button
                   key={feature.id}
@@ -117,7 +117,7 @@ export const ProSearchField: FC<ProSearchFieldProps> = () => {
                     onPlaceChange(feature);
                     isCitySearchOpen.setFalse();
                   }}
-                  className='flex items-center bg-transparent text-left text-sm py-3 transition rounded-md px-4 gap-y-2 hover:bg-primary-light hover:text-primary'
+                  className='flex items-center gap-y-2 rounded-md bg-transparent px-4 py-3 text-left text-sm transition hover:bg-primary-light hover:text-primary'
                 >
                   {feature.properties.full_address}
                 </button>
@@ -130,7 +130,7 @@ export const ProSearchField: FC<ProSearchFieldProps> = () => {
       <Button
         icon='search'
         variant='secondary'
-        className='!w-8 !h-8 mr-1 shrink-0'
+        className='mr-1 !h-8 !w-8 shrink-0'
         classes={{
           icon: '!w-4 !h-4',
         }}

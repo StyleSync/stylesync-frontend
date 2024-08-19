@@ -22,7 +22,7 @@ export const Base: Story = {
       <>
         <Button text='Open' onClick={isOpen.setTrue} />
         <DialogBottom isOpen={isOpen.value} onOpenChange={isOpen.setValue}>
-          <div className='flex h-[400px] p-6 justify-end'>
+          <div className='flex h-[400px] justify-end p-6'>
             <Button
               icon='close'
               variant='secondary'

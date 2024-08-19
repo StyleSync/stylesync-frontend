@@ -106,17 +106,17 @@ const testimonialsData2 = [
 
 export const ReviewsSection = () => {
   return (
-    <section className='w-full flex flex-col items-center mt-24 z-0'>
+    <section className='z-0 mt-24 flex w-full flex-col items-center'>
       <Typography
         variant='title'
         weight='semibold'
-        className='!text-4xl md:!text-5xl !text-black text-center'
+        className='text-center !text-4xl !text-black md:!text-5xl'
       >
         Check Out What They Said
       </Typography>
-      <div className=' mt-16 w-full'>
+      <div className='mt-16 w-full'>
         <Swiper
-          className=' w-full h-full'
+          className='h-full w-full'
           wrapperClass=' !ease-linear'
           slidesPerView={2.4}
           speed={10000}
@@ -148,7 +148,7 @@ export const ReviewsSection = () => {
           }}
         >
           {testimonialsData1.map((card, index) => (
-            <SwiperSlide className=' w-full h-full' key={index}>
+            <SwiperSlide className='h-full w-full' key={index}>
               <ReviewCard
                 text={card.text}
                 name={card.author.name}
@@ -159,9 +159,9 @@ export const ReviewsSection = () => {
         </Swiper>
       </div>
 
-      <div className=' mt-5 w-full'>
+      <div className='mt-5 w-full'>
         <Swiper
-          className=' w-full h-full'
+          className='h-full w-full'
           wrapperClass=' !ease-linear'
           speed={10000}
           loop
@@ -194,7 +194,7 @@ export const ReviewsSection = () => {
           }}
         >
           {testimonialsData2.map((card, index) => (
-            <SwiperSlide className=' w-full h-full' key={index}>
+            <SwiperSlide className='h-full w-full' key={index}>
               <ReviewCard
                 text={card.text}
                 name={card.author.name}
