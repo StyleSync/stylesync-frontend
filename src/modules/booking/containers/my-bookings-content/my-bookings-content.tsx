@@ -16,12 +16,12 @@ export const MyBookingsContent = () => {
       {activeTab === 'list' && (
         <Suspense
           fallback={
-            <div className='flex flex-col w-full gap-y-8'>
-              <div className='h-5 skeleton w-[90px] rounded-md' />
-              <div className='flex flex-col w-full gap-y-4'>
-                <div className='skeleton w-full h-[76px] rounded-xl' />
-                <div className='skeleton w-full h-[76px] rounded-xl' />
-                <div className='skeleton w-full h-[76px] rounded-xl' />
+            <div className='flex w-full flex-col gap-y-8'>
+              <div className='skeleton h-5 w-[90px] rounded-md' />
+              <div className='flex w-full flex-col gap-y-4'>
+                <div className='skeleton h-[76px] w-full rounded-xl' />
+                <div className='skeleton h-[76px] w-full rounded-xl' />
+                <div className='skeleton h-[76px] w-full rounded-xl' />
               </div>
             </div>
           }

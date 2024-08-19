@@ -28,7 +28,7 @@ export default async function Profile({ params }: PageParams<{ id: string }>) {
         <section className={clsx(styles.section, styles.headerSection)}>
           <Suspense
             fallback={
-              <div className='w-full h-[214px] rounded-xl bg-black/10' />
+              <div className='h-[214px] w-full rounded-xl bg-black/10' />
             }
           >
             <ProfessionalInfoBigCard userId={params.id} session={session} />
@@ -59,8 +59,8 @@ export default async function Profile({ params }: PageParams<{ id: string }>) {
               <Suspense
                 fallback={
                   <div className='flex flex-col gap-y-4'>
-                    <div className='skeleton w-[60%] rounded h-4' />
-                    <div className='skeleton w-full h-[400px] rounded-xl' />
+                    <div className='skeleton h-4 w-[60%] rounded' />
+                    <div className='skeleton h-[400px] w-full rounded-xl' />
                   </div>
                 }
               >

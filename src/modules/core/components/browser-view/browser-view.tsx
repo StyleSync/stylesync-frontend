@@ -26,8 +26,8 @@ export const BrowserView: FC<BrowserViewProps> = ({
 
   return (
     <div className={clsx(styles.root, className)} style={style} ref={ref}>
-      <MacBrowserChromeToolbar className='w-full relative' />
-      <div className='absolute flex items-center gap-x-1 z-10 top-[1.7%] left-[6.8%]'>
+      <MacBrowserChromeToolbar className='relative w-full' />
+      <div className='absolute left-[6.8%] top-[1.7%] z-10 flex items-center gap-x-1'>
         <Icon name={siteIcon} width={iconSize} height={iconSize} />
         <span
           className='text-dark'
@@ -38,7 +38,7 @@ export const BrowserView: FC<BrowserViewProps> = ({
           {siteName}
         </span>
       </div>
-      <div className='absolute top-[6.5%] left-[11.1%] flex bg-[#F1F3F4] z-10 w-fit pr-5 h-fit' />
+      <div className='absolute left-[11.1%] top-[6.5%] z-10 flex h-fit w-fit bg-[#F1F3F4] pr-5' />
       <div className={styles.content}>
         <div className={styles.ratio} />
         <Image

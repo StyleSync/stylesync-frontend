@@ -37,7 +37,7 @@ export const BookingTimeSelectNavigation: FC<
         onClick={() => swiper.slidePrev()}
         icon='arrow-left'
         variant='unstyled'
-        className='hover:text-primary transition'
+        className='transition hover:text-primary'
       />
       <Typography variant='body1' className='min-w-[150px] text-center'>
         {selectedDate
@@ -48,7 +48,7 @@ export const BookingTimeSelectNavigation: FC<
         onClick={() => swiper.slideNext()}
         icon='arrow-right'
         variant='unstyled'
-        className='hover:text-primary transition'
+        className='transition hover:text-primary'
       />
     </div>
   );

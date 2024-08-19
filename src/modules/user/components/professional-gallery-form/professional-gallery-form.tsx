@@ -107,7 +107,7 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
             }}
             trigger={<Button variant='secondary' {...buttonProps} />}
           />
-          <div className='grid xl:grid-cols-5 sm:grid-cols-3 gap-4 mt-8'>
+          <div className='mt-8 grid gap-4 sm:grid-cols-3 xl:grid-cols-5'>
             {albumsList?.map((album) => (
               <AlbumCard
                 isMoreButtonVisible

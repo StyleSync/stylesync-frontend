@@ -1,6 +1,6 @@
 export const ProDataSkeleton = () => (
-  <div className='flex flex-col gap-y-4 w-full bg-white py-5 px-6'>
-    <div className='skeleton w-[200px] h-4' />
-    <div className='skeleton w-[150px] h-4' />
+  <div className='flex w-full flex-col gap-y-4 bg-white px-6 py-5'>
+    <div className='skeleton h-4 w-[200px]' />
+    <div className='skeleton h-4 w-[150px]' />
   </div>
 );

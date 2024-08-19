@@ -292,7 +292,7 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
             portfolioUpdateMutation.isLoading
           }
         />
-        <div className='h-[70vh] flex'>
+        <div className='flex h-[70vh]'>
           <div
             {...getRootProps({
               className:
@@ -308,7 +308,7 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
                     invert: isDragAccept,
                   })}
                 />
-                <div className='flex flex-col gap-y-2 items-center'>
+                <div className='flex flex-col items-center gap-y-2'>
                   <Typography variant='subtitle' className='text-dark'>
                     {intl.formatMessage({ id: 'photo.modal.upload.dropHere' })}
                   </Typography>
@@ -328,14 +328,14 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
             {photoUploadState.step === 'crop' && (
               <Cropper
                 ref={cropperRef}
-                className='w-full h-full'
+                className='h-full w-full'
                 src={photoUploadState.preview}
               />
             )}
             {photoUploadState.step === 'details' && (
-              <div className='w-full h-full bg-black'>
+              <div className='h-full w-full bg-black'>
                 <Image
-                  className='w-full h-full object-contain flex'
+                  className='flex h-full w-full object-contain'
                   src={photoUploadState.editedPreview}
                   width={100}
                   height={100}
@@ -344,15 +344,15 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
               </div>
             )}
             {photoUploadState.step === 'preview' && (
-              <div className='w-full h-full bg-black relative'>
+              <div className='relative h-full w-full bg-black'>
                 <Placeholder
                   isActive={uploadedPortfolio.isLoading}
-                  className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
+                  className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'
                   placeholder={<Spinner size='medium' color='#fff' />}
                 >
                   {uploadedPortfolio.data && (
                     <Image
-                      className='w-full h-full object-contain flex'
+                      className='flex h-full w-full object-contain'
                       src={uploadedPortfolio.data.link}
                       width={100}
                       height={100}
@@ -365,10 +365,10 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
           </div>
           <animated.div
             style={{ width: springs }}
-            className='bg-transparent w-0 h-full flex'
+            className='flex h-full w-0 bg-transparent'
           >
-            <div className='flex-1 flex flex-col gap-y-4 p-4'>
-              <div className='flex gap-x-2 items-center'>
+            <div className='flex flex-1 flex-col gap-y-4 p-4'>
+              <div className='flex items-center gap-x-2'>
                 <Avatar size={32} url={me?.avatar} />
                 <Typography weight='medium'>{getFullName(me || {})}</Typography>
               </div>
@@ -377,7 +377,7 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder='Write a caption...'
-                className='h-full !p-0 !rounded !resize-none'
+                className='h-full !resize-none !rounded !p-0'
                 classes={{
                   container: 'flex-1',
                   fieldset: '!hidden',

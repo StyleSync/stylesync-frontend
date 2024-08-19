@@ -26,10 +26,10 @@ export const ProData: FC<ProDataProps> = ({ professional, session }) => {
   const isContactOpen = useBoolean();
 
   return (
-    <div className='flex items-center z-10 justify-between w-full bg-white py-5 px-6'>
+    <div className='z-10 flex w-full items-center justify-between bg-white px-6 py-5'>
       <div className='flex flex-col gap-y-3'>
         <div className='flex w-fit items-center gap-x-2 text-dark'>
-          <Icon name='menu' className='w-4 h-4 !text-gray' />
+          <Icon name='menu' className='h-4 w-4 !text-gray' />
           <Typography variant='body2' className='!text-inherit'>
             {serviceOnProfessionalList.length} services provided
           </Typography>
@@ -42,7 +42,7 @@ export const ProData: FC<ProDataProps> = ({ professional, session }) => {
         {/*   </Typography> */}
         {/* </div> */}
         <div className='flex w-fit items-center gap-x-2 text-dark'>
-          <Icon name='arrow-increase' className='w-4 h-4 !text-gray' />
+          <Icon name='arrow-increase' className='h-4 w-4 !text-gray' />
           <Typography variant='body2' className='!text-inherit'>
             14 services booked in the last 7 days
           </Typography>

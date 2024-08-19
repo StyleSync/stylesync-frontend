@@ -20,12 +20,12 @@ export const DialogWizard: FC<DialogWizardProps> = ({
     <Dialog {...props}>
       <div className='flex flex-col'>
         {activeStep && (
-          <div className='w-full z-10 relative shadow h-[44px] flex items-center justify-center'>
+          <div className='relative z-10 flex h-[44px] w-full items-center justify-center shadow'>
             {activeStep.isBack && (
               <Button
                 variant='outlined'
                 icon='arrow-left'
-                className='!border-none ml-2 !text-dark !absolute top-1/2 -translate-y-1/2 left-0'
+                className='!absolute left-0 top-1/2 ml-2 -translate-y-1/2 !border-none !text-dark'
                 onClick={() => {
                   onBack && onBack(activeStep.id);
                 }}

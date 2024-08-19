@@ -68,17 +68,17 @@ export default function SearchProPage() {
   return (
     <>
       <main className={clsx(styles.root)}>
-        <section className='flex-1 flex px-6 md:px-[40px] w-full'>
-          <div className='py-6 md:py-12 flex-1 flex flex-col'>
-            <div className='lg:hidden flex gap-5'>
+        <section className='flex w-full flex-1 px-6 md:px-[40px]'>
+          <div className='flex flex-1 flex-col py-6 md:py-12'>
+            <div className='flex gap-5 lg:hidden'>
               <ProSearchField />
             </div>
 
-            <div className='flex flex-row items-center gap-x-4 mt-6 lg:mt-0'>
+            <div className='mt-6 flex flex-row items-center gap-x-4 lg:mt-0'>
               {isLoading ? (
-                <div className='skeleton w-[250px] h-5 rounded' />
+                <div className='skeleton h-5 w-[250px] rounded' />
               ) : (
-                <span className='text-dark text-base lg:text-xl font-medium'>
+                <span className='text-base font-medium text-dark lg:text-xl'>
                   We found{' '}
                   <span className='text-primary'>
                     {professionalList?.length} pro&apos;s for you
@@ -97,13 +97,13 @@ export default function SearchProPage() {
                 }}
               />
             </div>
-            <div className='flex flex-1 gap-x-8 mt-4 lg:mt-8'>
-              <div className='relative flex-1 transition grid [grid-template-rows:max-content] [grid-template-columns:repeat(auto-fill,_minmax(240px,1fr))] gap-6'>
+            <div className='mt-4 flex flex-1 gap-x-8 lg:mt-8'>
+              <div className='relative grid flex-1 gap-6 transition [grid-template-columns:repeat(auto-fill,_minmax(240px,1fr))] [grid-template-rows:max-content]'>
                 {isLoading ? (
                   <>
-                    <div className='skeleton w-full h-[337px] rounded-xl' />
-                    <div className='skeleton w-full h-[337px] rounded-xl' />
-                    <div className='skeleton w-full h-[337px] rounded-xl' />
+                    <div className='skeleton h-[337px] w-full rounded-xl' />
+                    <div className='skeleton h-[337px] w-full rounded-xl' />
+                    <div className='skeleton h-[337px] w-full rounded-xl' />
                   </>
                 ) : (
                   <>
@@ -116,14 +116,14 @@ export default function SearchProPage() {
                         />
                       ))
                     ) : (
-                      <div className='absolute top-0 left-0 w-full h-full flex flex-col gap-y-4'>
-                        <span className='text-dark text-xl font-medium'>
+                      <div className='absolute left-0 top-0 flex h-full w-full flex-col gap-y-4'>
+                        <span className='text-xl font-medium text-dark'>
                           {intl.formatMessage({
                             id: 'pages.searchPro.noFound.title',
                           })}
                           {/* На жаль у місті Київ нічого не знайдено! */}
                         </span>
-                        <span className='text-gray text-sm font-medium'>
+                        <span className='text-sm font-medium text-gray'>
                           {intl.formatMessage({
                             id: 'pages.searchPro.noFound.description',
                           })}
