@@ -5,7 +5,7 @@ import { LandingHeader } from '@/modules/landing/containers/header/landing-heade
 
 export default function BookingDetailsPage() {
   return (
-    <div className='flex flex-col justify-between h-screen '>
+    <div className='flex h-screen flex-col justify-between'>
       <LandingHeader />
       <BookingPreview />
       <Footer />

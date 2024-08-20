@@ -38,7 +38,7 @@ export const BookingPreviewProgressbar: FC<BookingPreviewProgressbarProps> = ({
   const percents = (daysWaited * 100) / daysRemaining;
 
   return (
-    <div className='relative w-[120px] h-[120px] mt-[66px] ml-5'>
+    <div className='relative ml-5 mt-[66px] h-[120px] w-[120px]'>
       <CircularProgressbar
         strokeWidth={3}
         value={percents}
@@ -47,7 +47,7 @@ export const BookingPreviewProgressbar: FC<BookingPreviewProgressbarProps> = ({
           trailColor: '#d8e6fc',
         })}
       />
-      <div className='absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center flex-col'>
+      <div className='absolute bottom-0 left-0 right-0 top-0 flex flex-col items-center justify-center'>
         <Typography>Залишилось</Typography>
         <Typography weight='semibold'>{`${daysRemaining} д.`}</Typography>
       </div>

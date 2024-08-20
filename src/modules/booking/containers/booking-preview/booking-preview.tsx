@@ -98,19 +98,19 @@ export const BookingPreview = () => {
 
   if (bookingDetails.isLoading) {
     return (
-      <div className='mt-[190px] mx-auto'>
+      <div className='mx-auto mt-[190px]'>
         <Spinner size='large' />
       </div>
     );
   }
 
   return (
-    <main className='w-full max-w-[950px] flex flex-col flex-1 mx-auto px-[15px] mt-28 mb-20'>
-      <Typography className='mx-auto !text-[24px] text-center'>
+    <main className='mx-auto mb-20 mt-28 flex w-full max-w-[950px] flex-1 flex-col px-[15px]'>
+      <Typography className='mx-auto text-center !text-[24px]'>
         Booking № 20
       </Typography>
-      <div className='flex w-full mt-12'>
-        <div className='flex flex-col gap-4 flex-1'>
+      <div className='mt-12 flex w-full'>
+        <div className='flex flex-1 flex-col gap-4'>
           <a
             target='_blank'
             href={`/app/profile/${professional.data?.userId}`}
@@ -173,7 +173,7 @@ export const BookingPreview = () => {
           />
         )}
       </div>
-      <div className='flex gap-4 mt-12'>
+      <div className='mt-12 flex gap-4'>
         <UserContactPopup
           // @ts-ignore
           professional={professional.data}
@@ -209,7 +209,7 @@ export const BookingPreview = () => {
           }}
         />
       </div>
-      <div className='flex flex-col gap-5 h-[400px] w-full mt-12'>
+      <div className='mt-12 flex h-[400px] w-full flex-col gap-5'>
         <div className='flex gap-5'>
           <Typography variant='small' className='!text-gray'>
             {location?.name}
