@@ -3,7 +3,6 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useIntl } from 'react-intl';
-
 // components
 import { TextField } from '@/modules/core/components/text-field';
 import { AvatarSelect } from '@/modules/core/components/avatar-select';
@@ -11,7 +10,7 @@ import { PhoneField } from '@/modules/core/components/phone-field';
 
 // hooks
 import { useImageInputState } from '@/modules/core/hooks/use-image-input-state';
-
+// type
 import type {
   AboutProfessionalFormProps,
   AboutProfessionalFormValues,
@@ -28,13 +27,36 @@ const defaultValues: AboutProfessionalFormValues = {
   about: '',
 };
 
+const phoneRegex = /^(\+\d{1,3}[- ]?)?\d{10}$/;
+
+const facebookUrlRegex =
+  /^(?:https?:\/\/)?(?:www\.)?(?:mbasic\.facebook|m\.facebook|facebook|fb)\.(?:com|me)\/(?:profile\.php\?id=\d+|pages\/\d+\/[\w-]+|[\w-]+)?\/?$/i;
+
+const instagramRegex =
+  /^(?:https?:\/\/)?(?:www\.)?instagram\.com\/(?:p|reel|tv|stories|[\w._-]+)(?:\/[a-zA-Z0-9_-]+)?\/?$/i;
+
 const validationSchema: z.Schema<AboutProfessionalFormValues> = z.object({
   firstName: z.string().min(1),
   lastName: z.string().min(1),
-  phone: z.string(),
+  phone: z.string().regex(phoneRegex, 'Invalid phone number'),
   email: z.string(),
-  facebook: z.string(),
-  instagram: z.string(),
+  facebook: z
+    .string()
+    .max(100)
+    .optional()
+    .refine(
+      (value) => !value || facebookUrlRegex.test(value),
+      'Invalid Facebook URL'
+    ),
+
+  instagram: z
+    .string()
+    .max(100)
+    .optional()
+    .refine(
+      (value) => !value || instagramRegex.test(value),
+      'Invalid Instagram URL'
+    ),
   about: z.string(),
 });
 
@@ -107,7 +129,7 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
             render={({ field }) => {
               return (
                 <PhoneField
-                  error={Boolean(form.formState.errors.phone)}
+                  error={form.formState.errors.phone?.message}
                   label={intl.formatMessage({
                     id: 'user.about.professional.form.phone',
                   })}
@@ -121,7 +143,7 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
         <div className={styles.inputsRow}>
           <TextField
             {...form.register('facebook')}
-            error={Boolean(form.formState.errors.facebook)}
+            error={form.formState.errors.facebook?.message}
             variant='input'
             label={intl.formatMessage({
               id: 'user.about.professional.form.facebook',
@@ -129,7 +151,7 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
           />
           <TextField
             {...form.register('instagram')}
-            error={Boolean(form.formState.errors.instagram)}
+            error={form.formState.errors.instagram?.message}
             variant='input'
             label={intl.formatMessage({
               id: 'user.about.professional.form.instagram',

@@ -161,5 +161,10 @@
   transform: translateY(-50%);
 }
 
-.textFieldError {
+.errorText {
+  position: absolute;
+  color: variables.$error-color;
+  font-size: 12px;
+  top: 50px;
+  left: 33px;
 }

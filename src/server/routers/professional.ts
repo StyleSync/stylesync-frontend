@@ -13,7 +13,7 @@ import { defaultLocationSelect } from '@/server/selectors/location';
 import { publicUserSelect } from '@/server/selectors/user';
 import { defaultAlbumSelect } from '@/server/selectors/album';
 
-const maxTextLength = 32;
+const maxTextLength = 100;
 const maxLargeTextLength = 140;
 const defaultLimit = 10;
 const maxLimit = 100;
@@ -65,19 +65,9 @@ export const professionalRouter = router({
   create: privateProcedure
     .input(
       z.object({
-        facebook: z
-          .string()
-          .url('Invalid url')
-          .min(1, 'Required')
-          .max(maxTextLength)
-          .nullish(),
-        instagram: z
-          .string()
-          .url('Invalid url')
-          .min(1, 'Required')
-          .max(maxTextLength)
-          .nullish(),
-        about: z.string().min(1, 'Required').max(maxLargeTextLength).nullish(),
+        facebook: z.string().max(maxTextLength).nullish(),
+        instagram: z.string().max(maxTextLength).nullish(),
+        about: z.string().max(maxLargeTextLength).nullish(),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -105,18 +95,8 @@ export const professionalRouter = router({
   update: privateProcedure
     .input(
       z.object({
-        facebook: z
-          .string()
-          .url('Invalid url')
-          .min(1, 'Required')
-          .max(maxTextLength)
-          .nullish(),
-        instagram: z
-          .string()
-          .url('Invalid url')
-          .min(1, 'Required')
-          .max(maxTextLength)
-          .nullish(),
+        facebook: z.string().max(maxTextLength).nullish(),
+        instagram: z.string().max(maxTextLength).nullish(),
         about: z.string().min(1, 'Required').max(maxLargeTextLength).nullish(),
       })
     )
