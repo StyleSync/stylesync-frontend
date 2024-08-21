@@ -23,6 +23,8 @@ export const BookingInfoCard: FC<BookingInfoCardProps> = ({
   startTime,
   serviceName,
   variant = 'light',
+  email,
+  phone,
 }) => {
   const intl = useIntl();
 
@@ -62,7 +64,16 @@ export const BookingInfoCard: FC<BookingInfoCardProps> = ({
           </div>
         </div>
       </div>
-      <BookingInfoDialog isOpen={isOpen.value} onOpenChange={isOpen.setValue} />
+      <BookingInfoDialog
+        phone={phone}
+        startTime={formattedStartTime}
+        startDate={formattedDate}
+        email={email}
+        serviceName={serviceName}
+        name={name}
+        isOpen={isOpen.value}
+        onOpenChange={isOpen.setValue}
+      />
     </>
   );
 };
