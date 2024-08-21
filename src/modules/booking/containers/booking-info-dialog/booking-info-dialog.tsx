@@ -80,7 +80,7 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
               name='calendar'
               width={18}
               height={18}
-              className=' !border-none'
+              className='!border-none'
             />
             <Typography variant='small'>
               {startDate} at {startTime}
