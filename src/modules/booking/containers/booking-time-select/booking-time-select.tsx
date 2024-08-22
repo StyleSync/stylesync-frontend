@@ -1,7 +1,7 @@
 import { useMemo, type FC } from 'react';
 import clsx from 'clsx';
 import { useIntl } from 'react-intl';
-
+import { isPast } from 'date-fns';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import {
@@ -50,7 +50,9 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
 
   const bookingAvalibleTimes = useMemo(() => {
     if (bookingData.data) {
-      return bookingData.data;
+      return bookingData.data.filter(
+        (timeSlot) => !isPast(new Date(timeSlot.startTime))
+      );
     }
 
     return [];
