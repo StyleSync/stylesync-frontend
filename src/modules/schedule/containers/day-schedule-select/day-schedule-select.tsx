@@ -256,6 +256,7 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
                   inputProps={{
                     fieldSize: 'small',
                     error: Boolean(fieldState.error),
+                    disabled: weekdayScheduleSaveMutation.isLoading,
                   }}
                 />
               )}
@@ -282,6 +283,7 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
                         inputProps={{
                           fieldSize: 'small',
                           error: Boolean(fieldState.error),
+                          disabled: weekdayScheduleSaveMutation.isLoading,
                         }}
                       />
                     )}
