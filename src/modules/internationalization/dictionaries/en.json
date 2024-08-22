@@ -278,5 +278,8 @@
   "pages.landing.services.title": "Discover Beauty Services Near You",
   "pages.landing.services.description": "Experience top-tier beauty and wellness services, from makeup and hair to personalized fitness, all designed to ensure a seamless and efficient appointment.",
   "pages.landing.mobileApp.title": "StyleSync Mobile App",
-  "pages.landing.mobileApp.description": "Manage bookings, automate processes, and promote your services on-the-go with our user-friendly mobile app"
+  "pages.landing.mobileApp.description": "Manage bookings, automate processes, and promote your services on-the-go with our user-friendly mobile app",
+
+  "progressbar.title": "Left",
+  "progressbar.days": "d"
 }
