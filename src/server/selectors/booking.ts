@@ -11,4 +11,6 @@ export const defaultBookingSelect = Prisma.validator<Prisma.BookingSelect>()({
   guestEmail: true,
   guestComment: true,
   status: true,
+  createdAt: true,
+  updatedAt: true,
 });
