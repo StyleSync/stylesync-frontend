@@ -77,6 +77,7 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
       'image/jpg': [],
       'image/png': [],
     },
+    multiple: false,
     maxFiles: 1,
     onDrop: (acceptedFilesDropped) => {
       if (acceptedFilesDropped.length) {
