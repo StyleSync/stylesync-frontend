@@ -1,5 +1,6 @@
 import { type FC } from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import { useIntl } from 'react-intl';
 
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
@@ -15,6 +16,7 @@ export const BookingPreviewProgressbar: FC<BookingPreviewProgressbarProps> = ({
   createdAt,
   startTime,
 }) => {
+  const intl = useIntl();
   const currentDate = new Date();
 
   const daysRemaining = Math.ceil(
@@ -48,8 +50,15 @@ export const BookingPreviewProgressbar: FC<BookingPreviewProgressbarProps> = ({
         })}
       />
       <div className='absolute bottom-0 left-0 right-0 top-0 flex flex-col items-center justify-center'>
-        <Typography>Залишилось</Typography>
-        <Typography weight='semibold'>{`${daysRemaining} д.`}</Typography>
+        <Typography>
+          {intl.formatMessage({
+            id: 'progressbar.title',
+          })}
+        </Typography>
+        <Typography weight='semibold'>{`${daysRemaining}
+         ${intl.formatMessage({
+           id: 'progressbar.days',
+         })}`}</Typography>
       </div>
     </div>
   );
