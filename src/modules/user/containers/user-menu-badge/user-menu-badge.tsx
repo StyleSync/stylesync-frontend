@@ -107,6 +107,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
       <div className={styles.root}>
         <div className='relative flex h-fit w-fit'>
           <Button
+            aria-label='Settings'
             className={clsx(styles.iconButton, {
               [styles.active]: pathname.includes('/settings'),
             })}

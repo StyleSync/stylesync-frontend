@@ -55,6 +55,7 @@ export const AvatarSelect: FC<AvatarSelectProps> = ({
         )}
       </div>
       <input
+        aria-label='Avatar select'
         ref={inputRef}
         type='file'
         className='visibilityHidden'

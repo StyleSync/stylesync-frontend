@@ -121,6 +121,7 @@ const UserLocationSelectForm = forwardRef<
             label: intl.formatMessage({ id: 'location.search.input.label' }),
             endAdornment: (
               <Button
+                aria-label='Delete location'
                 variant='unstyled'
                 icon='close'
                 onClick={handleClearAddress}

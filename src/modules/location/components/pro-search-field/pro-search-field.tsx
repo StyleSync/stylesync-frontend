@@ -128,6 +128,7 @@ export const ProSearchField: FC<ProSearchFieldProps> = () => {
       </Popover>
 
       <Button
+        aria-label='Search'
         icon='search'
         variant='secondary'
         className='mr-1 !h-8 !w-8 shrink-0'

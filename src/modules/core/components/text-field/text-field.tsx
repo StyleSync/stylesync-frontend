@@ -75,6 +75,8 @@ export const TextField = forwardRef<
         {isInputProps(variant, props) && (
           <input
             ref={combinedRefs as ForwardedRef<HTMLInputElement>}
+            id={props.id}
+            aria-label={label}
             className={clsx(
               className,
               styles.textField,
@@ -89,6 +91,8 @@ export const TextField = forwardRef<
         {isTextAreaProps(variant, props) && (
           <textarea
             ref={combinedRefs as ForwardedRef<HTMLTextAreaElement>}
+            aria-label={label}
+            id={props.id}
             className={clsx(
               className,
               styles.textField,
