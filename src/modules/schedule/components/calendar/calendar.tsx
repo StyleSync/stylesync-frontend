@@ -1,41 +1,38 @@
-import { useMemo, type FC } from 'react';
-import { getHours, set, getMinutes, add } from 'date-fns';
+import { useMemo, type FC, useContext } from 'react';
+import { getHours, set, getMinutes } from 'date-fns';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { useIntl } from 'react-intl';
+import dynamic from 'next/dynamic';
 // components
 import { Icon } from '@/modules/core/components/icon';
-import { AddBookingModal } from '@/modules/schedule/components/add-booking-modal';
+import { Button } from '@/modules/core/components/button';
+// context
+import { BookingContext } from '@/modules/booking/providers/booking-provider';
 // type
-import type { CalendarProps } from './calendar.interface';
-import type { CreateBookingRequestData } from '@/modules/booking/components/service-booking-modal/service-booking-modal.interface';
-
+import type { EventInput } from '@fullcalendar/core';
 // utils
 import { getTime } from '@/modules/schedule/utils/get-time';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
+// constants
+import { weekdays } from '@/modules/schedule/constants/schedule.constants';
 
-// styles
+import type { CalendarProps } from './calendar.interface';
 import styles from './calendarEvent.module.scss';
-import { useBoolean } from 'usehooks-ts';
 
 import './calendar.scss';
-import dynamic from 'next/dynamic';
-import { Button } from '@/modules/core/components/button';
-import { Time } from '@/modules/core/utils/time.utils';
 
 const FullCalendar = dynamic(() => import('@fullcalendar/react'), {
   ssr: false,
 });
-import { weekdays } from '@/modules/schedule/constants/schedule.constants';
-import type { EventInput } from '@fullcalendar/core';
-import { Icon } from '@/modules/core/components/icon';
 
 export const Calendar: FC<CalendarProps> = () => {
   const intl = useIntl();
-  const isOpenAddBookingModal = useBoolean();
 
   const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
 
+  // context
+  const { book } = useContext(BookingContext);
   // queries
   const [events] = trpc.booking.list.useSuspenseQuery({
     expand: ['serviceProfessional'],
@@ -100,14 +97,13 @@ export const Calendar: FC<CalendarProps> = () => {
 
   return (
     <div className='w-full'>
-      <AddBookingModal
-        onOpenChange={isOpenAddBookingModal.setValue}
-        isOpen={isOpenAddBookingModal.value}
-        trigger={
-          <Button text='Add event' className='absolute right-[36px] top-8' />
-        }
+      <Button
+        text='Create'
+        onClick={() => {
+          book();
+        }}
+        className='absolute right-[36px] top-8'
       />
-
       <FullCalendar
         businessHours={businessHours}
         events={eventsList}
@@ -147,10 +143,10 @@ export const Calendar: FC<CalendarProps> = () => {
           return (
             <div
               key={event.id}
-              className='relative flex flex-col border-l-[3px] border-green pl-3 gap-y-1'
+              className='relative flex flex-col gap-y-1 border-l-[3px] border-green pl-3'
             >
               <div className='flex'>
-                <span className='text-base font-medium text-black truncate'>
+                <span className='truncate text-base font-medium text-black'>
                   {event.title}
                 </span>
               </div>
@@ -161,11 +157,11 @@ export const Calendar: FC<CalendarProps> = () => {
                   height={16}
                   className='text-gray-accent'
                 />
-                <span className='text-gray-accent font-medium text-sm'>
+                <span className='text-sm font-medium text-gray-accent'>
                   {startTime} - {endTime}
                 </span>
               </div>
-              <div className='w-1 h-full bg-green absolute top-0 -left-1 rounded-full' />
+              <div className='absolute -left-1 top-0 h-full w-1 rounded-full bg-green' />
             </div>
           );
         }}

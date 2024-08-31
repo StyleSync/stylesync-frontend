@@ -32,6 +32,7 @@ export const Popover: FC<PopoverProps> = ({
   const { width } = useResizeObserver({
     ref: popperRef,
   });
+
   // refs
   const { current: PortalOrFragment } = useRef(
     disablePortal ? Fragment : RPopover.Portal

@@ -69,7 +69,7 @@ export const BookingProvider: FC<ChildrenProp & { userId: string }> = ({
         guestFirstName: name,
         guestLastName: lastName || undefined,
         guestPhone: phone,
-        guestEmail: email || undefined,
+        guestEmail: email,
         date: selectedDay,
         startTime: selectedTimeRange.startTime,
         endTime: selectedTimeRange.endTime,

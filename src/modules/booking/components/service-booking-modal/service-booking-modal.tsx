@@ -154,7 +154,7 @@ export const ServiceBookingModal: FC<
           blurDataURL={Bg.blurDataURL}
           alt='booking bg'
         />
-        <div className='z-10 flex justify-between px-6 pt-6'>
+        <div className='z-10 flex items-center justify-between gap-x-3 px-6 pt-6'>
           <div className='flex w-fit items-center gap-x-3'>
             <Avatar url={professional.user?.avatar} shadow />
             <div className='flex flex-col gap-y-1'>
@@ -171,7 +171,7 @@ export const ServiceBookingModal: FC<
             </div>
           </div>
           {step !== 'service' && (
-            <div className='flex flex-col items-end gap-y-1'>
+            <div className='flex shrink-0 flex-col items-end gap-y-1'>
               {serviceOnProfessional && (
                 <span className='text-sm font-medium !text-dark'>
                   <Icon

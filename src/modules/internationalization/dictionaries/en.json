@@ -292,7 +292,7 @@
   "add.booking.modal.toast.error.title": "Error",
   "add.booking.modal.toast.error.description": "An error occurred",
   "add.booking.modal.toast.success.title": "Great!",
-  "add.booking.modal.toast.success.description": "Event added"
+  "add.booking.modal.toast.success.description": "Event added",
 
   "progressbar.title": "Left",
   "progressbar.days": "d"

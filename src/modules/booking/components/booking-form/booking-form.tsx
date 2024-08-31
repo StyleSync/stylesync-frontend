@@ -17,7 +17,6 @@ const defaultValues = {
   phone: '',
   email: '',
   comment: '',
-  email: '',
 };
 
 const bookingValidationSchema = z.object({
