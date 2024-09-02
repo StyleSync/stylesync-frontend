@@ -280,6 +280,20 @@
   "pages.landing.mobileApp.title": "StyleSync Mobile App",
   "pages.landing.mobileApp.description": "Manage bookings, automate processes, and promote your services on-the-go with our user-friendly mobile app",
 
+  "add.booking.modal.title": "Add reservation manually",
+  "add.booking.modal.form.service": "Service Name *",
+  "add.booking.modal.form.date": "Date *",
+  "add.booking.modal.form.duration": "Duration *",
+  "add.booking.modal.form.guest.name": "Guest name * *",
+  "add.booking.modal.form.guest.phone": "Guest phone number *",
+  "add.booking.modal.form.guest.email": "Guest email *",
+  "add.booking.modal.form.description": "Duration *",
+
+  "add.booking.modal.toast.error.title": "Error",
+  "add.booking.modal.toast.error.description": "An error occurred",
+  "add.booking.modal.toast.success.title": "Great!",
+  "add.booking.modal.toast.success.description": "Event added",
+
   "progressbar.title": "Left",
   "progressbar.days": "d"
 }

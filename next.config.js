@@ -3,6 +3,7 @@ const path = require('path');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   swcMinify: true,
+  reactStrictMode: false,
   compiler: {
     removeConsole: process.env.NODE_ENV !== 'development', // Remove console.log in production
   },

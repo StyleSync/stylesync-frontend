@@ -37,7 +37,7 @@ export const Sidebar: FC<SidebarProps> = ({
             )}
             <div className={styles.links}>
               {group.links.map((link) => (
-                <>
+                <Fragment key={link.name}>
                   {link.renderItem ? (
                     link.renderItem({})
                   ) : (
@@ -53,7 +53,7 @@ export const Sidebar: FC<SidebarProps> = ({
                       iconEnd='chevron-right'
                     />
                   )}
-                </>
+                </Fragment>
               ))}
             </div>
           </div>

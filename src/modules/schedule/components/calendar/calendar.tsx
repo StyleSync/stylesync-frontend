@@ -1,28 +1,38 @@
-import { useMemo, type FC } from 'react';
+import { useMemo, type FC, useContext } from 'react';
 import { getHours, set, getMinutes } from 'date-fns';
-import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { useIntl } from 'react-intl';
-
+import dynamic from 'next/dynamic';
 // components
-import { Typography } from '@/modules/core/components/typogrpahy';
+import { Icon } from '@/modules/core/components/icon';
+import { Button } from '@/modules/core/components/button';
+// context
+import { BookingContext } from '@/modules/booking/providers/booking-provider';
 // type
-import type { CalendarProps } from './calendar.interface';
+import type { EventInput } from '@fullcalendar/core';
 // utils
 import { getTime } from '@/modules/schedule/utils/get-time';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
-// styles
-import './calendar.scss';
-import styles from './calendarEvent.module.scss';
+// constants
 import { weekdays } from '@/modules/schedule/constants/schedule.constants';
-import type { EventInput } from '@fullcalendar/core';
+
+import type { CalendarProps } from './calendar.interface';
+import styles from './calendarEvent.module.scss';
+
+import './calendar.scss';
+
+const FullCalendar = dynamic(() => import('@fullcalendar/react'), {
+  ssr: false,
+});
 
 export const Calendar: FC<CalendarProps> = () => {
   const intl = useIntl();
 
   const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
 
+  // context
+  const { book } = useContext(BookingContext);
   // queries
   const [events] = trpc.booking.list.useSuspenseQuery({
     expand: ['serviceProfessional'],
@@ -86,32 +96,25 @@ export const Calendar: FC<CalendarProps> = () => {
   }, [events]);
 
   return (
-    <div className='mostly-customized'>
+    <div className='w-full'>
+      <Button
+        text='Create'
+        onClick={() => {
+          book();
+        }}
+        className='absolute right-[36px] top-8'
+      />
       <FullCalendar
         businessHours={businessHours}
         events={eventsList}
         viewDidMount={handleViewMount}
-        eventBackgroundColor='#26c967'
         plugins={[timeGridPlugin]}
         initialView='timeGridWeek'
-        customButtons={{
-          customButtons: {
-            text: intl.formatMessage({ id: 'calendar.customButtons.approved' }),
-          },
-          customButtons2: {
-            text: intl.formatMessage({
-              id: 'calendar.customButtons.requested',
-            }),
-          },
-          customButtons3: {
-            text: intl.formatMessage({ id: 'calendar.customButtons.past' }),
-          },
-        }}
         buttonText={{ today: 'Today' }}
         headerToolbar={{
-          left: 'today prev,next',
-          center: 'title',
-          right: 'customButtons customButtons2 customButtons3',
+          left: 'title',
+          center: 'prev,next',
+          right: '',
         }}
         dayHeaderFormat={({ date }) =>
           formatI18n(date.marker, 'dd E', intl.locale)
@@ -128,6 +131,9 @@ export const Calendar: FC<CalendarProps> = () => {
           </div>
         )}
         allDaySlot={false}
+        eventClassNames={() =>
+          '!bg-green-light py-2 cursor-pointer hover:saturate-[1.6] hover:shadow hover:border hover:border-green transition'
+        }
         height={'75vh'}
         nowIndicator
         eventContent={({ event }) => {
@@ -135,14 +141,27 @@ export const Calendar: FC<CalendarProps> = () => {
           const endTime = getTime(event.end);
 
           return (
-            <div key={event.id} className={styles.eventContainer}>
-              {/* TODO: Avatar */}
-              <Typography className={styles.eventText} variant='small'>
-                {event.title}
-              </Typography>
-              <Typography className={styles.eventText}>
-                {startTime} - {endTime}
-              </Typography>
+            <div
+              key={event.id}
+              className='relative flex flex-col gap-y-1 border-l-[3px] border-green pl-3'
+            >
+              <div className='flex'>
+                <span className='truncate text-base font-medium text-black'>
+                  {event.title}
+                </span>
+              </div>
+              <div className='flex items-center gap-x-1'>
+                <Icon
+                  name='time'
+                  width={16}
+                  height={16}
+                  className='text-gray-accent'
+                />
+                <span className='text-sm font-medium text-gray-accent'>
+                  {startTime} - {endTime}
+                </span>
+              </div>
+              <div className='absolute -left-1 top-0 h-full w-1 rounded-full bg-green' />
             </div>
           );
         }}

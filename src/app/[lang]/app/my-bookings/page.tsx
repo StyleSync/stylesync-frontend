@@ -1,29 +1,34 @@
 // containers
 import { MyBookingsTabs } from '@/modules/booking/containers/my-bookings-tabs';
 import { MyBookingsContent } from '@/modules/booking/containers/my-bookings-content';
+import { BookingProvider } from '@/modules/booking/providers/booking-provider';
 // utils
 import { pageGuard } from '@/modules/core/utils/route.utils';
 
 import styles from './my-bookings.module.scss';
 
 export default async function MyBookings() {
-  await pageGuard({
+  const session = await pageGuard({
     require: {
       onboarding: true,
       userType: true,
     },
   });
 
+  if (!session) {
+    return null;
+  }
+
   return (
-    <div className={styles.root}>
-      <section className='pageContent'>
-        <MyBookingsTabs />
-      </section>
-      <section className={styles.pageContent}>
-        <div className='pageContent'>
+    <BookingProvider userId={session?.user?.id}>
+      <div className={styles.root}>
+        <section className='px-8'>
+          <MyBookingsTabs />
+        </section>
+        <section className='relative flex w-full flex-1 bg-white px-8 shadow'>
           <MyBookingsContent />
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+    </BookingProvider>
   );
 }

@@ -13,11 +13,12 @@ import { ServiceTableSkeleton } from '@/modules/service/components/service-table
 // containers
 import { ProBookActions } from '@/modules/user/containers/pro-book-actions';
 import { ProfessionalInfoBigCard } from '@/modules/user/containers/professional-info-big-card';
+// providers
+import { BookingProvider } from '@/modules/booking/providers/booking-provider';
 
 // types
 import type { PageParams } from '@/modules/core/types/next.types';
 import styles from './profile.module.scss';
-import { BookingProvider } from '@/modules/booking/providers/booking-provider';
 
 export default async function Profile({ params }: PageParams<{ id: string }>) {
   const session = await getServerSession(authOptions);

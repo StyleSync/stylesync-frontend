@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { getServerSession } from 'next-auth';
+import { getServerSession, type Session } from 'next-auth';
 import { authOptions } from '@/modules/auth/constants/auth-server.constants';
 
 type PageGuardConfig = {
@@ -9,7 +9,9 @@ type PageGuardConfig = {
   };
 };
 
-export const pageGuard = async (config: PageGuardConfig): Promise<void> => {
+export const pageGuard = async (
+  config: PageGuardConfig
+): Promise<void | Session> => {
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -23,4 +25,6 @@ export const pageGuard = async (config: PageGuardConfig): Promise<void> => {
   if (config.require.onboarding && !session.user.onboardingCompleted) {
     redirect('/app/onboard');
   }
+
+  return session;
 };
