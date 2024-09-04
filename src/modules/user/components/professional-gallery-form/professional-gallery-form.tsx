@@ -35,7 +35,7 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
     if (windowSizeType === 'mobile') {
       return {
         icon: 'plus',
-        variant: 'primary',
+        variant: 'outlined',
       };
     }
 
@@ -43,7 +43,7 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
       text: intl.formatMessage({
         id: 'user.professional.gallery.form.createAlbum',
       }),
-      variant: 'secondary',
+      variant: 'outlined',
     };
   }, [windowSizeType, intl]);
 
@@ -89,7 +89,9 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
             <AlbumAddModal
               onOpenChange={isModalOpen.setValue}
               isOpen={isModalOpen.value}
-              trigger={<Button variant='secondary' {...buttonProps} />}
+              trigger={
+                <Button className='left-[140px] top-[300px]' {...buttonProps} />
+              }
             />
           ),
         }}
@@ -105,7 +107,7 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
                 setAlbunToEdit(null);
               }
             }}
-            trigger={<Button variant='secondary' {...buttonProps} />}
+            trigger={<Button {...buttonProps} />}
           />
           <div className='mt-8 grid gap-4 sm:grid-cols-3 xl:grid-cols-5'>
             {albumsList?.map((album) => (

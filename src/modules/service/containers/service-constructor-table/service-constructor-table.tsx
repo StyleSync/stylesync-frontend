@@ -22,6 +22,7 @@ import { trpc } from '@/modules/core/utils/trpc.utils';
 
 import type { ServiceConstructorTableProps } from './service-constructor-table.interface';
 import styles from './service-constructor-table.module.scss';
+import type { DropdownItem } from '@/modules/core/components/dropdown-menu/dropdown-menu.interface';
 
 export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
   service,
@@ -64,6 +65,18 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
     onRemove,
   ]);
 
+  const handleSelect = ({ id }: DropdownItem) => {
+    if (id === 'add') {
+      isActionsOpen.setFalse();
+      isCreateOpen.setTrue();
+    }
+
+    if (id === 'delete') {
+      isActionsOpen.setFalse();
+      handleTableRemoveClick();
+    }
+  };
+
   return (
     <div className={styles.root}>
       <div className={styles.header}>
@@ -102,6 +115,7 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
               icon='points'
             />
           }
+          onSelect={handleSelect}
           items={[
             {
               id: 'add',

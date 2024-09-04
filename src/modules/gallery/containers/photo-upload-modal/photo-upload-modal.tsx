@@ -297,7 +297,7 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
           <div
             {...getRootProps({
               className:
-                'aspect-square relative h-full flex flex-col gap-y-6 justify-center items-center',
+                'w-full aspect-square relative h-full flex flex-col gap-y-6 justify-center items-center',
             })}
           >
             {photoUploadState.step === 'select' && (

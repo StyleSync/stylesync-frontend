@@ -40,7 +40,7 @@ export const AlbumDetails: FC<AlbumDetailsProps> = ({
 
     return {
       text: intl.formatMessage({ id: 'album.details.addImage' }),
-      variant: 'secondary',
+      variant: 'outlined',
     };
   }, [windowSizeType, intl]);
 

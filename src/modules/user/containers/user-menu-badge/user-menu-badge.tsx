@@ -66,7 +66,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
   }, [router]);
 
   if (deviceType === 'mobile') {
-    return <BurgerMenu />;
+    return <BurgerMenu session={session} />;
   }
 
   if (!session) {

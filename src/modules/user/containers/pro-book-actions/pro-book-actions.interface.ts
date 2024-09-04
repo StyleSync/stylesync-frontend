@@ -1,1 +1,3 @@
-export type ProBookActionsProps = {};
+export type ProBookActionsProps = {
+  userId: string;
+};

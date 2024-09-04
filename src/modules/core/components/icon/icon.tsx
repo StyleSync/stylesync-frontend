@@ -73,6 +73,7 @@ import FaceMassage from '@/assets/icons/face-massage.svg?icon';
 import Filter from '@/assets/icons/filter.svg?icon';
 import Eyebrows from '@/assets/icons/eyebrows.svg?icon';
 import Skincare from '@/assets/icons/skincare.svg?icon';
+import Profile from '@/assets/icons/profile.svg?icon';
 
 import type { SVGComponentElement } from './icon.interface';
 
@@ -127,6 +128,7 @@ export const icons = {
   'log-out': LogOutIcon,
   'alert-triangle': AlertTriangleIcon,
   'refresh-ccw': RefreshCcwIcon,
+  'profile-circle': Profile,
   shield: ShieldIcon,
   instagram: InstagramIcon,
   facebook: FacebookIcon,

@@ -24,6 +24,12 @@ import styles from './burger-menu.module.scss';
 
 const proActions: BurgerMenuAction[] = [
   {
+    id: 'my-profile',
+    icon: 'profile-circle',
+    text: 'My profile',
+    variant: 'default',
+  },
+  {
     id: 'share',
     icon: 'share',
     text: 'Share profile',
@@ -101,26 +107,29 @@ const dialogAnimationConfig: Partial<DialogFullScreenAnimationConfig> = {
   },
 };
 
-export const BurgerMenu: FC<BurgerMenuProps> = () => {
+export const BurgerMenu: FC<BurgerMenuProps> = ({ session }) => {
   const router = useRouter();
   // state
   const isOpen = useBoolean();
-  const session = useSession();
+  const { status } = useSession();
   const { data: me, ...meQuery } = trpc.user.me.useQuery(
     {
       expand: [],
     },
     {
-      enabled: session.status === 'authenticated',
+      enabled: status === 'authenticated',
     }
   );
   // memo
-  const actions =
-    session.status === 'authenticated' ? proActions : publicActions;
-  const isLoading = session.status === 'loading' || meQuery.isInitialLoading;
+  const actions = status === 'authenticated' ? proActions : publicActions;
+  const isLoading = status === 'loading' || meQuery.isInitialLoading;
 
   const handleActionClick = useCallback(
     (action: BurgerMenuAction) => () => {
+      if (action.id === 'my-profile') {
+        router.push(`/app/profile/${session?.user.id}`);
+      }
+
       if (action.id === 'sign-out') {
         void signOut({ callbackUrl: '/' });
       }
@@ -170,7 +179,7 @@ export const BurgerMenu: FC<BurgerMenuProps> = () => {
           <div className={styles.info}>
             <Placeholder
               className={styles.unauthPlaceholder}
-              isActive={session.status === 'unauthenticated'}
+              isActive={status === 'unauthenticated'}
               placeholder={
                 <Typography className={styles.name}>
                   Not authenticated
