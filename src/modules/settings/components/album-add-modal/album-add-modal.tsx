@@ -143,7 +143,7 @@ export const AlbumAddModal: FC<
         <div className='flex items-center gap-3'>
           <Typography variant='subtitle'>
             {intl.formatMessage({
-              id: album
+              id: !album
                 ? 'albumAdd.modal.title.edit'
                 : 'albumAdd.modal.title.add',
             })}

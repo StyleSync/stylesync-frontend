@@ -260,6 +260,7 @@
   "photo.upload.modal.header.crop": "Crop",
   "photo.upload.modal.header.details": "Upload new photo",
   "photo.upload.modal.header.preview": "Display photo",
+  "photo.upload.modal.caption": "Write a caption...",
 
   "user.header.navigation.profile": "Profile",
   "user.header.navigation.myBookings": "My bookings",

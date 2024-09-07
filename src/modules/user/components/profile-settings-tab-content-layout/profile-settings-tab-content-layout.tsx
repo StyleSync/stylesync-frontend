@@ -93,7 +93,7 @@ export const ProfileSettingsTabContentLayout: FC<
           )}
         </div>
         {profileCompletionStatus && !profileCompletionStatus.isAllCompleted && (
-          <div className='hidden w-[300px] flex-col gap-y-6 rounded-[20px] bg-white p-8 shadow md:flex'>
+          <div className='hidden w-[300px] flex-col gap-y-6 rounded-[20px] bg-white p-8 shadow xl:flex'>
             <span className='text-base font-medium text-dark'>
               {intl.formatMessage({
                 id: 'professional.settings.profileRequirements.title',

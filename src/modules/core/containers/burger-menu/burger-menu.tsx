@@ -25,14 +25,26 @@ import styles from './burger-menu.module.scss';
 const proActions: BurgerMenuAction[] = [
   {
     id: 'my-profile',
-    icon: 'profile-circle',
+    icon: 'user',
     text: 'My profile',
+    variant: 'default',
+  },
+  {
+    id: 'my-bookings',
+    icon: 'list',
+    text: 'My bookings',
     variant: 'default',
   },
   {
     id: 'share',
     icon: 'share',
     text: 'Share profile',
+    variant: 'default',
+  },
+  {
+    id: 'settings',
+    icon: 'settings',
+    text: 'Settings',
     variant: 'default',
   },
   {
@@ -130,8 +142,16 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ session }) => {
         router.push(`/app/profile/${session?.user.id}`);
       }
 
+      if (action.id === 'my-bookings') {
+        router.push(`/app/my-bookings`);
+      }
+
       if (action.id === 'sign-out') {
         void signOut({ callbackUrl: '/' });
+      }
+
+      if (action.id === 'settings') {
+        router.push(`/app/settings`);
       }
 
       if (action.id === 'sign-in') {

@@ -17,6 +17,7 @@ import { TextField } from '@/modules/core/components/text-field';
 import { Placeholder } from '@/modules/core/components/placeholder';
 // hooks
 import { useImageUploadMutation } from '@/modules/user/hooks/use-image-upload-mutation';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // utils
 import { getFullName } from '@/modules/user/utils/user.utils';
 import { trpc } from '@/modules/core/utils/trpc.utils';
@@ -44,6 +45,7 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
 }) => {
   const intl = useIntl();
   const queryClient = useQueryClient();
+  const deviceType = useDeviceType();
   // queries
   const { data: me } = trpc.user.me.useQuery({
     expand: ['professional'],
@@ -296,8 +298,14 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
         <div className='flex h-[70vh]'>
           <div
             {...getRootProps({
-              className:
+              className: clsx(
                 'w-full aspect-square relative h-full flex flex-col gap-y-6 justify-center items-center',
+                {
+                  hidden:
+                    photoUploadState.step === 'details' &&
+                    deviceType === 'mobile',
+                }
+              ),
             })}
           >
             {photoUploadState.step === 'select' && (
@@ -333,7 +341,7 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
                 src={photoUploadState.preview}
               />
             )}
-            {photoUploadState.step === 'details' && (
+            {photoUploadState.step === 'details' && deviceType !== 'mobile' && (
               <div className='h-full w-full bg-black'>
                 <Image
                   className='flex h-full w-full object-contain'
@@ -377,7 +385,9 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
                 variant='textarea'
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder='Write a caption...'
+                placeholder={intl.formatMessage({
+                  id: 'photo.upload.modal.caption',
+                })}
                 className='h-full !resize-none !rounded !p-0'
                 classes={{
                   container: 'flex-1',

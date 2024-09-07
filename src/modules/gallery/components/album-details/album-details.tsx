@@ -64,7 +64,6 @@ export const AlbumDetails: FC<AlbumDetailsProps> = ({
         onClick={onClickClose}
         className={styles.btnBack}
       />
-
       <Placeholder
         className='h-full'
         isActive={imagesList?.length === 0}

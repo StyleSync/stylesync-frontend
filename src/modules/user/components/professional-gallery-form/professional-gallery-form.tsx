@@ -1,5 +1,6 @@
 import { type FC, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
+import clsx from 'clsx';
 
 // components
 import { Button } from '@/modules/core/components/button';
@@ -35,7 +36,7 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
     if (windowSizeType === 'mobile') {
       return {
         icon: 'plus',
-        variant: 'outlined',
+        variant: 'primary',
       };
     }
 
@@ -85,12 +86,15 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
           description: intl.formatMessage({
             id: 'user.professional.gallery.form.noAlbumsAdded',
           }),
-          action: (
+          action: !albumData.isLoading && (
             <AlbumAddModal
               onOpenChange={isModalOpen.setValue}
               isOpen={isModalOpen.value}
               trigger={
-                <Button className='left-[140px] top-[300px]' {...buttonProps} />
+                <Button
+                  className={clsx('mobileActionBtn', styles.trigger)}
+                  {...buttonProps}
+                />
               }
             />
           ),
@@ -109,7 +113,7 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
             }}
             trigger={<Button {...buttonProps} />}
           />
-          <div className='mt-8 grid gap-4 sm:grid-cols-3 xl:grid-cols-5'>
+          <div className='mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-5'>
             {albumsList?.map((album) => (
               <AlbumCard
                 isMoreButtonVisible

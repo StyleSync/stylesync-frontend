@@ -4,9 +4,15 @@
 
 .root {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(6, 1fr);
   row-gap: utils.spacing(1);
   column-gap: utils.spacing(1);
+  @include mixins.tablet {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @include mixins.phone {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .imagePreview {

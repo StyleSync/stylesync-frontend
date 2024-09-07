@@ -261,6 +261,7 @@
   "photo.upload.modal.header.crop": "Обрізати",
   "photo.upload.modal.header.details": "Завантажити нове фото",
   "photo.upload.modal.header.preview": "Показати фото",
+  "photo.upload.modal.caption": "Напишіть підпис...",
 
   "user.header.navigation.profile": "Профіль",
   "user.header.navigation.myBookings": "Мої бронювання",

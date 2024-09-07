@@ -6,6 +6,7 @@ import { useIntl } from 'react-intl';
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
 import { useBoolean } from 'usehooks-ts';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Button } from '@/modules/core/components/button';
@@ -22,7 +23,8 @@ import type { AlbumCardProps } from './album-card.interface';
 import styles from './album-card.module.scss';
 
 const IMAGES_PREVIEW_LENGTH = 4;
-const COUNT_THREE = 3;
+const VIEW_IMAGES_THREE = 3;
+const VIEW_IMAGES_FIVE = 5;
 
 export const AlbumCard: FC<AlbumCardProps> = ({
   isActive,
@@ -39,6 +41,9 @@ export const AlbumCard: FC<AlbumCardProps> = ({
   const queryClient = useQueryClient();
   const isAlbumModalOpen = useBoolean();
   const isOpenDropMenu = useBoolean();
+  const deviceType = useDeviceType();
+  const imagesCountPrev =
+    deviceType === 'mobile' ? VIEW_IMAGES_THREE : VIEW_IMAGES_FIVE;
 
   // mutation
   const deleteAlbumMutation = trpc.album.delete.useMutation();
@@ -169,7 +174,7 @@ export const AlbumCard: FC<AlbumCardProps> = ({
         className={clsx(styles.images, { [styles.images_active]: isActive })}
       >
         {isActive && !!album?.portfolios ? (
-          <Gallery images={album.portfolios} rowImagesCount={5} />
+          <Gallery images={album.portfolios} rowImagesCount={imagesCountPrev} />
         ) : (
           album?.portfolios
             .slice(0, IMAGES_PREVIEW_LENGTH)
@@ -182,10 +187,10 @@ export const AlbumCard: FC<AlbumCardProps> = ({
                   height={250}
                   width={250}
                 />
-                {index === COUNT_THREE && (
+                {index === VIEW_IMAGES_THREE && (
                   <div className={styles.meta}>
                     <Typography variant='subtitle'>
-                      +{album?.portfolios.length - COUNT_THREE}
+                      +{album?.portfolios.length - VIEW_IMAGES_THREE}
                     </Typography>
                   </div>
                 )}
