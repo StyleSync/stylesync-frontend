@@ -13,10 +13,14 @@ export const ZoomControl: FC<ZoomProps> = ({
 }) => {
   return (
     <div className={clsx(styles.zoomControl, className)}>
-      <button onClick={onZoomIn} className={styles.btn}>
+      <button aria-label='Zoom plus' onClick={onZoomIn} className={styles.btn}>
         <Icon name='plus' />
       </button>
-      <button onClick={onZoomOut} className={styles.btn}>
+      <button
+        aria-label='Zoom minus'
+        onClick={onZoomOut}
+        className={styles.btn}
+      >
         <Icon name='minus' />
       </button>
     </div>

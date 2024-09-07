@@ -73,12 +73,14 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
         />
         <div className={styles.actions}>
           <Button
+            aria-label='Add service group'
             icon='plus'
             variant='outlined'
             type='button'
             onClick={isCreateOpen.setTrue}
           />
           <Button
+            aria-label='Delete service group'
             className={styles.remove}
             icon='trash'
             variant='danger'

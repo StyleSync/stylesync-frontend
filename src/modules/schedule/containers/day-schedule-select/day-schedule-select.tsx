@@ -213,6 +213,7 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
           </div>
           <div className={clsx(styles.cell, styles.actions)}>
             <Button
+              aria-label='Edit schedule day'
               icon='pencil'
               variant='outlined'
               type='button'

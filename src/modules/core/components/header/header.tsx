@@ -44,7 +44,7 @@ const Header: FC<HeaderProps> & { BottomContent: FC<ChildrenProp> } = ({
     >
       <div className={clsx(styles.content, classes?.content)}>
         <div className={clsx(styles.leftSlot, classes?.leftSlot)}>
-          <Link href='/'>
+          <Link href='/' aria-label='Logo'>
             <Icon className={styles.logo} name='stylesync-logo' width={150} />
           </Link>
         </div>

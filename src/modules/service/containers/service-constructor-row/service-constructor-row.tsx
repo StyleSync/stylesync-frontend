@@ -75,12 +75,14 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
         </div>
         <div className={styles.actions}>
           <Button
+            aria-label='Edit service'
             icon='pencil'
             disabled={serviceOnProfessionalDeleteMutation.isLoading}
             variant='outlined'
             onClick={isEdit.setTrue}
           />
           <Button
+            aria-label='Delete service'
             icon='trash'
             variant='danger'
             isLoading={serviceOnProfessionalDeleteMutation.isLoading}

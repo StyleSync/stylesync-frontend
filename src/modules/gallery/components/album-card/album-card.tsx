@@ -118,6 +118,8 @@ export const AlbumCard: FC<AlbumCardProps> = ({
               onClose={isOpenDropMenu.setFalse}
               trigger={
                 <Button
+                  aria-label='Album options'
+                  aria-haspopup='true'
                   className='!h-6 !w-6'
                   onClick={(e) => {
                     e.preventDefault();

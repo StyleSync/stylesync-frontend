@@ -61,12 +61,17 @@ export const ServiceOnProfessionalTableRow: FC<
                 <Accordion.Trigger asChild>
                   {data.description && !isEditorFieldEmpty(data.description) ? (
                     <Button
+                      aria-label='Information'
                       variant='unstyled'
                       icon='info'
                       className='text-gray hover:!text-primary data-[state=open]:text-primary'
                     />
                   ) : (
-                    <div className='w-[40px]' />
+                    <div
+                      className='w-[40px]'
+                      role='button'
+                      aria-label='Information'
+                    />
                   )}
                 </Accordion.Trigger>
 
