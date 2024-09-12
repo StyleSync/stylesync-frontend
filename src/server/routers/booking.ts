@@ -443,10 +443,9 @@ export const bookingRouter = router({
 
       return prisma.booking.findMany({
         where: {
-          serviceProfessionalId:
-            serviceOnProfessionalIds.length > 0
-              ? { in: serviceOnProfessionalIds }
-              : input?.serviceProfessionalId,
+          serviceProfessionalId: !!input?.serviceProfessionalId
+            ? input?.serviceProfessionalId
+            : { in: serviceOnProfessionalIds },
           AND: [
             input?.date
               ? {
