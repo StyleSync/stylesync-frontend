@@ -60,19 +60,15 @@ export const ProBookActions: FC<ProBookActionsProps> = ({ userId }) => {
   return (
     <BottomFixedContent.Item orderIndex={1}>
       <div className={styles.root}>
-        {/* <Button
-          className={styles.action}
-          variant='secondary'
-          text={intl.formatMessage({ id: 'button.contact' })}
-        /> */}
         <UserContactPopup
+          side='top'
           professional={professional}
           isOpen={isContactOpen.value}
           onClose={isContactOpen.setFalse}
           trigger={
             <Button
               variant='secondary'
-              text='Contact'
+              text={intl.formatMessage({ id: 'button.contact' })}
               onClick={isContactOpen.setTrue}
             />
           }

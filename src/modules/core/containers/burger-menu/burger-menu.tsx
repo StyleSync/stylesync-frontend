@@ -1,8 +1,10 @@
-import { type FC, useCallback } from 'react';
+import { type FC, useCallback, useMemo } from 'react';
+import { useIntl } from 'react-intl';
 import clsx from 'clsx';
 import { useBoolean } from 'usehooks-ts';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Button } from '@/modules/core/components/button';
@@ -22,38 +24,38 @@ import type {
 } from './burger-menu.interface';
 import styles from './burger-menu.module.scss';
 
-const proActions: BurgerMenuAction[] = [
-  {
-    id: 'my-profile',
-    icon: 'user',
-    text: 'My profile',
-    variant: 'default',
-  },
-  {
-    id: 'my-bookings',
-    icon: 'list',
-    text: 'My bookings',
-    variant: 'default',
-  },
-  {
-    id: 'share',
-    icon: 'share',
-    text: 'Share profile',
-    variant: 'default',
-  },
-  {
-    id: 'settings',
-    icon: 'settings',
-    text: 'Settings',
-    variant: 'default',
-  },
-  {
-    id: 'sign-out',
-    icon: 'log-out',
-    text: 'Sign out',
-    variant: 'danger',
-  },
-];
+// const proActions: BurgerMenuAction[] = [
+//   {
+//     id: 'my-profile',
+//     icon: 'user',
+//     text: 'My profile',
+//     variant: 'default',
+//   },
+//   {
+//     id: 'my-bookings',
+//     icon: 'list',
+//     text: 'My bookings',
+//     variant: 'default',
+//   },
+//   {
+//     id: 'share',
+//     icon: 'share',
+//     text: 'Share profile',
+//     variant: 'default',
+//   },
+//   {
+//     id: 'settings',
+//     icon: 'settings',
+//     text: 'Settings',
+//     variant: 'default',
+//   },
+//   {
+//     id: 'sign-out',
+//     icon: 'log-out',
+//     text: 'Sign out',
+//     variant: 'danger',
+//   },
+// ];
 
 const publicActions: BurgerMenuAction[] = [
   {
@@ -120,10 +122,12 @@ const dialogAnimationConfig: Partial<DialogFullScreenAnimationConfig> = {
 };
 
 export const BurgerMenu: FC<BurgerMenuProps> = ({ session }) => {
+  const intl = useIntl();
   const router = useRouter();
-  // state
   const isOpen = useBoolean();
   const { status } = useSession();
+
+  // query
   const { data: me, ...meQuery } = trpc.user.me.useQuery(
     {
       expand: [],
@@ -132,7 +136,44 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ session }) => {
       enabled: status === 'authenticated',
     }
   );
+
   // memo
+  const proActions = useMemo<BurgerMenuAction[]>(
+    () => [
+      {
+        id: 'my-profile',
+        icon: 'user',
+        text: intl.formatMessage({ id: 'burger.menu.btn.myProfile' }),
+        variant: 'default',
+      },
+      {
+        id: 'my-bookings',
+        icon: 'list',
+        text: intl.formatMessage({ id: 'burger.menu.btn.myBookings' }),
+        variant: 'default',
+      },
+      {
+        id: 'share',
+        icon: 'share',
+        text: intl.formatMessage({ id: 'burger.menu.btn.shareProfile' }),
+        variant: 'default',
+      },
+      {
+        id: 'settings',
+        icon: 'settings',
+        text: intl.formatMessage({ id: 'burger.menu.btn.settings' }),
+        variant: 'default',
+      },
+      {
+        id: 'sign-out',
+        icon: 'log-out',
+        text: intl.formatMessage({ id: 'burger.menu.btn.signOut' }),
+        variant: 'danger',
+      },
+    ],
+    [intl]
+  );
+
   const actions = status === 'authenticated' ? proActions : publicActions;
   const isLoading = status === 'loading' || meQuery.isInitialLoading;
 
@@ -202,7 +243,7 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ session }) => {
               isActive={status === 'unauthenticated'}
               placeholder={
                 <Typography className={styles.name}>
-                  Not authenticated
+                  {intl.formatMessage({ id: 'burger.menu.notAuthenticated' })}
                 </Typography>
               }
             >

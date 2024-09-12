@@ -296,5 +296,11 @@
   "add.booking.modal.toast.success.description": "Event added",
 
   "progressbar.title": "Left",
-  "progressbar.days": "d"
+  "progressbar.days": "d",
+  "burger.menu.btn.myProfile": "My profile",
+  "burger.menu.btn.myBookings": "My bookings",
+  "burger.menu.btn.shareProfile": "Share profile",
+  "burger.menu.btn.settings": "Settings",
+  "burger.menu.btn.signOut": "Sign out",
+  "burger.menu.notAuthenticated": "Not authenticated"
 }

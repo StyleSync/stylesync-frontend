@@ -261,7 +261,7 @@
   "photo.upload.modal.header.crop": "Обрізати",
   "photo.upload.modal.header.details": "Завантажити нове фото",
   "photo.upload.modal.header.preview": "Показати фото",
-  "photo.upload.modal.caption": "Напишіть підпис...",
+  "photo.upload.modal.caption": "Описання...",
 
   "user.header.navigation.profile": "Профіль",
   "user.header.navigation.myBookings": "Мої бронювання",
@@ -297,5 +297,12 @@
   "add.booking.modal.toast.success.description": "Подію додано",
 
   "progressbar.title": "Залишилось",
-  "progressbar.days": "д"
+  "progressbar.days": "д",
+
+  "burger.menu.btn.myProfile": "Мій профіль",
+  "burger.menu.btn.myBookings": "Мої бронювання",
+  "burger.menu.btn.shareProfile": "Поділитись профілем",
+  "burger.menu.btn.settings": "Налаштування",
+  "burger.menu.btn.signOut": "Вийти",
+  "burger.menu.notAuthenticated": "Не автентифіковано"
 }
