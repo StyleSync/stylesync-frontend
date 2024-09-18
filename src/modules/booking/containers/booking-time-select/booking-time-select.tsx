@@ -24,6 +24,7 @@ import 'swiper/scss';
 import 'swiper/scss/navigation';
 // style
 import styles from './booking-time-select.module.scss';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 
 export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
   selectedDay,
@@ -33,6 +34,7 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
   serviceOnProfessionalId,
 }) => {
   const intl = useIntl();
+  const deviceType = useDeviceType();
 
   const bookingData = trpc.booking.available.list.useQuery(
     {
@@ -66,10 +68,10 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
     <div className={styles.root}>
       <div className={styles.bookingContent}>
         <Swiper
-          spaceBetween={0}
+          spaceBetween={deviceType === 'mobile' ? 12 : 0}
           slideNextClass={styles.slideNext}
           loop={false}
-          slidesPerView={7}
+          slidesPerView={deviceType === 'mobile' ? 'auto' : 7}
           className={styles.swiper}
         >
           <BookingTimeSelectNavigation selectedDay={selectedDay} />

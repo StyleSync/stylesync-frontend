@@ -147,7 +147,7 @@ export const ServiceBookingModal: FC<
       onBack={handleBack}
       isNextLoading={isLoading}
       {...props}
-      classes={{ content: 'h-full' }}
+      classes={{ content: 'h-full w-full' }}
     >
       <div className='relative flex w-full flex-1 flex-col gap-y-6 sm:w-[620px]'>
         <Image

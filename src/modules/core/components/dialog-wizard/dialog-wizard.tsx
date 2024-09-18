@@ -4,7 +4,7 @@ import type { DialogWizardProps } from './dialog-wizard.interface';
 import { Dialog } from '@/modules/core/components/dialog';
 import { Button } from '@/modules/core/components/button';
 import { Typography } from '@/modules/core/components/typogrpahy';
-// import styles from 'yet-another-react-lightbox/styles.css';
+
 import styles from './dialog-wizard.module.scss';
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 
@@ -15,6 +15,7 @@ export const DialogWizard: FC<DialogWizardProps> = ({
   onNext,
   onBack,
   isNextLoading,
+  classes,
   ...props
 }) => {
   const deviceType = useDeviceType();
@@ -28,7 +29,7 @@ export const DialogWizard: FC<DialogWizardProps> = ({
         content: styles.content,
       }}
     >
-      <div className='flex flex-col'>
+      <div className='flex w-full flex-col'>
         {activeStep && (
           <div className='relative z-10 flex h-[44px] w-full items-center justify-center shadow'>
             {activeStep.isBack && (
