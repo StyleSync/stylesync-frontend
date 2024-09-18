@@ -24,12 +24,16 @@ import { Icon, type IconName } from '@/modules/core/components/icon';
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
 import { startOfToday } from 'date-fns';
 import { trpc } from '@/modules/core/utils/trpc.utils';
+import { Button } from '@/modules/core/components/button';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 
 export const ServiceBookingModal: FC<
   Omit<DialogProps, 'children'> & ServiceBookingModalProps
 > = ({ onConfirm, isLoading, professional, ...props }) => {
   const intl = useIntl();
   const confirmationFormId = useId();
+  const deviceType = useDeviceType();
+
   // state
   const [serviceOnProfessional, setServiceOnProfessional] =
     useState<ServiceOnProfessionalListItem | null>(null);
@@ -145,7 +149,7 @@ export const ServiceBookingModal: FC<
       {...props}
       classes={{ content: 'h-full' }}
     >
-      <div className='relative flex w-[620px] flex-1 flex-col gap-y-6'>
+      <div className='relative flex w-full flex-1 flex-col gap-y-6 sm:w-[620px]'>
         <Image
           className='absolute left-0 top-0 h-[120px] w-full opacity-20'
           src={Bg.src}
@@ -220,6 +224,13 @@ export const ServiceBookingModal: FC<
             <BookingForm onSubmit={handleConfirm} formId={confirmationFormId} />
           )}
         </div>
+        {deviceType === 'mobile' && (
+          <Button
+            onClick={handleNext}
+            className='absolute bottom-0 z-10 !mx-6 !mb-5 !w-[calc(100%-3rem)] border-[1px] shadow'
+            text={step === 'confirmation' ? 'Reserve' : 'Next'}
+          />
+        )}
       </div>
     </DialogWizard>
   );

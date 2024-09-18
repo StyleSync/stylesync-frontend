@@ -4,6 +4,9 @@ import type { DialogWizardProps } from './dialog-wizard.interface';
 import { Dialog } from '@/modules/core/components/dialog';
 import { Button } from '@/modules/core/components/button';
 import { Typography } from '@/modules/core/components/typogrpahy';
+// import styles from 'yet-another-react-lightbox/styles.css';
+import styles from './dialog-wizard.module.scss';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 
 export const DialogWizard: FC<DialogWizardProps> = ({
   steps,
@@ -14,10 +17,17 @@ export const DialogWizard: FC<DialogWizardProps> = ({
   isNextLoading,
   ...props
 }) => {
+  const deviceType = useDeviceType();
+
   const activeStep = steps.find((step) => step.id === activeStepId);
 
   return (
-    <Dialog {...props}>
+    <Dialog
+      {...props}
+      classes={{
+        content: styles.content,
+      }}
+    >
       <div className='flex flex-col'>
         {activeStep && (
           <div className='relative z-10 flex h-[44px] w-full items-center justify-center shadow'>
@@ -34,7 +44,7 @@ export const DialogWizard: FC<DialogWizardProps> = ({
             <Typography variant='body1' weight='medium'>
               {activeStep.title}
             </Typography>
-            {activeStep.isNext && (
+            {activeStep.isNext && deviceType !== 'mobile' && (
               <Button
                 variant='outlined'
                 rippleColor='transparent'
