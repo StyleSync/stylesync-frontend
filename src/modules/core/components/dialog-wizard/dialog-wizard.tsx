@@ -7,6 +7,7 @@ import { Typography } from '@/modules/core/components/typogrpahy';
 
 import styles from './dialog-wizard.module.scss';
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
+import clsx from 'clsx';
 
 export const DialogWizard: FC<DialogWizardProps> = ({
   steps,
@@ -16,17 +17,20 @@ export const DialogWizard: FC<DialogWizardProps> = ({
   onBack,
   isNextLoading,
   classes,
+  handleModalClose,
   ...props
 }) => {
   const deviceType = useDeviceType();
 
   const activeStep = steps.find((step) => step.id === activeStepId);
 
+  activeStep?.id;
+
   return (
     <Dialog
       {...props}
       classes={{
-        content: styles.content,
+        content: clsx(styles.content, classes?.content),
       }}
     >
       <div className='flex w-full flex-col'>
@@ -56,6 +60,14 @@ export const DialogWizard: FC<DialogWizardProps> = ({
                   onNext && onNext(activeStep.id);
                 }}
                 {...activeStep.nextBtnProps}
+              />
+            )}
+            {activeStep.id === 'service' && deviceType === 'mobile' && (
+              <Button
+                className='!absolute right-2 top-1/2 z-10 -translate-y-1/2 !border-none !text-base'
+                onClick={handleModalClose}
+                variant='unstyled'
+                icon='close'
               />
             )}
           </div>

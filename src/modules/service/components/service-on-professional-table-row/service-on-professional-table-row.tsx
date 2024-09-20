@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import * as Accordion from '@radix-ui/react-accordion';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
-import { Icon } from '@/modules/core/components/icon';
 import { Button } from '@/modules/core/components/button';
 import { EditorPreview } from '@/modules/core/components/editor-preview';
 // hooks
@@ -50,12 +49,30 @@ export const ServiceOnProfessionalTableRow: FC<
           </div>
           <div className={clsx(styles.cell, styles.fit)}>
             {!isOwn && deviceType === 'mobile' ? (
-              <Icon
-                className={styles.chevron}
-                name='chevron-right'
-                width={18}
-                height={18}
-              />
+              <div className={styles.btnRoot}>
+                <Accordion.Trigger asChild>
+                  {data.description && !isEditorFieldEmpty(data.description) ? (
+                    <Button
+                      variant='unstyled'
+                      icon='info'
+                      className='text-gray hover:!text-primary data-[state=open]:text-primary'
+                    />
+                  ) : (
+                    <div className='w-[40px]' />
+                  )}
+                </Accordion.Trigger>
+
+                {!isOwn && (
+                  <Button
+                    className={styles.chevron}
+                    icon='chevron-right'
+                    variant='unstyled'
+                    onClick={() => {
+                      book(data);
+                    }}
+                  />
+                )}
+              </div>
             ) : (
               <div className={styles.btnRoot}>
                 <Accordion.Trigger asChild>

@@ -99,6 +99,12 @@ export const ServiceBookingModal: FC<
     });
   }, []);
 
+  const handleModalClose = () => {
+    if (props.onOpenChange) {
+      props.onOpenChange(false);
+    }
+  };
+
   const handleConfirm = (data: BookingFormValue) => {
     if (serviceOnProfessional && selectedDay && selectedTimeRange) {
       onConfirm({
@@ -145,11 +151,12 @@ export const ServiceBookingModal: FC<
       ]}
       onNext={handleNext}
       onBack={handleBack}
+      handleModalClose={handleModalClose}
       isNextLoading={isLoading}
       {...props}
-      classes={{ content: 'h-full w-full' }}
+      classes={{ content: '!h-dvh !overflow-hidden w-full' }}
     >
-      <div className='relative flex w-full flex-1 flex-col gap-y-6 sm:w-[620px]'>
+      <div className='relative flex w-full flex-1 flex-col gap-y-5 overflow-hidden sm:w-[620px]'>
         <Image
           className='absolute left-0 top-0 h-[120px] w-full opacity-20'
           src={Bg.src}
@@ -203,7 +210,7 @@ export const ServiceBookingModal: FC<
             </div>
           )}
         </div>
-        <div className='relative z-10 flex-1 bg-white px-6 pt-6 shadow'>
+        <div className='relative z-10 flex-1 overflow-scroll bg-white px-6 pt-6 shadow'>
           {step === 'service' && (
             <ServiceOnProfessionalSelect
               professional={professional}
@@ -225,11 +232,18 @@ export const ServiceBookingModal: FC<
           )}
         </div>
         {deviceType === 'mobile' && (
-          <Button
-            onClick={handleNext}
-            className='absolute bottom-0 z-10 !mx-6 !mb-5 !w-[calc(100%-3rem)] border-[1px] shadow'
-            text={step === 'confirmation' ? 'Reserve' : 'Next'}
-          />
+          <div className='z-10 !mx-6 !mb-3 flex !w-[calc(100%-3rem)]'>
+            <Button
+              className='!w-full'
+              onClick={handleNext}
+              text={step === 'confirmation' ? 'Reserve' : 'Next'}
+              disabled={
+                (step === 'service' && !serviceOnProfessional) ||
+                (step === 'datetime' && (!selectedDay || !selectedTimeRange))
+              }
+              isLoading={isLoading}
+            />
+          </div>
         )}
       </div>
     </DialogWizard>
