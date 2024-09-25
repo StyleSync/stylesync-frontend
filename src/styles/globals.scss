@@ -85,7 +85,8 @@ textarea {
   @include mixins.phone {
     padding-left: utils.spacing(2);
     padding-right: utils.spacing(2);
-    padding-bottom: 80px;
+    // maybe something broke
+    // padding-bottom: 80px;
   }
 }
 

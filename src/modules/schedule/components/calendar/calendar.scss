@@ -1,6 +1,8 @@
 @use '@/styles/variables.module';
 @use '@/styles/utils';
 
+@use '@/styles/mixins';
+
 :root {
   --fc-button-active-bg-color: #c5d8f8 !important;
   --fc-event-border-color: transparent !important;
@@ -11,7 +13,11 @@
   border-radius: variables.$border-radius-medium !important;
 }
 .fc .fc-scrollgrid-section-liquid > td {
-  background: linear-gradient(to bottom, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0) 20%) !important;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.02) 0%,
+    rgba(0, 0, 0, 0) 20%
+  ) !important;
 }
 
 .fc-timegrid-axis-frame {
@@ -20,6 +26,15 @@
   justify-content: center !important;
   overflow: hidden !important;
   padding-top: utils.spacing(2.3) !important;
+  @include mixins.phone {
+    padding-top: utils.spacing(1.3) !important;
+  }
+  span {
+    @include mixins.phone {
+      font-size: 10px !important;
+      font-weight: 600;
+    }
+  }
 }
 
 .fc-timegrid-axis {
@@ -34,11 +49,18 @@
   margin-top: 2px !important;
 }
 
+.fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
+  margin-left: 0 !important;
+}
+
 .fc .fc-toolbar {
   align-items: center !important;
   display: flex !important;
   justify-content: left !important;
   column-gap: utils.spacing(3) !important;
+  @include mixins.phone {
+    column-gap: utils.spacing(2) !important;
+  }
 
   .fc-toolbar-chunk:nth-child(2) {
     flex: 1 !important;
@@ -66,6 +88,10 @@
       a {
         font-size: 16px !important;
         font-weight: 400 !important;
+        @include mixins.phone {
+          font-size: 14px !important;
+          font-weight: 500 !important;
+        }
       }
     }
   }
@@ -79,6 +105,9 @@
   .fc-timegrid-slot {
     height: utils.spacing(6) !important;
   }
+  .fc-datagrid-cell-frame {
+    width: 50px !important;
+  }
 
   .fc-event-border-color {
     color: red !important;
@@ -88,6 +117,9 @@
     font-size: 18px !important;
     font-weight: 500 !important;
     color: variables.$dark-color !important;
+    @include mixins.phone {
+      font-size: 14px !important;
+    }
   }
 
   .fc-timegrid-slot-label-cushion {
@@ -97,6 +129,25 @@
 
   .fc-toolbar-chunk:last-child {
     margin-left: utils.spacing(2) !important;
+    @include mixins.phone {
+      margin-left: utils.spacing(0) !important;
+    }
+  }
+
+  .fc-toolbar-chunk:nth-of-type(1) {
+    @media (max-width: 660px) {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+
+  .fc-toolbar-chunk:nth-of-type(3) {
+    @include mixins.phone {
+      flex-direction: column;
+      align-items: baseline;
+      gap: 4px;
+    }
   }
 
   .fc-today-button {
@@ -152,6 +203,9 @@
   }
 
   .fc-button-group {
+    @include mixins.phone {
+      margin-left: 0 !important;
+    }
     .fc-button-primary {
       background-color: transparent !important;
       border: 1px solid variables.$primary-color !important;
@@ -179,7 +233,9 @@
       }
 
       &:focus-visible {
-        box-shadow: 0 0 0 2px #fff, 0 0 0 4px variables.$primary-color !important;
+        box-shadow:
+          0 0 0 2px #fff,
+          0 0 0 4px variables.$primary-color !important;
       }
 
       .fc-icon {
@@ -319,6 +375,20 @@
 
   &::after {
     background-color: variables.$primary-color !important;
+  }
+
+  @include mixins.phone {
+    width: unset;
+    padding-right: 2px;
+    span {
+      font-size: 12px;
+    }
+  }
+}
+
+.fc colgroup > col {
+  @include mixins.phone {
+    width: 38px !important;
   }
 }
 

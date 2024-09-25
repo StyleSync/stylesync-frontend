@@ -24,39 +24,6 @@ import type {
 } from './burger-menu.interface';
 import styles from './burger-menu.module.scss';
 
-// const proActions: BurgerMenuAction[] = [
-//   {
-//     id: 'my-profile',
-//     icon: 'user',
-//     text: 'My profile',
-//     variant: 'default',
-//   },
-//   {
-//     id: 'my-bookings',
-//     icon: 'list',
-//     text: 'My bookings',
-//     variant: 'default',
-//   },
-//   {
-//     id: 'share',
-//     icon: 'share',
-//     text: 'Share profile',
-//     variant: 'default',
-//   },
-//   {
-//     id: 'settings',
-//     icon: 'settings',
-//     text: 'Settings',
-//     variant: 'default',
-//   },
-//   {
-//     id: 'sign-out',
-//     icon: 'log-out',
-//     text: 'Sign out',
-//     variant: 'danger',
-//   },
-// ];
-
 const publicActions: BurgerMenuAction[] = [
   {
     id: 'sign-in',
