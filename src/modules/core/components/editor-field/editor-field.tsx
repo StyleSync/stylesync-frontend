@@ -28,7 +28,10 @@ export const EditorField: FC<EditorProps> = ({
 
   return (
     <div
-      className='relative mt-2 flex flex-col gap-y-2 rounded-3xl'
+      className={clsx(
+        styles.root,
+        'relative mt-2 flex flex-col gap-y-2 rounded-3xl'
+      )}
       ref={rootRef}
     >
       <div className={clsx('flex w-full', {})}>
