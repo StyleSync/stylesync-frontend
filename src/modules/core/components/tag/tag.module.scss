@@ -8,6 +8,7 @@
   column-gap: utils.spacing(0.5);
   border-radius: variables.$border-radius-large;
   padding: 0 12px;
+  min-height: 1.5rem;
   border: 1px solid variables.$grey-color;
 
   .text {
