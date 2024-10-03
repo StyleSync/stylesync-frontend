@@ -265,7 +265,7 @@
   "user.header.navigation.myBookings": "My bookings",
   "user.header.navigation.search": "Search",
 
-  "pages.searchPro.noFound.title": "Unfortunately, nothing was found in the city of Kyiv!",
+  "pages.searchPro.noFound.title": "Unfortunately, nothing was found!",
   "pages.searchPro.noFound.description": "Try specifying different search parameters",
 
   "pages.landing.intro.title": "Discover Your Style with StyleSync",

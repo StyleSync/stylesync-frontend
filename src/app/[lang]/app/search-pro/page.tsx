@@ -1,5 +1,5 @@
 'use client';
-import { useContext, useMemo } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import clsx from 'clsx';
 // components
 import { Button } from '@/modules/core/components/button';
@@ -28,6 +28,7 @@ export default function SearchProPage() {
     place,
     selectedServices: { isAll, selectedServices },
     searchQuery,
+    activateBrowserLocationSearch,
   } = useContext(ProfessionalSearchContext);
   // memo
   const queryFilter = useMemo<
@@ -64,6 +65,10 @@ export default function SearchProPage() {
   const { data: professionalList, isLoading } =
     trpc.professional.list.useQuery(queryFilter);
   const isFilterActive = useBoolean();
+
+  useEffect(() => {
+    activateBrowserLocationSearch();
+  }, [activateBrowserLocationSearch]);
 
   return (
     <>
@@ -121,7 +126,6 @@ export default function SearchProPage() {
                           {intl.formatMessage({
                             id: 'pages.searchPro.noFound.title',
                           })}
-                          {/* На жаль у місті Київ нічого не знайдено! */}
                         </span>
                         <span className='text-sm font-medium text-gray'>
                           {intl.formatMessage({

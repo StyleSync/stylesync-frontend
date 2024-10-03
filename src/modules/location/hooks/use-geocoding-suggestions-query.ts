@@ -6,7 +6,10 @@ const GEOCODING_SUGGESTIONS_CACHE_KEY = 'GEOCODING_SUGGESTIONS';
 
 export const useGeocodingSuggestionsQuery = (
   searchText: string,
-  optionsArg?: Partial<GeocodingOptions>
+  optionsArg?: Partial<GeocodingOptions>,
+  queryOptions?: {
+    enabled?: boolean;
+  }
 ) => {
   const geocodingCore = useGeocodingCore({
     accessToken: process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
@@ -18,6 +21,6 @@ export const useGeocodingSuggestionsQuery = (
       return geocodingCore.suggest(searchText, optionsArg);
     },
     keepPreviousData: true,
-    enabled: !!searchText,
+    enabled: !!searchText && (queryOptions?.enabled ?? true),
   });
 };

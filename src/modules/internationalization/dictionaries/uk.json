@@ -266,7 +266,7 @@
   "user.header.navigation.myBookings": "Мої бронювання",
   "user.header.navigation.search": "Пошук",
 
-  "pages.searchPro.noFound.title": "На жаль у місті Київ нічого не знайдено!",
+  "pages.searchPro.noFound.title": "На жаль нічого не знайдено!",
   "pages.searchPro.noFound.description": "Спробуйте вказати інші параметри пошуку",
 
   "pages.landing.intro.title": "Відкрийте новий стиль з StyleSync",

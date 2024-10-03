@@ -25,9 +25,13 @@ export const ProSearchField: FC<ProSearchFieldProps> = () => {
   const intl = useIntl();
   const router = useRouter();
   // context
-  const { place, searchQuery, onSearchQueryChange, onPlaceChange } = useContext(
-    ProfessionalSearchContext
-  );
+  const {
+    place,
+    searchQuery,
+    onSearchQueryChange,
+    onPlaceChange,
+    activateBrowserLocationSearch,
+  } = useContext(ProfessionalSearchContext);
   // state
   const isCitySearchOpen = useBoolean();
   const [citySearchQuery, setCitySearchQuery] = useState('');
@@ -40,7 +44,11 @@ export const ProSearchField: FC<ProSearchFieldProps> = () => {
     if (!isCitySearchOpen.value) {
       setCitySearchQuery('');
     }
-  }, [isCitySearchOpen.value]);
+
+    if (isCitySearchOpen.value) {
+      activateBrowserLocationSearch();
+    }
+  }, [isCitySearchOpen.value, activateBrowserLocationSearch]);
 
   const handleSearchChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {

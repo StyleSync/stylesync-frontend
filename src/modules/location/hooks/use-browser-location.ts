@@ -3,7 +3,11 @@ import type { LngLatLike } from '@mapbox/search-js-core/dist/LngLat';
 
 const BROWSER_LOCATION_CACHE_KEY = 'BROWSER_LOCATION';
 
-export const useBrowserLocation = () => {
+type UseBrowserLocationOptions = {
+  enabled?: boolean;
+};
+
+export const useBrowserLocation = (options?: UseBrowserLocationOptions) => {
   return useQuery<LngLatLike>({
     queryKey: [BROWSER_LOCATION_CACHE_KEY],
     queryFn: async () => {
@@ -25,5 +29,6 @@ export const useBrowserLocation = () => {
         }
       });
     },
+    ...options,
   });
 };
