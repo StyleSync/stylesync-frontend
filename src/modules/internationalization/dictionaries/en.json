@@ -303,5 +303,7 @@
   "burger.menu.btn.shareProfile": "Share profile",
   "burger.menu.btn.settings": "Settings",
   "burger.menu.btn.signOut": "Sign out",
-  "burger.menu.notAuthenticated": "Not authenticated"
+  "burger.menu.notAuthenticated": "Not authenticated",
+
+  "weekdays.MONDAY": "Monday"
 }

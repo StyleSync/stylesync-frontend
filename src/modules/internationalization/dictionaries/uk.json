@@ -305,5 +305,7 @@
   "burger.menu.btn.shareProfile": "Поділитись профілем",
   "burger.menu.btn.settings": "Налаштування",
   "burger.menu.btn.signOut": "Вийти",
-  "burger.menu.notAuthenticated": "Немає доступу"
+  "burger.menu.notAuthenticated": "Немає доступу",
+
+  "weekdays.MONDAY": "Понеділок"
 }

@@ -23,7 +23,6 @@ import styles from './schedule-form.module.scss';
 export const WeeklyScheduleForm: FC<WeeklyScheduleFormProps> = () => {
   const intl = useIntl();
   const deviceType = useDeviceType();
-
   const queryClient = useQueryClient();
   // queries
   const { data: me } = trpc.user.me.useQuery({ expand: ['professional'] });
