@@ -71,7 +71,7 @@ export const ProfileSettingsTabContentLayout: FC<
           {title}
         </Typography>
       </div>
-      <div className='flex flex-1 gap-x-6'>
+      <div className='flex flex-1 gap-x-6 overflow-auto'>
         <div className={styles.content}>
           <div className={styles.scrolledContent}>
             <Placeholder

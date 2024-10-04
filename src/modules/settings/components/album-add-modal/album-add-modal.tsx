@@ -138,7 +138,10 @@ export const AlbumAddModal: FC<
   };
 
   return (
-    <Dialog {...props} classes={{ content: styles.content }}>
+    <Dialog
+      {...props}
+      classes={{ content: styles.content, overlay: styles.dialogOverlay }}
+    >
       <form onSubmit={form.handleSubmit(handleSubmit)} className={styles.root}>
         <div className='flex items-center gap-3'>
           <Typography variant='subtitle'>

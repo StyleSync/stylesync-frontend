@@ -114,6 +114,7 @@
 
   "schedule.select.toast.error.title": "Ой! Дані не збережено",
   "schedule.day.off": "Вихідний",
+  "schedule.working.day": "Робочий день",
   "schedule.form.errorBox.title": "Зв'язок з сервером було перервано",
   "schedule.form.errorBox.description": "Будь ласка, перевірте своє підключення до інтернету або спробуйте оновити сторінку. Якщо проблема залишається, будь ласка, зверніться до нашої служби підтримки для отримання допомоги.",
   "schedule.form.day": "День",

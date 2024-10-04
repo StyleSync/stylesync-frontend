@@ -233,16 +233,27 @@ export const ServiceBookingModal: FC<
         </div>
         {deviceType === 'mobile' && (
           <div className='z-10 !mx-6 !mb-3 flex !w-[calc(100%-3rem)]'>
-            <Button
-              className='!w-full'
-              onClick={handleNext}
-              text={step === 'confirmation' ? 'Reserve' : 'Next'}
-              disabled={
-                (step === 'service' && !serviceOnProfessional) ||
-                (step === 'datetime' && (!selectedDay || !selectedTimeRange))
-              }
-              isLoading={isLoading}
-            />
+            {step === 'confirmation' ? (
+              <Button
+                className='!w-full'
+                type='submit'
+                form={confirmationFormId}
+                text='Reserve'
+                disabled={isLoading}
+                isLoading={isLoading}
+              />
+            ) : (
+              <Button
+                className='!w-full'
+                onClick={handleNext}
+                text='Next'
+                disabled={
+                  (step === 'service' && !serviceOnProfessional) ||
+                  (step === 'datetime' && (!selectedDay || !selectedTimeRange))
+                }
+                isLoading={isLoading}
+              />
+            )}
           </div>
         )}
       </div>

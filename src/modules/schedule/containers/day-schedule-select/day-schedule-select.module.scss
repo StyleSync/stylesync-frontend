@@ -15,6 +15,15 @@
     padding: utils.spacing(2, 3);
     background-color: rgba(variables.$primary-light-color, 0.3);
     align-items: flex-start;
+    @include mixins.phone {
+      flex-direction: column;
+    }
+  }
+
+  @include mixins.phone {
+    &:first-child {
+      border-top: none;
+    }
   }
 
   &:last-child {
@@ -33,6 +42,9 @@
 
     &.xPadding {
       padding: utils.spacing(1, 0);
+      @include mixins.phone {
+        width: 100%;
+      }
     }
 
     &.weekday {
@@ -54,6 +66,9 @@
 
   .timerange {
     flex: 1;
+    @include mixins.phone {
+      // margin-bottom: 10px;
+    }
   }
 
   .addBreak {

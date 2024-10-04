@@ -113,6 +113,7 @@
   "calendar.customButtons.past": "Past",
 
   "schedule.select.toast.error.title": "Oops! Data hasn't been saved",
+  "schedule.working.day": "Working day",
   "schedule.day.off": "Day off",
   "schedule.form.errorBox.title": "Connection with server has been interrupted",
   "schedule.form.errorBox.description": "Please check your internet connection or try refreshing the page. If the issue persists, please contact our support team for assistance.",

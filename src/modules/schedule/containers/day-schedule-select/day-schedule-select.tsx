@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useIntl } from 'react-intl';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 
 // components
 import { Button } from '@/modules/core/components/button';
@@ -60,6 +61,7 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
   onUpdate,
 }) => {
   const intl = useIntl();
+  const deviceType = useDeviceType();
 
   const queryClient = useQueryClient();
   // state
@@ -190,7 +192,11 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
       {!isEdit.value ? (
         <>
           <div className={clsx(styles.cell, styles.weekday)}>
-            <Typography className={styles.weekday} variant='body1'>
+            <Typography
+              className={styles.weekday}
+              variant='body1'
+              weight='medium'
+            >
               {weekday}
             </Typography>
           </div>
@@ -201,16 +207,18 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
                 : form.getValues().workHours}
             </Typography>
           </div>
-          <div className={clsx(styles.cell, styles.tags)}>
-            <BreakTags
-              breaks={fields}
-              isLoading={
-                scheduleBreaksQuery.isLoading &&
-                scheduleBreaksQuery.fetchStatus !== 'idle'
-              }
-              error={scheduleBreaksQuery.error?.message}
-            />
-          </div>
+          {deviceType !== 'mobile' && (
+            <div className={clsx(styles.cell, styles.tags)}>
+              <BreakTags
+                breaks={fields}
+                isLoading={
+                  scheduleBreaksQuery.isLoading &&
+                  scheduleBreaksQuery.fetchStatus !== 'idle'
+                }
+                error={scheduleBreaksQuery.error?.message}
+              />
+            </div>
+          )}
           <div className={clsx(styles.cell, styles.actions)}>
             <Button
               aria-label='Edit schedule day'
@@ -227,7 +235,11 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
       ) : (
         <>
           <div className={clsx(styles.cell, styles.weekday)}>
-            <Typography className={styles.weekday} variant='body2'>
+            <Typography
+              className={styles.weekday}
+              variant='body2'
+              weight='medium'
+            >
               {weekday}
             </Typography>
             <label className={styles.dayoff}>
@@ -237,84 +249,119 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
                 size='small'
               />
               <Typography variant='small'>
-                {intl.formatMessage({ id: 'schedule.day.off' })}
+                {intl.formatMessage({ id: 'schedule.working.day' })}
               </Typography>
             </label>
           </div>
-          <div
-            className={clsx(styles.cell, styles.xPadding, {
-              [styles.disabled]: isDayOff.value,
-            })}
-          >
-            <Controller
-              name='workHours'
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <TimeRangeField
-                  className={styles.timerange}
-                  value={field.value}
-                  onChange={field.onChange}
-                  inputProps={{
-                    fieldSize: 'small',
-                    error: Boolean(fieldState.error),
-                    disabled: weekdayScheduleSaveMutation.isLoading,
-                  }}
+          {isDayOff.value && (
+            <>
+              <div
+                className={clsx(styles.cell, styles.xPadding, {
+                  // [styles.disabled]: isDayOff.value,
+                })}
+              >
+                <Controller
+                  name='workHours'
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <TimeRangeField
+                      className={styles.timerange}
+                      value={field.value}
+                      label='Working hours'
+                      onChange={field.onChange}
+                      inputProps={{
+                        fieldSize: 'small',
+                        error: Boolean(fieldState.error),
+                        disabled: weekdayScheduleSaveMutation.isLoading,
+                      }}
+                    />
+                  )}
                 />
+              </div>
+              {deviceType === 'mobile' && (
+                <Typography variant='body2' weight='medium'>
+                  Breaks
+                </Typography>
               )}
-            />
-          </div>
-          <div
-            className={clsx(styles.cell, styles.xPadding, {
-              [styles.disabled]: isDayOff.value,
-            })}
-          >
-            <div className={styles.breaks}>
-              {fields.map((item, index) => (
-                <div key={item._id} className={styles.break}>
-                  <Controller
-                    key={item._id}
-                    control={form.control}
-                    name={`breaks.${index}.timerange`}
-                    render={({ field, fieldState }) => (
-                      <TimeRangeField
+              <div
+                className={clsx(styles.cell, styles.xPadding, {
+                  [styles.disabled]: isDayOff.value,
+                })}
+              >
+                <div className={styles.breaks}>
+                  {fields.map((item, index) => (
+                    <div key={item._id} className={styles.break}>
+                      <Controller
                         key={item._id}
-                        value={field.value}
-                        className={styles.timerange}
-                        onChange={field.onChange}
-                        inputProps={{
-                          fieldSize: 'small',
-                          error: Boolean(fieldState.error),
-                          disabled: weekdayScheduleSaveMutation.isLoading,
-                        }}
+                        control={form.control}
+                        name={`breaks.${index}.timerange`}
+                        render={({ field, fieldState }) => (
+                          <TimeRangeField
+                            key={item._id}
+                            value={field.value}
+                            className={styles.timerange}
+                            onChange={field.onChange}
+                            inputProps={{
+                              fieldSize: 'small',
+                              error: Boolean(fieldState.error),
+                              disabled: weekdayScheduleSaveMutation.isLoading,
+                            }}
+                          />
+                        )}
                       />
-                    )}
-                  />
-                  <Button
-                    className={styles.delete}
-                    onClick={() => remove(index)}
-                    variant='unstyled'
-                    icon='close'
-                    type='button'
-                  />
+                      <Button
+                        className={styles.delete}
+                        onClick={() => remove(index)}
+                        variant='unstyled'
+                        icon='close'
+                        type='button'
+                      />
+                    </div>
+                  ))}
+                  {deviceType !== 'mobile' && (
+                    <Button
+                      icon='plus'
+                      variant='outlined'
+                      type='button'
+                      className={styles.addBreak}
+                      onClick={handleAddBreak}
+                    />
+                  )}
                 </div>
-              ))}
+              </div>
+            </>
+          )}
+          {deviceType !== 'mobile' && (
+            <div className={clsx(styles.cell, styles.actions, styles.xPadding)}>
               <Button
-                icon='plus'
-                variant='outlined'
-                type='button'
-                className={styles.addBreak}
-                onClick={handleAddBreak}
+                icon='check-mark'
+                variant='primary'
+                type='submit'
+                isLoading={weekdayScheduleSaveMutation.isLoading}
               />
             </div>
-          </div>
-          <div className={clsx(styles.cell, styles.actions, styles.xPadding)}>
-            <Button
-              icon='check-mark'
-              variant='primary'
-              type='submit'
-              isLoading={weekdayScheduleSaveMutation.isLoading}
-            />
-          </div>
+          )}
+          {deviceType === 'mobile' && (
+            <>
+              <div className='mt-7 flex w-full justify-center gap-4'>
+                {isDayOff.value && (
+                  <Button
+                    onClick={handleAddBreak}
+                    text='Add break'
+                    variant='outlined'
+                  />
+                )}
+
+                <Button
+                  className='!w-full'
+                  text='Save'
+                  variant='primary'
+                  type='submit'
+                  isLoading={weekdayScheduleSaveMutation.isLoading}
+                />
+              </div>
+            </>
+          )}
         </>
       )}
     </form>
