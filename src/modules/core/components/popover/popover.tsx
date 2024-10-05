@@ -30,7 +30,7 @@ export const Popover: FC<PopoverProps> = ({
   const triggerRef = useRef<HTMLDivElement>(null);
   // state
   const { width } = useResizeObserver({
-    ref: popperRef,
+    ref: triggerRef,
   });
 
   // refs

@@ -20,7 +20,7 @@ export const Base: Story = {
     const [value, setValue] = useState<string>(new Time().getString());
 
     return (
-      <div style={{ maxWidth: 300 }}>
+      <div style={{ maxWidth: 300, minHeight: 500 }}>
         <TimeField
           value={value}
           onChange={setValue}

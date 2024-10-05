@@ -15,7 +15,6 @@ import { Popover } from '@/modules/core/components/popover';
 import { Button } from '@/modules/core/components/button';
 // utils
 import { Time } from '@/modules/core/utils/time.utils';
-import { useUpdateEffect } from '@/modules/core/hooks/use-update-effect';
 import type { TimeFieldProps } from './time-field.interface';
 import styles from './time-field.module.scss';
 import clsx from 'clsx';
@@ -40,7 +39,7 @@ export const TimeField: FC<TimeFieldProps> = ({
     }
   }, [value]);
 
-  useUpdateEffect(() => {
+  useEffect(() => {
     onChange(time.getString());
   }, [time]);
 
@@ -141,6 +140,7 @@ export const TimeField: FC<TimeFieldProps> = ({
       }
       followTriggerWidth
       disableAutofocus
+      disablePortal
     >
       <TimeSelect value={time} onChange={setTime} />
     </Popover>
