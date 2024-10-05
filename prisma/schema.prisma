@@ -33,11 +33,12 @@ enum Day {
 }
 
 enum BookingStatus {
-  PENDING
-  FINISHED
-  REJECTED
-  CANCELED
-  MISSED
+  PENDING // Booking was create
+  APPROVED // Booking approved by professional
+  FINISHED // Booking finished
+  REJECTED // Booking rejected by professional
+  CANCELED // Booking canceled by user
+  MISSED // Booking missed by user, user didn't come
 }
 
 // Next Auth models
@@ -171,6 +172,7 @@ model Service {
   professionals ServiceOnProfessional[]
   createdAt     DateTime                @default(now())
   updatedAt     DateTime                @default(now()) @updatedAt
+  deletedAt     DateTime?
 }
 
 model ServiceOnProfessional {
@@ -180,13 +182,14 @@ model ServiceOnProfessional {
   currency       Currency
   duration       Int
   serviceId      String
-  service        Service      @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  service        Service      @relation(fields: [serviceId], references: [id], onDelete: Restrict)
   professionalId String
-  professional   Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+  professional   Professional @relation(fields: [professionalId], references: [id], onDelete: Restrict)
   description    String?
   bookings       Booking[]
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @default(now()) @updatedAt
+  deletedAt      DateTime?
 }
 
 model Portfolio {
@@ -225,7 +228,8 @@ model Booking {
   guestComment          String?
   status                BookingStatus         @default(PENDING)
   serviceProfessionalId String
-  serviceProfessional   ServiceOnProfessional @relation(fields: [serviceProfessionalId], references: [id])
+  serviceProfessional   ServiceOnProfessional @relation(fields: [serviceProfessionalId], references: [id], onDelete: Cascade)
   createdAt             DateTime              @default(now())
   updatedAt             DateTime              @updatedAt
+  deletedAt             DateTime?
 }

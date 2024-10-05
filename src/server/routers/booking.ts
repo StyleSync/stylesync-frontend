@@ -8,19 +8,20 @@ import {
 } from '@/server/selectors';
 import uniqueString from 'unique-string';
 import {
-  getProfessionalFromContext,
+  checkProfessionalAccessToBooking,
   getProfessionalFromServiceOnProfessional,
 } from '@/server/utils/prisma-utils';
 import { defaultScheduleSelect } from '@/server/selectors/schedule';
 import {
-  getPossibleBookingTimes,
   isTimeWithinPeriods,
   isTimeWithinSchedule,
   mergeDates,
 } from '@/server/utils/helpers';
-import type { AvailableBookingTime } from '@/server/types';
 import { BookingStatus, Day } from '@prisma/client';
 import { addHours, endOfDay, isAfter, startOfDay } from 'date-fns';
+import { availableList } from '@/server/routers/booking/available.list';
+import { availableReschedule } from '@/server/routers/booking/available.reschedule';
+import { rescheduleBooking } from '@/server/routers/booking/reschedule';
 
 const maxLargeTextLength = 140;
 const defaultLimit = 10;
@@ -86,126 +87,64 @@ export const bookingRouter = router({
       return booking;
     }),
   available: router({
-    list: publicProcedure
+    list: availableList,
+    reschedule: availableReschedule,
+  }),
+  reschedule: rescheduleBooking,
+  status: router({
+    update: privateProcedure
       .input(
         z.object({
-          serviceOnProfessionalId: z.string().min(1, 'Required'),
-          date: z.string().datetime(),
-          day: z.enum([
-            Day.MONDAY,
-            Day.TUESDAY,
-            Day.WEDNESDAY,
-            Day.THURSDAY,
-            Day.FRIDAY,
-            Day.SATURDAY,
-            Day.SUNDAY,
+          id: z.string().min(1, 'Required'),
+          status: z.enum([
+            BookingStatus.APPROVED,
+            BookingStatus.REJECTED,
+            BookingStatus.MISSED,
+            BookingStatus.FINISHED,
           ]),
         })
       )
-      .query(async ({ input }) => {
-        const availableTimeList: AvailableBookingTime[] = [];
-        const serviceOnProfessional =
-          await prisma.serviceOnProfessional.findUnique({
-            where: { id: input.serviceOnProfessionalId },
-            select: {
-              id: true,
-              duration: true,
-            },
-          });
+      .mutation(async ({ input, ctx }) => {
+        await checkProfessionalAccessToBooking(ctx, input.id);
 
-        if (!serviceOnProfessional) {
+        return prisma.booking.update({
+          where: { id: input.id },
+          data: { status: BookingStatus.APPROVED },
+          select: defaultBookingSelect,
+        });
+      }),
+    cancelByCode: publicProcedure
+      .input(
+        z.object({
+          id: z.string().min(1, 'Required'),
+          status: z.enum([
+            BookingStatus.APPROVED,
+            BookingStatus.REJECTED,
+            BookingStatus.MISSED,
+            BookingStatus.FINISHED,
+          ]),
+        })
+      )
+      .mutation(async ({ input }) => {
+        const booking = await prisma.booking.findUnique({
+          where: { id: input.id },
+          select: {
+            ...defaultBookingSelect,
+          },
+        });
+
+        if (!booking) {
           throw new TRPCError({
             code: 'NOT_FOUND',
-            message: `No service on professional found with id '${input.serviceOnProfessionalId}'`,
+            message: `No booking found with id '${input.id}'`,
           });
         }
 
-        const professional = await getProfessionalFromServiceOnProfessional(
-          serviceOnProfessional.id
-        );
-
-        // first we check if we have specific schedule for the day
-        // temporary commented out as we don't have specific day schedule yet
-        // const specificDaySchedule = await prisma.schedule.findFirst({
-        //   where: {
-        //     professionalId: professional.id,
-        //     isSpecificDay: true,
-        //     day: input.day,
-        //   },
-        //   select: defaultScheduleSelect,
-        // });
-
-        const defaultDaySchedule = await prisma.schedule.findFirst({
-          where: {
-            professionalId: professional.id,
-            isSpecificDay: false,
-            day: input.day,
-          },
-          select: defaultScheduleSelect,
+        return prisma.booking.update({
+          where: { id: input.id },
+          data: { status: BookingStatus.CANCELED },
+          select: defaultBookingSelect,
         });
-
-        // commented out until we return specific day schedule
-        // const currentDaySchedule = specificDaySchedule ?? defaultDaySchedule;
-        const currentDaySchedule = defaultDaySchedule;
-
-        if (!currentDaySchedule) {
-          throw new TRPCError({
-            code: 'BAD_REQUEST',
-            message: `No schedule found for this day`,
-          });
-        }
-
-        const allServiceOnProfessional =
-          await prisma.serviceOnProfessional.findMany({
-            where: {
-              professionalId: professional.id,
-            },
-            select: {
-              id: true,
-            },
-          });
-
-        const bookings = await prisma.booking.findMany({
-          where: {
-            serviceProfessionalId: {
-              in: allServiceOnProfessional.map((s) => s.id),
-            },
-            date: {
-              gte: new Date(input.date),
-              lte: addHours(new Date(input.date), 24),
-            },
-          },
-          select: {
-            startTime: true,
-            endTime: true,
-          },
-        });
-
-        const possibleBookingTime = getPossibleBookingTimes(
-          currentDaySchedule,
-          serviceOnProfessional.duration,
-          input.date
-        );
-
-        for (const time of possibleBookingTime) {
-          if (
-            !isTimeWithinPeriods(
-              time.startTime,
-              time.endTime,
-              availableTimeList
-            ) &&
-            isTimeWithinSchedule(
-              time.startTime,
-              time.endTime,
-              currentDaySchedule
-            ) &&
-            !isTimeWithinPeriods(time.startTime, time.endTime, bookings)
-          ) {
-            availableTimeList.push(time);
-          }
-        }
-
-        return availableTimeList;
       }),
   }),
   create: publicProcedure
@@ -375,31 +314,7 @@ export const bookingRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      const booking = await prisma.booking.findUnique({
-        where: { id: input.id },
-        select: { ...defaultBookingSelect, serviceProfessionalId: true },
-      });
-
-      if (!booking) {
-        throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: `No booking found with id '${input.id}'`,
-        });
-      }
-
-      const professional = await getProfessionalFromContext(ctx);
-
-      const bookingProfessional =
-        await getProfessionalFromServiceOnProfessional(
-          booking.serviceProfessionalId
-        );
-
-      if (bookingProfessional.id !== professional.id) {
-        throw new TRPCError({
-          code: 'FORBIDDEN',
-          message: `You dont have permission to delete booking with id '${input.id}'`,
-        });
-      }
+      await checkProfessionalAccessToBooking(ctx, input.id);
 
       return prisma.booking.delete({
         where: { id: input.id },
