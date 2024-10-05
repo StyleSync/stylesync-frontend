@@ -55,6 +55,17 @@ export const AlbumDetails: FC<AlbumDetailsProps> = ({
     { enabled: !!activeAlbumId }
   );
 
+  if (imagesData.isLoading) {
+    return (
+      <div className='absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-y-2'>
+        <Spinner size='medium' />
+        <Typography className={styles.loadingLabel}>
+          {intl.formatMessage({ id: 'album.details.dowlandImage' })}
+        </Typography>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.root}>
       <Button
@@ -62,11 +73,10 @@ export const AlbumDetails: FC<AlbumDetailsProps> = ({
         icon='chevron-left'
         variant='unstyled'
         onClick={onClickClose}
-        className={styles.btnBack}
+        className='!px-0'
       />
-
       <Placeholder
-        className='h-full'
+        className='flex-1'
         isActive={imagesList?.length === 0}
         placeholder={{
           illustration: 'files',
@@ -106,14 +116,6 @@ export const AlbumDetails: FC<AlbumDetailsProps> = ({
           <div className='mt-8'>
             <SettingsGallery images={imagesList || []} />
           </div>
-          {imagesData.isLoading && (
-            <div className={styles.spinnerContainer}>
-              <Spinner size='medium' />
-              <Typography className={styles.loadingLabel}>
-                {intl.formatMessage({ id: 'album.details.dowlandImage' })}
-              </Typography>
-            </div>
-          )}
         </div>
       </Placeholder>
     </div>

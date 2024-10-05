@@ -8,7 +8,6 @@ import { AlbumAddModal } from '@/modules/settings/components/album-add-modal';
 import { AlbumCard } from '@/modules/gallery/components/album-card';
 import { AlbumDetails } from '@/modules/gallery/components/album-details';
 import { Spinner } from '@/modules/core/components/spinner';
-import { Typography } from '@/modules/core/components/typogrpahy';
 // hooks
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import { useBoolean } from 'usehooks-ts';
@@ -75,6 +74,14 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
     );
   }
 
+  if (albumData.isLoading) {
+    return (
+      <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
+        <Spinner size='medium' />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.root}>
       <Placeholder
@@ -121,16 +128,6 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
           </div>
         </>
       </Placeholder>
-      {albumData.isLoading && (
-        <div className={styles.spinnerContainer}>
-          <Spinner size='medium' />
-          <Typography className={styles.loadingLabel}>
-            {intl.formatMessage({
-              id: 'user.professional.gallery.form.loadingAlbums',
-            })}
-          </Typography>
-        </div>
-      )}
     </div>
   );
 };

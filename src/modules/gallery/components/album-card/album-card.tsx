@@ -20,6 +20,7 @@ import type { DropdownItem } from '@/modules/core/components/dropdown-menu/dropd
 import type { AlbumCardProps } from './album-card.interface';
 // style
 import styles from './album-card.module.scss';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 
 const IMAGES_PREVIEW_LENGTH = 4;
 const COUNT_THREE = 3;
@@ -39,6 +40,7 @@ export const AlbumCard: FC<AlbumCardProps> = ({
   const queryClient = useQueryClient();
   const isAlbumModalOpen = useBoolean();
   const isOpenDropMenu = useBoolean();
+  const deviceType = useDeviceType();
 
   // mutation
   const deleteAlbumMutation = trpc.album.delete.useMutation();
@@ -144,6 +146,10 @@ export const AlbumCard: FC<AlbumCardProps> = ({
                   text: intl.formatMessage({ id: 'album.card.menu.delete' }),
                 },
               ]}
+              popoverProps={{
+                align: deviceType === 'mobile' ? 'end' : 'center',
+                backgroundBlurEffect: false,
+              }}
             />
           )}
         </div>
