@@ -8,6 +8,7 @@ import {
 import type { ChildrenProp } from '@/modules/core/types/react.types';
 import type { GeocodingFeature } from '@mapbox/search-js-core';
 import { useBrowserLocationDetails } from '@/modules/location/hooks/use-browser-location-details';
+import { useBoolean } from 'usehooks-ts';
 
 type SelectedServices = {
   isAll: boolean;
@@ -25,6 +26,7 @@ type ProfessionalSearchContextValues = {
   onSelectedServicesChange: (
     selectedServices: Partial<SelectedServices>
   ) => void;
+  activateBrowserLocationSearch: () => void;
 };
 
 const defaultSelectedServices = {
@@ -42,17 +44,22 @@ export const ProfessionalSearchContext =
     onSearchQueryChange: () => {},
     onDateChange: () => {},
     onSelectedServicesChange: () => {},
+    activateBrowserLocationSearch: () => {},
   });
 
 export const ProfessionalSearchProvider: FC<ChildrenProp> = ({ children }) => {
-  const browserLocationDetails = useBrowserLocationDetails();
   // state
+  const isBrowserLocationEnabled = useBoolean();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [place, setPlace] = useState<GeocodingFeature | null>(null);
   const [date, setDate] = useState<Date | null>(null);
   const [selectedServices, setSelectedServices] = useState<SelectedServices>(
     defaultSelectedServices
   );
+  // search
+  const browserLocationDetails = useBrowserLocationDetails({
+    browserLocationSearchEnabled: isBrowserLocationEnabled.value,
+  });
 
   useEffect(() => {
     if (browserLocationDetails && !place) {
@@ -78,6 +85,7 @@ export const ProfessionalSearchProvider: FC<ChildrenProp> = ({ children }) => {
         onSearchQueryChange: setSearchQuery,
         onDateChange: setDate,
         onSelectedServicesChange: handleSelectedServicesChange,
+        activateBrowserLocationSearch: isBrowserLocationEnabled.setTrue,
       }}
     >
       {children}

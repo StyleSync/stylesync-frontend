@@ -2,9 +2,18 @@ import { useBrowserLocation } from '@/modules/location/hooks/use-browser-locatio
 import { useReverseGeocodingQuery } from '@/modules/location/hooks/use-reverse-geocoding-query';
 import { useMemo } from 'react';
 
-export const useBrowserLocationDetails = () => {
-  const { data: browserLocation, ...browserLocationQuery } =
-    useBrowserLocation();
+type UseBrowserLocationDetailsOptions = {
+  browserLocationSearchEnabled?: boolean;
+};
+
+export const useBrowserLocationDetails = (
+  options?: UseBrowserLocationDetailsOptions
+) => {
+  const { data: browserLocation, ...browserLocationQuery } = useBrowserLocation(
+    {
+      enabled: options?.browserLocationSearchEnabled,
+    }
+  );
   const { data: geocodingResponse, ...geocodingQuery } =
     useReverseGeocodingQuery(browserLocation);
   // memo
