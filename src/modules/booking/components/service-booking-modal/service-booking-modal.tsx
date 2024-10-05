@@ -156,7 +156,7 @@ export const ServiceBookingModal: FC<
       {...props}
       classes={{ content: '!h-dvh !overflow-hidden w-full' }}
     >
-      <div className='relative flex w-full flex-1 flex-col gap-y-5 overflow-hidden sm:w-[620px]'>
+      <div className='relative flex w-full flex-1 flex-col overflow-hidden sm:w-[620px]'>
         <Image
           className='absolute left-0 top-0 h-[120px] w-full opacity-20'
           src={Bg.src}
@@ -167,18 +167,14 @@ export const ServiceBookingModal: FC<
         />
         <div className='z-10 flex items-center justify-between gap-x-3 px-6 pt-6'>
           <div className='flex w-fit items-center gap-x-3'>
-            <Avatar url={professional.user?.avatar} shadow />
-            <div className='flex flex-col gap-y-1'>
-              <Typography variant='body2' weight='bold'>
+            <Avatar url={professional.user?.avatar} shadow size={40} />
+            <div className='flex flex-col'>
+              <span className='text-base font-medium text-dark'>
                 {getFullName(professional.user || {})}
-              </Typography>
-              <Typography
-                variant='small'
-                weight='semibold'
-                className='!text-gray'
-              >
+              </span>
+              <span className='text-xs font-medium text-gray-accent'>
                 {location?.name}
-              </Typography>
+              </span>
             </div>
           </div>
           {step !== 'service' && (
@@ -228,11 +224,38 @@ export const ServiceBookingModal: FC<
             />
           )}
           {step === 'confirmation' && (
-            <BookingForm onSubmit={handleConfirm} formId={confirmationFormId} />
+            <div className='flex flex-col gap-y-4'>
+              {deviceType === 'mobile' && (
+                <div className='flex flex-col gap-y-1'>
+                  {serviceOnProfessional && (
+                    <span className='text-sm font-medium !text-dark'>
+                      {serviceOnProfessional.title}
+                    </span>
+                  )}
+                  {step === 'confirmation' && selectedDay && (
+                    <Typography
+                      variant='small'
+                      weight='medium'
+                      className='!text-gray'
+                    >
+                      {formatI18n(
+                        new Date(selectedDay),
+                        'dd MMM yyyy',
+                        intl.locale
+                      )}
+                    </Typography>
+                  )}
+                </div>
+              )}
+              <BookingForm
+                onSubmit={handleConfirm}
+                formId={confirmationFormId}
+              />
+            </div>
           )}
         </div>
         {deviceType === 'mobile' && (
-          <div className='z-10 !mx-6 !mb-3 flex !w-[calc(100%-3rem)]'>
+          <div className='z-10 flex w-full bg-white px-6 pb-6 pt-5 shadow'>
             {step === 'confirmation' ? (
               <Button
                 className='!w-full'

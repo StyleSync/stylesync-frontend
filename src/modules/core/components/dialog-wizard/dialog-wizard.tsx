@@ -24,8 +24,6 @@ export const DialogWizard: FC<DialogWizardProps> = ({
 
   const activeStep = steps.find((step) => step.id === activeStepId);
 
-  activeStep?.id;
-
   return (
     <Dialog
       {...props}
@@ -35,7 +33,7 @@ export const DialogWizard: FC<DialogWizardProps> = ({
     >
       <div className='flex w-full flex-col'>
         {activeStep && (
-          <div className='relative z-10 flex h-[44px] w-full items-center justify-center shadow'>
+          <div className='relative z-10 flex h-[60px] w-full items-center justify-center shadow sm:h-[44px]'>
             {activeStep.isBack && (
               <Button
                 variant='outlined'
