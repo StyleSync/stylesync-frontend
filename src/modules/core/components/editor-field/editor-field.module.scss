@@ -1,6 +1,18 @@
 @use '@/styles/utils';
 @use '@/styles/variables.module';
 
+.root {
+  &:focus-within {
+    .fieldset {
+      border-color: variables.$primary-color;
+    }
+
+    .label {
+      color: variables.$primary-color;
+    }
+  }
+}
+
 .fieldset {
   position: absolute;
   text-align: left;
