@@ -3,7 +3,7 @@
   "short_name": "SS",
   "description": "Find the Perfect Professional for Your Beauty Needs",
   "version": "0.0.1",
-  "theme_color": "#3b82ef",
+  "theme_color": "#ffffff",
   "background_color": "#FFFFFF",
   "display": "standalone",
   "orientation": "portrait",
