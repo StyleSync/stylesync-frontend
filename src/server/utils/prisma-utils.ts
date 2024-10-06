@@ -1,6 +1,7 @@
 import type { Context } from '@/server/context';
 import { prisma } from '@/server/prisma';
 import {
+  defaultBookingSelect,
   defaultProfessionalSelect,
   defaultServiceOnProfessionalSelect,
 } from '@/server/selectors';
@@ -68,4 +69,40 @@ export const checkScheduleBreakChangePermission = async (
       message: `You dont have permission to do this action`,
     });
   }
+};
+
+export const checkProfessionalAccessToBooking = async (
+  ctx: Context,
+  id: string
+) => {
+  const booking = await prisma.booking.findUnique({
+    where: { id },
+    select: {
+      ...defaultBookingSelect,
+      serviceProfessionalId: true,
+      serviceProfessional: {
+        select: {
+          professionalId: true,
+        },
+      },
+    },
+  });
+
+  if (!booking) {
+    throw new TRPCError({
+      code: 'NOT_FOUND',
+      message: `No booking found with id '${id}'`,
+    });
+  }
+
+  const professional = await getProfessionalFromContext(ctx);
+
+  if (booking.serviceProfessional.professionalId !== professional.id) {
+    throw new TRPCError({
+      code: 'FORBIDDEN',
+      message: `You dont have permission to delete booking with id '${id}'`,
+    });
+  }
+
+  return professional;
 };

@@ -20,6 +20,7 @@ export const Default: Story = {
         icon: 'makeup',
         createdAt: new Date(),
         updatedAt: new Date(),
+        deletedAt: null,
       },
       {
         id: 'nails',
@@ -27,6 +28,7 @@ export const Default: Story = {
         icon: 'nails',
         createdAt: new Date(),
         updatedAt: new Date(),
+        deletedAt: null,
       },
       {
         id: 'haircut',
@@ -34,6 +36,7 @@ export const Default: Story = {
         icon: 'haircut',
         createdAt: new Date(),
         updatedAt: new Date(),
+        deletedAt: null,
       },
     ],
   },

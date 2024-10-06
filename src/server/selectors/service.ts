@@ -6,4 +6,5 @@ export const defaultServiceSelect = Prisma.validator<Prisma.ServiceSelect>()({
   icon: true,
   createdAt: true,
   updatedAt: true,
+  deletedAt: true,
 });
