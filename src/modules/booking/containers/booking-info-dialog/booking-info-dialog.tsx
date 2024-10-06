@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import { useIntl } from 'react-intl';
 
 // components
-import { Avatar } from '@/modules/core/components/avatar';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Tag } from '../../../core/components/tag';
 import { Icon } from '@/modules/core/components/icon';
@@ -12,8 +11,6 @@ import { DialogBottom } from '@/modules/core/components/dialog-bottom';
 import { Dialog } from '@/modules/core/components/dialog';
 // hooks
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
-// assets
-import Girl from '@/assets/images/girl.png';
 
 import type {
   BookingInfoDialogProps,
@@ -30,9 +27,11 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
   startDate,
   startTime,
   phone,
+  comment,
 }) => {
   const intl = useIntl();
   const deviceType = useDeviceType();
+  // const bookingDeleteMutation = trpc.booking.delete.useMutation();
   const DialogComponent = deviceType === 'mobile' ? DialogBottom : Dialog;
 
   const actions: Action[] = useMemo(
@@ -58,20 +57,30 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
         variant: 'danger',
       },
     ],
-    []
+    [intl]
   );
 
   return (
     <DialogComponent isOpen={isOpen} onOpenChange={onOpenChange}>
       <div className={styles.root}>
         <div className={styles.userInfo}>
-          <Avatar url={Girl.src} size='medium' />
           <Typography className={styles.name} variant='subtitle'>
             {name}
           </Typography>
           <Typography className={styles.email} variant='small'>
             {email}
           </Typography>
+          <Typography className={styles.email} variant='small'>
+            {phone}
+          </Typography>
+          {comment && (
+            <div className='mt-4 flex max-w-[400px] rounded-lg border border-gray-light px-4 py-3 shadow'>
+              <span className='text-sm font-normal leading-[18px] text-dark'>
+                <span className='font-bold'>Comment: </span>
+                {comment}
+              </span>
+            </div>
+          )}
         </div>
         <div className={styles.bookingInfo}>
           <Tag icon='nails' text={serviceName} />
