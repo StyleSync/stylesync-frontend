@@ -9,4 +9,5 @@ export type BookingInfoCardProps = {
   variant?: BookingInfoCardVariant;
   email: string | null;
   phone: string;
+  comment?: string | null;
 };

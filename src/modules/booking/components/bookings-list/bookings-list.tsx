@@ -78,11 +78,12 @@ export const BookingsList: FC<BookingsListProps> = () => {
                       phone={booking.guestPhone}
                       email={booking.guestEmail}
                       key={booking.id}
-                      name={`${booking.guestFirstName} ${booking.guestLastName}`}
+                      name={`${booking.guestFirstName || ''} ${booking.guestLastName || ''}`}
                       serviceName={booking.serviceProfessional.title}
                       date={booking.startTime}
                       startTime={booking.startTime}
                       endTime={booking.endTime}
+                      comment={booking.guestComment}
                       variant='light'
                     />
                   ))}
