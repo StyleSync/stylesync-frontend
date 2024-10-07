@@ -109,39 +109,31 @@ export const bookingRouter = router({
 
         return prisma.booking.update({
           where: { id: input.id },
-          data: { status: BookingStatus.APPROVED },
+          data: { status: input.status },
           select: defaultBookingSelect,
         });
       }),
     cancelByCode: publicProcedure
       .input(
         z.object({
-          id: z.string().min(1, 'Required'),
-          status: z.enum([
-            BookingStatus.APPROVED,
-            BookingStatus.REJECTED,
-            BookingStatus.MISSED,
-            BookingStatus.FINISHED,
-          ]),
+          code: z.string().min(1, 'Required'),
         })
       )
       .mutation(async ({ input }) => {
         const booking = await prisma.booking.findUnique({
-          where: { id: input.id },
-          select: {
-            ...defaultBookingSelect,
-          },
+          where: { code: input.code },
+          select: defaultBookingSelect,
         });
 
         if (!booking) {
           throw new TRPCError({
             code: 'NOT_FOUND',
-            message: `No booking found with id '${input.id}'`,
+            message: `No booking found with code '${input.code}'`,
           });
         }
 
         return prisma.booking.update({
-          where: { id: input.id },
+          where: { code: input.code },
           data: { status: BookingStatus.CANCELED },
           select: defaultBookingSelect,
         });
