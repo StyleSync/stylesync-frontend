@@ -14,8 +14,10 @@ export const isBreaksEqual = (
     break1.end.toISOString() === break2.end.toISOString()
   );
 };
- 
-export const formatBreaks = (breaks: {id: string, start: Date, end: Date}[]) =>
+
+export const formatBreaks = (
+  breaks: { id: string; start: Date; end: Date }[]
+) =>
   breaks
     .map((b) => `${format(b.start, 'HH:mm')} - ${format(b.end, 'HH:mm')}`)
     .join('; ');
