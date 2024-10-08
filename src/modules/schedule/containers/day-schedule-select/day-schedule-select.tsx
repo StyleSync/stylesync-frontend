@@ -16,6 +16,7 @@ import { Checkbox } from '@/modules/core/components/checkbox';
 import { useWeekdayScheduleSaveMutation } from '@/modules/schedule/hooks/use-weekday-schedule-save-mutation';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
+import { formatBreaks } from '@/modules/schedule/utils/breaks.utils';
 import {
   emptyTimeRange,
   formatTimeRange,
@@ -190,6 +191,65 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
       onSubmit={form.handleSubmit(handleSubmit)}
     >
       {!isEdit.value ? (
+        <div className={styles.container}>
+          <div className={styles.containerTop}>
+            <div className={clsx(styles.cell, styles.weekday)}>
+              <Typography
+                className={styles.weekday}
+                variant='body1'
+                weight='medium'
+              >
+                {intl.formatMessage({
+                  id: `weekdays.${weekday}`,
+                })}
+              </Typography>
+            </div>
+            <div className={clsx(styles.cell)}>
+              <Typography>
+                {isWorkingDay.value
+                  ? form.getValues().workHours
+                  : intl.formatMessage({ id: 'schedule.day.off' })}
+              </Typography>
+            </div>
+            {deviceType !== 'mobile' && (
+              <div className={clsx(styles.cell, styles.tags)}>
+                <BreakTags
+                  breaks={fields}
+                  isLoading={
+                    scheduleBreaksQuery.isLoading &&
+                    scheduleBreaksQuery.fetchStatus !== 'idle'
+                  }
+                  error={scheduleBreaksQuery.error?.message}
+                />
+              </div>
+            )}
+            <div className={clsx(styles.cell, styles.actions)}>
+              <Button
+                icon='pencil'
+                variant='outlined'
+                type='button'
+                onClick={(e) => {
+                  e.preventDefault();
+                  isEdit.setTrue();
+                }}
+              />
+            </div>
+          </div>
+          {deviceType === 'mobile' && (
+            <div className={styles.containerBottom}>
+              {scheduleBreaks && scheduleBreaks.length > 0 ? (
+                <Typography className='!text-gray' variant='small'>
+                  {`Breaks at ${formatBreaks(scheduleBreaks)}`}
+                </Typography>
+              ) : (
+                <Typography className='!text-gray' variant='small'>
+                  {intl.formatMessage({ id: 'schedule.no.breaks' })}
+                </Typography>
+              )}
+            </div>
+          )}
+        </div>
+      ) : (
         <>
           <div className={clsx(styles.cell, styles.weekday)}>
             <Typography
@@ -201,54 +261,11 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
                 id: `weekdays.${weekday}`,
               })}
             </Typography>
-          </div>
-          <div className={clsx(styles.cell)}>
-            <Typography>
-              {isWorkingDay.value
-                ? form.getValues().workHours
-                : intl.formatMessage({ id: 'schedule.day.off' })}
-            </Typography>
-          </div>
-          {deviceType !== 'mobile' && (
-            <div className={clsx(styles.cell, styles.tags)}>
-              <BreakTags
-                breaks={fields}
-                isLoading={
-                  scheduleBreaksQuery.isLoading &&
-                  scheduleBreaksQuery.fetchStatus !== 'idle'
-                }
-                error={scheduleBreaksQuery.error?.message}
-              />
-            </div>
-          )}
-          <div className={clsx(styles.cell, styles.actions)}>
-            <Button
-              aria-label='Edit schedule day'
-              icon='pencil'
-              variant='outlined'
-              type='button'
-              onClick={(e) => {
-                e.preventDefault();
-                isEdit.setTrue();
-              }}
-            />
-          </div>
-        </>
-      ) : (
-        <>
-          <div className={clsx(styles.cell, styles.weekday)}>
-            <Typography
-              className={styles.weekday}
-              variant='body2'
-              weight='medium'
-            >
-              {weekday}
-            </Typography>
             <label className={styles.dayoff}>
               <Checkbox
                 value={isWorkingDay.value}
                 onChange={isWorkingDay.toggle}
-                size='small'
+                size='medium'
               />
               <Typography variant='small'>
                 {intl.formatMessage({ id: 'schedule.working.day' })}
@@ -268,7 +285,7 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
                   <TimeRangeField
                     className={styles.timerange}
                     value={field.value}
-                    label='Working hours'
+                    label={intl.formatMessage({ id: 'schedule.working.hours' })}
                     onChange={field.onChange}
                     inputProps={{
                       fieldSize: 'small',
@@ -279,11 +296,17 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
                 )}
               />
             </div>
-            {deviceType === 'mobile' && isWorkingDay.value && (
-              <Typography variant='body2' weight='medium'>
-                Breaks
-              </Typography>
-            )}
+            {deviceType === 'mobile' &&
+              isWorkingDay.value &&
+              fields.length > 0 && (
+                <Typography
+                  className='mb-3 mt-4'
+                  variant='body2'
+                  weight='medium'
+                >
+                  {intl.formatMessage({ id: 'schedule.form.breaks' })}
+                </Typography>
+              )}
             <div
               className={clsx(styles.cell, styles.xPadding, {
                 [styles.disabled]: !isWorkingDay.value,
@@ -347,7 +370,7 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
                 <Button
                   className='flex-1'
                   onClick={handleAddBreak}
-                  text='Add break'
+                  text={intl.formatMessage({ id: 'button.add.break' })}
                   variant='outlined'
                 />
               )}

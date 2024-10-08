@@ -14,11 +14,11 @@
     column-gap: utils.spacing(1);
     color: variables.$dark-color;
     padding: utils.spacing(1, 4, 3, 4);
-    box-shadow: variables.$main-box-shadow;
-    z-index: 1;
 
     @include mixins.phone {
       padding: utils.spacing(2, 8, 1, 3);
+      box-shadow: variables.$main-box-shadow;
+      z-index: 1;
 
       span {
         flex: 1;

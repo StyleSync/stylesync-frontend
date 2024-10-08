@@ -17,6 +17,7 @@
     align-items: flex-start;
     @include mixins.phone {
       flex-direction: column;
+      padding: utils.spacing(2.5, 1.5);
     }
   }
 
@@ -28,6 +29,17 @@
 
   &:last-child {
     border-bottom: none;
+  }
+  .container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .containerTop {
+    display: flex;
+    flex: 1;
+    align-items: center;
   }
 
   .cell {
