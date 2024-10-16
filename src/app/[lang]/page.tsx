@@ -6,6 +6,7 @@ import { MobileAppSection } from '@/modules/landing/containers/mobile-app-sectio
 import { Footer } from '@/modules/landing/containers/footer/footer';
 import { ServiceDataSection } from '@/modules/landing/containers/service-data-section';
 import { LandingHeader } from '@/modules/landing/containers/header/landing-header';
+import { BottomTabNavigation } from '@/modules/core/containers/bottom-tab-navigation';
 
 export default async function Home() {
   return (
@@ -19,6 +20,7 @@ export default async function Home() {
         <MobileAppSection />
       </main>
       <Footer />
+      <BottomTabNavigation />
     </>
   );
 }

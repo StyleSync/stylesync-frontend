@@ -1,6 +1,8 @@
 'use client';
 import { useContext, useEffect, useMemo } from 'react';
 import clsx from 'clsx';
+import type { BBox } from 'geojson';
+import { useIntl } from 'react-intl';
 // components
 import { Button } from '@/modules/core/components/button';
 import { ProSearchField } from '@/modules/location/components/pro-search-field';
@@ -8,17 +10,16 @@ import { ProSearchField } from '@/modules/location/components/pro-search-field';
 import { useBoolean } from 'usehooks-ts';
 // containers
 import { ProfessionalSearchCard } from '@/modules/user/containers/professional-search-card';
+import { ProSearchFilter } from '@/modules/user/containers/pro-search-filter';
+import { Footer } from '@/modules/landing/containers/footer/footer';
+// contexts
+import { ProfessionalSearchContext } from '@/modules/user/providers/professional-search-provider';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
+import { mapDateToDayEnum } from '@/modules/core/utils/date.utils';
+import { bboxLargestSideInKm } from '@/modules/location/utils/bbox.utils';
 // styles
 import styles from './search-pro.module.scss';
-import { Footer } from '@/modules/landing/containers/footer/footer';
-import { ProfessionalSearchContext } from '@/modules/user/providers/professional-search-provider';
-import type { BBox } from 'geojson';
-import { bboxLargestSideInKm } from '@/modules/location/utils/bbox.utils';
-import { ProSearchFilter } from '@/modules/user/containers/pro-search-filter';
-import { mapDateToDayEnum } from '@/modules/core/utils/date.utils';
-import { useIntl } from 'react-intl';
 
 export default function SearchProPage() {
   const intl = useIntl();
