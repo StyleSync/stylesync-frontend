@@ -235,9 +235,9 @@
   "button.support": "Підтримка",
   "button.select.from.computer": "Вибрати з комп'ютера",
 
-  "bookingInfo.dialog.actions.call": "Дзвінок",
-  "bookingInfo.dialog.actions.reschedule": "Перепланувати",
-  "bookingInfo.dialog.actions.cancel": "Скасувати бронювання",
+  "bookingInfo.dialog.actions.call": "Зателефонувати",
+  "bookingInfo.dialog.actions.reschedule": "Перенести",
+  "bookingInfo.dialog.actions.cancel": "Скасувати",
 
   "album.card.toast.error.title": "Помилка",
   "album.card.toast.error.description": "Виникла помилка",

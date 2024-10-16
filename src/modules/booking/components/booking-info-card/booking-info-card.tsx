@@ -4,7 +4,6 @@ import { useBoolean } from 'usehooks-ts';
 import { useIntl } from 'react-intl';
 
 // components
-import { Avatar } from '@/modules/core/components/avatar';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
 // hooks
@@ -25,9 +24,9 @@ export const BookingInfoCard: FC<BookingInfoCardProps> = ({
   variant = 'light',
   email,
   phone,
+  comment,
 }) => {
   const intl = useIntl();
-
   // state
   const isOpen = useBoolean();
   // refs
@@ -53,7 +52,7 @@ export const BookingInfoCard: FC<BookingInfoCardProps> = ({
         ref={rootRef}
       >
         <div className={styles.container}>
-          <Avatar className={styles.avatar} />
+          {/* <Avatar className={styles.avatar} /> */}
           <div className={styles.info}>
             <Typography className={styles.datetime} variant='body1'>
               {formattedDate}, {formattedStartTime} - {formattedEndTime}
@@ -73,6 +72,7 @@ export const BookingInfoCard: FC<BookingInfoCardProps> = ({
         name={name}
         isOpen={isOpen.value}
         onOpenChange={isOpen.setValue}
+        comment={comment}
       />
     </>
   );
