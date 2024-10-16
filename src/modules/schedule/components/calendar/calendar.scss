@@ -359,6 +359,10 @@
   justify-content: center !important;
   position: relative !important;
 
+  @include mixins.phone {
+    padding-right: 40px !important;
+  }
+
   &::after {
     position: absolute !important;
     content: '' !important;
@@ -388,7 +392,7 @@
 
 .fc colgroup > col {
   @include mixins.phone {
-    width: 38px !important;
+    width: 40px !important;
   }
 }
 

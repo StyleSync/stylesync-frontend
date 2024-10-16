@@ -122,6 +122,12 @@
   "schedule.form.working.hours": "Working hours",
   "schedule.form.breaks": "Breaks",
   "schedule.no.breaks": "No breaks",
+  "schedule.breaks": "Break at",
+
+  "service.constructor.table.toast.error": "Unable to delete",
+  "service.constructor.add.sevice": "Add service",
+  "service.constructor.delete.group": "Delete group",
+
 
   "weekdays.MONDAY": "Monday",
   "weekdays.TUESDAY": "Tuesday",

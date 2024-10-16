@@ -122,7 +122,11 @@
   "schedule.form.working.hours": "Робочі години",
   "schedule.form.breaks": "Перерви",
   "schedule.no.breaks": "Без перерви",
+  "schedule.breaks": "Перерва о",
 
+  "service.constructor.table.toast.error": "Не вдалося видалити",
+  "service.constructor.add.sevice": "Додати сервіс",
+  "service.constructor.delete.group": "Видалити групу",
 
   "weekdays.MONDAY": "Понеділок",
   "weekdays.TUESDAY": "Вівторок",
@@ -247,6 +251,7 @@
   "button.support": "Підтримка",
   "button.add.break": "Додати перерву",
   "button.select.from.computer": "Вибрати з комп'ютера",
+  "button.select.from.phone": "Вибрати з галереї",
 
   "bookingInfo.dialog.actions.call": "Дзвінок",
   "bookingInfo.dialog.actions.reschedule": "Перепланувати",
@@ -274,7 +279,7 @@
   "photo.upload.modal.header.crop": "Обрізати",
   "photo.upload.modal.header.details": "Завантажити нове фото",
   "photo.upload.modal.header.preview": "Показати фото",
-  "photo.upload.modal.caption": "Описання...",
+  "photo.upload.modal.caption": "Опис...",
 
   "user.header.navigation.profile": "Профіль",
   "user.header.navigation.myBookings": "Мої бронювання",

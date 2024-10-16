@@ -26,8 +26,8 @@ import { dataURLtoBlob } from '@/modules/core/utils/file.utils';
 
 import 'react-advanced-cropper/dist/style.css';
 import 'react-advanced-cropper/dist/themes/bubble.css';
-
 import { PhotoUploadModalHeader } from './elements/photo-upload-modal-header';
+import styles from './photo-upload-modal.module.scss';
 
 import type {
   PhotoUploadState,
@@ -273,9 +273,16 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
     [onOpenChange, portfolioId]
   );
 
+  const handleCloseDialog = () => {
+    if (onOpenChange) {
+      onOpenChange(false);
+    }
+  };
+
   return (
     <Dialog
       isOpen={isOpen}
+      classes={{ content: styles.dialogContent, overlay: styles.dialogOverlay }}
       onOpenChange={handleOpenChange}
       trigger={trigger}
       isCloseButtonVisible={
@@ -283,7 +290,15 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
         photoUploadState.step === 'preview'
       }
     >
-      <div className='flex flex-col overflow-hidden rounded-xl'>
+      <div className='relative flex w-full flex-col overflow-hidden rounded-xl'>
+        {deviceType === 'mobile' && (
+          <Button
+            variant='unstyled'
+            className='absolute left-[10px] top-[6px] z-50'
+            icon='arrow-left'
+            onClick={handleCloseDialog}
+          />
+        )}
         <PhotoUploadModalHeader
           state={photoUploadState}
           onBackClick={handleBackClick}
@@ -295,7 +310,7 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
             portfolioUpdateMutation.isLoading
           }
         />
-        <div className='flex h-[70vh]'>
+        <div className='flex h-[100vh] flex-col md:h-[70vh] md:flex-row'>
           <div
             {...getRootProps({
               className: clsx(
@@ -328,7 +343,10 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
                 <Button
                   variant='primary'
                   text={intl.formatMessage({
-                    id: 'button.select.from.computer',
+                    id:
+                      deviceType === 'mobile'
+                        ? 'button.select.from.phone'
+                        : 'button.select.from.computer',
                   })}
                 />
                 <input {...getInputProps()} />
@@ -372,11 +390,12 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
               </div>
             )}
           </div>
+
           <animated.div
             style={{ width: springs }}
-            className='flex h-full w-0 bg-transparent'
+            className='flex h-full !w-full bg-transparent md:w-0'
           >
-            <div className='flex flex-1 flex-col gap-y-4 p-4'>
+            <div className='flex w-full flex-1 flex-col gap-y-4 p-4'>
               <div className='flex items-center gap-x-2'>
                 <Avatar size={32} url={me?.avatar} />
                 <Typography weight='medium'>{getFullName(me || {})}</Typography>
@@ -388,7 +407,7 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
                 placeholder={intl.formatMessage({
                   id: 'photo.upload.modal.caption',
                 })}
-                className='h-full !resize-none !rounded !p-0'
+                className='h-full w-full !resize-none !rounded !p-0'
                 classes={{
                   container: 'flex-1',
                   fieldset: '!hidden',

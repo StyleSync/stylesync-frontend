@@ -41,7 +41,7 @@ export const PhotoUploadModalHeader: FC<PhotoUploadModalHeaderProps> = ({
   const { title } = metadata[state.step];
 
   return (
-    <div className='relative z-10 flex h-[44px] w-full items-center justify-center shadow'>
+    <div className='relative z-10 flex h-[54px] w-full items-center justify-center shadow md:h-[44px]'>
       {state.step !== 'select' && state.step !== 'preview' && (
         <Button
           variant='outlined'

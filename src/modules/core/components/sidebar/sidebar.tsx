@@ -36,8 +36,8 @@ export const Sidebar: FC<SidebarProps> = ({
               </Typography>
             )}
             <div className={styles.links}>
-              {group.links.map((link) => (
-                <Fragment key={link.name}>
+              {group.links.map((link, index) => (
+                <Fragment key={index}>
                   {link.renderItem ? (
                     link.renderItem({})
                   ) : (

@@ -147,8 +147,8 @@ export const AlbumAddModal: FC<
           <Typography variant='subtitle'>
             {intl.formatMessage({
               id: !album
-                ? 'albumAdd.modal.title.edit'
-                : 'albumAdd.modal.title.add',
+                ? 'albumAdd.modal.title.add'
+                : 'albumAdd.modal.title.edit',
             })}
           </Typography>
         </div>

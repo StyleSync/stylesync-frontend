@@ -51,7 +51,9 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
         onError: () => {
           showToast({
             variant: 'error',
-            title: 'Unable to delete',
+            title: intl.formatMessage({
+              id: 'service.constructor.table.toast.error',
+            }),
             description: '',
           });
         },
@@ -121,13 +123,17 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
               id: 'add',
               variant: 'primary',
               icon: 'plus',
-              text: 'Add service',
+              text: intl.formatMessage({
+                id: 'service.constructor.add.sevice',
+              }),
             },
             {
               id: 'delete',
               variant: 'danger',
               icon: 'trash',
-              text: 'Delete group',
+              text: intl.formatMessage({
+                id: 'service.constructor.delete.group',
+              }),
             },
           ]}
           popoverProps={{

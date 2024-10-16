@@ -239,7 +239,7 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
             <div className={styles.containerBottom}>
               {scheduleBreaks && scheduleBreaks.length > 0 ? (
                 <Typography className='!text-gray' variant='small'>
-                  {`Breaks at ${formatBreaks(scheduleBreaks)}`}
+                  {`${intl.formatMessage({ id: 'schedule.breaks' })} ${formatBreaks(scheduleBreaks)}`}
                 </Typography>
               ) : (
                 <Typography className='!text-gray' variant='small'>
@@ -377,7 +377,7 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
 
               <Button
                 className='flex-1'
-                text='Save'
+                text={intl.formatMessage({ id: 'button.save' })}
                 variant='primary'
                 type='submit'
                 isLoading={weekdayScheduleSaveMutation.isLoading}
