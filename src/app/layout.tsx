@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     { name: 'Yevhen Derii' },
   ],
   viewport:
-    'minimum-scale=1, user-scalable=0, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover',
+    'minimum-scale=1, maximum-scale=1, user-scalable=0, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover',
   icons: [
     { rel: 'apple-touch-icon', url: '/icons/icon-128x128.png' },
     { rel: 'icon', url: '/icons/icon-128x128.png' },
