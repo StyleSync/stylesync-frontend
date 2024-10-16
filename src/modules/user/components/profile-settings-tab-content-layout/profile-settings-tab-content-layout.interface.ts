@@ -6,7 +6,9 @@ import { type ReactNode } from 'react';
 export type ProfileSettingsTabContentLayoutProps = ChildrenProp & {
   title: string;
   icon?: IconName;
-  actions?: Array<(ButtonProps | { actionNode: ReactNode}) & { isMobile?: boolean }>;
+  actions?: Array<
+    (ButtonProps | { actionNode: ReactNode }) & { isMobile?: boolean }
+  >;
   hideActions?: boolean;
   isLoading?: boolean;
 };
