@@ -1,4 +1,4 @@
-import { type FC, useMemo, useState } from 'react';
+import { type FC, useState } from 'react';
 import { useIntl } from 'react-intl';
 import clsx from 'clsx';
 
@@ -16,7 +16,6 @@ import { useBoolean } from 'usehooks-ts';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 // types
-import type { ButtonProps } from '@/modules/core/components/button/button.interface';
 import type { ProfessionalGalleryFormProps } from './professional-gallery-form.interface';
 import type { Album } from '@prisma/client';
 
@@ -32,21 +31,6 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
   const windowSizeType = useDeviceType();
   const isModalOpen = useBoolean();
   // memo
-  const buttonProps = useMemo<Partial<ButtonProps>>(() => {
-    if (windowSizeType === 'mobile') {
-      return {
-        icon: 'plus',
-        variant: 'primary',
-      };
-    }
-
-    return {
-      text: intl.formatMessage({
-        id: 'user.professional.gallery.form.createAlbum',
-      }),
-      variant: 'outlined',
-    };
-  }, [windowSizeType, intl]);
 
   // query
 
@@ -91,10 +75,9 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
               onOpenChange={isModalOpen.setValue}
               isOpen={isModalOpen.value}
               trigger={
-                <Button
-                  className={clsx('mobileActionBtn', styles.trigger)}
-                  {...buttonProps}
-                />
+                windowSizeType !== 'mobile' && (
+                  <Button className={clsx(styles.trigger)} />
+                )
               }
             />
           ),
@@ -111,7 +94,16 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
                 setAlbunToEdit(null);
               }
             }}
-            trigger={<Button {...buttonProps} />}
+            trigger={
+              windowSizeType !== 'mobile' && (
+                <Button
+                  text={intl.formatMessage({
+                    id: 'user.professional.gallery.form.createAlbum',
+                  })}
+                  variant='outlined'
+                />
+              )
+            }
           />
           <div className='mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-5'>
             {albumsList?.map((album) => (

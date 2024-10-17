@@ -154,7 +154,7 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
           title: '',
           duration: 0,
           price: 0,
-          currency: 'USD',
+          currency: 'UAH',
           description: '',
         }}
         isActive={isCreateOpen.value}

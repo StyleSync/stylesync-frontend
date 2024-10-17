@@ -37,11 +37,11 @@
   }
 }
 
-.trigger {
-  @include mixins.phone {
-    bottom: utils.spacing(20);
-  }
-}
+// .trigger {
+//   @include mixins.phone {
+//     bottom: utils.spacing(20);
+//   }
+// }
 
 .spinnerContainer {
   margin-top: utils.spacing(20);

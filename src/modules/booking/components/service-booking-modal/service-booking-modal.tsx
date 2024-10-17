@@ -165,7 +165,7 @@ export const ServiceBookingModal: FC<
           blurDataURL={Bg.blurDataURL}
           alt='booking bg'
         />
-        <div className='z-10 flex items-center justify-between gap-x-3 px-6 pt-6'>
+        <div className='z-10 mb-7 flex items-center justify-between gap-x-3 px-6 pt-6'>
           <div className='flex w-fit items-center gap-x-3'>
             <Avatar url={professional.user?.avatar} shadow size={40} />
             <div className='flex flex-col'>
