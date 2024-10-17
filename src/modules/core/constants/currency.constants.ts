@@ -1,7 +1,7 @@
 import type { Currency } from '@/modules/core/types/currency.types';
 import type { IconName } from '@/modules/core/components/icon';
 
-export const currencies: Currency[] = ['UAH', 'USD', 'EUR',];
+export const currencies: Currency[] = ['UAH', 'USD', 'EUR'];
 
 export const currencyMeta: Record<
   Currency,
@@ -18,5 +18,4 @@ export const currencyMeta: Record<
   EUR: {
     icon: 'flag-europe',
   },
- 
 };
