@@ -14,7 +14,7 @@ export const GallerySection: FC<GallerySectionProps> = ({ userId }) => {
 
   const [professional] = trpc.professional.get.useSuspenseQuery({
     id: userId,
-    expand: ['user'],
+    expand: [],
   });
 
   const {
@@ -23,7 +23,7 @@ export const GallerySection: FC<GallerySectionProps> = ({ userId }) => {
     isFetched,
   } = trpc.album.list.useQuery(
     {
-      professionalId: professional.id,
+      professionalId: professional?.id,
     },
     {
       enabled: !!professional.id,
