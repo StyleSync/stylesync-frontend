@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import { Icon } from '@/modules/core/components/icon';
 import { TextField } from '@/modules/core/components/text-field';
 import { Typography } from '@/modules/core/components/typogrpahy';
+import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
 // constants
 import {
   currencies,
@@ -14,14 +15,12 @@ import {
 import { formatPrice } from '@/modules/core/utils/price.utils';
 // types
 import type { Currency } from '@/modules/core/types/currency.types';
-
 import type { PriceFieldProps } from './price-field.interface';
 import styles from './price-field.module.scss';
-import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
 
 export const PriceField: FC<PriceFieldProps> = ({
   price,
-  currency,
+  currency = 'UAH',
   onPriceChange,
   onCurrencyChange,
   inputProps,

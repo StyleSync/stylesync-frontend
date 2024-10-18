@@ -28,6 +28,7 @@ export const TimeRangeField: FC<TimeRangeFieldInterface> = ({
   value,
   onChange,
   inputProps,
+  label,
   className,
   style,
 }) => {
@@ -141,6 +142,7 @@ export const TimeRangeField: FC<TimeRangeFieldInterface> = ({
           ref={rootRef}
         >
           <TextField
+            label={label}
             {...inputProps}
             ref={inputRef}
             value={value}

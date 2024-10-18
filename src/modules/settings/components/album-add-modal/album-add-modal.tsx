@@ -138,14 +138,17 @@ export const AlbumAddModal: FC<
   };
 
   return (
-    <Dialog {...props} classes={{ content: styles.content }}>
+    <Dialog
+      {...props}
+      classes={{ content: styles.content, overlay: styles.dialogOverlay }}
+    >
       <form onSubmit={form.handleSubmit(handleSubmit)} className={styles.root}>
         <div className='flex items-center gap-3'>
           <Typography variant='subtitle'>
             {intl.formatMessage({
-              id: album
-                ? 'albumAdd.modal.title.edit'
-                : 'albumAdd.modal.title.add',
+              id: !album
+                ? 'albumAdd.modal.title.add'
+                : 'albumAdd.modal.title.edit',
             })}
           </Typography>
         </div>

@@ -29,8 +29,8 @@ export const ServiceSelect: FC<ServiceSelectProps> = ({
   const buttonProps = useMemo<Partial<ButtonProps>>(() => {
     if (deviceType === 'mobile') {
       return {
-        icon: 'plus',
         variant: 'primary',
+        text: 'Додати сервіс',
       };
     }
 
@@ -44,7 +44,7 @@ export const ServiceSelect: FC<ServiceSelectProps> = ({
       return {
         align: 'end',
         side: 'top',
-        sideOffset: 10,
+        sideOffset: 24,
       };
     }
 
@@ -68,6 +68,7 @@ export const ServiceSelect: FC<ServiceSelectProps> = ({
 
   return (
     <DropdownMenu
+      classes={{ option: '!flex-[unset]' }}
       items={services
         .filter((service) => !blackList.includes(service.id))
         .map((service) => {
@@ -82,7 +83,7 @@ export const ServiceSelect: FC<ServiceSelectProps> = ({
           {...buttonProps}
           onClick={isOpen.toggle}
           disabled={services.length === blackList.length}
-          className={clsx('mobileActionBtn', styles.trigger)}
+          className={clsx(styles.trigger)}
         />
       }
       isOpen={isOpen.value}

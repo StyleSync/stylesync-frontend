@@ -1,9 +1,0 @@
-@use '@/styles/utils';
-@use '@/styles/mixins';
-@use '@/styles/variables.module';
-
-.trigger {
-  @include mixins.phone {
-    bottom: utils.spacing(15);
-  }
-}

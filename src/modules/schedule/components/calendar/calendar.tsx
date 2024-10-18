@@ -102,7 +102,7 @@ export const Calendar: FC<CalendarProps> = () => {
         onClick={() => {
           book();
         }}
-        className='absolute right-[36px] top-8'
+        className='absolute right-[36px] top-[16px] sm:!top-[40px]'
       />
       <FullCalendar
         businessHours={businessHours}

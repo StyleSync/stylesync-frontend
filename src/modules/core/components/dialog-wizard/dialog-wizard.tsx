@@ -5,6 +5,10 @@ import { Dialog } from '@/modules/core/components/dialog';
 import { Button } from '@/modules/core/components/button';
 import { Typography } from '@/modules/core/components/typogrpahy';
 
+import styles from './dialog-wizard.module.scss';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
+import clsx from 'clsx';
+
 export const DialogWizard: FC<DialogWizardProps> = ({
   steps,
   activeStepId,
@@ -12,15 +16,24 @@ export const DialogWizard: FC<DialogWizardProps> = ({
   onNext,
   onBack,
   isNextLoading,
+  classes,
+  handleModalClose,
   ...props
 }) => {
+  const deviceType = useDeviceType();
+
   const activeStep = steps.find((step) => step.id === activeStepId);
 
   return (
-    <Dialog {...props}>
-      <div className='flex flex-col'>
+    <Dialog
+      {...props}
+      classes={{
+        content: clsx(styles.content, classes?.content),
+      }}
+    >
+      <div className='flex w-full flex-col'>
         {activeStep && (
-          <div className='relative z-10 flex h-[44px] w-full items-center justify-center shadow'>
+          <div className='relative z-10 flex h-[60px] w-full items-center justify-center shadow sm:h-[44px]'>
             {activeStep.isBack && (
               <Button
                 variant='outlined'
@@ -34,7 +47,7 @@ export const DialogWizard: FC<DialogWizardProps> = ({
             <Typography variant='body1' weight='medium'>
               {activeStep.title}
             </Typography>
-            {activeStep.isNext && (
+            {activeStep.isNext && deviceType !== 'mobile' && (
               <Button
                 variant='outlined'
                 rippleColor='transparent'
@@ -45,6 +58,14 @@ export const DialogWizard: FC<DialogWizardProps> = ({
                   onNext && onNext(activeStep.id);
                 }}
                 {...activeStep.nextBtnProps}
+              />
+            )}
+            {activeStep.id === 'service' && deviceType === 'mobile' && (
+              <Button
+                className='!absolute right-2 top-1/2 z-10 -translate-y-1/2 !border-none !text-base'
+                onClick={handleModalClose}
+                variant='unstyled'
+                icon='close'
               />
             )}
           </div>

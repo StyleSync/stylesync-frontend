@@ -1,8 +1,10 @@
-import { type FC, useCallback } from 'react';
+import { type FC, useCallback, useMemo } from 'react';
+import { useIntl } from 'react-intl';
 import clsx from 'clsx';
 import { useBoolean } from 'usehooks-ts';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Button } from '@/modules/core/components/button';
@@ -21,21 +23,6 @@ import type {
   BurgerMenuProps,
 } from './burger-menu.interface';
 import styles from './burger-menu.module.scss';
-
-const proActions: BurgerMenuAction[] = [
-  {
-    id: 'share',
-    icon: 'share',
-    text: 'Share profile',
-    variant: 'default',
-  },
-  {
-    id: 'sign-out',
-    icon: 'log-out',
-    text: 'Sign out',
-    variant: 'danger',
-  },
-];
 
 const publicActions: BurgerMenuAction[] = [
   {
@@ -101,28 +88,78 @@ const dialogAnimationConfig: Partial<DialogFullScreenAnimationConfig> = {
   },
 };
 
-export const BurgerMenu: FC<BurgerMenuProps> = () => {
+export const BurgerMenu: FC<BurgerMenuProps> = ({ session }) => {
+  const intl = useIntl();
   const router = useRouter();
-  // state
   const isOpen = useBoolean();
-  const session = useSession();
+  const { status } = useSession();
+
+  // query
   const { data: me, ...meQuery } = trpc.user.me.useQuery(
     {
       expand: [],
     },
     {
-      enabled: session.status === 'authenticated',
+      enabled: status === 'authenticated',
     }
   );
+
   // memo
-  const actions =
-    session.status === 'authenticated' ? proActions : publicActions;
-  const isLoading = session.status === 'loading' || meQuery.isInitialLoading;
+  const proActions = useMemo<BurgerMenuAction[]>(
+    () => [
+      {
+        id: 'my-profile',
+        icon: 'user',
+        text: intl.formatMessage({ id: 'burger.menu.btn.myProfile' }),
+        variant: 'default',
+      },
+      {
+        id: 'my-bookings',
+        icon: 'list',
+        text: intl.formatMessage({ id: 'burger.menu.btn.myBookings' }),
+        variant: 'default',
+      },
+      {
+        id: 'share',
+        icon: 'share',
+        text: intl.formatMessage({ id: 'burger.menu.btn.shareProfile' }),
+        variant: 'default',
+      },
+      {
+        id: 'settings',
+        icon: 'settings',
+        text: intl.formatMessage({ id: 'burger.menu.btn.settings' }),
+        variant: 'default',
+      },
+      {
+        id: 'sign-out',
+        icon: 'log-out',
+        text: intl.formatMessage({ id: 'burger.menu.btn.signOut' }),
+        variant: 'danger',
+      },
+    ],
+    [intl]
+  );
+
+  const actions = status === 'authenticated' ? proActions : publicActions;
+  const isLoading = status === 'loading' || meQuery.isInitialLoading;
 
   const handleActionClick = useCallback(
     (action: BurgerMenuAction) => () => {
+      if (action.id === 'my-profile') {
+        router.push(`/app/profile/${session?.user.id}`);
+      }
+
+      if (action.id === 'my-bookings') {
+        router.push(`/app/my-bookings`);
+      }
+
       if (action.id === 'sign-out') {
         void signOut({ callbackUrl: '/' });
+      }
+
+      if (action.id === 'settings') {
+        router.push(`/app/settings`);
       }
 
       if (action.id === 'sign-in') {
@@ -170,10 +207,10 @@ export const BurgerMenu: FC<BurgerMenuProps> = () => {
           <div className={styles.info}>
             <Placeholder
               className={styles.unauthPlaceholder}
-              isActive={session.status === 'unauthenticated'}
+              isActive={status === 'unauthenticated'}
               placeholder={
                 <Typography className={styles.name}>
-                  Not authenticated
+                  {intl.formatMessage({ id: 'burger.menu.notAuthenticated' })}
                 </Typography>
               }
             >

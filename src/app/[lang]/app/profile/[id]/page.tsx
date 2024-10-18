@@ -71,7 +71,7 @@ export default async function Profile({ params }: PageParams<{ id: string }>) {
           </ErrorBoundary>
           <GallerySection />
         </div>
-        <ProBookActions />
+        <ProBookActions userId={params.id} />
       </main>
     </BookingProvider>
   );

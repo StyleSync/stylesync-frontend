@@ -1,0 +1,10 @@
+@use '@/styles/mixins';
+
+.content {
+  height: 100%;
+  @include mixins.phone {
+    width: 100%;
+    min-height: 100%;
+    border-radius: 0px;
+  }
+}

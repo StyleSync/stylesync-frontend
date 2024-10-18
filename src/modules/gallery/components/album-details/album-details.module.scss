@@ -8,7 +8,7 @@
 
 .trigger {
   @include mixins.phone {
-    bottom: utils.spacing(15);
+    bottom: utils.spacing(20);
   }
 }
 

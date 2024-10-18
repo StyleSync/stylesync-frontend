@@ -113,12 +113,29 @@
   "calendar.customButtons.past": "Past",
 
   "schedule.select.toast.error.title": "Oops! Data hasn't been saved",
+  "schedule.working.day": "Working day",
+  "schedule.working.hours": "Working hours",
   "schedule.day.off": "Day off",
   "schedule.form.errorBox.title": "Connection with server has been interrupted",
   "schedule.form.errorBox.description": "Please check your internet connection or try refreshing the page. If the issue persists, please contact our support team for assistance.",
   "schedule.form.day": "Day",
   "schedule.form.working.hours": "Working hours",
   "schedule.form.breaks": "Breaks",
+  "schedule.no.breaks": "No breaks",
+  "schedule.breaks": "Break at",
+
+  "service.constructor.table.toast.error": "Unable to delete",
+  "service.constructor.add.sevice": "Add service",
+  "service.constructor.delete.group": "Delete group",
+
+
+  "weekdays.MONDAY": "Monday",
+  "weekdays.TUESDAY": "Tuesday",
+  "weekdays.WEDNESDAY": "Wednesday",
+  "weekdays.THURSDAY": "Thursday",
+  "weekdays.FRIDAY": "Friday",
+  "weekdays.SUNDAY": "Sunday",
+  "weekdays.SATURDAY": "Saturday",
 
   "serviceOn.professional.edit.form.add": "Add",
   "serviceOn.professional.edit.form.service": "service",
@@ -225,8 +242,10 @@
   "button.cancel": "Cancel",
   "button.confirm": "Confirm",
   "button.contact": "Contact",
+  "button.add.break": "Add break",
   "button.reserve": "Reserve",
   "button.select.from.computer": "Select from computer",
+  
 
   "button.remove": "Remove",
   "button.avatar.select.new": "Select new avatar",
@@ -260,6 +279,7 @@
   "photo.upload.modal.header.crop": "Crop",
   "photo.upload.modal.header.details": "Upload new photo",
   "photo.upload.modal.header.preview": "Display photo",
+  "photo.upload.modal.caption": "Write a caption...",
 
   "user.header.navigation.profile": "Profile",
   "user.header.navigation.myBookings": "My bookings",
@@ -295,5 +315,13 @@
   "add.booking.modal.toast.success.description": "Event added",
 
   "progressbar.title": "Left",
-  "progressbar.days": "d"
+  "progressbar.days": "d",
+  "burger.menu.btn.myProfile": "My profile",
+  "burger.menu.btn.myBookings": "My bookings",
+  "burger.menu.btn.shareProfile": "Share profile",
+  "burger.menu.btn.settings": "Settings",
+  "burger.menu.btn.signOut": "Sign out",
+  "burger.menu.notAuthenticated": "Not authenticated"
+
+  
 }

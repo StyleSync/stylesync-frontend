@@ -79,7 +79,7 @@ export const ServiceOnProfessionalEditForm: FC<
 
   useEffect(() => {
     form.reset(mapServiceOnProfessionalToFormValues(data));
-  }, [data, form.reset]);
+  }, [data, form, form.reset]);
 
   const handleSubmit = useCallback(
     (values: ServiceOnProfessionalFormValues) => {
@@ -140,6 +140,8 @@ export const ServiceOnProfessionalEditForm: FC<
       data,
       serviceOnProfessionalCreateMutation,
       serviceOnProfessionalUpdateMutation,
+      onOpenChange,
+      queryClient,
     ]
   );
 
@@ -166,7 +168,7 @@ export const ServiceOnProfessionalEditForm: FC<
         content: styles.dialogContent,
       }}
     >
-      <div className='grid h-fit grid-rows-[auto_1fr] flex-col gap-y-10'>
+      <div className='flex flex-col gap-y-10'>
         <Typography className='text-dark' variant='subtitle'>
           {isNew
             ? intl.formatMessage({ id: 'serviceOn.professional.edit.form.add' })
@@ -178,7 +180,7 @@ export const ServiceOnProfessionalEditForm: FC<
           })}
         </Typography>
         <form
-          className='flex flex-col gap-y-6'
+          className='flex h-full flex-col gap-y-6'
           onSubmit={form.handleSubmit(handleSubmit)}
         >
           <TextField
@@ -190,68 +192,69 @@ export const ServiceOnProfessionalEditForm: FC<
             error={Boolean(form.formState.errors.title)}
             {...form.register('title')}
           />
-          <div className='flex gap-x-4'>
+          <div className='flex flex-col gap-2'>
+            <div className='flex gap-x-4'>
+              <Controller
+                name='duration'
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <TimeField
+                    value={field.value}
+                    onChange={field.onChange}
+                    inputProps={{
+                      label: intl.formatMessage({
+                        id: 'serviceOn.professional.edit.duration.label',
+                      }),
+                      error: Boolean(fieldState.error),
+                    }}
+                  />
+                )}
+              />
+              <Controller
+                name='price'
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <PriceField
+                    price={field.value.value}
+                    currency={field.value.currency}
+                    onCurrencyChange={(currency) =>
+                      field.onChange({
+                        value: form.getValues().price.value,
+                        currency,
+                      })
+                    }
+                    onPriceChange={(price) =>
+                      field.onChange({
+                        value: price,
+                        currency: form.getValues().price.currency,
+                      })
+                    }
+                    inputProps={{
+                      label: intl.formatMessage({
+                        id: 'serviceOn.professional.edit.price.label',
+                      }),
+                      error: Boolean(fieldState.error),
+                    }}
+                  />
+                )}
+              />
+            </div>
             <Controller
-              name='duration'
+              name='description'
               control={form.control}
-              render={({ field, fieldState }) => (
-                <TimeField
+              render={({ field }) => (
+                <EditorField
+                  id={data.id}
                   value={field.value}
                   onChange={field.onChange}
-                  inputProps={{
-                    label: intl.formatMessage({
-                      id: 'serviceOn.professional.edit.duration.label',
-                    }),
-                    error: Boolean(fieldState.error),
-                  }}
-                />
-              )}
-            />
-            <Controller
-              name='price'
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <PriceField
-                  price={field.value.value}
-                  currency={field.value.currency}
-                  onCurrencyChange={(currency) =>
-                    field.onChange({
-                      value: form.getValues().price.value,
-                      currency,
-                    })
-                  }
-                  onPriceChange={(price) =>
-                    field.onChange({
-                      value: price,
-                      currency: form.getValues().price.currency,
-                    })
-                  }
-                  inputProps={{
-                    label: intl.formatMessage({
-                      id: 'serviceOn.professional.edit.price.label',
-                    }),
-                    error: Boolean(fieldState.error),
-                  }}
+                  fixedHeight={400}
+                  label='Description (optional)'
                 />
               )}
             />
           </div>
 
-          <Controller
-            name='description'
-            control={form.control}
-            render={({ field }) => (
-              <EditorField
-                id={data.id}
-                value={field.value}
-                onChange={field.onChange}
-                fixedHeight={400}
-                label='Description (optional)'
-              />
-            )}
-          />
-
-          <div className='ml-auto mt-2 flex gap-x-2'>
+          <div className={styles.btnContainer}>
             <Button
               variant='secondary'
               type='button'

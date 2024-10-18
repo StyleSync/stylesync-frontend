@@ -6,7 +6,6 @@ import clsx from 'clsx';
 import { Button } from '@/modules/core/components/button';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { ServiceOnProfessionalEditForm } from '@/modules/service/components/service-on-professional-edit-form';
-import { Icon } from '@/modules/core/components/icon';
 // hooks
 import { useRipple } from '@/modules/core/hooks/use-ripple';
 import { useBoolean } from 'usehooks-ts';
@@ -48,12 +47,6 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
     );
   }, [data.id, serviceOnProfessionalDeleteMutation]);
 
-  const handleRowClick = useCallback(() => {
-    if (deviceType === 'mobile') {
-      isEdit.setTrue();
-    }
-  }, [deviceType, isEdit.setTrue]);
-
   return (
     <div
       className={clsx(styles.root, {
@@ -61,7 +54,7 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
       })}
       ref={rootRef}
     >
-      <div className={styles.display} onClick={handleRowClick}>
+      <div className={styles.display}>
         <div className={styles.info}>
           <Typography variant='body1'>{data.title}</Typography>
           <Typography variant='small' className={styles.secondaryText}>
@@ -82,6 +75,7 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
             onClick={isEdit.setTrue}
           />
           <Button
+            className='z-50'
             aria-label='Delete service'
             icon='trash'
             variant='danger'
@@ -89,12 +83,6 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
             onClick={handleDelete}
           />
         </div>
-        <Icon
-          className={styles.chevron}
-          name='chevron-right'
-          width={18}
-          height={18}
-        />
       </div>
       <ServiceOnProfessionalEditForm
         data={data}

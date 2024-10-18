@@ -2,7 +2,6 @@
 @use '@/styles/utils';
 @use '@/styles/mixins';
 
-
 .root {
   position: fixed;
   top: variables.$header-height;
@@ -26,7 +25,7 @@
     top: variables.$header-height-mobile;
     height: unset;
     width: 100%;
-    bottom: variables.$bottom-tab-bar-height;
+    bottom: 70px;
     box-shadow: none;
     padding: utils.spacing(2, 3);
     backdrop-filter: none;
@@ -49,7 +48,8 @@
       width: 100%;
       row-gap: utils.spacing(2);
 
-      .title {}
+      .title {
+      }
 
       .links {
         display: flex;
@@ -86,7 +86,7 @@
           }
 
           &:hover {
-            background-color: rgba(black, .05);
+            background-color: rgba(black, 0.05);
 
             @include mixins.phone {
               background-color: #fff;

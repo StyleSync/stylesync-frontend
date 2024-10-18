@@ -43,7 +43,7 @@ export const PhoneField: FC<PhoneFieldProps> = ({
           onClose={isOpen.setFalse}
           trigger={
             <div
-              className='flex cursor-pointer items-center gap-x-2 border-r border-primary-light pl-8 pr-5'
+              className='flex cursor-pointer items-center gap-x-2 border-r border-primary-light pl-8'
               onClick={isOpen.setTrue}
             >
               <FlagImage iso2={country.iso2} size='30px' />

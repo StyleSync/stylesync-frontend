@@ -2,6 +2,7 @@ import { type FC, useCallback } from 'react';
 import clsx from 'clsx';
 import { useQueryClient } from '@tanstack/react-query';
 import { useIntl } from 'react-intl';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 
 // containers
 import { DayScheduleSelect } from '@/modules/schedule/containers/day-schedule-select';
@@ -21,7 +22,7 @@ import styles from './schedule-form.module.scss';
 
 export const WeeklyScheduleForm: FC<WeeklyScheduleFormProps> = () => {
   const intl = useIntl();
-
+  const deviceType = useDeviceType();
   const queryClient = useQueryClient();
   // queries
   const { data: me } = trpc.user.me.useQuery({ expand: ['professional'] });
@@ -64,27 +65,29 @@ export const WeeklyScheduleForm: FC<WeeklyScheduleFormProps> = () => {
         }
       >
         <div className={styles.root}>
-          <div className={styles.header}>
-            <div className={styles.cell}>
-              <Icon name='calendar' />
-              <Typography weight='medium'>
-                {intl.formatMessage({ id: 'schedule.form.day' })}
-              </Typography>
+          {deviceType !== 'mobile' && (
+            <div className={styles.header}>
+              <div className={styles.cell}>
+                <Icon name='calendar' />
+                <Typography weight='medium'>
+                  {intl.formatMessage({ id: 'schedule.form.day' })}
+                </Typography>
+              </div>
+              <div className={styles.cell}>
+                <Icon name='time' />
+                <Typography weight='medium'>
+                  {intl.formatMessage({ id: 'schedule.form.working.hours' })}
+                </Typography>
+              </div>
+              <div className={styles.cell}>
+                <Icon name='alarm' />
+                <Typography weight='medium'>
+                  {intl.formatMessage({ id: 'schedule.form.breaks' })}
+                </Typography>
+              </div>
+              <div className={clsx(styles.cell, styles.actions)} />
             </div>
-            <div className={styles.cell}>
-              <Icon name='time' />
-              <Typography weight='medium'>
-                {intl.formatMessage({ id: 'schedule.form.working.hours' })}
-              </Typography>
-            </div>
-            <div className={styles.cell}>
-              <Icon name='alarm' />
-              <Typography weight='medium'>
-                {intl.formatMessage({ id: 'schedule.form.breaks' })}
-              </Typography>
-            </div>
-            <div className={clsx(styles.cell, styles.actions)} />
-          </div>
+          )}
           {weekdays.map((weekday) => (
             <DayScheduleSelect
               key={weekday}

@@ -16,7 +16,7 @@ export const ServiceDataSection = () => {
   const intl = useIntl();
 
   return (
-    <section className='w-full px-6 pb-[60px] pt-4 sm:py-[60px] lg:px-[80px]'>
+    <section className='w-full px-4 pb-[60px] pt-4 sm:py-[60px] lg:px-[80px]'>
       <div className='relative z-10 flex flex-col gap-[70px] rounded-3xl px-8 py-[50px] sm:px-10 lg:gap-[100px] lg:px-[80px] lg:py-[80px]'>
         <Image
           className='absolute left-0 top-0 -z-10 h-full w-full rounded-[20px] object-fill'

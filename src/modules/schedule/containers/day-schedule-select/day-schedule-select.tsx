@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useIntl } from 'react-intl';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 
 // components
 import { Button } from '@/modules/core/components/button';
@@ -15,6 +16,7 @@ import { Checkbox } from '@/modules/core/components/checkbox';
 import { useWeekdayScheduleSaveMutation } from '@/modules/schedule/hooks/use-weekday-schedule-save-mutation';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
+import { formatBreaks } from '@/modules/schedule/utils/breaks.utils';
 import {
   emptyTimeRange,
   formatTimeRange,
@@ -60,15 +62,16 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
   onUpdate,
 }) => {
   const intl = useIntl();
+  const deviceType = useDeviceType();
 
   const queryClient = useQueryClient();
   // state
   const isEdit = useBoolean();
-  const isDayOff = useBoolean();
+  const isWorkingDay = useBoolean();
   // form
   const form = useForm<DayScheduleFormValues>({
     defaultValues: emptySchedule[weekday],
-    resolver: isDayOff.value ? undefined : zodResolver(validationSchema),
+    resolver: isWorkingDay ? undefined : zodResolver(validationSchema),
   });
   const { fields, append, remove } = useFieldArray({
     name: 'breaks',
@@ -131,20 +134,20 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
         ),
       }));
 
-      isDayOff.setFalse();
+      isWorkingDay.setTrue();
 
       return;
     }
 
     form.reset({ ...emptySchedule[weekday] });
-    isDayOff.setTrue();
+    isWorkingDay.setFalse();
     // TODO: update eslint to allow [bool.setFalse] in deps
   }, [
     form.reset,
     weekday,
     dailySchedule,
-    isDayOff.setFalse,
-    isDayOff.setTrue,
+    isWorkingDay.setFalse,
+    isWorkingDay.setTrue,
     isEdit.value,
   ]);
 
@@ -171,9 +174,9 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
 
   const handleSubmit = useCallback(
     async (values: Omit<DailySchedule, 'isActive'>) => {
-      weekdayScheduleSave({ ...values, weekday, isActive: !isDayOff.value });
+      weekdayScheduleSave({ ...values, weekday, isActive: isWorkingDay.value });
     },
-    [weekdayScheduleSave, weekday, isDayOff.value]
+    [weekdayScheduleSave, weekday, isWorkingDay.value]
   );
 
   const handleAddBreak = useCallback(() => {
@@ -188,133 +191,199 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
       onSubmit={form.handleSubmit(handleSubmit)}
     >
       {!isEdit.value ? (
-        <>
-          <div className={clsx(styles.cell, styles.weekday)}>
-            <Typography className={styles.weekday} variant='body1'>
-              {weekday}
-            </Typography>
-          </div>
-          <div className={clsx(styles.cell)}>
-            <Typography>
-              {isDayOff.value
-                ? intl.formatMessage({ id: 'schedule.day.off' })
-                : form.getValues().workHours}
-            </Typography>
-          </div>
-          <div className={clsx(styles.cell, styles.tags)}>
-            <BreakTags
-              breaks={fields}
-              isLoading={
-                scheduleBreaksQuery.isLoading &&
-                scheduleBreaksQuery.fetchStatus !== 'idle'
-              }
-              error={scheduleBreaksQuery.error?.message}
-            />
-          </div>
-          <div className={clsx(styles.cell, styles.actions)}>
-            <Button
-              aria-label='Edit schedule day'
-              icon='pencil'
-              variant='outlined'
-              type='button'
-              onClick={(e) => {
-                e.preventDefault();
-                isEdit.setTrue();
-              }}
-            />
-          </div>
-        </>
-      ) : (
-        <>
-          <div className={clsx(styles.cell, styles.weekday)}>
-            <Typography className={styles.weekday} variant='body2'>
-              {weekday}
-            </Typography>
-            <label className={styles.dayoff}>
-              <Checkbox
-                value={isDayOff.value}
-                onChange={isDayOff.toggle}
-                size='small'
-              />
-              <Typography variant='small'>
-                {intl.formatMessage({ id: 'schedule.day.off' })}
+        <div className={styles.container}>
+          <div className={styles.containerTop}>
+            <div className={clsx(styles.cell, styles.weekday)}>
+              <Typography
+                className={styles.weekday}
+                variant='body1'
+                weight='medium'
+              >
+                {intl.formatMessage({
+                  id: `weekdays.${weekday}`,
+                })}
               </Typography>
-            </label>
-          </div>
-          <div
-            className={clsx(styles.cell, styles.xPadding, {
-              [styles.disabled]: isDayOff.value,
-            })}
-          >
-            <Controller
-              name='workHours'
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <TimeRangeField
-                  className={styles.timerange}
-                  value={field.value}
-                  onChange={field.onChange}
-                  inputProps={{
-                    fieldSize: 'small',
-                    error: Boolean(fieldState.error),
-                    disabled: weekdayScheduleSaveMutation.isLoading,
-                  }}
+            </div>
+            <div className={clsx(styles.cell)}>
+              <Typography>
+                {isWorkingDay.value
+                  ? form.getValues().workHours
+                  : intl.formatMessage({ id: 'schedule.day.off' })}
+              </Typography>
+            </div>
+            {deviceType !== 'mobile' && (
+              <div className={clsx(styles.cell, styles.tags)}>
+                <BreakTags
+                  breaks={fields}
+                  isLoading={
+                    scheduleBreaksQuery.isLoading &&
+                    scheduleBreaksQuery.fetchStatus !== 'idle'
+                  }
+                  error={scheduleBreaksQuery.error?.message}
                 />
-              )}
-            />
-          </div>
-          <div
-            className={clsx(styles.cell, styles.xPadding, {
-              [styles.disabled]: isDayOff.value,
-            })}
-          >
-            <div className={styles.breaks}>
-              {fields.map((item, index) => (
-                <div key={item._id} className={styles.break}>
-                  <Controller
-                    key={item._id}
-                    control={form.control}
-                    name={`breaks.${index}.timerange`}
-                    render={({ field, fieldState }) => (
-                      <TimeRangeField
-                        key={item._id}
-                        value={field.value}
-                        className={styles.timerange}
-                        onChange={field.onChange}
-                        inputProps={{
-                          fieldSize: 'small',
-                          error: Boolean(fieldState.error),
-                          disabled: weekdayScheduleSaveMutation.isLoading,
-                        }}
-                      />
-                    )}
-                  />
-                  <Button
-                    className={styles.delete}
-                    onClick={() => remove(index)}
-                    variant='unstyled'
-                    icon='close'
-                    type='button'
-                  />
-                </div>
-              ))}
+              </div>
+            )}
+            <div className={clsx(styles.cell, styles.actions)}>
               <Button
-                icon='plus'
+                icon='pencil'
                 variant='outlined'
                 type='button'
-                className={styles.addBreak}
-                onClick={handleAddBreak}
+                onClick={(e) => {
+                  e.preventDefault();
+                  isEdit.setTrue();
+                }}
               />
             </div>
           </div>
-          <div className={clsx(styles.cell, styles.actions, styles.xPadding)}>
-            <Button
-              icon='check-mark'
-              variant='primary'
-              type='submit'
-              isLoading={weekdayScheduleSaveMutation.isLoading}
-            />
+          {deviceType === 'mobile' && (
+            <div className={styles.containerBottom}>
+              {scheduleBreaks && scheduleBreaks.length > 0 ? (
+                <Typography className='!text-gray' variant='small'>
+                  {`${intl.formatMessage({ id: 'schedule.breaks' })} ${formatBreaks(scheduleBreaks)}`}
+                </Typography>
+              ) : (
+                <Typography className='!text-gray' variant='small'>
+                  {intl.formatMessage({ id: 'schedule.no.breaks' })}
+                </Typography>
+              )}
+            </div>
+          )}
+        </div>
+      ) : (
+        <>
+          <div className={clsx(styles.cell, styles.weekday)}>
+            <Typography
+              className={styles.weekday}
+              variant='body1'
+              weight='medium'
+            >
+              {intl.formatMessage({
+                id: `weekdays.${weekday}`,
+              })}
+            </Typography>
+            <label className={styles.dayoff}>
+              <Checkbox
+                value={isWorkingDay.value}
+                onChange={isWorkingDay.toggle}
+                size='medium'
+              />
+              <Typography variant='small'>
+                {intl.formatMessage({ id: 'schedule.working.day' })}
+              </Typography>
+            </label>
           </div>
+          <>
+            <div
+              className={clsx(styles.cell, styles.xPadding, {
+                [styles.disabled]: !isWorkingDay.value,
+              })}
+            >
+              <Controller
+                name='workHours'
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <TimeRangeField
+                    className={styles.timerange}
+                    value={field.value}
+                    label={intl.formatMessage({ id: 'schedule.working.hours' })}
+                    onChange={field.onChange}
+                    inputProps={{
+                      fieldSize: 'small',
+                      error: Boolean(fieldState.error),
+                      disabled: weekdayScheduleSaveMutation.isLoading,
+                    }}
+                  />
+                )}
+              />
+            </div>
+            {deviceType === 'mobile' &&
+              isWorkingDay.value &&
+              fields.length > 0 && (
+                <Typography
+                  className='mb-3 mt-4'
+                  variant='body2'
+                  weight='medium'
+                >
+                  {intl.formatMessage({ id: 'schedule.form.breaks' })}
+                </Typography>
+              )}
+            <div
+              className={clsx(styles.cell, styles.xPadding, {
+                [styles.disabled]: !isWorkingDay.value,
+              })}
+            >
+              <div className={styles.breaks}>
+                {fields.map((item, index) => (
+                  <div key={item._id} className={styles.break}>
+                    <Controller
+                      key={item._id}
+                      control={form.control}
+                      name={`breaks.${index}.timerange`}
+                      render={({ field, fieldState }) => (
+                        <TimeRangeField
+                          key={item._id}
+                          value={field.value}
+                          className={styles.timerange}
+                          onChange={field.onChange}
+                          inputProps={{
+                            fieldSize: 'small',
+                            error: Boolean(fieldState.error),
+                            disabled: weekdayScheduleSaveMutation.isLoading,
+                          }}
+                        />
+                      )}
+                    />
+                    <Button
+                      className={styles.delete}
+                      onClick={() => remove(index)}
+                      variant='unstyled'
+                      icon='close'
+                      type='button'
+                    />
+                  </div>
+                ))}
+                {deviceType !== 'mobile' && (
+                  <Button
+                    icon='plus'
+                    variant='outlined'
+                    type='button'
+                    className={styles.addBreak}
+                    onClick={handleAddBreak}
+                  />
+                )}
+              </div>
+            </div>
+          </>
+          {deviceType !== 'mobile' && (
+            <div className={clsx(styles.cell, styles.actions, styles.xPadding)}>
+              <Button
+                icon='check-mark'
+                variant='primary'
+                type='submit'
+                isLoading={weekdayScheduleSaveMutation.isLoading}
+              />
+            </div>
+          )}
+          {deviceType === 'mobile' && (
+            <div className='mt-7 flex w-full justify-center gap-4'>
+              {isWorkingDay.value && (
+                <Button
+                  className='flex-1'
+                  onClick={handleAddBreak}
+                  text={intl.formatMessage({ id: 'button.add.break' })}
+                  variant='outlined'
+                />
+              )}
+
+              <Button
+                className='flex-1'
+                text={intl.formatMessage({ id: 'button.save' })}
+                variant='primary'
+                type='submit'
+                isLoading={weekdayScheduleSaveMutation.isLoading}
+              />
+            </div>
+          )}
         </>
       )}
     </form>

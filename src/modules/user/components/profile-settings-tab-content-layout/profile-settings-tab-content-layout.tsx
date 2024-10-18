@@ -1,4 +1,4 @@
-import { type FC, useMemo } from 'react';
+import { type FC, type ReactNode, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import clsx from 'clsx';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
@@ -40,7 +40,7 @@ export const ProfileSettingsTabContentLayout: FC<
       }
     );
   // memo
-  const _actions = useMemo<ButtonProps[]>(() => {
+  const _actions = useMemo<(ButtonProps | { actionNode: ReactNode })[]>(() => {
     if (deviceType === 'mobile') {
       return [
         {
@@ -52,7 +52,9 @@ export const ProfileSettingsTabContentLayout: FC<
       ];
     }
 
-    return actions ?? [];
+    const filterActions = actions?.filter((item) => !item.isMobile);
+
+    return filterActions ?? [];
   }, [actions, deviceType, reset, intl]);
 
   return (
@@ -71,7 +73,7 @@ export const ProfileSettingsTabContentLayout: FC<
           {title}
         </Typography>
       </div>
-      <div className='flex flex-1 gap-x-6'>
+      <div className='flex flex-1 gap-x-6 overflow-auto'>
         <div className={styles.content}>
           <div className={styles.scrolledContent}>
             <Placeholder
@@ -85,15 +87,19 @@ export const ProfileSettingsTabContentLayout: FC<
             <>
               <Divider className={styles.divider} variant='horizontal' />
               <div className={styles.actions}>
-                {_actions.map((action, index) => (
-                  <Button key={index} {...action} />
-                ))}
+                {_actions.map((action, index) =>
+                  'actionNode' in action ? (
+                    action.actionNode
+                  ) : (
+                    <Button key={index} {...action} />
+                  )
+                )}
               </div>
             </>
           )}
         </div>
         {profileCompletionStatus && !profileCompletionStatus.isAllCompleted && (
-          <div className='flex w-[300px] flex-col gap-y-6 rounded-[20px] bg-white p-8 shadow'>
+          <div className='hidden w-[300px] flex-col gap-y-6 rounded-[20px] bg-white p-8 shadow xl:flex'>
             <span className='text-base font-medium text-dark'>
               {intl.formatMessage({
                 id: 'professional.settings.profileRequirements.title',

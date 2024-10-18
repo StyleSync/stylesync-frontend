@@ -13,6 +13,7 @@
 
   .display {
     display: flex;
+    column-gap: 14px;
 
     @include mixins.phone {
       align-items: center;
@@ -49,7 +50,12 @@
       column-gap: utils.spacing(2);
 
       @include mixins.phone {
-        display: none;
+        column-gap: utils.spacing(1);
+
+        button {
+          width: 36px;
+          height: 36px;
+        }
       }
     }
 

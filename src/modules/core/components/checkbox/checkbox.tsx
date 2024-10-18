@@ -38,6 +38,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             styles.checkmark,
             { [styles.checkmark_active]: value },
             { [styles.small]: size === 'small' },
+            { [styles.medium]: size === 'medium' },
             classes?.checkmark
           )}
         />

@@ -66,10 +66,10 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
     <div className={styles.root}>
       <div className={styles.bookingContent}>
         <Swiper
-          spaceBetween={0}
+          spaceBetween={10}
           slideNextClass={styles.slideNext}
           loop={false}
-          slidesPerView={7}
+          slidesPerView={'auto'}
           className={styles.swiper}
         >
           <BookingTimeSelectNavigation selectedDay={selectedDay} />
