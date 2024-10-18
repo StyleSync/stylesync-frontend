@@ -69,7 +69,7 @@ export default async function Profile({ params }: PageParams<{ id: string }>) {
               </Suspense>
             </ProfileSectionLayout>
           </ErrorBoundary>
-          <GallerySection />
+          <GallerySection userId={params.id} />
         </div>
         <ProBookActions />
       </main>

@@ -15,4 +15,6 @@ export type GalleryImage = {
   caption?: string;
 };
 
-export type GallerySectionProps = {};
+export type GallerySectionProps = {
+  userId: string;
+};
