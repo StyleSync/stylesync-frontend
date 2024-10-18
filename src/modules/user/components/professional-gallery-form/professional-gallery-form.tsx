@@ -22,19 +22,14 @@ import styles from './professional-gallery-form.module.scss';
 
 export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
   const intl = useIntl();
+  const isModalOpen = useBoolean();
   // state
   const [activeAlbum, setActiveAlbum] = useState<Album | null>(null);
   const [albumToEdit, setAlbunToEdit] = useState<Album | null>(null);
-
-  const isModalOpen = useBoolean();
-  // memo
-
-  // query
-
+  // queries
   const { data: me } = trpc.user.me.useQuery({
     expand: ['professional'],
   });
-
   const { data: albumsList, ...albumData } = trpc.album.list.useQuery(
     {
       professionalId: me?.professional?.id,

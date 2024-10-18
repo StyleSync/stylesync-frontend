@@ -108,7 +108,7 @@ export const BookingPreview = () => {
   }
 
   return (
-    <main className='mx-auto mb-20 mt-28 flex w-full max-w-[950px] flex-1 flex-col px-[15px]'>
+    <main className='mx-auto mb-20 mt-20 flex w-full max-w-[950px] flex-1 flex-col px-[15px]'>
       <Typography className='mx-auto text-center !text-[24px]'>
         {intl.formatMessage({ id: 'booking.number' })}№ 20
       </Typography>

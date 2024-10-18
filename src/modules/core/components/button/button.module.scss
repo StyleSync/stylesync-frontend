@@ -15,6 +15,7 @@
   spinnerOutlinedColor: variables.$primary-color;
   spinnerDangerColor: variables.$error-color;
   spinnerLightColor: variables.$dark-color;
+  spinnerSuccessColor: variables.$success-color;
 }
 
 .base {
@@ -163,6 +164,26 @@
   &:hover {
     color: variables.$primary-color;
     border-color: variables.$primary-light-color;
+  }
+
+  &:disabled {
+    color: darken(variables.$grey-color, 10%);
+  }
+}
+
+
+.success {
+  background-color: lighten(variables.$success-color, 42%);
+  color: variables.$success-color;
+  transition: variables.$transition-ultrafast;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px variables.$success-color;
+  }
+
+  &:hover {
+    color: darken(variables.$success-color, 10%);
+    background-color: lighten(variables.$success-color, 39%);
   }
 
   &:disabled {

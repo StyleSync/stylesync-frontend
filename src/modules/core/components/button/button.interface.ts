@@ -10,7 +10,8 @@ export type ButtonVariant =
   | 'danger'
   | 'unstyled'
   | 'text'
-  | 'light';
+  | 'light'
+  | 'success';
 
 export type ButtonProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,

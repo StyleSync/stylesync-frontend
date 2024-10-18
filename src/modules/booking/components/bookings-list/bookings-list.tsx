@@ -1,6 +1,7 @@
-import { type FC } from 'react';
+import { type FC, useState } from 'react';
 import { useIntl } from 'react-intl';
-
+// containers
+import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Placeholder } from '@/modules/core/components/placeholder';
@@ -20,7 +21,8 @@ const now = new Date().toISOString();
 
 export const BookingsList: FC<BookingsListProps> = () => {
   const intl = useIntl();
-
+  // state
+  const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
   // queries
   const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
 
@@ -56,15 +58,15 @@ export const BookingsList: FC<BookingsListProps> = () => {
   ];
 
   return (
-    <div className={styles.root}>
-      {groups.map(
-        (group) =>
-          !group.hidden && (
-            <div className={styles.group} key={group.id}>
-              <Typography className={styles.title} variant='body1'>
-                {group.title}
-              </Typography>
-              <div className={styles.list}>
+    <>
+      <div className={styles.root}>
+        {groups.map(
+          (group) =>
+            !group.hidden && (
+              <div className={styles.group} key={group.id}>
+                <Typography className={styles.title} variant='body1'>
+                  {group.title}
+                </Typography>
                 <Placeholder
                   isActive={group.list?.length === 0}
                   placeholder={
@@ -73,25 +75,28 @@ export const BookingsList: FC<BookingsListProps> = () => {
                     </Typography>
                   }
                 >
-                  {group.list?.map((booking) => (
-                    <BookingInfoCard
-                      phone={booking.guestPhone}
-                      email={booking.guestEmail}
-                      key={booking.id}
-                      name={`${booking.guestFirstName || ''} ${booking.guestLastName || ''}`}
-                      serviceName={booking.serviceProfessional.title}
-                      date={booking.startTime}
-                      startTime={booking.startTime}
-                      endTime={booking.endTime}
-                      comment={booking.guestComment}
-                      variant='light'
-                    />
-                  ))}
+                  <div className='mt-8 grid gap-6 [grid-template-columns:repeat(auto-fill,_minmax(300px,1fr))] [grid-template-rows:max-content] md:[grid-template-columns:repeat(auto-fill,_minmax(400px,1fr))]'>
+                    {group.list?.map((booking) => (
+                      <BookingInfoCard
+                        key={booking.id}
+                        booking={booking}
+                        onClick={(data) => {
+                          setActiveBookingId(data.id);
+                        }}
+                      />
+                    ))}
+                  </div>
                 </Placeholder>
               </div>
-            </div>
-          )
-      )}
-    </div>
+            )
+        )}
+      </div>
+      <BookingInfoDialog
+        bookingId={activeBookingId}
+        onClose={() => {
+          setActiveBookingId(null);
+        }}
+      />
+    </>
   );
 };

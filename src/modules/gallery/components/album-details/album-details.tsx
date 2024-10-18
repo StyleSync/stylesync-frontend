@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 // hooks
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import { useBoolean } from 'usehooks-ts';
-// containets
+// containers
 import { PhotoUploadModal } from '@/modules/gallery/containers/photo-upload-modal/photo-upload-modal';
 // components
 import { Button } from '@/modules/core/components/button';
