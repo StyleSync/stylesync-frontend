@@ -55,7 +55,7 @@ export const OnboardTitle: FC = () => {
       {
         onSuccess: () => {
           session.update();
-          router.replace('/app/profile');
+          router.replace(`/app/profile/${me.id}`);
         },
         onError: () => {
           showToast({

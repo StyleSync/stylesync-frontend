@@ -1,7 +1,7 @@
 import { type FC, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useIntl } from 'react-intl';
-
+import { trpc } from '@/modules/core/utils/trpc.utils';
 // components
 import { OnboardLayout } from '@/modules/onboard/components/onboard-layout';
 // containers
@@ -11,12 +11,15 @@ import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboa
 
 export const OnboardLocation: FC<ProOnboardStepProps> = ({ back }) => {
   const intl = useIntl();
+  const { data: userData } = trpc.user.me.useQuery();
+  const { mutateAsync: updateUser } = trpc.user.update.useMutation();
 
   const router = useRouter();
 
-  const handleSubmit = useCallback(() => {
-    router.push('/app/profile');
-  }, [router]);
+  const handleSubmit = useCallback(async () => {
+    await updateUser({ onboardingCompleted: true });
+    router.push(`/app/profile/${userData?.id}`);
+  }, [router, updateUser, userData?.id]);
 
   return (
     <OnboardLayout
