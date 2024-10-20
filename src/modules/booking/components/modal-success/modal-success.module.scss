@@ -3,7 +3,8 @@
 @use '@/styles/mixins';
 
 .content {
-  height: 45%;
+  // height: 45%;
+  width: fit-content;
 }
 
 .root {
@@ -11,6 +12,9 @@
   flex-direction: column;
   width: 380px;
   padding: utils.spacing(3);
+  @include mixins.phone {
+    width: 350px;
+  }
 }
 
 .iconSuccess {
@@ -35,6 +39,9 @@
   display: flex;
   justify-content: center;
   column-gap: utils.spacing(2);
+  @include mixins.phone {
+    column-gap: utils.spacing(1);
+  }
 }
 
 .title {

@@ -1,5 +1,6 @@
-import { type FC, useMemo, useState } from 'react';
+import { type FC, useState } from 'react';
 import { useIntl } from 'react-intl';
+import clsx from 'clsx';
 
 // components
 import { Button } from '@/modules/core/components/button';
@@ -15,7 +16,6 @@ import { useBoolean } from 'usehooks-ts';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 // types
-import type { ButtonProps } from '@/modules/core/components/button/button.interface';
 import type { ProfessionalGalleryFormProps } from './professional-gallery-form.interface';
 import type { Album } from '@prisma/client';
 
@@ -31,21 +31,6 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
   const windowSizeType = useDeviceType();
   const isModalOpen = useBoolean();
   // memo
-  const buttonProps = useMemo<Partial<ButtonProps>>(() => {
-    if (windowSizeType === 'mobile') {
-      return {
-        icon: 'plus',
-        variant: 'primary',
-      };
-    }
-
-    return {
-      text: intl.formatMessage({
-        id: 'user.professional.gallery.form.createAlbum',
-      }),
-      variant: 'secondary',
-    };
-  }, [windowSizeType, intl]);
 
   // query
 
@@ -85,11 +70,15 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
           description: intl.formatMessage({
             id: 'user.professional.gallery.form.noAlbumsAdded',
           }),
-          action: (
+          action: !albumData.isLoading && (
             <AlbumAddModal
               onOpenChange={isModalOpen.setValue}
               isOpen={isModalOpen.value}
-              trigger={<Button variant='secondary' {...buttonProps} />}
+              trigger={
+                windowSizeType !== 'mobile' && (
+                  <Button className={clsx(styles.trigger)} />
+                )
+              }
             />
           ),
         }}
@@ -105,9 +94,18 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
                 setAlbunToEdit(null);
               }
             }}
-            trigger={<Button variant='secondary' {...buttonProps} />}
+            trigger={
+              windowSizeType !== 'mobile' && (
+                <Button
+                  text={intl.formatMessage({
+                    id: 'user.professional.gallery.form.createAlbum',
+                  })}
+                  variant='outlined'
+                />
+              )
+            }
           />
-          <div className='mt-8 grid gap-4 sm:grid-cols-3 xl:grid-cols-5'>
+          <div className='mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-5'>
             {albumsList?.map((album) => (
               <AlbumCard
                 isMoreButtonVisible

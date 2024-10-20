@@ -48,7 +48,9 @@ textarea {
   }
 
   &:focus-visible {
-    box-shadow: 0 0 0 2px #fff, 0 0 0 4px variables.$primary-color;
+    box-shadow:
+      0 0 0 2px #fff,
+      0 0 0 4px variables.$primary-color;
   }
 }
 
@@ -57,7 +59,9 @@ textarea {
   transition: box-shadow variables.$transition-ultrafast;
 
   &:focus-visible {
-    box-shadow: 0 0 0 2px #fff, 0 0 0 4px variables.$primary-color;
+    box-shadow:
+      0 0 0 2px #fff,
+      0 0 0 4px variables.$primary-color;
   }
 }
 
@@ -79,8 +83,10 @@ textarea {
   margin: 0 auto;
 
   @include mixins.phone {
-    padding-left: utils.spacing(3);
-    padding-right: utils.spacing(3);
+    padding-left: utils.spacing(2);
+    padding-right: utils.spacing(2);
+    // maybe something broke
+    // padding-bottom: 80px;
   }
 }
 

@@ -5,4 +5,5 @@ export type TimeRangeFieldInterface = StylingProps & {
   value: string;
   onChange: (value: string) => void;
   inputProps?: Omit<InputProps, 'variant' | 'value' | 'onChange'>;
+  label?: string;
 };

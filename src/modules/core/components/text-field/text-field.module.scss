@@ -152,6 +152,8 @@
 }
 
 .startAdornment {
+  display: flex;
+  flex-shrink: 0;
 }
 
 .endAdornment {

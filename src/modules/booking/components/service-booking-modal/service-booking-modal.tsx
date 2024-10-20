@@ -24,12 +24,16 @@ import { Icon, type IconName } from '@/modules/core/components/icon';
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
 import { startOfToday } from 'date-fns';
 import { trpc } from '@/modules/core/utils/trpc.utils';
+import { Button } from '@/modules/core/components/button';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 
 export const ServiceBookingModal: FC<
   Omit<DialogProps, 'children'> & ServiceBookingModalProps
 > = ({ onConfirm, isLoading, professional, ...props }) => {
   const intl = useIntl();
   const confirmationFormId = useId();
+  const deviceType = useDeviceType();
+
   // state
   const [serviceOnProfessional, setServiceOnProfessional] =
     useState<ServiceOnProfessionalListItem | null>(null);
@@ -95,6 +99,12 @@ export const ServiceBookingModal: FC<
     });
   }, []);
 
+  const handleModalClose = () => {
+    if (props.onOpenChange) {
+      props.onOpenChange(false);
+    }
+  };
+
   const handleConfirm = (data: BookingFormValue) => {
     if (serviceOnProfessional && selectedDay && selectedTimeRange) {
       onConfirm({
@@ -141,11 +151,12 @@ export const ServiceBookingModal: FC<
       ]}
       onNext={handleNext}
       onBack={handleBack}
+      handleModalClose={handleModalClose}
       isNextLoading={isLoading}
       {...props}
-      classes={{ content: 'h-full' }}
+      classes={{ content: '!h-dvh !overflow-hidden w-full' }}
     >
-      <div className='relative flex w-[620px] flex-1 flex-col gap-y-6'>
+      <div className='relative flex w-full flex-1 flex-col overflow-hidden sm:w-[620px]'>
         <Image
           className='absolute left-0 top-0 h-[120px] w-full opacity-20'
           src={Bg.src}
@@ -154,20 +165,16 @@ export const ServiceBookingModal: FC<
           blurDataURL={Bg.blurDataURL}
           alt='booking bg'
         />
-        <div className='z-10 flex items-center justify-between gap-x-3 px-6 pt-6'>
+        <div className='z-10 mb-7 flex items-center justify-between gap-x-3 px-6 pt-6'>
           <div className='flex w-fit items-center gap-x-3'>
-            <Avatar url={professional.user?.avatar} shadow />
-            <div className='flex flex-col gap-y-1'>
-              <Typography variant='body2' weight='bold'>
+            <Avatar url={professional.user?.avatar} shadow size={40} />
+            <div className='flex flex-col'>
+              <span className='text-base font-medium text-dark'>
                 {getFullName(professional.user || {})}
-              </Typography>
-              <Typography
-                variant='small'
-                weight='semibold'
-                className='!text-gray'
-              >
+              </span>
+              <span className='text-xs font-medium text-gray-accent'>
                 {location?.name}
-              </Typography>
+              </span>
             </div>
           </div>
           {step !== 'service' && (
@@ -199,7 +206,7 @@ export const ServiceBookingModal: FC<
             </div>
           )}
         </div>
-        <div className='relative z-10 flex-1 bg-white px-6 pt-6 shadow'>
+        <div className='relative z-10 flex-1 overflow-scroll bg-white px-6 pt-6 shadow'>
           {step === 'service' && (
             <ServiceOnProfessionalSelect
               professional={professional}
@@ -217,9 +224,61 @@ export const ServiceBookingModal: FC<
             />
           )}
           {step === 'confirmation' && (
-            <BookingForm onSubmit={handleConfirm} formId={confirmationFormId} />
+            <div className='flex flex-col gap-y-4'>
+              {deviceType === 'mobile' && (
+                <div className='flex flex-col gap-y-1'>
+                  {serviceOnProfessional && (
+                    <span className='text-sm font-medium !text-dark'>
+                      {serviceOnProfessional.title}
+                    </span>
+                  )}
+                  {step === 'confirmation' && selectedDay && (
+                    <Typography
+                      variant='small'
+                      weight='medium'
+                      className='!text-gray'
+                    >
+                      {formatI18n(
+                        new Date(selectedDay),
+                        'dd MMM yyyy',
+                        intl.locale
+                      )}
+                    </Typography>
+                  )}
+                </div>
+              )}
+              <BookingForm
+                onSubmit={handleConfirm}
+                formId={confirmationFormId}
+              />
+            </div>
           )}
         </div>
+        {deviceType === 'mobile' && (
+          <div className='z-10 flex w-full bg-white px-6 pb-6 pt-5 shadow'>
+            {step === 'confirmation' ? (
+              <Button
+                className='!w-full'
+                type='submit'
+                form={confirmationFormId}
+                text='Reserve'
+                disabled={isLoading}
+                isLoading={isLoading}
+              />
+            ) : (
+              <Button
+                className='!w-full'
+                onClick={handleNext}
+                text='Next'
+                disabled={
+                  (step === 'service' && !serviceOnProfessional) ||
+                  (step === 'datetime' && (!selectedDay || !selectedTimeRange))
+                }
+                isLoading={isLoading}
+              />
+            )}
+          </div>
+        )}
       </div>
     </DialogWizard>
   );

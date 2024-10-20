@@ -15,4 +15,5 @@ export type DialogWizardProps = DialogProps & {
   onBack?: (id: string) => void;
   onNext?: (id: string) => void;
   isNextLoading?: boolean;
+  handleModalClose?: () => void;
 };

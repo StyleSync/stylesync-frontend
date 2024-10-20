@@ -22,6 +22,7 @@ import { trpc } from '@/modules/core/utils/trpc.utils';
 
 import type { ServiceConstructorTableProps } from './service-constructor-table.interface';
 import styles from './service-constructor-table.module.scss';
+import type { DropdownItem } from '@/modules/core/components/dropdown-menu/dropdown-menu.interface';
 
 export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
   service,
@@ -50,7 +51,9 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
         onError: () => {
           showToast({
             variant: 'error',
-            title: 'Unable to delete',
+            title: intl.formatMessage({
+              id: 'service.constructor.table.toast.error',
+            }),
             description: '',
           });
         },
@@ -63,6 +66,18 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
     serviceOnProfessionalList,
     onRemove,
   ]);
+
+  const handleSelect = ({ id }: DropdownItem) => {
+    if (id === 'add') {
+      isActionsOpen.setFalse();
+      isCreateOpen.setTrue();
+    }
+
+    if (id === 'delete') {
+      isActionsOpen.setFalse();
+      handleTableRemoveClick();
+    }
+  };
 
   return (
     <div className={styles.root}>
@@ -102,18 +117,23 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
               icon='points'
             />
           }
+          onSelect={handleSelect}
           items={[
             {
               id: 'add',
               variant: 'primary',
               icon: 'plus',
-              text: 'Add service',
+              text: intl.formatMessage({
+                id: 'service.constructor.add.sevice',
+              }),
             },
             {
               id: 'delete',
               variant: 'danger',
               icon: 'trash',
-              text: 'Delete group',
+              text: intl.formatMessage({
+                id: 'service.constructor.delete.group',
+              }),
             },
           ]}
           popoverProps={{
@@ -134,7 +154,7 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
           title: '',
           duration: 0,
           price: 0,
-          currency: 'USD',
+          currency: 'UAH',
           description: '',
         }}
         isActive={isCreateOpen.value}

@@ -37,12 +37,6 @@
   }
 }
 
-.trigger {
-  @include mixins.phone {
-    bottom: utils.spacing(15);
-  }
-}
-
 .spinnerContainer {
   margin-top: utils.spacing(20);
   display: flex;

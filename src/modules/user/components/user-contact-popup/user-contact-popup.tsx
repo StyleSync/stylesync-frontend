@@ -9,10 +9,11 @@ import styles from './user-contact-popup.module.scss';
 
 export const UserContactPopup: FC<UserContactPopupProps> = ({
   professional,
+  side,
   ...props
 }) => {
   return (
-    <Popover {...props} sideOffset={5} side='bottom'>
+    <Popover {...props} sideOffset={5} side={side}>
       <div className={styles.root}>
         {professional && professional.user?.phone && (
           <Button

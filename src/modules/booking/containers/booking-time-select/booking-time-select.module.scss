@@ -107,6 +107,7 @@
 
 .swiperSlide {
   z-index: 3;
+  width: fit-content;
 }
 
 .navigationBtns {
@@ -132,6 +133,7 @@
   gap: 5px;
   align-items: center;
   justify-content: center;
+  text-align: center;
   span {
     color: variables.$error-color;
   }

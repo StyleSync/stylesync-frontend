@@ -1,2 +1,19 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
 .root {
+}
+
+.dialogOverlay {
+  z-index: 100;
+  width: 100%;
+}
+
+.dialogContent {
+  @include mixins.phone {
+    min-height: 100%;
+    border-radius: 0px;
+    width: 100%;
+  }
 }
