@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { type FC, useState } from 'react';
 // components
 import { AlbumCard } from '@/modules/gallery/components/album-card';
 
@@ -7,12 +7,14 @@ import styles from './gallery-section.module.scss';
 import clsx from 'clsx';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { ProfileSectionLayout } from '@/modules/user/components/profile-section-layout';
+import type { GallerySectionProps } from './gallery-section.inerface';
 
-export const GallerySection = () => {
+export const GallerySection: FC<GallerySectionProps> = ({ userId }) => {
   const [activeAlbum, setActiveAlbum] = useState<string | null>(null);
 
-  const { data: me } = trpc.user.me.useQuery({
-    expand: ['professional'],
+  const [professional] = trpc.professional.get.useSuspenseQuery({
+    id: userId,
+    expand: [],
   });
 
   const {
@@ -21,10 +23,10 @@ export const GallerySection = () => {
     isFetched,
   } = trpc.album.list.useQuery(
     {
-      professionalId: me?.professional?.id,
+      professionalId: professional?.id,
     },
     {
-      enabled: !!me?.professional?.id,
+      enabled: !!professional.id,
     }
   );
 
