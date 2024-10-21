@@ -17,4 +17,5 @@ export type BookingInfoDialogProps = DialogProps & {
   phone: string;
   startDate: string;
   startTime: string;
+  comment?: string | null;
 };
