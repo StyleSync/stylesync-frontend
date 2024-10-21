@@ -75,9 +75,13 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
               onOpenChange={isModalOpen.setValue}
               isOpen={isModalOpen.value}
               trigger={
-                windowSizeType !== 'mobile' && (
-                  <Button className={clsx(styles.trigger)} />
-                )
+                <Button
+                  variant='outlined'
+                  text={intl.formatMessage({
+                    id: 'user.professional.gallery.form.createAlbum',
+                  })}
+                  className={clsx(styles.trigger)}
+                />
               }
             />
           ),
