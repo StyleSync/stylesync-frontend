@@ -142,6 +142,9 @@ export const professionalRouter = router({
           user: {
             select: defaultUserSelect,
           },
+          location: {
+            select: defaultLocationSelect,
+          },
         },
         where: {
           OR: [
