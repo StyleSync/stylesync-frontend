@@ -97,7 +97,7 @@ export const professionalRouter = router({
       z.object({
         facebook: z.string().max(maxTextLength).nullish(),
         instagram: z.string().max(maxTextLength).nullish(),
-        about: z.string().max(maxLargeTextLength).nullish(),
+        about: z.string().max(maxLargeTextLength).optional(),
       })
     )
     .mutation(async ({ input, ctx }) => {

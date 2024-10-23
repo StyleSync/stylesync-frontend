@@ -109,8 +109,6 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
       if (errorKey) {
         return intl.formatMessage({ id: errorKey });
       }
-
-      return '';
     };
 
     return (
