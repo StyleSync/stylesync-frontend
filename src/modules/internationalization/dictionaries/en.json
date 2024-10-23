@@ -321,7 +321,22 @@
   "burger.menu.btn.shareProfile": "Share profile",
   "burger.menu.btn.settings": "Settings",
   "burger.menu.btn.signOut": "Sign out",
-  "burger.menu.notAuthenticated": "Not authenticated"
+  "burger.menu.notAuthenticated": "Not authenticated",
 
-  
+  "validation.firstName.required": "First name is required",
+  "validation.firstName.minLength": "Name must contain at least 2 characters",
+  "validation.firstName.maxLength": "Name must contain at most 32 characters",
+  "validation.firstName.invalidCharacters": "Name can only contain letters from the English and Ukrainian alphabets",
+  "validation.lastName.required": "Last name is required",
+  "validation.lastName.minLength": "Last name must contain at least 2 characters",
+  "validation.lastName.maxLength": "Last name must contain at most 32 characters",
+  "validation.lastName.invalidCharacters": "Last name can only contain letters from the English and Ukrainian alphabets",
+  "validation.phone.required": "Phone number is required",
+  "validation.phone.invalid": "Invalid phone number",
+  "validation.email.required": "Email is required",
+  "validation.facebook.invalid": "Invalid Facebook URL",
+  "validation.instagram.invalid": "Invalid Instagram URL",
+  "validation.about.required": "About is required",
+  "validation.firstName.firstLetterCapitalized": "The first letter of the first name must be uppercase.",
+  "validation.lastName.firstLetterCapitalized": "The first letter of the last name must be uppercase."
 }

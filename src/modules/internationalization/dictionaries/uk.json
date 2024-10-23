@@ -322,6 +322,23 @@
   "burger.menu.btn.shareProfile": "Поділитись профілем",
   "burger.menu.btn.settings": "Налаштування",
   "burger.menu.btn.signOut": "Вийти",
-  "burger.menu.notAuthenticated": "Немає доступу"
+  "burger.menu.notAuthenticated": "Немає доступу",
+
+  "validation.firstName.required": "Ім'я є обов'язковим",
+  "validation.firstName.minLength": "Ім'я повинно містити принаймні 2 символи",
+  "validation.firstName.maxLength": "Ім'я повинно містити не більше 32 символів",
+  "validation.firstName.invalidCharacters": "Ім'я може містити тільки літери української та англійської мов",
+  "validation.lastName.required": "Прізвище є обов'язковим",
+  "validation.lastName.minLength": "Прізвище повинно містити принаймні 2 символи",
+  "validation.lastName.maxLength": "Прізвище повинно містити не більше 32 символів",
+  "validation.lastName.invalidCharacters": "Прізвище може містити тільки літери української та англійської мов",
+  "validation.phone.required": "Номер телефону є обов'язковим",
+  "validation.phone.invalid": "Невірний номер телефону",
+  "validation.email.required": "Email є обов'язковим",
+  "validation.facebook.invalid": "Невірний URL Facebook",
+  "validation.instagram.invalid": "Невірний URL Instagram",
+  "validation.about.required": "Про себе є обов'язковим",
+  "validation.firstName.firstLetterCapitalized": "Перша літера імені повинна бути великою",
+  "validation.lastName.firstLetterCapitalized": "Перша літера прізвища повинна бути великою"
 
 }

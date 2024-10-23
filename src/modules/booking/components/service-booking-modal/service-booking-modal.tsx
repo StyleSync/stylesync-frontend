@@ -261,7 +261,7 @@ export const ServiceBookingModal: FC<
                 className='!w-full'
                 type='submit'
                 form={confirmationFormId}
-                text='Reserve'
+                text={intl.formatMessage({ id: 'button.reserve' })}
                 disabled={isLoading}
                 isLoading={isLoading}
               />
@@ -269,7 +269,7 @@ export const ServiceBookingModal: FC<
               <Button
                 className='!w-full'
                 onClick={handleNext}
-                text='Next'
+                text={intl.formatMessage({ id: 'button.next' })}
                 disabled={
                   (step === 'service' && !serviceOnProfessional) ||
                   (step === 'datetime' && (!selectedDay || !selectedTimeRange))
