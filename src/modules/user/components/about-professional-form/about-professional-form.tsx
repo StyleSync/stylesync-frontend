@@ -29,33 +29,55 @@ const defaultValues: AboutProfessionalFormValues = {
 
 const phoneRegex = /^(\+\d{1,3}[- ]?)?\d{10}$/;
 
+const nameRegex = /^[A-Za-zА-Яа-яІіЇїЄєҐґ']+$/;
+
 const facebookUrlRegex =
   /^(?:https?:\/\/)?(?:www\.)?(?:mbasic\.facebook|m\.facebook|facebook|fb)\.(?:com|me)\/(?:profile\.php\?id=\d+|pages\/\d+\/[\w-]+|[\w-]+)?\/?$/i;
 
 const instagramRegex =
   /^(?:https?:\/\/)?(?:www\.)?instagram\.com\/(?:p|reel|tv|stories|[\w._-]+)(?:\/[a-zA-Z0-9_-]+)?\/?$/i;
 
+const THIRTY_TWO = 32;
+
 const validationSchema: z.Schema<AboutProfessionalFormValues> = z.object({
-  firstName: z.string().min(1),
-  lastName: z.string().min(1),
-  phone: z.string().regex(phoneRegex, 'Invalid phone number'),
-  email: z.string(),
+  firstName: z
+    .string()
+    .min(2, 'validation.firstName.minLength')
+    .max(THIRTY_TWO, 'validation.firstName.maxLength')
+    .regex(nameRegex, 'validation.firstName.invalidCharacters')
+    .refine(
+      (value) => /^[A-ZА-Я]/.test(value),
+      'validation.firstName.firstLetterCapitalized'
+    ),
+  lastName: z
+    .string()
+    .min(2, 'validation.lastName.minLength')
+    .max(THIRTY_TWO, 'validation.lastName.maxLength')
+    .regex(nameRegex, 'validation.lastName.invalidCharacters')
+    .refine(
+      (value) => /^[A-ZА-Я]/.test(value),
+      'validation.lastName.firstLetterCapitalized'
+    ),
+  phone: z
+    .string()
+    .min(1, 'validation.phone.required')
+    .regex(phoneRegex, 'validation.phone.invalid'),
+  email: z.string().min(1, 'validation.email.required'),
   facebook: z
     .string()
     .max(100)
     .optional()
     .refine(
       (value) => !value || facebookUrlRegex.test(value),
-      'Invalid Facebook URL'
+      'validation.facebook.invalid'
     ),
-
   instagram: z
     .string()
     .max(100)
     .optional()
     .refine(
       (value) => !value || instagramRegex.test(value),
-      'Invalid Instagram URL'
+      'validation.instagram.invalid'
     ),
   about: z.string(),
 });
@@ -83,6 +105,14 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
       [avatar.file, avatar.preview, onSubmit]
     );
 
+    const getErrorMessage = (errorKey: string | undefined) => {
+      if (errorKey) {
+        return intl.formatMessage({ id: errorKey });
+      }
+
+      return '';
+    };
+
     return (
       <form
         id={formId}
@@ -98,7 +128,7 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
         <div className={styles.inputsRow}>
           <TextField
             {...form.register('firstName')}
-            error={Boolean(form.formState.errors.firstName)}
+            error={getErrorMessage(form.formState.errors.firstName?.message)}
             variant='input'
             label={intl.formatMessage({
               id: 'user.about.professional.form.firstName',
@@ -106,7 +136,7 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
           />
           <TextField
             {...form.register('lastName')}
-            error={Boolean(form.formState.errors.lastName)}
+            error={getErrorMessage(form.formState.errors.lastName?.message)}
             variant='input'
             label={intl.formatMessage({
               id: 'user.about.professional.form.lastName',
@@ -116,7 +146,7 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
         <div className={styles.inputsRow}>
           <TextField
             {...form.register('email')}
-            error={Boolean(form.formState.errors.email)}
+            error={getErrorMessage(form.formState.errors.email?.message)}
             variant='input'
             label={intl.formatMessage({
               id: 'user.about.professional.form.email',
@@ -129,7 +159,7 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
             render={({ field }) => {
               return (
                 <PhoneField
-                  error={form.formState.errors.phone?.message}
+                  error={getErrorMessage(form.formState.errors.phone?.message)}
                   label={intl.formatMessage({
                     id: 'user.about.professional.form.phone',
                   })}
@@ -143,7 +173,7 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
         <div className={styles.inputsRow}>
           <TextField
             {...form.register('facebook')}
-            error={form.formState.errors.facebook?.message}
+            error={getErrorMessage(form.formState.errors.facebook?.message)}
             variant='input'
             label={intl.formatMessage({
               id: 'user.about.professional.form.facebook',
@@ -151,7 +181,7 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
           />
           <TextField
             {...form.register('instagram')}
-            error={form.formState.errors.instagram?.message}
+            error={getErrorMessage(form.formState.errors.instagram?.message)}
             variant='input'
             label={intl.formatMessage({
               id: 'user.about.professional.form.instagram',
@@ -160,7 +190,7 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
         </div>
         <TextField
           {...form.register('about')}
-          error={Boolean(form.formState.errors.about)}
+          error={getErrorMessage(form.formState.errors.about?.message)}
           variant='textarea'
           label={intl.formatMessage({
             id: 'user.about.professional.form.about',
