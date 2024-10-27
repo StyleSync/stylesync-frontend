@@ -101,30 +101,31 @@ const defaultPeriod = 15; // minutes;
 export const getPossibleBookingTimes = (
   currentDaySchedule: Pick<Schedule, 'start' | 'end'>,
   duration: number, // in minutes
-  requestedDate: string,
+  year: number,
+  month: number,
+  day: number,
   period: number = defaultPeriod
 ): AvailableBookingTime[] => {
   const availableTimeList: AvailableBookingTime[] = [];
-  const requestedDateObj = new Date(requestedDate);
   let iteration = 0;
 
   let startTime = new Date(currentDaySchedule.start);
   const endTime = new Date(currentDaySchedule.end);
 
   if (isSameDay(startTime, endTime)) {
-    startTime.setFullYear(requestedDateObj.getFullYear());
-    startTime.setMonth(requestedDateObj.getMonth());
-    startTime.setDate(requestedDateObj.getDate());
-    endTime.setFullYear(requestedDateObj.getFullYear());
-    endTime.setMonth(requestedDateObj.getMonth());
-    endTime.setDate(requestedDateObj.getDate());
+    startTime.setFullYear(year);
+    startTime.setMonth(month);
+    startTime.setDate(day);
+    endTime.setFullYear(year);
+    endTime.setMonth(month);
+    endTime.setDate(day);
   } else {
-    startTime.setFullYear(requestedDateObj.getFullYear());
-    startTime.setMonth(requestedDateObj.getMonth());
-    startTime.setDate(requestedDateObj.getDate());
-    endTime.setFullYear(requestedDateObj.getFullYear());
-    endTime.setMonth(requestedDateObj.getMonth());
-    endTime.setDate(requestedDateObj.getDate() + 1);
+    startTime.setFullYear(year);
+    startTime.setMonth(month);
+    startTime.setDate(day);
+    endTime.setFullYear(year);
+    endTime.setMonth(month);
+    endTime.setDate(day + 1);
   }
 
   while (

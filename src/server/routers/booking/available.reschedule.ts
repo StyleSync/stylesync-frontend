@@ -27,6 +27,9 @@ export const availableReschedule = privateProcedure
         Day.SATURDAY,
         Day.SUNDAY,
       ]),
+      yearTime: z.number(),
+      monthTime: z.number(),
+      dayTime: z.number(),
     })
   )
   .query(async ({ input, ctx }) => {
@@ -119,7 +122,9 @@ export const availableReschedule = privateProcedure
     const possibleBookingTime = getPossibleBookingTimes(
       currentDaySchedule,
       booking.serviceProfessional.duration,
-      input.date
+      input.yearTime,
+      input.monthTime,
+      input.dayTime
     );
 
     for (const time of possibleBookingTime) {
