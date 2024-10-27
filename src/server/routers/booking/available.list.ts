@@ -27,6 +27,9 @@ export const availableList = publicProcedure
         Day.SATURDAY,
         Day.SUNDAY,
       ]),
+      yearTime: z.number(),
+      monthTime: z.number(),
+      dayTime: z.number(),
     })
   )
   .query(async ({ input }) => {
@@ -112,7 +115,9 @@ export const availableList = publicProcedure
     const possibleBookingTime = getPossibleBookingTimes(
       currentDaySchedule,
       serviceOnProfessional.duration,
-      input.date
+      input.yearTime,
+      input.monthTime,
+      input.dayTime
     );
 
     for (const time of possibleBookingTime) {

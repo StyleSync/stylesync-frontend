@@ -39,8 +39,14 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
       date: selectedDay || '',
       serviceOnProfessionalId: serviceOnProfessionalId || '',
       day: mapDateToDayEnum(selectedDay || ''),
+      dayTime: new Date(selectedDay || '').getDate(),
+      monthTime: new Date(selectedDay || '').getMonth(),
+      yearTime: new Date(selectedDay || '').getFullYear(),
     },
-    { enabled: !!selectedDay && !!serviceOnProfessionalId, retry: false }
+    {
+      enabled: !!selectedDay && !!serviceOnProfessionalId,
+      retry: false,
+    }
   );
 
   const handleDayChoose = (date: string) => {
