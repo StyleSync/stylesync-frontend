@@ -26,10 +26,6 @@
       margin-bottom: utils.spacing(2);
       border-bottom: 1px solid rgba(variables.$grey-color, 0.2);
       column-gap: utils.spacing(1);
-
-      span {
-        color: variables.$dark-color;
-      }
     }
   }
 }

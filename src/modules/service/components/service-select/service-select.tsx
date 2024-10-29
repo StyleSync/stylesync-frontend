@@ -29,8 +29,8 @@ export const ServiceSelect: FC<ServiceSelectProps> = ({
   const buttonProps = useMemo<Partial<ButtonProps>>(() => {
     if (deviceType === 'mobile') {
       return {
-        variant: 'primary',
-        text: 'Додати сервіс',
+        variant: 'outlined',
+        text: formatMessage({ id: 'select.service.add.group' }),
       };
     }
 
