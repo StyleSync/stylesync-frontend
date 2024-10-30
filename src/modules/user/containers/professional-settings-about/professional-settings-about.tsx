@@ -96,7 +96,7 @@ export const ProfessionalSettingsAbout: FC = () => {
           });
         });
     },
-    [userUpdate, proUpdate, avatarUpload, meQuery, intl]
+    [userUpdate, proUpdate, avatarUpload, intl]
   );
 
   return (

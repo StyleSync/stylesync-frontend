@@ -19,7 +19,6 @@ import styles from './onboard-title.module.scss';
 
 export const OnboardTitle: FC = () => {
   const intl = useIntl();
-
   const router = useRouter();
   const session = useSession();
   const { active, onboardData } = useOnboard();

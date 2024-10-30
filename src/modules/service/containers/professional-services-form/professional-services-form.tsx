@@ -14,14 +14,11 @@ import type { Service } from '@prisma/client';
 
 import type { ProfessionalServicesFormProps } from './professional-services-form.interface';
 import styles from './professional-services-form.module.scss';
-import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 
 export const ProfessionalServicesForm: FC<ProfessionalServicesFormProps> = ({
   serviceOnProfessionalGroups,
   setServiceOnProfessionalGroups,
 }) => {
-  const deviceType = useDeviceType();
-
   const intl = useIntl();
   const { data: serviceList, ...serviceListQuery } =
     trpc.service.list.useQuery();
@@ -52,16 +49,15 @@ export const ProfessionalServicesForm: FC<ProfessionalServicesFormProps> = ({
 
   return (
     <div className={styles.root}>
-      {deviceType !== 'mobile' && (
-        <ServiceSelect
-          services={serviceList ?? []}
-          onServiceSelect={handleServiceSelect}
-          blackList={sortedServiceOnProfessionalGroups.map(
-            (group) => group.service.id
-          )}
-          isLoading={serviceListQuery.isLoading}
-        />
-      )}
+      <ServiceSelect
+        services={serviceList ?? []}
+        onServiceSelect={handleServiceSelect}
+        blackList={sortedServiceOnProfessionalGroups.map(
+          (group) => group.service.id
+        )}
+        isLoading={serviceListQuery.isLoading}
+      />
+
       <Placeholder
         isActive={sortedServiceOnProfessionalGroups.length === 0}
         placeholder={{

@@ -6,20 +6,20 @@ import { ErrorBox } from '@/modules/core/components/error-box';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { OnboardLayout } from '@/modules/onboard/components/onboard-layout';
 import { AboutProfessionalForm } from '@/modules/user/components/about-professional-form';
+import { Spinner } from '@/modules/core/components/spinner';
+// hooks
+import { useAvatarUploadMutation } from '@/modules/user/hooks/use-avatar-upload-mutation';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { showToast } from '@/modules/core/providers/toast-provider';
 // types
 import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboard/pro-onboard.interface';
-
 import type { AboutProfessionalFormValues } from '@/modules/user/components/about-professional-form/about-professional-form.interface';
-import { Spinner } from '@/modules/core/components/spinner';
-import { useAvatarUploadMutation } from '@/modules/user/hooks/use-avatar-upload-mutation';
 
 export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
   const intl = useIntl();
-
   const formId = useId();
+
   // queries
   const { data: me, ...meQuery } = trpc.user.me.useQuery({
     expand: ['professional'],
@@ -31,6 +31,7 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
   const { mutate: professionalUpdate, ...professionalUpdateMutation } =
     trpc.professional.update.useMutation();
   const avatarUpload = useAvatarUploadMutation();
+
   // memo
   const initialValues = useMemo<
     Partial<AboutProfessionalFormValues & { avatar: string }>
