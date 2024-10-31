@@ -32,13 +32,13 @@ export const BookingsList: FC<BookingsListProps> = () => {
     expand: ['serviceProfessional'],
     sortField: 'startTime',
     startDate: now,
-    professionalId: me.professional.id,
+    professionalId: me.userType === 'PROFESSIONAL' ? me.professional.id : me.id,
   });
   const [pastEvents] = trpc.booking.list.useSuspenseQuery({
     expand: ['serviceProfessional'],
     sortField: 'startTime',
     endDate: now,
-    professionalId: me.professional.id,
+    professionalId: me.userType === 'PROFESSIONAL' ? me.professional.id : me.id,
   });
 
   const groups: BookingListGroup[] = [

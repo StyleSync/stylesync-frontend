@@ -105,8 +105,31 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ session }) => {
   );
 
   // memo
-  const proActions = useMemo<BurgerMenuAction[]>(
-    () => [
+  const proActions = useMemo<BurgerMenuAction[]>(() => {
+    if (me?.userType !== 'PROFESSIONAL') {
+      return [
+        {
+          id: 'my-bookings',
+          icon: 'list',
+          text: intl.formatMessage({ id: 'burger.menu.btn.myBookings' }),
+          variant: 'default',
+        },
+        {
+          id: 'settings',
+          icon: 'settings',
+          text: intl.formatMessage({ id: 'burger.menu.btn.settings' }),
+          variant: 'default',
+        },
+        {
+          id: 'sign-out',
+          icon: 'log-out',
+          text: intl.formatMessage({ id: 'burger.menu.btn.signOut' }),
+          variant: 'danger',
+        },
+      ];
+    }
+
+    return [
       {
         id: 'my-profile',
         icon: 'user',
@@ -137,9 +160,8 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ session }) => {
         text: intl.formatMessage({ id: 'burger.menu.btn.signOut' }),
         variant: 'danger',
       },
-    ],
-    [intl]
-  );
+    ];
+  }, [intl, me?.userType]);
 
   const actions = status === 'authenticated' ? proActions : publicActions;
   const isLoading = status === 'loading' || meQuery.isInitialLoading;
@@ -168,7 +190,7 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ session }) => {
 
       isOpen.setFalse();
     },
-    [isOpen, router]
+    [isOpen, router, session?.user.id]
   );
 
   return (
