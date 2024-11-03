@@ -1,5 +1,4 @@
 import { useMemo, type FC, useContext } from 'react';
-import { getHours, set, getMinutes } from 'date-fns';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { useIntl } from 'react-intl';
 import dynamic from 'next/dynamic';
@@ -79,18 +78,8 @@ export const Calendar: FC<CalendarProps> = () => {
     return events.map((event) => ({
       id: event.id,
       title: event.serviceProfessional.title,
-      start: set(event.date, {
-        hours: getHours(event.startTime),
-        minutes: getMinutes(event.startTime),
-        seconds: 0,
-        milliseconds: 0,
-      }),
-      end: set(event.date, {
-        hours: getHours(event.endTime),
-        minutes: getMinutes(event.endTime),
-        seconds: 0,
-        milliseconds: 0,
-      }),
+      start: new Date(event.startTime),
+      end: new Date(event.endTime),
       className: styles.event,
     }));
   }, [events]);
