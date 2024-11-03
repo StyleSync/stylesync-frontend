@@ -255,7 +255,7 @@ export const bookingRouter = router({
       const existingBooking = await prisma.booking.findMany({
         where: {
           serviceProfessionalId: { in: servicesIds },
-          date: {
+          startTime: {
             gte: new Date(input.date),
             lte: addHours(new Date(input.date), 24),
           },
@@ -271,16 +271,13 @@ export const bookingRouter = router({
         });
       }
 
-      const inputDate = mergeDates(input.date, input.startTime);
-
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { day, ...createData } = input;
+      const { day, date, ...createData } = input;
 
       const booking = await prisma.booking.create({
         data: {
           ...createData,
           status: BookingStatus.PENDING,
-          date: inputDate,
           code: uniqueString(),
         },
         select: {
@@ -325,7 +322,7 @@ export const bookingRouter = router({
           offset: z.number().min(0).default(0),
           expand: z.array(z.enum(['serviceProfessional'])).optional(),
           sortDirection: z.enum(['asc', 'desc']).optional(),
-          sortField: z.enum(['date']).optional(),
+          sortField: z.enum(['startTime']).optional(),
         })
         .optional()
     )
@@ -356,14 +353,14 @@ export const bookingRouter = router({
           AND: [
             input?.date
               ? {
-                  date: {
+                  startTime: {
                     gte: startOfDay(new Date(input.date)),
                     lte: endOfDay(new Date(input.date)),
                   },
                 }
               : {},
-            input?.startDate ? { date: { gte: input.startDate } } : {},
-            input?.endDate ? { date: { lte: input.endDate } } : {},
+            input?.startDate ? { startTime: { gte: input.startDate } } : {},
+            input?.endDate ? { endTime: { lte: input.endDate } } : {},
           ],
         },
         select: {

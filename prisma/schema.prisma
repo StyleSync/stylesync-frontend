@@ -147,7 +147,9 @@ model Schedule {
   end            DateTime
   day            Day
   isSpecificDay  Boolean
-  date           DateTime?
+  specificYear   Int?
+  specificMonth  Int?
+  specificDay    Int?
   breaks         Break[]
   professionalId String
   professional   Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
@@ -217,7 +219,6 @@ model Booking {
   id                    String                @id @default(cuid())
   startTime             DateTime
   endTime               DateTime
-  date                  DateTime
   userId                String?
   user                  User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
   code                  String                @unique
