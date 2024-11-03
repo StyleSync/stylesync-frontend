@@ -30,13 +30,13 @@ export const BookingsList: FC<BookingsListProps> = () => {
 
   const [upcomingEvents] = trpc.booking.list.useSuspenseQuery({
     expand: ['serviceProfessional'],
-    sortField: 'date',
+    sortField: 'startTime',
     startDate: now,
     professionalId: me.professional.id,
   });
   const [pastEvents] = trpc.booking.list.useSuspenseQuery({
     expand: ['serviceProfessional'],
-    sortField: 'date',
+    sortField: 'startTime',
     endDate: now,
     professionalId: me.professional.id,
   });
@@ -80,7 +80,7 @@ export const BookingsList: FC<BookingsListProps> = () => {
                       key={booking.id}
                       name={`${booking.guestFirstName} ${booking.guestLastName}`}
                       serviceName={booking.serviceProfessional.title}
-                      date={booking.date}
+                      date={booking.startTime}
                       startTime={booking.startTime}
                       endTime={booking.endTime}
                       variant='light'

@@ -5,8 +5,7 @@ import { prisma } from '@/server/prisma';
 import { Day } from '@prisma/client';
 import { defaultScheduleSelect } from '@/server/selectors/schedule';
 import { getProfessionalFromContext } from '@/server/utils/prisma-utils';
-import { mapDateToDayEnum } from '@/server/utils/helpers';
-import { isAfter, startOfDay } from 'date-fns';
+import { isAfter } from 'date-fns';
 
 const defaultLimit = 10;
 const maxLimit = 100;
@@ -69,15 +68,16 @@ export const scheduleRouter = router({
           Day.SUNDAY,
         ]),
         isSpecificDay: z.boolean(),
-        date: z.string().nullish(),
+        specificDay: z.number().optional(),
+        specificMonth: z.number().optional(),
+        specificYear: z.number().optional(),
       })
     )
     .mutation(async ({ input, ctx }) => {
-      const inputDate = input.date
-        ? startOfDay(new Date(input.date))
-        : input.date;
-
-      if (input.isSpecificDay && !input.date) {
+      if (
+        input.isSpecificDay &&
+        (!input.specificDay || !input.specificMonth || !input.specificYear)
+      ) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: `Specific day schedule must have a date`,
@@ -88,13 +88,6 @@ export const scheduleRouter = router({
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: `End Date should be after Start Date`,
-        });
-      }
-
-      if (input.date && mapDateToDayEnum(input.date) !== input.day) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: `Day and date do not match`,
         });
       }
 
@@ -117,26 +110,28 @@ export const scheduleRouter = router({
         }
       }
 
-      const existingSchedule = await prisma.schedule.findFirst({
-        where: {
-          professionalId: professional.id,
-          isSpecificDay: input.isSpecificDay,
-          day: input.day,
-          date: inputDate,
-        },
-      });
-
-      if (existingSchedule) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: `There is already a schedule for this day`,
+      if (input.isSpecificDay) {
+        const existingSchedule = await prisma.schedule.findFirst({
+          where: {
+            professionalId: professional.id,
+            isSpecificDay: input.isSpecificDay,
+            specificDay: input.specificDay,
+            specificMonth: input.specificMonth,
+            specificYear: input.specificYear,
+          },
         });
+
+        if (existingSchedule) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: `There is already a schedule for this day`,
+          });
+        }
       }
 
       return prisma.schedule.create({
         data: {
           ...input,
-          date: inputDate,
           professionalId: professional.id,
         },
         select: defaultScheduleSelect,
@@ -158,7 +153,6 @@ export const scheduleRouter = router({
         select: {
           professionalId: true,
           id: true,
-          date: true,
           start: true,
           end: true,
         },
@@ -241,14 +235,11 @@ export const scheduleRouter = router({
       })
     )
     .query(async ({ input }) => {
+      // TODO: Change it so we can work with specificYear, specificMonth and specificDay
       return prisma.schedule.findMany({
         where: {
           isSpecificDay: true,
           professionalId: input.professionalId,
-          date: {
-            gte: input.startDate,
-            lte: input.endDate,
-          },
         },
         select: defaultScheduleSelect,
         take: input.limit,
