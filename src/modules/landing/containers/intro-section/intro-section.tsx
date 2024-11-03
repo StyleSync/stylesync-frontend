@@ -11,7 +11,7 @@ import { Icon, type IconName } from '@/modules/core/components/icon';
 // types
 import type { StylingProps } from '@/styles/styles.types';
 // assets
-import picture from '@/assets/images/Banner picture.png';
+import picture from '@/assets/images/banner-girl.png';
 
 import styles from './intro-section.module.scss';
 
@@ -38,8 +38,8 @@ export const IntroSection = () => {
   const intl = useIntl();
 
   return (
-    <section className='h-[700px]:bg-red-500 flex h-screen w-full flex-col pt-[38px] sm:pt-[72px]'>
-      <div className='flex flex-[0.4] flex-col items-center justify-end pt-[9vh]'>
+    <section className='grid h-screen w-full grid-cols-1 flex-col gap-y-2 pt-[38px] [grid-template-rows:0.7fr_1.3fr] sm:pt-[72px]'>
+      <div className='flex flex-col items-center justify-end pt-[6vh]'>
         <Typography
           className='max-w-[820px] px-2 text-center !text-5xl !font-semibold !text-black md:!text-6xl'
           variant='title'
@@ -66,22 +66,23 @@ export const IntroSection = () => {
           variant='unstyled'
         />
       </div>
-
-      <div className='flex flex-1 items-end'>
-        <div className='relative flex h-[calc(100%-2rem)] w-full justify-center'>
+      <div className='relative flex flex-1'>
+        <div className='absolute left-0 top-0 flex h-full w-full justify-center'>
           <div className={styles.bubblesGroup}>
             <ServiceCircle iconName='makeup' />
             <ServiceCircle iconName='fitness' />
             <ServiceCircle iconName='haircut' />
             <ServiceCircle iconName='nails' />
           </div>
-          <Image
-            width={picture.width}
-            height={picture.height}
-            src={picture}
-            className='h-full w-auto object-contain'
-            alt='img'
-          />
+          <div className='relative h-full'>
+            <Image
+              width={picture.width}
+              height={picture.height}
+              src={picture}
+              className='h-full w-auto object-contain'
+              alt='img'
+            />
+          </div>
 
           <div className={styles.bubblesGroup}>
             <ServiceCircle iconName='skincare' />
