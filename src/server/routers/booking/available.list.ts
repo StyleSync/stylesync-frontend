@@ -101,7 +101,7 @@ export const availableList = publicProcedure
         serviceProfessionalId: {
           in: allServiceOnProfessional.map((s) => s.id),
         },
-        date: {
+        startTime: {
           gte: new Date(input.date),
           lte: addHours(new Date(input.date), 24),
         },

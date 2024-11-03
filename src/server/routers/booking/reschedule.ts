@@ -99,7 +99,7 @@ export const rescheduleBooking = privateProcedure
           },
         },
         serviceProfessionalId: { in: servicesIds },
-        date: {
+        startTime: {
           gte: new Date(input.date),
           lte: addHours(new Date(input.date), 24),
         },
@@ -113,10 +113,8 @@ export const rescheduleBooking = privateProcedure
       });
     }
 
-    const inputDate = mergeDates(input.date, input.startTime);
-
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { day, bookingId, ...createData } = input;
+    const { day, bookingId, date, ...createData } = input;
 
     const booking = await prisma.booking.update({
       where: {
@@ -124,7 +122,6 @@ export const rescheduleBooking = privateProcedure
       },
       data: {
         ...createData,
-        date: inputDate,
       },
       select: {
         ...defaultBookingSelect,
