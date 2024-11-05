@@ -237,11 +237,9 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
           showToast({
             variant: 'success',
             title: intl.formatMessage({
-              id: 'photo.modal.upload.toast.success.title',
-            }),
-            description: intl.formatMessage({
               id: 'photo.modal.upload.toast.success.description',
             }),
+            description: '',
           });
 
           queryClient.invalidateQueries({
@@ -291,11 +289,11 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
       }
     >
       <div className='relative flex w-full flex-col overflow-hidden rounded-xl'>
-        {deviceType === 'mobile' && (
+        {deviceType === 'mobile' && photoUploadState.step === 'select' && (
           <Button
             variant='unstyled'
-            className='absolute left-[10px] top-[6px] z-50'
-            icon='arrow-left'
+            className='absolute left-6 top-[10px] z-50'
+            icon='close'
             onClick={handleCloseDialog}
           />
         )}
@@ -314,12 +312,7 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
           <div
             {...getRootProps({
               className: clsx(
-                'w-full aspect-square relative h-full flex flex-col gap-y-6 justify-center items-center',
-                {
-                  hidden:
-                    photoUploadState.step === 'details' &&
-                    deviceType === 'mobile',
-                }
+                'w-full aspect-square relative h-full flex flex-col gap-y-6 justify-center items-center'
               ),
             })}
           >
@@ -359,7 +352,7 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
                 src={photoUploadState.preview}
               />
             )}
-            {photoUploadState.step === 'details' && deviceType !== 'mobile' && (
+            {photoUploadState.step === 'details' && (
               <div className='h-full w-full bg-black'>
                 <Image
                   className='flex h-full w-full object-contain'
@@ -371,7 +364,7 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
               </div>
             )}
             {photoUploadState.step === 'preview' && (
-              <div className='relative h-full w-full bg-black'>
+              <div className='relative h-full w-full bg-white'>
                 <Placeholder
                   isActive={uploadedPortfolio.isLoading}
                   className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'
@@ -392,8 +385,15 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
           </div>
 
           <animated.div
-            style={{ width: springs }}
-            className='flex h-full !w-full bg-transparent md:w-0'
+            style={{ width: deviceType === 'mobile' ? '100%' : springs }}
+            className={clsx(
+              'flex h-0 w-full overflow-hidden bg-transparent md:h-full md:w-0',
+              {
+                'h-[40vh]':
+                  photoUploadState.step === 'preview' ||
+                  photoUploadState.step === 'details',
+              }
+            )}
           >
             <div className='flex w-full flex-1 flex-col gap-y-4 p-4'>
               <div className='flex items-center gap-x-2'>

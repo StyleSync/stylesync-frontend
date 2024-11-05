@@ -47,11 +47,9 @@ export const GalleyImage: FC<GalleryImageProps> = ({ image }) => {
           showToast({
             variant: 'success',
             title: intl.formatMessage({
-              id: 'galleryImage.toast.success.title',
-            }),
-            description: intl.formatMessage({
               id: 'galleryImage.toast.success.description.delete',
             }),
+            description: '',
           });
 
           queryClient.invalidateQueries({

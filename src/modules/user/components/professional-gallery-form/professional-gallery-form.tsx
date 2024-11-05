@@ -1,6 +1,5 @@
 import { type FC, useState } from 'react';
 import { useIntl } from 'react-intl';
-import clsx from 'clsx';
 
 // components
 import { Button } from '@/modules/core/components/button';
@@ -11,7 +10,6 @@ import { AlbumDetails } from '@/modules/gallery/components/album-details';
 import { Spinner } from '@/modules/core/components/spinner';
 import { Typography } from '@/modules/core/components/typogrpahy';
 // hooks
-import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import { useBoolean } from 'usehooks-ts';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
@@ -28,7 +26,6 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
   const [activeAlbum, setActiveAlbum] = useState<Album | null>(null);
   const [albumToEdit, setAlbunToEdit] = useState<Album | null>(null);
 
-  const windowSizeType = useDeviceType();
   const isModalOpen = useBoolean();
   // memo
 
@@ -80,7 +77,6 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
                   text={intl.formatMessage({
                     id: 'user.professional.gallery.form.createAlbum',
                   })}
-                  className={clsx(styles.trigger)}
                 />
               }
             />
@@ -99,17 +95,15 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
               }
             }}
             trigger={
-              windowSizeType !== 'mobile' && (
-                <Button
-                  text={intl.formatMessage({
-                    id: 'user.professional.gallery.form.createAlbum',
-                  })}
-                  variant='outlined'
-                />
-              )
+              <Button
+                text={intl.formatMessage({
+                  id: 'user.professional.gallery.form.createAlbum',
+                })}
+                variant='outlined'
+              />
             }
           />
-          <div className='mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-5'>
+          <div className='mt-5 grid grid-cols-1 gap-4 md:mt-8 md:grid-cols-3 xl:grid-cols-5'>
             {albumsList?.map((album) => (
               <AlbumCard
                 isMoreButtonVisible

@@ -62,10 +62,10 @@ export const AlbumDetails: FC<AlbumDetailsProps> = ({
         icon='chevron-left'
         variant='unstyled'
         onClick={onClickClose}
-        className={styles.btnBack}
+        className='!px-0 !py-0'
       />
       <Placeholder
-        className='h-full'
+        className='h-[calc(100%-40px)]'
         isActive={imagesList?.length === 0}
         placeholder={{
           illustration: 'files',
@@ -96,13 +96,12 @@ export const AlbumDetails: FC<AlbumDetailsProps> = ({
               <Button
                 disabled={imagesData.isLoading}
                 isLoading={isFileUploding.value}
-                className={clsx('mobileActionBtn', styles.trigger)}
-                {...buttonProps}
+                text={intl.formatMessage({ id: 'album.details.addImage' })}
+                variant='outlined'
               />
             }
           />
-
-          <div className='mt-8'>
+          <div className='mt-5 md:mt-8'>
             <SettingsGallery images={imagesList || []} />
           </div>
           {imagesData.isLoading && (

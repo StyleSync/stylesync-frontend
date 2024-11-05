@@ -87,8 +87,7 @@
 
   "photo.modal.upload.toast.error.title": "Oops, error",
   "photo.modal.upload.toast.error.description": "Oops",
-  "photo.modal.upload.toast.success.title": "Good!",
-  "photo.modal.upload.toast.success.description": "Photo added",
+  "photo.modal.upload.toast.success.description": "Photo has been added",
   "photo.modal.upload.dropHere": "Drop photos here",
   "photo.modal.upload.supports": "Supports: PNG, JPG, JPEG, WEBP",
 
@@ -149,15 +148,13 @@
 
   "albumAdd.modal.toast.error.title.edit": "Oops, error",
   "albumAdd.modal.toast.error.description.edit": "Error",
-  "albumAdd.modal.toast.success.title.edit": "Good!",
   "albumAdd.modal.toast.success.description.edit": "Album edit",
   "albumAdd.modal.toast.error.title.add": "Oops, error",
   "albumAdd.modal.toast.error.description.add": "Error",
-  "albumAdd.modal.toast.success.title.add": "Good!",
   "albumAdd.modal.toast.success.description.add": "Album added",
 
-  "albumAdd.modal.title.edit": "Add album",
-  "albumAdd.modal.title.add": "Edit album",
+  "albumAdd.modal.title.edit": "Album",
+  "albumAdd.modal.title.add": "New album",
   "albumAdd.modal.label.input": "Album title",
 
   "galleryImage.toast.error.title": "Oops, error",
@@ -271,7 +268,6 @@
 
   "album.card.toast.error.title": "OOps, error",
   "album.card.toast.error.description": "Error",
-  "album.card.toast.success.title": "Good!",
   "album.card.toast.success.description": "Album deleted",
 
   "album.card.menu.rename": "Rename album",

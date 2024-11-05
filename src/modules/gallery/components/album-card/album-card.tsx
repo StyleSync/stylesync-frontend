@@ -76,11 +76,9 @@ export const AlbumCard: FC<AlbumCardProps> = ({
               showToast({
                 variant: 'success',
                 title: intl.formatMessage({
-                  id: 'album.card.toast.success.title',
-                }),
-                description: intl.formatMessage({
                   id: 'album.card.toast.success.description',
                 }),
+                description: '',
               });
 
               queryClient.invalidateQueries({
@@ -149,6 +147,10 @@ export const AlbumCard: FC<AlbumCardProps> = ({
                   text: intl.formatMessage({ id: 'album.card.menu.delete' }),
                 },
               ]}
+              popoverProps={{
+                align: deviceType === 'mobile' ? 'end' : 'center',
+                backgroundBlurEffect: false,
+              }}
             />
           )}
         </div>

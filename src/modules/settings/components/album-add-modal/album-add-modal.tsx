@@ -80,11 +80,9 @@ export const AlbumAddModal: FC<
             showToast({
               variant: 'success',
               title: intl.formatMessage({
-                id: 'albumAdd.modal.toast.success.title.edit',
-              }),
-              description: intl.formatMessage({
                 id: 'albumAdd.modal.toast.success.description.edit',
               }),
+              description: '',
             });
 
             queryClient.invalidateQueries({
@@ -114,11 +112,9 @@ export const AlbumAddModal: FC<
           showToast({
             variant: 'success',
             title: intl.formatMessage({
-              id: 'albumAdd.modal.toast.success.title.add',
-            }),
-            description: intl.formatMessage({
               id: 'albumAdd.modal.toast.success.description.add',
             }),
+            description: '',
           });
 
           queryClient.invalidateQueries({
