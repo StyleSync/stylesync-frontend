@@ -1,4 +1,5 @@
 import { type FC, useCallback, useMemo } from 'react';
+import { useIntl } from 'react-intl';
 import { createEvent, type EventAttributes } from 'ics';
 // components
 import { Button } from '@/modules/core/components/button';
@@ -13,6 +14,8 @@ export const DownloadIcsButton: FC<DownloadIcsButtonProps> = ({
   organizer,
   attendee,
 }) => {
+  const intl = useIntl();
+
   const event: EventAttributes = useMemo(() => {
     return {
       start: startEventTime,
@@ -32,7 +35,7 @@ export const DownloadIcsButton: FC<DownloadIcsButtonProps> = ({
   }, [startEventTime, duration, title, location, organizer, attendee]);
 
   const handleDownloadIcs = useCallback(async () => {
-    const filename = 'ExampleEvent.ics';
+    const filename = 'Event.ics';
     const file: File = await new Promise((resolve, reject) => {
       createEvent(event, (error, value) => {
         if (error) {
@@ -61,7 +64,7 @@ export const DownloadIcsButton: FC<DownloadIcsButtonProps> = ({
   return (
     <Button
       variant='outlined'
-      text='Add to calendar'
+      text={intl.formatMessage({ id: 'button.add.to.calendar' })}
       onClick={handleDownloadIcs}
     />
   );

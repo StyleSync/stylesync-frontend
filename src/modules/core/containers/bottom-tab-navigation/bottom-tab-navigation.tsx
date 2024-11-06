@@ -1,6 +1,7 @@
 'use client';
 import { type FC, useMemo } from 'react';
 import clsx from 'clsx';
+import { useIntl } from 'react-intl';
 import { usePathname, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 // components
@@ -22,6 +23,8 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
   const session = useSession();
   const pathname = usePathname();
   const router = useRouter();
+  const intl = useIntl();
+
   const { data: me } = trpc.user.me.useQuery(
     { expand: ['professional'] },
     {
@@ -34,20 +37,20 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
       {
         href: `/app/profile/${session.data?.user?.id}`,
         icon: 'user',
-        title: 'Profile',
+        title: intl.formatMessage({ id: 'burger.menu.btn.myProfile' }),
       },
       {
         href: '/app/my-bookings',
         icon: 'list',
-        title: 'My bookings',
+        title: intl.formatMessage({ id: 'burger.menu.btn.myBookings' }),
       },
       {
         href: '/app/settings',
         icon: 'settings',
-        title: 'Settings',
+        title: intl.formatMessage({ id: 'burger.menu.btn.settings' }),
       },
     ],
-    [session.data]
+    [session.data, intl]
   );
 
   if (!me?.professional) {

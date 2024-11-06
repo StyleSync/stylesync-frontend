@@ -256,6 +256,8 @@
   "button.pro.now": "Стати профі зараз",
   "button.apply.filter": "Застосувати фільтри",
   "button.clear.all": "Очистити все",
+  "button.add.to.calendar": "Додати до календара",
+  "button.google.map": "Відкрити на картах Google",
 
   "bookingInfo.dialog.actions.call": "Дзвінок",
   "bookingInfo.dialog.actions.reschedule": "Перепланувати",
@@ -373,5 +375,14 @@
 
   "gallery.settings.title": "Налаштування галереї",
 
-  "choose.service": "Виберіть послугу"
+  "choose.service": "Виберіть послугу",
+  "select.time": "Оберіть час",
+  "confirm.booking": "Підтвердьте бронювання",
+
+  "booking.number": "Бронювання",
+  "specialist": "Спеціаліст",
+  "service.title": "Назва сервісу",
+  "service.price": "Ціна",
+  "service.start.time": "Час початку",
+  "service.duration": "Тривалість"
 }

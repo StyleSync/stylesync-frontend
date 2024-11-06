@@ -1,4 +1,5 @@
 import { type FC } from 'react';
+import { useIntl } from 'react-intl';
 
 import type { DialogWizardProps } from './dialog-wizard.interface';
 import { Dialog } from '@/modules/core/components/dialog';
@@ -21,6 +22,7 @@ export const DialogWizard: FC<DialogWizardProps> = ({
   ...props
 }) => {
   const deviceType = useDeviceType();
+  const intl = useIntl();
 
   const activeStep = steps.find((step) => step.id === activeStepId);
 
@@ -52,7 +54,7 @@ export const DialogWizard: FC<DialogWizardProps> = ({
                 variant='outlined'
                 rippleColor='transparent'
                 isLoading={isNextLoading}
-                text={'Next'}
+                text={intl.formatMessage({ id: 'button.next' })}
                 className='!absolute right-0 top-1/2 -translate-y-1/2 !border-none !text-base'
                 onClick={() => {
                   onNext && onNext(activeStep.id);

@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import getDistance from 'geolib/es/getDistance';
 import { getHours, getMinutes, format } from 'date-fns';
+import { useIntl } from 'react-intl';
+
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { BookingPreviewDetailBox } from '@/modules/booking/components/booking-preview-detail-box/booking-preview-detail-box';
@@ -28,6 +30,7 @@ export const BookingPreview = () => {
   const params = useParams();
   const code = params.code;
   const isContactOpen = useBoolean();
+  const intl = useIntl();
 
   // state
   const [userLocation, setUserLocation] = useState<{
@@ -107,7 +110,7 @@ export const BookingPreview = () => {
   return (
     <main className='mx-auto mb-20 mt-28 flex w-full max-w-[950px] flex-1 flex-col px-[15px]'>
       <Typography className='mx-auto text-center !text-[24px]'>
-        Booking № 20
+        {intl.formatMessage({ id: 'booking.number' })}№ 20
       </Typography>
       <div className='mt-12 flex w-full'>
         <div className='flex flex-1 flex-col gap-4'>
@@ -117,7 +120,7 @@ export const BookingPreview = () => {
             rel='noreferrer'
           >
             <BookingPreviewDetailBox
-              label='Specialist'
+              label={intl.formatMessage({ id: 'specialist' })}
               value={`${professional.data?.user?.firstName} ${professional.data?.user?.lastName}`}
               avatar={professional.data?.user?.avatar || ''}
             />
@@ -125,21 +128,21 @@ export const BookingPreview = () => {
 
           <div className='flex flex-col gap-3'>
             <BookingPreviewDetailBox
-              label='Title'
+              label={intl.formatMessage({ id: 'service.title' })}
               value={bookingDetails.data?.serviceProfessional?.title || ''}
             />
           </div>
 
           <div className='flex flex-col gap-3'>
             <BookingPreviewDetailBox
-              label='Price'
+              label={intl.formatMessage({ id: 'service.price' })}
               value={`${bookingDetails.data?.serviceProfessional?.price} ${bookingDetails.data?.serviceProfessional?.currency}`}
             />
           </div>
           <div className='flex gap-6'>
             <div className='flex flex-col gap-3'>
               <BookingPreviewDetailBox
-                label='Start time'
+                label={intl.formatMessage({ id: 'service.start.time' })}
                 value={
                   bookingDetails?.data
                     ? format(
@@ -152,7 +155,7 @@ export const BookingPreview = () => {
             </div>
             <div className='flex flex-col gap-3'>
               <BookingPreviewDetailBox
-                label='Duration'
+                label={intl.formatMessage({ id: 'service.duration' })}
                 value={
                   bookingDetails.data?.serviceProfessional.duration !==
                   undefined
@@ -182,7 +185,7 @@ export const BookingPreview = () => {
           trigger={
             <Button
               variant='secondary'
-              text='Contact'
+              text={intl.formatMessage({ id: 'button.contact' })}
               onClick={isContactOpen.setTrue}
             />
           }
@@ -237,7 +240,7 @@ export const BookingPreview = () => {
         }}
         className='mt-12'
         variant='outlined'
-        text='Open on google maps'
+        text={intl.formatMessage({ id: 'button.google.map' })}
       />
     </main>
   );

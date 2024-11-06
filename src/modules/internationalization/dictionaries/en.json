@@ -249,6 +249,8 @@
   "button.pro": "Become a Pro",
   "button.clear.all": "Clear All",
   "button.apply.filter": "Apply Filters",
+  "button.google.map": "Open on google maps",
+  "button.add.to.calendar": "Add to calendar",
 
   "button.remove": "Remove",
   "button.avatar.select.new": "Select new avatar",
@@ -367,5 +369,14 @@
 
   "gallery.settings.title": "Gallery settings",
 
-  "choose.service": "Choose a service"
+  "choose.service": "Choose a service",
+  "select.time": "Select time",
+  "confirm.booking": "Confirm booking",
+
+  "booking.number": "Booking",
+  "specialist": "Specialist",
+  "service.title": "Title",
+  "service.price": "Price",
+  "service.start.time": "Start time",
+  "service.duration": "Duration"
 }
