@@ -37,7 +37,12 @@ export const ServiceDataSection = () => {
                 id: 'pages.landing.features.booking.description',
               })}
             </span>
-            <Button text='Book Now' variant='outlined' />
+            <Button
+              text={intl.formatMessage({
+                id: 'button.book.now',
+              })}
+              variant='outlined'
+            />
           </div>
           <div className='flex flex-1 items-end'>
             <IphoneLayout
@@ -84,7 +89,12 @@ export const ServiceDataSection = () => {
                 id: 'pages.landing.features.forPro.description',
               })}
             </span>
-            <Button text='Become a Pro Now' variant='outlined' />
+            <Button
+              text={intl.formatMessage({
+                id: 'button.pro.now',
+              })}
+              variant='outlined'
+            />
           </div>
         </div>
       </div>

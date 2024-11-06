@@ -122,7 +122,9 @@ export const ServiceBookingModal: FC<
       steps={[
         {
           id: 'service',
-          title: 'Choose a service',
+          title: intl.formatMessage({
+            id: 'choose.service',
+          }),
           isNext: true,
           nextBtnProps: {
             disabled: !serviceOnProfessional,

@@ -108,7 +108,9 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
             variant='body1'
             className='!text-sm !font-medium text-dark'
           >
-            Services for Search
+            {intl.formatMessage({
+              id: 'filter.service.for.search',
+            })}
           </Typography>
           <div className='flex flex-col gap-y-1'>
             <div className='flex items-center gap-x-1'>
@@ -117,7 +119,11 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
                 onChange={handleIsAllChange}
                 size='small'
               />
-              <span>All</span>
+              <span>
+                {intl.formatMessage({
+                  id: 'filter.service.all',
+                })}
+              </span>
             </div>
             {serviceListQuery.data?.map((service) => {
               const isActive = selectedServices.includes(service.id);
@@ -159,7 +165,9 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
             weight='medium'
             className='!text-sm !text-dark'
           >
-            Date for Booking Availability
+            {intl.formatMessage({
+              id: 'filter.date.for.booking',
+            })}
           </Typography>
           <DateSelect
             value={date}
@@ -176,9 +184,17 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
           />
         </div>
         <div className='mt-auto flex w-full gap-x-4'>
-          <Button text='Clear All' variant='outlined' className='!w-full' />
           <Button
-            text='Apply Filters'
+            text={intl.formatMessage({
+              id: 'button.clear.all',
+            })}
+            variant='outlined'
+            className='!w-full'
+          />
+          <Button
+            text={intl.formatMessage({
+              id: 'button.apply.filter',
+            })}
             variant='primary'
             className='!w-full md:!hidden'
             onClick={() => {

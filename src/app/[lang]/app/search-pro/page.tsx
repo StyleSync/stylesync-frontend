@@ -85,10 +85,10 @@ export default function SearchProPage() {
                 <div className='skeleton h-5 w-[250px] rounded' />
               ) : (
                 <span className='text-base font-medium text-dark lg:text-xl'>
-                  We found{' '}
-                  <span className='text-primary'>
-                    {professionalList?.length} pro&apos;s for you
-                  </span>
+                  {intl.formatMessage(
+                    { id: 'professional.count' },
+                    { count: professionalList?.length }
+                  )}
                 </span>
               )}
 
