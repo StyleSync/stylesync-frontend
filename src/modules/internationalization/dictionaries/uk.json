@@ -17,6 +17,7 @@
   "general.service.skincare": "Догляд за шкірою",
   "general.service.eyebrows": "Брови",
   "general.service.massage": "Масаж",
+  "general.service.other": "Інше",
 
   "validation.password.oneUppercaseChar": "Одна велика буква",
   "validation.password.oneLowercaseChar": "One мала буква",
@@ -347,18 +348,10 @@
   "validation.firstName.firstLetterCapitalized": "Перша літера імені повинна бути великою",
   "validation.lastName.firstLetterCapitalized": "Перша літера прізвища повинна бути великою",
 
-  "service.landing.title.make.up": "Макіяж",
-  "service.landing.title.hair": "Волосся",
-  "service.landing.title.massage": "Масаж",
-  "service.landing.title.fitness": "Фітнес",
-  "service.landing.title.nails": "Нігті",
-  "service.landing.title.skincare": "Догляд за шкірою",
-  "service.landing.title.eyebrows": "Брови",
-
   "professional.pro": "професіоналів",
   "professional.found": "Ми знайшли",
 
-  "professional.count": "Ми знайшли для вас {count} професіоналів",
+  "professional.count": "{count, plural, =0 {Професіоналів не знайдено} other {Ми знайшли для вас {count} професіоналів}}",
 
   "filter.service.for.search": "Сервіси для пошуку",
   "filter.date.for.booking": "Дата доступності для бронювання",

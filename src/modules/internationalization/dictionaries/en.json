@@ -17,6 +17,7 @@
   "general.service.skincare": "Skincare",
   "general.service.eyebrows": "Eyebrows",
   "general.service.massage": "Massage",
+  "general.service.other": "Other",
 
   "validation.password.oneUppercaseChar": "One uppercase character",
   "validation.password.oneLowercaseChar": "One lowercase character",
@@ -345,15 +346,7 @@
   "validation.firstName.firstLetterCapitalized": "The first letter of the first name must be uppercase.",
   "validation.lastName.firstLetterCapitalized": "The first letter of the last name must be uppercase.",
 
-  "service.landing.title.make.up": "Make up",
-  "service.landing.title.hair": "Hair",
-  "service.landing.title.massage": "Massage",
-  "service.landing.title.fitness": "Fitness",
-  "service.landing.title.nails": "Nails",
-  "service.landing.title.skincare": "Skincare",
-  "service.landing.title.eyebrows": "Eyebrows",
-
-  "professional.count": "We found {count} pro's for you",
+  "professional.count": "{count, plural, =0 {No pro was found} other {We found {count} pro's for you}}",
 
   "filter.service.for.search": " Services for Search",
   "filter.service.all": "All",
