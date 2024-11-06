@@ -65,7 +65,6 @@ export const BookingProvider: FC<ChildrenProp & { userId: string }> = ({
     bookingCreate.mutate(
       {
         ...data,
-        userId: professional.user?.id,
         guestFirstName: name,
         guestLastName: lastName || undefined,
         guestPhone: phone,
