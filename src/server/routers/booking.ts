@@ -145,7 +145,6 @@ export const bookingRouter = router({
         startTime: z.string().datetime(),
         endTime: z.string().datetime(),
         date: z.string().datetime(),
-        userId: z.string().min(1, 'Required').optional(),
         guestFirstName: z.string().min(1, 'Required').max(maxLargeTextLength),
         guestLastName: z.string().max(maxLargeTextLength).optional(),
         guestPhone: z.string().min(1, 'Required').max(maxLargeTextLength),
@@ -162,7 +161,7 @@ export const bookingRouter = router({
         ]),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       const professional = await getProfessionalFromServiceOnProfessional(
         input.serviceProfessionalId
       );
@@ -277,6 +276,7 @@ export const bookingRouter = router({
       const booking = await prisma.booking.create({
         data: {
           ...createData,
+          userId: ctx?.user?.id,
           status: BookingStatus.PENDING,
           code: uniqueString(),
         },
@@ -350,6 +350,55 @@ export const bookingRouter = router({
           serviceProfessionalId: !!input?.serviceProfessionalId
             ? input?.serviceProfessionalId
             : { in: serviceOnProfessionalIds },
+          AND: [
+            input?.date
+              ? {
+                  startTime: {
+                    gte: startOfDay(new Date(input.date)),
+                    lte: endOfDay(new Date(input.date)),
+                  },
+                }
+              : {},
+            input?.startDate ? { startTime: { gte: input.startDate } } : {},
+            input?.endDate ? { endTime: { lte: input.endDate } } : {},
+          ],
+        },
+        select: {
+          ...defaultBookingSelect,
+          serviceProfessional: !!input?.expand?.includes(
+            'serviceProfessional'
+          ) && {
+            select: defaultServiceOnProfessionalSelect,
+          },
+        },
+        orderBy: input?.sortField && {
+          [input.sortField]: input.sortDirection ?? 'asc',
+        },
+        take: input?.limit ?? defaultLimit,
+        skip: input?.offset ?? 0,
+      });
+    }),
+  myBookings: privateProcedure
+    .input(
+      z
+        .object({
+          date: z.string().datetime().optional(),
+          startDate: z.string().datetime().optional(),
+          endDate: z.string().datetime().optional(),
+          limit: z.number().min(1).max(maxLimit).default(defaultLimit),
+          offset: z.number().min(0).default(0),
+          expand: z.array(z.enum(['serviceProfessional'])).optional(),
+          sortDirection: z.enum(['asc', 'desc']).optional(),
+          sortField: z.enum(['startTime']).optional(),
+        })
+        .optional()
+    )
+    .query(async ({ input, ctx }) => {
+      const { id } = ctx.user;
+
+      return prisma.booking.findMany({
+        where: {
+          userId: id,
           AND: [
             input?.date
               ? {
