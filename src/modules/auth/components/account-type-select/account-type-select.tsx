@@ -31,7 +31,6 @@ export const AccountTypeSelect: FC<AccountTypeSelectProps> = ({
         id: 'signUp.accountType.clientCard.description',
       }),
       badge: intl.formatMessage({ id: 'signUp.accountType.clientCard.badge' }),
-      // disabled: true,
     },
   };
 
