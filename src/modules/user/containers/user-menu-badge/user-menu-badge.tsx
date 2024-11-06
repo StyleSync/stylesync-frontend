@@ -73,7 +73,9 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
     return (
       <div className='flex items-center gap-x-2'>
         <Button
-          text='Become a Pro'
+          text={intl.formatMessage({
+            id: 'button.pro',
+          })}
           variant='light'
           onClick={() =>
             signIn(
@@ -123,7 +125,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
           items={[
             {
               id: 'profile',
-              text: 'My profile',
+              text: intl.formatMessage({ id: 'burger.menu.btn.myProfile' }),
               icon: 'user',
             },
             {

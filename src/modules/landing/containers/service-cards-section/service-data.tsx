@@ -7,35 +7,35 @@ import epil from '@/modules/landing/landing-image/epil.png';
 
 export const services = [
   {
-    title: 'Makeup',
+    title: 'general.service.makeup',
     image: makeup,
   },
   {
-    title: 'Hair',
+    title: 'general.service.hair',
     image: hair,
   },
   {
-    title: 'Massage',
+    title: 'general.service.massage',
     image: epil,
   },
   {
-    title: 'Fitness',
+    title: 'general.service.fitness',
     image: finess,
   },
   {
-    title: 'Nails',
+    title: 'general.service.nails',
     image: nails,
   },
   {
-    title: 'Skincare',
+    title: 'general.service.skincare',
     image: skincare,
   },
   {
-    title: 'Eyebrows',
+    title: 'general.service.eyebrows',
     image: epil,
   },
   {
-    title: 'Other',
+    title: 'general.service.other',
     // image: epil,
   },
 ];

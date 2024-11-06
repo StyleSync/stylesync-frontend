@@ -17,6 +17,7 @@
   "general.service.skincare": "Skincare",
   "general.service.eyebrows": "Eyebrows",
   "general.service.massage": "Massage",
+  "general.service.other": "Other",
 
   "validation.password.oneUppercaseChar": "One uppercase character",
   "validation.password.oneLowercaseChar": "One lowercase character",
@@ -128,7 +129,6 @@
   "service.constructor.add.sevice": "Add service",
   "service.constructor.delete.group": "Delete group",
 
-
   "weekdays.MONDAY": "Monday",
   "weekdays.TUESDAY": "Tuesday",
   "weekdays.WEDNESDAY": "Wednesday",
@@ -236,6 +236,7 @@
   "button.back": "Back",
   "button.next": "Next",
   "button.book": "Book",
+  "button.book.now": "Book now",
   "button.done": "Done",
   "button.skip": "Skip",
   "button.close": "Close",
@@ -245,7 +246,12 @@
   "button.add.break": "Add break",
   "button.reserve": "Reserve",
   "button.select.from.computer": "Select from computer",
-  
+  "button.pro.now": "Become a Pro Now",
+  "button.pro": "Become a Pro",
+  "button.clear.all": "Clear All",
+  "button.apply.filter": "Apply Filters",
+  "button.google.map": "Open on google maps",
+  "button.add.to.calendar": "Add to calendar",
 
   "button.remove": "Remove",
   "button.avatar.select.new": "Select new avatar",
@@ -338,5 +344,32 @@
   "validation.instagram.invalid": "Invalid Instagram URL",
   "validation.about.required": "About is required",
   "validation.firstName.firstLetterCapitalized": "The first letter of the first name must be uppercase.",
-  "validation.lastName.firstLetterCapitalized": "The first letter of the last name must be uppercase."
+  "validation.lastName.firstLetterCapitalized": "The first letter of the last name must be uppercase.",
+
+  "professional.count": "{count, plural, =0 {No pro was found} other {We found {count} pro's for you}}",
+
+  "filter.service.for.search": " Services for Search",
+  "filter.service.all": "All",
+  "filter.date.for.booking": "Date for Booking Availability",
+
+  "professional.search.card.services": "Makeup, hair, nails",
+  "pro.data.services": "services provided",
+  "pro.data.last.7.days": "14 services booked in the last 7 days",
+
+  "pro.layout.title.about": "About me",
+  "pro.layout.title.services": "Services",
+  "pro.layout.title.location": "Location",
+
+  "gallery.settings.title": "Gallery settings",
+
+  "choose.service": "Choose a service",
+  "select.time": "Select time",
+  "confirm.booking": "Confirm booking",
+
+  "booking.number": "Booking",
+  "specialist": "Specialist",
+  "service.title": "Title",
+  "service.price": "Price",
+  "service.start.time": "Start time",
+  "service.duration": "Duration"
 }

@@ -31,7 +31,8 @@ export const ProData: FC<ProDataProps> = ({ professional, session }) => {
         <div className='flex w-fit items-center gap-x-2 text-dark'>
           <Icon name='menu' className='h-4 w-4 !text-gray' />
           <Typography variant='body2' className='!text-inherit'>
-            {serviceOnProfessionalList.length} services provided
+            {serviceOnProfessionalList.length}{' '}
+            {intl.formatMessage({ id: 'pro.data.services' })}
           </Typography>
         </div>
         {/* todo: show this label if doesn't have bookings for last 7 days and the user has been registered less than 1 week ago  */}
@@ -44,7 +45,7 @@ export const ProData: FC<ProDataProps> = ({ professional, session }) => {
         <div className='flex w-fit items-center gap-x-2 text-dark'>
           <Icon name='arrow-increase' className='h-4 w-4 !text-gray' />
           <Typography variant='body2' className='!text-inherit'>
-            14 services booked in the last 7 days
+            {intl.formatMessage({ id: 'pro.data.last.7.days' })}
           </Typography>
         </div>
       </div>

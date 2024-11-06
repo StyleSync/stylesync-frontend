@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import clsx from 'clsx';
+
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/modules/auth/constants/auth-server.constants';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -37,7 +38,7 @@ export default async function Profile({ params }: PageParams<{ id: string }>) {
         </section>
         <div className={styles.divider} />
         <div className={styles.sectionGroup}>
-          <ProfileSectionLayout title='About me' id='about-me'>
+          <ProfileSectionLayout title='pro.layout.title.about' id='about-me'>
             <Suspense
               fallback={
                 <div className='flex flex-col gap-y-2'>
@@ -50,13 +51,19 @@ export default async function Profile({ params }: PageParams<{ id: string }>) {
               <AboutMe userId={params.id} />
             </Suspense>
           </ProfileSectionLayout>
-          <ProfileSectionLayout title='Services' id='profile-services'>
+          <ProfileSectionLayout
+            title='pro.layout.title.services'
+            id='profile-services'
+          >
             <Suspense fallback={<ServiceTableSkeleton rows={3} />}>
               <UserServices userId={params.id} session={session} />
             </Suspense>
           </ProfileSectionLayout>
           <ErrorBoundary fallback={null}>
-            <ProfileSectionLayout title='Location' id='profile-location'>
+            <ProfileSectionLayout
+              title='pro.layout.title.location'
+              id='profile-location'
+            >
               <Suspense
                 fallback={
                   <div className='flex flex-col gap-y-4'>

@@ -85,10 +85,10 @@ export default function SearchProPage() {
                 <div className='skeleton h-5 w-[250px] rounded' />
               ) : (
                 <span className='text-base font-medium text-dark lg:text-xl'>
-                  We found{' '}
-                  <span className='text-primary'>
-                    {professionalList?.length} pro&apos;s for you
-                  </span>
+                  {intl.formatMessage(
+                    { id: 'professional.count' },
+                    { count: professionalList?.length }
+                  )}
                 </span>
               )}
 
@@ -123,11 +123,6 @@ export default function SearchProPage() {
                       ))
                     ) : (
                       <div className='absolute left-0 top-0 flex h-full w-full flex-col gap-y-4'>
-                        <span className='text-xl font-medium text-dark'>
-                          {intl.formatMessage({
-                            id: 'pages.searchPro.noFound.title',
-                          })}
-                        </span>
                         <span className='text-sm font-medium text-gray'>
                           {intl.formatMessage({
                             id: 'pages.searchPro.noFound.description',

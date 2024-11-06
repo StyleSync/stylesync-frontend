@@ -70,7 +70,9 @@ export const ProfileSettingsTabContentLayout: FC<
         )}
         {icon && deviceType !== 'mobile' && <Icon name={icon} />}
         <Typography variant='body1' weight='medium'>
-          {title}
+          {intl.formatMessage({
+            id: title,
+          })}
         </Typography>
       </div>
       <div className='flex flex-1 gap-x-6 overflow-y-auto pb-0 md:overflow-y-visible'>

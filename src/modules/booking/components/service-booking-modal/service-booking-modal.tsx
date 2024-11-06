@@ -1,6 +1,7 @@
 import { type FC, useState, useEffect, useCallback, useId } from 'react';
 import { useIntl } from 'react-intl';
-
+import { startOfToday } from 'date-fns';
+import Image from 'next/image';
 // components
 import { Avatar } from '@/modules/core/components/avatar';
 import { Typography } from '@/modules/core/components/typogrpahy';
@@ -8,24 +9,23 @@ import { BookingForm } from '@/modules/booking/components/booking-form';
 import { BookingTimeSelect } from '@/modules/booking/containers/booking-time-select';
 import { ServiceOnProfessionalSelect } from '@/modules/service/components/service-on-professional-select';
 import { DialogWizard } from '@/modules/core/components/dialog-wizard';
+import { Button } from '@/modules/core/components/button';
+import { Icon, type IconName } from '@/modules/core/components/icon';
 // utils
 import { onQueryRetry } from '@/modules/core/utils/query-retry.utils';
+import { getFullName } from '@/modules/user/utils/user.utils';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
+// hooks
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // type
 import { type DialogProps } from '@/modules/core/components/dialog/dialog.interface';
 import { type AvailableBookingTime } from '@/server/types';
 import { type BookingFormValue } from '@/modules/booking/components/booking-form/booking-form';
 import { type ServiceBookingModalProps } from './service-booking-modal.interface';
+import type { ServiceOnProfessionalListItem } from '@/modules/service/types/service.types';
 // assets
 import Bg from '@/assets/images/bg-1.png';
-import Image from 'next/image';
-import { getFullName } from '@/modules/user/utils/user.utils';
-import type { ServiceOnProfessionalListItem } from '@/modules/service/types/service.types';
-import { Icon, type IconName } from '@/modules/core/components/icon';
-import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
-import { startOfToday } from 'date-fns';
-import { trpc } from '@/modules/core/utils/trpc.utils';
-import { Button } from '@/modules/core/components/button';
-import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 
 export const ServiceBookingModal: FC<
   Omit<DialogProps, 'children'> & ServiceBookingModalProps
@@ -122,7 +122,9 @@ export const ServiceBookingModal: FC<
       steps={[
         {
           id: 'service',
-          title: 'Choose a service',
+          title: intl.formatMessage({
+            id: 'choose.service',
+          }),
           isNext: true,
           nextBtnProps: {
             disabled: !serviceOnProfessional,
@@ -130,7 +132,9 @@ export const ServiceBookingModal: FC<
         },
         {
           id: 'datetime',
-          title: 'Select time',
+          title: intl.formatMessage({
+            id: 'select.time',
+          }),
           isNext: true,
           isBack: true,
           nextBtnProps: {
@@ -139,11 +143,13 @@ export const ServiceBookingModal: FC<
         },
         {
           id: 'confirmation',
-          title: 'Confirm booking',
+          title: intl.formatMessage({
+            id: 'confirm.booking',
+          }),
           isNext: true,
           isBack: true,
           nextBtnProps: {
-            text: 'Book',
+            text: intl.formatMessage({ id: 'button.book' }),
             form: confirmationFormId,
             type: 'submit',
           },

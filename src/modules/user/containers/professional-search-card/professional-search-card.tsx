@@ -1,4 +1,6 @@
 import { type FC } from 'react';
+import { useIntl } from 'react-intl';
+
 // components
 import { Avatar } from '@/modules/core/components/avatar';
 import { Typography } from '@/modules/core/components/typogrpahy';
@@ -12,6 +14,8 @@ import { Icon } from '@/modules/core/components/icon';
 export const ProfessionalSearchCard: FC<ProfessionalSearchCardProps> = ({
   professional,
 }) => {
+  const intl = useIntl();
+
   const router = useRouter();
 
   return (
@@ -52,7 +56,9 @@ export const ProfessionalSearchCard: FC<ProfessionalSearchCardProps> = ({
             <div className='flex w-fit items-center gap-x-2 text-dark'>
               <Icon name='beauty-service' className='h-4 w-4 !text-gray' />
               <Typography variant='body2' className='!text-inherit'>
-                Makeup, hair, nails
+                {intl.formatMessage({
+                  id: 'professional.search.card.services',
+                })}
               </Typography>
             </div>
           </div>

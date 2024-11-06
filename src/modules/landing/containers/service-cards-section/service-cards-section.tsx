@@ -80,7 +80,10 @@ export const ServiceCardSection = () => {
         <Swiper className='h-full w-full' {...dynamicSwiperProps} grabCursor>
           {services.map((card, index) => (
             <SwiperSlide className='h-fit w-full pb-14 pt-4' key={index}>
-              <ServiceCard image={card.image} title={card.title} />
+              <ServiceCard
+                image={card.image}
+                title={intl.formatMessage({ id: card.title })}
+              />
             </SwiperSlide>
           ))}
         </Swiper>

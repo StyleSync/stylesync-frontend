@@ -23,7 +23,7 @@ export const ProfessionalSettingsGallery: FC = () => {
           isMobile: true,
         },
       ]}
-      title='Gallery settings'
+      title='gallery.settings.title'
       icon='folder'
     >
       <ProfessionalGalleryForm />
