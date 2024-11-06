@@ -215,14 +215,14 @@ export const formatMinutesDuration = (minutes: number): string => {
 export const emptyTimeRange = formatTimeRange(new Time(), new Time());
 
 // formatter duration
-export const formatDuration = (duration: number, intl: IntlShape): string => {
+export const formatDuration = (duration: number, intl?: IntlShape): string => {
   const hours = Math.floor(duration / 60);
   const minutes = duration % 60;
 
   let formattedDuration = '';
 
   if (hours > 0) {
-    formattedDuration += `${hours} ${intl.formatMessage(
+    formattedDuration += `${hours} ${intl?.formatMessage(
       { id: hours === 1 ? 'duration.hour' : 'duration.hours' },
       { count: hours }
     )}`;
@@ -233,7 +233,7 @@ export const formatDuration = (duration: number, intl: IntlShape): string => {
       formattedDuration += ' ';
     }
 
-    formattedDuration += `${minutes} ${intl.formatMessage(
+    formattedDuration += `${minutes} ${intl?.formatMessage(
       { id: minutes === 1 ? 'duration.min' : 'duration.mins' },
       { count: minutes }
     )}`;
