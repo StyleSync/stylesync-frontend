@@ -1,4 +1,5 @@
 import { minutesInHour, set, getMinutes, getHours } from 'date-fns';
+import { type IntlShape } from 'react-intl';
 
 type TimeUnit = `${number}${number}`;
 
@@ -214,14 +215,17 @@ export const formatMinutesDuration = (minutes: number): string => {
 export const emptyTimeRange = formatTimeRange(new Time(), new Time());
 
 // formatter duration
-export const formatDuration = (duration: number): string => {
+export const formatDuration = (duration: number, intl: IntlShape): string => {
   const hours = Math.floor(duration / 60);
   const minutes = duration % 60;
 
   let formattedDuration = '';
 
   if (hours > 0) {
-    formattedDuration += `${hours} ${hours === 1 ? 'hour' : 'hours'}`;
+    formattedDuration += `${hours} ${intl.formatMessage(
+      { id: hours === 1 ? 'duration.hour' : 'duration.hours' },
+      { count: hours }
+    )}`;
   }
 
   if (minutes > 0) {
@@ -229,7 +233,10 @@ export const formatDuration = (duration: number): string => {
       formattedDuration += ' ';
     }
 
-    formattedDuration += `${minutes} ${minutes === 1 ? 'min' : 'mins'}`;
+    formattedDuration += `${minutes} ${intl.formatMessage(
+      { id: minutes === 1 ? 'duration.min' : 'duration.mins' },
+      { count: minutes }
+    )}`;
   }
 
   return formattedDuration;

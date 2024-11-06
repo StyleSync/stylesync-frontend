@@ -260,6 +260,11 @@
   "button.add.to.calendar": "Додати до календара",
   "button.google.map": "Відкрити на картах Google",
 
+  "duration.hour": "година",
+  "duration.hours": "години",
+  "duration.min": "хв",
+  "duration.mins": "хв",
+
   "bookingInfo.dialog.actions.call": "Дзвінок",
   "bookingInfo.dialog.actions.reschedule": "Перепланувати",
   "bookingInfo.dialog.actions.cancel": "Скасувати бронювання",
