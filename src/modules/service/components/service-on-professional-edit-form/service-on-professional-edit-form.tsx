@@ -13,7 +13,11 @@ import { Dialog } from '@/modules/core/components/dialog';
 import { Typography } from '@/modules/core/components/typogrpahy';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
-import { Time, type TimeValue } from '@/modules/core/utils/time.utils';
+import {
+  formatDuration,
+  Time,
+  type TimeValue,
+} from '@/modules/core/utils/time.utils';
 // types
 import type { ServiceOnProfessionalEditableFields } from '@/modules/service/types/service.types';
 import type {
@@ -200,6 +204,12 @@ export const ServiceOnProfessionalEditForm: FC<
                 render={({ field, fieldState }) => (
                   <TimeField
                     value={field.value}
+                    formatValue={(value: string) => {
+                      return formatDuration(
+                        Time.toMinuteDuration(value as TimeValue),
+                        intl
+                      );
+                    }}
                     onChange={field.onChange}
                     inputProps={{
                       label: intl.formatMessage({

@@ -25,6 +25,7 @@ export const TimeField: FC<TimeFieldProps> = ({
   value,
   onChange,
   inputProps,
+  formatValue,
 }) => {
   // state
   const isActive = useBoolean();
@@ -58,6 +59,7 @@ export const TimeField: FC<TimeFieldProps> = ({
 
   const handleTextFieldChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
+      if (formatValue) return;
       // Remove any non-digit characters from the input value
       const sanitizedValue = e.target.value.replace(/\D/g, '');
 
@@ -81,7 +83,7 @@ export const TimeField: FC<TimeFieldProps> = ({
 
       onChange(formattedValue);
     },
-    [onChange]
+    [onChange, formatValue]
   );
 
   const handleKeyDown = useCallback(
@@ -115,7 +117,7 @@ export const TimeField: FC<TimeFieldProps> = ({
           <TextField
             {...inputProps}
             ref={inputRef}
-            value={value}
+            value={formatValue ? formatValue(value) : value}
             onChange={handleTextFieldChange}
             onFocus={startTimeSelection}
             variant='input'

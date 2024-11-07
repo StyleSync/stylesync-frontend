@@ -16,12 +16,15 @@ import { isServiceOnProfessionalValid } from '@/modules/service/utils/service.ut
 // types
 import type { ServiceConstructorRowProps } from './service-constructor-row.interface';
 import styles from './service-constructor-row.module.scss';
+import { formatDuration } from '@/modules/core/utils/time.utils';
+import { useIntl } from 'react-intl';
 
 export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
   data,
 }) => {
   const queryClient = useQueryClient();
   const deviceType = useDeviceType();
+  const intl = useIntl();
   // state
   const isEdit = useBoolean(!isServiceOnProfessionalValid(data));
   // refs
@@ -58,7 +61,7 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
         <div className={styles.info}>
           <Typography variant='body1'>{data.title}</Typography>
           <Typography variant='small' className={styles.secondaryText}>
-            {data.duration}
+            {formatDuration(data.duration, intl)}
           </Typography>
         </div>
         <div className={styles.price}>

@@ -1,4 +1,5 @@
 import { minutesInHour, set, getMinutes, getHours } from 'date-fns';
+import { type IntlShape } from 'react-intl';
 
 type TimeUnit = `${number}${number}`;
 
@@ -189,14 +190,20 @@ export const isTimeRangeString = (timeRange: string): boolean => {
  * @param {number} minutes - The duration in minutes to be formatted.
  * @returns {string} A string representing the duration in the format 'h hours m minutes'.
  */
-export const formatMinutesDuration = (minutes: number): string => {
+export const formatMinutesDuration = (
+  minutes: number,
+  intl?: IntlShape
+): string => {
   const h = Math.floor(minutes / minutesInHour);
-  const m = minutes - h * minutesInHour;
+  const m = minutes % minutesInHour;
 
   let formatted = '';
 
   if (h > 0) {
-    formatted += `${h}h`;
+    formatted += intl?.formatMessage(
+      { id: 'duration.hour.short' },
+      { count: h }
+    );
   }
 
   if (m > 0) {
@@ -204,7 +211,10 @@ export const formatMinutesDuration = (minutes: number): string => {
       formatted += ' ';
     }
 
-    formatted += `${m}min`;
+    formatted += intl?.formatMessage(
+      { id: 'duration.minute.short' },
+      { count: m }
+    );
   }
 
   return formatted;
@@ -214,14 +224,17 @@ export const formatMinutesDuration = (minutes: number): string => {
 export const emptyTimeRange = formatTimeRange(new Time(), new Time());
 
 // formatter duration
-export const formatDuration = (duration: number): string => {
+export const formatDuration = (duration: number, intl?: IntlShape): string => {
   const hours = Math.floor(duration / 60);
   const minutes = duration % 60;
 
   let formattedDuration = '';
 
   if (hours > 0) {
-    formattedDuration += `${hours} ${hours === 1 ? 'hour' : 'hours'}`;
+    formattedDuration += ` ${intl?.formatMessage(
+      { id: 'duration.hour' },
+      { count: hours }
+    )}`;
   }
 
   if (minutes > 0) {
@@ -229,7 +242,10 @@ export const formatDuration = (duration: number): string => {
       formattedDuration += ' ';
     }
 
-    formattedDuration += `${minutes} ${minutes === 1 ? 'min' : 'mins'}`;
+    formattedDuration += ` ${intl?.formatMessage(
+      { id: 'duration.minute' },
+      { count: minutes }
+    )}`;
   }
 
   return formattedDuration;

@@ -39,7 +39,7 @@ export const ServiceOnProfessionalTableRow: FC<
               {data.title}
             </Typography>
             <Typography className={styles.duration} variant='small'>
-              {formatMinutesDuration(data.duration)}
+              {formatMinutesDuration(data.duration, intl)}
             </Typography>
           </div>
           <div className={clsx(styles.cell, styles.flex25)}>
