@@ -253,6 +253,12 @@
   "button.google.map": "Open on google maps",
   "button.add.to.calendar": "Add to calendar",
 
+  "duration.hour": "{count, plural, one {# hour} other {# hours}}",
+  "duration.minute": "{count, plural, one {# minute} other {# minutes}}",
+
+  "duration.hour.short": "{count}h",
+  "duration.minute.short": "{count}min",
+
   "button.remove": "Remove",
   "button.avatar.select.new": "Select new avatar",
   "button.avatar.select": "Select avatar",

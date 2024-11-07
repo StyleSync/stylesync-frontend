@@ -190,14 +190,20 @@ export const isTimeRangeString = (timeRange: string): boolean => {
  * @param {number} minutes - The duration in minutes to be formatted.
  * @returns {string} A string representing the duration in the format 'h hours m minutes'.
  */
-export const formatMinutesDuration = (minutes: number): string => {
+export const formatMinutesDuration = (
+  minutes: number,
+  intl?: IntlShape
+): string => {
   const h = Math.floor(minutes / minutesInHour);
-  const m = minutes - h * minutesInHour;
+  const m = minutes % minutesInHour;
 
   let formatted = '';
 
   if (h > 0) {
-    formatted += `${h}h`;
+    formatted += intl?.formatMessage(
+      { id: 'duration.hour.short' },
+      { count: h }
+    );
   }
 
   if (m > 0) {
@@ -205,7 +211,10 @@ export const formatMinutesDuration = (minutes: number): string => {
       formatted += ' ';
     }
 
-    formatted += `${m}min`;
+    formatted += intl?.formatMessage(
+      { id: 'duration.minute.short' },
+      { count: m }
+    );
   }
 
   return formatted;
@@ -222,8 +231,8 @@ export const formatDuration = (duration: number, intl?: IntlShape): string => {
   let formattedDuration = '';
 
   if (hours > 0) {
-    formattedDuration += `${hours} ${intl?.formatMessage(
-      { id: hours === 1 ? 'duration.hour' : 'duration.hours' },
+    formattedDuration += ` ${intl?.formatMessage(
+      { id: 'duration.hour' },
       { count: hours }
     )}`;
   }
@@ -233,8 +242,8 @@ export const formatDuration = (duration: number, intl?: IntlShape): string => {
       formattedDuration += ' ';
     }
 
-    formattedDuration += `${minutes} ${intl?.formatMessage(
-      { id: minutes === 1 ? 'duration.min' : 'duration.mins' },
+    formattedDuration += ` ${intl?.formatMessage(
+      { id: 'duration.minute' },
       { count: minutes }
     )}`;
   }
