@@ -16,6 +16,7 @@ import type {
   AboutProfessionalFormValues,
 } from './about-professional-form.interface';
 import styles from './about-professional-form.module.scss';
+import { trpc } from '@/modules/core/utils/trpc.utils';
 
 const defaultValues: AboutProfessionalFormValues = {
   firstName: '',
@@ -85,6 +86,9 @@ const validationSchema: z.Schema<AboutProfessionalFormValues> = z.object({
 const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
   ({ initialValues, formId, onSubmit }) => {
     const intl = useIntl();
+    // queries
+    const { data: me } = trpc.user.me.useQuery();
+
     // form
     const { reset, ...form } = useForm<AboutProfessionalFormValues>({
       defaultValues,
@@ -168,33 +172,37 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
             }}
           />
         </div>
-        <div className={styles.inputsRow}>
-          <TextField
-            {...form.register('facebook')}
-            error={getErrorMessage(form.formState.errors.facebook?.message)}
-            variant='input'
-            label={intl.formatMessage({
-              id: 'user.about.professional.form.facebook',
-            })}
-          />
-          <TextField
-            {...form.register('instagram')}
-            error={getErrorMessage(form.formState.errors.instagram?.message)}
-            variant='input'
-            label={intl.formatMessage({
-              id: 'user.about.professional.form.instagram',
-            })}
-          />
-        </div>
-        <TextField
-          {...form.register('about')}
-          error={getErrorMessage(form.formState.errors.about?.message)}
-          variant='textarea'
-          label={intl.formatMessage({
-            id: 'user.about.professional.form.about',
-          })}
-          style={{ height: 200, resize: 'none' }}
-        />
+        {me?.userType === 'PROFESSIONAL' && (
+          <>
+            <div className={styles.inputsRow}>
+              <TextField
+                {...form.register('facebook')}
+                error={form.formState.errors.facebook?.message}
+                variant='input'
+                label={intl.formatMessage({
+                  id: 'user.about.professional.form.facebook',
+                })}
+              />
+              <TextField
+                {...form.register('instagram')}
+                error={form.formState.errors.instagram?.message}
+                variant='input'
+                label={intl.formatMessage({
+                  id: 'user.about.professional.form.instagram',
+                })}
+              />
+            </div>
+            <TextField
+              {...form.register('about')}
+              error={Boolean(form.formState.errors.about)}
+              variant='textarea'
+              label={intl.formatMessage({
+                id: 'user.about.professional.form.about',
+              })}
+              style={{ height: 200, resize: 'none' }}
+            />
+          </>
+        )}
       </form>
     );
   }

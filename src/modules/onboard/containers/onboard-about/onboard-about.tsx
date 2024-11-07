@@ -15,10 +15,12 @@ import { showToast } from '@/modules/core/providers/toast-provider';
 // types
 import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboard/pro-onboard.interface';
 import type { AboutProfessionalFormValues } from '@/modules/user/components/about-professional-form/about-professional-form.interface';
+import { useRouter } from 'next/navigation';
 
 export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
   const intl = useIntl();
   const formId = useId();
+  const router = useRouter();
 
   // queries
   const { data: me, ...meQuery } = trpc.user.me.useQuery({
@@ -83,32 +85,39 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
         firstName: values.firstName || undefined,
         lastName: values.lastName || undefined,
         phone: values.phone || undefined,
+        onboardingCompleted: me.userType === 'CUSTOMER',
       });
 
-      professionalMutation(
-        {
-          about: values.about || undefined,
-          instagram: values.instagram || undefined,
-          facebook: values.facebook || undefined,
-        },
-        {
-          onSuccess: () => {
-            meQuery.refetch();
-            next();
+      if (me.userType === 'PROFESSIONAL') {
+        professionalMutation(
+          {
+            about: values.about || undefined,
+            instagram: values.instagram || undefined,
+            facebook: values.facebook || undefined,
           },
-          onError: () => {
-            showToast({
-              variant: 'error',
-              title: intl.formatMessage({
-                id: 'onboard.about.toast.error.title',
-              }),
-              description: intl.formatMessage({
-                id: 'onboard.about.toast.success.description',
-              }),
-            });
-          },
-        }
-      );
+          {
+            onSuccess: () => {
+              meQuery.refetch();
+              next();
+            },
+            onError: () => {
+              showToast({
+                variant: 'error',
+                title: intl.formatMessage({
+                  id: 'onboard.about.toast.error.title',
+                }),
+                description: intl.formatMessage({
+                  id: 'onboard.about.toast.success.description',
+                }),
+              });
+            },
+          }
+        );
+      }
+
+      if (me.userType === 'CUSTOMER') {
+        router.push(`/app/my-bookings`);
+      }
     },
     [
       me,
@@ -119,6 +128,7 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
       professionalUpdate,
       intl,
       avatarUpload,
+      router,
     ]
   );
 
@@ -128,6 +138,7 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
         title: 'About me',
       }}
       nextButtonProps={{
+        text: me?.userType === 'CUSTOMER' ? 'Save' : undefined,
         form: formId,
         isLoading:
           professionalUpdateMutation.isLoading ||

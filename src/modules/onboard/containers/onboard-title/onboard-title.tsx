@@ -32,6 +32,9 @@ export const OnboardTitle: FC = () => {
     mutateAsync: professionalCreateAsync,
     ...professionalCreateMutation
   } = trpc.professional.create.useMutation();
+
+  const accountData = trpc.user.me.useQuery();
+
   //
   const isLoading =
     meQuery.isLoading ||
@@ -70,31 +73,35 @@ export const OnboardTitle: FC = () => {
   }, [router, session, me, meUpdate, professionalCreateAsync, intl]);
 
   return (
-    <div className={styles.root}>
-      <div className={clsx('pageContent', styles.info)}>
-        <Typography variant='subtitle' weight='medium'>
-          {intl.formatMessage({ id: 'onboard.title.title' })}
-        </Typography>
-        <Button
-          className={styles.skip}
-          text={intl.formatMessage({ id: 'button.skip' })}
-          variant='outlined'
-          disabled={isLoading || meQuery.isError}
-          onClick={skip}
-        />
-      </div>
-      <div className='pageContent'>
-        <Stepper
-          value={active}
-          steps={Object.values(onboardData).map((data) => ({
-            value: data.value,
-            text: data.title,
-          }))}
-          classes={{
-            root: styles.stepper,
-          }}
-        />
-      </div>
-    </div>
+    <>
+      {accountData?.data?.userType === 'PROFESSIONAL' && (
+        <div className={styles.root}>
+          <div className={clsx('pageContent', styles.info)}>
+            <Typography variant='subtitle' weight='medium'>
+              {intl.formatMessage({ id: 'onboard.title.title' })}
+            </Typography>
+            <Button
+              className={styles.skip}
+              text={intl.formatMessage({ id: 'button.skip' })}
+              variant='outlined'
+              disabled={isLoading || meQuery.isError}
+              onClick={skip}
+            />
+          </div>
+          <div className='pageContent'>
+            <Stepper
+              value={active}
+              steps={Object.values(onboardData).map((data) => ({
+                value: data.value,
+                text: data.title,
+              }))}
+              classes={{
+                root: styles.stepper,
+              }}
+            />
+          </div>
+        </div>
+      )}
+    </>
   );
 };

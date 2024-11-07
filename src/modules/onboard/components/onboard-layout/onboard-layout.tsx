@@ -12,6 +12,7 @@ import { Button } from '@/modules/core/components/button';
 import { Typography } from '@/modules/core/components/typogrpahy';
 // containers
 import { BottomFixedContent } from '@/modules/core/containers/bottom-fixed-content';
+// import { trpc } from '@/modules/core/utils/trpc.utils';
 
 import type { OnboardLayoutProps } from './onboard-layout.interface';
 import styles from './onboard-layout.module.scss';
@@ -107,6 +108,7 @@ export const OnboardLayout: FC<OnboardLayoutProps> = ({
               {...prevButtonProps}
             />
           )}
+
           <Button
             className={styles.action}
             text={intl.formatMessage({ id: 'button.next' })}

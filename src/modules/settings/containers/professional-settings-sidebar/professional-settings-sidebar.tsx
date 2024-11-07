@@ -31,8 +31,43 @@ export const ProfessionalSettingsSidebar: FC<UserSettingsSidebarProps> = () => {
     expand: ['professional'],
   });
   // memo
-  const linkGroups: SidebarLinkGroup[] = useMemo(
-    () => [
+  const linkGroups: SidebarLinkGroup[] = useMemo(() => {
+    if (me?.userType !== 'PROFESSIONAL') {
+      return [
+        {
+          id: 'profile',
+          title: intl.formatMessage({
+            id: 'professional.settings.sidebar.profile',
+          }),
+          links: [
+            {
+              id: 'about',
+              name: intl.formatMessage({
+                id: 'professional.settings.sidebar.about',
+              }),
+              icon: 'info',
+            },
+          ],
+        },
+        {
+          id: 'app',
+          title: intl.formatMessage({
+            id: 'professional.settings.sidebar.language',
+          }),
+          links: [
+            {
+              id: 'language',
+              icon: 'flag-ukraine',
+              renderItem: () => {
+                return <LocaleSelect />;
+              },
+            },
+          ],
+        },
+      ];
+    }
+
+    return [
       {
         id: 'profile',
         title: intl.formatMessage({
@@ -91,9 +126,8 @@ export const ProfessionalSettingsSidebar: FC<UserSettingsSidebarProps> = () => {
           },
         ],
       },
-    ],
-    [intl]
-  );
+    ];
+  }, [intl, me?.userType]);
 
   const topSlot = useMemo<ReactNode[] | undefined>(() => {
     if (deviceType === 'mobile') {
