@@ -87,7 +87,6 @@
 
   "photo.modal.upload.toast.error.title": "Ой, помилка",
   "photo.modal.upload.toast.error.description": "Ой",
-  "photo.modal.upload.toast.success.title": "Добре!",
   "photo.modal.upload.toast.success.description": "Фото додано",
   "photo.modal.upload.dropHere": "Перетягніть фото сюди",
   "photo.modal.upload.supports": "Підтримує: PNG, JPG, JPEG, WEBP",
@@ -150,21 +149,18 @@
 
   "albumAdd.modal.toast.error.title.edit": "Ой, помилка",
   "albumAdd.modal.toast.error.description.edit": "Помилка",
-  "albumAdd.modal.toast.success.title.edit": "Добре!",
-  "albumAdd.modal.toast.success.description.edit": "Альбом відредаговано",
+  "albumAdd.modal.toast.success.description.edit": "Зміни збережено",
   "albumAdd.modal.toast.error.title.add": "Ой, помилка",
   "albumAdd.modal.toast.error.description.add": "Помилка",
-  "albumAdd.modal.toast.success.title.add": "Добре!",
   "albumAdd.modal.toast.success.description.add": "Альбом додано",
 
-  "albumAdd.modal.title.edit": "Змінити",
-  "albumAdd.modal.title.add": "Додати",
+  "albumAdd.modal.title.edit": "Альбом",
+  "albumAdd.modal.title.add": "Новий альбом",
 
   "albumAdd.modal.label.input": "Назва альбому",
 
   "galleryImage.toast.error.title": "Ой, помилка",
   "galleryImage.toast.error.description": "Помилка",
-  "galleryImage.toast.success.title": "Добре!",
   "galleryImage.toast.success.description.delete": "Фото видалено",
 
   "professional.settings.location.toast.error.title.add": "Ой, помилка",
@@ -220,7 +216,7 @@
 
   "user.professional.gallery.form.noAlbumsAdded": "Альбомів не додано",
   "user.professional.gallery.form.loadingAlbums": "Завантаження альбомів...",
-  "user.professional.gallery.form.createAlbum": "Створити альбом",
+  "user.professional.gallery.form.createAlbum": "Додати альбом",
 
   "user.professional.profile.tabs.about": "Про себе",
   "user.professional.profile.tabs.services": "Послуги",
@@ -252,7 +248,7 @@
   "button.refresh": "Оновити",
   "button.support": "Підтримка",
   "button.add.break": "Додати перерву",
-  "button.select.from.computer": "Вибрати з комп'ютера",
+  "button.select.from.computer": "Вибрати фото",
   "button.select.from.phone": "Вибрати з галереї",
   "button.pro.now": "Стати профі зараз",
   "button.apply.filter": "Застосувати фільтри",
@@ -273,7 +269,6 @@
 
   "album.card.toast.error.title": "Помилка",
   "album.card.toast.error.description": "Виникла помилка",
-  "album.card.toast.success.title": "Відмінно!",
   "album.card.toast.success.description": "Альбом видалено",
 
   "album.card.menu.rename": "Перейменувати альбом",
@@ -282,7 +277,7 @@
 
   "album.details.noImages": "Фотографії відсутні",
   "album.details.dowlandImage": "Завантаження фотографій",
-  "album.details.addImage": "Завантажити фото",
+  "album.details.addImage": "Додати фото",
 
   "photo.upload.modal.toast.error.title": "Помилка",
   "photo.upload.modal.toast.error.description": "Виникла помилка",

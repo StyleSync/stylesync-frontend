@@ -4,11 +4,11 @@
 
 .content {
   height: 212px;
-  z-index: variables.$level-dialog-2;
+  z-index: variables.$level-dialog-3;
 }
 
 .dialogOverlay {
-  z-index: calc(#{variables.$level-dialog-2} - 1);
+  z-index: calc(#{variables.$level-dialog-3} - 1);
 }
 
 .root {

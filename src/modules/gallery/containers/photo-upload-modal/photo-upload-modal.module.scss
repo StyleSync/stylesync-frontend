@@ -13,7 +13,8 @@
 .dialogContent {
   @include mixins.phone {
     min-height: 100%;
-    border-radius: 0px;
+    border-radius: 0;
     width: 100%;
+    z-index: 150;
   }
 }

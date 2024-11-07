@@ -98,6 +98,7 @@
     display: flex;
     justify-content: flex-end;
     padding: utils.spacing(3, 4, 4, 4);
+    border-top: 1px solid variables.$grey-light-color;
 
     @include mixins.phone {
       padding: utils.spacing(2, 3, 3);
