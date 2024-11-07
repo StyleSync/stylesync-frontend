@@ -50,8 +50,6 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
     );
   }, [data.id, serviceOnProfessionalDeleteMutation]);
 
-  console.log(data.duration);
-
   return (
     <div
       className={clsx(styles.root, {
