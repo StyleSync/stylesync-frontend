@@ -52,7 +52,7 @@ export const OnboardLayout: FC<OnboardLayoutProps> = ({
       return;
     }
 
-    if (!me.professional) {
+    if (!me.professional && me.userType === 'PROFESSIONAL') {
       await professionalCreateAsync({});
     }
 
@@ -63,7 +63,13 @@ export const OnboardLayout: FC<OnboardLayoutProps> = ({
       {
         onSuccess: () => {
           session.update();
-          router.replace(`/app/profile/${me.id}`);
+          if (me.userType === 'PROFESSIONAL') {
+            router.replace(`/app/profile/${me.id}`);
+
+            return;
+          }
+
+          router.replace(`/app/my-bookings`);
         },
         onError: () => {
           showToast({

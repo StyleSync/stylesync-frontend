@@ -39,10 +39,18 @@ export const BookingProvider: FC<ChildrenProp & { userId: string }> = ({
   const [selectedServiceOnProfessional, setSelectedServiceOnProfessional] =
     useState<ServiceOnProfessionalListItem | null>(null);
 
-  const [professional] = trpc.professional.get.useSuspenseQuery({
+  const { data: user } = trpc.user.get.useQuery({
     id: userId,
-    expand: ['user'],
+    expand: [],
   });
+
+  const { data: professional } = trpc.professional.get.useQuery(
+    {
+      id: userId,
+      expand: ['user'],
+    },
+    { enabled: user?.userType === 'PROFESSIONAL' }
+  );
 
   const bookingCreate = trpc.booking.create.useMutation();
 
@@ -114,14 +122,16 @@ export const BookingProvider: FC<ChildrenProp & { userId: string }> = ({
       }}
     >
       {children}
-      <ServiceBookingModal
-        professional={professional}
-        selectedService={selectedServiceOnProfessional}
-        onOpenChange={isBookingOpen.setValue}
-        isOpen={isBookingOpen.value}
-        onConfirm={handleConfirm}
-        isLoading={bookingCreate.isLoading}
-      />
+      {professional && (
+        <ServiceBookingModal
+          professional={professional}
+          selectedService={selectedServiceOnProfessional}
+          onOpenChange={isBookingOpen.setValue}
+          isOpen={isBookingOpen.value}
+          onConfirm={handleConfirm}
+          isLoading={bookingCreate.isLoading}
+        />
+      )}
       <BookingModalSuccess
         isOpen={isSuccessOpen.value}
         onOpenChange={isSuccessOpen.setValue}

@@ -7,7 +7,8 @@ import { useIntl } from 'react-intl';
 import { TextField } from '@/modules/core/components/text-field';
 import { AvatarSelect } from '@/modules/core/components/avatar-select';
 import { PhoneField } from '@/modules/core/components/phone-field';
-
+// utils
+import { trpc } from '@/modules/core/utils/trpc.utils';
 // hooks
 import { useImageInputState } from '@/modules/core/hooks/use-image-input-state';
 // type
@@ -16,7 +17,6 @@ import type {
   AboutProfessionalFormValues,
 } from './about-professional-form.interface';
 import styles from './about-professional-form.module.scss';
-import { trpc } from '@/modules/core/utils/trpc.utils';
 
 const defaultValues: AboutProfessionalFormValues = {
   firstName: '',
@@ -83,6 +83,33 @@ const validationSchema: z.Schema<AboutProfessionalFormValues> = z.object({
   about: z.string(),
 });
 
+const validationSchemaCustomer: z.Schema<AboutProfessionalFormValues> =
+  z.object({
+    firstName: z
+      .string()
+      .min(2, 'validation.firstName.minLength')
+      .max(THIRTY_TWO, 'validation.firstName.maxLength')
+      .regex(nameRegex, 'validation.firstName.invalidCharacters')
+      .refine(
+        (value) => /^[A-ZА-Я]/.test(value),
+        'validation.firstName.firstLetterCapitalized'
+      ),
+    lastName: z
+      .string()
+      .min(2, 'validation.lastName.minLength')
+      .max(THIRTY_TWO, 'validation.lastName.maxLength')
+      .regex(nameRegex, 'validation.lastName.invalidCharacters')
+      .refine(
+        (value) => /^[A-ZА-Я]/.test(value),
+        'validation.lastName.firstLetterCapitalized'
+      ),
+    phone: z
+      .string()
+      .min(1, 'validation.phone.required')
+      .regex(phoneRegex, 'validation.phone.invalid'),
+    email: z.string().min(1, 'validation.email.required'),
+  });
+
 const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
   ({ initialValues, formId, onSubmit }) => {
     const intl = useIntl();
@@ -92,7 +119,10 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
     // form
     const { reset, ...form } = useForm<AboutProfessionalFormValues>({
       defaultValues,
-      resolver: zodResolver(validationSchema),
+      resolver:
+        me?.userType === 'PROFESSIONAL'
+          ? zodResolver(validationSchema)
+          : zodResolver(validationSchemaCustomer),
     });
     // state
     const avatar = useImageInputState(initialValues?.avatar);

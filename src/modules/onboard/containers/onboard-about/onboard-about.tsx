@@ -1,6 +1,6 @@
 import { type FC, useCallback, useId, useMemo } from 'react';
 import { useIntl } from 'react-intl';
-
+import { useRouter } from 'next/navigation';
 // components
 import { ErrorBox } from '@/modules/core/components/error-box';
 import { Placeholder } from '@/modules/core/components/placeholder';
@@ -15,7 +15,6 @@ import { showToast } from '@/modules/core/providers/toast-provider';
 // types
 import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboard/pro-onboard.interface';
 import type { AboutProfessionalFormValues } from '@/modules/user/components/about-professional-form/about-professional-form.interface';
-import { useRouter } from 'next/navigation';
 
 export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
   const intl = useIntl();
