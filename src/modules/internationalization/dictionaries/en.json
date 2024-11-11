@@ -7,6 +7,7 @@
   "general.credentials.password": "Password",
   "general.conjunction.and": "and",
   "general.conjunction.or": "or",
+  "general.note": "Note",
 
   "general.time.duration": "{numHours, plural, \n=1 {hour} \nother {hours}\n}",
 
@@ -49,19 +50,26 @@
   "header.proSearch.selectYourCity": "Select your city",
   "header.proSearch.findYourCity": "Find your city",
 
+  "booking.status.requested": "Requested",
+  "booking.status.approved": "Approved",
+  "booking.status.finished": "Finished",
+  "booking.status.rejected": "Rejected",
+  "booking.status.canceled": "Canceled",
+  "booking.status.missed": "Missed",
+  "booking.note.statusRejected": "This booking has been rejected, but it still blocks the calendar slot. To free up this time for other bookings, please select \"Remove from History\".",
+  "booking.note.statusRequested": "This booking is currently pending approval. Please select \"Approve\" to confirm the booking or \"Reject\" to decline.",
+  "booking.note.statusApproved": "This booking has been approved and the calendar slot is reserved. No further action is required unless changes are needed.",
+  "booking.note.statusCanceled": "This booking has been canceled, but it still blocks the calendar slot. To free up this time for other bookings, please select \"Remove from History\".",
   "booking.form.name": "Name *",
   "booking.form.lastName": "Last name",
   "booking.form.phone": "Phone *",
   "booking.form.email": "Email",
   "booking.form.comment": "Comment",
   "booking.metadata.fillPersonalInfo": "Please complete the following information to confirm your booking",
-
   "booking.time.select.title": "Select a date",
-
-  "booking.list.upcomming": "Upcomming",
+  "booking.list.upcomming": "Upcoming",
   "booking.list.past": "Past",
   "booking.list.listEmpty": "List is empty",
-
   "booking.modal.success.title": "Booking successful!",
   "booking.modal.success.service": "Service",
   "booking.modal.success.price": "Price",
@@ -70,15 +78,14 @@
   "booking.modal.success.button.myBooking": "My booking",
   "booking.modal.status.pending": "Requested",
   "booking.modal.status.approved": "Approved",
-
   "booking.modal.service.title": "New booking",
-
   "booking.modal.service.step.service": "Service",
   "booking.modal.service.step.dataTime": "Date & Time",
   "booking.modal.service.step.confirmation": "Confirmation",
-
   "booking.timeSelect.searching": "Searching for available time...",
   "booking.timeSelect.noAvailableTime": "Sorry, no free time, please choose another date.",
+  "booking.toast.removeSuccess": "The booking has been removed",
+
   "create.booking.toast.error.title": "Oops, error",
   "create.booking.toast.success.description": "Choose another date",
 

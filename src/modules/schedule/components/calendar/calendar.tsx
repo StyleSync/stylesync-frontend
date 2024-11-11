@@ -1,7 +1,8 @@
-import { useMemo, type FC, useContext } from 'react';
+import { useMemo, type FC, useContext, useState } from 'react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { useIntl } from 'react-intl';
 import dynamic from 'next/dynamic';
+import clsx from 'clsx';
 // components
 import { Icon } from '@/modules/core/components/icon';
 import { Button } from '@/modules/core/components/button';
@@ -20,6 +21,7 @@ import type { CalendarProps } from './calendar.interface';
 import styles from './calendarEvent.module.scss';
 
 import './calendar.scss';
+import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
 
 const FullCalendar = dynamic(() => import('@fullcalendar/react'), {
   ssr: false,
@@ -27,12 +29,12 @@ const FullCalendar = dynamic(() => import('@fullcalendar/react'), {
 
 export const Calendar: FC<CalendarProps> = () => {
   const intl = useIntl();
-
-  const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
-
   // context
   const { book } = useContext(BookingContext);
+  // state
+  const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
   // queries
+  const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
   const [events] = trpc.booking.list.useSuspenseQuery({
     expand: ['serviceProfessional'],
     professionalId: me.professional?.id,
@@ -80,7 +82,8 @@ export const Calendar: FC<CalendarProps> = () => {
       title: event.serviceProfessional.title,
       start: new Date(event.startTime),
       end: new Date(event.endTime),
-      className: styles.event,
+      status: event.status,
+      className: clsx(styles.event, styles[`event_${event.status}`]),
     }));
   }, [events]);
 
@@ -120,22 +123,22 @@ export const Calendar: FC<CalendarProps> = () => {
           </div>
         )}
         allDaySlot={false}
-        eventClassNames={() =>
-          '!bg-green-light py-2 cursor-pointer hover:saturate-[1.6] hover:shadow hover:border hover:border-green transition'
-        }
+        eventClassNames={() => {
+          return 'py-2 cursor-pointer hover:saturate-[1.4] hover:shadow transition';
+        }}
         height={'75vh'}
         nowIndicator
+        eventClick={({ event }) => {
+          setActiveBookingId(event.id);
+        }}
         eventContent={({ event }) => {
           const startTime = getTime(event.start);
           const endTime = getTime(event.end);
 
           return (
-            <div
-              key={event.id}
-              className='relative flex flex-col gap-y-1 border-l-[3px] border-green pl-3'
-            >
+            <div key={event.id} className='relative flex flex-col gap-y-1 pl-3'>
               <div className='flex'>
-                <span className='truncate text-base font-medium text-black'>
+                <span className='truncate text-base font-medium text-white'>
                   {event.title}
                 </span>
               </div>
@@ -144,15 +147,21 @@ export const Calendar: FC<CalendarProps> = () => {
                   name='time'
                   width={16}
                   height={16}
-                  className='text-gray-accent'
+                  className='text-white'
                 />
-                <span className='text-sm font-medium text-gray-accent'>
+                <span className='text-sm font-medium text-white'>
                   {startTime} - {endTime}
                 </span>
               </div>
-              <div className='absolute -left-1 top-0 h-full w-1 rounded-full bg-green' />
+              {/* <div className='absolute -left-1 top-0 h-full w-1 rounded-full bg-green' /> */}
             </div>
           );
+        }}
+      />
+      <BookingInfoDialog
+        bookingId={activeBookingId}
+        onClose={() => {
+          setActiveBookingId(null);
         }}
       />
     </div>

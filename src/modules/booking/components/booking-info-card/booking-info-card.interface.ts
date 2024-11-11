@@ -1,12 +1,6 @@
-export type BookingInfoCardVariant = 'light' | 'green';
+import type { BookingListType } from '@/modules/booking/containers/my-bookings-content/my-bookings-content.interface';
 
 export type BookingInfoCardProps = {
-  name: string;
-  serviceName: string;
-  startTime: Date;
-  endTime: Date;
-  date: Date;
-  variant?: BookingInfoCardVariant;
-  email: string | null;
-  phone: string;
+  booking: BookingListType[number];
+  onClick?: (booking: BookingListType[number]) => void;
 };

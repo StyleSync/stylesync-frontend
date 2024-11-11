@@ -19,6 +19,7 @@ const RIPPLE_COLORS: Record<ButtonVariant, string> = {
   danger: styles.rippleDangerColor,
   light: styles.rippleLightColor,
   text: 'transparent',
+  success: 'rgba(255,255,255,0.2)',
 };
 
 const SPINNER_COLORS: Record<ButtonVariant, string> = {
@@ -29,6 +30,7 @@ const SPINNER_COLORS: Record<ButtonVariant, string> = {
   danger: styles.spinnerDangerColor,
   light: styles.spinnerLightColor,
   text: styles.spinnerPrimaryColor,
+  success: styles.spinnerSuccessColor,
 };
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -70,6 +72,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             [styles.danger]: variant === 'danger',
             [styles.textVariant]: variant === 'text',
             [styles.light]: variant === 'light',
+            [styles.success]: variant === 'success',
             [styles.base_textless]: !text,
           },
           className,

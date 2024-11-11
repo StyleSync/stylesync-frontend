@@ -2,6 +2,7 @@ import { type FC, useCallback, useEffect, useRef, useState } from 'react';
 import { Cropper, type CropperRef } from 'react-advanced-cropper';
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
+import Image from 'next/image';
 import clsx from 'clsx';
 import { useDropzone } from 'react-dropzone';
 import { animated, useSpringValue } from '@react-spring/web';
@@ -26,7 +27,9 @@ import { dataURLtoBlob } from '@/modules/core/utils/file.utils';
 
 import 'react-advanced-cropper/dist/style.css';
 import 'react-advanced-cropper/dist/themes/bubble.css';
+
 import { PhotoUploadModalHeader } from './elements/photo-upload-modal-header';
+
 import styles from './photo-upload-modal.module.scss';
 
 import type {
@@ -34,7 +37,6 @@ import type {
   PhotoUploadModalProps,
 } from './photo-upload-modal.interface';
 import { Spinner } from '@/modules/core/components/spinner';
-import Image from 'next/image';
 
 export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
   isOpen,
@@ -44,8 +46,8 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
   albumId,
 }) => {
   const intl = useIntl();
-  const queryClient = useQueryClient();
   const deviceType = useDeviceType();
+  const queryClient = useQueryClient();
   // queries
   const { data: me } = trpc.user.me.useQuery({
     expand: ['professional'],

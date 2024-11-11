@@ -43,25 +43,15 @@
   .actions {
     display: flex;
     flex-direction: column;
-    padding: utils.spacing(3);
+    row-gap: 0.5rem;
+    padding-top: 1.5rem;
 
     .action {
-      border-radius: 0;
+      border-radius: variables.$border-radius-medium;
       height: 50px;
       width: 100%;
       justify-content: flex-start;
-      border-bottom: 2px solid #fff;
       padding: utils.spacing(0, 2);
-
-      &:first-child {
-        border-top-left-radius: variables.$border-radius-medium;
-        border-top-right-radius: variables.$border-radius-medium;
-      }
-
-      &:last-child {
-        border-bottom-left-radius: variables.$border-radius-medium;
-        border-bottom-right-radius: variables.$border-radius-medium;
-      }
 
       &.danger {
         background-color: lighten(variables.$error-light-color, 4%);

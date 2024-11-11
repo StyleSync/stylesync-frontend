@@ -7,6 +7,7 @@
   "general.credentials.password": "Пароль",
   "general.conjunction.and": "і",
   "general.conjunction.or": "або",
+  "general.note": "Примітка",
 
   "general.time.duration": "{numHours, plural, \n=1 {hour} \nother {hours}\n}",
 
@@ -49,19 +50,26 @@
   "header.proSearch.selectYourCity": "Вибрати місто",
   "header.proSearch.findYourCity": "Знайдіть своє місто",
 
+  "booking.status.requested": "Очікує підтвердження",
+  "booking.status.approved": "Схвалено",
+  "booking.status.finished": "Завершено",
+  "booking.status.rejected": "Відхилено",
+  "booking.status.canceled": "Скасовано",
+  "booking.status.missed": "Пропущено",
+  "booking.note.statusRejected": "Це бронювання було відхилено, але воно все ще блокує слот у календарі. Щоб звільнити цей час для інших бронювань, натисніть \"Видалити з історії\".",
+  "booking.note.statusRequested": "Це бронювання очікує на підтвердження. Виберіть \"Підтвердити\", щоб підтвердити бронювання, або \"Відхилити\", щоб відмовити.",
+  "booking.note.statusApproved": "Це бронювання підтверджено, слот у календарі зарезервовано.",
+  "booking.note.statusCanceled": "Це бронювання було скасовано клієнтом, але воно все ще блокує слот у календарі. Щоб звільнити цей час для інших бронювань, натисніть \"Видалити з історії\".",
   "booking.form.name": "Ім'я *",
   "booking.form.lastName": "Прізвище",
   "booking.form.phone": "Телефон *",
   "booking.form.email": "Електронна пошта*",
   "booking.form.comment": "Коментар",
   "booking.metadata.fillPersonalInfo": "Будь ласка, заповніть наступну інформацію для підтвердження бронювання",
-
   "booking.time.select.title": "Оберіть дату",
-
   "booking.list.upcomming": "Майбутні",
   "booking.list.past": "Минулі",
   "booking.list.listEmpty": "Список порожній",
-
   "booking.modal.success.title": "Бронювання успішне!",
   "booking.modal.success.service": "Послуга",
   "booking.modal.success.price": "Ціна",
@@ -70,15 +78,14 @@
   "booking.modal.success.button.myBooking": "Моє бронювання",
   "booking.modal.status.pending": "Запитано",
   "booking.modal.status.approved": "Підтверджено",
-
   "booking.modal.service.title": "Нове бронювання",
-
   "booking.modal.service.step.service": "Послуга",
   "booking.modal.service.step.dataTime": "Дата та час",
   "booking.modal.service.step.confirmation": "Підтвердження",
-
   "booking.timeSelect.searching": "Пошук доступного часу...",
   "booking.timeSelect.noAvailableTime": "Вибачте, немає вільного часу, будь ласка, оберіть іншу дату.",
+  "booking.toast.removeSuccess": "Бронювання було видалено",
+
   "create.booking.toast.error.title": "Ой, помилка",
   "create.booking.toast.success.description": "Оберіть іншу дату",
 
@@ -255,17 +262,13 @@
   "button.clear.all": "Очистити все",
   "button.add.to.calendar": "Додати до календара",
   "button.google.map": "Відкрити на картах Google",
-
   "duration.hour": "{count, plural, one {# година} few {# години} many {# годин} other {# годин}}",
-
   "duration.minute": "{count, plural, one {# хвилина} few {# хвилини} many {# хвилин} other {# хвилин}}",
-
   "duration.hour.short": "{count}г",
   "duration.minute.short": "{count}хв",
-
-  "bookingInfo.dialog.actions.call": "Дзвінок",
-  "bookingInfo.dialog.actions.reschedule": "Перепланувати",
-  "bookingInfo.dialog.actions.cancel": "Скасувати бронювання",
+  "bookingInfo.dialog.actions.call": "Зателефонувати",
+  "bookingInfo.dialog.actions.reschedule": "Перенести",
+  "bookingInfo.dialog.actions.cancel": "Скасувати візит",
 
   "album.card.toast.error.title": "Помилка",
   "album.card.toast.error.description": "Виникла помилка",

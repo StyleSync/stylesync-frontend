@@ -11,6 +11,30 @@
 
 .event {
   border-radius: 6px !important;
+
+  &_PENDING {
+    background-color: variables.$orange-color !important;
+  }
+
+  &_APPROVED {
+    background-color: variables.$green-color !important;
+  }
+
+  &_FINISHED {
+    background-color: #fff !important;
+  }
+
+  &_REJECTED {
+    background-color: variables.$error-color !important;
+  }
+
+  &_CANCELED {
+    background-color: variables.$error-color !important;
+  }
+
+  &_MISSED {
+    background-color: variables.$error-color !important;
+  }
 }
 
 .eventText {

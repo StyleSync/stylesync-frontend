@@ -11,7 +11,7 @@ export const BookingPreviewDetailBox: FC<BookingPreviewDetailProps> = ({
   avatar,
 }) => (
   <div className='flex flex-col gap-3'>
-    <Typography variant='small' className='!text-gray'>
+    <Typography variant='body2' className='!text-gray' weight='medium'>
       {label}
     </Typography>
     <div className='flex items-center gap-4'>

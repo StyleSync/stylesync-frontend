@@ -1,20 +1,15 @@
-import type { DialogProps } from '@/modules/core/types/dialog.types';
-
-export type IconType = 'phone' | 'time' | 'close';
-export type VariantType = 'secondary' | 'danger';
+import type { IconName } from '@/modules/core/components/icon';
+import type { ButtonVariant } from '@/modules/core/components/button/button.interface';
 
 export type Action = {
   id: string;
   text: string;
-  icon: IconType;
-  variant: VariantType;
+  icon: IconName;
+  variant: ButtonVariant;
+  isLoading?: boolean;
 };
 
-export type BookingInfoDialogProps = DialogProps & {
-  name: string;
-  serviceName: string;
-  email: string | null;
-  phone: string;
-  startDate: string;
-  startTime: string;
+export type BookingInfoDialogProps = {
+  bookingId?: string | null;
+  onClose: () => void;
 };

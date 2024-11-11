@@ -14,6 +14,7 @@ import { type BookingModalSuccessProps } from './modal-success.interface';
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
 // style
 import styles from './modal-success.module.scss';
+import { BookingStatus } from '@/modules/booking/components/booking-status';
 
 export const BookingModalSuccess: FC<BookingModalSuccessProps> = ({
   bookingData,
@@ -21,7 +22,6 @@ export const BookingModalSuccess: FC<BookingModalSuccessProps> = ({
 }) => {
   const intl = useIntl();
   // route
-
   const handleModalClose = () => {
     if (props.onOpenChange) {
       props.onOpenChange(false);
@@ -45,11 +45,6 @@ export const BookingModalSuccess: FC<BookingModalSuccessProps> = ({
     intl.locale
   );
 
-  const statusSuccess =
-    bookingData?.status === 'PENDING'
-      ? intl.formatMessage({ id: 'booking.modal.status.pending' })
-      : intl.formatMessage({ id: 'booking.modal.status.approved' });
-
   const currencies = {
     [Currency.USD]: '$',
     [Currency.UAH]: '₴',
@@ -69,25 +64,29 @@ export const BookingModalSuccess: FC<BookingModalSuccessProps> = ({
             {intl.formatMessage({ id: 'booking.modal.success.title' })}
           </Typography>
         </div>
-        <div className={styles.containerInfo}>
-          <InfoBox
-            title={intl.formatMessage({ id: 'booking.modal.success.service' })}
-            content={`${bookingData?.serviceProfessional?.title}`}
-          />
-          <InfoBox
-            title={intl.formatMessage({ id: 'booking.modal.success.price' })}
-            content={`${bookingData?.serviceProfessional.price}${currency}`}
-          />
-          <InfoBox
-            title={intl.formatMessage({ id: 'booking.modal.success.time' })}
-            content={`${formattedDate}, ${formattedStartTime} - ${formattedEndTime}`}
-          />
-          <InfoBox
-            status={bookingData?.status}
-            title={intl.formatMessage({ id: 'booking.modal.success.status' })}
-            content={statusSuccess}
-          />
-        </div>
+        {bookingData && (
+          <div className={styles.containerInfo}>
+            <InfoBox
+              title={intl.formatMessage({
+                id: 'booking.modal.success.service',
+              })}
+              content={`${bookingData?.serviceProfessional?.title}`}
+            />
+            <InfoBox
+              title={intl.formatMessage({ id: 'booking.modal.success.price' })}
+              content={`${bookingData?.serviceProfessional.price}${currency}`}
+            />
+            <InfoBox
+              title={intl.formatMessage({ id: 'booking.modal.success.time' })}
+              content={`${formattedDate}, ${formattedStartTime} - ${formattedEndTime}`}
+            />
+            <InfoBox
+              status={bookingData?.status}
+              title={intl.formatMessage({ id: 'booking.modal.success.status' })}
+              content={<BookingStatus status={bookingData.status} />}
+            />
+          </div>
+        )}
         <div className={styles.action}>
           <Button
             onClick={handleModalClose}
