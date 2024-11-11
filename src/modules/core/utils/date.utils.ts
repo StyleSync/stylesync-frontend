@@ -1,5 +1,6 @@
 import { eachDayOfInterval, getDay, startOfDay } from 'date-fns';
 import { Day } from '@prisma/client';
+import { type IntlShape } from 'react-intl';
 
 export const generateDates = () => {
   const currentDate = new Date();
@@ -26,4 +27,14 @@ export const mapDateToDayEnum = (date: string | number | Date) => {
   };
 
   return dayMap[dayNumber];
+};
+
+export const formatDateIntl = (date: Date, intl: IntlShape): string => {
+  return intl.formatDate(date, {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
 };
