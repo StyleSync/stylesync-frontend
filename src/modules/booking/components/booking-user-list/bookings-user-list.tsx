@@ -9,39 +9,31 @@ import { BookingInfoCard } from '@/modules/booking/components/booking-info-card'
 import { trpc } from '@/modules/core/utils/trpc.utils';
 // type
 import type {
-  BookingListGroup,
-  BookingsListProps,
-} from './bookings-list.interface';
+  BookingUserListGroup,
+  BookingsUserListProps,
+} from './bookings-user-list.interface';
 import type { BookingListType } from '@/modules/booking/containers/my-bookings-content/my-bookings-content.interface';
 
-import styles from './bookings-list.module.scss';
+import styles from './bookings-user-list.module.scss';
 
 const now = new Date().toISOString();
 
-export const BookingsList: FC<BookingsListProps> = () => {
+export const BookingsUserList: FC<BookingsUserListProps> = () => {
   const intl = useIntl();
 
-  // queries
-  const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
-
-  if (!me.professional) {
-    throw new Error('Unable to load professional data');
-  }
-
-  const [upcomingEvents] = trpc.booking.list.useSuspenseQuery({
+  const [upcomingEvents] = trpc.booking.myBookings.useSuspenseQuery({
     expand: ['serviceProfessional'],
     sortField: 'startTime',
     startDate: now,
-    professionalId: me.professional.id,
   });
-  const [pastEvents] = trpc.booking.list.useSuspenseQuery({
+
+  const [pastEvents] = trpc.booking.myBookings.useSuspenseQuery({
     expand: ['serviceProfessional'],
     sortField: 'startTime',
     endDate: now,
-    professionalId: me.professional.id,
   });
 
-  const groups: BookingListGroup[] = [
+  const groups: BookingUserListGroup[] = [
     {
       id: 'upcomming',
       title: intl.formatMessage({ id: 'booking.list.upcomming' }),

@@ -160,7 +160,8 @@ export const BookingPreview = () => {
                   bookingDetails.data?.serviceProfessional.duration !==
                   undefined
                     ? formatDuration(
-                        bookingDetails.data?.serviceProfessional.duration
+                        bookingDetails.data?.serviceProfessional.duration,
+                        intl
                       )
                     : ''
                 }

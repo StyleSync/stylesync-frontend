@@ -3,13 +3,18 @@ import { Suspense } from 'react';
 // components
 import { BookingsList } from '@/modules/booking/components/bookings-list';
 import { Calendar } from '@/modules/schedule/components/calendar';
+// utils
+import { trpc } from '@/modules/core/utils/trpc.utils';
 // hooks
 import { useMyBookingsTab } from '@/modules/booking/hooks/use-my-bookings-tab';
 // style
 import styles from './my-bookings-content.module.scss';
+import { BookingsUserList } from '../../components/booking-user-list';
 
 export const MyBookingsContent = () => {
   const { activeTab } = useMyBookingsTab();
+
+  const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
 
   return (
     <div className={styles.root}>
@@ -26,7 +31,8 @@ export const MyBookingsContent = () => {
             </div>
           }
         >
-          <BookingsList />
+          {me.userType === 'PROFESSIONAL' && <BookingsList />}
+          {me.userType === 'CUSTOMER' && <BookingsUserList />}
         </Suspense>
       )}
       {activeTab === 'calendar' && (
