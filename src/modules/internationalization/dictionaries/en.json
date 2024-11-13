@@ -149,6 +149,7 @@
   "serviceOn.professional.edit.input.title": "Service title",
   "serviceOn.professional.edit.duration.label": "Duration",
   "serviceOn.professional.edit.price.label": "Price",
+  "serviceOn.professional.edit.description": "Description (optional)",
 
   "select.service.add.group": "Add services group",
   "professional.service.description": "No services added",
@@ -256,6 +257,7 @@
   "button.apply.filter": "Apply Filters",
   "button.google.map": "Open on google maps",
   "button.add.to.calendar": "Add to calendar",
+  "button.sign.in": "Sign-in",
 
   "duration.hour": "{count, plural, one {# hour} other {# hours}}",
   "duration.minute": "{count, plural, one {# minute} other {# minutes}}",
@@ -357,9 +359,12 @@
 
   "professional.count": "{count, plural, =0 {No pro was found} other {We found {count} pro's for you}}",
 
+  "professional.search.filters": "Filters",
+
   "filter.service.for.search": " Services for Search",
   "filter.service.all": "All",
   "filter.date.for.booking": "Date for Booking Availability",
+  "filter.all.dates": "All dates",
 
   "professional.search.card.services": "Makeup, hair, nails",
   "pro.data.services": "services provided",
@@ -382,5 +387,13 @@
   "service.start.time": "Start time",
   "service.duration": "Duration",
   "service.meters": "m",
-  "service.daysRemaining": "{count, plural, one {{count} day} other {{count} days}}"
+  "service.daysRemaining": "{count, plural, one {{count} day} other {{count} days}}",
+
+  "onboard.data.about": "About",
+  "onboard.data.description.about": "We will use this information to create a detailed account of your experience that can be shared with your clients",
+  "onboard.data.services": "Services",
+  "onboard.data.description.services": "Complete your portfolio to attract more clients",
+  "onboard.data.schedule": "Schedule",
+  "onboard.data.gallery": "Gallery",
+  "onboard.data.location": "Location"
 }

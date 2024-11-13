@@ -1,4 +1,6 @@
 import { useCallback, useMemo } from 'react';
+import { useIntl } from 'react-intl';
+
 // containers
 import { OnboardAbout } from '@/modules/onboard/containers/onboard-about';
 import { OnboardServices } from '@/modules/onboard/containers/onboard-services';
@@ -20,37 +22,44 @@ type StepKey = (typeof steps)[number];
 export const useOnboard = () => {
   const { queryParams, setQueryParams } = useQueryParams<{ step: StepKey }>();
   const active = queryParams.step ?? initialStep;
+
+  const intl = useIntl();
   // memo
   const onboardData = useMemo<ProOnboardData<StepKey>>(
     () => ({
       about: {
         value: 'about',
-        title: 'About',
-        description:
-          'We will use this information to create a detailed account of your experience that can be shared with your clients',
+        title: intl.formatMessage({ id: 'onboard.data.about' }),
+        description: intl.formatMessage({
+          id: 'onboard.data.description.about',
+        }),
         Step: OnboardAbout,
       },
       services: {
         value: 'services',
-        title: 'Services',
-        description: 'Complete your portfolio to attract more clients',
+        title: intl.formatMessage({ id: 'onboard.data.services' }),
+        description: intl.formatMessage({
+          id: 'onboard.data.description.services',
+        }),
         Step: OnboardServices,
       },
       schedule: {
         value: 'schedule',
-        title: 'Schedule',
+        title: intl.formatMessage({ id: 'onboard.data.schedule' }),
         description: 'test',
+
         Step: OnboardSchedule,
       },
       gallery: {
         value: 'gallery',
-        title: 'Gallery',
+        title: intl.formatMessage({ id: 'onboard.data.gallery' }),
+
         description: 'test',
         Step: OnboardGallery,
       },
       location: {
         value: 'location',
-        title: 'Location',
+        title: intl.formatMessage({ id: 'onboard.data.location' }),
         description: 'test',
         Step: OnboardLocation,
       },

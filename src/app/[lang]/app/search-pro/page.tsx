@@ -95,7 +95,7 @@ export default function SearchProPage() {
               <Button
                 variant='light'
                 onClick={isFilterActive.toggle}
-                text='Filters'
+                text={intl.formatMessage({ id: 'professional.search.filters' })}
                 icon='filter'
                 classes={{
                   root: 'ml-auto lg:ml-1 shrink-0',

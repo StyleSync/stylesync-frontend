@@ -24,15 +24,6 @@ import type {
 } from './burger-menu.interface';
 import styles from './burger-menu.module.scss';
 
-const publicActions: BurgerMenuAction[] = [
-  {
-    id: 'sign-in',
-    icon: 'log-out',
-    text: 'Sign in',
-    variant: 'primary',
-  },
-];
-
 const dialogAnimationConfig: Partial<DialogFullScreenAnimationConfig> = {
   overlay: {
     cssOpen: {
@@ -93,6 +84,15 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ session }) => {
   const router = useRouter();
   const isOpen = useBoolean();
   const { status } = useSession();
+
+  const publicActions: BurgerMenuAction[] = [
+    {
+      id: 'sign-in',
+      icon: 'log-out',
+      text: intl.formatMessage({ id: 'button.sign.in' }),
+      variant: 'primary',
+    },
+  ];
 
   // query
   const { data: me, ...meQuery } = trpc.user.me.useQuery(
