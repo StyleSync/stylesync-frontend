@@ -380,5 +380,7 @@
   "service.title": "Title",
   "service.price": "Price",
   "service.start.time": "Start time",
-  "service.duration": "Duration"
+  "service.duration": "Duration",
+  "service.meters": "m",
+  "service.daysRemaining": "{count, plural, one {{count} day} other {{count} days}}"
 }

@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import getDistance from 'geolib/es/getDistance';
-import { getHours, getMinutes, format } from 'date-fns';
+import { getHours, getMinutes } from 'date-fns';
 import { useIntl } from 'react-intl';
 
 // components
@@ -21,6 +21,7 @@ import { trpc } from '@/modules/core/utils/trpc.utils';
 import { formatDuration } from '@/modules/core/utils/time.utils';
 import { onQueryRetry } from '@/modules/core/utils/query-retry.utils';
 import { getAddressGoogleLink } from '@/modules/location/utils/address.utils';
+import { formatDateIntl } from '@/modules/core/utils/date.utils';
 // style
 import 'react-circular-progressbar/dist/styles.css';
 
@@ -109,8 +110,9 @@ export const BookingPreview = () => {
 
   return (
     <main className='mx-auto mb-20 mt-20 flex w-full max-w-[950px] flex-1 flex-col px-[15px]'>
+      {/* todo : booking number */}
       <Typography className='mx-auto text-center !text-[24px]'>
-        {intl.formatMessage({ id: 'booking.number' })}№ 20
+        {intl.formatMessage({ id: 'booking.number' })} № 20
       </Typography>
       <div className='mt-12 flex w-full'>
         <div className='flex flex-1 flex-col gap-4'>
@@ -145,10 +147,10 @@ export const BookingPreview = () => {
                 label={intl.formatMessage({ id: 'service.start.time' })}
                 value={
                   bookingDetails?.data
-                    ? format(
+                    ? formatDateIntl(
                         new Date(bookingDetails?.data?.startTime || ''),
-                        "EEEE', 'd MMM yyyy', 'HH:mm"
-                      ).toLowerCase()
+                        intl
+                      )
                     : ''
                 }
               />
@@ -223,7 +225,11 @@ export const BookingPreview = () => {
               Array.isArray(markers) &&
               markers.length > 0 &&
               getDistance(userLocation, markers[0])}{' '}
-            м
+            {userLocation && (
+              <Typography variant='small' className='!text-gray'>
+                {intl.formatMessage({ id: 'service.meters' })}
+              </Typography>
+            )}
           </Typography>
         </div>
         <BookingPreviewMap markers={markers} zoom={zoom} center={center} />

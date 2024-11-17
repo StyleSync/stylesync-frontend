@@ -258,6 +258,7 @@
   "button.select.from.computer": "Вибрати фото",
   "button.select.from.phone": "Вибрати з галереї",
   "button.pro.now": "Стати профі зараз",
+  "button.pro": "Стати профі",
   "button.apply.filter": "Застосувати фільтри",
   "button.clear.all": "Очистити все",
   "button.add.to.calendar": "Додати до календара",
@@ -382,5 +383,7 @@
   "service.title": "Назва сервісу",
   "service.price": "Ціна",
   "service.start.time": "Час початку",
-  "service.duration": "Тривалість"
+  "service.duration": "Тривалість",
+  "service.meters": "м",
+  "service.daysRemaining": "{count, plural, one {{count} день} few {{count} дні} many {{count} днів} other {днів}}"
 }

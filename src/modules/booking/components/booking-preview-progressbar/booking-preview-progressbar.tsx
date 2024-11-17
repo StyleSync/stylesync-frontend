@@ -1,6 +1,7 @@
 import { type FC } from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import { useIntl } from 'react-intl';
+import { Typography } from '@/modules/core/components/typogrpahy';
 // type
 import type { BookingPreviewProgressbarProps } from './booking-preview-progressbar.interface';
 
@@ -52,9 +53,13 @@ export const BookingPreviewProgressbar: FC<BookingPreviewProgressbarProps> = ({
             id: 'progressbar.title',
           })}
         </span>
-        <span className='text-base font-medium'>5 days</span>
 
-        {/* todo <span>{daysRemaining}</span> */}
+        <Typography variant='small' className='!text-accent'>
+          {intl.formatMessage(
+            { id: 'service.daysRemaining' },
+            { count: daysRemaining }
+          )}
+        </Typography>
       </div>
     </div>
   );

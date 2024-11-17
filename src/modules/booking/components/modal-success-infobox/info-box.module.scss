@@ -5,6 +5,7 @@
 .box {
   display: flex;
   justify-content: space-between;
+  gap: 25px;
   .infoContent {
     color: variables.$dark-color;
   }
