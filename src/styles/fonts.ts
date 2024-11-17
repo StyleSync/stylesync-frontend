@@ -1,4 +1,5 @@
 import { Inter } from 'next/font/google';
+import { GeistSans } from 'geist/font/sans';
 // types
 import type { SupportedFonts } from '@/styles/styles.types';
 import type { NextFont } from 'next/dist/compiled/@next/font';
@@ -10,6 +11,7 @@ const inter = Inter({
 
 const fonts: Record<SupportedFonts, NextFont> = {
   INTER: inter,
+  GEIST: GeistSans,
 };
 
 export { fonts };

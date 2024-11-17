@@ -6,8 +6,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 2rem;
+
   @include mixins.phone {
     grid-template-columns: 1fr 1fr;
+    gap: 1rem;
   }
 
   &_displayAlbum {
