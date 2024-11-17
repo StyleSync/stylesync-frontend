@@ -292,6 +292,9 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
                       error: Boolean(fieldState.error),
                       disabled: weekdayScheduleSaveMutation.isLoading,
                     }}
+                    popoverProps={{
+                      disablePortal: true,
+                    }}
                   />
                 )}
               />

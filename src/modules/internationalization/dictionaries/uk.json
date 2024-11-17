@@ -132,7 +132,7 @@
   "schedule.breaks": "Перерва о",
 
   "service.constructor.table.toast.error": "Не вдалося видалити",
-  "service.constructor.add.sevice": "Додати сервіс",
+  "service.constructor.add.sevice": "Додати послугу",
   "service.constructor.delete.group": "Видалити групу",
 
   "weekdays.MONDAY": "Понеділок",
@@ -150,6 +150,7 @@
   "serviceOn.professional.edit.input.title": "Назва послуги",
   "serviceOn.professional.edit.duration.label": "Тривалість",
   "serviceOn.professional.edit.price.label": "Ціна",
+  "serviceOn.professional.edit.description": "Описання (необов'язково)",
 
   "select.service.add.group": "Додати групу послуг",
   "professional.service.description": "Послуги не додані",
@@ -263,6 +264,8 @@
   "button.clear.all": "Очистити все",
   "button.add.to.calendar": "Додати до календара",
   "button.google.map": "Відкрити на картах Google",
+  "button.sign.in": "Увійти",
+
   "duration.hour": "{count, plural, one {# година} few {# години} many {# годин} other {# годин}}",
   "duration.minute": "{count, plural, one {# хвилина} few {# хвилини} many {# хвилин} other {# хвилин}}",
   "duration.hour.short": "{count}г",
@@ -358,10 +361,13 @@
   "professional.found": "Ми знайшли",
 
   "professional.count": "{count, plural, =0 {Професіоналів не знайдено} other {Ми знайшли для вас {count} професіоналів}}",
+  "professional.search.filters": "Фільтри",
 
   "filter.service.for.search": "Сервіси для пошуку",
   "filter.date.for.booking": "Дата доступності для бронювання",
   "filter.service.all": "Всі",
+
+  "filter.all.dates": "Всі дати",
 
   "professional.search.card.services": "Макіяж, зачіска, нігті",
 
@@ -376,7 +382,7 @@
 
   "choose.service": "Виберіть послугу",
   "select.time": "Оберіть час",
-  "confirm.booking": "Підтвердьте бронювання",
+  "confirm.booking": "Підтвердити бронування",
 
   "booking.number": "Бронювання",
   "specialist": "Спеціаліст",
@@ -385,5 +391,13 @@
   "service.start.time": "Час початку",
   "service.duration": "Тривалість",
   "service.meters": "м",
-  "service.daysRemaining": "{count, plural, one {{count} день} few {{count} дні} many {{count} днів} other {днів}}"
+  "service.daysRemaining": "{count, plural, one {{count} день} few {{count} дні} many {{count} днів} other {днів}}",
+
+  "onboard.data.about": "Про себе",
+  "onboard.data.description.about": "Ми використаємо цю інформацію для створення детального опису вашого досвіду, який можна поділитися з клієнтами",
+  "onboard.data.services": "Послуги",
+  "onboard.data.description.services": "Заповніть портфоліо, щоб залучити більше клієнтів",
+  "onboard.data.schedule": "Розклад",
+  "onboard.data.gallery": "Галерея",
+  "onboard.data.location": "Локація"
 }

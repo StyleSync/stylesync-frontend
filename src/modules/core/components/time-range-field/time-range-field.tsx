@@ -29,6 +29,7 @@ export const TimeRangeField: FC<TimeRangeFieldInterface> = ({
   onChange,
   inputProps,
   label,
+  popoverProps,
   className,
   style,
 }) => {
@@ -135,6 +136,7 @@ export const TimeRangeField: FC<TimeRangeFieldInterface> = ({
     <Popover
       isOpen={isActive.value}
       onClose={finishTimeSelection}
+      {...popoverProps}
       trigger={
         <div
           className={clsx(styles.root, className)}

@@ -172,7 +172,7 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
           <DateSelect
             value={date}
             onChange={onDateChange}
-            placeholder='All dates'
+            placeholder={intl.formatMessage({ id: 'filter.all.dates' })}
             triggerProps={{
               classes: {
                 root: clsx('!w-full !justify-between', {

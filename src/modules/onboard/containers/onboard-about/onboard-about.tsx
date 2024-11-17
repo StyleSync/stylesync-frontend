@@ -134,10 +134,13 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
   return (
     <OnboardLayout
       meta={{
-        title: 'About me',
+        title: intl.formatMessage({ id: 'onboard.about.title' }),
       }}
       nextButtonProps={{
-        text: me?.userType === 'CUSTOMER' ? 'Save' : undefined,
+        text:
+          me?.userType === 'CUSTOMER'
+            ? intl.formatMessage({ id: 'button.save' })
+            : undefined,
         form: formId,
         isLoading:
           professionalUpdateMutation.isLoading ||

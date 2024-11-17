@@ -258,7 +258,9 @@ export const ServiceOnProfessionalEditForm: FC<
                   value={field.value}
                   onChange={field.onChange}
                   fixedHeight={400}
-                  label='Description (optional)'
+                  label={intl.formatMessage({
+                    id: 'serviceOn.professional.edit.description',
+                  })}
                 />
               )}
             />
