@@ -343,7 +343,7 @@
   "burger.menu.btn.shareProfile": "Поділитись профілем",
   "burger.menu.btn.settings": "Налаштування",
   "burger.menu.btn.signOut": "Вийти",
-  "burger.menu.notAuthenticated": "Немає доступу",
+  "burger.menu.notAuthenticated": "Не авторизовано",
 
   "validation.firstName.required": "Ім'я є обов'язковим",
   "validation.firstName.minLength": "Ім'я повинно містити принаймні 2 символи",

@@ -97,6 +97,12 @@
     padding: utils.spacing(0, 3);
   }
 
+  &.medium {
+    height: 40px;
+    font-size: 16px;
+    padding: utils.spacing(0, 3);
+  }
+
   &:disabled {
     background-color: variables.$grey-light-color;
   }

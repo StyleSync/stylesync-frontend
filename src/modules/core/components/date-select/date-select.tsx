@@ -1,13 +1,19 @@
 import { type FC, useMemo } from 'react';
-
-import type { DateSelectProps } from './date-select.interface';
+import { useIntl } from 'react-intl';
+import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { isSameDay } from 'date-fns';
+import { uk, enUS } from 'date-fns/locale';
+// hooks
+import { useBoolean } from 'usehooks-ts';
+// components
 import { Popover } from '@/modules/core/components/popover';
 import { Button } from '@/modules/core/components/button';
-import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
-import { useBoolean } from 'usehooks-ts';
+// utils
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
-import { useIntl } from 'react-intl';
-import { isSameDay } from 'date-fns';
+// types
+import type { DateSelectProps } from './date-select.interface';
 
 export const DateSelect: FC<DateSelectProps> = ({
   value,
@@ -17,6 +23,7 @@ export const DateSelect: FC<DateSelectProps> = ({
 }) => {
   const isOpen = useBoolean();
   const { locale } = useIntl();
+
   // memo
   const displayText = useMemo(() => {
     if (!value) {
@@ -25,6 +32,12 @@ export const DateSelect: FC<DateSelectProps> = ({
 
     return formatI18n(value, 'dd MMM yyyy', locale);
   }, [locale, value, placeholder]);
+
+  const dateFnsLocale = useMemo(() => {
+    if (locale === 'uk') return uk;
+
+    return enUS;
+  }, [locale]);
 
   return (
     <Popover
@@ -44,21 +57,26 @@ export const DateSelect: FC<DateSelectProps> = ({
       align='center'
       backgroundBlurEffect={false}
     >
-      <DateCalendar
-        value={value}
-        onChange={(date) => {
-          if (!onChange) return;
+      <LocalizationProvider
+        dateAdapter={AdapterDateFns}
+        adapterLocale={dateFnsLocale}
+      >
+        <DateCalendar
+          value={value}
+          onChange={(date) => {
+            if (!onChange) return;
 
-          if (value && isSameDay(value, date)) {
-            onChange(null);
+            if (value && isSameDay(value, date)) {
+              onChange(null);
 
-            return;
-          }
+              return;
+            }
 
-          onChange(date);
-        }}
-        classes={{}}
-      />
+            onChange(date);
+          }}
+          classes={{}}
+        />
+      </LocalizationProvider>
     </Popover>
   );
 };

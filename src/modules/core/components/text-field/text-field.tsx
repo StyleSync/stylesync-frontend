@@ -81,7 +81,10 @@ export const TextField = forwardRef<
               className,
               styles.textField,
               styles.input,
-              { [styles.small]: props.fieldSize === 'small' },
+              {
+                [styles.small]: props.fieldSize === 'small',
+                [styles.medium]: props.fieldSize === 'medium',
+              },
               fonts[font].className
             )}
             {...props}
