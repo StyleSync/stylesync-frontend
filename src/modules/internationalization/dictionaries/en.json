@@ -258,6 +258,7 @@
   "button.google.map": "Open on google maps",
   "button.add.to.calendar": "Add to calendar",
   "button.sign.in": "Sign-in",
+  "button.create": "Create",
 
   "duration.hour": "{count, plural, one {# hour} other {# hours}}",
   "duration.minute": "{count, plural, one {# minute} other {# minutes}}",
@@ -331,7 +332,9 @@
   "add.booking.modal.toast.success.title": "Great!",
   "add.booking.modal.toast.success.description": "Event added",
 
-  "progressbar.title": "Left",
+  "progressbar.title.lost": "Left",
+  "progressbar.finished": "Finished",
+
   "progressbar.days": "d",
   "burger.menu.btn.myProfile": "My profile",
   "burger.menu.btn.myBookings": "My bookings",

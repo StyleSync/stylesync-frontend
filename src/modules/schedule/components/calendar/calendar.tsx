@@ -90,7 +90,7 @@ export const Calendar: FC<CalendarProps> = () => {
   return (
     <div className='w-full'>
       <Button
-        text='Create'
+        text={intl.formatMessage({ id: 'button.create' })}
         onClick={() => {
           book();
         }}

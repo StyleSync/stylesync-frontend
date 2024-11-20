@@ -43,10 +43,12 @@ export const ProData: FC<ProDataProps> = ({ professional, session }) => {
         {/*   </Typography> */}
         {/* </div> */}
         <div className='flex w-fit items-center gap-x-2 text-dark'>
-          <Icon name='arrow-increase' className='h-4 w-4 !text-gray' />
+          {/* Todo: show quantity last bookings and icon */}
+          {/* <Icon name='arrow-increase' className='h-4 w-4 !text-gray' />
+          
           <Typography variant='body2' className='!text-inherit'>
             {intl.formatMessage({ id: 'pro.data.last.7.days' })}
-          </Typography>
+          </Typography> */}
         </div>
       </div>
       {professional.userId !== session?.user?.id && (

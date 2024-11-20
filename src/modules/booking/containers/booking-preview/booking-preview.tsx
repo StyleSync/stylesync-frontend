@@ -1,7 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import getDistance from 'geolib/es/getDistance';
 import { getHours, getMinutes } from 'date-fns';
 import { useIntl } from 'react-intl';
 // components
@@ -31,27 +29,6 @@ export const BookingPreview = () => {
   const code = params.code;
   const isContactOpen = useBoolean();
   const intl = useIntl();
-
-  // state
-  const [userLocation, setUserLocation] = useState<{
-    latitude: number;
-    longitude: number;
-  } | null>(null);
-
-  // user location
-  const getUserLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords;
-
-        setUserLocation({ latitude, longitude });
-      });
-    }
-  };
-
-  useEffect(() => {
-    getUserLocation();
-  }, []);
 
   // queries
   const bookingDetails = trpc.booking.getByCode.useQuery({
@@ -211,17 +188,6 @@ export const BookingPreview = () => {
         <div className='flex gap-5'>
           <Typography variant='small' className='!text-gray'>
             {location?.name}
-          </Typography>
-          <Typography variant='small' className='!text-gray'>
-            {userLocation &&
-              Array.isArray(markers) &&
-              markers.length > 0 &&
-              getDistance(userLocation, markers[0])}{' '}
-            {userLocation && (
-              <Typography variant='small' className='!text-gray'>
-                {intl.formatMessage({ id: 'service.meters' })}
-              </Typography>
-            )}
           </Typography>
         </div>
         <BookingPreviewMap markers={markers} zoom={zoom} center={center} />

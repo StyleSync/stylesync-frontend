@@ -35,7 +35,7 @@ export const BookingPreviewProgressbar: FC<BookingPreviewProgressbarProps> = ({
   );
 
   // Calculate the percentage of time passed
-  const percents = (daysWaited * 100) / daysRemaining;
+  const percents = daysRemaining ? (daysWaited * 100) / daysRemaining : 100;
 
   return (
     <div className='relative ml-5 mt-[66px] h-[120px] w-[120px]'>
@@ -43,15 +43,15 @@ export const BookingPreviewProgressbar: FC<BookingPreviewProgressbarProps> = ({
         strokeWidth={5}
         value={percents}
         styles={buildStyles({
-          pathColor: '#3b82ef',
+          pathColor: daysRemaining > 0 ? '#3b82ef' : '#4bb543',
           trailColor: '#d8e6fc',
         })}
       />
       <div className='absolute bottom-0 left-0 right-0 top-0 flex flex-col items-center justify-center'>
         <span className='text-sm text-gray-accent'>
-          {intl.formatMessage({
-            id: 'progressbar.title',
-          })}
+          {daysRemaining > 0
+            ? intl.formatMessage({ id: 'progressbar.title.lost' })
+            : intl.formatMessage({ id: 'progressbar.finished' })}
         </span>
 
         <Typography variant='small' className='!text-accent'>

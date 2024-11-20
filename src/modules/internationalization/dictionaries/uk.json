@@ -265,6 +265,7 @@
   "button.add.to.calendar": "Додати до календара",
   "button.google.map": "Відкрити на картах Google",
   "button.sign.in": "Увійти",
+  "button.create": "Створити",
 
   "duration.hour": "{count, plural, one {# година} few {# години} many {# годин} other {# годин}}",
   "duration.minute": "{count, plural, one {# хвилина} few {# хвилини} many {# хвилин} other {# хвилин}}",
@@ -330,7 +331,8 @@
   "add.booking.modal.toast.success.title": "Відмінно!",
   "add.booking.modal.toast.success.description": "Подію додано",
 
-  "progressbar.title": "Залишилось",
+  "progressbar.title.lost": "Залишилось",
+  "progressbar.finished": "Завершено",
   "progressbar.days": "д",
 
   "burger.menu.btn.myProfile": "Мій профіль",
