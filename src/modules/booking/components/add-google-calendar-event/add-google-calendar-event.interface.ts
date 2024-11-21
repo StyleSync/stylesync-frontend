@@ -3,6 +3,4 @@ export type DownloadIcsButtonProps = {
   duration: { hours: number; minutes: number };
   title: string;
   location: string;
-  organizer: { name: string; email: string };
-  attendee: { name: string; email: string };
 };
