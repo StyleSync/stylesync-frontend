@@ -6,6 +6,7 @@ import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useIntl } from 'react-intl';
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
+import { getQueryKey } from '@trpc/react-query';
 
 // components
 import { Button } from '@/modules/core/components/button';
@@ -103,6 +104,10 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
               })
             );
           }
+
+          queryClient.invalidateQueries({
+            queryKey: getQueryKey(trpc.professional.getProfileCompletionStatus),
+          });
 
           isEdit.setFalse();
         },

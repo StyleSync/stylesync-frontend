@@ -1,6 +1,8 @@
 'use client';
 import { type FC, useCallback, useId, useMemo } from 'react';
 import { useIntl } from 'react-intl';
+import { useQueryClient } from '@tanstack/react-query';
+import { getQueryKey } from '@trpc/react-query';
 // components
 import { ProfileSettingsTabContentLayout } from '@/modules/user/components/profile-settings-tab-content-layout';
 import { AboutProfessionalForm } from '@/modules/user/components/about-professional-form';
@@ -17,6 +19,8 @@ import type { AboutProfessionalFormValues } from '@/modules/user/components/abou
 export const ProfessionalSettingsAbout: FC = () => {
   const intl = useIntl();
   const formId = useId();
+  const queryClient = useQueryClient();
+
   // queries
   const { data: me, ...meQuery } = trpc.user.me.useQuery({
     expand: ['professional'],
@@ -76,6 +80,10 @@ export const ProfessionalSettingsAbout: FC = () => {
         }),
       ])
         .then(() => {
+          queryClient.invalidateQueries({
+            queryKey: getQueryKey(trpc.professional.getProfileCompletionStatus),
+          });
+
           showToast({
             variant: 'success',
             title: intl.formatMessage({

@@ -333,7 +333,10 @@
 
   "progressbar.title.lost": "Залишилось",
   "progressbar.finished": "Завершено",
-  "progressbar.days": "д",
+  "progressbar.daysRemaining": "{count, plural, one {{count} день} few {{count} дні} many {{count} днів} other {днів}}",
+  "progressbar.hoursRemaining": "{count, plural, one {{count} година} few {{count} години} other {годин}}",
+
+  "progressbar.minutesRemaning": "{count, plural, one {{count} хвилина} few {{count} хвилин} other {хвилин}}",
 
   "burger.menu.btn.myProfile": "Мій профіль",
   "burger.menu.btn.myBookings": "Мої бронювання",
@@ -393,7 +396,6 @@
   "service.start.time": "Час початку",
   "service.duration": "Тривалість",
   "service.meters": "м",
-  "service.daysRemaining": "{count, plural, one {{count} день} few {{count} дні} many {{count} днів} other {днів}}",
 
   "onboard.data.about": "Про себе",
   "onboard.data.description.about": "Ми використаємо цю інформацію для створення детального опису вашого досвіду, який можна поділитися з клієнтами",

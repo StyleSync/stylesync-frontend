@@ -53,12 +53,12 @@ export const ServiceDataSection = () => {
             <IphoneLayout
               imageUrl={profile}
               className='relative left-[50px] z-10 sm:left-[70px] xl:left-[100px]'
-              width={270}
+              width={300}
             />
             <IphoneLayout
               imageUrl={search}
               className='relative right-[50px] sm:right-0'
-              width={300}
+              width={270}
             />
           </div>
         </div>

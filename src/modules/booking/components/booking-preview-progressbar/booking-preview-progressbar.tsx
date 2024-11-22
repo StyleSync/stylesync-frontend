@@ -17,12 +17,33 @@ export const BookingPreviewProgressbar: FC<BookingPreviewProgressbarProps> = ({
   const intl = useIntl();
   const currentDate = new Date();
 
-  const daysRemaining = Math.ceil(
-    (startTime.getTime() - currentDate.getTime()) /
+  // Calculate the remaining time before events in milliseconds
+  const timeRemaining = startTime.getTime() - currentDate.getTime();
+
+  const daysRemaining = Math.floor(
+    timeRemaining /
       (MILLISECONDS_IN_SECOND *
         SECONDS_IN_MINUTE *
         MINUTES_IN_HOUR *
         HOURS_IN_DAY)
+  );
+
+  const hoursRemaining = Math.floor(
+    (timeRemaining %
+      (MILLISECONDS_IN_SECOND *
+        SECONDS_IN_MINUTE *
+        MINUTES_IN_HOUR *
+        HOURS_IN_DAY)) /
+      (MILLISECONDS_IN_SECOND * SECONDS_IN_MINUTE * MINUTES_IN_HOUR)
+  );
+
+  const minutesRemaning = Math.floor(
+    (timeRemaining %
+      (MILLISECONDS_IN_SECOND *
+        SECONDS_IN_MINUTE *
+        SECONDS_IN_MINUTE *
+        MINUTES_IN_HOUR)) /
+      (MILLISECONDS_IN_SECOND * SECONDS_IN_MINUTE)
   );
 
   // Calculate the number of days that have passed since the reservation was created
@@ -35,7 +56,32 @@ export const BookingPreviewProgressbar: FC<BookingPreviewProgressbarProps> = ({
   );
 
   // Calculate the percentage of time passed
-  const percents = daysRemaining ? (daysWaited * 100) / daysRemaining : 100;
+  const percents = timeRemaining > 0 ? (daysWaited * 100) / daysRemaining : 100;
+
+  let timeLeftMessage = '';
+
+  if (timeRemaining > 0) {
+    if (daysRemaining > 0) {
+      timeLeftMessage = intl.formatMessage(
+        { id: 'progressbar.daysRemaining' },
+        { count: daysRemaining }
+      );
+    }
+
+    if (daysRemaining <= 0 && hoursRemaining > 0) {
+      timeLeftMessage = intl.formatMessage(
+        { id: 'progressbar.hoursRemaining' },
+        { count: hoursRemaining }
+      );
+    }
+
+    if (daysRemaining <= 0 && hoursRemaining <= 0 && minutesRemaning > 0) {
+      timeLeftMessage = intl.formatMessage(
+        { id: 'progressbar.minutesRemaning' },
+        { count: minutesRemaning }
+      );
+    }
+  }
 
   return (
     <div className='relative ml-5 mt-[66px] h-[120px] w-[120px]'>
@@ -55,10 +101,7 @@ export const BookingPreviewProgressbar: FC<BookingPreviewProgressbarProps> = ({
         </span>
 
         <Typography variant='small' className='!text-accent'>
-          {intl.formatMessage(
-            { id: 'service.daysRemaining' },
-            { count: daysRemaining }
-          )}
+          {timeLeftMessage}
         </Typography>
       </div>
     </div>

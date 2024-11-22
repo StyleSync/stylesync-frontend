@@ -46,6 +46,9 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
           queryClient.invalidateQueries({
             queryKey: getQueryKey(trpc.serviceOnProfessional.list),
           });
+          queryClient.invalidateQueries({
+            queryKey: getQueryKey(trpc.professional.getProfileCompletionStatus),
+          });
           onRemove(service);
         },
         onError: () => {
