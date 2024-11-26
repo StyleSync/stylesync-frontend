@@ -25,10 +25,7 @@ export const AddGoogleCalendarEventBtn: FC<DownloadIcsButtonProps> = ({
     const durationInMinutes = duration.hours * 60 + duration.minutes;
 
     const endDate = formatGoogleCalendarDate(
-      new Date(
-        new Date(startEventTime).getTime() +
-          durationInMinutes * 60 * MILLISECONDS_IN_MINUTE
-      )
+      new Date(startEventTime + durationInMinutes * 60 * MILLISECONDS_IN_MINUTE)
     );
 
     const url = `https://calendar.google.com/calendar/u/0/r/eventedit?text=${title}&dates=${startDate}/${endDate}&location=${location}`;
