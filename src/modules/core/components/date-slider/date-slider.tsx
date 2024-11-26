@@ -1,4 +1,4 @@
-import { useMemo, useState, type FC } from 'react';
+import { useMemo, type FC } from 'react';
 import styles from '@/modules/booking/containers/booking-time-select/booking-time-select.module.scss';
 import { BookingTimeSelectNavigation } from '@/modules/booking/components/booking-time-select-navigation';
 import { Swiper, SwiperSlide } from 'swiper/react';

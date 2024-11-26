@@ -395,5 +395,13 @@
   "onboard.data.description.services": "Complete your portfolio to attract more clients",
   "onboard.data.schedule": "Schedule",
   "onboard.data.gallery": "Gallery",
-  "onboard.data.location": "Location"
+  "onboard.data.location": "Location",
+
+  "booking.reschedule.toast.title": "Success!",
+  "booking.reschedule.toast.descr": "Booking has been updated!",
+
+  "booking.details.name": "Name:",
+  "booking.details.phone": "Phone:",
+  "booking.details.email": "Email:",
+  "booking.details.comment": "Comment:"
 }

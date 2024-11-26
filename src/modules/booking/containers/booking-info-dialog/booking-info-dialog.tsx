@@ -22,6 +22,7 @@ import { formatI18n } from '@/modules/internationalization/utils/data-fns-intern
 import { trpc } from '@/modules/core/utils/trpc.utils';
 // constants
 import { bookingStatusMetadata } from '@/modules/booking/constants/booking.constants';
+import { getQueryKey } from '@trpc/react-query';
 
 import type {
   BookingInfoDialogProps,
@@ -103,6 +104,18 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
             });
 
             queryClient.invalidateQueries(queryKey);
+
+            // now work update list
+            const listQueryKey = getQueryKey(trpc.booking.list);
+
+            queryClient.invalidateQueries(listQueryKey);
+
+            // now work update calendar
+            queryClient.invalidateQueries(
+              trpc.schedule.get.useQuery({
+                id: bookingId || '',
+              })
+            );
           },
         }
       );
@@ -249,7 +262,7 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
                 {formattedData.note && (
                   <div className='mb-4 flex w-full max-w-[350px] rounded'>
                     <span className='leading-1 text-xs text-gray-accent'>
-                      <span className='font-medium'>
+                      <span className='font-medium text-primary'>
                         {`${intl.formatMessage({ id: 'general.note' })}: `}
                       </span>
                       {intl.formatMessage({ id: formattedData.note })}
@@ -258,20 +271,26 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
                 )}
                 <div className='flex flex-col gap-y-2 border-t border-primary-light pt-4'>
                   <div className='flex gap-x-2'>
-                    <span className='text-sm text-gray'>Name</span>
+                    <span className='text-sm text-gray'>
+                      {intl.formatMessage({ id: 'booking.details.name' })}
+                    </span>
                     <span className='text-sm text-dark'>
                       {formattedData.guestName}
                     </span>
                   </div>
                   <div className='flex gap-x-2'>
-                    <span className='text-sm text-gray'>Phone</span>
+                    <span className='text-sm text-gray'>
+                      {intl.formatMessage({ id: 'booking.details.phone' })}
+                    </span>
                     <span className='text-sm text-dark'>
                       {formattedData.guestPhone}
                     </span>
                   </div>
                   {formattedData.guestEmail && (
                     <div className='flex gap-x-2'>
-                      <span className='text-sm text-gray'>Email</span>
+                      <span className='text-sm text-gray'>
+                        {intl.formatMessage({ id: 'booking.details.email' })}
+                      </span>
                       <span className='text-sm text-dark'>
                         {formattedData.guestEmail}
                       </span>
@@ -279,7 +298,10 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
                   )}
                   {formattedData.guestComment && (
                     <div className='flex gap-x-2'>
-                      <span className='text-sm text-gray'>Comment</span>
+                      <span className='text-sm text-gray'>
+                        {' '}
+                        {intl.formatMessage({ id: 'booking.details.comment' })}
+                      </span>
                       <span className='text-sm text-dark'>
                         {formattedData.guestComment}
                       </span>
@@ -287,7 +309,10 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
                   )}
                 </div>
                 {isBookingRescheduleActive.value && bookingId && (
-                  <BookingRescheduleForm bookingId={bookingId} />
+                  <BookingRescheduleForm
+                    onOpenChange={isBookingRescheduleActive.setValue}
+                    bookingId={bookingId}
+                  />
                 )}
                 {actions.length > 0 && !isBookingRescheduleActive.value && (
                   <div className={styles.actions}>
