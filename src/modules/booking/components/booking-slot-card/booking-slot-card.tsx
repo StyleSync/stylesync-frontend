@@ -21,9 +21,9 @@ export const BookingSlotCard: FC<BookingSlotCardProps> = ({
   return (
     <div
       className={clsx(
-        'mt-2 cursor-pointer rounded-xl border border-primary-light bg-transparent px-4 py-3 text-base text-dark transition duration-300 hover:border-primary',
+        'flex cursor-pointer items-center justify-center rounded-xl border border-primary-light bg-transparent px-4 py-3 text-sm text-dark transition duration-300 hover:border-primary hover:text-primary',
         {
-          '!border-primary !bg-primary text-white': isActive,
+          '!border-primary !bg-primary text-white hover:text-white': isActive,
         }
       )}
       onClick={onClick}

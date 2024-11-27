@@ -99,32 +99,60 @@ export const BookingRescheduleForm: FC<BookingRescheduleFormProps> = ({
           onSelectedDateChange={setSelectedDate}
         />
       </div>
-      <Placeholder
-        isActive={bookingSlotsToRescheduleQuery.isInitialLoading}
-        placeholder={<Spinner size='medium' />}
-      >
-        <div className='flex flex-wrap gap-2'>
-          {bookingAvailableSlots.map((slot, index) => (
-            <BookingSlotCard
-              key={index}
-              isActive={
-                selectedSlot?.startTime === slot.startTime &&
-                selectedSlot.endTime === slot.endTime
-              }
-              startTime={slot.startTime}
-              endTime={slot.endTime}
-              onClick={() => setSelectedSlot(slot)}
-            />
-          ))}
+      <div className='flex min-h-[calc(178px+1rem)] flex-col'>
+        <Placeholder
+          isActive={bookingSlotsToRescheduleQuery.isInitialLoading}
+          placeholder={<Spinner size='medium' />}
+        >
+          <Placeholder
+            isActive={bookingAvailableSlots.length === 0}
+            placeholder={
+              <span className='text-sm text-gray-accent'>
+                {intl.formatMessage({
+                  id: 'booking.timeSelect.noAvailableTime',
+                })}
+              </span>
+            }
+          >
+            <div className='flex flex-col gap-y-4'>
+              <span className='text-xs text-gray-accent'>
+                {intl.formatMessage({
+                  id: 'booking.schedule.availableSlots',
+                })}
+                :
+              </span>
+              <div className='grid gap-2 [grid-template-columns:repeat(auto-fill,_minmax(120px,1fr))] [grid-template-rows:max-content]'>
+                {bookingAvailableSlots.map((slot, index) => (
+                  <BookingSlotCard
+                    key={index}
+                    isActive={
+                      selectedSlot?.startTime === slot.startTime &&
+                      selectedSlot.endTime === slot.endTime
+                    }
+                    startTime={slot.startTime}
+                    endTime={slot.endTime}
+                    onClick={() => setSelectedSlot(slot)}
+                  />
+                ))}
+              </div>
+            </div>
+          </Placeholder>
+        </Placeholder>
+        <div className='mt-auto flex items-center justify-end gap-x-4'>
+          <Button
+            text={intl.formatMessage({ id: 'button.cancel' })}
+            variant='secondary'
+            className='flex-1 md:flex-[unset]'
+          />
+          <Button
+            className='flex-1 md:flex-[unset]'
+            text={intl.formatMessage({ id: 'button.save' })}
+            onClick={handleDateUpdate}
+            isLoading={bookingReschedule.isLoading}
+            disabled={!selectedSlot}
+          />
         </div>
-      </Placeholder>
-      <Button
-        onClick={handleDateUpdate}
-        className='ml-auto mt-6'
-        text={intl.formatMessage({ id: 'button.save' })}
-        isLoading={bookingReschedule.isLoading}
-        disabled={!selectedSlot}
-      />
+      </div>
     </div>
   );
 };

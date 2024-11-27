@@ -403,6 +403,7 @@
 
   "booking.reschedule.toast.title": "Успішно!",
   "booking.reschedule.toast.descr": "Бронювання оновлено!",
+  "booking.schedule.availableSlots": "Доступні години",
 
   "booking.details.name": "Ім'я:",
   "booking.details.phone": "Телефон:",

@@ -399,6 +399,7 @@
 
   "booking.reschedule.toast.title": "Success!",
   "booking.reschedule.toast.descr": "Booking has been updated!",
+  "booking.schedule.availableSlots": "Available time",
 
   "booking.details.name": "Name:",
   "booking.details.phone": "Phone:",
