@@ -1,6 +1,7 @@
 import { type FC, useMemo, useState } from 'react';
 import { isPast } from 'date-fns';
 import { useIntl } from 'react-intl';
+import { getQueryKey } from '@trpc/react-query';
 
 // components
 import { Placeholder } from '@/modules/core/components/placeholder';
@@ -67,7 +68,11 @@ export const BookingRescheduleForm: FC<BookingRescheduleFormProps> = ({
             expand: ['serviceProfessional'],
           });
 
+          const listQueryKey = getQueryKey(trpc.booking.list);
+
           queryClient.invalidateQueries(queryKey);
+
+          queryClient.invalidateQueries(listQueryKey);
 
           onOpenChange(false);
         },
@@ -98,7 +103,7 @@ export const BookingRescheduleForm: FC<BookingRescheduleFormProps> = ({
         isActive={bookingSlotsToRescheduleQuery.isInitialLoading}
         placeholder={<Spinner size='medium' />}
       >
-        <div>
+        <div className='flex flex-wrap gap-2'>
           {bookingAvailableSlots.map((slot, index) => (
             <BookingSlotCard
               key={index}
@@ -115,7 +120,7 @@ export const BookingRescheduleForm: FC<BookingRescheduleFormProps> = ({
       </Placeholder>
       <Button
         onClick={handleDateUpdate}
-        className='ml-auto pt-6'
+        className='ml-auto mt-6'
         text={intl.formatMessage({ id: 'button.save' })}
         isLoading={bookingReschedule.isLoading}
         disabled={!selectedSlot}

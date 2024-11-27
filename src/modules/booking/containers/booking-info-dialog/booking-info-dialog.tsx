@@ -102,20 +102,11 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
               id: bookingId || '',
               expand: ['serviceProfessional'],
             });
+            const listQueryKey = getQueryKey(trpc.booking.list);
 
             queryClient.invalidateQueries(queryKey);
 
-            // now work update list
-            const listQueryKey = getQueryKey(trpc.booking.list);
-
             queryClient.invalidateQueries(listQueryKey);
-
-            // now work update calendar
-            queryClient.invalidateQueries(
-              trpc.schedule.get.useQuery({
-                id: bookingId || '',
-              })
-            );
           },
         }
       );
