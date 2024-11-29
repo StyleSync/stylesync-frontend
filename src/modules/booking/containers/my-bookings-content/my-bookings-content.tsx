@@ -2,7 +2,8 @@
 import { Suspense } from 'react';
 // components
 import { BookingsList } from '@/modules/booking/components/bookings-list';
-import { Calendar } from '@/modules/schedule/components/calendar';
+// import { Calendar } from '@/modules/schedule/components/calendar';
+import { CalendarMobile } from '@/modules/schedule/components/mobile-calendar';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 // hooks
@@ -39,7 +40,8 @@ export const MyBookingsContent = () => {
         <Suspense fallback={<div />}>
           <div className='flex w-full'>
             <div className='flex-1'>
-              <Calendar />
+              {/* <Calendar /> */}
+              <CalendarMobile />
             </div>
           </div>
         </Suspense>

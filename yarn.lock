@@ -2403,21 +2403,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fullcalendar/daygrid@npm:6.1.14":
-  version: 6.1.14
-  resolution: "@fullcalendar/daygrid@npm:6.1.14"
-  peerDependencies:
-    "@fullcalendar/core": ~6.1.14
-  checksum: 10c0/4ef6aea9b08c03ca017ebc82449b3855181bfc4f34299f63f582719eaa8944493d4dabf171c5d28e90c39132c60e6761c6b66c2fd63a0f6d75fcec8c4c2387c8
-  languageName: node
-  linkType: hard
-
-"@fullcalendar/daygrid@npm:~6.1.14":
+"@fullcalendar/daygrid@npm:^6.1.15, @fullcalendar/daygrid@npm:~6.1.14":
   version: 6.1.15
   resolution: "@fullcalendar/daygrid@npm:6.1.15"
   peerDependencies:
     "@fullcalendar/core": ~6.1.15
   checksum: 10c0/52ba7a479675aa8e2bd36ca6c00c9cc28f11539710cf7a233e8657835b29fe21954e732a23c9b7c7c345c5b6b3c08e3af24ce9125ec28478176cce1b3e7d0da4
+  languageName: node
+  linkType: hard
+
+"@fullcalendar/list@npm:^6.1.15":
+  version: 6.1.15
+  resolution: "@fullcalendar/list@npm:6.1.15"
+  peerDependencies:
+    "@fullcalendar/core": ~6.1.15
+  checksum: 10c0/33c0ba3ee9c2545cd68b5395a4ccf59986fbbcae07a458837a6ac52b0a0e6fe59fbc78d10286115ea5145b70c6aaa03b50cbe95285645c7f91f50dacc6ee1a35
   languageName: node
   linkType: hard
 
@@ -16405,7 +16405,8 @@ __metadata:
     "@faker-js/faker": "npm:8.0.2"
     "@formatjs/intl-localematcher": "npm:0.5.4"
     "@fullcalendar/core": "npm:6.1.9"
-    "@fullcalendar/daygrid": "npm:6.1.14"
+    "@fullcalendar/daygrid": "npm:^6.1.15"
+    "@fullcalendar/list": "npm:^6.1.15"
     "@fullcalendar/react": "npm:6.1.14"
     "@fullcalendar/timegrid": "npm:6.1.14"
     "@hookform/resolvers": "npm:3.6.0"

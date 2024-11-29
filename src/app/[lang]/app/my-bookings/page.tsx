@@ -25,7 +25,7 @@ export default async function MyBookings() {
         <section className='px-6 md:px-[40px]'>
           <MyBookingsTabs />
         </section>
-        <section className='relative flex w-full flex-1 bg-white px-6 shadow md:px-[40px]'>
+        <section className='relative flex w-full flex-1 bg-white pl-6 shadow md:pl-[40px]'>
           <MyBookingsContent />
         </section>
       </div>
