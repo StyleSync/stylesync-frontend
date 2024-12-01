@@ -31,13 +31,14 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
 
   return (
     <div className='relative flex w-full flex-col gap-5'>
-      <DateSelectCalendar onMonthChange={setSelectedDates} />
-
-      <div>
+      <div className='pl-6'>
+        <DateSelectCalendar onMonthChange={setSelectedDates} />
+      </div>
+      <div className='relative flex w-full max-w-full pb-4'>
         <DateSliderCalendar days={selectedDates || []} />
       </div>
 
-      <div className='h-full border-t border-primary-light'>
+      <div className='h-full border-t border-primary-light pl-6'>
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin]}
           initialView='timeGridDay'

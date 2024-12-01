@@ -16,13 +16,14 @@ export const DateSliderCalendar: FC<DateSliderCalendarProps> = ({ days }) => {
   return (
     <Swiper
       spaceBetween={10}
-      loop
-      slidesPerView={5}
-      className='z-10 h-full !w-full !pb-4'
+      loop={false}
+      slidesPerView='auto'
+      slidesOffsetBefore={24}
+      className='z-10 w-full !pb-4'
     >
       {days.map((day, index) => (
         <SwiperSlide key={index} className={styles.swiperSlideCalendar}>
-          <div className='inline-flex w-full flex-col items-center gap-3 rounded-xl bg-white py-[11px] pb-3 shadow'>
+          <div className='flex w-full flex-col items-center gap-3 rounded-xl bg-white py-[11px] pb-3 shadow'>
             <Typography>{format(day, 'EEE')}</Typography>
             <Typography>{format(day, 'd')}</Typography>
             <div className='flex gap-1'>
