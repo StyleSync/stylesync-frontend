@@ -12,6 +12,7 @@ import { defaultScheduleSelect } from '@/server/selectors/schedule';
 import { defaultLocationSelect } from '@/server/selectors/location';
 import { publicUserSelect } from '@/server/selectors/user';
 import { defaultAlbumSelect } from '@/server/selectors/album';
+import { createUniqueArray } from '@/server/utils/helpers';
 
 const maxTextLength = 100;
 const maxLargeTextLength = 140;
@@ -136,14 +137,31 @@ export const professionalRouter = router({
       const defaultPrecision = 0.3;
       const precision = input.precision || defaultPrecision;
 
-      return prisma.professional.findMany({
+      const professionals = await prisma.professional.findMany({
         select: {
           ...defaultProfessionalSelect,
           user: {
-            select: defaultUserSelect,
+            select: {
+              id: true,
+              avatar: true,
+              image: true,
+              firstName: true,
+              lastName: true,
+            },
           },
           location: {
             select: defaultLocationSelect,
+          },
+          services: {
+            select: {
+              service: {
+                select: {
+                  id: true,
+                  name: true,
+                  icon: true,
+                },
+              },
+            },
           },
         },
         where: {
@@ -216,6 +234,18 @@ export const professionalRouter = router({
         },
         take: input.limit,
         skip: input.offset,
+      });
+
+      return professionals.map((professional) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { services: _, ...rest } = professional;
+
+        return {
+          ...rest,
+          mainServices: createUniqueArray(
+            professional.services.map((serviceObj) => serviceObj.service)
+          ),
+        };
       });
     }),
   getProfileCompletionStatus: publicProcedure
