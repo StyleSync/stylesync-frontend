@@ -15,7 +15,6 @@ import { defaultScheduleSelect } from '@/server/selectors/schedule';
 import {
   isTimeWithinPeriods,
   isTimeWithinSchedule,
-  mergeDates,
 } from '@/server/utils/helpers';
 import { BookingStatus, Day } from '@prisma/client';
 import { addHours, endOfDay, isAfter, startOfDay } from 'date-fns';
@@ -173,9 +172,7 @@ export const bookingRouter = router({
         });
       }
 
-      if (
-        isAfter(new Date(), new Date(mergeDates(input.date, input.startTime)))
-      ) {
+      if (isAfter(new Date(), new Date(input.startTime))) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: `You have selected a past date`,

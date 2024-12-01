@@ -9,7 +9,6 @@ import { addHours, isAfter } from 'date-fns';
 import {
   isTimeWithinPeriods,
   isTimeWithinSchedule,
-  mergeDates,
 } from '@/server/utils/helpers';
 import {
   defaultBookingSelect,
@@ -47,9 +46,7 @@ export const rescheduleBooking = privateProcedure
       });
     }
 
-    if (
-      isAfter(new Date(), new Date(mergeDates(input.date, input.startTime)))
-    ) {
+    if (isAfter(new Date(), new Date(input.startTime))) {
       throw new TRPCError({
         code: 'BAD_REQUEST',
         message: `You have selected a past date`,
