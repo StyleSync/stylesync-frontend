@@ -252,12 +252,11 @@ export const formatDuration = (duration: number, intl?: IntlShape): string => {
 };
 
 //  formatting time in the 'HH:mm' format.
-export const formatTime = (timeString: string) => {
+export const formatTime = (timeString: string | Date | number) => {
   const time = new Date(timeString);
-  const formattedTime = `${time.getHours().toString().padStart(2, '0')}:${time
+
+  return `${time.getHours().toString().padStart(2, '0')}:${time
     .getMinutes()
     .toString()
     .padStart(2, '0')}`;
-
-  return formattedTime;
 };

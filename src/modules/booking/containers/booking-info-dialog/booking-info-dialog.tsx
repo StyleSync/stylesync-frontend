@@ -1,28 +1,34 @@
 import { type FC, useCallback, useMemo } from 'react';
 import clsx from 'clsx';
 import { useIntl } from 'react-intl';
+import { useQueryClient } from '@tanstack/react-query';
+import { useBoolean } from 'usehooks-ts';
 // components
 import { Button } from '@/modules/core/components/button';
 import { DialogBottom } from '@/modules/core/components/dialog-bottom';
 import { Dialog } from '@/modules/core/components/dialog';
 import { Spinner } from '@/modules/core/components/spinner';
 import { Placeholder } from '@/modules/core/components/placeholder';
+import { BookingStatus } from '@/modules/booking/components/booking-status';
+import { Icon } from '@/modules/core/components/icon';
+// containers
+import { BookingRescheduleForm } from '@/modules/booking/containers/booking-reschedule-form';
 // hooks
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // utils
+import { showToast } from '@/modules/core/providers/toast-provider';
+// utils
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
 import { trpc } from '@/modules/core/utils/trpc.utils';
+// constants
+import { bookingStatusMetadata } from '@/modules/booking/constants/booking.constants';
+import { getQueryKey } from '@trpc/react-query';
 
 import type {
   BookingInfoDialogProps,
   Action,
 } from './booking-info-dialog.interface';
 import styles from './booking-info-dialog.module.scss';
-import { BookingStatus } from '@/modules/booking/components/booking-status';
-import { useQueryClient } from '@tanstack/react-query';
-import { Icon } from '@/modules/core/components/icon';
-import { bookingStatusMetadata } from '@/modules/booking/constants/booking.constants';
-import { showToast } from '@/modules/core/providers/toast-provider';
 
 export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
   bookingId,
@@ -31,6 +37,8 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
   const intl = useIntl();
   const deviceType = useDeviceType();
   const queryClient = useQueryClient();
+  // state
+  const isBookingRescheduleActive = useBoolean();
   // memo
   const DialogComponent = useMemo(() => {
     return deviceType === 'mobile' ? DialogBottom : Dialog;
@@ -94,8 +102,11 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
               id: bookingId || '',
               expand: ['serviceProfessional'],
             });
+            const listQueryKey = getQueryKey(trpc.booking.list);
 
             queryClient.invalidateQueries(queryKey);
+
+            queryClient.invalidateQueries(listQueryKey);
           },
         }
       );
@@ -194,114 +205,135 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
     if (actionId === 'delete') {
       deleteBooking();
     }
+
+    if (actionId === 'reschedule') {
+      isBookingRescheduleActive.setTrue();
+    }
   };
 
   return (
-    <DialogComponent
-      isOpen={!!bookingId}
-      isCloseButtonVisible
-      onOpenChange={(open) => {
-        if (!open) {
-          onClose();
-        }
-      }}
-    >
-      <div className={styles.root}>
-        <Placeholder
-          isActive={bookingQuery.isLoading || !formattedData}
-          placeholder={
-            <div className='p-10'>
-              <Spinner size='medium' />
-            </div>
+    <>
+      <DialogComponent
+        isOpen={!!bookingId}
+        isCloseButtonVisible
+        onOpenChange={(open) => {
+          if (!open) {
+            onClose();
           }
-        >
-          {formattedData && (
-            <div className='flex flex-col px-6 pb-8 pt-6'>
-              <div className='flex flex-col items-center justify-center gap-y-2 pb-4'>
-                <span className='text-xl text-dark'>
-                  {formattedData.serviceTitle}
-                </span>
-                <BookingStatus status={formattedData.status} />
-                <div className='flex items-center gap-x-2'>
-                  <Icon
-                    name='calendar'
-                    width={16}
-                    height={16}
-                    className='text-dark'
-                  />
-                  <span className='text-sm font-medium capitalize text-dark'>
-                    {formattedData.date}
-                  </span>
-                </div>
+        }}
+      >
+        <div className={styles.root}>
+          <Placeholder
+            isActive={bookingQuery.isLoading || !formattedData}
+            placeholder={
+              <div className='p-10'>
+                <Spinner size='medium' />
               </div>
-              {formattedData.note && (
-                <div className='mb-4 flex w-full max-w-[350px] rounded'>
-                  <span className='leading-1 text-xs text-gray-accent'>
-                    <span className='font-medium'>
-                      {`${intl.formatMessage({ id: 'general.note' })}: `}
-                    </span>
-                    {intl.formatMessage({ id: formattedData.note })}
+            }
+          >
+            {formattedData && (
+              <div className='flex flex-col px-6 pb-8 pt-6'>
+                <div className='flex flex-col items-center justify-center gap-y-2 pb-4'>
+                  <span className='text-xl text-dark'>
+                    {formattedData.serviceTitle}
                   </span>
-                </div>
-              )}
-              <div className='flex flex-col gap-y-2 border-t border-primary-light pt-4'>
-                <div className='flex gap-x-2'>
-                  <span className='text-sm text-gray'>Name</span>
-                  <span className='text-sm text-dark'>
-                    {formattedData.guestName}
-                  </span>
-                </div>
-                <div className='flex gap-x-2'>
-                  <span className='text-sm text-gray'>Phone</span>
-                  <span className='text-sm text-dark'>
-                    {formattedData.guestPhone}
-                  </span>
-                </div>
-                {formattedData.guestEmail && (
-                  <div className='flex gap-x-2'>
-                    <span className='text-sm text-gray'>Email</span>
-                    <span className='text-sm text-dark'>
-                      {formattedData.guestEmail}
-                    </span>
-                  </div>
-                )}
-                {formattedData.guestComment && (
-                  <div className='flex gap-x-2'>
-                    <span className='text-sm text-gray'>Comment</span>
-                    <span className='text-sm text-dark'>
-                      {formattedData.guestComment}
-                    </span>
-                  </div>
-                )}
-              </div>
-              {actions.length > 0 && (
-                <div className={styles.actions}>
-                  {actions.map((action) => (
-                    <Button
-                      key={action.id}
-                      className={clsx(styles.action, styles[action.variant])}
-                      icon={action.icon}
-                      text={action.text}
-                      variant={action.variant}
-                      disabled={
-                        bookingStatusUpdateMutation.isLoading &&
-                        ['reject', 'approve'].includes(action.id)
-                      }
-                      typographyProps={{
-                        weight: 'medium',
-                      }}
-                      onClick={() => {
-                        handleActionClick(action.id);
-                      }}
-                      isLoading={action.isLoading}
+                  <BookingStatus status={formattedData.status} />
+                  <div className='flex items-center gap-x-2'>
+                    <Icon
+                      name='calendar'
+                      width={16}
+                      height={16}
+                      className='text-dark'
                     />
-                  ))}
+                    <span className='text-sm font-medium capitalize text-dark'>
+                      {formattedData.date}
+                    </span>
+                  </div>
                 </div>
-              )}
-            </div>
-          )}
-        </Placeholder>
-      </div>
-    </DialogComponent>
+                {formattedData.note && (
+                  <div className='mb-4 flex w-full max-w-[350px] rounded'>
+                    <span className='leading-1 text-xs text-gray-accent'>
+                      <span className='font-medium text-primary'>
+                        {`${intl.formatMessage({ id: 'general.note' })}: `}
+                      </span>
+                      {intl.formatMessage({ id: formattedData.note })}
+                    </span>
+                  </div>
+                )}
+                <div className='flex flex-col gap-y-2 border-t border-primary-light pt-4'>
+                  <div className='flex gap-x-2'>
+                    <span className='text-sm text-gray'>
+                      {intl.formatMessage({ id: 'booking.details.name' })}
+                    </span>
+                    <span className='text-sm text-dark'>
+                      {formattedData.guestName}
+                    </span>
+                  </div>
+                  <div className='flex gap-x-2'>
+                    <span className='text-sm text-gray'>
+                      {intl.formatMessage({ id: 'booking.details.phone' })}
+                    </span>
+                    <span className='text-sm text-dark'>
+                      {formattedData.guestPhone}
+                    </span>
+                  </div>
+                  {formattedData.guestEmail && (
+                    <div className='flex gap-x-2'>
+                      <span className='text-sm text-gray'>
+                        {intl.formatMessage({ id: 'booking.details.email' })}
+                      </span>
+                      <span className='text-sm text-dark'>
+                        {formattedData.guestEmail}
+                      </span>
+                    </div>
+                  )}
+                  {formattedData.guestComment && (
+                    <div className='flex gap-x-2'>
+                      <span className='text-sm text-gray'>
+                        {' '}
+                        {intl.formatMessage({ id: 'booking.details.comment' })}
+                      </span>
+                      <span className='text-sm text-dark'>
+                        {formattedData.guestComment}
+                      </span>
+                    </div>
+                  )}
+                </div>
+                {isBookingRescheduleActive.value && bookingId && (
+                  <BookingRescheduleForm
+                    onOpenChange={isBookingRescheduleActive.setValue}
+                    bookingId={bookingId}
+                  />
+                )}
+                {actions.length > 0 && !isBookingRescheduleActive.value && (
+                  <div className={styles.actions}>
+                    {actions.map((action) => (
+                      <Button
+                        key={action.id}
+                        className={clsx(styles.action, styles[action.variant])}
+                        icon={action.icon}
+                        text={action.text}
+                        variant={action.variant}
+                        disabled={
+                          bookingStatusUpdateMutation.isLoading &&
+                          ['reject', 'approve'].includes(action.id)
+                        }
+                        typographyProps={{
+                          weight: 'medium',
+                        }}
+                        onClick={() => {
+                          handleActionClick(action.id);
+                        }}
+                        isLoading={action.isLoading}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </Placeholder>
+        </div>
+      </DialogComponent>
+    </>
   );
 };

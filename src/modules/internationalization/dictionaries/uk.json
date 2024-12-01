@@ -399,5 +399,14 @@
   "onboard.data.description.services": "Заповніть портфоліо, щоб залучити більше клієнтів",
   "onboard.data.schedule": "Розклад",
   "onboard.data.gallery": "Галерея",
-  "onboard.data.location": "Локація"
+  "onboard.data.location": "Локація",
+
+  "booking.reschedule.toast.title": "Успішно!",
+  "booking.reschedule.toast.descr": "Бронювання оновлено!",
+  "booking.schedule.availableSlots": "Доступні години",
+
+  "booking.details.name": "Ім'я:",
+  "booking.details.phone": "Телефон:",
+  "booking.details.email": "Електронна пошта:",
+  "booking.details.comment": "Коментар:"
 }
