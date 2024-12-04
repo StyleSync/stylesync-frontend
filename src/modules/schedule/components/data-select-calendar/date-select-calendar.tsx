@@ -3,8 +3,9 @@ import { Popover } from '@/modules/core/components/popover';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { useBoolean } from 'usehooks-ts';
 import type { DateSelectCalendarProps } from './data-select-calendat.interface';
-import { useEffect, useState, type FC } from 'react';
-import { eachDayOfInterval, endOfMonth, format, startOfMonth } from 'date-fns';
+import { type FC } from 'react';
+import { format } from 'date-fns';
+import { getDaysOfCurrentMonth } from '@/modules/schedule/utils/get-current-month-days';
 
 export const DateSelectCalendar: FC<DateSelectCalendarProps> = ({
   onMonthChange,
@@ -12,16 +13,6 @@ export const DateSelectCalendar: FC<DateSelectCalendarProps> = ({
   selectedDate,
 }) => {
   const isOpen = useBoolean();
-
-  const [showDate, setShowDate] = useState<string>(
-    format(new Date(), 'dd MMMM yyyy')
-  );
-
-  useEffect(() => {
-    if (selectedDate) {
-      setShowDate(format(selectedDate, 'dd MMMM yyyy'));
-    }
-  }, [selectedDate]);
 
   return (
     <Popover
@@ -32,7 +23,7 @@ export const DateSelectCalendar: FC<DateSelectCalendarProps> = ({
           variant='unstyled'
           iconEnd={isOpen.value ? 'chevron-top' : 'chevron-bottom'}
           onClick={isOpen.setTrue}
-          text={showDate}
+          text={selectedDate ? format(selectedDate, 'dd MMMM yyyy') : ''}
           classes={{
             iconEnd: '!w-5 !h-4',
             root: '!pl-2 !pr-2',
@@ -43,17 +34,11 @@ export const DateSelectCalendar: FC<DateSelectCalendarProps> = ({
       backgroundBlurEffect={false}
     >
       <DateCalendar
-        // value={value}
+        value={selectedDate}
         onChange={(date) => {
           if (!date) return;
-          setShowDate(format(date, 'dd MMMM yyyy'));
 
-          const starDay = startOfMonth(date);
-          const endDay = endOfMonth(date);
-          const daysOfMonth = eachDayOfInterval({
-            start: starDay,
-            end: endDay,
-          });
+          const daysOfMonth = getDaysOfCurrentMonth(date);
 
           onDateSelect(date);
 
