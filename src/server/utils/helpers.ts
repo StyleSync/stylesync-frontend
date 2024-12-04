@@ -177,3 +177,17 @@ export const mergeDates = (
     return date;
   }
 };
+
+export const createUniqueArray = <T extends { id: string }>(
+  array: T[]
+): T[] => {
+  const uniqueArray = array
+    .reduce((map, obj) => {
+      map.set(obj.id, obj);
+
+      return map;
+    }, new Map())
+    .values();
+
+  return Array.from(uniqueArray);
+};

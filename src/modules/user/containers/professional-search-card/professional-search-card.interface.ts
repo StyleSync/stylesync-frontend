@@ -1,7 +1,5 @@
-import type { Prisma } from '@prisma/client';
+import type { AppRouterOutputs } from '@/server/types';
 
 export type ProfessionalSearchCardProps = {
-  professional: Prisma.ProfessionalGetPayload<{
-    include: { user: true };
-  }>;
+  professional: AppRouterOutputs['professional']['list'][0];
 };
