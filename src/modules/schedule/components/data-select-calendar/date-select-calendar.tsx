@@ -3,17 +3,25 @@ import { Popover } from '@/modules/core/components/popover';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { useBoolean } from 'usehooks-ts';
 import type { DateSelectCalendarProps } from './data-select-calendat.interface';
-import { useState, type FC } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { eachDayOfInterval, endOfMonth, format, startOfMonth } from 'date-fns';
 
 export const DateSelectCalendar: FC<DateSelectCalendarProps> = ({
   onMonthChange,
+  onDateSelect,
+  selectedDate,
 }) => {
   const isOpen = useBoolean();
 
   const [showDate, setShowDate] = useState<string>(
     format(new Date(), 'dd MMMM yyyy')
   );
+
+  useEffect(() => {
+    if (selectedDate) {
+      setShowDate(format(selectedDate, 'dd MMMM yyyy'));
+    }
+  }, [selectedDate]);
 
   return (
     <Popover
@@ -46,6 +54,8 @@ export const DateSelectCalendar: FC<DateSelectCalendarProps> = ({
             start: starDay,
             end: endDay,
           });
+
+          onDateSelect(date);
 
           onMonthChange(daysOfMonth);
           isOpen.setFalse;

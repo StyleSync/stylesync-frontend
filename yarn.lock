@@ -2412,6 +2412,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fullcalendar/interaction@npm:^6.1.15":
+  version: 6.1.15
+  resolution: "@fullcalendar/interaction@npm:6.1.15"
+  peerDependencies:
+    "@fullcalendar/core": ~6.1.15
+  checksum: 10c0/f9e2542965b3d28a4eb65638a21d036d883399956781649f5442c2fb681ee59ea5fb071779be04acb88afed9278d38fc6f5758dc8a6dfa1d7b90cb6858a0115e
+  languageName: node
+  linkType: hard
+
 "@fullcalendar/list@npm:^6.1.15":
   version: 6.1.15
   resolution: "@fullcalendar/list@npm:6.1.15"
@@ -16406,6 +16415,7 @@ __metadata:
     "@formatjs/intl-localematcher": "npm:0.5.4"
     "@fullcalendar/core": "npm:6.1.9"
     "@fullcalendar/daygrid": "npm:^6.1.15"
+    "@fullcalendar/interaction": "npm:^6.1.15"
     "@fullcalendar/list": "npm:^6.1.15"
     "@fullcalendar/react": "npm:6.1.14"
     "@fullcalendar/timegrid": "npm:6.1.14"
