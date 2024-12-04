@@ -9,7 +9,7 @@ import {
 } from 'react';
 import clsx from 'clsx';
 import { trpc } from '@/modules/core/utils/trpc.utils';
-import { eachDayOfInterval, endOfMonth, format, startOfMonth } from 'date-fns';
+import { format, startOfDay } from 'date-fns';
 import { useIntl } from 'react-intl';
 // fullcalendar
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -30,6 +30,8 @@ import { type CalendarMobileProps } from './calendar-mobile.interface';
 import styles from '@/modules/schedule/components/calendar/calendarEvent.module.scss';
 
 import FullCalendar from '@fullcalendar/react';
+import { getDaysOfCurrentMonth } from '@/modules/schedule/utils/get-current-month-days';
+import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
 
 // const FullCalendar = dynamic(() => import('@fullcalendar/react'), {
 //   ssr: false,
@@ -40,8 +42,14 @@ const SPEED_TO_SLIDE = 500;
 export const CalendarMobile: FC<CalendarMobileProps> = () => {
   const intl = useIntl();
 
-  const [selectedDates, setSelectedDates] = useState<Date[]>();
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedDates, setSelectedDates] = useState<Date[]>(
+    getDaysOfCurrentMonth(new Date())
+  );
+  const [selectedDate, setSelectedDate] = useState<Date | null>(
+    startOfDay(new Date())
+  );
+
+  const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
   const swiperRef = useRef<Swiper | null>(null);
   const calendarRef = useRef<FullCalendar>(null);
 
@@ -87,6 +95,7 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
     }));
   }, [events]);
 
+  // connecting fullcalendar days
   useEffect(() => {
     const calendarApi: CalendarApi =
       calendarRef.current?.getApi() as CalendarApi;
@@ -95,11 +104,6 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
       return;
     }
 
-    // setTimeout(() => {
-    //   if (selectedDate) {
-    //     calendarApi.gotoDate(selectedDate);
-    //   }
-    // }, 0);
     queueMicrotask(() => {
       if (selectedDate) {
         calendarApi.gotoDate(selectedDate);
@@ -117,7 +121,6 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
     [swiperRef]
   );
 
-  //
   useEffect(() => {
     if (
       selectedDate &&
@@ -135,16 +138,6 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
     }
   }, [selectedDate, selectedDates]);
 
-  useEffect(() => {
-    const today = new Date();
-    const startDay = startOfMonth(today);
-    const endDay = endOfMonth(today);
-    const daysOfMonth = eachDayOfInterval({ start: startDay, end: endDay });
-
-    setSelectedDates(daysOfMonth);
-    setSelectedDate(today);
-  }, []);
-
   return (
     <div className='relative flex w-full flex-col gap-2'>
       <div className='pl-6'>
@@ -154,6 +147,7 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
           selectedDate={selectedDate}
         />
       </div>
+
       <div className='relative flex w-full max-w-full'>
         <DateSliderCalendar
           onSwiper={onSwiperHandler}
@@ -183,6 +177,9 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
           allDaySlot={false}
           height={'75vh'}
           nowIndicator
+          eventClick={({ event }) => {
+            setActiveBookingId(event.id);
+          }}
           eventContent={({ event }) => {
             const startTime = event.start
               ? format(new Date(event.start), 'HH:mm')
@@ -214,6 +211,12 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
                 </div>
               </div>
             );
+          }}
+        />
+        <BookingInfoDialog
+          bookingId={activeBookingId}
+          onClose={() => {
+            setActiveBookingId(null);
           }}
         />
       </div>
