@@ -1,5 +1,4 @@
 import { useMemo, type FC } from 'react';
-import { useSwiper } from 'swiper/react';
 import { useIntl } from 'react-intl';
 
 // components
@@ -10,16 +9,15 @@ import { generateDates } from '@/modules/core/utils/date.utils';
 // type
 import type { BookingTimeSelectNavigationProps } from './booking-time-select.interface';
 // style
-import styles from './booking-time-select-navigation.module.scss';
 // utils
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
 
 export const BookingTimeSelectNavigation: FC<
   BookingTimeSelectNavigationProps
-> = ({ selectedDay }) => {
+> = ({ selectedDay, onPrev, onNext }) => {
   const intl = useIntl();
 
-  const swiper = useSwiper();
+  // const swiper = useSwiper();
   const dates = generateDates();
   const selectedDate = useMemo(() => {
     if (!selectedDay) {
@@ -32,9 +30,9 @@ export const BookingTimeSelectNavigation: FC<
   }, [selectedDay, dates]);
 
   return (
-    <div className={styles.dateNavigation}>
+    <div className='flex items-center justify-center gap-x-4'>
       <Button
-        onClick={() => swiper.slidePrev()}
+        onClick={onPrev}
         icon='arrow-left'
         variant='unstyled'
         className='transition hover:text-primary'
@@ -45,7 +43,7 @@ export const BookingTimeSelectNavigation: FC<
           : intl.formatMessage({ id: 'booking.time.select.title' })}
       </Typography>
       <Button
-        onClick={() => swiper.slideNext()}
+        onClick={onNext}
         icon='arrow-right'
         variant='unstyled'
         className='transition hover:text-primary'
