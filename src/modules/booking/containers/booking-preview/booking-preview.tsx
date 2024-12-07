@@ -4,14 +4,13 @@ import { useParams } from 'next/navigation';
 import getDistance from 'geolib/es/getDistance';
 import { getHours, getMinutes } from 'date-fns';
 import { useIntl } from 'react-intl';
-
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { BookingPreviewDetailBox } from '@/modules/booking/components/booking-preview-detail-box/booking-preview-detail-box';
 import { Button } from '@/modules/core/components/button';
 import { Spinner } from '@/modules/core/components/spinner';
 import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
-import { DownloadIcsButton } from '@/modules/booking/components/download-ics-button';
+import { AddGoogleCalendarEventBtn } from '@/modules/booking/components/add-google-calendar-event';
 import { BookingPreviewProgressbar } from '@/modules/booking/components/booking-preview-progressbar';
 import { BookingPreviewMap } from '@/modules/booking/components/booking-preview-map';
 // hooks
@@ -111,9 +110,9 @@ export const BookingPreview = () => {
   return (
     <main className='mx-auto mb-20 mt-20 flex w-full max-w-[950px] flex-1 flex-col px-[15px]'>
       {/* todo : booking number */}
-      <Typography className='mx-auto text-center !text-[24px]'>
+      {/* <Typography className='mx-auto text-center !text-[24px]'>
         {intl.formatMessage({ id: 'booking.number' })} № 20
-      </Typography>
+      </Typography> */}
       <div className='mt-12 flex w-full'>
         <div className='flex flex-1 flex-col gap-4'>
           <a
@@ -193,8 +192,10 @@ export const BookingPreview = () => {
             />
           }
         />
-        <DownloadIcsButton
+
+        <AddGoogleCalendarEventBtn
           startEventTime={startEventTime}
+          title={bookingDetails.data?.serviceProfessional.title || ''}
           duration={{
             hours: bookingDetails.data?.serviceProfessional.duration
               ? getHours(bookingDetails.data?.serviceProfessional.duration)
@@ -203,16 +204,7 @@ export const BookingPreview = () => {
               ? getMinutes(bookingDetails.data?.serviceProfessional.duration)
               : 0,
           }}
-          title={bookingDetails.data?.serviceProfessional.title || ''}
           location={location?.name || ''}
-          organizer={{
-            name: professional.data?.user.firstName || '',
-            email: professional.data?.user?.email || '',
-          }}
-          attendee={{
-            name: `${bookingDetails.data?.guestFirstName} ${bookingDetails.data?.guestLastName}`,
-            email: bookingDetails.data?.guestEmail || '',
-          }}
         />
       </div>
       <div className='mt-12 flex h-[400px] w-full flex-col gap-5'>
