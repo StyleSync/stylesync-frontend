@@ -1,6 +1,5 @@
 import { useMemo, type FC } from 'react';
 import styles from '@/modules/booking/containers/booking-time-select/booking-time-select.module.scss';
-import { BookingTimeSelectNavigation } from '@/modules/booking/components/booking-time-select-navigation';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import clsx from 'clsx';
@@ -29,9 +28,8 @@ export const DateSlider: FC<DateSliderProps> = ({
       spaceBetween={10}
       loop={false}
       slidesPerView={'auto'}
-      className='!pt-12'
+      className='w-full'
     >
-      <BookingTimeSelectNavigation selectedDay={selectedDate} />
       {generatedDates.map((item, index) => (
         <SwiperSlide className={styles.swiperSlide} key={index}>
           <div

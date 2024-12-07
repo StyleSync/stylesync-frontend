@@ -7,21 +7,39 @@
   width: 100%;
 
   .tab {
+    position: relative;
     display: flex;
     flex-direction: column;
     flex: 1;
     height: 60px;
-    row-gap: utils.spacing(0.5);
+    row-gap: 6px;
     border-radius: 0;
     color: variables.$dark-color;
     transition: variables.$transition-ultrafast;
 
+    &:before {
+      position: absolute;
+      top: 4px;
+      content: '';
+      width: 1.75rem;
+      height: 1.75rem;
+      background-color: variables.$primary-light-color;
+      border-radius: 100%;
+      opacity: 0;
+      transition: variables.$transition-ultrafast;
+    }
+
     span {
       font-size: 12px;
+      font-weight: 500;
     }
 
     &.active {
       color: variables.$primary-color;
+
+      &:before {
+        opacity: 1;
+      }
     }
   }
 }

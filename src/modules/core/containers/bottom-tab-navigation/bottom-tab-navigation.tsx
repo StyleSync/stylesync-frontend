@@ -1,5 +1,5 @@
 'use client';
-import { type FC, useMemo } from 'react';
+import { type FC, useMemo, type ReactNode } from 'react';
 import clsx from 'clsx';
 import { useIntl } from 'react-intl';
 import { usePathname, useRouter } from 'next/navigation';
@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react';
 // components
 import { Button } from '@/modules/core/components/button';
 // containers
+import { BookingsBadge } from '@/modules/booking/containers/bookings-badge/bookings-badge';
 import { BottomFixedContent } from '@/modules/core/containers/bottom-fixed-content';
 // hooks
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
@@ -32,7 +33,9 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
     }
   );
 
-  const userLinks = useMemo<{ href: string; title: string; icon: IconName }[]>(
+  const userLinks = useMemo<
+    { href: string; title: string; icon: IconName; slotEnd?: ReactNode }[]
+  >(
     () => [
       {
         href: `/app/profile/${session.data?.user?.id}`,
@@ -43,6 +46,9 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
         href: '/app/my-bookings',
         icon: 'list',
         title: intl.formatMessage({ id: 'burger.menu.btn.myBookings' }),
+        slotEnd: (
+          <BookingsBadge className='absolute left-[calc(50%+2px)] top-[4px]' />
+        ),
       },
       {
         href: '/app/settings',
@@ -75,6 +81,7 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
             onClick={() => router.push(link.href)}
             variant='unstyled'
             rippleColor='transparent'
+            slotEnd={link.slotEnd}
           />
         ))}
       </div>
