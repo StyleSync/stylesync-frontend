@@ -47,6 +47,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       typographyProps,
       isLoading,
       classes,
+      slot,
+      slotEnd,
       ...props
     },
     ref
@@ -84,6 +86,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         type='button'
         {...props}
       >
+        {slot}
         {!!isLoading && (
           <Spinner size='small' color={SPINNER_COLORS[variant]} />
         )}
@@ -104,6 +107,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             name={iconEnd}
           />
         )}
+        {slotEnd}
       </button>
     );
   }

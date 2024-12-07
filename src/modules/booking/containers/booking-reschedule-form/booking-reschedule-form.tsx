@@ -1,5 +1,5 @@
 import { type FC, useMemo, useState } from 'react';
-import { isPast } from 'date-fns';
+import { addDays, isPast } from 'date-fns';
 import { useIntl } from 'react-intl';
 import { getQueryKey } from '@trpc/react-query';
 
@@ -17,6 +17,7 @@ import type { BookingRescheduleFormProps } from './booking-reschedule-form.inter
 import { type AvailableBookingTime } from '@/server/types';
 import { showToast } from '@/modules/core/providers/toast-provider';
 import { useQueryClient } from '@tanstack/react-query';
+import { BookingTimeSelectNavigation } from '@/modules/booking/components/booking-time-select-navigation';
 
 export const BookingRescheduleForm: FC<BookingRescheduleFormProps> = ({
   bookingId,
@@ -93,7 +94,24 @@ export const BookingRescheduleForm: FC<BookingRescheduleFormProps> = ({
 
   return (
     <div className='relative flex flex-col gap-y-4 pt-6'>
-      <div>
+      <div className='flex flex-col gap-y-4'>
+        <BookingTimeSelectNavigation
+          selectedDay={selectedDate}
+          onPrev={() => {
+            const prevDate = selectedDate
+              ? addDays(new Date(selectedDate), -1)
+              : new Date();
+
+            setSelectedDate(prevDate.toISOString());
+          }}
+          onNext={() => {
+            const nextDate = selectedDate
+              ? addDays(new Date(selectedDate), 1)
+              : new Date();
+
+            setSelectedDate(nextDate.toISOString());
+          }}
+        />
         <DateSlider
           selectedDate={selectedDate}
           onSelectedDateChange={setSelectedDate}
@@ -107,7 +125,7 @@ export const BookingRescheduleForm: FC<BookingRescheduleFormProps> = ({
           <Placeholder
             isActive={bookingAvailableSlots.length === 0}
             placeholder={
-              <span className='text-sm text-gray-accent'>
+              <span className='text-center text-sm text-gray-accent'>
                 {intl.formatMessage({
                   id: 'booking.timeSelect.noAvailableTime',
                 })}
@@ -121,7 +139,7 @@ export const BookingRescheduleForm: FC<BookingRescheduleFormProps> = ({
                 })}
                 :
               </span>
-              <div className='grid gap-2 [grid-template-columns:repeat(auto-fill,_minmax(120px,1fr))] [grid-template-rows:max-content]'>
+              <div className='grid gap-2 pb-4 [grid-template-columns:repeat(auto-fill,_minmax(120px,1fr))] [grid-template-rows:max-content]'>
                 {bookingAvailableSlots.map((slot, index) => (
                   <BookingSlotCard
                     key={index}
