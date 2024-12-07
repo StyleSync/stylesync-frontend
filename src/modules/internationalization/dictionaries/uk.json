@@ -265,6 +265,7 @@
   "button.add.to.calendar": "Додати до календара",
   "button.google.map": "Відкрити на картах Google",
   "button.sign.in": "Увійти",
+  "button.create": "Створити",
 
   "duration.hour": "{count, plural, one {# година} few {# години} many {# годин} other {# годин}}",
   "duration.minute": "{count, plural, one {# хвилина} few {# хвилини} many {# хвилин} other {# хвилин}}",
@@ -330,8 +331,12 @@
   "add.booking.modal.toast.success.title": "Відмінно!",
   "add.booking.modal.toast.success.description": "Подію додано",
 
-  "progressbar.title": "Залишилось",
-  "progressbar.days": "д",
+  "progressbar.title.lost": "Залишилось",
+  "progressbar.finished": "Завершено",
+  "progressbar.daysRemaining": "{count, plural, one {{count} день} few {{count} дні} many {{count} днів} other {днів}}",
+  "progressbar.hoursRemaining": "{count, plural, one {{count} година} few {{count} години} other {годин}}",
+
+  "progressbar.minutesRemaning": "{count, plural, one {{count} хвилина} few {{count} хвилин} other {хвилин}}",
 
   "burger.menu.btn.myProfile": "Мій профіль",
   "burger.menu.btn.myBookings": "Мої бронювання",
@@ -391,7 +396,6 @@
   "service.start.time": "Час початку",
   "service.duration": "Тривалість",
   "service.meters": "м",
-  "service.daysRemaining": "{count, plural, one {{count} день} few {{count} дні} many {{count} днів} other {днів}}",
 
   "onboard.data.about": "Про себе",
   "onboard.data.description.about": "Ми використаємо цю інформацію для створення детального опису вашого досвіду, який можна поділитися з клієнтами",

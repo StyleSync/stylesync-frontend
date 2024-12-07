@@ -258,6 +258,7 @@
   "button.google.map": "Open on google maps",
   "button.add.to.calendar": "Add to calendar",
   "button.sign.in": "Sign-in",
+  "button.create": "Create",
 
   "duration.hour": "{count, plural, one {# hour} other {# hours}}",
   "duration.minute": "{count, plural, one {# minute} other {# minutes}}",
@@ -331,8 +332,12 @@
   "add.booking.modal.toast.success.title": "Great!",
   "add.booking.modal.toast.success.description": "Event added",
 
-  "progressbar.title": "Left",
-  "progressbar.days": "d",
+  "progressbar.title.lost": "Left",
+  "progressbar.finished": "Finished",
+  "progressbar.daysRemaining": "{count, plural, one {{count} day} other {{count} days}}",
+  "progressbar.hoursRemaining": "{count, plural, one {{count} hour} other {{count} hours}",
+  "progressbar.minutesRemaining": "{count, plural, one {{count} minute} other {{count} minutes}}",
+
   "burger.menu.btn.myProfile": "My profile",
   "burger.menu.btn.myBookings": "My bookings",
   "burger.menu.btn.shareProfile": "Share profile",
@@ -387,7 +392,6 @@
   "service.start.time": "Start time",
   "service.duration": "Duration",
   "service.meters": "m",
-  "service.daysRemaining": "{count, plural, one {{count} day} other {{count} days}}",
 
   "onboard.data.about": "About",
   "onboard.data.description.about": "We will use this information to create a detailed account of your experience that can be shared with your clients",

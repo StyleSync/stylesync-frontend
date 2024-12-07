@@ -1,18 +1,24 @@
 'use client';
 import Image from 'next/image';
+import { useIntl } from 'react-intl';
+
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Icon } from '@/modules/core/components/icon';
-
+import { IphoneLayout } from '@/modules/core/components/iphone-layout';
+// assets
 import net from '@/modules/landing/landing-image/big-net.png';
 import google from '@/modules/landing/landing-image/google-play-badge.png';
-import { IphoneLayout } from '@/modules/core/components/iphone-layout';
-import Screenshot from '@/assets/images/screenshot.png';
-import Screenshot2 from '@/assets/images/screenshot2.png';
-import { useIntl } from 'react-intl';
+import profileEn from '@/assets/images/profile2en.png';
+import profileUk from '@/assets/images/profile2uk.png';
+import searchUk from '@/assets/images/uk-pro-search.png';
+import searchEn from '@/assets/images/en-pro-search.png';
 
 export const MobileAppSection = () => {
   const intl = useIntl();
+
+  const image1 = intl.locale === 'uk' ? searchUk.src : searchEn.src;
+  const image2 = intl.locale === 'uk' ? profileUk.src : profileEn.src;
 
   return (
     <section className='relative flex w-full flex-col items-center justify-center p-3 sm:mt-12 lg:mt-20'>
@@ -62,15 +68,15 @@ export const MobileAppSection = () => {
         <div className='absolute bottom-0 left-1/2 -z-10 aspect-square w-[750px] max-w-full -translate-x-1/2 rounded-full bg-[#F9F9F9]' />
         <div className='mx-auto flex aspect-[16/9] w-full max-w-[1180px] items-end justify-center'>
           <IphoneLayout
-            imageUrl={Screenshot.src}
+            imageUrl={image1}
             className='relative left-[13%] h-full'
           />
           <IphoneLayout
-            imageUrl={Screenshot2.src}
+            imageUrl={image2}
             className='relative z-10 h-full scale-110'
           />
           <IphoneLayout
-            imageUrl={Screenshot.src}
+            imageUrl={image1}
             className='relative right-[13%] h-full'
           />
         </div>

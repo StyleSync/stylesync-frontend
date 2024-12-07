@@ -3,7 +3,8 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useIntl } from 'react-intl';
-
+import { useQueryClient } from '@tanstack/react-query';
+import { getQueryKey } from '@trpc/react-query';
 // components
 import { TextField } from '@/modules/core/components/text-field';
 import { PriceField } from '@/modules/core/components/price-field';
@@ -18,6 +19,7 @@ import {
   Time,
   type TimeValue,
 } from '@/modules/core/utils/time.utils';
+import { showToast } from '@/modules/core/providers/toast-provider';
 // types
 import type { ServiceOnProfessionalEditableFields } from '@/modules/service/types/service.types';
 import type {
@@ -25,9 +27,7 @@ import type {
   ServiceOnProfessionalFormValues,
 } from './service-on-professional-edit-form.interface';
 import styles from './service-on-professional-edit-form.module.scss';
-import { showToast } from '@/modules/core/providers/toast-provider';
-import { useQueryClient } from '@tanstack/react-query';
-import { getQueryKey } from '@trpc/react-query';
+
 import { EditorField } from '@/modules/core/components/editor-field';
 
 const validationSchema = z.object({
@@ -100,6 +100,12 @@ export const ServiceOnProfessionalEditForm: FC<
 
               queryClient.invalidateQueries({
                 queryKey: getQueryKey(trpc.serviceOnProfessional.list),
+              });
+
+              queryClient.invalidateQueries({
+                queryKey: getQueryKey(
+                  trpc.professional.getProfileCompletionStatus
+                ),
               });
             },
             onError: (err) => {

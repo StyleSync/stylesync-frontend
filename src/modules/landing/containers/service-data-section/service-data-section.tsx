@@ -8,12 +8,17 @@ import { BrowserView } from '@/modules/core/components/browser-view';
 // assets
 import ServicesSettingsScreenshot from '@/assets/images/services-settings-screenshot.png';
 import MyBookingsScreenshot from '@/assets/images/my-bookings-screenshot.png';
-import Screenshot from '@/assets/images/screenshot.png';
-import Screenshot2 from '@/assets/images/screenshot2.png';
 import bg from '@/modules/landing/landing-image/bg.png';
+import profileUk from '@/assets/images/profile1uk.png';
+import profileEn from '@/assets/images/profile1en.png';
+import searchUk from '@/assets/images/uk-pro-search.png';
+import searchEn from '@/assets/images/en-pro-search.png';
 
 export const ServiceDataSection = () => {
   const intl = useIntl();
+
+  const profile = intl.locale === 'uk' ? profileUk.src : profileEn.src;
+  const search = intl.locale === 'uk' ? searchUk.src : searchEn.src;
 
   return (
     <section className='w-full px-4 pb-[60px] pt-4 sm:py-[60px] lg:px-[80px]'>
@@ -46,14 +51,14 @@ export const ServiceDataSection = () => {
           </div>
           <div className='flex flex-1 items-end'>
             <IphoneLayout
-              imageUrl={Screenshot2.src}
+              imageUrl={profile}
               className='relative left-[50px] z-10 sm:left-[70px] xl:left-[100px]'
-              width={270}
+              width={300}
             />
             <IphoneLayout
-              imageUrl={Screenshot.src}
+              imageUrl={search}
               className='relative right-[50px] sm:right-0'
-              width={300}
+              width={270}
             />
           </div>
         </div>
