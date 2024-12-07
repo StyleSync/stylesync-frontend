@@ -293,7 +293,7 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
                     label={intl.formatMessage({ id: 'schedule.working.hours' })}
                     onChange={field.onChange}
                     inputProps={{
-                      fieldSize: 'small',
+                      fieldSize: deviceType === 'mobile' ? 'medium' : 'small',
                       error: Boolean(fieldState.error),
                       disabled: weekdayScheduleSaveMutation.isLoading,
                     }}
@@ -334,7 +334,8 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
                           className={styles.timerange}
                           onChange={field.onChange}
                           inputProps={{
-                            fieldSize: 'small',
+                            fieldSize:
+                              deviceType === 'mobile' ? 'medium' : 'small',
                             error: Boolean(fieldState.error),
                             disabled: weekdayScheduleSaveMutation.isLoading,
                           }}

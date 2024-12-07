@@ -1,27 +1,27 @@
 import { useMemo, type FC, useContext, useState } from 'react';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import allLocale from '@fullcalendar/core/locales-all';
 import { useIntl } from 'react-intl';
 import dynamic from 'next/dynamic';
 import clsx from 'clsx';
+// containers
+import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
 // components
 import { Icon } from '@/modules/core/components/icon';
 import { Button } from '@/modules/core/components/button';
 // context
 import { BookingContext } from '@/modules/booking/providers/booking-provider';
-// type
-import type { EventInput } from '@fullcalendar/core';
 // utils
 import { getTime } from '@/modules/schedule/utils/get-time';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
 // constants
 import { weekdays } from '@/modules/schedule/constants/schedule.constants';
-
+// type
+import type { EventInput } from '@fullcalendar/core';
 import type { CalendarProps } from './calendar.interface';
 import styles from './calendarEvent.module.scss';
-
 import './calendar.scss';
-import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
 
 const FullCalendar = dynamic(() => import('@fullcalendar/react'), {
   ssr: false,
@@ -97,6 +97,8 @@ export const Calendar: FC<CalendarProps> = () => {
         className='absolute right-[36px] top-[16px] sm:!top-[40px]'
       />
       <FullCalendar
+        locales={allLocale}
+        locale={intl.locale}
         businessHours={businessHours}
         events={eventsList}
         viewDidMount={handleViewMount}
