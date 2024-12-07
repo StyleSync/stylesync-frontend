@@ -2,9 +2,10 @@
 
 .content {
   height: 100%;
+  
   @include mixins.phone {
-    width: 100%;
+    width: 100% !important;
     min-height: 100%;
-    border-radius: 0px;
+    border-radius: 0;
   }
 }

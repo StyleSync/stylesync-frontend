@@ -10,7 +10,6 @@ import { BookingTimeSelect } from '@/modules/booking/containers/booking-time-sel
 import { ServiceOnProfessionalSelect } from '@/modules/service/components/service-on-professional-select';
 import { DialogWizard } from '@/modules/core/components/dialog-wizard';
 import { Button } from '@/modules/core/components/button';
-import { Icon, type IconName } from '@/modules/core/components/icon';
 // utils
 import { onQueryRetry } from '@/modules/core/utils/query-retry.utils';
 import { getFullName } from '@/modules/user/utils/user.utils';
@@ -183,34 +182,6 @@ export const ServiceBookingModal: FC<
               </span>
             </div>
           </div>
-          {step !== 'service' && (
-            <div className='flex shrink-0 flex-col items-end gap-y-1'>
-              {serviceOnProfessional && (
-                <span className='text-sm font-medium !text-dark'>
-                  <Icon
-                    name={serviceOnProfessional.service.icon as IconName}
-                    width={17}
-                    height={17}
-                    className='mr-2 inline'
-                  />
-                  {serviceOnProfessional.title}
-                </span>
-              )}
-              {step === 'confirmation' && selectedDay && (
-                <Typography
-                  variant='small'
-                  weight='bold'
-                  className='!text-gray'
-                >
-                  {formatI18n(
-                    new Date(selectedDay),
-                    'dd MMM yyyy',
-                    intl.locale
-                  )}
-                </Typography>
-              )}
-            </div>
-          )}
         </div>
         <div className='relative z-10 flex-1 overflow-scroll bg-white px-6 pt-6 shadow'>
           {step === 'service' && (
@@ -221,38 +192,43 @@ export const ServiceBookingModal: FC<
             />
           )}
           {step === 'datetime' && (
-            <BookingTimeSelect
-              selectedDay={selectedDay}
-              setSelectedDay={setSelectedDay}
-              selectedTimeRange={selectedTimeRange}
-              setSelectedTimeRange={setSelectedTimeRange}
-              serviceOnProfessionalId={serviceOnProfessional?.id}
-            />
+            <div className='flex flex-col gap-y-4'>
+              {serviceOnProfessional && (
+                <span className='text-sm font-medium !text-dark'>
+                  {serviceOnProfessional.title}
+                </span>
+              )}
+              <BookingTimeSelect
+                selectedDay={selectedDay}
+                setSelectedDay={setSelectedDay}
+                selectedTimeRange={selectedTimeRange}
+                setSelectedTimeRange={setSelectedTimeRange}
+                serviceOnProfessionalId={serviceOnProfessional?.id}
+              />
+            </div>
           )}
           {step === 'confirmation' && (
             <div className='flex flex-col gap-y-4'>
-              {deviceType === 'mobile' && (
-                <div className='flex flex-col gap-y-1'>
-                  {serviceOnProfessional && (
-                    <span className='text-sm font-medium !text-dark'>
-                      {serviceOnProfessional.title}
-                    </span>
-                  )}
-                  {step === 'confirmation' && selectedDay && (
-                    <Typography
-                      variant='small'
-                      weight='medium'
-                      className='!text-gray'
-                    >
-                      {formatI18n(
-                        new Date(selectedDay),
-                        'dd MMM yyyy',
-                        intl.locale
-                      )}
-                    </Typography>
-                  )}
-                </div>
-              )}
+              <div className='flex flex-col gap-y-1'>
+                {serviceOnProfessional && (
+                  <span className='text-sm font-medium !text-dark'>
+                    {serviceOnProfessional.title}
+                  </span>
+                )}
+                {step === 'confirmation' && selectedDay && (
+                  <Typography
+                    variant='small'
+                    weight='medium'
+                    className='!text-gray'
+                  >
+                    {formatI18n(
+                      new Date(selectedDay),
+                      'dd MMM yyyy',
+                      intl.locale
+                    )}
+                  </Typography>
+                )}
+              </div>
               <BookingForm
                 onSubmit={handleConfirm}
                 formId={confirmationFormId}

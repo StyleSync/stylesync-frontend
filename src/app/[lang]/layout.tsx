@@ -1,5 +1,6 @@
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { GeistSans } from 'geist/font/sans';
 // constants
 // import { i18nConfig } from '@/modules/internationalization/constants/i18n.constants';
 // providers
@@ -11,7 +12,6 @@ import { getDictionary } from '@/modules/internationalization/utils/dictionary.u
 // types
 import type { ChildrenProp } from '@/modules/core/types/react.types';
 import type { PageParams } from '@/modules/core/types/next.types';
-import { fonts } from '@/styles/fonts';
 
 import '@/styles/globals.scss';
 import '@/modules/schedule/components/calendar/calendar.scss';
@@ -24,7 +24,7 @@ export default async function RootLayout({
 
   return (
     <html lang={params.lang}>
-      <body className={fonts.INTER.className}>
+      <body className={GeistSans.className}>
         <TrpcProvider>
           <IntlProvider locale={params.lang} dictionary={dictionary}>
             <Providers session={params.session}>{children}</Providers>

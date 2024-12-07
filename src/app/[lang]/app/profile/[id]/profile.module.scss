@@ -54,6 +54,7 @@
   box-shadow: variables.$main-box-shadow;
 
   @include mixins.phone {
+    border-radius: variables.$border-radius-large;
     padding-bottom: calc(
       var(--bottom-fixed-content-height) + #{utils.spacing(2)}
     );
