@@ -1,5 +1,6 @@
 import { type MutableRefObject } from 'react';
 import { type Swiper } from 'swiper/types';
+import type { AppRouterOutputs } from '@/server/types';
 
 export type DateSliderCalendarProps = {
   days: Date[] | undefined;
@@ -7,4 +8,5 @@ export type DateSliderCalendarProps = {
   onSwiper: (swiper: Swiper) => void;
   onDateSelect: (date: Date) => void;
   selectedDate: Date | null;
+  events: AppRouterOutputs['booking']['list'];
 };

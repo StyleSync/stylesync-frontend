@@ -12,6 +12,7 @@ import { trpc } from '@/modules/core/utils/trpc.utils';
 import { format, startOfDay } from 'date-fns';
 import { useIntl } from 'react-intl';
 // fullcalendar
+import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import type { CalendarApi, EventInput } from '@fullcalendar/core';
@@ -20,22 +21,17 @@ import { Icon } from '@/modules/core/components/icon';
 import './calendar-mobile';
 import { DateSelectCalendar } from '@/modules/schedule/components/data-select-calendar';
 import { DateSliderCalendar } from '../date-slider-calendar';
-// utils
-import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
+// containers
+import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
 // constants
 import { weekdays } from '@/modules/schedule/constants/schedule.constants';
+// utils
+import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
+import { getDaysOfCurrentMonth } from '@/modules/schedule/utils/get-current-month-days';
 // type
 import { type Swiper } from 'swiper/types';
 import { type CalendarMobileProps } from './calendar-mobile.interface';
 import styles from '@/modules/schedule/components/calendar/calendarEvent.module.scss';
-
-import FullCalendar from '@fullcalendar/react';
-import { getDaysOfCurrentMonth } from '@/modules/schedule/utils/get-current-month-days';
-import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
-
-// const FullCalendar = dynamic(() => import('@fullcalendar/react'), {
-//   ssr: false,
-// });
 
 const SPEED_TO_SLIDE = 500;
 
@@ -145,11 +141,13 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
           onDateSelect={setSelectedDate}
           onMonthChange={setSelectedDates}
           selectedDate={selectedDate}
+          events={events}
         />
       </div>
 
       <div className='relative flex w-full max-w-full'>
         <DateSliderCalendar
+          events={events}
           onSwiper={onSwiperHandler}
           swiperRef={swiperRef}
           days={selectedDates || []}

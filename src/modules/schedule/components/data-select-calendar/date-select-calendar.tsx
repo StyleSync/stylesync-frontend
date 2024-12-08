@@ -1,16 +1,21 @@
+import { type FC } from 'react';
+import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import { format } from 'date-fns';
+import { useBoolean } from 'usehooks-ts';
+// components
 import { Button } from '@/modules/core/components/button';
 import { Popover } from '@/modules/core/components/popover';
-import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
-import { useBoolean } from 'usehooks-ts';
-import type { DateSelectCalendarProps } from './data-select-calendat.interface';
-import { type FC } from 'react';
-import { format } from 'date-fns';
+import { EventIndicators } from '@/modules/schedule/components/event-indicators';
+// utils
 import { getDaysOfCurrentMonth } from '@/modules/schedule/utils/get-current-month-days';
+// types
+import type { DateSelectCalendarProps } from './data-select-calendat.interface';
 
 export const DateSelectCalendar: FC<DateSelectCalendarProps> = ({
   onMonthChange,
   onDateSelect,
   selectedDate,
+  events,
 }) => {
   const isOpen = useBoolean();
 
@@ -37,13 +42,21 @@ export const DateSelectCalendar: FC<DateSelectCalendarProps> = ({
         value={selectedDate}
         onChange={(date) => {
           if (!date) return;
-
           const daysOfMonth = getDaysOfCurrentMonth(date);
 
           onDateSelect(date);
-
           onMonthChange(daysOfMonth);
           isOpen.setFalse;
+        }}
+        slots={
+          {
+            day: EventIndicators,
+          } as any
+        }
+        slotProps={{
+          day: {
+            events,
+          } as any,
         }}
         classes={{}}
       />
