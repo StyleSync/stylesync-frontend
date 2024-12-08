@@ -18,7 +18,6 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import type { CalendarApi, EventInput } from '@fullcalendar/core';
 // components
 import { Icon } from '@/modules/core/components/icon';
-import './calendar-mobile';
 import { DateSelectCalendar } from '@/modules/schedule/components/data-select-calendar';
 import { DateSliderCalendar } from '../date-slider-calendar';
 // containers
@@ -44,10 +43,10 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     startOfDay(new Date())
   );
-
   const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
+
   const swiperRef = useRef<Swiper | null>(null);
-  const calendarRef = useRef<FullCalendar>(null);
+  const fullCalendarRef = useRef<FullCalendar>(null);
 
   // queries
   const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
@@ -94,7 +93,7 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
   // connecting fullcalendar days
   useEffect(() => {
     const calendarApi: CalendarApi =
-      calendarRef.current?.getApi() as CalendarApi;
+      fullCalendarRef.current?.getApi() as CalendarApi;
 
     if (!calendarApi) {
       return;
@@ -107,7 +106,7 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
     });
   }, [selectedDate]);
 
-  // scroll to slide
+  // smooth scrolling to slide
   const onSwiperHandler = useCallback(
     (swiper: Swiper) => {
       if (swiperRef.current !== swiper) {
@@ -159,7 +158,7 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
       <div className='h-full border-t border-primary-light pl-6'>
         <FullCalendar
           events={eventsList}
-          ref={calendarRef}
+          ref={fullCalendarRef}
           plugins={[dayGridPlugin, timeGridPlugin]}
           initialView='timeGridDay'
           buttonText={{ today: 'Today' }}

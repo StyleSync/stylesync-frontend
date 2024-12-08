@@ -1,15 +1,18 @@
-// Swiper components
-import { Typography } from '@/modules/core/components/typogrpahy';
-
-import styles from '@/modules/booking/containers/booking-time-select/booking-time-select.module.scss';
-import { type DateSliderCalendarProps } from './date-slider-calendar.inerface';
-import { type FC } from 'react';
+import { useMemo, type FC } from 'react';
+import { useIntl } from 'react-intl';
+import { uk, enUS } from 'date-fns/locale';
 import { endOfDay, format, isSameDay, startOfDay } from 'date-fns';
+//  components
+import { Typography } from '@/modules/core/components/typogrpahy';
+// constants
+import { bookingStatusMetadata } from '@/modules/booking/constants/booking.constants';
+// types
+import { type DateSliderCalendarProps } from './date-slider-calendar.inerface';
+// Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
-// Swiper styles
 import 'swiper/scss';
 import 'swiper/scss/navigation';
-import { bookingStatusMetadata } from '@/modules/booking/constants/booking.constants';
+import styles from '@/modules/booking/containers/booking-time-select/booking-time-select.module.scss';
 
 export const DateSliderCalendar: FC<DateSliderCalendarProps> = ({
   days,
@@ -19,9 +22,17 @@ export const DateSliderCalendar: FC<DateSliderCalendarProps> = ({
   selectedDate,
   events,
 }) => {
+  const { locale } = useIntl();
+
   const handleDateSelect = (day: Date) => {
     onDateSelect(day);
   };
+
+  const dateFnsLocale = useMemo(() => {
+    if (locale === 'uk') return uk;
+
+    return enUS;
+  }, [locale]);
 
   if (!days || days.length === 0) return;
 
@@ -55,14 +66,14 @@ export const DateSliderCalendar: FC<DateSliderCalendarProps> = ({
                 className={`${selectedDate && isSameDay(selectedDate, day) ? '!text-white' : '!text-dark'}`}
                 variant='body2'
               >
-                {format(day, 'EEE')}
+                {format(day, 'EEE', { locale: dateFnsLocale })}
               </Typography>
               <Typography
                 className={` ${selectedDate && isSameDay(selectedDate, day) ? '!text-white' : '!text-dark'}`}
                 weight='semibold'
                 variant='body1'
               >
-                {format(day, 'd')}
+                {format(day, 'd', { locale: dateFnsLocale })}
               </Typography>
               <div className='flex gap-[2px]'>
                 {uniqStatuses.map((status) => {
