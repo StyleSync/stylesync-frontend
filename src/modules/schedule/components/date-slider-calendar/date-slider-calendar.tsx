@@ -4,11 +4,12 @@ import { Typography } from '@/modules/core/components/typogrpahy';
 import styles from '@/modules/booking/containers/booking-time-select/booking-time-select.module.scss';
 import { type DateSliderCalendarProps } from './date-slider-calendar.inerface';
 import { type FC } from 'react';
-import { format, isSameDay } from 'date-fns';
+import { endOfDay, format, isSameDay, startOfDay } from 'date-fns';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Swiper styles
 import 'swiper/scss';
 import 'swiper/scss/navigation';
+import { bookingStatusMetadata } from '@/modules/booking/constants/booking.constants';
 
 export const DateSliderCalendar: FC<DateSliderCalendarProps> = ({
   days,
@@ -16,6 +17,7 @@ export const DateSliderCalendar: FC<DateSliderCalendarProps> = ({
   onSwiper,
   onDateSelect,
   selectedDate,
+  events,
 }) => {
   const handleDateSelect = (day: Date) => {
     onDateSelect(day);
@@ -33,31 +35,51 @@ export const DateSliderCalendar: FC<DateSliderCalendarProps> = ({
       slidesOffsetBefore={24}
       className='z-10 w-full !pb-4'
     >
-      {days.map((day, index) => (
-        <SwiperSlide key={index} className={`${styles.swiperSlideCalendar}`}>
-          <div
-            className={`flex w-full flex-col items-center gap-3 rounded-xl py-[11px] pb-3 shadow ${selectedDate && isSameDay(selectedDate, day) ? 'bg-primary' : 'bg-white'}`}
-            onClick={() => handleDateSelect(day)}
-          >
-            <Typography
-              className={`${selectedDate && isSameDay(selectedDate, day) ? '!text-white' : '!text-dark'}`}
-              variant='body2'
+      {days.map((day, index) => {
+        const dayEvents = events.filter(
+          (event) =>
+            new Date(event.startTime) > startOfDay(day) &&
+            new Date(event.startTime) < endOfDay(day)
+        );
+
+        const statuses = dayEvents.map((event) => event.status);
+        const uniqStatuses = Array.from(new Set(statuses));
+
+        return (
+          <SwiperSlide key={index} className={`${styles.swiperSlideCalendar}`}>
+            <div
+              className={`flex h-full w-full flex-col items-center gap-[6px] rounded-xl px-[7px] py-[11px] pb-3 shadow ${selectedDate && isSameDay(selectedDate, day) ? 'bg-primary' : 'bg-white'}`}
+              onClick={() => handleDateSelect(day)}
             >
-              {format(day, 'EEE')}
-            </Typography>
-            <Typography
-              className={` ${selectedDate && isSameDay(selectedDate, day) ? '!text-white' : '!text-dark'}`}
-              weight='semibold'
-            >
-              {format(day, 'd')}
-            </Typography>
-            <div className='flex gap-1'>
-              <div className='h-[5px] w-[5px] rounded-full bg-green-500' />
-              <div className='h-[5px] w-[5px] rounded-full bg-green-500' />
+              <Typography
+                className={`${selectedDate && isSameDay(selectedDate, day) ? '!text-white' : '!text-dark'}`}
+                variant='body2'
+              >
+                {format(day, 'EEE')}
+              </Typography>
+              <Typography
+                className={` ${selectedDate && isSameDay(selectedDate, day) ? '!text-white' : '!text-dark'}`}
+                weight='semibold'
+                variant='body1'
+              >
+                {format(day, 'd')}
+              </Typography>
+              <div className='flex gap-[2px]'>
+                {uniqStatuses.map((status) => {
+                  const statusMetadata = bookingStatusMetadata[status];
+
+                  return (
+                    <div
+                      key={status}
+                      className={`h-[5px] w-[5px] rounded-full ${statusMetadata.color}`}
+                    />
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        </SwiperSlide>
-      ))}
+          </SwiperSlide>
+        );
+      })}
     </Swiper>
   );
 };
