@@ -1,7 +1,11 @@
-import { type FC } from 'react';
-import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
-import { format } from 'date-fns';
+import { useMemo, type FC } from 'react';
 import { useBoolean } from 'usehooks-ts';
+import { useIntl } from 'react-intl';
+import { uk, enUS } from 'date-fns/locale';
+// mui calendar
+import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 // components
 import { Button } from '@/modules/core/components/button';
 import { Popover } from '@/modules/core/components/popover';
@@ -18,6 +22,21 @@ export const DateSelectCalendar: FC<DateSelectCalendarProps> = ({
   events,
 }) => {
   const isOpen = useBoolean();
+  const { locale, formatDate } = useIntl();
+
+  const dateFnsLocale = useMemo(() => {
+    if (locale === 'uk') return uk;
+
+    return enUS;
+  }, [locale]);
+
+  const formattedDate = selectedDate
+    ? formatDate(selectedDate, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+    : '';
 
   return (
     <Popover
@@ -28,7 +47,7 @@ export const DateSelectCalendar: FC<DateSelectCalendarProps> = ({
           variant='unstyled'
           iconEnd={isOpen.value ? 'chevron-top' : 'chevron-bottom'}
           onClick={isOpen.setTrue}
-          text={selectedDate ? format(selectedDate, 'dd MMMM yyyy') : ''}
+          text={formattedDate}
           classes={{
             iconEnd: '!w-5 !h-4',
             root: '!pl-2 !pr-2',
@@ -38,28 +57,33 @@ export const DateSelectCalendar: FC<DateSelectCalendarProps> = ({
       align='start'
       backgroundBlurEffect={false}
     >
-      <DateCalendar
-        value={selectedDate}
-        onChange={(date) => {
-          if (!date) return;
-          const daysOfMonth = getDaysOfCurrentMonth(date);
+      <LocalizationProvider
+        dateAdapter={AdapterDateFns}
+        adapterLocale={dateFnsLocale}
+      >
+        <DateCalendar
+          value={selectedDate}
+          onChange={(date) => {
+            if (!date) return;
+            const daysOfMonth = getDaysOfCurrentMonth(date);
 
-          onDateSelect(date);
-          onMonthChange(daysOfMonth);
-          isOpen.setFalse;
-        }}
-        slots={
-          {
-            day: EventIndicators,
-          } as any
-        }
-        slotProps={{
-          day: {
-            events,
-          } as any,
-        }}
-        classes={{}}
-      />
+            onDateSelect(date);
+            onMonthChange(daysOfMonth);
+            isOpen.setFalse;
+          }}
+          slots={
+            {
+              day: EventIndicators,
+            } as any
+          }
+          slotProps={{
+            day: {
+              events,
+            } as any,
+          }}
+          classes={{}}
+        />
+      </LocalizationProvider>
     </Popover>
   );
 };
