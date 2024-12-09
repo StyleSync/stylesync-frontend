@@ -47,7 +47,7 @@ const validationSchema: z.Schema<AboutProfessionalFormValues> = z.object({
     .max(THIRTY_TWO, 'validation.firstName.maxLength')
     .regex(nameRegex, 'validation.firstName.invalidCharacters')
     .refine(
-      (value) => /^[A-ZА-Я]/.test(value),
+      (value) => /^[A-ZА-ЯІЇЄҐ]/.test(value),
       'validation.firstName.firstLetterCapitalized'
     ),
   lastName: z
@@ -56,8 +56,8 @@ const validationSchema: z.Schema<AboutProfessionalFormValues> = z.object({
     .max(THIRTY_TWO, 'validation.lastName.maxLength')
     .regex(nameRegex, 'validation.lastName.invalidCharacters')
     .refine(
-      (value) => /^[A-ZА-Я]/.test(value),
-      'validation.lastName.firstLetterCapitalized'
+      (value) => /^[A-ZА-ЯІЇЄҐ]/.test(value),
+      'validation.firstName.firstLetterCapitalized'
     ),
   phone: z
     .string()
@@ -91,7 +91,7 @@ const validationSchemaCustomer: z.Schema<AboutProfessionalFormValues> =
       .max(THIRTY_TWO, 'validation.firstName.maxLength')
       .regex(nameRegex, 'validation.firstName.invalidCharacters')
       .refine(
-        (value) => /^[A-ZА-Я]/.test(value),
+        (value) => /^[A-ZА-ЯІЇЄҐ]/.test(value),
         'validation.firstName.firstLetterCapitalized'
       ),
     lastName: z
@@ -100,7 +100,7 @@ const validationSchemaCustomer: z.Schema<AboutProfessionalFormValues> =
       .max(THIRTY_TWO, 'validation.lastName.maxLength')
       .regex(nameRegex, 'validation.lastName.invalidCharacters')
       .refine(
-        (value) => /^[A-ZА-Я]/.test(value),
+        (value) => /^[A-ZА-ЯІЇЄҐ]/.test(value),
         'validation.lastName.firstLetterCapitalized'
       ),
     phone: z
