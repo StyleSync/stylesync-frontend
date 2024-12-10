@@ -408,5 +408,7 @@
   "booking.details.name": "Name:",
   "booking.details.phone": "Phone:",
   "booking.details.email": "Email:",
-  "booking.details.comment": "Comment:"
+  "booking.details.comment": "Comment:",
+
+  "calendar.add.event": "Add event"
 }

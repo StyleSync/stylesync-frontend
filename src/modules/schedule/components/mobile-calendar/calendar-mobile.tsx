@@ -6,6 +6,7 @@ import {
   useRef,
   useState,
   useMemo,
+  useContext,
 } from 'react';
 import clsx from 'clsx';
 import { trpc } from '@/modules/core/utils/trpc.utils';
@@ -17,13 +18,19 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import type { CalendarApi, EventInput } from '@fullcalendar/core';
 // components
-import { Icon } from '@/modules/core/components/icon';
 import { DateSelectCalendar } from '@/modules/schedule/components/data-select-calendar';
 import { DateSliderCalendar } from '../date-slider-calendar';
+import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
+import { Button } from '@/modules/core/components/button';
+import { Icon } from '@/modules/core/components/icon';
 // containers
 import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
+// context
+import { BookingContext } from '@/modules/booking/providers/booking-provider';
 // constants
 import { weekdays } from '@/modules/schedule/constants/schedule.constants';
+// hoooks
+import { useBoolean } from 'usehooks-ts';
 // utils
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
 import { getDaysOfCurrentMonth } from '@/modules/schedule/utils/get-current-month-days';
@@ -36,6 +43,9 @@ const SPEED_TO_SLIDE = 500;
 
 export const CalendarMobile: FC<CalendarMobileProps> = () => {
   const intl = useIntl();
+  const isOpenDropMenu = useBoolean();
+  // context
+  const { book } = useContext(BookingContext);
 
   const [selectedDates, setSelectedDates] = useState<Date[]>(
     getDaysOfCurrentMonth(new Date())
@@ -135,6 +145,45 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
 
   return (
     <div className='relative flex w-full flex-col gap-2'>
+      <div className='absolute right-6 top-2'>
+        <DropdownMenu
+          isOpen={isOpenDropMenu.value}
+          onClose={isOpenDropMenu.setFalse}
+          onSelect={({ id }) => {
+            if (id === 'add') {
+              book();
+              isOpenDropMenu.setFalse();
+            }
+          }}
+          trigger={
+            <Button
+              aria-label='Add event'
+              aria-haspopup='true'
+              className='!h-6 !w-6'
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                isOpenDropMenu.toggle();
+              }}
+              variant='unstyled'
+              icon='points'
+            />
+          }
+          items={[
+            {
+              id: 'add',
+              variant: 'primary',
+              icon: 'plus',
+              text: intl.formatMessage({ id: 'calendar.add.event' }),
+            },
+          ]}
+          popoverProps={{
+            align: 'start',
+            backgroundBlurEffect: false,
+          }}
+        />
+      </div>
+
       <div className='pl-6'>
         <DateSelectCalendar
           onDateSelect={setSelectedDate}

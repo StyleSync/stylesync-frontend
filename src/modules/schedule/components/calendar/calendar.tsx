@@ -88,7 +88,7 @@ export const Calendar: FC<CalendarProps> = () => {
   }, [events]);
 
   return (
-    <div className='w-full'>
+    <div className='w-full pl-0 md:pl-8'>
       <Button
         text={intl.formatMessage({ id: 'button.create' })}
         onClick={() => {
