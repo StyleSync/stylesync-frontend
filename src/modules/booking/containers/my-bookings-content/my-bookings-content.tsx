@@ -41,8 +41,8 @@ export const MyBookingsContent = () => {
       )}
       {activeTab === 'calendar' && (
         <Suspense fallback={<div />}>
-          <div className='flex w-full'>
-            <div className='w-full flex-1'>
+          <div className='flex w-full flex-1'>
+            <div className='flex w-full flex-1'>
               {deviceType === 'mobile' ? <CalendarMobile /> : <Calendar />}
             </div>
           </div>

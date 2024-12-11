@@ -57,25 +57,25 @@ export const DateSliderCalendar: FC<DateSliderCalendarProps> = ({
         const uniqStatuses = Array.from(new Set(statuses));
 
         return (
-          <SwiperSlide key={index} className={`${styles.swiperSlideCalendar}`}>
+          <SwiperSlide key={index} className={styles.swiperSlideCalendar}>
             <div
-              className={`flex h-full w-full flex-col items-center gap-[6px] rounded-xl px-[7px] py-[11px] pb-3 shadow ${selectedDate && isSameDay(selectedDate, day) ? 'bg-primary' : 'bg-white'}`}
+              className={`flex h-full w-full flex-col items-center rounded-xl px-[7px] py-[11px] pb-3 shadow ${selectedDate && isSameDay(selectedDate, day) ? 'bg-primary' : 'bg-white'}`}
               onClick={() => handleDateSelect(day)}
             >
               <Typography
-                className={`${selectedDate && isSameDay(selectedDate, day) ? '!text-white' : '!text-dark'}`}
+                className={`capitalize ${selectedDate && isSameDay(selectedDate, day) ? '!text-white' : '!text-dark'}`}
                 variant='body2'
               >
                 {format(day, 'EEE', { locale: dateFnsLocale })}
               </Typography>
               <Typography
-                className={` ${selectedDate && isSameDay(selectedDate, day) ? '!text-white' : '!text-dark'}`}
+                className={`mt-2 ${selectedDate && isSameDay(selectedDate, day) ? '!text-white' : '!text-black'}`}
                 weight='semibold'
                 variant='body1'
               >
                 {format(day, 'd', { locale: dateFnsLocale })}
               </Typography>
-              <div className='flex gap-[2px]'>
+              <div className='mt-1 flex gap-[2px]'>
                 {uniqStatuses.map((status) => {
                   const statusMetadata = bookingStatusMetadata[status];
 

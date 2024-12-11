@@ -144,7 +144,7 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
   }, [selectedDate, selectedDates]);
 
   return (
-    <div className='relative flex w-full flex-col gap-2'>
+    <div className='relative flex w-full flex-1 flex-col gap-2'>
       <div className='absolute right-6 top-2'>
         <DropdownMenu
           isOpen={isOpenDropMenu.value}
@@ -204,7 +204,7 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
         />
       </div>
 
-      <div className='h-[calc(100vh-358px)] overflow-auto !overscroll-none border-t border-primary-light pl-6'>
+      <div className='flex-1 border-t border-primary-light pl-6'>
         <FullCalendar
           events={eventsList}
           ref={fullCalendarRef}
@@ -221,7 +221,7 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
           }}
           businessHours={businessHours}
           allDaySlot={false}
-          height={'75vh'}
+          height={'100%'}
           nowIndicator
           eventClick={({ event }) => {
             setActiveBookingId(event.id);
