@@ -224,7 +224,7 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
       >
         <div className={styles.root}>
           <Placeholder
-            isActive={bookingQuery.isLoading || !formattedData}
+            isActive={!bookingId || bookingQuery.isLoading || !formattedData}
             placeholder={
               <div className='p-10'>
                 <Spinner size='medium' />
