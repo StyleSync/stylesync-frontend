@@ -69,7 +69,7 @@ export const DateSelectCalendar: FC<DateSelectCalendarProps> = ({
 
             onDateSelect(date);
             onMonthChange(daysOfMonth);
-            isOpen.setFalse;
+            isOpen.setFalse();
           }}
           slots={
             {

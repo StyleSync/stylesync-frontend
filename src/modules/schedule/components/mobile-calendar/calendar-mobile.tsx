@@ -204,7 +204,7 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
         />
       </div>
 
-      <div className='h-full border-t border-primary-light pl-6'>
+      <div className='h-[calc(100vh-358px)] overflow-auto !overscroll-none border-t border-primary-light pl-6'>
         <FullCalendar
           events={eventsList}
           ref={fullCalendarRef}
