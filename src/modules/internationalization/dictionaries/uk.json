@@ -412,5 +412,7 @@
   "booking.details.name": "Ім'я:",
   "booking.details.phone": "Телефон:",
   "booking.details.email": "Електронна пошта:",
-  "booking.details.comment": "Коментар:"
+  "booking.details.comment": "Коментар:",
+
+  "calendar.add.event": "Додати подію"
 }

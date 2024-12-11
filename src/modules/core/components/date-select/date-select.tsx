@@ -1,10 +1,11 @@
 import { type FC, useMemo } from 'react';
 import { useIntl } from 'react-intl';
+import { isSameDay } from 'date-fns';
+import { uk, enUS } from 'date-fns/locale';
+// mui calendar
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { isSameDay } from 'date-fns';
-import { uk, enUS } from 'date-fns/locale';
 // hooks
 import { useBoolean } from 'usehooks-ts';
 // components

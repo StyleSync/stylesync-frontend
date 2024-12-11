@@ -2,11 +2,13 @@
 @use '@/styles/mixins';
 
 .root {
+  display: flex;
+  flex-direction: column;
   padding-top: utils.spacing(6);
   width: 100%;
 
   @include mixins.phone {
     padding-top: utils.spacing(3);
-    padding-bottom: 6.5rem;
+    padding-bottom: 4.75rem;
   }
 }
