@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes } from 'react';
+import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import type { IconName } from '@/modules/core/components/icon';
 import type { StylingProps } from '@/styles/styles.types';
 import type { TypographyProps } from '@/modules/core/components/typogrpahy/typography.interface';
@@ -31,4 +31,6 @@ export type ButtonProps = Omit<
       iconEnd?: string;
       text?: string;
     };
+    slot?: ReactNode;
+    slotEnd?: ReactNode;
   };
