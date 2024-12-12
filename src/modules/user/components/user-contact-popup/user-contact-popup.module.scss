@@ -6,8 +6,7 @@
 }
 
 .root {
-  display: flex;
-  min-width: 200px;
+  display: inline-flex;
   column-gap: utils.spacing(2);
   justify-content: center;
   padding: utils.spacing(0.5, 1);
@@ -22,7 +21,8 @@
       transition: variables.$transition-ultrafast;
     }
 
-    &:hover, &:focus-visible {
+    &:hover,
+    &:focus-visible {
       opacity: 1;
       transform: scale(1.1);
 

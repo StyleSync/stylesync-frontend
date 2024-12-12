@@ -1,4 +1,4 @@
-import { type FC, useMemo, useState } from 'react';
+import { type FC, useEffect, useMemo, useState } from 'react';
 import { isPast } from 'date-fns';
 import { useIntl } from 'react-intl';
 import { getQueryKey } from '@trpc/react-query';
@@ -21,6 +21,7 @@ import { useQueryClient } from '@tanstack/react-query';
 export const BookingRescheduleForm: FC<BookingRescheduleFormProps> = ({
   bookingId,
   onOpenChange,
+  onClose,
 }) => {
   const intl = useIntl();
   const queryClient = useQueryClient();
@@ -79,6 +80,12 @@ export const BookingRescheduleForm: FC<BookingRescheduleFormProps> = ({
       }
     );
   };
+
+  useEffect(() => {
+    if (!onOpenChange) {
+      onClose();
+    }
+  }, [onClose, onOpenChange]);
 
   // memo
   const bookingAvailableSlots = useMemo(() => {
@@ -143,6 +150,7 @@ export const BookingRescheduleForm: FC<BookingRescheduleFormProps> = ({
             text={intl.formatMessage({ id: 'button.cancel' })}
             variant='secondary'
             className='flex-1 md:flex-[unset]'
+            onClick={() => onOpenChange(false)}
           />
           <Button
             className='flex-1 md:flex-[unset]'
