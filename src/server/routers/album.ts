@@ -2,7 +2,10 @@ import { privateProcedure, publicProcedure, router } from '../trpc-helpers';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { prisma } from '@/server/prisma';
-import { getProfessionalFromContext } from '@/server/utils/prisma-utils';
+import {
+  getCursor,
+  getProfessionalFromContext,
+} from '@/server/utils/prisma-utils';
 import { defaultAlbumSelect } from '@/server/selectors/album';
 
 const maxLargeTextLength = 140;
@@ -123,17 +126,23 @@ export const albumRouter = router({
           professionalId: z.string().min(1, 'Required').optional(),
           limit: z.number().min(1).max(maxLimit).default(defaultLimit),
           offset: z.number().min(0).default(0),
+          cursor: z.string().nullish(),
         })
         .optional()
     )
     .query(async ({ input }) => {
-      return prisma.album.findMany({
+      const limit = input?.limit ?? defaultLimit;
+
+      const items = await prisma.album.findMany({
         where: {
           professionalId: input?.professionalId,
         },
         select: defaultAlbumSelect,
-        take: input?.limit ?? defaultLimit,
-        skip: input?.offset ?? 0,
+        take: limit + 1,
+        skip: input?.cursor ? undefined : input?.offset ?? 0,
+        cursor: input?.cursor ? { id: input?.cursor } : undefined,
       });
+
+      return { items, nextCursor: getCursor(items, limit) };
     }),
 });
