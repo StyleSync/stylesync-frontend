@@ -4,7 +4,10 @@ import { z } from 'zod';
 import { prisma } from '@/server/prisma';
 import { Day } from '@prisma/client';
 import { defaultScheduleSelect } from '@/server/selectors/schedule';
-import { getProfessionalFromContext } from '@/server/utils/prisma-utils';
+import {
+  getCursor,
+  getProfessionalFromContext,
+} from '@/server/utils/prisma-utils';
 import { isAfter } from 'date-fns';
 
 const defaultLimit = 10;
@@ -232,18 +235,24 @@ export const scheduleRouter = router({
         endDate: z.string().datetime().optional(),
         limit: z.number().min(1).max(maxLimit).default(defaultLimit),
         offset: z.number().min(0).default(0),
+        cursor: z.string().nullish(),
       })
     )
     .query(async ({ input }) => {
+      const limit = input?.limit ?? defaultLimit;
+
       // TODO: Change it so we can work with specificYear, specificMonth and specificDay
-      return prisma.schedule.findMany({
+      const items = await prisma.schedule.findMany({
         where: {
           isSpecificDay: true,
           professionalId: input.professionalId,
         },
         select: defaultScheduleSelect,
-        take: input.limit,
-        skip: input.offset,
+        take: limit + 1,
+        skip: input?.cursor ? undefined : input?.offset ?? 0,
+        cursor: input?.cursor ? { id: input?.cursor } : undefined,
       });
+
+      return { items, nextCursor: getCursor(items, limit) };
     }),
 });
