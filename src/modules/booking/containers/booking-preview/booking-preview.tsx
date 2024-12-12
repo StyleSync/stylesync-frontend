@@ -11,6 +11,7 @@ import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
 import { AddGoogleCalendarEventBtn } from '@/modules/booking/components/add-google-calendar-event';
 import { BookingPreviewProgressbar } from '@/modules/booking/components/booking-preview-progressbar';
 import { BookingPreviewMap } from '@/modules/booking/components/booking-preview-map';
+import { BookingStatus } from '../../components/booking-status';
 // hooks
 import { useBoolean } from 'usehooks-ts';
 // utils
@@ -141,6 +142,14 @@ export const BookingPreview = () => {
                 }
               />
             </div>
+          </div>
+          <div className='flex flex-col gap-3'>
+            <Typography weight='medium' variant='body2' className='!text-gray'>
+              {intl.formatMessage({ id: 'service.status' })}
+            </Typography>
+            {bookingDetails.data?.status && (
+              <BookingStatus status={bookingDetails.data?.status} />
+            )}
           </div>
         </div>
 
