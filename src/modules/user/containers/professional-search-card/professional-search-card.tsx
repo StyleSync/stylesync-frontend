@@ -1,15 +1,15 @@
 import { type FC } from 'react';
 import { useIntl } from 'react-intl';
-
+import { useRouter } from 'next/navigation';
 // components
 import { Avatar } from '@/modules/core/components/avatar';
 import { Typography } from '@/modules/core/components/typogrpahy';
+import { Icon } from '@/modules/core/components/icon';
 // utils
 import { getFullName } from '@/modules/user/utils/user.utils';
-
+import { trpc } from '@/modules/core/utils/trpc.utils';
+// types
 import type { ProfessionalSearchCardProps } from './professional-search-card.interface';
-import { useRouter } from 'next/navigation';
-import { Icon } from '@/modules/core/components/icon';
 
 export const ProfessionalSearchCard: FC<ProfessionalSearchCardProps> = ({
   professional,
@@ -17,6 +17,13 @@ export const ProfessionalSearchCard: FC<ProfessionalSearchCardProps> = ({
   const intl = useIntl();
 
   const router = useRouter();
+
+  const [services] = trpc.serviceOnProfessional.list.useSuspenseQuery({
+    professionalId: professional.id,
+  });
+
+  const serviceNames = services.map((service) => service.service.name);
+  const uniqueServiceNames = Array.from(new Set(serviceNames));
 
   return (
     <div
@@ -55,11 +62,15 @@ export const ProfessionalSearchCard: FC<ProfessionalSearchCardProps> = ({
             {/* </div> */}
             <div className='flex w-fit items-center gap-x-2 text-dark'>
               <Icon name='beauty-service' className='h-4 w-4 !text-gray' />
-              <Typography variant='body2' className='!text-inherit'>
-                {intl.formatMessage({
-                  id: 'professional.search.card.services',
-                })}
-              </Typography>
+              {uniqueServiceNames.map((service) => (
+                <Typography
+                  key={service}
+                  variant='body2'
+                  className='!text-inherit'
+                >
+                  {intl.formatMessage({ id: service })}
+                </Typography>
+              ))}
             </div>
           </div>
         </div>
