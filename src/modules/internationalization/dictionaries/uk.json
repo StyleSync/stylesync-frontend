@@ -186,7 +186,7 @@
   "professional.settings.location.toast.success.title.delete": "Добре!",
   "professional.settings.location.toast.success.description.delete": "Місцезнаходження видалено",
 
-  "professional.settings.location.title": "Налаштування місцезнаходження",
+  "professional.settings.location.title": "Місцезнаходження",
 
   "professional.settings.sidebar.profile": "Профіль",
   "professional.settings.sidebar.services": "Послуги",
@@ -196,12 +196,12 @@
   "professional.settings.sidebar.location": "Місцезнаходження",
   "professional.settings.sidebar.language": "Мова",
 
-  "professional.settings.services.title": "Налаштування послуг",
+  "professional.settings.services.title": "Послуги",
   "professional.settings.services.errorBox.title": "Зв'язок з сервером було перервано",
   "professional.settings.services.errorBox.description": "Будь ласка, перевірте своє підключення до інтернету або спробуйте оновити сторінку. Якщо проблема залишається, будь ласка, зверніться до нашої служби підтримки для отримання допомоги.",
 
-  "professional.settings.schedule.title": "Налаштування розкладу",
-  "professional.settings.about.title": "Налаштування про себе",
+  "professional.settings.schedule.title": "Розклад",
+  "professional.settings.about.title": "Про себе",
 
   "professional.settings.about.toast.error.description": "Будь ласка, перевірте введені дані або спробуйте пізніше",
   "professional.settings.about.toast.success.title": "Все готово!",
@@ -383,7 +383,7 @@
   "pro.layout.title.services": "Сервіси",
   "pro.layout.title.location": "Локація",
 
-  "gallery.settings.title": "Налаштування галереї",
+  "gallery.settings.title": "Галерея",
 
   "choose.service": "Виберіть послугу",
   "select.time": "Оберіть час",

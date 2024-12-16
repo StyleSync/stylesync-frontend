@@ -185,7 +185,7 @@
   "professional.settings.location.toast.success.title.delete": "Good!",
   "professional.settings.location.toast.success.description.delete": "Location deleted",
 
-  "professional.settings.location.title": "Location settings",
+  "professional.settings.location.title": "Location",
 
   "professional.settings.sidebar.profile": "Profile",
   "professional.settings.sidebar.services": "Services",
@@ -195,12 +195,12 @@
   "professional.settings.sidebar.location": "Location",
   "professional.settings.sidebar.language": "Language",
 
-  "professional.settings.services.title": "Services settings",
+  "professional.settings.services.title": "Services",
   "professional.settings.services.errorBox.title": "Connection with server has been interrupted",
   "professional.settings.services.errorBox.description": "Please check your internet connection or try refreshing the page. If the issue persists, please contact our support team for assistance.",
 
-  "professional.settings.schedule.title": "Schedule settings",
-  "professional.settings.about.title": "About settings",
+  "professional.settings.schedule.title": "Schedule",
+  "professional.settings.about.title": "About",
 
   "professional.settings.about.toast.error.description": "Please review the entered data or try again later",
   "professional.settings.about.toast.success.title": "All done!",
@@ -379,7 +379,7 @@
   "pro.layout.title.services": "Services",
   "pro.layout.title.location": "Location",
 
-  "gallery.settings.title": "Gallery settings",
+  "gallery.settings.title": "Gallery",
 
   "choose.service": "Choose a service",
   "select.time": "Select time",
