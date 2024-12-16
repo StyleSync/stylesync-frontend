@@ -62,7 +62,7 @@ export const GallerySection: FC<GallerySectionProps> = ({ userId }) => {
           [styles.root_displayAlbum]: !!activeAlbum,
         })}
       >
-        {albumsList?.map((album) => (
+        {albumsList?.items.map((album) => (
           <AlbumCard
             isMoreButtonVisible={false}
             album={album}

@@ -29,7 +29,7 @@ export const UserServices: FC<UserServicesProps> = ({ userId, session }) => {
   });
   const groups = useMemo(() => {
     // @ts-ignore
-    const _groups = getGroupOfServiceOnProfessionalList(serviceList);
+    const _groups = getGroupOfServiceOnProfessionalList(serviceList.items);
 
     return sortServiceOnProfessionalGroups(_groups);
   }, [serviceList]);
