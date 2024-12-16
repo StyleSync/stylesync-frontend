@@ -37,7 +37,7 @@ export const ServiceOnProfessionalSelect: FC<
           name='cards'
         >
           <div className={styles.baseCardContainer}>
-            {serviceList?.map((service) => (
+            {serviceList?.items.map((service) => (
               <BaseCardWithRadioButton
                 key={service.id}
                 value={service.id}
