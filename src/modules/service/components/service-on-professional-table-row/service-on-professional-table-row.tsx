@@ -16,6 +16,7 @@ import styles from './service-on-professional-table-row.module.scss';
 import { isEditorFieldEmpty } from '@/modules/core/components/editor-field/editor-field';
 import { useIntl } from 'react-intl';
 import { BookingContext } from '@/modules/booking/providers/booking-provider';
+import { Icon } from '@/modules/core/components/icon';
 
 export const ServiceOnProfessionalTableRow: FC<
   ServiceOnProfessionalTableRowProps
@@ -33,7 +34,13 @@ export const ServiceOnProfessionalTableRow: FC<
   return (
     <Accordion.Item className={styles.acardionItem} value={data.id}>
       <Accordion.Header>
-        <div className={styles.root} ref={rootRef}>
+        <div
+          onClick={() => {
+            book(data);
+          }}
+          className={styles.root}
+          ref={rootRef}
+        >
           <div className={clsx(styles.cell, styles.vertical, styles.flex75)}>
             <Typography className={styles.title} variant='body1'>
               {data.title}
@@ -55,6 +62,9 @@ export const ServiceOnProfessionalTableRow: FC<
                     <Button
                       variant='unstyled'
                       icon='info'
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
                       className='text-gray hover:!text-primary data-[state=open]:text-primary'
                     />
                   ) : (
@@ -63,13 +73,11 @@ export const ServiceOnProfessionalTableRow: FC<
                 </Accordion.Trigger>
 
                 {!isOwn && (
-                  <Button
+                  <Icon
+                    width={20}
+                    height={20}
                     className={styles.chevron}
-                    icon='chevron-right'
-                    variant='unstyled'
-                    onClick={() => {
-                      book(data);
-                    }}
+                    name='chevron-right'
                   />
                 )}
               </div>
