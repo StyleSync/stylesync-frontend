@@ -4,6 +4,8 @@ import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useIntl } from 'react-intl';
+// containers
+import { BookingsBadge } from '@/modules/booking/containers/bookings-badge/bookings-badge';
 
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
@@ -65,6 +67,11 @@ export const UserHeaderNavigation: FC<{
           <Typography variant='body2' weight='medium'>
             {link.title}
           </Typography>
+          {link.icon === 'calendar' && (
+            <div className='absolute -right-[15px] -top-[7px]'>
+              <BookingsBadge />
+            </div>
+          )}
         </Link>
       ))}
     </div>
