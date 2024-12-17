@@ -6,6 +6,7 @@ import { useIntl } from 'react-intl';
 // components
 import { Button } from '@/modules/core/components/button';
 import { ProSearchField } from '@/modules/location/components/pro-search-field';
+import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
 // hooks
 import { useBoolean } from 'usehooks-ts';
 // containers
@@ -63,9 +64,19 @@ export default function SearchProPage() {
     return res;
   }, [isAll, date, place, searchQuery, selectedServices]);
   // query
-  const { data: professionalList, isLoading } =
-    trpc.professional.list.useQuery(queryFilter);
+  const {
+    data: professionalListQuery,
+    isLoading,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = trpc.professional.list.useInfiniteQuery(queryFilter, {
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+  });
   const isFilterActive = useBoolean();
+
+  const professionalList =
+    professionalListQuery?.pages.map((page) => page.items).flat() || [];
 
   useEffect(() => {
     activateBrowserLocationSearch();
@@ -87,7 +98,7 @@ export default function SearchProPage() {
                 <span className='text-base font-medium text-dark lg:text-xl'>
                   {intl.formatMessage(
                     { id: 'professional.count' },
-                    { count: professionalList?.length }
+                    { count: professionalListQuery?.pages.length }
                   )}
                 </span>
               )}
@@ -115,11 +126,18 @@ export default function SearchProPage() {
                   <>
                     {professionalList && professionalList.length ? (
                       professionalList.map((pro) => (
-                        <ProfessionalSearchCard
-                          // @ts-ignore todo: Will be fixed later. Expected different api query with different response.
-                          professional={pro}
-                          key={pro.id}
-                        />
+                        <>
+                          <ProfessionalSearchCard
+                            // @ts-ignore todo: Will be fixed later. Expected different api query with different response.
+                            professional={pro}
+                            key={pro.id}
+                          />
+                          <InfinityListController
+                            hasNextPage={hasNextPage || false}
+                            onLoadMore={fetchNextPage}
+                            isNextPageLoading={isFetchingNextPage}
+                          />
+                        </>
                       ))
                     ) : (
                       <div className='absolute left-0 top-0 flex h-full w-full flex-col gap-y-4'>

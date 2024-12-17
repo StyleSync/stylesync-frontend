@@ -4,6 +4,7 @@ import { useIntl } from 'react-intl';
 // components
 import { ServiceSelect } from '@/modules/service/components/service-select';
 import { Placeholder } from '@/modules/core/components/placeholder';
+import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
 // containers
 import { ServiceConstructorTable } from '@/modules/service/containers/service-constructor-table';
 // utils
@@ -20,8 +21,16 @@ export const ProfessionalServicesForm: FC<ProfessionalServicesFormProps> = ({
   setServiceOnProfessionalGroups,
 }) => {
   const intl = useIntl();
-  const { data: serviceList, ...serviceListQuery } =
-    trpc.service.list.useQuery();
+  const { data: serviceListQuery, ...serviceListData } =
+    trpc.service.list.useInfiniteQuery(
+      { limit: 10 },
+      {
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
+      }
+    );
+
+  const serviceList =
+    serviceListQuery?.pages.map((page) => page.items).flat() || [];
   // memo
   const sortedServiceOnProfessionalGroups = useMemo(
     () => sortServiceOnProfessionalGroups(serviceOnProfessionalGroups),
@@ -55,7 +64,13 @@ export const ProfessionalServicesForm: FC<ProfessionalServicesFormProps> = ({
         blackList={sortedServiceOnProfessionalGroups.map(
           (group) => group.service.id
         )}
-        isLoading={serviceListQuery.isLoading}
+        isLoading={serviceListData.isLoading}
+      />
+
+      <InfinityListController
+        hasNextPage={serviceListData.hasNextPage || false}
+        onLoadMore={serviceListData.fetchNextPage}
+        isNextPageLoading={serviceListData.isFetchingNextPage}
       />
 
       <Placeholder

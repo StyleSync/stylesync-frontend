@@ -4,6 +4,7 @@ import { useIntl } from 'react-intl';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { ServicesTable } from '@/modules/service/components/service-table';
+import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
 // utils
 import {
   getGroupOfServiceOnProfessionalList,
@@ -22,11 +23,21 @@ export const UserServices: FC<UserServicesProps> = ({ userId, session }) => {
     expand: [],
   });
 
-  const [serviceList] = trpc.serviceOnProfessional.list.useSuspenseQuery({
-    limit: 10,
-    offset: 0,
-    professionalId: professional.id,
-  });
+  const serviceListQuery = trpc.serviceOnProfessional.list.useInfiniteQuery(
+    {
+      limit: 10,
+      offset: 0,
+      professionalId: professional.id,
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    }
+  );
+
+  const serviceList = useMemo(() => {
+    serviceListQuery.data?.pages.map((page) => page.items).flat() || [];
+  }, [serviceListQuery]);
+
   const groups = useMemo(() => {
     // @ts-ignore
     const _groups = getGroupOfServiceOnProfessionalList(serviceList.items);
@@ -38,12 +49,19 @@ export const UserServices: FC<UserServicesProps> = ({ userId, session }) => {
     <div className={styles.root}>
       {groups.length > 0 ? (
         groups.map(({ service, serviceOnProfessionalList }) => (
-          <ServicesTable
-            isOwn={userId === session?.user.id}
-            key={service.id}
-            service={service}
-            serviceOnProfessionalList={serviceOnProfessionalList}
-          />
+          <>
+            <ServicesTable
+              isOwn={userId === session?.user.id}
+              key={service.id}
+              service={service}
+              serviceOnProfessionalList={serviceOnProfessionalList}
+            />
+            <InfinityListController
+              hasNextPage={serviceListQuery.hasNextPage || false}
+              onLoadMore={serviceListQuery.fetchNextPage}
+              isNextPageLoading={serviceListQuery.isFetchingNextPage}
+            />
+          </>
         ))
       ) : (
         <Typography className='!text-gray'>
