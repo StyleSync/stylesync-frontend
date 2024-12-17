@@ -11,7 +11,7 @@ import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
 import { AddGoogleCalendarEventBtn } from '@/modules/booking/components/add-google-calendar-event';
 import { BookingPreviewProgressbar } from '@/modules/booking/components/booking-preview-progressbar';
 import { BookingPreviewMap } from '@/modules/booking/components/booking-preview-map';
-import { BookingStatus } from '../../components/booking-status';
+import { BookingStatus } from '@/modules/booking/components/booking-status';
 // hooks
 import { useBoolean } from 'usehooks-ts';
 // utils
