@@ -306,7 +306,6 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
                 </div>
                 {isBookingRescheduleActive.value && bookingId && (
                   <BookingRescheduleForm
-                    onOpenChange={isBookingRescheduleActive.setValue}
                     bookingId={bookingId}
                     onClose={handleClose}
                   />
