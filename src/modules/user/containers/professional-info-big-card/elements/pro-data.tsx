@@ -18,10 +18,15 @@ export const ProData: FC<ProDataProps> = ({ professional, session }) => {
   // context
   const { book } = useContext(BookingContext);
   // queries
-  const [serviceOnProfessionalList] =
-    trpc.serviceOnProfessional.list.useSuspenseQuery({
-      professionalId: professional.id,
-    });
+  const serviceOnProfessionalList =
+    trpc.serviceOnProfessional.list.useInfiniteQuery(
+      {
+        professionalId: professional.id,
+      },
+      {
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
+      }
+    );
   // state
   const isContactOpen = useBoolean();
 
@@ -31,7 +36,7 @@ export const ProData: FC<ProDataProps> = ({ professional, session }) => {
         <div className='flex w-fit items-center gap-x-2 text-dark'>
           <Icon name='menu' className='h-4 w-4 !text-gray' />
           <Typography variant='body2' className='!text-inherit'>
-            {serviceOnProfessionalList.length}{' '}
+            {serviceOnProfessionalList.data?.pages.length}{' '}
             {intl.formatMessage({ id: 'pro.data.services' })}
           </Typography>
         </div>
