@@ -37,7 +37,6 @@ export default function SearchProPage() {
     Parameters<typeof trpc.professional.list.useQuery>[0]
   >(() => {
     const res: Parameters<typeof trpc.professional.list.useQuery>[0] = {
-      limit: 6,
       query: searchQuery,
     };
 
@@ -132,11 +131,6 @@ export default function SearchProPage() {
                             professional={pro}
                             key={pro.id}
                           />
-                          <InfinityListController
-                            hasNextPage={hasNextPage || false}
-                            onLoadMore={fetchNextPage}
-                            isNextPageLoading={isFetchingNextPage}
-                          />
                         </>
                       ))
                     ) : (
@@ -150,6 +144,11 @@ export default function SearchProPage() {
                     )}
                   </>
                 )}
+                <InfinityListController
+                  hasNextPage={hasNextPage || false}
+                  onLoadMore={fetchNextPage}
+                  isNextPageLoading={isFetchingNextPage}
+                />
               </div>
               <ProSearchFilter
                 isOpen={isFilterActive.value}

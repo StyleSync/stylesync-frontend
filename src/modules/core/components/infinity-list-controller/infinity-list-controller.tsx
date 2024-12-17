@@ -20,7 +20,7 @@ export const InfinityListController: FC<InfinityListControllerProps> = ({
     if (isIntersecting && hasNextPage && !isNextPageLoading) {
       onLoadMore();
     }
-  }, [isIntersecting]);
+  }, [isIntersecting, hasNextPage, isNextPageLoading, onLoadMore]);
 
   return (
     <div ref={ref} className='h-[1px] min-h-[1px] w-full bg-transparent' />
