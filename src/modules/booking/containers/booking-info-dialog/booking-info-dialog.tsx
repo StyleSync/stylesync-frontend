@@ -211,6 +211,11 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
     }
   };
 
+  const handleClose = () => {
+    isBookingRescheduleActive.setValue(false);
+    onClose();
+  };
+
   return (
     <>
       <DialogComponent
@@ -218,7 +223,7 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
         isCloseButtonVisible
         onOpenChange={(open) => {
           if (!open) {
-            onClose();
+            handleClose();
           }
         }}
       >
@@ -301,8 +306,8 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
                 </div>
                 {isBookingRescheduleActive.value && bookingId && (
                   <BookingRescheduleForm
-                    onOpenChange={isBookingRescheduleActive.setValue}
                     bookingId={bookingId}
+                    onClose={handleClose}
                   />
                 )}
                 {actions.length > 0 && !isBookingRescheduleActive.value && (

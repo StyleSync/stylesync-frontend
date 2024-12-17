@@ -62,6 +62,7 @@ export const ProBookActions: FC<ProBookActionsProps> = ({ userId }) => {
       <div className={styles.root}>
         <UserContactPopup
           side='top'
+          classes={{ content: '!ml-[23px]' }}
           professional={professional}
           isOpen={isContactOpen.value}
           onClose={isContactOpen.setFalse}

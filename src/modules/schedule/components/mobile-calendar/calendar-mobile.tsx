@@ -180,6 +180,8 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
           popoverProps={{
             align: 'start',
             backgroundBlurEffect: false,
+            side: 'bottom',
+            classes: { content: '!mr-[22px]' },
           }}
         />
       </div>
