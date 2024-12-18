@@ -103,21 +103,28 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
     });
   }, [weekSchedule, intl.locale]);
 
-  const eventsList = useMemo(() => {
-    return (
-      events?.pages
-        .map((page) => page.items)
-        .flat()
-        .map((event) => ({
-          id: event.id,
-          title: event.serviceProfessional.title,
-          start: new Date(event.startTime),
-          end: new Date(event.endTime),
-          status: event.status,
-          className: clsx(styles.event, styles[`event_${event.status}`]),
-        })) || []
-    );
+  const eventsFullCalendarList = useMemo(() => {
+    if (!events?.pages) return [];
+
+    return events?.pages
+      .map((page) => page.items)
+      .flat()
+      .map((event) => ({
+        id: event.id,
+        title: event.serviceProfessional.title,
+        start: new Date(event.startTime),
+        end: new Date(event.endTime),
+        status: event.status,
+        className: clsx(styles.event, styles[`event_${event.status}`]),
+      }));
   }, [events]);
+
+  const adaptedEvents = useMemo(() => {
+    return {
+      items: events?.pages.map((page) => page.items).flat() || [],
+      nextCursor: events?.pages.at(-1)?.nextCursor,
+    };
+  }, [events?.pages]);
 
   // connecting fullcalendar days
   useEffect(() => {
@@ -192,13 +199,13 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
           onDateSelect={setSelectedDate}
           onMonthChange={setSelectedDates}
           selectedDate={selectedDate}
-          events={events}
+          events={adaptedEvents}
         />
       </div>
 
       <div className='relative flex w-full max-w-full'>
         <DateSliderCalendar
-          events={events}
+          events={adaptedEvents}
           onSwiper={onSwiperHandler}
           swiperRef={swiperRef}
           days={selectedDates || []}
@@ -209,7 +216,7 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
 
       <div className='flex-1 border-t border-primary-light pl-6'>
         <FullCalendar
-          events={eventsList}
+          events={eventsFullCalendarList}
           ref={fullCalendarRef}
           plugins={[dayGridPlugin, timeGridPlugin]}
           initialView='timeGridDay'
