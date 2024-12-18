@@ -82,7 +82,7 @@ export default function SearchProPage() {
 
             <div className='mt-6 flex flex-row items-center gap-x-4 lg:mt-0'>
               {isLoading ? (
-                <div className='skeleton h-5 w-[250px] rounded' />
+                <div className='skeleton h-5 w-[80%] max-w-[250px] rounded' />
               ) : (
                 <span className='text-base font-medium text-dark lg:text-xl'>
                   {intl.formatMessage(
