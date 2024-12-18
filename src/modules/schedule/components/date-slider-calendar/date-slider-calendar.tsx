@@ -47,7 +47,7 @@ export const DateSliderCalendar: FC<DateSliderCalendarProps> = ({
       className='z-10 w-full !pb-4'
     >
       {days.map((day, index) => {
-        const dayEvents = events.filter(
+        const dayEvents = events.items.filter(
           (event) =>
             new Date(event.startTime) > startOfDay(day) &&
             new Date(event.startTime) < endOfDay(day)

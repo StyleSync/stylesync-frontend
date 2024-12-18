@@ -2,6 +2,7 @@ import { type FC, useCallback, useMemo } from 'react';
 
 import { RadioButton } from '@/modules/core/components/radio-button';
 import { BaseCardWithRadioButton } from '@/modules/booking/components/booking-card-radio-button';
+import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 
@@ -12,17 +13,21 @@ import type { ServiceOnProfessionalListItem } from '@/modules/service/types/serv
 export const ServiceOnProfessionalSelect: FC<
   ServiceOnProfessionalSelectProps
 > = ({ value, onChange, professional }) => {
-  const { data: serviceListQuery } =
-    trpc.serviceOnProfessional.list.useInfiniteQuery(
-      {
-        limit: 10,
-        offset: 0,
-        professionalId: professional?.id,
-      },
-      {
-        getNextPageParam: (lastPage) => lastPage.nextCursor,
-      }
-    );
+  const {
+    data: serviceListQuery,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = trpc.serviceOnProfessional.list.useInfiniteQuery(
+    {
+      limit: 10,
+      offset: 0,
+      professionalId: professional?.id,
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    }
+  );
 
   const serviceList = useMemo<ServiceOnProfessionalListItem[] | []>(() => {
     return serviceListQuery?.pages.map((page) => page.items).flat() || [];
@@ -55,6 +60,11 @@ export const ServiceOnProfessionalSelect: FC<
                 serviceOnProfessional={service}
               />
             ))}
+            <InfinityListController
+              hasNextPage={hasNextPage || false}
+              onLoadMore={fetchNextPage}
+              isNextPageLoading={isFetchingNextPage}
+            />
           </div>
         </RadioButton.Group>
       </div>

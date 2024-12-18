@@ -35,7 +35,7 @@ export const Calendar: FC<CalendarProps> = () => {
   const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
   // queries
   const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
-  const [events] = trpc.booking.list.useSuspenseQuery({
+  const { data: events } = trpc.booking.list.useInfiniteQuery({
     expand: ['serviceProfessional'],
     professionalId: me.professional?.id,
   });
@@ -77,14 +77,19 @@ export const Calendar: FC<CalendarProps> = () => {
   }, [weekSchedule, intl.locale]);
 
   const eventsList = useMemo(() => {
-    return events.map((event) => ({
-      id: event.id,
-      title: event.serviceProfessional.title,
-      start: new Date(event.startTime),
-      end: new Date(event.endTime),
-      status: event.status,
-      className: clsx(styles.event, styles[`event_${event.status}`]),
-    }));
+    return (
+      events?.pages
+        .map((page) => page.items)
+        .flat()
+        .map((event) => ({
+          id: event.id,
+          title: event.serviceProfessional.title,
+          start: new Date(event.startTime),
+          end: new Date(event.endTime),
+          status: event.status,
+          className: clsx(styles.event, styles[`event_${event.status}`]),
+        })) || []
+    );
   }, [events]);
 
   return (

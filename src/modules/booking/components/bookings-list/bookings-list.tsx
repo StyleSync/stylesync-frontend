@@ -6,12 +6,11 @@ import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dia
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { BookingInfoCard } from '@/modules/booking/components/booking-info-card';
-// utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
-
-import styles from './bookings-list.module.scss';
 import { Spinner } from '@/modules/core/components/spinner';
 import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
+// utils
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import styles from './bookings-list.module.scss';
 
 const now = new Date().toISOString();
 
