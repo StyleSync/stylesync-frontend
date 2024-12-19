@@ -266,6 +266,11 @@
   "button.google.map": "Відкрити на картах Google",
   "button.sign.in": "Увійти",
   "button.create": "Створити",
+  "button.approve": "Схвалити",
+  "button.reject": "Відхилити",
+  "button.remove.history": "Видалити з історії",
+  "button.finished": "Завершено",
+  "button.missed": "Пропущено",
 
   "duration.hour": "{count, plural, one {# година} few {# години} many {# годин} other {# годин}}",
   "duration.minute": "{count, plural, one {# хвилина} few {# хвилини} many {# хвилин} other {# хвилин}}",
