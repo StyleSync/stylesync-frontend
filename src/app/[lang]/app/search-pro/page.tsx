@@ -97,7 +97,7 @@ export default function SearchProPage() {
                 <span className='text-base font-medium text-dark lg:text-xl'>
                   {intl.formatMessage(
                     { id: 'professional.count' },
-                    { count: professionalListQuery?.pages.length }
+                    { count: professionalList.length }
                   )}
                 </span>
               )}
