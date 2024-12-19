@@ -1,12 +1,14 @@
 'use client';
 import { type FC, useState } from 'react';
+import clsx from 'clsx';
 // components
 import { AlbumCard } from '@/modules/gallery/components/album-card';
+import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
+import { ProfileSectionLayout } from '@/modules/user/components/profile-section-layout';
+// utils
+import { trpc } from '@/modules/core/utils/trpc.utils';
 
 import styles from './gallery-section.module.scss';
-import clsx from 'clsx';
-import { trpc } from '@/modules/core/utils/trpc.utils';
-import { ProfileSectionLayout } from '@/modules/user/components/profile-section-layout';
 import type { GallerySectionProps } from './gallery-section.inerface';
 
 export const GallerySection: FC<GallerySectionProps> = ({ userId }) => {
@@ -18,15 +20,19 @@ export const GallerySection: FC<GallerySectionProps> = ({ userId }) => {
   });
 
   const {
-    data: albumsList,
+    data: albumsListQuery,
     isLoading,
     isFetched,
-  } = trpc.album.list.useQuery(
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = trpc.album.list.useInfiniteQuery(
     {
       professionalId: professional?.id,
     },
     {
       enabled: !!professional.id,
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
   );
 
@@ -35,9 +41,12 @@ export const GallerySection: FC<GallerySectionProps> = ({ userId }) => {
     return null;
   }
 
-  if (isFetched && (!albumsList || albumsList.length === 0)) {
+  if (isFetched && (!albumsListQuery || albumsListQuery.pages.length === 0)) {
     return null;
   }
+
+  const albumList =
+    albumsListQuery?.pages.map((page) => page.items).flat() || [];
 
   return (
     <ProfileSectionLayout title='Gallery' id='profile-gallery'>
@@ -46,7 +55,7 @@ export const GallerySection: FC<GallerySectionProps> = ({ userId }) => {
           [styles.root_displayAlbum]: !!activeAlbum,
         })}
       >
-        {albumsList?.map((album) => (
+        {albumList?.map((album) => (
           <AlbumCard
             isMoreButtonVisible={false}
             album={album}
@@ -60,6 +69,11 @@ export const GallerySection: FC<GallerySectionProps> = ({ userId }) => {
             }}
           />
         ))}
+        <InfinityListController
+          hasNextPage={hasNextPage || false}
+          onLoadMore={fetchNextPage}
+          isNextPageLoading={isFetchingNextPage}
+        />
       </div>
     </ProfileSectionLayout>
   );

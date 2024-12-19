@@ -12,6 +12,7 @@ import { Spinner } from '@/modules/core/components/spinner';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { SettingsGallery } from '@/modules/settings/components/settings-gallery';
+import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 // type
@@ -48,12 +49,19 @@ export const AlbumDetails: FC<AlbumDetailsProps> = ({
     id: activeAlbumId,
   });
 
-  const { data: imagesList, ...imagesData } = trpc.portfolio.list.useQuery(
-    {
-      albumId: activeAlbumId,
-    },
-    { enabled: !!activeAlbumId }
-  );
+  const { data: imagesListQuery, ...imagesData } =
+    trpc.portfolio.list.useInfiniteQuery(
+      {
+        albumId: activeAlbumId,
+      },
+      {
+        enabled: !!activeAlbumId,
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
+      }
+    );
+
+  const imagesList =
+    imagesListQuery?.pages.map((pages) => pages.items).flat() || [];
 
   return (
     <div className={styles.root}>
@@ -66,7 +74,7 @@ export const AlbumDetails: FC<AlbumDetailsProps> = ({
       />
       <Placeholder
         className='h-[calc(100%-40px)]'
-        isActive={imagesList?.length === 0}
+        isActive={imagesListQuery?.pages.length === 0}
         placeholder={{
           illustration: 'files',
           description: intl.formatMessage({ id: 'album.details.noImages' }),
@@ -103,6 +111,11 @@ export const AlbumDetails: FC<AlbumDetailsProps> = ({
           />
           <div className='mt-5 md:mt-8'>
             <SettingsGallery images={imagesList || []} />
+            <InfinityListController
+              hasNextPage={imagesData.hasNextPage || false}
+              onLoadMore={imagesData.fetchNextPage}
+              isNextPageLoading={imagesData.isFetchingNextPage}
+            />
           </div>
           {imagesData.isLoading && (
             <div className={styles.spinnerContainer}>

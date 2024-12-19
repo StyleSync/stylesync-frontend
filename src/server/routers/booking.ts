@@ -9,6 +9,7 @@ import {
 import uniqueString from 'unique-string';
 import {
   checkProfessionalAccessToBooking,
+  getCursor,
   getProfessionalFromServiceOnProfessional,
 } from '@/server/utils/prisma-utils';
 import { defaultScheduleSelect } from '@/server/selectors/schedule';
@@ -317,6 +318,7 @@ export const bookingRouter = router({
           endDate: z.string().datetime().optional(),
           limit: z.number().min(1).max(maxLimit).default(defaultLimit),
           offset: z.number().min(0).default(0),
+          cursor: z.string().nullish(),
           expand: z.array(z.enum(['serviceProfessional'])).optional(),
           sortDirection: z.enum(['asc', 'desc']).optional(),
           sortField: z.enum(['startTime']).optional(),
@@ -325,6 +327,7 @@ export const bookingRouter = router({
     )
     .query(async ({ input }) => {
       const serviceOnProfessionalIds = [];
+      const limit = input?.limit ?? defaultLimit;
 
       if (input?.professionalId) {
         const listServiceOnProfessionals =
@@ -342,7 +345,7 @@ export const bookingRouter = router({
         }
       }
 
-      return prisma.booking.findMany({
+      const items = await prisma.booking.findMany({
         where: {
           serviceProfessionalId: !!input?.serviceProfessionalId
             ? input?.serviceProfessionalId
@@ -371,9 +374,12 @@ export const bookingRouter = router({
         orderBy: input?.sortField && {
           [input.sortField]: input.sortDirection ?? 'asc',
         },
-        take: input?.limit ?? defaultLimit,
-        skip: input?.offset ?? 0,
+        take: limit + 1,
+        skip: input?.cursor ? undefined : input?.offset ?? 0,
+        cursor: input?.cursor ? { id: input?.cursor } : undefined,
       });
+
+      return { items, nextCursor: getCursor(items, limit) };
     }),
   myBookings: privateProcedure
     .input(
@@ -384,6 +390,7 @@ export const bookingRouter = router({
           endDate: z.string().datetime().optional(),
           limit: z.number().min(1).max(maxLimit).default(defaultLimit),
           offset: z.number().min(0).default(0),
+          cursor: z.string().nullish(),
           expand: z.array(z.enum(['serviceProfessional'])).optional(),
           sortDirection: z.enum(['asc', 'desc']).optional(),
           sortField: z.enum(['startTime']).optional(),
@@ -392,8 +399,9 @@ export const bookingRouter = router({
     )
     .query(async ({ input, ctx }) => {
       const { id } = ctx.user;
+      const limit = input?.limit ?? defaultLimit;
 
-      return prisma.booking.findMany({
+      const items = await prisma.booking.findMany({
         where: {
           userId: id,
           AND: [
@@ -420,8 +428,11 @@ export const bookingRouter = router({
         orderBy: input?.sortField && {
           [input.sortField]: input.sortDirection ?? 'asc',
         },
-        take: input?.limit ?? defaultLimit,
-        skip: input?.offset ?? 0,
+        take: limit + 1,
+        skip: input?.cursor ? undefined : input?.offset ?? 0,
+        cursor: input?.cursor ? { id: input?.cursor } : undefined,
       });
+
+      return { items, nextCursor: getCursor(items, limit) };
     }),
 });

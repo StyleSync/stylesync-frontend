@@ -4,7 +4,10 @@ import { z } from 'zod';
 import { prisma } from '@/server/prisma';
 import { defaultServiceOnProfessionalSelect } from '@/server/selectors';
 import { Currency } from '@prisma/client';
-import { getProfessionalFromContext } from '@/server/utils/prisma-utils';
+import {
+  getCursor,
+  getProfessionalFromContext,
+} from '@/server/utils/prisma-utils';
 
 const maxLargeTextLength = 140;
 const defaultLimit = 10;
@@ -166,18 +169,24 @@ export const serviceOnProfessionalRouter = router({
           professionalId: z.string().min(1, 'Required').optional(),
           limit: z.number().min(1).max(maxLimit).default(defaultLimit),
           offset: z.number().min(0).default(0),
+          cursor: z.string().nullish(),
         })
         .optional()
     )
     .query(async ({ input }) => {
-      return prisma.serviceOnProfessional.findMany({
+      const limit = input?.limit ?? defaultLimit;
+
+      const items = await prisma.serviceOnProfessional.findMany({
         where: {
           serviceId: input?.serviceId,
           professionalId: input?.professionalId,
         },
         select: defaultServiceOnProfessionalSelect,
-        take: input?.limit ?? defaultLimit,
-        skip: input?.offset ?? 0,
+        take: limit + 1,
+        skip: input?.cursor ? undefined : input?.offset ?? 0,
+        cursor: input?.cursor ? { id: input?.cursor } : undefined,
       });
+
+      return { items, nextCursor: getCursor(items, limit) };
     }),
 });

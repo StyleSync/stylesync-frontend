@@ -106,3 +106,18 @@ export const checkProfessionalAccessToBooking = async (
 
   return professional;
 };
+
+export const getCursor = <T extends { id: string }>(
+  items: T[],
+  limit: number
+) => {
+  let nextCursor: string | undefined;
+
+  if (items.length > limit) {
+    const nextItem = items.pop();
+
+    nextCursor = nextItem!.id;
+  }
+
+  return nextCursor;
+};

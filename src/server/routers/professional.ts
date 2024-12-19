@@ -13,6 +13,7 @@ import { defaultLocationSelect } from '@/server/selectors/location';
 import { publicUserSelect } from '@/server/selectors/user';
 import { defaultAlbumSelect } from '@/server/selectors/album';
 import { createUniqueArray } from '@/server/utils/helpers';
+import { getCursor } from '@/server/utils/prisma-utils';
 
 const maxTextLength = 100;
 const maxLargeTextLength = 140;
@@ -115,6 +116,7 @@ export const professionalRouter = router({
       z.object({
         limit: z.number().min(1).max(maxLimit).default(defaultLimit),
         offset: z.number().min(0).default(0),
+        cursor: z.string().nullish(),
         serviceIds: z.array(z.string()).optional(),
         day: z
           .enum([
@@ -136,6 +138,7 @@ export const professionalRouter = router({
     .query(async ({ input }) => {
       const defaultPrecision = 0.3;
       const precision = input.precision || defaultPrecision;
+      const limit = input?.limit ?? defaultLimit;
 
       const professionals = await prisma.professional.findMany({
         select: {
@@ -232,11 +235,12 @@ export const professionalRouter = router({
               ],
             }),
         },
-        take: input.limit,
-        skip: input.offset,
+        take: limit + 1,
+        skip: input?.cursor ? undefined : input?.offset ?? 0,
+        cursor: input?.cursor ? { id: input?.cursor } : undefined,
       });
 
-      return professionals.map((professional) => {
+      const items = professionals.map((professional) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { services: _, ...rest } = professional;
 
@@ -247,6 +251,8 @@ export const professionalRouter = router({
           ),
         };
       });
+
+      return { items, nextCursor: getCursor(items, limit) };
     }),
   getProfileCompletionStatus: publicProcedure
     .input(

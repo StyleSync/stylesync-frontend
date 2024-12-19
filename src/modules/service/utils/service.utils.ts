@@ -18,8 +18,12 @@ export const isServiceOnProfessionalEqual = (
 };
 
 export const getGroupOfServiceOnProfessionalList = (
-  list: ServiceOnProfessional[]
+  list: ServiceOnProfessional[] | undefined
 ): ServiceOnProfessionalGroup[] => {
+  if (!Array.isArray(list)) {
+    return [];
+  }
+
   const next: ServiceOnProfessionalGroup[] = [];
 
   list.forEach((serviceOnProfessional) => {

@@ -14,7 +14,7 @@ type BookingsBadgeProps = {
 
 export const BookingsBadge: FC<BookingsBadgeProps> = ({ className }) => {
   const { data: me } = trpc.user.me.useQuery({ expand: ['professional'] });
-  const todayBookingsQuery = trpc.booking.list.useQuery(
+  const todayBookingsQuery = trpc.booking.list.useInfiniteQuery(
     {
       startDate: startOfToday().toISOString(),
       endDate: endOfToday().toISOString(),
@@ -22,34 +22,38 @@ export const BookingsBadge: FC<BookingsBadgeProps> = ({ className }) => {
     },
     {
       enabled: !!me?.professional,
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
   );
-  const bookingsPendingOrApproved = useMemo(() => {
+  const todayBookingsList = useMemo(() => {
+    const allBookings =
+      todayBookingsQuery.data?.pages.map((page) => page.items).flat() || [];
+
     return (
-      todayBookingsQuery.data?.filter(
+      allBookings.filter(
         (booking) =>
           booking.status === 'PENDING' || booking.status === 'APPROVED'
       ) || []
     );
-  }, [todayBookingsQuery.data]);
+  }, [todayBookingsQuery.data?.pages]);
 
   const badgeColor = useMemo(() => {
-    const isPendingBookings = bookingsPendingOrApproved.some(
+    const isPendingBookings = todayBookingsList.some(
       (booking) => booking.status === 'PENDING'
     );
 
     if (isPendingBookings) return bookingStatusMetadata.PENDING.color;
 
     return bookingStatusMetadata.APPROVED.color;
-  }, [bookingsPendingOrApproved]);
+  }, [todayBookingsList]);
 
-  if (bookingsPendingOrApproved.length === 0) {
+  if (todayBookingsList.length === 0) {
     return null;
   }
 
   return (
     <Badge className={clsx(className, badgeColor)}>
-      {bookingsPendingOrApproved.length}
+      {todayBookingsList.length}
     </Badge>
   );
 };

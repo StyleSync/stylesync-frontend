@@ -8,5 +8,3 @@ export type BookingListGroup = {
   hidden?: boolean;
   emptyPlaceholder?: ReactNode;
 };
-
-export type BookingsListProps = {};

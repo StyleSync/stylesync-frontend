@@ -73,12 +73,20 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
     onDateChange,
   } = useContext(ProfessionalSearchContext);
   // queries
-  const serviceListQuery = trpc.service.list.useQuery({
-    limit: 15,
-  });
+  const { data: serviceListQuery } = trpc.service.list.useInfiniteQuery(
+    {
+      limit: 15,
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    }
+  );
+
+  const serviceList =
+    serviceListQuery?.pages.map((page) => page.items).flat() || [];
 
   const handleIsAllChange = () => {
-    if (!serviceListQuery.data) {
+    if (!serviceListQuery?.pages) {
       return;
     }
 
@@ -88,7 +96,7 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
         selectedServices:
           selectedServices.length > 0
             ? selectedServices
-            : [serviceListQuery.data[0].id],
+            : [serviceListQuery.pages[0]?.items[0]?.id],
       });
 
       return;
@@ -125,7 +133,7 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
                 })}
               </span>
             </div>
-            {serviceListQuery.data?.map((service) => {
+            {serviceList?.map((service) => {
               const isActive = selectedServices.includes(service.id);
 
               return (
