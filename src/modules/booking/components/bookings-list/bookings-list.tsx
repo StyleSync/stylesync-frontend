@@ -1,11 +1,16 @@
-import { type FC, useState } from 'react';
+import { type FC, useState, useContext } from 'react';
 import { useIntl } from 'react-intl';
+import { useBoolean } from 'usehooks-ts';
 // containers
 import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { BookingInfoCard } from '@/modules/booking/components/booking-info-card';
+import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
+import { Button } from '@/modules/core/components/button';
+// context
+import { BookingContext } from '@/modules/booking/providers/booking-provider';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 // type
@@ -21,6 +26,9 @@ const now = new Date().toISOString();
 
 export const BookingsList: FC<BookingsListProps> = () => {
   const intl = useIntl();
+  const isOpenDropMenu = useBoolean();
+  // context
+  const { book } = useContext(BookingContext);
   // state
   const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
   // queries
@@ -64,9 +72,53 @@ export const BookingsList: FC<BookingsListProps> = () => {
           (group) =>
             !group.hidden && (
               <div className={styles.group} key={group.id}>
-                <Typography className={styles.title} variant='body1'>
-                  {group.title}
-                </Typography>
+                <div className='flex items-center justify-between'>
+                  <Typography className={styles.title} variant='body1'>
+                    {group.title}
+                  </Typography>
+                  {group.id === 'upcomming' && (
+                    <DropdownMenu
+                      isOpen={isOpenDropMenu.value}
+                      onClose={isOpenDropMenu.setFalse}
+                      onSelect={({ id }) => {
+                        if (id === 'add') {
+                          book();
+                          isOpenDropMenu.setFalse();
+                        }
+                      }}
+                      trigger={
+                        <Button
+                          aria-label='Add event'
+                          aria-haspopup='true'
+                          className='!h-6 !w-6'
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            isOpenDropMenu.toggle();
+                          }}
+                          variant='unstyled'
+                          icon='points'
+                        />
+                      }
+                      items={[
+                        {
+                          id: 'add',
+                          variant: 'primary',
+                          icon: 'plus',
+                          text: intl.formatMessage({
+                            id: 'calendar.add.event',
+                          }),
+                        },
+                      ]}
+                      popoverProps={{
+                        align: 'start',
+                        backgroundBlurEffect: false,
+                        side: 'bottom',
+                        classes: { content: '!mr-[22px]' },
+                      }}
+                    />
+                  )}
+                </div>
                 <Placeholder
                   isActive={group.list?.length === 0}
                   placeholder={

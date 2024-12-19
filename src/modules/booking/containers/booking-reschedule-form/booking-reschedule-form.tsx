@@ -21,7 +21,7 @@ import { BookingTimeSelectNavigation } from '@/modules/booking/components/bookin
 
 export const BookingRescheduleForm: FC<BookingRescheduleFormProps> = ({
   bookingId,
-  onOpenChange,
+  onClose,
 }) => {
   const intl = useIntl();
   const queryClient = useQueryClient();
@@ -75,7 +75,7 @@ export const BookingRescheduleForm: FC<BookingRescheduleFormProps> = ({
 
           queryClient.invalidateQueries(listQueryKey);
 
-          onOpenChange(false);
+          onClose();
         },
       }
     );
@@ -161,6 +161,7 @@ export const BookingRescheduleForm: FC<BookingRescheduleFormProps> = ({
             text={intl.formatMessage({ id: 'button.cancel' })}
             variant='secondary'
             className='flex-1 md:flex-[unset]'
+            onClick={onClose}
           />
           <Button
             className='flex-1 md:flex-[unset]'
