@@ -25,7 +25,7 @@ export const MyBookingsContent = () => {
       {activeTab === 'list' && (
         <Suspense
           fallback={
-            <div className='flex w-full flex-col gap-y-8'>
+            <div className='flex w-full flex-col gap-y-8 px-6 md:px-10'>
               <div className='skeleton h-5 w-[90px] rounded-md' />
               <div className='flex w-full flex-col gap-y-4'>
                 <div className='skeleton h-[76px] w-full rounded-xl' />
