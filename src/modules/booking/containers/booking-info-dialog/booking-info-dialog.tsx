@@ -148,7 +148,7 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
       return [
         {
           id: 'delete',
-          text: 'Remove from history',
+          text: intl.formatMessage({ id: 'button.remove.history' }),
           icon: 'trash',
           variant: 'danger',
           isLoading: bookingDeleteMutation.isLoading,
@@ -160,13 +160,13 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
       return [
         {
           id: 'approve',
-          text: 'Approve',
+          text: intl.formatMessage({ id: 'button.approve' }),
           icon: 'check-mark',
           variant: 'success',
         },
         {
           id: 'reject',
-          text: 'Reject',
+          text: intl.formatMessage({ id: 'button.reject' }),
           icon: 'close',
           variant: 'danger',
         },
@@ -174,6 +174,27 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
     }
 
     if (formattedData.status === 'APPROVED') {
+      const isEventFinished =
+        bookingQuery.data?.startTime &&
+        new Date(bookingQuery.data?.startTime) <= new Date();
+
+      if (isEventFinished) {
+        return [
+          {
+            id: 'finished',
+            text: intl.formatMessage({ id: 'button.finished' }),
+            icon: 'check-mark',
+            variant: 'success',
+          },
+          {
+            id: 'missed',
+            text: intl.formatMessage({ id: 'button.missed' }),
+            icon: 'close',
+            variant: 'danger',
+          },
+        ];
+      }
+
       return [
         {
           id: 'reschedule',
@@ -187,7 +208,13 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
     }
 
     return [];
-  }, [formattedData, bookingDeleteMutation.isLoading, intl, me?.userType]);
+  }, [
+    formattedData,
+    bookingDeleteMutation.isLoading,
+    intl,
+    me?.userType,
+    bookingQuery.data?.startTime,
+  ]);
 
   const handleActionClick = (actionId: string) => {
     if (actionId === 'call') {
