@@ -34,6 +34,7 @@ export const UserHeaderNavigation: FC<{
           title: intl.formatMessage({
             id: 'user.header.navigation.myBookings',
           }),
+          badge: <BookingsBadge />,
         },
         {
           icon: 'search',
@@ -67,9 +68,9 @@ export const UserHeaderNavigation: FC<{
           <Typography variant='body2' weight='medium'>
             {link.title}
           </Typography>
-          {link.icon === 'calendar' && (
+          {link.badge && (
             <div className='absolute -right-[15px] -top-[7px]'>
-              <BookingsBadge />
+              {link.badge}
             </div>
           )}
         </Link>
