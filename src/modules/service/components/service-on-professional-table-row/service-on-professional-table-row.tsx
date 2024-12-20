@@ -36,7 +36,9 @@ export const ServiceOnProfessionalTableRow: FC<
       <Accordion.Header>
         <div
           onClick={() => {
-            book(data);
+            if (deviceType === 'mobile') {
+              book(data);
+            }
           }}
           className={styles.root}
           ref={rootRef}
