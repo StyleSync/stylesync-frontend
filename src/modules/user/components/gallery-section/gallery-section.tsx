@@ -35,7 +35,10 @@ export const GallerySection: FC<GallerySectionProps> = ({ userId }) => {
 
   if (isLoading) {
     return (
-      <ProfileSectionLayout title='Gallery' id='profile-gallery'>
+      <ProfileSectionLayout
+        title={intl.formatMessage({ id: 'pro.layout.title.gallery' })}
+        id='profile-gallery'
+      >
         <div className={styles.root}>
           <div className='skeleton h-[180px] w-full rounded-xl md:h-[330px]' />
           <div className='skeleton h-[180px] w-full rounded-xl md:h-[330px]' />
