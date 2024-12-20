@@ -7,8 +7,6 @@ import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dia
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { BookingInfoCard } from '@/modules/booking/components/booking-info-card';
-import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
-import { Button } from '@/modules/core/components/button';
 // context
 import { BookingContext } from '@/modules/booking/providers/booking-provider';
 // utils
@@ -21,6 +19,7 @@ import type {
 import type { BookingListType } from '@/modules/booking/containers/my-bookings-content/my-bookings-content.interface';
 
 import styles from './bookings-list.module.scss';
+import { PointsBookingActions } from '../points-booking-actions/points-booking-action';
 
 const now = new Date().toISOString();
 
@@ -77,29 +76,15 @@ export const BookingsList: FC<BookingsListProps> = () => {
                     {group.title}
                   </Typography>
                   {group.id === 'upcomming' && (
-                    <DropdownMenu
+                    <PointsBookingActions
                       isOpen={isOpenDropMenu.value}
-                      onClose={isOpenDropMenu.setFalse}
-                      onSelect={({ id }) => {
-                        if (id === 'add') {
+                      onToggle={isOpenDropMenu.toggle}
+                      onSelect={(item) => {
+                        if (item.id === 'add') {
                           book();
                           isOpenDropMenu.setFalse();
                         }
                       }}
-                      trigger={
-                        <Button
-                          aria-label='Add event'
-                          aria-haspopup='true'
-                          className='!h-6 !w-6'
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            isOpenDropMenu.toggle();
-                          }}
-                          variant='unstyled'
-                          icon='points'
-                        />
-                      }
                       items={[
                         {
                           id: 'add',
@@ -110,12 +95,6 @@ export const BookingsList: FC<BookingsListProps> = () => {
                           }),
                         },
                       ]}
-                      popoverProps={{
-                        align: 'start',
-                        backgroundBlurEffect: false,
-                        side: 'bottom',
-                        classes: { content: '!mr-[22px]' },
-                      }}
                     />
                   )}
                 </div>

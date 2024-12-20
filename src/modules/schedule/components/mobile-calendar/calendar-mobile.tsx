@@ -20,8 +20,6 @@ import type { CalendarApi, EventInput } from '@fullcalendar/core';
 // components
 import { DateSelectCalendar } from '@/modules/schedule/components/data-select-calendar';
 import { DateSliderCalendar } from '../date-slider-calendar';
-import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
-import { Button } from '@/modules/core/components/button';
 import { Icon } from '@/modules/core/components/icon';
 // containers
 import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
@@ -38,6 +36,7 @@ import { getDaysOfCurrentMonth } from '@/modules/schedule/utils/get-current-mont
 import { type Swiper } from 'swiper/types';
 import { type CalendarMobileProps } from './calendar-mobile.interface';
 import styles from '@/modules/schedule/components/calendar/calendarEvent.module.scss';
+import { PointsBookingActions } from '@/modules/booking/components/points-booking-actions/points-booking-action';
 
 const SPEED_TO_SLIDE = 500;
 
@@ -146,43 +145,25 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
   return (
     <div className='relative flex w-full flex-1 flex-col gap-2'>
       <div className='absolute right-6 top-2'>
-        <DropdownMenu
+        <PointsBookingActions
           isOpen={isOpenDropMenu.value}
-          onClose={isOpenDropMenu.setFalse}
-          onSelect={({ id }) => {
-            if (id === 'add') {
+          onToggle={isOpenDropMenu.toggle}
+          onSelect={(item) => {
+            if (item.id === 'add') {
               book();
               isOpenDropMenu.setFalse();
             }
           }}
-          trigger={
-            <Button
-              aria-label='Add event'
-              aria-haspopup='true'
-              className='!h-6 !w-6'
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                isOpenDropMenu.toggle();
-              }}
-              variant='unstyled'
-              icon='points'
-            />
-          }
           items={[
             {
               id: 'add',
               variant: 'primary',
               icon: 'plus',
-              text: intl.formatMessage({ id: 'calendar.add.event' }),
+              text: intl.formatMessage({
+                id: 'calendar.add.event',
+              }),
             },
           ]}
-          popoverProps={{
-            align: 'start',
-            backgroundBlurEffect: false,
-            side: 'bottom',
-            classes: { content: '!mr-[22px]' },
-          }}
         />
       </div>
 
