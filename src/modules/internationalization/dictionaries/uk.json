@@ -400,6 +400,7 @@
   "service.price": "Ціна",
   "service.start.time": "Час початку",
   "service.duration": "Тривалість",
+  "service.status": "Статус",
   "service.meters": "м",
 
   "onboard.data.about": "Про себе",
