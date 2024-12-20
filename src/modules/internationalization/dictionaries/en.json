@@ -261,6 +261,11 @@
   "button.add.to.calendar": "Add to calendar",
   "button.sign.in": "Sign-in",
   "button.create": "Create",
+  "button.approve": "Approve",
+  "button.reject": "Reject",
+  "button.remove.history": "Remove from history",
+  "button.finished": "Mark as Finished",
+  "button.missed": "Mark as Missed",
 
   "duration.hour": "{count, plural, one {# hour} other {# hours}}",
   "duration.minute": "{count, plural, one {# minute} other {# minutes}}",
