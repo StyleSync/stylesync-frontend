@@ -175,8 +175,8 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
 
     if (formattedData.status === 'APPROVED') {
       const isEventFinished =
-        bookingQuery.data?.startTime &&
-        new Date(bookingQuery.data?.startTime) <= new Date();
+        bookingQuery.data?.endTime &&
+        new Date(bookingQuery.data?.endTime) <= new Date();
 
       if (isEventFinished) {
         return [
@@ -213,7 +213,7 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
     bookingDeleteMutation.isLoading,
     intl,
     me?.userType,
-    bookingQuery.data?.startTime,
+    bookingQuery.data?.endTime,
   ]);
 
   const handleActionClick = (actionId: string) => {
@@ -235,6 +235,14 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
 
     if (actionId === 'reschedule') {
       isBookingRescheduleActive.setTrue();
+    }
+
+    if (actionId === 'finished') {
+      updateBookingStatus('FINISHED');
+    }
+
+    if (actionId === 'missed') {
+      updateBookingStatus('MISSED');
     }
   };
 
