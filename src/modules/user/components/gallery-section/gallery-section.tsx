@@ -1,5 +1,6 @@
 'use client';
 import { type FC, useState } from 'react';
+import { useIntl } from 'react-intl';
 // components
 import { AlbumCard } from '@/modules/gallery/components/album-card';
 
@@ -10,6 +11,8 @@ import { ProfileSectionLayout } from '@/modules/user/components/profile-section-
 import type { GallerySectionProps } from './gallery-section.inerface';
 
 export const GallerySection: FC<GallerySectionProps> = ({ userId }) => {
+  const intl = useIntl();
+
   const [activeAlbum, setActiveAlbum] = useState<string | null>(null);
 
   const [professional] = trpc.professional.get.useSuspenseQuery({
@@ -31,8 +34,18 @@ export const GallerySection: FC<GallerySectionProps> = ({ userId }) => {
   );
 
   if (isLoading) {
-    // todo: add skeleton
-    return null;
+    return (
+      <ProfileSectionLayout
+        title={intl.formatMessage({ id: 'pro.layout.title.gallery' })}
+        id='profile-gallery'
+      >
+        <div className={styles.root}>
+          <div className='skeleton h-[180px] w-full rounded-xl md:h-[330px]' />
+          <div className='skeleton h-[180px] w-full rounded-xl md:h-[330px]' />
+          <div className='skeleton h-[180px] w-full rounded-xl md:h-[330px]' />
+        </div>
+      </ProfileSectionLayout>
+    );
   }
 
   if (isFetched && (!albumsList || albumsList.length === 0)) {
@@ -40,7 +53,10 @@ export const GallerySection: FC<GallerySectionProps> = ({ userId }) => {
   }
 
   return (
-    <ProfileSectionLayout title='Gallery' id='profile-gallery'>
+    <ProfileSectionLayout
+      title={intl.formatMessage({ id: 'pro.layout.title.gallery' })}
+      id='profile-gallery'
+    >
       <div
         className={clsx(styles.root, {
           [styles.root_displayAlbum]: !!activeAlbum,
