@@ -7,7 +7,6 @@ import { Typography } from '@/modules/core/components/typogrpahy';
 import { Icon } from '@/modules/core/components/icon';
 // utils
 import { getFullName } from '@/modules/user/utils/user.utils';
-import { trpc } from '@/modules/core/utils/trpc.utils';
 // types
 import type { ProfessionalSearchCardProps } from './professional-search-card.interface';
 
@@ -17,13 +16,6 @@ export const ProfessionalSearchCard: FC<ProfessionalSearchCardProps> = ({
   const intl = useIntl();
 
   const router = useRouter();
-
-  const [services] = trpc.serviceOnProfessional.list.useSuspenseQuery({
-    professionalId: professional.id,
-  });
-
-  const serviceNames = services.map((service) => service.service.name);
-  const uniqueServiceNames = Array.from(new Set(serviceNames));
 
   return (
     <div
@@ -62,13 +54,14 @@ export const ProfessionalSearchCard: FC<ProfessionalSearchCardProps> = ({
             {/* </div> */}
             <div className='flex w-fit items-center gap-x-2 text-dark'>
               <Icon name='beauty-service' className='h-4 w-4 !text-gray' />
-              {uniqueServiceNames.map((service) => (
+              {professional.mainServices.map((service, index) => (
                 <Typography
-                  key={service}
+                  key={service.id}
                   variant='body2'
                   className='!text-inherit'
                 >
-                  {intl.formatMessage({ id: service })}
+                  {intl.formatMessage({ id: service.name })}
+                  {index < professional.mainServices.length - 1 && ','}
                 </Typography>
               ))}
             </div>
