@@ -391,6 +391,7 @@
   "service.price": "Price",
   "service.start.time": "Start time",
   "service.duration": "Duration",
+  "service.status": "Status",
   "service.meters": "m",
 
   "onboard.data.about": "About",
