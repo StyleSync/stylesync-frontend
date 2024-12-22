@@ -3,7 +3,7 @@ import type { Locale } from 'date-fns';
 import { enUS, uk } from 'date-fns/locale';
 
 export const i18nConfig = {
-  defaultLocale: 'en',
+  defaultLocale: 'uk',
   locales: ['en', 'uk'],
 } as const;
 
