@@ -1,15 +1,14 @@
 import { type FC } from 'react';
 import { useIntl } from 'react-intl';
-
+import { useRouter } from 'next/navigation';
 // components
 import { Avatar } from '@/modules/core/components/avatar';
 import { Typography } from '@/modules/core/components/typogrpahy';
+import { Icon } from '@/modules/core/components/icon';
 // utils
 import { getFullName } from '@/modules/user/utils/user.utils';
-
+// types
 import type { ProfessionalSearchCardProps } from './professional-search-card.interface';
-import { useRouter } from 'next/navigation';
-import { Icon } from '@/modules/core/components/icon';
 
 export const ProfessionalSearchCard: FC<ProfessionalSearchCardProps> = ({
   professional,
@@ -55,11 +54,16 @@ export const ProfessionalSearchCard: FC<ProfessionalSearchCardProps> = ({
             {/* </div> */}
             <div className='flex w-fit items-center gap-x-2 text-dark'>
               <Icon name='beauty-service' className='h-4 w-4 !text-gray' />
-              <Typography variant='body2' className='!text-inherit'>
-                {intl.formatMessage({
-                  id: 'professional.search.card.services',
-                })}
-              </Typography>
+              {professional.mainServices.map((service, index) => (
+                <Typography
+                  key={service.id}
+                  variant='body2'
+                  className='!text-inherit'
+                >
+                  {intl.formatMessage({ id: service.name })}
+                  {index < professional.mainServices.length - 1 && ','}
+                </Typography>
+              ))}
             </div>
           </div>
         </div>
