@@ -1,11 +1,14 @@
-import { type FC, useState } from 'react';
+import { type FC, useState, useContext } from 'react';
 import { useIntl } from 'react-intl';
+import { useBoolean } from 'usehooks-ts';
 // containers
 import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { BookingInfoCard } from '@/modules/booking/components/booking-info-card';
+// context
+import { BookingContext } from '@/modules/booking/providers/booking-provider';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 // type
@@ -16,11 +19,15 @@ import type {
 import type { BookingListType } from '@/modules/booking/containers/my-bookings-content/my-bookings-content.interface';
 
 import styles from './bookings-list.module.scss';
+import { PointsBookingActions } from '../points-booking-actions/points-booking-action';
 
 const now = new Date().toISOString();
 
 export const BookingsList: FC<BookingsListProps> = () => {
   const intl = useIntl();
+  const isOpenDropMenu = useBoolean();
+  // context
+  const { book } = useContext(BookingContext);
   // state
   const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
   // queries
@@ -64,9 +71,33 @@ export const BookingsList: FC<BookingsListProps> = () => {
           (group) =>
             !group.hidden && (
               <div className={styles.group} key={group.id}>
-                <Typography className={styles.title} variant='body1'>
-                  {group.title}
-                </Typography>
+                <div className='flex items-center justify-between'>
+                  <Typography className={styles.title} variant='body1'>
+                    {group.title}
+                  </Typography>
+                  {group.id === 'upcomming' && (
+                    <PointsBookingActions
+                      isOpen={isOpenDropMenu.value}
+                      onToggle={isOpenDropMenu.toggle}
+                      onSelect={(item) => {
+                        if (item.id === 'add') {
+                          book();
+                          isOpenDropMenu.setFalse();
+                        }
+                      }}
+                      items={[
+                        {
+                          id: 'add',
+                          variant: 'primary',
+                          icon: 'plus',
+                          text: intl.formatMessage({
+                            id: 'calendar.add.event',
+                          }),
+                        },
+                      ]}
+                    />
+                  )}
+                </div>
                 <Placeholder
                   isActive={group.list?.length === 0}
                   placeholder={
