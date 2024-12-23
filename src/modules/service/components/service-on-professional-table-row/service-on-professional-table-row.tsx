@@ -1,4 +1,4 @@
-import React, { type FC, useContext, useRef } from 'react';
+import React, { type FC, useContext } from 'react';
 import clsx from 'clsx';
 import * as Accordion from '@radix-ui/react-accordion';
 // components
@@ -7,7 +7,6 @@ import { Button } from '@/modules/core/components/button';
 import { EditorPreview } from '@/modules/core/components/editor-preview';
 // hooks
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
-import { useRipple } from '@/modules/core/hooks/use-ripple';
 // utils
 import { formatMinutesDuration } from '@/modules/core/utils/time.utils';
 
@@ -24,24 +23,17 @@ export const ServiceOnProfessionalTableRow: FC<
   const intl = useIntl();
   const deviceType = useDeviceType();
   const { book } = useContext(BookingContext);
-  // refs
-  const rootRef = useRef<HTMLDivElement>(null);
-
-  useRipple(rootRef, {
-    disabled: deviceType !== 'mobile',
-  });
 
   return (
     <Accordion.Item className={styles.acardionItem} value={data.id}>
       <Accordion.Header>
         <div
           onClick={() => {
-            if (deviceType === 'mobile') {
+            if (deviceType === 'mobile' && !isOwn) {
               book(data);
             }
           }}
           className={styles.root}
-          ref={rootRef}
         >
           <div className={clsx(styles.cell, styles.vertical, styles.flex75)}>
             <Typography className={styles.title} variant='body1'>
