@@ -7,9 +7,12 @@
   flex-direction: column;
   row-gap: utils.spacing(5);
   padding-right: utils.spacing(5);
+  padding-left: utils.spacing(5);
+  padding-bottom: 1rem;
 
   @include mixins.phone {
     padding-right: utils.spacing(3);
+    padding-left: utils.spacing(3);
   }
 
   .group {
