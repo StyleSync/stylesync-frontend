@@ -60,7 +60,7 @@ export const ProData: FC<ProDataProps> = ({ professional, session }) => {
             trigger={
               <Button
                 variant='secondary'
-                text='Contact'
+                text={intl.formatMessage({ id: 'button.contact' })}
                 onClick={isContactOpen.setTrue}
               />
             }

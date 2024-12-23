@@ -1,4 +1,4 @@
-import React, { type FC, useContext, useRef } from 'react';
+import React, { type FC, useContext } from 'react';
 import clsx from 'clsx';
 import * as Accordion from '@radix-ui/react-accordion';
 // components
@@ -7,7 +7,6 @@ import { Button } from '@/modules/core/components/button';
 import { EditorPreview } from '@/modules/core/components/editor-preview';
 // hooks
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
-import { useRipple } from '@/modules/core/hooks/use-ripple';
 // utils
 import { formatMinutesDuration } from '@/modules/core/utils/time.utils';
 
@@ -16,6 +15,7 @@ import styles from './service-on-professional-table-row.module.scss';
 import { isEditorFieldEmpty } from '@/modules/core/components/editor-field/editor-field';
 import { useIntl } from 'react-intl';
 import { BookingContext } from '@/modules/booking/providers/booking-provider';
+import { Icon } from '@/modules/core/components/icon';
 
 export const ServiceOnProfessionalTableRow: FC<
   ServiceOnProfessionalTableRowProps
@@ -23,17 +23,18 @@ export const ServiceOnProfessionalTableRow: FC<
   const intl = useIntl();
   const deviceType = useDeviceType();
   const { book } = useContext(BookingContext);
-  // refs
-  const rootRef = useRef<HTMLDivElement>(null);
-
-  useRipple(rootRef, {
-    disabled: deviceType !== 'mobile',
-  });
 
   return (
     <Accordion.Item className={styles.acardionItem} value={data.id}>
       <Accordion.Header>
-        <div className={styles.root} ref={rootRef}>
+        <div
+          onClick={() => {
+            if (deviceType === 'mobile' && !isOwn) {
+              book(data);
+            }
+          }}
+          className={styles.root}
+        >
           <div className={clsx(styles.cell, styles.vertical, styles.flex75)}>
             <Typography className={styles.title} variant='body1'>
               {data.title}
@@ -55,6 +56,9 @@ export const ServiceOnProfessionalTableRow: FC<
                     <Button
                       variant='unstyled'
                       icon='info'
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
                       className='text-gray hover:!text-primary data-[state=open]:text-primary'
                     />
                   ) : (
@@ -63,13 +67,11 @@ export const ServiceOnProfessionalTableRow: FC<
                 </Accordion.Trigger>
 
                 {!isOwn && (
-                  <Button
+                  <Icon
+                    width={20}
+                    height={20}
                     className={styles.chevron}
-                    icon='chevron-right'
-                    variant='unstyled'
-                    onClick={() => {
-                      book(data);
-                    }}
+                    name='chevron-right'
                   />
                 )}
               </div>
