@@ -1,5 +1,5 @@
 import { trpc } from '@/modules/core/utils/trpc.utils';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 // utils
 import { getGroupOfServiceOnProfessionalList } from '@/modules/service/utils/service.utils';
 // types
@@ -10,8 +10,8 @@ export const useServiceOnProfessionalGroups = () => {
   const { data: me } = trpc.user.me.useQuery({
     expand: ['professional'],
   });
-  const { data: serviceList, ...serviceListQuery } =
-    trpc.serviceOnProfessional.list.useQuery(
+  const { data: serviceListQuery, ...serviceListData } =
+    trpc.serviceOnProfessional.list.useInfiniteQuery(
       {
         limit: 10,
         offset: 0,
@@ -21,12 +21,17 @@ export const useServiceOnProfessionalGroups = () => {
         enabled: Boolean(me?.professional?.id),
       }
     );
+
+  const serviceList = useMemo(() => {
+    return serviceListQuery?.pages.map((page) => page.items).flat() || [];
+  }, [serviceListQuery?.pages]);
+
   // state
   const [serviceOnProfessionalGroups, setServiceOnProfessionalGroups] =
     useState<ServiceOnProfessionalGroup[]>([]);
 
   useEffect(() => {
-    if (!serviceList) {
+    if (!serviceList.length) {
       return;
     }
 
@@ -38,7 +43,7 @@ export const useServiceOnProfessionalGroups = () => {
   return {
     groups: serviceOnProfessionalGroups,
     setGroups: setServiceOnProfessionalGroups,
-    isGroupsLoading: serviceListQuery.isLoading,
-    isGroupsLoadingError: serviceListQuery.isError,
+    isGroupsLoading: serviceListData.isLoading,
+    isGroupsLoadingError: serviceListData.isError,
   };
 };

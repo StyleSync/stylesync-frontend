@@ -3,7 +3,10 @@ import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { prisma } from '@/server/prisma';
 import { defaultLocationSelect } from '@/server/selectors';
-import { getProfessionalFromContext } from '@/server/utils/prisma-utils';
+import {
+  getCursor,
+  getProfessionalFromContext,
+} from '@/server/utils/prisma-utils';
 
 const maxLargeTextLength = 140;
 const defaultLimit = 10;
@@ -153,15 +156,21 @@ export const locationRouter = router({
         .object({
           limit: z.number().min(1).max(maxLimit).default(defaultLimit),
           offset: z.number().min(0).default(0),
+          cursor: z.string().nullish(),
         })
         .optional()
     )
     .query(async ({ input }) => {
-      return prisma.location.findMany({
+      const limit = input?.limit ?? defaultLimit;
+
+      const items = await prisma.location.findMany({
         select: defaultLocationSelect,
-        take: input?.limit ?? defaultLimit,
-        skip: input?.offset ?? 0,
+        take: limit + 1,
+        skip: input?.cursor ? undefined : input?.offset ?? 0,
+        cursor: input?.cursor ? { id: input?.cursor } : undefined,
       });
+
+      return { items, nextCursor: getCursor(items, limit) };
     }),
   getByProfessionalId: publicProcedure
     .input(

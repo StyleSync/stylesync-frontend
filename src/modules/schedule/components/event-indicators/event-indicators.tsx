@@ -10,7 +10,7 @@ import { type BookingStatus } from '@prisma/client';
 export const EventIndicators: FC<EventIndicatorsProps> = (props) => {
   const { day, events, outsideCurrentMonth } = props;
 
-  const dayEvents = events.filter((event: any) =>
+  const dayEvents = events.items.filter((event: any) =>
     isSameDay(new Date(event.startTime), day)
   );
 

@@ -3,7 +3,10 @@ import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { prisma } from '@/server/prisma';
 import { defaultBreakSelect } from '@/server/selectors/break';
-import { checkScheduleBreakChangePermission } from '@/server/utils/prisma-utils';
+import {
+  checkScheduleBreakChangePermission,
+  getCursor,
+} from '@/server/utils/prisma-utils';
 import { isAfter } from 'date-fns';
 import { mergeDates } from '@/server/utils/helpers';
 
@@ -158,10 +161,13 @@ export const breakRouter = router({
         scheduleId: z.string().min(1, 'Required'),
         limit: z.number().min(1).max(maxLimit).default(defaultLimit),
         offset: z.number().min(0).default(0),
+        cursor: z.string().nullish(),
       })
     )
     .query(async ({ input }) => {
-      return prisma.break.findMany({
+      const limit = input?.limit ?? defaultLimit;
+
+      const items = await prisma.break.findMany({
         where: {
           scheduleId: input.scheduleId,
         },
@@ -169,5 +175,7 @@ export const breakRouter = router({
         take: input.limit,
         skip: input.offset,
       });
+
+      return { items, nextCursor: getCursor(items, limit) };
     }),
 });

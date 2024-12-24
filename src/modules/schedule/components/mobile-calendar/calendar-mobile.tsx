@@ -10,7 +10,7 @@ import {
 } from 'react';
 import clsx from 'clsx';
 import { trpc } from '@/modules/core/utils/trpc.utils';
-import { format, startOfDay } from 'date-fns';
+import { endOfMonth, format, startOfDay, startOfMonth } from 'date-fns';
 import { useIntl } from 'react-intl';
 // fullcalendar
 import FullCalendar from '@fullcalendar/react';
@@ -49,7 +49,7 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
   const [selectedDates, setSelectedDates] = useState<Date[]>(
     getDaysOfCurrentMonth(new Date())
   );
-  const [selectedDate, setSelectedDate] = useState<Date | null>(
+  const [selectedDate, setSelectedDate] = useState<Date>(
     startOfDay(new Date())
   );
   const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
@@ -59,10 +59,25 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
 
   // queries
   const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
-  const [events] = trpc.booking.list.useSuspenseQuery({
+  const {
+    data: events,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = trpc.booking.list.useInfiniteQuery({
     expand: ['serviceProfessional'],
     professionalId: me.professional?.id,
+    limit: 100,
+    startDate: startOfMonth(selectedDate),
+    endDate: endOfMonth(selectedDate),
   });
+
+  useEffect(() => {
+    const lastPage = events?.pages.at(-1);
+
+    if (lastPage?.nextCursor && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [events?.pages, fetchNextPage, isFetchingNextPage]);
 
   const { data: weekSchedule } = trpc.schedule.getWeekSchedule.useQuery(
     {
@@ -88,16 +103,28 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
     });
   }, [weekSchedule, intl.locale]);
 
-  const eventsList = useMemo(() => {
-    return events.map((event) => ({
-      id: event.id,
-      title: event.serviceProfessional.title,
-      start: new Date(event.startTime),
-      end: new Date(event.endTime),
-      status: event.status,
-      className: clsx(styles.event, styles[`event_${event.status}`]),
-    }));
+  const eventsFullCalendarList = useMemo(() => {
+    if (!events?.pages) return [];
+
+    return events?.pages
+      .map((page) => page.items)
+      .flat()
+      .map((event) => ({
+        id: event.id,
+        title: event.serviceProfessional.title,
+        start: new Date(event.startTime),
+        end: new Date(event.endTime),
+        status: event.status,
+        className: clsx(styles.event, styles[`event_${event.status}`]),
+      }));
   }, [events]);
+
+  const adaptedEvents = useMemo(() => {
+    return {
+      items: events?.pages.map((page) => page.items).flat() || [],
+      nextCursor: events?.pages.at(-1)?.nextCursor,
+    };
+  }, [events?.pages]);
 
   // connecting fullcalendar days
   useEffect(() => {
@@ -172,13 +199,13 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
           onDateSelect={setSelectedDate}
           onMonthChange={setSelectedDates}
           selectedDate={selectedDate}
-          events={events}
+          events={adaptedEvents}
         />
       </div>
 
       <div className='relative flex w-full max-w-full'>
         <DateSliderCalendar
-          events={events}
+          events={adaptedEvents}
           onSwiper={onSwiperHandler}
           swiperRef={swiperRef}
           days={selectedDates || []}
@@ -189,7 +216,7 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
 
       <div className='flex-1 border-t border-primary-light pl-6'>
         <FullCalendar
-          events={eventsList}
+          events={eventsFullCalendarList}
           ref={fullCalendarRef}
           plugins={[dayGridPlugin, timeGridPlugin]}
           initialView='timeGridDay'
