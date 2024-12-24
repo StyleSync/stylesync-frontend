@@ -48,8 +48,12 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
 
   const handleSelect = useCallback(
     ({ id }: DropdownItem) => {
-      if (id === 'profile') {
-        router.push('/app/profile');
+      if (id === 'my-bookings') {
+        router.push(`/app/my-bookings`);
+      }
+
+      if (id === 'settings') {
+        router.push(`/app/settings`);
       }
 
       if (id === 'sign-out') {
@@ -124,9 +128,16 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
         <DropdownMenu
           items={[
             {
-              id: 'profile',
-              text: intl.formatMessage({ id: 'burger.menu.btn.myProfile' }),
-              icon: 'user',
+              id: 'my-bookings',
+              icon: 'list',
+              text: intl.formatMessage({ id: 'burger.menu.btn.myBookings' }),
+              variant: 'default',
+            },
+            {
+              id: 'settings',
+              icon: 'settings',
+              text: intl.formatMessage({ id: 'burger.menu.btn.settings' }),
+              variant: 'default',
             },
             {
               id: 'sign-out',

@@ -56,6 +56,7 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
       enabled: !!bookingId,
     }
   );
+
   const bookingStatusUpdateMutation = trpc.booking.status.update.useMutation();
   const bookingDeleteMutation = trpc.booking.delete.useMutation();
   // memo
@@ -142,7 +143,15 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
   const actions: Action[] = useMemo(() => {
     if (!formattedData) return [];
 
-    if (me?.userType === 'CUSTOMER') return [];
+    if (me?.userType === 'CUSTOMER')
+      return [
+        {
+          id: 'info',
+          text: 'Open details',
+          icon: 'info',
+          variant: 'secondary',
+        },
+      ];
 
     if (formattedData.status === 'REJECTED') {
       return [
@@ -243,6 +252,10 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
 
     if (actionId === 'missed') {
       updateBookingStatus('MISSED');
+    }
+
+    if (actionId === 'info') {
+      window.open(`/bookings/${`booking`}`, '_blank');
     }
   };
 

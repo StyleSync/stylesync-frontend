@@ -11,7 +11,8 @@ import { ProfessionalSettingsLocation } from '@/modules/settings/containers/prof
 // hooks
 import { useSettingsNavigation } from '@/modules/user/hooks/use-settings-navigation';
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
-
+// utils
+import { trpc } from '@/modules/core/utils/trpc.utils';
 import type { ProfileSettingsContentProps } from './profile-settings-content.interface';
 
 const contentMap: Record<string, ReactElement> = {
@@ -25,7 +26,11 @@ const contentMap: Record<string, ReactElement> = {
 export const ProfileSettingsContent: FC<ProfileSettingsContentProps> = () => {
   const { active, defaultTab, reset } = useSettingsNavigation();
   const deviceType = useDeviceType();
-  const stepElement = contentMap[active ?? defaultTab];
+  // queries
+  const { data: me } = trpc.user.me.useQuery();
+
+  const initialTab = me?.userType === 'CUSTOMER' ? 'about' : defaultTab;
+  const stepElement = contentMap[active ?? initialTab];
 
   if (deviceType === 'mobile') {
     return (

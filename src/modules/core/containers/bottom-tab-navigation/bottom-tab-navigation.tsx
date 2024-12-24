@@ -35,8 +35,26 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
 
   const userLinks = useMemo<
     { href: string; title: string; icon: IconName; slotEnd?: ReactNode }[]
-  >(
-    () => [
+  >(() => {
+    if (me?.userType === 'CUSTOMER') {
+      return [
+        {
+          href: '/app/my-bookings',
+          icon: 'list',
+          title: intl.formatMessage({ id: 'burger.menu.btn.myBookings' }),
+          slotEnd: (
+            <BookingsBadge className='absolute left-[calc(50%+2px)] top-[4px]' />
+          ),
+        },
+        {
+          href: '/app/settings',
+          icon: 'settings',
+          title: intl.formatMessage({ id: 'burger.menu.btn.settings' }),
+        },
+      ];
+    }
+
+    return [
       {
         href: `/app/profile/${session.data?.user?.id}`,
         icon: 'user',
@@ -55,13 +73,8 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
         icon: 'settings',
         title: intl.formatMessage({ id: 'burger.menu.btn.settings' }),
       },
-    ],
-    [session.data, intl]
-  );
-
-  if (!me?.professional) {
-    return;
-  }
+    ];
+  }, [me, session.data, intl]);
 
   if (deviceType !== 'mobile') {
     return;
