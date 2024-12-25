@@ -1,10 +1,8 @@
 import type { PopoverProps } from '@/modules/core/components/popover/popover.interface';
-import type { Prisma } from '@prisma/client';
 import type { Side } from '@radix-ui/react-popper';
+import type { AppRouterOutputs } from '@/server/types';
 
 export type UserContactPopupProps = Omit<PopoverProps, 'children'> & {
-  professional: Prisma.ProfessionalGetPayload<{
-    include: { user: true };
-  }>;
+  professional: AppRouterOutputs['professional']['get'];
   side?: Side;
 };

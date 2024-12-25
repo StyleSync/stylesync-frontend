@@ -11,7 +11,7 @@ export const getProfessionalFromContext = async (ctx: Context) => {
   const { id } = ctx.user;
   const professional = await prisma.professional.findUnique({
     where: { userId: id },
-    select: defaultProfessionalSelect,
+    select: { ...defaultProfessionalSelect, isBetaUser: true },
   });
 
   if (!professional) {
@@ -29,7 +29,12 @@ export const getProfessionalFromServiceOnProfessional = async (
 ) => {
   const serviceOnProfessional = await prisma.serviceOnProfessional.findUnique({
     where: { id: serviceOnProfessionalId },
-    select: defaultServiceOnProfessionalSelect,
+    select: {
+      ...defaultServiceOnProfessionalSelect,
+      professional: {
+        select: { ...defaultProfessionalSelect, isBetaUser: true },
+      },
+    },
   });
 
   if (!serviceOnProfessional) {

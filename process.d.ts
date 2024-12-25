@@ -21,5 +21,7 @@ declare namespace NodeJS {
     POSTGRES_HOST: string;
     POSTGRES_PASSWORD: string;
     POSTGRES_DATABASE: string;
+    SMS_TOKEN: string;
+    SMS_REDIRECT_URL: string;
   }
 }
