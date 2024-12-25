@@ -35,11 +35,10 @@ export const UserServices: FC<UserServicesProps> = ({ userId, session }) => {
   );
 
   const serviceList = useMemo(() => {
-    serviceListQuery.data?.pages.map((page) => page.items).flat() || [];
+    return serviceListQuery.data?.pages.map((page) => page.items).flat() || [];
   }, [serviceListQuery]);
 
   const groups = useMemo(() => {
-    // @ts-ignore
     const _groups = getGroupOfServiceOnProfessionalList(serviceList);
 
     return sortServiceOnProfessionalGroups(_groups);
