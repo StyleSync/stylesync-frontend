@@ -14,14 +14,19 @@ import styles from './user-header-navigation.module.scss';
 import type { Session } from 'next-auth';
 import { ProSearchField } from '@/modules/location/components/pro-search-field';
 import { Icon, type IconName } from '@/modules/core/components/icon';
+// utils
+import { trpc } from '@/modules/core/utils/trpc.utils';
 
 export const UserHeaderNavigation: FC<{
   session: Session | null;
 }> = ({ session }) => {
   const intl = useIntl();
   const pathname = usePathname();
+  // queries
+  const { data: me } = trpc.user.me.useQuery();
+
   const userLinks = useMemo(() => {
-    if (session) {
+    if (session && me?.userType === 'PROFESSIONAL') {
       return [
         {
           icon: 'user',
@@ -46,8 +51,24 @@ export const UserHeaderNavigation: FC<{
       ];
     }
 
-    return [];
-  }, [session, intl]);
+    return [
+      {
+        icon: 'calendar',
+        href: '/app/my-bookings',
+        title: intl.formatMessage({
+          id: 'user.header.navigation.myBookings',
+        }),
+        badge: <BookingsBadge />,
+      },
+      {
+        icon: 'search',
+        href: '/app/search-pro',
+        title: intl.formatMessage({
+          id: 'user.header.navigation.search',
+        }),
+      },
+    ];
+  }, [session, intl, me?.userType]);
 
   if (!session || pathname.includes('app/search-pro')) {
     return <ProSearchField />;
