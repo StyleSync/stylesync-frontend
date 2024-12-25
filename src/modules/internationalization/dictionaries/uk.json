@@ -304,7 +304,7 @@
   "photo.upload.modal.caption": "Опис...",
 
   "user.header.navigation.profile": "Профіль",
-  "user.header.navigation.myBookings": "Мої бронювання",
+  "user.header.navigation.myBookings": "Бронювання",
   "user.header.navigation.search": "Пошук",
 
   "pages.searchPro.noFound.title": "На жаль нічого не знайдено!",
@@ -343,8 +343,8 @@
 
   "progressbar.minutesRemaning": "{count, plural, one {{count} хвилина} few {{count} хвилин} other {хвилин}}",
 
-  "burger.menu.btn.myProfile": "Мій профіль",
-  "burger.menu.btn.myBookings": "Мої бронювання",
+  "burger.menu.btn.myProfile": "Профіль",
+  "burger.menu.btn.myBookings": "Бронювання",
   "burger.menu.btn.shareProfile": "Поділитись профілем",
   "burger.menu.btn.settings": "Налаштування",
   "burger.menu.btn.signOut": "Вийти",
