@@ -1,5 +1,5 @@
 import type { Session } from 'next-auth';
-import type { Prisma } from '@prisma/client';
+import type { AppRouterOutputs } from '@/server/types';
 
 export type ProfileInfoBigCardProps = {
   userId: string;
@@ -7,14 +7,10 @@ export type ProfileInfoBigCardProps = {
 };
 
 export type ProDataProps = {
-  professional: Prisma.ProfessionalGetPayload<{
-    include: { user: true };
-  }>;
+  professional: AppRouterOutputs['professional']['get'];
   session: Session | null;
 };
 
 export type UserDataProps = {
-  professional: Prisma.ProfessionalGetPayload<{
-    include: { user: true };
-  }>;
+  professional: AppRouterOutputs['professional']['get'];
 };

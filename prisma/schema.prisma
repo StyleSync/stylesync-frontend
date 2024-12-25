@@ -114,18 +114,29 @@ model Company {
 }
 
 model Professional {
-  id        String                  @id @default(cuid())
-  userId    String                  @unique
-  user      User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  facebook  String?
-  instagram String?
-  about     String?
-  schedule  Schedule[]
-  albums    Album[]
-  location  Location?
-  services  ServiceOnProfessional[]
-  createdAt DateTime                @default(now())
-  updatedAt DateTime                @default(now()) @updatedAt
+  id         String                  @id @default(cuid())
+  userId     String                  @unique
+  user       User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  facebook   String?
+  instagram  String?
+  about      String?
+  schedule   Schedule[]
+  albums     Album[]
+  location   Location?
+  isBetaUser Boolean                 @default(false)
+  services   ServiceOnProfessional[]
+  createdAt  DateTime                @default(now())
+  updatedAt  DateTime                @default(now()) @updatedAt
+}
+
+model SmsUsage {
+  id        String   @id @default(cuid())
+  userId    String
+  count     Int
+  month     Int
+  year      Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Location {

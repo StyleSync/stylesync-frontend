@@ -22,10 +22,13 @@ import { addHours, endOfDay, isAfter, startOfDay } from 'date-fns';
 import { availableList } from '@/server/routers/booking/available.list';
 import { availableReschedule } from '@/server/routers/booking/available.reschedule';
 import { rescheduleBooking } from '@/server/routers/booking/reschedule';
+import { SmsService } from '@/server/services/sms.service';
 
 const maxLargeTextLength = 140;
 const defaultLimit = 10;
 const maxLimit = 100;
+
+const smsLimitForMonth = 50;
 
 export const bookingRouter = router({
   getByCode: publicProcedure
@@ -289,6 +292,45 @@ export const bookingRouter = router({
         throw new TRPCError({
           code: 'NOT_FOUND',
           message: `There was error creating booking`,
+        });
+      }
+
+      if (professional.isBetaUser) {
+        const foundSmsUsage = await prisma.smsUsage.findFirst({
+          where: {
+            userId: professional.userId,
+            month: new Date().getMonth() + 1,
+            year: new Date().getFullYear(),
+          },
+        });
+
+        // if we have reached the limit of sms for the month then we stop here
+        if (foundSmsUsage && foundSmsUsage.count >= smsLimitForMonth) {
+          return booking;
+        }
+
+        if (!foundSmsUsage) {
+          await prisma.smsUsage.create({
+            data: {
+              userId: professional.userId,
+              month: new Date().getMonth() + 1,
+              year: new Date().getFullYear(),
+              count: 1,
+            },
+          });
+        }
+
+        if (foundSmsUsage) {
+          await prisma.smsUsage.update({
+            where: { id: foundSmsUsage.id },
+            data: { count: foundSmsUsage.count + 1 },
+          });
+        }
+
+        await SmsService.sendSms({
+          phone: createData.guestPhone,
+          // TODO: think about translations for thsi message
+          message: `Vashe bronjuvannya: ${process.env.SMS_REDIRECT_URL}/bookings/${booking.code}`,
         });
       }
 
