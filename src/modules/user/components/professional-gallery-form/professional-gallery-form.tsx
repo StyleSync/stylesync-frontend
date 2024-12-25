@@ -9,6 +9,7 @@ import { AlbumCard } from '@/modules/gallery/components/album-card';
 import { AlbumDetails } from '@/modules/gallery/components/album-details';
 import { Spinner } from '@/modules/core/components/spinner';
 import { Typography } from '@/modules/core/components/typogrpahy';
+import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
 // hooks
 import { useBoolean } from 'usehooks-ts';
 // utils
@@ -30,14 +31,19 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
   const { data: me } = trpc.user.me.useQuery({
     expand: ['professional'],
   });
-  const { data: albumsList, ...albumData } = trpc.album.list.useQuery(
-    {
-      professionalId: me?.professional?.id,
-    },
-    {
-      enabled: !!me?.professional?.id,
-    }
-  );
+  const { data: albumsListQuery, ...albumData } =
+    trpc.album.list.useInfiniteQuery(
+      {
+        professionalId: me?.professional?.id,
+      },
+      {
+        enabled: !!me?.professional?.id,
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
+      }
+    );
+
+  const albumsList =
+    albumsListQuery?.pages.map((page) => page.items).flat() || [];
 
   const handleCloseAlbum = () => {
     setActiveAlbum(null);
@@ -56,7 +62,7 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
     <div className={styles.root}>
       <Placeholder
         className='h-full'
-        isActive={albumsList?.length === 0}
+        isActive={albumsListQuery?.pages.length === 0}
         placeholder={{
           illustration: 'files',
           description: intl.formatMessage({
@@ -100,14 +106,21 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
           />
           <div className='mt-5 grid grid-cols-1 gap-4 md:mt-8 md:grid-cols-3 xl:grid-cols-5'>
             {albumsList?.map((album) => (
-              <AlbumCard
-                isMoreButtonVisible
-                onEditClick={setAlbunToEdit}
-                album={album}
-                key={album.id}
-                name={album.title}
-                onClick={() => setActiveAlbum(album)}
-              />
+              <>
+                <AlbumCard
+                  isMoreButtonVisible
+                  onEditClick={setAlbunToEdit}
+                  album={album}
+                  key={album.id}
+                  name={album.title}
+                  onClick={() => setActiveAlbum(album)}
+                />
+                <InfinityListController
+                  hasNextPage={albumData.hasNextPage || false}
+                  onLoadMore={albumData.fetchNextPage}
+                  isNextPageLoading={albumData.isFetchingNextPage}
+                />
+              </>
             ))}
           </div>
         </>

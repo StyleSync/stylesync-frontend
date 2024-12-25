@@ -148,7 +148,7 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
       return [
         {
           id: 'delete',
-          text: 'Remove from history',
+          text: intl.formatMessage({ id: 'button.remove.history' }),
           icon: 'trash',
           variant: 'danger',
           isLoading: bookingDeleteMutation.isLoading,
@@ -160,13 +160,13 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
       return [
         {
           id: 'approve',
-          text: 'Approve',
+          text: intl.formatMessage({ id: 'button.approve' }),
           icon: 'check-mark',
           variant: 'success',
         },
         {
           id: 'reject',
-          text: 'Reject',
+          text: intl.formatMessage({ id: 'button.reject' }),
           icon: 'close',
           variant: 'danger',
         },
@@ -174,6 +174,27 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
     }
 
     if (formattedData.status === 'APPROVED') {
+      const isEventFinished =
+        bookingQuery.data?.endTime &&
+        new Date(bookingQuery.data?.endTime) <= new Date();
+
+      if (isEventFinished) {
+        return [
+          {
+            id: 'finished',
+            text: intl.formatMessage({ id: 'button.finished' }),
+            icon: 'check-mark',
+            variant: 'success',
+          },
+          {
+            id: 'missed',
+            text: intl.formatMessage({ id: 'button.missed' }),
+            icon: 'close',
+            variant: 'danger',
+          },
+        ];
+      }
+
       return [
         {
           id: 'reschedule',
@@ -187,7 +208,13 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
     }
 
     return [];
-  }, [formattedData, bookingDeleteMutation.isLoading, intl, me?.userType]);
+  }, [
+    formattedData,
+    bookingDeleteMutation.isLoading,
+    intl,
+    me?.userType,
+    bookingQuery.data?.endTime,
+  ]);
 
   const handleActionClick = (actionId: string) => {
     if (actionId === 'call') {
@@ -209,6 +236,19 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
     if (actionId === 'reschedule') {
       isBookingRescheduleActive.setTrue();
     }
+
+    if (actionId === 'finished') {
+      updateBookingStatus('FINISHED');
+    }
+
+    if (actionId === 'missed') {
+      updateBookingStatus('MISSED');
+    }
+  };
+
+  const handleClose = () => {
+    isBookingRescheduleActive.setValue(false);
+    onClose();
   };
 
   return (
@@ -218,7 +258,7 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
         isCloseButtonVisible
         onOpenChange={(open) => {
           if (!open) {
-            onClose();
+            handleClose();
           }
         }}
       >
@@ -301,8 +341,8 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
                 </div>
                 {isBookingRescheduleActive.value && bookingId && (
                   <BookingRescheduleForm
-                    onOpenChange={isBookingRescheduleActive.setValue}
                     bookingId={bookingId}
+                    onClose={handleClose}
                   />
                 )}
                 {actions.length > 0 && !isBookingRescheduleActive.value && (

@@ -186,7 +186,7 @@
   "professional.settings.location.toast.success.title.delete": "Добре!",
   "professional.settings.location.toast.success.description.delete": "Місцезнаходження видалено",
 
-  "professional.settings.location.title": "Налаштування місцезнаходження",
+  "professional.settings.location.title": "Місцезнаходження",
 
   "professional.settings.sidebar.profile": "Профіль",
   "professional.settings.sidebar.services": "Послуги",
@@ -196,12 +196,12 @@
   "professional.settings.sidebar.location": "Місцезнаходження",
   "professional.settings.sidebar.language": "Мова",
 
-  "professional.settings.services.title": "Налаштування послуг",
+  "professional.settings.services.title": "Послуги",
   "professional.settings.services.errorBox.title": "Зв'язок з сервером було перервано",
   "professional.settings.services.errorBox.description": "Будь ласка, перевірте своє підключення до інтернету або спробуйте оновити сторінку. Якщо проблема залишається, будь ласка, зверніться до нашої служби підтримки для отримання допомоги.",
 
-  "professional.settings.schedule.title": "Налаштування розкладу",
-  "professional.settings.about.title": "Налаштування про себе",
+  "professional.settings.schedule.title": "Розклад",
+  "professional.settings.about.title": "Про себе",
 
   "professional.settings.about.toast.error.description": "Будь ласка, перевірте введені дані або спробуйте пізніше",
   "professional.settings.about.toast.success.title": "Все готово!",
@@ -249,7 +249,7 @@
   "button.cancel": "Скасувати",
   "button.confirm": "Підтвердити",
   "button.contact": "Контакт",
-  "button.reserve": "Зарезервувати",
+  "button.reserve": "Записатися",
   "button.remove": "Видалити",
   "button.avatar.select.new": "Вибрати новий аватар",
   "button.avatar.select": "Вибрати аватар",
@@ -266,6 +266,11 @@
   "button.google.map": "Відкрити на картах Google",
   "button.sign.in": "Увійти",
   "button.create": "Створити",
+  "button.approve": "Схвалити",
+  "button.reject": "Відхилити",
+  "button.remove.history": "Видалити з історії",
+  "button.finished": "Завершено",
+  "button.missed": "Пропущено",
 
   "duration.hour": "{count, plural, one {# година} few {# години} many {# годин} other {# годин}}",
   "duration.minute": "{count, plural, one {# хвилина} few {# хвилини} many {# хвилин} other {# хвилин}}",
@@ -382,8 +387,9 @@
   "pro.layout.title.about": "Про мене",
   "pro.layout.title.services": "Сервіси",
   "pro.layout.title.location": "Локація",
+  "pro.layout.title.gallery": "Галерея",
 
-  "gallery.settings.title": "Налаштування галереї",
+  "gallery.settings.title": "Галерея",
 
   "choose.service": "Виберіть послугу",
   "select.time": "Оберіть час",
@@ -395,6 +401,7 @@
   "service.price": "Ціна",
   "service.start.time": "Час початку",
   "service.duration": "Тривалість",
+  "service.status": "Статус",
   "service.meters": "м",
 
   "onboard.data.about": "Про себе",

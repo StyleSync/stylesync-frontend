@@ -78,7 +78,7 @@ export const DialogBottom: FC<BottomActionsProps> = ({
         _isOpen.setFalse();
       });
     }
-  }, [isOpen, _isOpen, screen]);
+  }, [isOpen, _isOpen.value, screen]);
 
   const handleDrag = useCallback((visibility: { percent: number }) => {
     if (!overlayRef.current) {
