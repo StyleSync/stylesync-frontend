@@ -35,7 +35,7 @@ export const Calendar: FC<CalendarProps> = () => {
   const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
   // queries
   const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
-  const { data: events } = trpc.booking.list.useInfiniteQuery({
+  const { data: events } = trpc.booking.myBookings.useInfiniteQuery({
     expand: ['serviceProfessional'],
     professionalId: me.professional?.id,
   });

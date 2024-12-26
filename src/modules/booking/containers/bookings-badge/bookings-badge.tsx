@@ -14,7 +14,7 @@ type BookingsBadgeProps = {
 
 export const BookingsBadge: FC<BookingsBadgeProps> = ({ className }) => {
   const { data: me } = trpc.user.me.useQuery({ expand: ['professional'] });
-  const todayBookingsQuery = trpc.booking.list.useInfiniteQuery(
+  const todayBookingsQuery = trpc.booking.myBookings.useInfiniteQuery(
     {
       startDate: startOfToday().toISOString(),
       endDate: endOfToday().toISOString(),
