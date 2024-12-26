@@ -27,7 +27,7 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
   const intl = useIntl();
 
   const { data: me } = trpc.user.me.useQuery(
-    { expand: ['professional'] },
+    { expand: [] },
     {
       enabled: session.status === 'authenticated',
     }
@@ -36,7 +36,9 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
   const userLinks = useMemo<
     { href: string; title: string; icon: IconName; slotEnd?: ReactNode }[]
   >(() => {
-    if (me?.userType === 'CUSTOMER') {
+    if (!me) return [];
+
+    if (me.userType === 'CUSTOMER') {
       return [
         {
           href: '/app/my-bookings',
@@ -45,6 +47,11 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
           slotEnd: (
             <BookingsBadge className='absolute left-[calc(50%+2px)] top-[4px]' />
           ),
+        },
+        {
+          href: '/app/search-pro',
+          icon: 'search',
+          title: intl.formatMessage({ id: 'user.header.navigation.search' }),
         },
         {
           href: '/app/settings',
@@ -56,7 +63,7 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
 
     return [
       {
-        href: `/app/profile/${session.data?.user?.id}`,
+        href: `/app/profile/${me.id}`,
         icon: 'user',
         title: intl.formatMessage({ id: 'burger.menu.btn.myProfile' }),
       },
@@ -69,14 +76,24 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
         ),
       },
       {
+        href: '/app/search-pro',
+        icon: 'search',
+        title: intl.formatMessage({ id: 'user.header.navigation.search' }),
+      },
+      {
         href: '/app/settings',
         icon: 'settings',
         title: intl.formatMessage({ id: 'burger.menu.btn.settings' }),
       },
     ];
-  }, [me, session.data, intl]);
+  }, [me, intl]);
 
-  if (deviceType !== 'mobile') {
+  if (
+    deviceType !== 'mobile' ||
+    session.status === 'loading' ||
+    !session.data?.user.onboardingCompleted ||
+    !userLinks.length
+  ) {
     return;
   }
 
