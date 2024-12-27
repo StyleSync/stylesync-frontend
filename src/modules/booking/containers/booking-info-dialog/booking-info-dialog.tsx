@@ -148,7 +148,7 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
       return [
         {
           id: 'info',
-          text: 'Open details',
+          text: intl.formatMessage({ id: 'button.open.details' }),
           icon: 'info',
           variant: 'secondary',
         },

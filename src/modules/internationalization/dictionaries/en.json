@@ -266,6 +266,7 @@
   "button.remove.history": "Remove from history",
   "button.finished": "Mark as Finished",
   "button.missed": "Mark as Missed",
+  "button.open.details": "Open details",
 
   "duration.hour": "{count, plural, one {# hour} other {# hours}}",
   "duration.minute": "{count, plural, one {# minute} other {# minutes}}",

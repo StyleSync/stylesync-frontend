@@ -271,6 +271,7 @@
   "button.remove.history": "Видалити з історії",
   "button.finished": "Завершено",
   "button.missed": "Пропущено",
+  "button.open.details": "Відкрити деталі",
 
   "duration.hour": "{count, plural, one {# година} few {# години} many {# годин} other {# годин}}",
   "duration.minute": "{count, plural, one {# хвилина} few {# хвилини} many {# хвилин} other {# хвилин}}",
