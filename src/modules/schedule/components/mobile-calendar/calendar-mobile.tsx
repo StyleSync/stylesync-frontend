@@ -63,7 +63,7 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
     data: events,
     isFetchingNextPage,
     fetchNextPage,
-  } = trpc.booking.list.useInfiniteQuery({
+  } = trpc.booking.myBookings.useInfiniteQuery({
     expand: ['serviceProfessional'],
     professionalId: me.professional?.id,
     limit: 100,

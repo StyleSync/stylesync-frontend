@@ -12,4 +12,5 @@ export type Action = {
 export type BookingInfoDialogProps = {
   bookingId?: string | null;
   onClose: () => void;
+  bookingCode?: string | null;
 };

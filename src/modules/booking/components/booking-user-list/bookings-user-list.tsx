@@ -20,6 +20,9 @@ export const BookingsUserList: FC<BookingsUserListProps> = () => {
   const intl = useIntl();
   // state
   const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
+  const [activeBookingCode, setActiveBookingCode] = useState<string | null>(
+    null
+  );
 
   const upcomingEventsQuery = trpc.booking.myBookings.useInfiniteQuery(
     {
@@ -72,6 +75,7 @@ export const BookingsUserList: FC<BookingsUserListProps> = () => {
                   booking={booking}
                   onClick={(data) => {
                     setActiveBookingId(data.id);
+                    setActiveBookingCode(data.code);
                   }}
                 />
               ))}
@@ -90,7 +94,7 @@ export const BookingsUserList: FC<BookingsUserListProps> = () => {
         </div>
         <div className={styles.group}>
           <Typography className={styles.title} variant='body1'>
-            {intl.formatMessage({ id: 'booking.list.upcomming' })}
+            {intl.formatMessage({ id: 'booking.list.past' })}
           </Typography>
           <Placeholder
             isActive={pastEvents.length === 0}
@@ -108,6 +112,7 @@ export const BookingsUserList: FC<BookingsUserListProps> = () => {
                   booking={booking}
                   onClick={(data) => {
                     setActiveBookingId(data.id);
+                    setActiveBookingCode(data.code);
                   }}
                 />
               ))}
@@ -125,7 +130,9 @@ export const BookingsUserList: FC<BookingsUserListProps> = () => {
           </Placeholder>
         </div>
       </div>
+
       <BookingInfoDialog
+        bookingCode={activeBookingCode}
         bookingId={activeBookingId}
         onClose={() => {
           setActiveBookingId(null);

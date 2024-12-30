@@ -33,6 +33,7 @@ import styles from './booking-info-dialog.module.scss';
 export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
   bookingId,
   onClose,
+  bookingCode,
 }) => {
   const intl = useIntl();
   const deviceType = useDeviceType();
@@ -147,7 +148,7 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
       return [
         {
           id: 'info',
-          text: 'Open details',
+          text: intl.formatMessage({ id: 'button.open.details' }),
           icon: 'info',
           variant: 'secondary',
         },
@@ -255,7 +256,7 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
     }
 
     if (actionId === 'info') {
-      window.open(`/bookings/${`booking`}`, '_blank');
+      window.open(`/bookings/${`${bookingCode}`}`, '_blank');
     }
   };
 

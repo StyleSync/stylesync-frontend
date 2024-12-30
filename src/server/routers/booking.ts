@@ -461,6 +461,7 @@ export const bookingRouter = router({
         },
         select: {
           ...defaultBookingSelect,
+          code: true,
           serviceProfessional: !!input?.expand?.includes(
             'serviceProfessional'
           ) && {
