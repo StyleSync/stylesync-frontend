@@ -25,6 +25,7 @@ export const ProfessionalSettingsAbout: FC = () => {
   const { data: me, ...meQuery } = trpc.user.me.useQuery({
     expand: ['professional'],
   });
+
   // mutations
   const userUpdate = trpc.user.update.useMutation({ useErrorBoundary: false });
   const proUpdate = trpc.professional.update.useMutation({
@@ -73,11 +74,12 @@ export const ProfessionalSettingsAbout: FC = () => {
           lastName: values.lastName || undefined,
           phone: values.phone || undefined,
         }),
-        proUpdate.mutateAsync({
-          about: values.about || '',
-          instagram: values.instagram || '',
-          facebook: values.facebook || '',
-        }),
+        me?.userType !== 'CUSTOMER' &&
+          proUpdate.mutateAsync({
+            about: values.about || '',
+            instagram: values.instagram || '',
+            facebook: values.facebook || '',
+          }),
       ])
         .then(() => {
           queryClient.invalidateQueries({
@@ -117,7 +119,7 @@ export const ProfessionalSettingsAbout: FC = () => {
           text: intl.formatMessage({ id: 'button.save' }),
           form: formId,
           isLoading: isSaveLoading,
-          disabled: !me || !me.professional,
+          disabled: !me,
           type: 'submit',
         },
       ]}
