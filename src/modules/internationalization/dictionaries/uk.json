@@ -18,6 +18,7 @@
   "general.service.skincare": "Догляд за шкірою",
   "general.service.eyebrows": "Брови",
   "general.service.massage": "Масаж",
+  "general.service.psychology": "Психологія",
   "general.service.other": "Інше",
 
   "validation.password.oneUppercaseChar": "Одна велика буква",
