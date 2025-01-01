@@ -30,7 +30,6 @@ export const AccountTypeSelect: FC<AccountTypeSelectProps> = ({
       description: intl.formatMessage({
         id: 'signUp.accountType.clientCard.description',
       }),
-      badge: intl.formatMessage({ id: 'signUp.accountType.clientCard.badge' }),
     },
   };
 

@@ -106,6 +106,17 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ session }) => {
 
   // memo
   const proActions = useMemo<BurgerMenuAction[]>(() => {
+    if (!me?.onboardingCompleted) {
+      return [
+        {
+          id: 'sign-out',
+          icon: 'log-out',
+          text: intl.formatMessage({ id: 'burger.menu.btn.signOut' }),
+          variant: 'danger',
+        },
+      ];
+    }
+
     if (me?.userType !== 'PROFESSIONAL') {
       return [
         {
@@ -161,7 +172,7 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ session }) => {
         variant: 'danger',
       },
     ];
-  }, [intl, me?.userType]);
+  }, [intl, me?.userType, me?.onboardingCompleted]);
 
   const actions = status === 'authenticated' ? proActions : publicActions;
   const isLoading = status === 'loading' || meQuery.isInitialLoading;

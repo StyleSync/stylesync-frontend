@@ -26,6 +26,10 @@ export const UserHeaderNavigation: FC<{
   const { data: me } = trpc.user.me.useQuery();
 
   const userLinks = useMemo(() => {
+    if (!me?.onboardingCompleted) {
+      return [];
+    }
+
     if (session && me?.userType === 'PROFESSIONAL') {
       return [
         {
@@ -68,7 +72,7 @@ export const UserHeaderNavigation: FC<{
         }),
       },
     ];
-  }, [session, intl, me?.userType]);
+  }, [session, intl, me?.userType, me?.onboardingCompleted]);
 
   if (!session || pathname.includes('app/search-pro')) {
     return <ProSearchField />;

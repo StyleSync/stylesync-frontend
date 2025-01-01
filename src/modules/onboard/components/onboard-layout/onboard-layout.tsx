@@ -91,7 +91,7 @@ export const OnboardLayout: FC<OnboardLayoutProps> = ({
           <Typography className='!text-dark' variant='body1'>
             {meta.title}
           </Typography>
-          {deviceType === 'mobile' && (
+          {deviceType === 'mobile' && me?.userType === 'PROFESSIONAL' && (
             <Button
               className='absolute right-[23px] top-[69px] z-20 !h-8 !text-primary'
               text={intl.formatMessage({ id: 'button.skip' })}

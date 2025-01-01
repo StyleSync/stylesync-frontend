@@ -1,5 +1,5 @@
 'use client';
-import { type FC, useCallback } from 'react';
+import { type FC, useCallback, useMemo } from 'react';
 import { useBoolean } from 'usehooks-ts';
 import clsx from 'clsx';
 import { signIn, signOut } from 'next-auth/react';
@@ -36,6 +36,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
       enabled: !!session,
     }
   );
+
   const { data: profileCompletionStatus } =
     trpc.professional.getProfileCompletionStatus.useQuery(
       {
@@ -48,6 +49,10 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
 
   const handleSelect = useCallback(
     ({ id }: DropdownItem) => {
+      if (id === 'my-profile') {
+        router.push(`/app/profile/${session?.user.id}`);
+      }
+
       if (id === 'my-bookings') {
         router.push(`/app/my-bookings`);
       }
@@ -62,8 +67,78 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
 
       isOpen.setFalse();
     },
-    [isOpen, router]
+    [isOpen, router, session?.user.id]
   );
+
+  const dropdownItems: DropdownItem[] = useMemo(() => {
+    if (!me?.onboardingCompleted) {
+      return [
+        {
+          id: 'sign-out',
+          text: intl.formatMessage({ id: 'user.menu.budge.signOut' }),
+          icon: 'log-out',
+          variant: 'danger',
+        },
+      ];
+    }
+
+    if (me.userType === 'CUSTOMER') {
+      return [
+        {
+          id: 'my-bookings',
+          icon: 'calendar',
+          text: intl.formatMessage({ id: 'burger.menu.btn.myBookings' }),
+          variant: 'default',
+        },
+        {
+          id: 'settings',
+          icon: 'settings',
+          text: intl.formatMessage({ id: 'burger.menu.btn.settings' }),
+          variant: 'default',
+        },
+        {
+          id: 'sign-out',
+          text: intl.formatMessage({ id: 'user.menu.budge.signOut' }),
+          icon: 'log-out',
+          variant: 'danger',
+        },
+      ];
+    }
+
+    return [
+      {
+        id: 'my-profile',
+        icon: 'user',
+        text: intl.formatMessage({ id: 'user.header.navigation.profile' }),
+        variant: 'default',
+      },
+
+      {
+        id: 'my-bookings',
+        icon: 'calendar',
+        text: intl.formatMessage({ id: 'burger.menu.btn.myBookings' }),
+        variant: 'default',
+      },
+      {
+        id: 'share',
+        icon: 'share',
+        text: intl.formatMessage({ id: 'burger.menu.btn.shareProfile' }),
+        variant: 'default',
+      },
+      {
+        id: 'settings',
+        icon: 'settings',
+        text: intl.formatMessage({ id: 'burger.menu.btn.settings' }),
+        variant: 'default',
+      },
+      {
+        id: 'sign-out',
+        text: intl.formatMessage({ id: 'user.menu.budge.signOut' }),
+        icon: 'log-out',
+        variant: 'danger',
+      },
+    ];
+  }, [intl, me?.onboardingCompleted, me?.userType, session]);
 
   const handleSettingsClick = useCallback(() => {
     router.push('/app/settings');
@@ -111,41 +186,24 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
   return (
     <>
       <div className={styles.root}>
-        <div className='relative flex h-fit w-fit'>
-          <Button
-            aria-label='Settings'
-            className={clsx(styles.iconButton, {
-              [styles.active]: pathname.includes('/settings'),
-            })}
-            onClick={handleSettingsClick}
-            icon='settings'
-            variant='secondary'
-          />
-          {profileCompletionStatus?.isAllCompleted === false && (
-            <div className='absolute -right-0 -top-0 h-2 w-2 rounded-full bg-primary' />
-          )}
-        </div>
+        {me?.onboardingCompleted && (
+          <div className='relative flex h-fit w-fit'>
+            <Button
+              aria-label='Settings'
+              className={clsx(styles.iconButton, {
+                [styles.active]: pathname.includes('/settings'),
+              })}
+              onClick={handleSettingsClick}
+              icon='settings'
+              variant='secondary'
+            />
+            {profileCompletionStatus?.isAllCompleted === false && (
+              <div className='absolute -right-0 -top-0 h-2 w-2 rounded-full bg-primary' />
+            )}
+          </div>
+        )}
         <DropdownMenu
-          items={[
-            {
-              id: 'my-bookings',
-              icon: 'list',
-              text: intl.formatMessage({ id: 'burger.menu.btn.myBookings' }),
-              variant: 'default',
-            },
-            {
-              id: 'settings',
-              icon: 'settings',
-              text: intl.formatMessage({ id: 'burger.menu.btn.settings' }),
-              variant: 'default',
-            },
-            {
-              id: 'sign-out',
-              text: intl.formatMessage({ id: 'user.menu.budge.signOut' }),
-              icon: 'log-out',
-              variant: 'danger',
-            },
-          ]}
+          items={dropdownItems}
           trigger={
             <button
               className={clsx(
