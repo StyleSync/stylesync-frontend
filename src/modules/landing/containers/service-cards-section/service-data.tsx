@@ -4,6 +4,7 @@ import finess from '@/modules/landing/landing-image/fitness.png';
 import makeup from '@/modules/landing/landing-image/makeup.png';
 import skincare from '@/modules/landing/landing-image/skincare.jpeg';
 import epil from '@/modules/landing/landing-image/epil.png';
+import psychology from '@/modules/landing/landing-image/psychology.jpg';
 
 export const services = [
   {
@@ -33,6 +34,10 @@ export const services = [
   {
     title: 'general.service.eyebrows',
     image: epil,
+  },
+  {
+    title: 'general.service.psychology',
+    image: psychology,
   },
   {
     title: 'general.service.other',

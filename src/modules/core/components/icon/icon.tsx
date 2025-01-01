@@ -13,6 +13,7 @@ import CheckMarkIcon from '@/assets/icons/check-mark.svg?icon';
 import HaircutIcon from '@/assets/icons/haircut.svg?icon';
 import MakeupIcon from '@/assets/icons/makup.svg?icon';
 import NailsIcon from '@/assets/icons/nails.svg?icon';
+import PsychologyIcon from '@/assets/icons/psycholog.svg?icon';
 import CloseIcon from '@/assets/icons/close.svg?icon';
 import PencilIcon from '@/assets/icons/pencil.svg?icon';
 import PlusIcon from '@/assets/icons/plus.svg?icon';
@@ -93,6 +94,7 @@ export const icons = {
   haircut: HaircutIcon,
   makeup: MakeupIcon,
   nails: NailsIcon,
+  psychology: PsychologyIcon,
   plus: PlusIcon,
   minus: MinusIcon,
   user: UserIcon,
