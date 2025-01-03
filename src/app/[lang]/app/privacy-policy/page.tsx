@@ -3,9 +3,9 @@ import { LandingHeader } from '@/modules/landing/containers/header/landing-heade
 
 export default function PrivacyPolicy() {
   return (
-    <div className='flex h-screen flex-col'>
+    <div className='relative z-[100] flex h-full flex-col bg-white'>
       <LandingHeader />
-      <main className='z-10 mt-[120px] flex w-full flex-1 flex-col items-center justify-center px-3 text-center'>
+      <main className='mt-[120px] flex w-full flex-1 flex-col items-center justify-center px-3 text-center'>
         <section className='flex max-w-[700px] flex-col items-center'>
           <h1 className='mb-4 text-2xl font-bold'>
             ПОЛІТИКА КОНФІДЕНЦІЙНОСТІ ТА ЗАХИСТУ І ОБРОБКИ ПЕРСОНАЛЬНИХ ДАНИХ
