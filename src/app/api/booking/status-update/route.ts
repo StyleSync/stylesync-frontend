@@ -6,6 +6,8 @@ import { BookingStatus } from '@prisma/client';
 import { subDays } from 'date-fns';
 
 export async function GET(request: NextRequest) {
+  // eslint-disable-next-line no-console
+  console.log('Cron job booking-status-update started');
   const authHeader = request.headers.get('authorization');
 
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
@@ -14,7 +16,7 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  await prisma.booking.updateMany({
+  const result = await prisma.booking.updateMany({
     where: {
       status: BookingStatus.PENDING,
       endTime: {
@@ -25,6 +27,11 @@ export async function GET(request: NextRequest) {
       status: BookingStatus.FINISHED,
     },
   });
+
+  // eslint-disable-next-line no-console
+  console.log('Cron job booking-status-update finished');
+  // eslint-disable-next-line no-console
+  console.log(result);
 
   return Response.json({ success: true });
 }

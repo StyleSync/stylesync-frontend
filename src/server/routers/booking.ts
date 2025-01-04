@@ -10,6 +10,7 @@ import uniqueString from 'unique-string';
 import {
   checkProfessionalAccessToBooking,
   getCursor,
+  getProfessionalFromContext,
   getProfessionalFromServiceOnProfessional,
 } from '@/server/utils/prisma-utils';
 import { defaultScheduleSelect } from '@/server/selectors/schedule';
@@ -349,11 +350,10 @@ export const bookingRouter = router({
         where: { id: input.id },
       });
     }),
-  list: publicProcedure
+  list: privateProcedure
     .input(
       z
         .object({
-          professionalId: z.string().min(1, 'Required').optional(),
           serviceProfessionalId: z.string().min(1, 'Required').optional(),
           date: z.string().datetime().optional(),
           startDate: z.string().datetime().optional(),
@@ -367,15 +367,16 @@ export const bookingRouter = router({
         })
         .optional()
     )
-    .query(async ({ input }) => {
+    .query(async ({ input, ctx }) => {
       const serviceOnProfessionalIds = [];
       const limit = input?.limit ?? defaultLimit;
+      const professional = await getProfessionalFromContext(ctx);
 
-      if (input?.professionalId) {
+      if (professional.id) {
         const listServiceOnProfessionals =
           await prisma.serviceOnProfessional.findMany({
             where: {
-              professionalId: input.professionalId,
+              professionalId: professional.id,
             },
             select: {
               id: true,
