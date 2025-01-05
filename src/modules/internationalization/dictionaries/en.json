@@ -18,6 +18,8 @@
   "general.service.skincare": "Skincare",
   "general.service.eyebrows": "Eyebrows",
   "general.service.massage": "Massage",
+  "general.service.psychology": "Psychology",
+
   "general.service.other": "Other",
 
   "validation.password.oneUppercaseChar": "One uppercase character",
