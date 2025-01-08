@@ -12,6 +12,7 @@ import { Avatar } from '@/modules/core/components/avatar';
 import { Emoji } from '@/modules/core/components/emoji';
 import { DialogFullScreen } from '@/modules/core/components/dialog-full-screen';
 import { Placeholder } from '@/modules/core/components/placeholder';
+import { ModalPfrofileLinks } from '@/modules/user/components/modal-profile-links';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { getFullName } from '@/modules/user/utils/user.utils';
@@ -83,6 +84,8 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ session }) => {
   const intl = useIntl();
   const router = useRouter();
   const isOpen = useBoolean();
+  const isOpenModalLinks = useBoolean();
+
   const { status } = useSession();
 
   const publicActions: BurgerMenuAction[] = [
@@ -191,6 +194,11 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ session }) => {
         void signOut({ callbackUrl: '/' });
       }
 
+      if (action.id === 'share') {
+        isOpenModalLinks.setTrue();
+        isOpen.setFalse();
+      }
+
       if (action.id === 'settings') {
         router.push(`/app/settings`);
       }
@@ -201,117 +209,123 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ session }) => {
 
       isOpen.setFalse();
     },
-    [isOpen, router, session?.user.id]
+    [isOpen, router, session?.user.id, isOpenModalLinks]
   );
 
   return (
-    <DialogFullScreen
-      isOpen={isOpen.value}
-      onOpenChange={isOpen.setValue}
-      trigger={
-        <Button
-          className={styles.trigger}
-          icon='menu'
-          variant='unstyled'
-          rippleColor='transparent'
-          onClick={isOpen.toggle}
-        />
-      }
-      classes={{
-        content: styles.dialogContent,
-        overlay: styles.dialogOverlay,
-      }}
-      animationConfig={dialogAnimationConfig}
-      closeOnOutsideClick
-    >
-      <div className={styles.root}>
-        <div className={styles.top}>
-          <Placeholder
-            className={clsx(styles.avatarSkeleton, 'skeleton')}
-            isActive={isLoading}
-          >
-            <Avatar
-              size={60}
-              className={styles.avatar}
-              url={me?.avatar}
-              fallback={<Emoji name='sunglasses' width={34} height={34} />}
-            />
-          </Placeholder>
-          <div className={styles.info}>
+    <>
+      <ModalPfrofileLinks
+        isOpen={isOpenModalLinks.value}
+        onOpenChange={isOpenModalLinks.setValue}
+      />
+      <DialogFullScreen
+        isOpen={isOpen.value}
+        onOpenChange={isOpen.setValue}
+        trigger={
+          <Button
+            className={styles.trigger}
+            icon='menu'
+            variant='unstyled'
+            rippleColor='transparent'
+            onClick={isOpen.toggle}
+          />
+        }
+        classes={{
+          content: styles.dialogContent,
+          overlay: styles.dialogOverlay,
+        }}
+        animationConfig={dialogAnimationConfig}
+        closeOnOutsideClick
+      >
+        <div className={styles.root}>
+          <div className={styles.top}>
             <Placeholder
-              className={styles.unauthPlaceholder}
-              isActive={status === 'unauthenticated'}
+              className={clsx(styles.avatarSkeleton, 'skeleton')}
+              isActive={isLoading}
+            >
+              <Avatar
+                size={60}
+                className={styles.avatar}
+                url={me?.avatar}
+                fallback={<Emoji name='sunglasses' width={34} height={34} />}
+              />
+            </Placeholder>
+            <div className={styles.info}>
+              <Placeholder
+                className={styles.unauthPlaceholder}
+                isActive={status === 'unauthenticated'}
+                placeholder={
+                  <Typography className={styles.name}>
+                    {intl.formatMessage({ id: 'burger.menu.notAuthenticated' })}
+                  </Typography>
+                }
+              >
+                <Placeholder
+                  className={clsx(styles.nameSkeleton, 'skeleton')}
+                  isActive={isLoading}
+                >
+                  <Typography
+                    className={styles.name}
+                    variant='body1'
+                    weight='medium'
+                  >
+                    {getFullName(me ?? {})}
+                  </Typography>
+                </Placeholder>
+                <Placeholder
+                  className={clsx(styles.emailSkeleton, 'skeleton')}
+                  isActive={isLoading}
+                >
+                  <Typography className={styles.email} variant='small' cutText>
+                    {me?.email}
+                  </Typography>
+                </Placeholder>
+              </Placeholder>
+            </div>
+
+            <Button
+              className={styles.close}
+              icon='arrow-right'
+              variant='unstyled'
+              rippleColor='#fff'
+              onClick={isOpen.setFalse}
+            />
+          </div>
+          <div className={styles.content}>
+            <Placeholder
+              className={styles.placeholder}
+              isActive={isLoading}
               placeholder={
-                <Typography className={styles.name}>
-                  {intl.formatMessage({ id: 'burger.menu.notAuthenticated' })}
-                </Typography>
+                <>
+                  <div className={styles.button}>
+                    <div className={clsx(styles.skeleton, 'skeleton')} />
+                  </div>
+                  <div className={styles.button}>
+                    <div className={clsx(styles.skeleton, 'skeleton')} />
+                  </div>
+                </>
               }
             >
-              <Placeholder
-                className={clsx(styles.nameSkeleton, 'skeleton')}
-                isActive={isLoading}
-              >
-                <Typography
-                  className={styles.name}
-                  variant='body1'
-                  weight='medium'
-                >
-                  {getFullName(me ?? {})}
-                </Typography>
-              </Placeholder>
-              <Placeholder
-                className={clsx(styles.emailSkeleton, 'skeleton')}
-                isActive={isLoading}
-              >
-                <Typography className={styles.email} variant='small' cutText>
-                  {me?.email}
-                </Typography>
-              </Placeholder>
+              {actions.map((action) => (
+                <Button
+                  key={action.id}
+                  className={clsx(styles.button, {
+                    [styles.danger]: action.variant === 'danger',
+                    [styles.primary]: action.variant === 'primary',
+                  })}
+                  icon={action.icon}
+                  text={action.text}
+                  variant='unstyled'
+                  onClick={handleActionClick(action)}
+                  typographyProps={{
+                    weight: 'medium',
+                  }}
+                />
+              ))}
             </Placeholder>
           </div>
-
-          <Button
-            className={styles.close}
-            icon='arrow-right'
-            variant='unstyled'
-            rippleColor='#fff'
-            onClick={isOpen.setFalse}
-          />
         </div>
-        <div className={styles.content}>
-          <Placeholder
-            className={styles.placeholder}
-            isActive={isLoading}
-            placeholder={
-              <>
-                <div className={styles.button}>
-                  <div className={clsx(styles.skeleton, 'skeleton')} />
-                </div>
-                <div className={styles.button}>
-                  <div className={clsx(styles.skeleton, 'skeleton')} />
-                </div>
-              </>
-            }
-          >
-            {actions.map((action) => (
-              <Button
-                key={action.id}
-                className={clsx(styles.button, {
-                  [styles.danger]: action.variant === 'danger',
-                  [styles.primary]: action.variant === 'primary',
-                })}
-                icon={action.icon}
-                text={action.text}
-                variant='unstyled'
-                onClick={handleActionClick(action)}
-                typographyProps={{
-                  weight: 'medium',
-                }}
-              />
-            ))}
-          </Placeholder>
-        </div>
-      </div>
-    </DialogFullScreen>
+      </DialogFullScreen>
+    </>
   );
 };
