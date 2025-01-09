@@ -59,7 +59,7 @@ export const ModalPfrofileLinks: FC<ModalProfileLinksProps> = ({
         </span>
         <div
           onClick={() => copy(linkStyleSync)}
-          className={`flex cursor-pointer items-center justify-between rounded-md bg-white px-[14px] py-[15px] shadow transition-colors duration-300 ${value ? 'border border-green' : 'border-transparent'}`}
+          className={`flex cursor-pointer items-center justify-between rounded-md bg-white px-[14px] py-[15px] shadow transition-colors duration-300 ${value ? 'border border-green' : ''}`}
         >
           <span className='truncate text-[11px]'>{linkStyleSync}</span>
           <Icon
