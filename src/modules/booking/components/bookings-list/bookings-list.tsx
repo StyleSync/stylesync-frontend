@@ -5,11 +5,14 @@ import { useBoolean } from 'usehooks-ts';
 import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
+import { Button } from '@/modules/core/components/button';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { BookingInfoCard } from '@/modules/booking/components/booking-info-card';
 import { Spinner } from '@/modules/core/components/spinner';
 import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
 import { PointsBookingActions } from '@/modules/booking/components/points-booking-actions';
+// hooks
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // context
 import { BookingContext } from '@/modules/booking/providers/booking-provider';
 // utils
@@ -24,6 +27,8 @@ type BookingsListProps = {
 
 export const BookingsList: FC<BookingsListProps> = ({ professionalId }) => {
   const intl = useIntl();
+  const deviceType = useDeviceType();
+
   const isOpenDropMenu = useBoolean();
   // context
   const { book } = useContext(BookingContext);
@@ -74,26 +79,36 @@ export const BookingsList: FC<BookingsListProps> = ({ professionalId }) => {
             <Typography className={styles.title} variant='body1'>
               {intl.formatMessage({ id: 'booking.list.upcomming' })}
             </Typography>
-            <PointsBookingActions
-              isOpen={isOpenDropMenu.value}
-              onToggle={isOpenDropMenu.toggle}
-              onSelect={(item) => {
-                if (item.id === 'add') {
+            {deviceType === 'mobile' ? (
+              <PointsBookingActions
+                isOpen={isOpenDropMenu.value}
+                onToggle={isOpenDropMenu.toggle}
+                onSelect={(item) => {
+                  if (item.id === 'add') {
+                    book();
+                    isOpenDropMenu.setFalse();
+                  }
+                }}
+                items={[
+                  {
+                    id: 'add',
+                    variant: 'primary',
+                    icon: 'plus',
+                    text: intl.formatMessage({
+                      id: 'calendar.add.event',
+                    }),
+                  },
+                ]}
+              />
+            ) : (
+              <Button
+                text={intl.formatMessage({ id: 'button.create' })}
+                onClick={() => {
                   book();
-                  isOpenDropMenu.setFalse();
-                }
-              }}
-              items={[
-                {
-                  id: 'add',
-                  variant: 'primary',
-                  icon: 'plus',
-                  text: intl.formatMessage({
-                    id: 'calendar.add.event',
-                  }),
-                },
-              ]}
-            />
+                }}
+                className='absolute right-[36px] top-[16px] sm:!top-[40px]'
+              />
+            )}
           </div>
           <Placeholder
             isActive={upcomingEvents.length === 0}
