@@ -26,7 +26,7 @@ import {
   WhatsappIcon,
 } from 'react-share';
 
-export const ModalPfrofileLinks: FC<ModalProfileLinksProps> = ({
+export const PfrofileLinksModal: FC<ModalProfileLinksProps> = ({
   isOpen,
   onOpenChange,
 }) => {

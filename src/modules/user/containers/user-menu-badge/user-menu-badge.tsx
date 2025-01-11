@@ -11,7 +11,7 @@ import { Emoji } from '@/modules/core/components/emoji';
 import { Icon } from '@/modules/core/components/icon';
 import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
 import { Button } from '@/modules/core/components/button';
-import { ModalPfrofileLinks } from '@/modules/user/components/modal-profile-links';
+import { PfrofileLinksModal } from '@/modules/user/components/modal-profile-links';
 // containers
 import { BurgerMenu } from '@/modules/core/containers/burger-menu';
 // hooks
@@ -240,7 +240,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
             align: 'end',
           }}
         />
-        <ModalPfrofileLinks
+        <PfrofileLinksModal
           isOpen={isOpenModalLinks.value}
           onOpenChange={isOpenModalLinks.setValue}
         />

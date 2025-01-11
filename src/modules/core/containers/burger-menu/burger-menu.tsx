@@ -12,7 +12,7 @@ import { Avatar } from '@/modules/core/components/avatar';
 import { Emoji } from '@/modules/core/components/emoji';
 import { DialogFullScreen } from '@/modules/core/components/dialog-full-screen';
 import { Placeholder } from '@/modules/core/components/placeholder';
-import { ModalPfrofileLinks } from '@/modules/user/components/modal-profile-links';
+import { PfrofileLinksModal } from '@/modules/user/components/modal-profile-links';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { getFullName } from '@/modules/user/utils/user.utils';
@@ -214,7 +214,7 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ session }) => {
 
   return (
     <>
-      <ModalPfrofileLinks
+      <PfrofileLinksModal
         isOpen={isOpenModalLinks.value}
         onOpenChange={isOpenModalLinks.setValue}
       />
