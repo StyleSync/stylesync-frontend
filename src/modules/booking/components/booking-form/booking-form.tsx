@@ -116,22 +116,22 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit, formId }) => {
             }}
           />
           <span className='text-sm'>
-            I accept{' '}
+            {intl.formatMessage({ id: 'booking.form.accept' })}{' '}
             <a
               href='/app/privacy-policy'
               target='_blank'
               className='cursor-pointer text-primary underline underline-offset-1'
             >
-              privacy policy
+              {intl.formatMessage({ id: 'booking.form.policy' })}
             </a>{' '}
-            and
+            {intl.formatMessage({ id: 'booking.form.and' })}{' '}
             <a
               href='/app/terms-policy'
               target='_blank'
               className='cursor-pointer text-primary underline underline-offset-1'
             >
               {' '}
-              terms and conditions of use
+              {intl.formatMessage({ id: 'booking.form.terms' })}
             </a>
           </span>
         </div>

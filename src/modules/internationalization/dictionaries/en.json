@@ -421,5 +421,9 @@
   "booking.details.email": "Email:",
   "booking.details.comment": "Comment:",
 
-  "calendar.add.event": "Add event"
+  "calendar.add.event": "Add event",
+  "booking.form.accept": "I accept",
+  "booking.form.policy": "privacy policy",
+  "booking.form.and": "and",
+  "booking.form.terms": "terms and conditions of use"
 }
