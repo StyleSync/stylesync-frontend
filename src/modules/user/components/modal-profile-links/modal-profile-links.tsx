@@ -1,4 +1,5 @@
 import { type FC, useMemo } from 'react';
+import { useIntl } from 'react-intl';
 // hooks
 import { useCopyToClipboard } from 'usehooks-ts';
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
@@ -12,6 +13,8 @@ import { Button } from '@/modules/core/components/button';
 import { type ModalProfileLinksProps } from './modal-profile-links.interface';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
+import { generateProfileLink } from '@/modules/user/utils/generate-profile-link';
+
 // icons
 import {
   EmailShareButton,
@@ -32,6 +35,7 @@ export const PfrofileLinksModal: FC<ModalProfileLinksProps> = ({
 }) => {
   const deviceType = useDeviceType();
   const [value, copy] = useCopyToClipboard();
+  const intl = useIntl();
 
   // queries
   const { data: me } = trpc.user.me.useQuery({
@@ -43,7 +47,11 @@ export const PfrofileLinksModal: FC<ModalProfileLinksProps> = ({
     return deviceType === 'mobile' ? DialogBottom : Dialog;
   }, [deviceType]);
 
-  const linkStyleSync = `${window.location.origin}/uk/app/profile/${me?.id}`;
+  const linkStyleSync = useMemo(() => {
+    if (!me?.id) return '';
+
+    return generateProfileLink(intl.locale, me.id);
+  }, [intl.locale, me?.id]);
 
   return (
     <DialogComponent
