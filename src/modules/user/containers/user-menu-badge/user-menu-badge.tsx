@@ -167,7 +167,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
           }
         />
         <Button
-          text='Sign In'
+          text={intl.formatMessage({ id: 'button.sign.in' })}
           variant='secondary'
           onClick={() =>
             signIn(
