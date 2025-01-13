@@ -60,24 +60,57 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
   // queries
   const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
   const {
-    data: events,
-    isFetchingNextPage,
-    fetchNextPage,
-  } = trpc.booking.myBookings.useInfiniteQuery({
-    expand: ['serviceProfessional'],
-    professionalId: me.professional?.id,
-    limit: 100,
-    startDate: startOfMonth(selectedDate),
-    endDate: endOfMonth(selectedDate),
-  });
+    data: eventsProfessional,
+    isFetchingNextPage: isFetchingNextPageProfessional,
+    fetchNextPage: fetchNextPageProfessional,
+  } = trpc.booking.list.useInfiniteQuery(
+    {
+      expand: ['serviceProfessional'],
+      professionalId: me.professional?.id,
+      limit: 100,
+      startDate: startOfMonth(selectedDate),
+      endDate: endOfMonth(selectedDate),
+    },
+    {
+      enabled: !!me.professional?.id && me.userType === 'CUSTOMER',
+    }
+  );
+
+  const {
+    data: eventsCustomer,
+    isFetchingNextPage: isFetchingNextPageCustomer,
+    fetchNextPage: fetchNextPageCustomer,
+  } = trpc.booking.myBookings.useInfiniteQuery(
+    {
+      expand: ['serviceProfessional'],
+      professionalId: me.professional?.id,
+      limit: 100,
+      startDate: startOfMonth(selectedDate),
+      endDate: endOfMonth(selectedDate),
+    },
+    {
+      enabled: me.userType === 'CUSTOMER',
+    }
+  );
+
+  const events = eventsProfessional || eventsCustomer;
 
   useEffect(() => {
     const lastPage = events?.pages.at(-1);
 
-    if (lastPage?.nextCursor && !isFetchingNextPage) {
-      fetchNextPage();
+    if (
+      lastPage?.nextCursor &&
+      (!isFetchingNextPageProfessional || !isFetchingNextPageCustomer)
+    ) {
+      fetchNextPageProfessional() || fetchNextPageCustomer();
     }
-  }, [events?.pages, fetchNextPage, isFetchingNextPage]);
+  }, [
+    events?.pages,
+    fetchNextPageCustomer,
+    fetchNextPageProfessional,
+    isFetchingNextPageCustomer,
+    isFetchingNextPageProfessional,
+  ]);
 
   const { data: weekSchedule } = trpc.schedule.getWeekSchedule.useQuery(
     {
