@@ -64,6 +64,7 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
   isOpen,
   onOpenChange,
 }) => {
+  const deviceType = useDeviceType();
   const intl = useIntl();
   // context
   const {
@@ -108,9 +109,29 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
     });
   };
 
+  const handleClearAll = () => {
+    onSelectedServicesChange({
+      isAll: false,
+      selectedServices: [],
+    });
+    onDateChange(null);
+  };
+
   return (
     <FilterWrapper isActive={isOpen} onActiveChange={onOpenChange}>
-      <div className='z-10 flex h-fit min-h-[100%] w-full flex-col gap-y-10 px-6 py-8 md:min-h-0 md:py-6'>
+      <div className='relative z-10 flex h-fit min-h-[100%] w-full flex-col gap-y-10 px-6 py-8 md:min-h-0 md:py-6'>
+        {deviceType !== 'mobile' && (
+          <Button
+            className='absolute right-[5px] top-0'
+            variant='unstyled'
+            icon='close'
+            type='button'
+            onClick={() => {
+              onOpenChange(false);
+            }}
+          />
+        )}
+
         <div className='flex w-full flex-col gap-y-6'>
           <Typography
             variant='body1'
@@ -198,8 +219,9 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
             })}
             variant='outlined'
             className='!w-full'
+            onClick={handleClearAll}
           />
-          <Button
+          {/* <Button
             text={intl.formatMessage({
               id: 'button.apply.filter',
             })}
@@ -208,7 +230,7 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
             onClick={() => {
               onOpenChange(false);
             }}
-          />
+          /> */}
         </div>
       </div>
     </FilterWrapper>
