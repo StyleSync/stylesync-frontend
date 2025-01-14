@@ -423,5 +423,10 @@
   "booking.details.email": "Електронна пошта:",
   "booking.details.comment": "Коментар:",
 
-  "calendar.add.event": "Додати подію"
+  "calendar.add.event": "Додати подію",
+
+  "booking.form.accept": "Я приймаю",
+  "booking.form.policy": "політику конфіденційності",
+  "booking.form.and": "та",
+  "booking.form.terms": "публічну оферту"
 }

@@ -6,6 +6,9 @@ import { useIntl } from 'react-intl';
 // components
 import { TextField } from '@/modules/core/components/text-field';
 import { PhoneField } from '@/modules/core/components/phone-field';
+import { Checkbox } from '@/modules/core/components/checkbox';
+// utils
+import { trpc } from '@/modules/core/utils/trpc.utils';
 // type
 import type { BookingFormProps } from './booking-form.interface';
 // styles
@@ -17,6 +20,7 @@ const defaultValues = {
   phone: '',
   email: '',
   comment: '',
+  termsAccepted: false,
 };
 
 const bookingValidationSchema = z.object({
@@ -25,6 +29,7 @@ const bookingValidationSchema = z.object({
   phone: z.string().regex(/^\+\d{1,3}\d{10}$/, 'Phone number is not valid'),
   email: z.string().email().or(z.literal('')),
   comment: z.string(),
+  termsAccepted: z.boolean().refine((value) => value),
 });
 
 export type BookingFormValue = z.infer<typeof bookingValidationSchema>;
@@ -35,6 +40,10 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit, formId }) => {
   const form = useForm<BookingFormValue>({
     defaultValues,
     resolver: zodResolver(bookingValidationSchema),
+  });
+
+  const { data: me } = trpc.user.me.useQuery({
+    expand: ['professional'],
   });
 
   return (
@@ -89,6 +98,44 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit, formId }) => {
         className='flex-1 resize-none'
         label={intl.formatMessage({ id: 'booking.form.comment' })}
       />
+
+      {me?.userType !== 'CUSTOMER' && me?.userType !== 'PROFESSIONAL' && (
+        <div className='flex items-center gap-1'>
+          <Controller
+            control={form.control}
+            name='termsAccepted'
+            render={({ field }) => {
+              return (
+                <Checkbox
+                  error={Boolean(form.formState.errors.termsAccepted)}
+                  value={field.value}
+                  onChange={field.onChange}
+                  size='small'
+                />
+              );
+            }}
+          />
+          <span className='text-sm'>
+            {intl.formatMessage({ id: 'booking.form.accept' })}{' '}
+            <a
+              href='/app/privacy-policy'
+              target='_blank'
+              className='cursor-pointer text-primary underline underline-offset-1'
+            >
+              {intl.formatMessage({ id: 'booking.form.policy' })}
+            </a>{' '}
+            {intl.formatMessage({ id: 'booking.form.and' })}{' '}
+            <a
+              href='/app/terms-policy'
+              target='_blank'
+              className='cursor-pointer text-primary underline underline-offset-1'
+            >
+              {' '}
+              {intl.formatMessage({ id: 'booking.form.terms' })}
+            </a>
+          </span>
+        </div>
+      )}
     </form>
   );
 };
