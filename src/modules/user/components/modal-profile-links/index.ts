@@ -1,1 +1,1 @@
-export { PfrofileLinksModal } from './modal-profile-links';
+export { ProfileLinksModal } from './profile-links-modal';

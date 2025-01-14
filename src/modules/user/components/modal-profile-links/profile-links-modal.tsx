@@ -10,7 +10,7 @@ import { DialogBottom } from '@/modules/core/components/dialog-bottom';
 import { Dialog } from '@/modules/core/components/dialog';
 import { Button } from '@/modules/core/components/button';
 // types
-import { type ModalProfileLinksProps } from './modal-profile-links.interface';
+import { type ProfileModalLinksProps } from './profile-links-modal.interface';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { generateProfileLink } from '@/modules/user/utils/generate-profile-link';
@@ -29,7 +29,7 @@ import {
   WhatsappIcon,
 } from 'react-share';
 
-export const PfrofileLinksModal: FC<ModalProfileLinksProps> = ({
+export const ProfileLinksModal: FC<ProfileModalLinksProps> = ({
   isOpen,
   onOpenChange,
 }) => {
