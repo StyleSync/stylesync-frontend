@@ -13,7 +13,11 @@ export default async function ProfileRedirect() {
     },
   });
 
-  if (session) {
+  if (session?.user.userType === 'PROFESSIONAL') {
     redirect(`/app/profile/${session.user.id}`);
+  }
+
+  if (session?.user.userType === 'CUSTOMER') {
+    redirect(`/app/my-bookings`);
   }
 }
