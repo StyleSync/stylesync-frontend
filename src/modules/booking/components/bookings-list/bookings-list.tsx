@@ -30,7 +30,7 @@ export const BookingsList: FC<BookingsListProps> = ({ professionalId }) => {
   // state
   const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
 
-  const upcomingEventsQuery = trpc.booking.myBookings.useInfiniteQuery(
+  const upcomingEventsQuery = trpc.booking.list.useInfiniteQuery(
     {
       expand: ['serviceProfessional'],
       sortField: 'startTime',
@@ -41,7 +41,7 @@ export const BookingsList: FC<BookingsListProps> = ({ professionalId }) => {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
   );
-  const pastEventsQuery = trpc.booking.myBookings.useInfiniteQuery(
+  const pastEventsQuery = trpc.booking.list.useInfiniteQuery(
     {
       expand: ['serviceProfessional'],
       sortField: 'startTime',

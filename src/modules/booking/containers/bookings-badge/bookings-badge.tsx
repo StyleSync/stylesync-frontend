@@ -14,7 +14,7 @@ type BookingsBadgeProps = {
 
 export const BookingsBadge: FC<BookingsBadgeProps> = ({ className }) => {
   const { data: me } = trpc.user.me.useQuery({ expand: ['professional'] });
-  const todayBookingsQuery = trpc.booking.myBookings.useInfiniteQuery(
+  const professionalBookingsQuery = trpc.booking.list.useInfiniteQuery(
     {
       startDate: startOfToday().toISOString(),
       endDate: endOfToday().toISOString(),
@@ -25,9 +25,26 @@ export const BookingsBadge: FC<BookingsBadgeProps> = ({ className }) => {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
   );
+  const customerBookingsQuery = trpc.booking.myBookings.useInfiniteQuery(
+    {
+      startDate: startOfToday().toISOString(),
+      endDate: endOfToday().toISOString(),
+      professionalId: me?.professional?.id,
+    },
+    {
+      enabled: me?.userType === 'CUSTOMER',
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    }
+  );
+
+  const bookingQueries =
+    me?.userType === 'CUSTOMER'
+      ? customerBookingsQuery.data
+      : professionalBookingsQuery.data;
+
   const todayBookingsList = useMemo(() => {
     const allBookings =
-      todayBookingsQuery.data?.pages.map((page) => page.items).flat() || [];
+      bookingQueries?.pages.map((page) => page.items).flat() || [];
 
     return (
       allBookings.filter(
@@ -35,7 +52,7 @@ export const BookingsBadge: FC<BookingsBadgeProps> = ({ className }) => {
           booking.status === 'PENDING' || booking.status === 'APPROVED'
       ) || []
     );
-  }, [todayBookingsQuery.data?.pages]);
+  }, [bookingQueries?.pages]);
 
   const badgeColor = useMemo(() => {
     const isPendingBookings = todayBookingsList.some(
