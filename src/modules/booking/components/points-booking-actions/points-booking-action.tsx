@@ -8,8 +8,8 @@ import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // context
 import { BookingContext } from '@/modules/booking/providers/booking-provider';
-// types
-// import { type PointsBookingActionsProps } from './points-booking-actions.interface';
+
+import { type DropdownItem } from '@/modules/core/components/dropdown-menu/dropdown-menu.interface';
 
 export const PointsBookingActions = () => {
   const intl = useIntl();
@@ -18,15 +18,12 @@ export const PointsBookingActions = () => {
   // context
   const { book } = useContext(BookingContext);
 
-  const items = [
-    {
-      id: 'add',
-      action: () => {
-        book();
-        isOpenDropMenu.setFalse();
-      },
-    },
-  ];
+  const handleSelect = (item: DropdownItem) => {
+    if (item.id === 'add') {
+      book();
+      isOpenDropMenu.setFalse();
+    }
+  };
 
   return (
     <div>
@@ -34,11 +31,7 @@ export const PointsBookingActions = () => {
         <DropdownMenu
           isOpen={isOpenDropMenu.value}
           onClose={isOpenDropMenu.setFalse}
-          onSelect={(item) => {
-            const selectedItem = items.find((i) => i.id === item.id);
-
-            selectedItem?.action();
-          }}
+          onSelect={handleSelect}
           trigger={
             <Button
               aria-label='Add event'

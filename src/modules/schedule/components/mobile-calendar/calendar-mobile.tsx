@@ -6,7 +6,6 @@ import {
   useRef,
   useState,
   useMemo,
-  useContext,
 } from 'react';
 import clsx from 'clsx';
 import { trpc } from '@/modules/core/utils/trpc.utils';
@@ -21,14 +20,11 @@ import type { CalendarApi, EventInput } from '@fullcalendar/core';
 import { DateSelectCalendar } from '@/modules/schedule/components/data-select-calendar';
 import { DateSliderCalendar } from '../date-slider-calendar';
 import { Icon } from '@/modules/core/components/icon';
+import { PointsBookingActions } from '@/modules/booking/components/points-booking-actions/points-booking-action';
 // containers
 import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
-// context
-import { BookingContext } from '@/modules/booking/providers/booking-provider';
 // constants
 import { weekdays } from '@/modules/schedule/constants/schedule.constants';
-// hoooks
-import { useBoolean } from 'usehooks-ts';
 // utils
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
 import { getDaysOfCurrentMonth } from '@/modules/schedule/utils/get-current-month-days';
@@ -36,15 +32,11 @@ import { getDaysOfCurrentMonth } from '@/modules/schedule/utils/get-current-mont
 import { type Swiper } from 'swiper/types';
 import { type CalendarMobileProps } from './calendar-mobile.interface';
 import styles from '@/modules/schedule/components/calendar/calendarEvent.module.scss';
-import { PointsBookingActions } from '@/modules/booking/components/points-booking-actions/points-booking-action';
 
 const SPEED_TO_SLIDE = 500;
 
 export const CalendarMobile: FC<CalendarMobileProps> = () => {
   const intl = useIntl();
-  const isOpenDropMenu = useBoolean();
-  // context
-  const { book } = useContext(BookingContext);
 
   const [selectedDates, setSelectedDates] = useState<Date[]>(
     getDaysOfCurrentMonth(new Date())
@@ -172,26 +164,7 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
   return (
     <div className='relative flex w-full flex-1 flex-col gap-2'>
       <div className='absolute right-6 top-2'>
-        <PointsBookingActions
-          isOpen={isOpenDropMenu.value}
-          onToggle={isOpenDropMenu.toggle}
-          onSelect={(item) => {
-            if (item.id === 'add') {
-              book();
-              isOpenDropMenu.setFalse();
-            }
-          }}
-          items={[
-            {
-              id: 'add',
-              variant: 'primary',
-              icon: 'plus',
-              text: intl.formatMessage({
-                id: 'calendar.add.event',
-              }),
-            },
-          ]}
-        />
+        <PointsBookingActions />
       </div>
 
       <div className='pl-6'>
