@@ -1,4 +1,4 @@
-import { type FC } from 'react';
+import { type FC, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -37,14 +37,25 @@ export type BookingFormValue = z.infer<typeof bookingValidationSchema>;
 export const BookingForm: FC<BookingFormProps> = ({ onSubmit, formId }) => {
   const intl = useIntl();
 
+  const { data: me } = trpc.user.me.useQuery({
+    expand: ['professional'],
+  });
+
   const form = useForm<BookingFormValue>({
     defaultValues,
     resolver: zodResolver(bookingValidationSchema),
   });
 
-  const { data: me } = trpc.user.me.useQuery({
-    expand: ['professional'],
-  });
+  const { setValue } = form;
+
+  useEffect(() => {
+    if (me) {
+      setValue('name', me.firstName || '');
+      setValue('lastName', me.lastName || '');
+      setValue('phone', me.phone || '');
+      setValue('email', me.email || '');
+    }
+  }, [me, setValue]);
 
   return (
     <form
