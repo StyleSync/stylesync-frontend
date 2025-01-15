@@ -37,13 +37,16 @@ export type BookingFormValue = z.infer<typeof bookingValidationSchema>;
 export const BookingForm: FC<BookingFormProps> = ({ onSubmit, formId }) => {
   const intl = useIntl();
 
-  const form = useForm<BookingFormValue>({
-    defaultValues,
-    resolver: zodResolver(bookingValidationSchema),
-  });
-
   const { data: me } = trpc.user.me.useQuery({
     expand: ['professional'],
+  });
+
+  const form = useForm<BookingFormValue>({
+    defaultValues: {
+      ...defaultValues,
+      termsAccepted: !!me,
+    },
+    resolver: zodResolver(bookingValidationSchema),
   });
 
   return (
