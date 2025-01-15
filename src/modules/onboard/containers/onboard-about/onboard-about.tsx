@@ -140,7 +140,7 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
         text:
           me?.userType === 'CUSTOMER'
             ? intl.formatMessage({ id: 'button.save' })
-            : undefined,
+            : intl.formatMessage({ id: 'button.next' }),
         form: formId,
         isLoading:
           professionalUpdateMutation.isLoading ||
