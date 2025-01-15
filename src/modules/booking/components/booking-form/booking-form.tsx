@@ -1,4 +1,4 @@
-import { type FC } from 'react';
+import { type FC, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -48,6 +48,17 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit, formId }) => {
     },
     resolver: zodResolver(bookingValidationSchema),
   });
+
+  const { setValue } = form;
+
+  useEffect(() => {
+    if (me) {
+      setValue('name', me.firstName || '');
+      setValue('lastName', me.lastName || '');
+      setValue('phone', me.phone || '');
+      setValue('email', me.email || '');
+    }
+  }, [me, setValue]);
 
   return (
     <form
