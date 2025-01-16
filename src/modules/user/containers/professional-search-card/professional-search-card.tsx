@@ -39,10 +39,10 @@ export const ProfessionalSearchCard: FC<ProfessionalSearchCardProps> = ({
             </div>
           </div>
           <div className='flex flex-col gap-y-3'>
-            <div className='flex w-fit items-center gap-x-2 text-dark'>
+            <div className='flex w-full items-center gap-x-2 text-dark'>
               <Icon name='location' className='h-4 w-4 !text-gray' />
-              <Typography variant='body2' className='!text-inherit'>
-                Ukraine, Kiev
+              <Typography variant='body2' className='truncate !text-inherit'>
+                {professional.location?.name}
               </Typography>
             </div>
             {/* todo: show this label if doesn't have bookings for last 7 days and the user has been registered less than 1 week ago  */}
