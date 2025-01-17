@@ -120,17 +120,15 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
   return (
     <FilterWrapper isActive={isOpen} onActiveChange={onOpenChange}>
       <div className='relative z-10 flex h-fit min-h-[100%] w-full flex-col gap-y-10 px-6 py-8 md:min-h-0 md:py-6'>
-        {deviceType !== 'mobile' && (
-          <Button
-            className='absolute right-[5px] top-0'
-            variant='unstyled'
-            icon='close'
-            type='button'
-            onClick={() => {
-              onOpenChange(false);
-            }}
-          />
-        )}
+        <Button
+          className='absolute right-[14px] top-[14px] text-gray-accent'
+          variant='unstyled'
+          icon='close'
+          type='button'
+          onClick={() => {
+            onOpenChange(false);
+          }}
+        />
 
         <div className='flex w-full flex-col gap-y-6'>
           <Typography
@@ -221,16 +219,6 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
             className='!w-full'
             onClick={handleClearAll}
           />
-          {/* <Button
-            text={intl.formatMessage({
-              id: 'button.apply.filter',
-            })}
-            variant='primary'
-            className='!w-full md:!hidden'
-            onClick={() => {
-              onOpenChange(false);
-            }}
-          /> */}
         </div>
       </div>
     </FilterWrapper>
