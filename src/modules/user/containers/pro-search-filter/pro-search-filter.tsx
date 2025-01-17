@@ -64,7 +64,6 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
   isOpen,
   onOpenChange,
 }) => {
-  const deviceType = useDeviceType();
   const intl = useIntl();
   // context
   const {
