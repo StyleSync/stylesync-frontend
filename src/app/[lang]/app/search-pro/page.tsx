@@ -24,6 +24,7 @@ import styles from './search-pro.module.scss';
 
 export default function SearchProPage() {
   const intl = useIntl();
+
   // context
   const {
     date,
