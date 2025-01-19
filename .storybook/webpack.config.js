@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = ({ config }) => {
   // Resolve the alias for '@/styles/fonts'
-  config.resolve.alias['@'] = path.resolve(__dirname, '../src/');
+  config.resolve.alias['@'] = path.resolve(__dirname, '../src');
 
   // Grab the existing rule that handles SVG imports
   const fileLoaderRule = config.module.rules.find((rule) =>
