@@ -20,7 +20,7 @@ jobs:
         run: npm install -g yarn@1
       - name: Install dependencies
         run: yarn install
-      - name: Apply all pending migrations to the database
+      - name: Apply all pending migrations to the database and make deploy to production
         run: npx prisma migrate deploy
         env:
           POSTGRES_PRISMA_URL: ${{ secrets.POSTGRES_PRISMA_URL }}
