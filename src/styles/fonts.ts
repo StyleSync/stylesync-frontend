@@ -1,17 +1,24 @@
-import { Inter } from 'next/font/google';
-import { GeistSans } from 'geist/font/sans';
-// types
-import type { SupportedFonts } from '@/styles/styles.types';
-import type { NextFont } from 'next/dist/compiled/@next/font';
+let inter;
+let geistSans;
 
-const inter = Inter({
-  subsets: ['latin', 'cyrillic'],
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-});
+if (process.env.STORYBOOK !== 'true') {
+  const { Inter } = require('next/font/google');
+  const { GeistSans } = require('geist/font/sans');
 
-const fonts: Record<SupportedFonts, NextFont> = {
+  inter = Inter({
+    subsets: ['latin', 'cyrillic'],
+    weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  });
+
+  geistSans = GeistSans();
+} else {
+  inter = { className: 'inter' };
+  geistSans = { className: 'geist-sans' };
+}
+
+const fonts = {
   INTER: inter,
-  GEIST: GeistSans,
+  GEIST: geistSans,
 };
 
 export { fonts };
