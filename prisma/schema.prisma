@@ -81,6 +81,7 @@ model User {
   image               String?
   onboardingCompleted Boolean       @default(false)
   isTestingUser       Boolean       @default(false)
+  isDevUser           Boolean       @default(false)
   userType            Role?
   companyId           String?
   company             Company?      @relation(fields: [companyId], references: [id], onDelete: SetNull)
