@@ -11,6 +11,7 @@ import { Emoji } from '@/modules/core/components/emoji';
 import { Icon } from '@/modules/core/components/icon';
 import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
 import { Button } from '@/modules/core/components/button';
+import { ProfileLinksModal } from '@/modules/user/components/profile-links-modal';
 // containers
 import { BurgerMenu } from '@/modules/core/containers/burger-menu';
 // hooks
@@ -26,6 +27,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
   const intl = useIntl();
   // state
   const isOpen = useBoolean();
+  const isOpenModalLinks = useBoolean();
   const pathname = usePathname();
   const router = useRouter();
   const deviceType = useDeviceType();
@@ -57,6 +59,10 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
         router.push(`/app/my-bookings`);
       }
 
+      if (id === 'share') {
+        isOpenModalLinks.setTrue();
+      }
+
       if (id === 'settings') {
         router.push(`/app/settings`);
       }
@@ -67,7 +73,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
 
       isOpen.setFalse();
     },
-    [isOpen, router, session?.user.id]
+    [isOpen, router, session?.user.id, isOpenModalLinks]
   );
 
   const dropdownItems: DropdownItem[] = useMemo(() => {
@@ -138,7 +144,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
         variant: 'danger',
       },
     ];
-  }, [intl, me?.onboardingCompleted, me?.userType, session]);
+  }, [intl, me?.onboardingCompleted, me?.userType]);
 
   const handleSettingsClick = useCallback(() => {
     router.push('/app/settings');
@@ -233,6 +239,10 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
             backgroundBlurEffect: false,
             align: 'end',
           }}
+        />
+        <ProfileLinksModal
+          isOpen={isOpenModalLinks.value}
+          onOpenChange={isOpenModalLinks.setValue}
         />
       </div>
     </>
