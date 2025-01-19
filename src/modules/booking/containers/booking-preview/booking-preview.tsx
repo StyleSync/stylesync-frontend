@@ -1,6 +1,6 @@
 'use client';
 import { useParams } from 'next/navigation';
-import { getHours, getMinutes } from 'date-fns';
+import { getHours, getMinutes, isAfter } from 'date-fns';
 import { useIntl } from 'react-intl';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
@@ -24,6 +24,7 @@ import { formatDateIntl } from '@/modules/core/utils/date.utils';
 import 'react-circular-progressbar/dist/styles.css';
 
 const MILLISECONDS_IN_MINUTE = 60000;
+const now = new Date();
 
 export const BookingPreview = () => {
   const params = useParams();
@@ -36,6 +37,10 @@ export const BookingPreview = () => {
     code: Array.isArray(code) ? code[0] : code,
     expand: ['serviceProfessional'],
   });
+
+  const isEventPast = bookingDetails?.data?.endTime
+    ? isAfter(now, new Date(bookingDetails.data.endTime))
+    : false;
 
   const professional = trpc.professional.get.useQuery(
     {
@@ -175,19 +180,21 @@ export const BookingPreview = () => {
           }
         />
 
-        <AddGoogleCalendarEventBtn
-          startEventTime={startEventTime}
-          title={bookingDetails.data?.serviceProfessional.title || ''}
-          duration={{
-            hours: bookingDetails.data?.serviceProfessional.duration
-              ? getHours(bookingDetails.data?.serviceProfessional.duration)
-              : 0,
-            minutes: bookingDetails.data?.serviceProfessional.duration
-              ? getMinutes(bookingDetails.data?.serviceProfessional.duration)
-              : 0,
-          }}
-          location={location?.name || ''}
-        />
+        {!isEventPast && (
+          <AddGoogleCalendarEventBtn
+            startEventTime={startEventTime}
+            title={bookingDetails.data?.serviceProfessional.title || ''}
+            duration={{
+              hours: bookingDetails.data?.serviceProfessional.duration
+                ? getHours(bookingDetails.data?.serviceProfessional.duration)
+                : 0,
+              minutes: bookingDetails.data?.serviceProfessional.duration
+                ? getMinutes(bookingDetails.data?.serviceProfessional.duration)
+                : 0,
+            }}
+            location={location?.name || ''}
+          />
+        )}
       </div>
       <div className='mt-12 flex h-[400px] w-full flex-col gap-5'>
         <div className='flex gap-5'>
