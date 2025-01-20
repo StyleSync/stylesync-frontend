@@ -3,7 +3,7 @@ import type { BookingStatusProps } from '@/modules/booking/components/booking-st
 type BookingStatusMetadata = {
   title: string;
   color: string;
-  note?: string;
+  note?: { professional: string; customer: string } | string;
 };
 
 export const bookingStatusMetadata: Record<
@@ -13,7 +13,10 @@ export const bookingStatusMetadata: Record<
   PENDING: {
     title: 'booking.status.requested',
     color: 'bg-orange',
-    note: 'booking.note.statusRequested',
+    note: {
+      professional: 'booking.note.statusRequested',
+      customer: 'booking.note.customerPending',
+    },
   },
   APPROVED: {
     title: 'booking.status.approved',
