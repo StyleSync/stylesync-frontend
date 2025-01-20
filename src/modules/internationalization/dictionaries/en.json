@@ -62,6 +62,7 @@
   "booking.note.statusRequested": "This booking is currently pending approval. Please select \"Approve\" to confirm the booking or \"Reject\" to decline.",
   "booking.note.statusApproved": "This booking has been approved and the calendar slot is reserved. No further action is required unless changes are needed.",
   "booking.note.statusCanceled": "This booking has been canceled, but it still blocks the calendar slot. To free up this time for other bookings, please select \"Remove from History\".",
+  "booking.note.customerPending": "Please await confirmation from a specialist. If you do not receive a response within the designated timeframe or have additional questions, please contact via social media",
   "booking.form.name": "Name *",
   "booking.form.lastName": "Last name",
   "booking.form.phone": "Phone *",
@@ -388,6 +389,7 @@
   "pro.layout.title.about": "About me",
   "pro.layout.title.services": "Services",
   "pro.layout.title.location": "Location",
+  "pro.layout.title.gallery": "Gallery",
 
   "gallery.settings.title": "Gallery",
 

@@ -38,6 +38,7 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
   const intl = useIntl();
   const deviceType = useDeviceType();
   const queryClient = useQueryClient();
+
   // state
   const isBookingRescheduleActive = useBoolean();
   // memo
@@ -265,6 +266,11 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
     onClose();
   };
 
+  const accountType =
+    me?.userType === 'PROFESSIONAL'
+      ? ('professional' as const)
+      : ('customer' as const);
+
   return (
     <>
       <DialogComponent
@@ -310,7 +316,12 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
                       <span className='font-medium text-primary'>
                         {`${intl.formatMessage({ id: 'general.note' })}: `}
                       </span>
-                      {intl.formatMessage({ id: formattedData.note })}
+                      {intl.formatMessage({
+                        id:
+                          typeof formattedData.note === 'string'
+                            ? formattedData.note
+                            : formattedData.note[accountType],
+                      })}
                     </span>
                   </div>
                 )}
