@@ -8,6 +8,7 @@ import { services } from './service-data';
 import { useIntl } from 'react-intl';
 import { useWindowSize } from 'usehooks-ts';
 import { useMemo } from 'react';
+import Link from 'next/link';
 
 const windowSizes = {
   md: 800,
@@ -63,6 +64,12 @@ export const ServiceCardSection = () => {
     };
   }, [windowSize]);
 
+  // const handleSlideClick = (serviceId: string) => {
+  //   router.push(`uk/app/search-pro?serviceId=${serviceId}`);
+
+  //   console.log(serviceId);
+  // };
+
   return (
     <section className='z-0 mt-24 flex flex-col items-center'>
       <Typography
@@ -80,10 +87,17 @@ export const ServiceCardSection = () => {
         <Swiper className='h-full w-full' {...dynamicSwiperProps} grabCursor>
           {services.map((card, index) => (
             <SwiperSlide className='h-fit w-full pb-14 pt-4' key={index}>
-              <ServiceCard
-                image={card.image}
-                title={intl.formatMessage({ id: card.title })}
-              />
+              <Link
+                prefetch={false}
+                href={`uk/app/search-pro?serviceId=${card.id}`}
+                passHref
+                className='block h-full w-full'
+              >
+                <ServiceCard
+                  image={card.image}
+                  title={intl.formatMessage({ id: card.title })}
+                />
+              </Link>
             </SwiperSlide>
           ))}
         </Swiper>

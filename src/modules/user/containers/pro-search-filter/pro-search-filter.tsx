@@ -1,4 +1,6 @@
-import { type FC, useContext } from 'react';
+'use client';
+
+import { type FC, useContext, useEffect } from 'react';
 
 import type { ProSearchFilterProps } from './pro-search-filter.interface';
 import { Typography } from '@/modules/core/components/typogrpahy';
@@ -13,6 +15,7 @@ import { DialogFullScreen } from '@/modules/core/components/dialog-full-screen';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { useIntl } from 'react-intl';
 import { ProfessionalSearchContext } from '@/modules/user/providers/professional-search-provider';
+import { useQueryParams } from '@/modules/core/hooks/use-search-params';
 
 const FilterWrapper: FC<
   ChildrenProp & {
@@ -65,6 +68,12 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
   onOpenChange,
 }) => {
   const intl = useIntl();
+  const { queryParams, clearQueryParams } = useQueryParams<{
+    serviceId: string;
+  }>();
+
+  console.log(queryParams.serviceId);
+
   // context
   const {
     date,
@@ -107,6 +116,17 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
       selectedServices: [],
     });
   };
+
+  useEffect(() => {
+    console.log('queryParams:', queryParams);
+    if (queryParams.serviceId) {
+      onSelectedServicesChange({
+        isAll: false,
+        selectedServices: [queryParams.serviceId],
+      });
+      clearQueryParams(['serviceId']);
+    }
+  }, [onSelectedServicesChange, queryParams.serviceId, clearQueryParams]);
 
   return (
     <FilterWrapper isActive={isOpen} onActiveChange={onOpenChange}>
@@ -153,6 +173,13 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
                         });
 
                         return;
+                      }
+
+                      if (queryParams.serviceId) {
+                        onSelectedServicesChange({
+                          isAll: false,
+                          selectedServices: [queryParams.serviceId],
+                        });
                       }
 
                       onSelectedServicesChange({
