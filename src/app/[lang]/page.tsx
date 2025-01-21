@@ -1,7 +1,6 @@
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { authOptions } from '@/modules/auth/constants/auth-server.constants';
-import { pageGuard } from '@/modules/core/utils/route.utils';
 
 // containers
 import { IntroSection } from '@/modules/landing/containers/intro-section';
@@ -15,13 +14,6 @@ import { BottomTabNavigation } from '@/modules/core/containers/bottom-tab-naviga
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
-
-  await pageGuard({
-    require: {
-      userType: true,
-      onboarding: true,
-    },
-  });
 
   if (session) {
     if (!session.user.userType) {
