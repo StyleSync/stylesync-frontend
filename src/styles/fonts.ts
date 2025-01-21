@@ -4,7 +4,7 @@ import { GeistSans } from 'geist/font/sans';
 import type { SupportedFonts } from '@/styles/styles.types';
 import type { NextFont } from 'next/dist/compiled/@next/font';
 
-const isStorybook = process.env.STORYBOOK !== 'true';
+const isStorybook = process.env.STORYBOOK === 'true';
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
