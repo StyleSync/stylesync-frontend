@@ -1,4 +1,4 @@
-import { useMemo, type FC, useContext, useState } from 'react';
+import { useMemo, type FC, useState } from 'react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import allLocale from '@fullcalendar/core/locales-all';
 import { useIntl } from 'react-intl';
@@ -8,9 +8,8 @@ import clsx from 'clsx';
 import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
 // components
 import { Icon } from '@/modules/core/components/icon';
-import { Button } from '@/modules/core/components/button';
-// context
-import { BookingContext } from '@/modules/booking/providers/booking-provider';
+import { PointsBookingActions } from '@/modules/booking/components/points-booking-actions/points-booking-action';
+
 // utils
 import { getTime } from '@/modules/schedule/utils/get-time';
 import { trpc } from '@/modules/core/utils/trpc.utils';
@@ -29,8 +28,6 @@ const FullCalendar = dynamic(() => import('@fullcalendar/react'), {
 
 export const Calendar: FC<CalendarProps> = () => {
   const intl = useIntl();
-  // context
-  const { book } = useContext(BookingContext);
   // state
   const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
   // queries
@@ -94,13 +91,7 @@ export const Calendar: FC<CalendarProps> = () => {
 
   return (
     <div className='w-full pl-0 md:pl-8'>
-      <Button
-        text={intl.formatMessage({ id: 'button.create' })}
-        onClick={() => {
-          book();
-        }}
-        className='absolute right-[36px] top-[16px] sm:!top-[40px]'
-      />
+      <PointsBookingActions />
       <FullCalendar
         locales={allLocale}
         locale={intl.locale}
