@@ -108,9 +108,27 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
     });
   };
 
+  const handleClearAll = () => {
+    onSelectedServicesChange({
+      isAll: false,
+      selectedServices: [],
+    });
+    onDateChange(null);
+  };
+
   return (
     <FilterWrapper isActive={isOpen} onActiveChange={onOpenChange}>
-      <div className='z-10 flex h-fit min-h-[100%] w-full flex-col gap-y-10 px-6 py-8 md:min-h-0 md:py-6'>
+      <div className='relative z-10 flex h-fit min-h-[100%] w-full flex-col gap-y-10 px-6 py-8 md:min-h-0 md:py-6'>
+        <Button
+          className='absolute right-[14px] top-[14px] text-gray-accent'
+          variant='unstyled'
+          icon='close'
+          type='button'
+          onClick={() => {
+            onOpenChange(false);
+          }}
+        />
+
         <div className='flex w-full flex-col gap-y-6'>
           <Typography
             variant='body1'
@@ -198,16 +216,7 @@ export const ProSearchFilter: FC<ProSearchFilterProps> = ({
             })}
             variant='outlined'
             className='!w-full'
-          />
-          <Button
-            text={intl.formatMessage({
-              id: 'button.apply.filter',
-            })}
-            variant='primary'
-            className='!w-full md:!hidden'
-            onClick={() => {
-              onOpenChange(false);
-            }}
+            onClick={handleClearAll}
           />
         </div>
       </div>
