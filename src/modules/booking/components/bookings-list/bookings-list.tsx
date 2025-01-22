@@ -1,6 +1,5 @@
-import { type FC, useState, useContext } from 'react';
+import { type FC, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useBoolean } from 'usehooks-ts';
 // containers
 import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
 // components
@@ -10,8 +9,6 @@ import { BookingInfoCard } from '@/modules/booking/components/booking-info-card'
 import { Spinner } from '@/modules/core/components/spinner';
 import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
 import { PointsBookingActions } from '@/modules/booking/components/points-booking-actions';
-// context
-import { BookingContext } from '@/modules/booking/providers/booking-provider';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import styles from './bookings-list.module.scss';
@@ -24,9 +21,7 @@ type BookingsListProps = {
 
 export const BookingsList: FC<BookingsListProps> = ({ professionalId }) => {
   const intl = useIntl();
-  const isOpenDropMenu = useBoolean();
-  // context
-  const { book } = useContext(BookingContext);
+
   // state
   const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
 
@@ -74,26 +69,7 @@ export const BookingsList: FC<BookingsListProps> = ({ professionalId }) => {
             <Typography className={styles.title} variant='body1'>
               {intl.formatMessage({ id: 'booking.list.upcomming' })}
             </Typography>
-            <PointsBookingActions
-              isOpen={isOpenDropMenu.value}
-              onToggle={isOpenDropMenu.toggle}
-              onSelect={(item) => {
-                if (item.id === 'add') {
-                  book();
-                  isOpenDropMenu.setFalse();
-                }
-              }}
-              items={[
-                {
-                  id: 'add',
-                  variant: 'primary',
-                  icon: 'plus',
-                  text: intl.formatMessage({
-                    id: 'calendar.add.event',
-                  }),
-                },
-              ]}
-            />
+            <PointsBookingActions />
           </div>
           <Placeholder
             isActive={upcomingEvents.length === 0}
