@@ -152,6 +152,7 @@ export const bookingRouter = router({
         guestFirstName: z.string().min(1, 'Required').max(maxLargeTextLength),
         guestLastName: z.string().max(maxLargeTextLength).optional(),
         guestPhone: z.string().min(1, 'Required').max(maxLargeTextLength),
+        guestComment: z.string().optional(),
         guestEmail: z.string().email().or(z.literal('')),
         serviceProfessionalId: z.string().min(1, 'Required'),
         day: z.enum([
