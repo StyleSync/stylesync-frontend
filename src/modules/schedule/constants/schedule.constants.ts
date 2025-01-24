@@ -14,8 +14,8 @@ export const weekdays: Day[] = [
   Day.WEDNESDAY,
   Day.THURSDAY,
   Day.FRIDAY,
-  Day.SUNDAY,
   Day.SATURDAY,
+  Day.SUNDAY,
 ];
 
 export const emptySchedule = weekdays.reduce<WeeklySchedule>((res, current) => {

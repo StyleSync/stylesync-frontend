@@ -143,8 +143,8 @@
   "weekdays.WEDNESDAY": "Wednesday",
   "weekdays.THURSDAY": "Thursday",
   "weekdays.FRIDAY": "Friday",
-  "weekdays.SUNDAY": "Sunday",
   "weekdays.SATURDAY": "Saturday",
+  "weekdays.SUNDAY": "Sunday",
 
   "serviceOn.professional.edit.form.add": "Add",
   "serviceOn.professional.edit.form.service": "service",
