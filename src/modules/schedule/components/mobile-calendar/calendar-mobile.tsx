@@ -231,6 +231,7 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
           slotLabelFormat={{
             hour: 'numeric',
             minute: '2-digit',
+            hour12: false,
             omitZeroMinute: false,
             meridiem: false,
           }}
