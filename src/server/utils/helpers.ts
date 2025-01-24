@@ -1,4 +1,10 @@
-import { addMinutes, getDay, isBefore, isSameDay } from 'date-fns';
+import {
+  addMinutes,
+  differenceInMinutes,
+  getDay,
+  isBefore,
+  isSameDay,
+} from 'date-fns';
 import { type Break, Day, type Schedule } from '@prisma/client';
 import type { AvailableBookingTime } from '@/server/types';
 
@@ -129,7 +135,8 @@ export const getPossibleBookingTimes = (
   }
 
   while (
-    isBefore(addMinutes(startTime, duration), endTime) &&
+    (isBefore(addMinutes(startTime, duration), endTime) ||
+      differenceInMinutes(addMinutes(startTime, duration), endTime) < 1) &&
     iteration < 100
   ) {
     const bookingTime: AvailableBookingTime = {

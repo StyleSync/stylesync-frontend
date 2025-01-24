@@ -60,11 +60,11 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
       expand: ['serviceProfessional'],
       professionalId: me.professional?.id,
       limit: 100,
-      startDate: startOfMonth(selectedDate),
-      endDate: endOfMonth(selectedDate),
+      startDate: startOfMonth(selectedDate).toISOString(),
+      endDate: endOfMonth(selectedDate).toISOString(),
     },
     {
-      enabled: !!me.professional?.id && me.userType === 'CUSTOMER',
+      enabled: !!me.professional?.id && me.userType === 'PROFESSIONAL',
     }
   );
 
@@ -75,10 +75,9 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
   } = trpc.booking.myBookings.useInfiniteQuery(
     {
       expand: ['serviceProfessional'],
-      professionalId: me.professional?.id,
       limit: 100,
-      startDate: startOfMonth(selectedDate),
-      endDate: endOfMonth(selectedDate),
+      startDate: startOfMonth(selectedDate).toISOString(),
+      endDate: endOfMonth(selectedDate).toISOString(),
     },
     {
       enabled: me.userType === 'CUSTOMER',
