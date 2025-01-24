@@ -38,13 +38,12 @@ export const Calendar: FC<CalendarProps> = () => {
       professionalId: me.professional?.id,
     },
     {
-      enabled: !!me.professional?.id && me.userType === 'CUSTOMER',
+      enabled: !!me.professional?.id && me.userType === 'PROFESSIONAL',
     }
   );
 
   const { data: customerEvents } = trpc.booking.myBookings.useInfiniteQuery({
     expand: ['serviceProfessional'],
-    professionalId: me.professional?.id,
   });
 
   const events = professionalEvents || customerEvents;
