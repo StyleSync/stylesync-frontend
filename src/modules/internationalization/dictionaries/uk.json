@@ -274,6 +274,7 @@
   "button.finished": "Завершено",
   "button.missed": "Пропущено",
   "button.open.details": "Відкрити деталі",
+  "button.registration": "Реєстрація",
 
   "duration.hour": "{count, plural, one {# година} few {# години} many {# годин} other {# годин}}",
   "duration.minute": "{count, plural, one {# хвилина} few {# хвилини} many {# хвилин} other {# хвилин}}",
