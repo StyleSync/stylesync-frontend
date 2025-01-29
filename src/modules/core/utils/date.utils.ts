@@ -30,11 +30,14 @@ export const mapDateToDayEnum = (date: string | number | Date) => {
 };
 
 export const formatDateIntl = (date: Date, intl: IntlShape): string => {
-  return intl.formatDate(date, {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'short',
+  const weekday = intl.formatDate(date, { weekday: 'long' });
+
+  const day = intl.formatDate(date, { day: 'numeric', month: 'long' });
+
+  const time = intl.formatDate(date, {
     hour: '2-digit',
     minute: '2-digit',
   });
+
+  return `${weekday}, ${day}, ${time}`;
 };
