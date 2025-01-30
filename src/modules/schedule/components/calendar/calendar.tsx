@@ -30,6 +30,9 @@ export const Calendar: FC<CalendarProps> = () => {
   const intl = useIntl();
   // state
   const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
+  // const [activeBookingCode, setActiveBookingCode] = useState<string | null>(
+  //   null
+  // );
   // queries
   const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
   const { data: professionalEvents } = trpc.booking.list.useInfiniteQuery(
@@ -96,6 +99,9 @@ export const Calendar: FC<CalendarProps> = () => {
           start: new Date(event.startTime),
           end: new Date(event.endTime),
           status: event.status,
+          // TODO:
+          // @ts-ignore
+          code: event.code,
           className: clsx(styles.event, styles[`event_${event.status}`]),
         })) || []
     );
@@ -140,6 +146,8 @@ export const Calendar: FC<CalendarProps> = () => {
         nowIndicator
         eventClick={({ event }) => {
           setActiveBookingId(event.id);
+          // TODO:
+          // setActiveBookingCode();
         }}
         eventContent={({ event }) => {
           const startTime = getTime(event.start);
