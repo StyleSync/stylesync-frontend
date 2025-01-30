@@ -1,3 +1,4 @@
+import { type IntlShape } from 'react-intl';
 // utils
 import { parseTimeRange, Time } from '@/modules/core/utils/time.utils';
 import { isArrContainDuplications } from '@/modules/core/utils/array.utils';
@@ -18,7 +19,8 @@ type ValidationResult =
     };
 
 export const validateDailySchedule = (
-  dailySchedule: DailySchedule
+  dailySchedule: DailySchedule,
+  intl: IntlShape
 ): ValidationResult => {
   const [workStart, workEnd] = parseTimeRange(dailySchedule.workHours);
   const workStartDuration = Time.toMinuteDuration(workStart);
@@ -37,8 +39,9 @@ export const validateDailySchedule = (
       isValid: false,
       error: {
         ERROR_CODE: 'BREAK_SLOT_DUPLICATIONS',
-        message:
-          'It seems one of your break slots has duplicates. Please double-check your schedule and ensure there are no duplications. Thank you!',
+        message: intl.formatMessage({
+          id: 'validation.break.slot.duplications',
+        }),
       },
     };
   }
@@ -56,8 +59,9 @@ export const validateDailySchedule = (
         isValid: false,
         error: {
           ERROR_CODE: 'BREAK_SLOT_OVERLAP_WORK_HOURS',
-          message:
-            'It seems one of your break slots overlaps with work hours. Please double-check your schedule and avoid crossing between work hours and breaks. Thank you!',
+          message: intl.formatMessage({
+            id: 'validation.break.slot.overlap.work.hours',
+          }),
         },
       };
     }
@@ -99,8 +103,9 @@ export const validateDailySchedule = (
         isValid: false,
         error: {
           ERROR_CODE: 'BREAK_SLOTS_OVERLAP_EACH_OTHER',
-          message:
-            'It seems some of your break slots overlaps each other. Please double-check your schedule and avoid crossing between work hours and breaks. Thank you!',
+          message: intl.formatMessage({
+            id: 'validation.break.slots.overap.each.other',
+          }),
         },
       };
     }

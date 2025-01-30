@@ -1,5 +1,5 @@
 import { useMutation, type UseMutationOptions } from '@tanstack/react-query';
-import type { Optional } from 'utility-types';
+import { useIntl } from 'react-intl';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { validateDailySchedule } from '@/modules/schedule/utils/daily-schedule.utils';
@@ -9,6 +9,7 @@ import { isBreaksEqual } from '@/modules/schedule/utils/breaks.utils';
 // types
 import type { DailySchedule } from '@/modules/schedule/types/schedule.types';
 import type { Day, Break } from '@prisma/client';
+import type { Optional } from 'utility-types';
 
 type UseWeekdayScheduleSaveParams = {
   scheduleId?: string;
@@ -26,6 +27,7 @@ export const useWeekdayScheduleSaveMutation = (
     DailySchedule & { weekday: Day }
   >
 ) => {
+  const intl = useIntl();
   // queries
   const { data: schedule } = trpc.schedule.get.useQuery(
     { id: params.scheduleId ?? '' },
@@ -58,7 +60,7 @@ export const useWeekdayScheduleSaveMutation = (
     Error,
     DailySchedule & { weekday: Day }
   >(async (scheduleToSave) => {
-    const validation = validateDailySchedule(scheduleToSave);
+    const validation = validateDailySchedule(scheduleToSave, intl);
 
     if (!validation.isValid) {
       throw new Error(validation.error.message);
