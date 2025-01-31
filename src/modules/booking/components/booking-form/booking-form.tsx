@@ -19,7 +19,7 @@ const defaultValues = {
   lastName: '',
   phone: '',
   email: '',
-  comment: '',
+  guestComment: '',
   termsAccepted: false,
 };
 
@@ -28,7 +28,7 @@ const bookingValidationSchema = z.object({
   lastName: z.string(),
   phone: z.string().regex(/^\+\d{1,3}\d{10}$/, 'Phone number is not valid'),
   email: z.string().email().or(z.literal('')),
-  comment: z.string(),
+  guestComment: z.string(),
   termsAccepted: z.boolean().refine((value) => value),
 });
 
@@ -110,8 +110,8 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit, formId }) => {
         label={intl.formatMessage({ id: 'booking.form.email' })}
       />
       <TextField
-        {...form.register('comment')}
-        error={Boolean(form.formState.errors.comment)}
+        {...form.register('guestComment')}
+        error={Boolean(form.formState.errors.guestComment)}
         variant='textarea'
         classes={{
           container: 'flex-1 flex',
