@@ -56,8 +56,9 @@ export const DialogWizard: FC<DialogWizardProps> = ({
                 isLoading={isNextLoading}
                 text={intl.formatMessage({ id: 'button.next' })}
                 className='!absolute right-0 top-1/2 -translate-y-1/2 !border-none !text-base'
-                onClick={() => {
+                onClick={(event) => {
                   onNext && onNext(activeStep.id);
+                  event.preventDefault();
                 }}
                 {...activeStep.nextBtnProps}
               />

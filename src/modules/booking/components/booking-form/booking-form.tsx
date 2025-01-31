@@ -49,7 +49,7 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit, formId }) => {
     resolver: zodResolver(bookingValidationSchema),
   });
 
-  const { setValue } = form;
+  const { setValue, watch } = form;
 
   useEffect(() => {
     if (me) {
@@ -59,6 +59,10 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit, formId }) => {
       setValue('email', me.email || '');
     }
   }, [me, setValue]);
+
+  const name = watch('name');
+  const lastName = watch('lastName');
+  const email = watch('email');
 
   return (
     <form
@@ -71,12 +75,14 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit, formId }) => {
       </span>
       <TextField
         {...form.register('name')}
+        value={name}
         error={Boolean(form.formState.errors.name)}
         variant='input'
         label={intl.formatMessage({ id: 'booking.form.name' })}
       />
       <TextField
         {...form.register('lastName')}
+        value={lastName}
         error={Boolean(form.formState.errors.lastName)}
         variant='input'
         label={intl.formatMessage({ id: 'booking.form.lastName' })}
@@ -98,6 +104,7 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit, formId }) => {
       />
       <TextField
         {...form.register('email')}
+        value={email}
         error={Boolean(form.formState.errors.email)}
         variant='input'
         label={intl.formatMessage({ id: 'booking.form.email' })}

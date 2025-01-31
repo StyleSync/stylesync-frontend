@@ -151,6 +151,7 @@ export const ServiceBookingModal: FC<
             text: intl.formatMessage({ id: 'button.book' }),
             form: confirmationFormId,
             type: 'submit',
+            onClick: undefined,
           },
         },
       ]}
