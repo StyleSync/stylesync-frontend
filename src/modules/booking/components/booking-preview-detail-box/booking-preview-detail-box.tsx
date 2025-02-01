@@ -14,9 +14,13 @@ export const BookingPreviewDetailBox: FC<BookingPreviewDetailProps> = ({
     <Typography variant='body2' className='!text-gray' weight='medium'>
       {label}
     </Typography>
-    <div className='flex items-center gap-4'>
+    <div className='flex w-full items-center gap-4'>
       {avatar && <Avatar url={avatar} />}
-      <Typography variant='body1' weight='medium' className='!text-dark'>
+      <Typography
+        variant='body1'
+        weight='medium'
+        className='!flex !flex-nowrap !text-dark'
+      >
         {value}
       </Typography>
     </div>
