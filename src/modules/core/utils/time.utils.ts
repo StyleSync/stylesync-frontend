@@ -190,7 +190,7 @@ export const isTimeRangeString = (timeRange: string): boolean => {
  * @param {number} minutes - The duration in minutes to be formatted.
  * @returns {string} A string representing the duration in the format 'h hours m minutes'.
  */
-export const formatMinutesDuration = (
+export const shortFormatDuration = (
   minutes: number,
   intl?: IntlShape
 ): string => {

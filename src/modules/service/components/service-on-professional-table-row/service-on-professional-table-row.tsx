@@ -8,7 +8,7 @@ import { EditorPreview } from '@/modules/core/components/editor-preview';
 // hooks
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // utils
-import { formatMinutesDuration } from '@/modules/core/utils/time.utils';
+import { formatDuration } from '@/modules/core/utils/time.utils';
 
 import type { ServiceOnProfessionalTableRowProps } from './service-on-professional-table-row.interface';
 import styles from './service-on-professional-table-row.module.scss';
@@ -40,7 +40,7 @@ export const ServiceOnProfessionalTableRow: FC<
               {data.title}
             </Typography>
             <Typography className={styles.duration} variant='small'>
-              {formatMinutesDuration(data.duration, intl)}
+              {formatDuration(data.duration, intl)}
             </Typography>
           </div>
           <div className={clsx(styles.cell, styles.flex25)}>
