@@ -151,6 +151,7 @@ export const ServiceBookingModal: FC<
             text: intl.formatMessage({ id: 'button.book' }),
             form: confirmationFormId,
             type: 'submit',
+            onClick: undefined,
           },
         },
       ]}
@@ -250,7 +251,10 @@ export const ServiceBookingModal: FC<
             ) : (
               <Button
                 className='!w-full'
-                onClick={handleNext}
+                onClick={(event) => {
+                  handleNext();
+                  event.preventDefault();
+                }}
                 text={intl.formatMessage({ id: 'button.next' })}
                 disabled={
                   (step === 'service' && !serviceOnProfessional) ||
