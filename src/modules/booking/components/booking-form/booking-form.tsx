@@ -29,7 +29,9 @@ const bookingValidationSchema = z.object({
   phone: z.string().regex(/^\+\d{1,3}\d{10}$/, 'Phone number is not valid'),
   email: z.string().email().or(z.literal('')),
   guestComment: z.string(),
-  termsAccepted: z.boolean().refine((value) => value),
+  termsAccepted: z
+    .boolean()
+    .refine((value) => value === true, 'booking.form.terms.accepted'),
 });
 
 export type BookingFormValue = z.infer<typeof bookingValidationSchema>;
@@ -118,40 +120,50 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit, formId }) => {
       />
 
       {me?.userType !== 'CUSTOMER' && me?.userType !== 'PROFESSIONAL' && (
-        <div className='flex items-center gap-1'>
-          <Controller
-            control={form.control}
-            name='termsAccepted'
-            render={({ field }) => {
-              return (
-                <Checkbox
-                  error={Boolean(form.formState.errors.termsAccepted)}
-                  value={field.value}
-                  onChange={field.onChange}
-                  size='small'
-                />
-              );
-            }}
-          />
-          <span className='text-sm'>
-            {intl.formatMessage({ id: 'booking.form.accept' })}{' '}
-            <a
-              href='/app/privacy-policy'
-              target='_blank'
-              className='cursor-pointer text-primary underline underline-offset-1'
-            >
-              {intl.formatMessage({ id: 'booking.form.policy' })}
-            </a>{' '}
-            {intl.formatMessage({ id: 'booking.form.and' })}{' '}
-            <a
-              href='/app/terms-policy'
-              target='_blank'
-              className='cursor-pointer text-primary underline underline-offset-1'
-            >
-              {' '}
-              {intl.formatMessage({ id: 'booking.form.terms' })}
-            </a>
-          </span>
+        <div className='flex flex-col gap-1'>
+          <div className='flex items-center gap-1'>
+            <Controller
+              control={form.control}
+              name='termsAccepted'
+              render={({ field }) => {
+                return (
+                  <Checkbox
+                    error={Boolean(form.formState.errors.termsAccepted)}
+                    value={field.value}
+                    onChange={field.onChange}
+                    size='small'
+                  />
+                );
+              }}
+            />
+            <span className='text-sm'>
+              {intl.formatMessage({ id: 'booking.form.accept' })}{' '}
+              <a
+                href='/app/privacy-policy'
+                target='_blank'
+                className='cursor-pointer text-primary underline underline-offset-1'
+              >
+                {intl.formatMessage({ id: 'booking.form.policy' })}
+              </a>{' '}
+              {intl.formatMessage({ id: 'booking.form.and' })}{' '}
+              <a
+                href='/app/terms-policy'
+                target='_blank'
+                className='cursor-pointer text-primary underline underline-offset-1'
+              >
+                {' '}
+                {intl.formatMessage({ id: 'booking.form.terms' })}
+              </a>
+            </span>
+          </div>
+
+          {form.formState.errors.termsAccepted && (
+            <span className='pl-2 text-xs text-destructive'>
+              {intl.formatMessage({
+                id: form.formState.errors.termsAccepted.message,
+              })}
+            </span>
+          )}
         </div>
       )}
     </form>

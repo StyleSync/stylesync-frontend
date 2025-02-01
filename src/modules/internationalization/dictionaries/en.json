@@ -430,6 +430,7 @@
   "booking.form.policy": "privacy policy",
   "booking.form.and": "and",
   "booking.form.terms": "terms and conditions of use",
+  "booking.form.terms.accepted": "Confirm Privacy Policy and Terms & Conditions to proceed",
 
   "validation.break.slot.duplications": "It seems one of your break slots has duplicates. Please double-check your schedule and ensure there are no duplications. Thank you!",
   "validation.break.slot.overlap.work.hours": "It seems one of your break slots overlaps with work hours. Please double-check your schedule and avoid crossing between work hours and breaks. Thank you!",
