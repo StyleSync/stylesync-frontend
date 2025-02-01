@@ -84,7 +84,7 @@ export const BookingPreviewProgressbar: FC<BookingPreviewProgressbarProps> = ({
   }
 
   return (
-    <div className='relative ml-5 mt-[66px] h-[120px] w-[120px]'>
+    <div className='relative ml-5 mt-[30px] h-[120px] w-[120px] md:mt-[66px]'>
       <CircularProgressbar
         strokeWidth={5}
         value={percents}

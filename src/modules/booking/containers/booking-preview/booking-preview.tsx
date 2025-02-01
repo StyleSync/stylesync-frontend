@@ -91,36 +91,45 @@ export const BookingPreview = () => {
   }
 
   return (
-    <main className='mx-auto mb-20 mt-20 flex w-full max-w-[950px] flex-1 flex-col px-[15px]'>
+    <main className='mx-auto mb-20 mt-8 flex w-full max-w-[950px] flex-1 flex-col px-6 md:mt-20'>
       <div className='mt-12 flex w-full'>
-        <div className='flex flex-1 flex-col gap-4'>
-          <a
-            target='_blank'
-            href={`/app/profile/${professional.data?.userId}`}
-            rel='noreferrer'
-          >
-            <BookingPreviewDetailBox
-              label={intl.formatMessage({ id: 'specialist' })}
-              value={`${professional.data?.user?.firstName} ${professional.data?.user?.lastName}`}
-              avatar={professional.data?.user?.avatar || ''}
-            />
-          </a>
-
-          <div className='flex flex-col gap-3'>
-            <BookingPreviewDetailBox
-              label={intl.formatMessage({ id: 'service.title' })}
-              value={bookingDetails.data?.serviceProfessional?.title || ''}
-            />
+        <div className='flex flex-1 flex-col'>
+          <div className='flex items-center justify-between'>
+            <div className='flex flex-col gap-4'>
+              <a
+                target='_blank'
+                href={`/app/profile/${professional.data?.userId}`}
+                rel='noreferrer'
+              >
+                <BookingPreviewDetailBox
+                  label={intl.formatMessage({ id: 'specialist' })}
+                  value={`${professional.data?.user?.firstName} ${professional.data?.user?.lastName}`}
+                  avatar={professional.data?.user?.avatar || ''}
+                />
+              </a>
+              <div className='flex flex-col gap-3'>
+                <BookingPreviewDetailBox
+                  label={intl.formatMessage({ id: 'service.title' })}
+                  value={bookingDetails.data?.serviceProfessional?.title || ''}
+                />
+              </div>
+            </div>
+            {bookingDetails.data && (
+              <BookingPreviewProgressbar
+                createdAt={bookingDetails.data?.createdAt}
+                startTime={bookingDetails.data?.startTime}
+              />
+            )}
           </div>
 
-          <div className='flex flex-col gap-3'>
+          <div className='flex flex-col gap-3 md:mt-[-14px]'>
             <BookingPreviewDetailBox
               label={intl.formatMessage({ id: 'service.price' })}
               value={`${bookingDetails.data?.serviceProfessional?.price} ${bookingDetails.data?.serviceProfessional?.currency}`}
             />
           </div>
           <div className='flex gap-6'>
-            <div className='flex flex-col gap-3'>
+            <div className='mt-3 flex flex-col gap-3'>
               <BookingPreviewDetailBox
                 label={intl.formatMessage({ id: 'service.start.time' })}
                 value={
@@ -133,7 +142,7 @@ export const BookingPreview = () => {
                 }
               />
             </div>
-            <div className='flex flex-col gap-3'>
+            <div className='mt-3 flex flex-col gap-3'>
               <BookingPreviewDetailBox
                 label={intl.formatMessage({ id: 'service.duration' })}
                 value={
@@ -148,7 +157,7 @@ export const BookingPreview = () => {
               />
             </div>
           </div>
-          <div className='flex flex-col gap-3'>
+          <div className='mt-3 flex flex-col gap-3'>
             <Typography weight='medium' variant='body2' className='!text-gray'>
               {intl.formatMessage({ id: 'service.status' })}
             </Typography>
@@ -157,15 +166,8 @@ export const BookingPreview = () => {
             )}
           </div>
         </div>
-
-        {bookingDetails.data && (
-          <BookingPreviewProgressbar
-            createdAt={bookingDetails.data?.createdAt}
-            startTime={bookingDetails.data?.startTime}
-          />
-        )}
       </div>
-      <div className='mt-12 flex gap-4'>
+      <div className='mt-8 flex gap-4'>
         <UserContactPopup
           // @ts-ignore
           professional={professional.data}
@@ -196,7 +198,7 @@ export const BookingPreview = () => {
           />
         )}
       </div>
-      <div className='mt-12 flex h-[400px] w-full flex-col gap-5'>
+      <div className='mt-8 flex h-[400px] w-full flex-col gap-5'>
         <div className='flex gap-5'>
           <Typography variant='small' className='!text-gray'>
             {location?.name}
