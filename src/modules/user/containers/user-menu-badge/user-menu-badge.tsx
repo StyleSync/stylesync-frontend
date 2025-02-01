@@ -159,7 +159,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
       <div className='flex items-center gap-x-2'>
         <Button
           text={intl.formatMessage({
-            id: 'button.pro',
+            id: 'button.registration',
           })}
           variant='light'
           onClick={() =>
@@ -168,7 +168,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
               {
                 callbackUrl: '/app/profile',
               },
-              { prompt: 'login' }
+              { prompt: 'signup', screen_hint: 'signup' }
             )
           }
         />

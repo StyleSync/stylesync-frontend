@@ -283,6 +283,8 @@
   "button.refresh": "Refresh",
   "button.support": "Support",
 
+  "button.registration": "Registration",
+
   "bookingInfo.dialog.actions.call": "Call",
   "bookingInfo.dialog.actions.reschedule": "Reschedule",
   "bookingInfo.dialog.actions.cancel": "Cancel reservation",
