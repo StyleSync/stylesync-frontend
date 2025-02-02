@@ -434,5 +434,8 @@
 
   "validation.break.slot.duplications": "It seems one of your break slots has duplicates. Please double-check your schedule and ensure there are no duplications. Thank you!",
   "validation.break.slot.overlap.work.hours": "It seems one of your break slots overlaps with work hours. Please double-check your schedule and avoid crossing between work hours and breaks. Thank you!",
-  "validation.break.slots.overap.each.other": "It seems some of your break slots overlap each other. Please double-check your schedule and ensure there are no conflicts. Thank you!"
+  "validation.break.slots.overap.each.other": "It seems some of your break slots overlap each other. Please double-check your schedule and ensure there are no conflicts. Thank you!",
+
+  "privacy.policy": "Privacy Policy",
+  "privacy.terms": "Terms and Conditions"
 }
