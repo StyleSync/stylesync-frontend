@@ -139,7 +139,7 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit, formId }) => {
             <span className='text-sm'>
               {intl.formatMessage({ id: 'booking.form.accept' })}{' '}
               <a
-                href='/app/privacy-policy'
+                href='/app/privacy/policy'
                 target='_blank'
                 className='cursor-pointer text-primary underline underline-offset-1'
               >
@@ -147,7 +147,7 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit, formId }) => {
               </a>{' '}
               {intl.formatMessage({ id: 'booking.form.and' })}{' '}
               <a
-                href='/app/terms-policy'
+                href='/app/privacy/terms'
                 target='_blank'
                 className='cursor-pointer text-primary underline underline-offset-1'
               >
