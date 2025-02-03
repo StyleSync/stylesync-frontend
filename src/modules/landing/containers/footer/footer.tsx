@@ -3,8 +3,11 @@
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { Divider } from '@/modules/core/components/divider';
 import { Icon } from '@/modules/core/components/icon';
+import { useIntl } from 'react-intl';
 
 export const Footer = () => {
+  const intl = useIntl();
+
   return (
     <footer className='relative z-10 flex w-full flex-col bg-[#0F1019]'>
       <div className='pb-[110px] pl-[100px] pr-[100px] pt-20'>
@@ -12,19 +15,19 @@ export const Footer = () => {
           <div className='flex items-center gap-[36px]'>
             <span
               onClick={() => {
-                window.open('/app/privacy-policy', '_blank');
+                window.open('/app/privacy/policy', '_blank');
               }}
               className='whitespace-nowrap !text-[#767A85] duration-200 hover:cursor-pointer hover:!text-white'
             >
-              Privacy & Police
+              {intl.formatMessage({ id: 'privacy.policy' })}
             </span>
             <span
               onClick={() => {
-                window.open('/app/terms-policy', '_blank');
+                window.open('/app/privacy/terms', '_blank');
               }}
               className='whitespace-nowrap !text-[#767A85] duration-200 hover:cursor-pointer hover:!text-white'
             >
-              Terms & conditions
+              {intl.formatMessage({ id: 'privacy.terms' })}
             </span>
           </div>
           <Icon

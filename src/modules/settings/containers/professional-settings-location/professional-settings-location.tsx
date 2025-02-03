@@ -110,10 +110,10 @@ export const ProfessionalSettingsLocation: FC = () => {
             showToast({
               variant: 'success',
               title: intl.formatMessage({
-                id: 'professional.settings.location.toast.error.title.change',
+                id: 'professional.settings.location.toast.success.title.change',
               }),
               description: intl.formatMessage({
-                id: 'professional.settings.location.toast.error.description.change',
+                id: 'professional.settings.location.toast.success.description.change',
               }),
             });
           },
