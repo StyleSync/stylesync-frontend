@@ -1,4 +1,11 @@
-import { type FC, useCallback, useId, useMemo } from 'react';
+import {
+  type FC,
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useState,
+} from 'react';
 import { useIntl } from 'react-intl';
 import { useRouter } from 'next/navigation';
 // components
@@ -20,6 +27,9 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
   const intl = useIntl();
   const formId = useId();
   const router = useRouter();
+
+  // state
+  const [phoneApiError, setPhoneApiError] = useState<string | null>(null);
 
   // queries
   const { data: me, ...meQuery } = trpc.user.me.useQuery({
@@ -79,30 +89,13 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
         }
       }
 
-      await meUpdateAsync(
-        {
-          avatar: avatarUrl,
-          firstName: values.firstName || undefined,
-          lastName: values.lastName || undefined,
-          phone: values.phone || undefined,
-          onboardingCompleted: me.userType === 'CUSTOMER',
-        },
-        {
-          onError: (error) => {
-            if (error.data?.code === 'INTERNAL_SERVER_ERROR') {
-              showToast({
-                variant: 'error',
-                title: intl.formatMessage({
-                  id: 'onboard.about.toast.error.title.phone',
-                }),
-                description: intl.formatMessage({
-                  id: 'onboard.about.toast.error.descr.phone',
-                }),
-              });
-            }
-          },
-        }
-      );
+      await meUpdateAsync({
+        avatar: avatarUrl,
+        firstName: values.firstName || undefined,
+        lastName: values.lastName || undefined,
+        phone: values.phone || undefined,
+        onboardingCompleted: me.userType === 'CUSTOMER',
+      });
 
       if (me.userType === 'PROFESSIONAL') {
         professionalMutation(
@@ -148,6 +141,14 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
     ]
   );
 
+  useEffect(() => {
+    if (meUpdateMutation.error?.data?.code === 'INTERNAL_SERVER_ERROR') {
+      setPhoneApiError(
+        intl.formatMessage({ id: 'onboard.about.toast.error.title.phone' })
+      );
+    }
+  }, [intl, meUpdateMutation.error?.data?.code]);
+
   return (
     <OnboardLayout
       meta={{
@@ -184,6 +185,7 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
           }
         >
           <AboutProfessionalForm
+            phoneApiError={phoneApiError || ''}
             formId={formId}
             onSubmit={handleSubmit}
             initialValues={initialValues}

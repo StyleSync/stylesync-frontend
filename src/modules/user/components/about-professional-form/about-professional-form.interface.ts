@@ -4,6 +4,7 @@ export type AboutProfessionalFormProps = {
     data: AboutProfessionalFormValues & { avatar?: File | string | null }
   ) => void;
   initialValues?: Partial<AboutProfessionalFormValues & { avatar: string }>;
+  phoneApiError: string | null;
 };
 
 export type AboutProfessionalFormValues = {

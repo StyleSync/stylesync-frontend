@@ -439,6 +439,5 @@
   "privacy.policy": "Privacy Policy",
   "privacy.terms": "Terms and Conditions",
 
-  "onboard.about.toast.error.title.phone": "A user with this phone number is already registered.",
-  "onboard.about.toast.error.descr.phone": "Try entering a different number or log into your account."
+  "onboard.about.toast.error.title.phone": "A user with this phone number is already registered."
 }

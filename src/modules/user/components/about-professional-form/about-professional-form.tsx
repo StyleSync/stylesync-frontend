@@ -111,7 +111,7 @@ const validationSchemaCustomer: z.Schema<AboutProfessionalFormValues> =
   });
 
 const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
-  ({ initialValues, formId, onSubmit }) => {
+  ({ initialValues, formId, onSubmit, phoneApiError }) => {
     const intl = useIntl();
     // queries
     const { data: me } = trpc.user.me.useQuery();
@@ -191,7 +191,9 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
             render={({ field }) => {
               return (
                 <PhoneField
-                  error={getErrorMessage(form.formState.errors.phone?.message)}
+                  error={getErrorMessage(
+                    form.formState.errors.phone?.message || phoneApiError || ''
+                  )}
                   label={intl.formatMessage({
                     id: 'user.about.professional.form.phone',
                   })}

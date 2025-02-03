@@ -440,6 +440,5 @@
   "privacy.policy": "Політика конфіденційності",
   "privacy.terms": "Публічна оферта",
 
-  "onboard.about.toast.error.title.phone": "Користувач із таким номером телефону вже зареєстрований.",
-  "onboard.about.toast.error.descr.phone": "Спробуйте ввести інший номер або увійдіть у свій акаунт."
+  "onboard.about.toast.error.title.phone": "Користувач із таким номером телефону вже зареєстрований."
 }
