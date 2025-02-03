@@ -11,7 +11,8 @@ import { Icon, type IconName } from '@/modules/core/components/icon';
 // types
 import type { StylingProps } from '@/styles/styles.types';
 // assets
-import picture from '@/assets/images/banner-girl.png';
+import pictureV2 from '@/assets/images/banner-girlV2.png';
+import Bg from '@/assets/images/bg-1.png';
 
 import styles from './intro-section.module.scss';
 
@@ -38,7 +39,7 @@ export const IntroSection = () => {
   const intl = useIntl();
 
   return (
-    <section className='grid h-screen w-full grid-cols-1 flex-col gap-y-2 pt-[38px] [grid-template-rows:0.7fr_1.3fr] sm:pt-[72px]'>
+    <section className='grid h-screen w-full grid-cols-1 flex-col gap-y-6 pb-4 pt-[38px] [grid-template-rows:0.7fr_1.3fr] sm:pt-[72px]'>
       <div className='flex flex-col items-center justify-end pt-[6vh]'>
         <Typography
           className='max-w-[820px] px-2 text-center !text-5xl !font-semibold !text-black md:!text-6xl'
@@ -68,23 +69,30 @@ export const IntroSection = () => {
       </div>
       <div className='relative flex flex-1'>
         <div className='absolute left-0 top-0 flex h-full w-full justify-center'>
-          <div className={styles.bubblesGroup}>
+          <div className={clsx(styles.bubblesGroup, 'relative left-[80px]')}>
             <ServiceCircle iconName='makeup' />
             <ServiceCircle iconName='fitness' />
             <ServiceCircle iconName='haircut' />
             <ServiceCircle iconName='nails' />
           </div>
-          <div className='relative h-full'>
+          <div className='relative aspect-square h-full overflow-hidden rounded-full'>
             <Image
-              width={picture.width}
-              height={picture.height}
-              src={picture}
-              className='h-full w-auto object-contain'
+              src={Bg}
+              alt='bg'
+              width={Bg.width}
+              height={Bg.height}
+              className='absolute left-0 top-0 z-0 h-full w-full opacity-[0.2]'
+            />
+            <Image
+              width={pictureV2.width}
+              height={pictureV2.height}
+              src={pictureV2}
+              className='absolute left-1/2 top-0 z-10 mx-auto h-full w-auto -translate-x-1/2 object-contain'
               alt='img'
             />
           </div>
 
-          <div className={styles.bubblesGroup}>
+          <div className={clsx(styles.bubblesGroup, 'relative -left-[60px]')}>
             <ServiceCircle iconName='skincare' />
             <ServiceCircle iconName='faceMassage' />
             <ServiceCircle iconName='eyebrows' />
