@@ -1,5 +1,12 @@
 'use client';
-import { type FC, useCallback, useId, useMemo } from 'react';
+import {
+  type FC,
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useState,
+} from 'react';
 import { useIntl } from 'react-intl';
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
@@ -20,6 +27,9 @@ export const ProfessionalSettingsAbout: FC = () => {
   const intl = useIntl();
   const formId = useId();
   const queryClient = useQueryClient();
+
+  // state
+  const [phoneApiError, setPhoneApiError] = useState<string | null>(null);
 
   // queries
   const { data: me, ...meQuery } = trpc.user.me.useQuery({
@@ -106,8 +116,16 @@ export const ProfessionalSettingsAbout: FC = () => {
           });
         });
     },
-    [userUpdate, proUpdate, avatarUpload, intl]
+    [userUpdate, proUpdate, avatarUpload, intl, me?.userType, queryClient]
   );
+
+  useEffect(() => {
+    if (proUpdate.error?.data?.code === 'INTERNAL_SERVER_ERROR') {
+      setPhoneApiError(
+        intl.formatMessage({ id: 'onboard.about.toast.error.title.phone' })
+      );
+    }
+  }, [intl, proUpdate.error?.data?.code]);
 
   return (
     <ProfileSettingsTabContentLayout
@@ -125,6 +143,7 @@ export const ProfessionalSettingsAbout: FC = () => {
       ]}
     >
       <AboutProfessionalForm
+        phoneApiError={phoneApiError}
         formId={formId}
         onSubmit={handleSubmit}
         initialValues={initialValues}
