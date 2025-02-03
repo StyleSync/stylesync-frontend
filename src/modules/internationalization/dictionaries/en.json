@@ -437,5 +437,8 @@
   "validation.break.slots.overap.each.other": "It seems some of your break slots overlap each other. Please double-check your schedule and ensure there are no conflicts. Thank you!",
 
   "privacy.policy": "Privacy Policy",
-  "privacy.terms": "Terms and Conditions"
+  "privacy.terms": "Terms and Conditions",
+
+  "onboard.about.toast.error.title.phone": "A user with this phone number is already registered.",
+  "onboard.about.toast.error.descr.phone": "Try entering a different number or log into your account."
 }

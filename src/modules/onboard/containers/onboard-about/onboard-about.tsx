@@ -79,13 +79,30 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
         }
       }
 
-      await meUpdateAsync({
-        avatar: avatarUrl,
-        firstName: values.firstName || undefined,
-        lastName: values.lastName || undefined,
-        phone: values.phone || undefined,
-        onboardingCompleted: me.userType === 'CUSTOMER',
-      });
+      await meUpdateAsync(
+        {
+          avatar: avatarUrl,
+          firstName: values.firstName || undefined,
+          lastName: values.lastName || undefined,
+          phone: values.phone || undefined,
+          onboardingCompleted: me.userType === 'CUSTOMER',
+        },
+        {
+          onError: (error) => {
+            if (error.data?.code === 'INTERNAL_SERVER_ERROR') {
+              showToast({
+                variant: 'error',
+                title: intl.formatMessage({
+                  id: 'onboard.about.toast.error.title.phone',
+                }),
+                description: intl.formatMessage({
+                  id: 'onboard.about.toast.error.descr.phone',
+                }),
+              });
+            }
+          },
+        }
+      );
 
       if (me.userType === 'PROFESSIONAL') {
         professionalMutation(
