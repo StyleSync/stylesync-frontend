@@ -2,6 +2,7 @@
 import { BookingPreview } from '@/modules/booking/containers/booking-preview/booking-preview';
 import { Footer } from '@/modules/landing/containers/footer/footer';
 import { LandingHeader } from '@/modules/landing/containers/header/landing-header';
+import { BottomTabNavigation } from '@/modules/core/containers/bottom-tab-navigation';
 
 export default function BookingDetailsPage() {
   return (
@@ -9,6 +10,7 @@ export default function BookingDetailsPage() {
       <LandingHeader />
       <BookingPreview />
       <Footer />
+      <BottomTabNavigation />
     </div>
   );
 }
