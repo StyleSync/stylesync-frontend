@@ -9,6 +9,11 @@
   flex: 1;
   width: 100%;
 
+  @include mixins.phone {
+    scroll-padding-bottom: 300px;
+    scroll-padding-top: 300px;
+  }
+
   .avatarSelect {
     margin: 0 auto utils.spacing(1);
     flex-direction: column;
