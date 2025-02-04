@@ -12,9 +12,6 @@
   flex-direction: column;
   width: 380px;
   padding: utils.spacing(3);
-  @include mixins.phone {
-    width: 350px;
-  }
 }
 
 .iconSuccess {
