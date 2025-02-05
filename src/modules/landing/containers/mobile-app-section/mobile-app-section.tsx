@@ -4,11 +4,11 @@ import { useIntl } from 'react-intl';
 
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
-import { Icon } from '@/modules/core/components/icon';
+// import { Icon } from '@/modules/core/components/icon';
 import { IphoneLayout } from '@/modules/core/components/iphone-layout';
 // assets
 import net from '@/modules/landing/landing-image/big-net.png';
-import google from '@/modules/landing/landing-image/google-play-badge.png';
+// import google from '@/modules/landing/landing-image/google-play-badge.png';
 import profileEn from '@/assets/images/profile2en.png';
 import profileUk from '@/assets/images/profile2uk.png';
 import searchUk from '@/assets/images/uk-pro-search.png';
@@ -48,7 +48,7 @@ export const MobileAppSection = () => {
         >
           {intl.formatMessage({ id: 'pages.landing.mobileApp.description' })}
         </Typography>
-        <div className='z-0 flex items-center justify-center gap-5 md:gap-8'>
+        {/* <div className='z-0 flex items-center justify-center gap-5 md:gap-8'>
           <Icon
             className='z-[25] hover:cursor-pointer'
             name='appleLogoLanding'
@@ -62,7 +62,7 @@ export const MobileAppSection = () => {
             width={google.width}
             height={google.height}
           />
-        </div>
+        </div> */}
       </div>
       <div className='relative mt-[104px] w-full'>
         <div className='absolute bottom-0 left-1/2 -z-10 aspect-square w-[750px] max-w-full -translate-x-1/2 rounded-full bg-[#F9F9F9]' />
