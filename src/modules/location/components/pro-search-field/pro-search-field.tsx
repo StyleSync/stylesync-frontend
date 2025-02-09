@@ -75,7 +75,7 @@ export const ProSearchField: FC<ProSearchFieldProps> = () => {
         onClose={isCitySearchOpen.setFalse}
         trigger={
           <div
-            className='flex min-w-[50px] cursor-pointer items-center pl-6 pr-8 text-dark transition hover:text-black md:min-w-[250px]'
+            className='flex min-w-[50px] max-w-[200px] cursor-pointer items-center pl-2 pr-4 text-dark transition hover:text-black md:min-w-[250px] md:pl-6 md:pr-8'
             onClick={isCitySearchOpen.toggle}
           >
             <Icon
