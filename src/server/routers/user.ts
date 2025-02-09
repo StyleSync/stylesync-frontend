@@ -141,6 +141,7 @@ export const userRouter = router({
 
       return {
         available: !existingUser,
+        userId: existingUser?.id,
       };
     }),
 });
