@@ -99,6 +99,7 @@ export const userRouter = router({
           .min(1, 'Required')
           .max(maxTextLength)
           .nullish(),
+        nickname: z.string().min(1, 'Required').max(maxTextLength).nullish(),
         image: z
           .string()
           .url('Invalid url')
@@ -110,6 +111,7 @@ export const userRouter = router({
     )
     .mutation(async ({ input, ctx }) => {
       const { id } = ctx.user;
+
       const user = await prisma.user.update({
         where: { id },
         data: { ...input },
@@ -124,5 +126,22 @@ export const userRouter = router({
       }
 
       return user;
+    }),
+  checkNickname: privateProcedure
+    .input(
+      z.object({
+        nickname: z.string().min(1, 'Required').max(maxTextLength),
+      })
+    )
+    .query(async ({ input }) => {
+      const existingUser = await prisma.user.findUnique({
+        where: { nickname: input.nickname },
+        select: { id: true },
+      });
+
+      return {
+        available: !existingUser,
+        userId: existingUser?.id,
+      };
     }),
 });

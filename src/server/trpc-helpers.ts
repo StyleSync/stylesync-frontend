@@ -2,6 +2,7 @@ import { initTRPC, TRPCError } from '@trpc/server';
 import superjson from 'superjson';
 import type { Context } from './context';
 import { ZodError } from 'zod';
+import { Prisma } from '@prisma/client';
 // Avoid exporting the entire t-object
 // since it's not very descriptive.
 // For instance, the use of a t variable
@@ -22,6 +23,20 @@ const t = initTRPC.context<Context>().create({
         zod:
           error.cause instanceof ZodError
             ? error.cause.flatten().fieldErrors
+            : null,
+        prisma:
+          error.cause instanceof Prisma.PrismaClientKnownRequestError
+            ? {
+                // `fields` contains the names of the fields that caused the error
+                // For unique constraints, this will be the field(s) that violated the constraint
+                // For required fields, this will be the field that was missing
+                fields: error.cause.meta?.target || [],
+                // `code` contains the Prisma error code. Common codes include:
+                // P2002: Unique constraint violation
+                // P2014: Required field violation
+                // P2003: Foreign key constraint violation
+                code: error.cause.code,
+              }
             : null,
       },
     };
