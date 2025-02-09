@@ -31,13 +31,13 @@ export const Footer = () => {
             </span>
           </div>
           <Icon
-            className='lg:mr-[140px]'
+            className='lg:mr-[325px]'
             name='logoLanding'
             width={169}
             height={40}
           />
           <div className='flex justify-end gap-[24px]'>
-            <Icon
+            {/* <Icon
               className='text-[#767A85] duration-200 hover:cursor-pointer hover:!text-white'
               name='facebookLanding'
               width={30}
@@ -48,7 +48,7 @@ export const Footer = () => {
               name='xLanding'
               width={30}
               height={30}
-            />
+            /> */}
             <Icon
               className='text-[#767A85] duration-200 hover:cursor-pointer hover:!text-white'
               name='instagramLanding'
@@ -64,7 +64,7 @@ export const Footer = () => {
           variant='body2'
           weight='semibold'
         >
-          © StyleSync 2024
+          © StyleSync 2025
         </Typography>
       </div>
     </footer>
