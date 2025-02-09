@@ -328,8 +328,8 @@
   "pages.landing.features.forPro.description": "Join StyleSync to ensure reliable online booking, automated processes, and effective promotion, empowering your professional growth",
   "pages.landing.services.title": "Discover Beauty Services Near You",
   "pages.landing.services.description": "Experience top-tier beauty and wellness services, from makeup and hair to personalized fitness, all designed to ensure a seamless and efficient appointment.",
-  "pages.landing.mobileApp.title": "StyleSync Mobile App",
-  "pages.landing.mobileApp.description": "Manage bookings, automate processes, and promote your services on-the-go with our user-friendly mobile app",
+  "pages.landing.mobileApp.title": "StyleSync Mobile View",
+  "pages.landing.mobileApp.description": "Manage bookings, automate processes, and promote your services on-the-go with our user-friendly mobile view",
 
   "add.booking.modal.title": "Add reservation manually",
   "add.booking.modal.form.service": "Service Name *",
