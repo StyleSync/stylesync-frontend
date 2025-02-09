@@ -5,6 +5,7 @@ export const defaultProfessionalSelect =
     id: true,
     facebook: true,
     instagram: true,
+    tiktok: true,
     about: true,
     userId: true,
     createdAt: true,
