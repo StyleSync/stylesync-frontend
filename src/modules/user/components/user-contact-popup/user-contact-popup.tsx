@@ -55,6 +55,20 @@ export const UserContactPopup: FC<UserContactPopupProps> = ({
           />
         )}
 
+        {professional && professional.tiktok && (
+          <Button
+            onClick={() => {
+              if (professional.tiktok) {
+                window.open(professional.tiktok, '_blank');
+              }
+            }}
+            icon='tiktok'
+            className={clsx('focusable', styles.socialBtn, styles.tiktok)}
+            variant='unstyled'
+            rippleColor={styles.rippleColor}
+          />
+        )}
+
         {professional && professional.user?.email && (
           <Button
             onClick={() => {

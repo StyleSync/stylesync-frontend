@@ -223,6 +223,9 @@
   "user.about.professional.form.facebook": "Facebook",
   "user.about.professional.form.instagram": "Instagram",
   "user.about.professional.form.about": "About you",
+  "user.about.professional.form.nickname": "Nickname *",
+  "user.about.professional.form.nickname.dublicate": "Nickname already in use",
+  "user.about.professional.form.tiktok": "Tiktok",
 
   "user.professional.gallery.form.noAlbumsAdded": "No albums added",
   "user.professional.gallery.form.loadingAlbums": "Download albums...",
@@ -371,6 +374,8 @@
   "validation.email.required": "Email is required",
   "validation.facebook.invalid": "Invalid Facebook URL",
   "validation.instagram.invalid": "Invalid Instagram URL",
+  "validation.tiktok.invalid": "Invalid Tiktok URL",
+
   "validation.about.required": "About is required",
   "validation.firstName.firstLetterCapitalized": "The first letter of the first name must be uppercase.",
   "validation.lastName.firstLetterCapitalized": "The first letter of the last name must be uppercase.",
@@ -439,5 +444,8 @@
   "privacy.policy": "Privacy Policy",
   "privacy.terms": "Terms and Conditions",
 
-  "onboard.about.toast.error.title.phone": "A user with this phone number is already registered."
+  "onboard.about.toast.error.title.phone": "A user with this phone number is already registered.",
+  "nickname": "Nickname",
+
+  "nickname.contents": "a unique name used to identify your profile. It can contain only Latin letters, numbers, and special characters (if allowed), but no spaces. The maximum length is 32 characters."
 }

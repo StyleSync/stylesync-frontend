@@ -1,11 +1,4 @@
-import {
-  type FC,
-  useCallback,
-  useEffect,
-  useId,
-  useMemo,
-  useState,
-} from 'react';
+import { type FC, useCallback, useId, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import { useRouter } from 'next/navigation';
 // components
@@ -27,9 +20,6 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
   const intl = useIntl();
   const formId = useId();
   const router = useRouter();
-
-  // state
-  const [phoneApiError, setPhoneApiError] = useState<string | null>(null);
 
   // queries
   const { data: me, ...meQuery } = trpc.user.me.useQuery({
@@ -56,6 +46,8 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
       about: me?.professional?.about ?? undefined,
       instagram: me?.professional?.instagram ?? undefined,
       facebook: me?.professional?.facebook ?? undefined,
+      nickname: me?.nickname ?? undefined,
+      tiktok: me?.professional?.tiktok ?? undefined,
     }),
     [me]
   );
@@ -66,7 +58,8 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
 
   const handleSubmit = useCallback(
     async (
-      values: AboutProfessionalFormValues & { avatar?: File | string | null }
+      values: AboutProfessionalFormValues & { avatar?: File | string | null },
+      onError: (error: any) => void
     ) => {
       if (!me) {
         return;
@@ -91,6 +84,7 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
 
       await meUpdateAsync({
         avatar: avatarUrl,
+        nickname: values.nickname || undefined,
         firstName: values.firstName || undefined,
         lastName: values.lastName || undefined,
         phone: values.phone || undefined,
@@ -103,13 +97,14 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
             about: values.about || undefined,
             instagram: values.instagram || undefined,
             facebook: values.facebook || undefined,
+            tiktok: values.tiktok || undefined,
           },
           {
             onSuccess: () => {
               meQuery.refetch();
               next();
             },
-            onError: () => {
+            onError: (error: any) => {
               showToast({
                 variant: 'error',
                 title: intl.formatMessage({
@@ -119,6 +114,9 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
                   id: 'onboard.about.toast.success.description',
                 }),
               });
+              if (error) {
+                onError(error);
+              }
             },
           }
         );
@@ -140,14 +138,6 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
       router,
     ]
   );
-
-  useEffect(() => {
-    if (meUpdateMutation.error?.data?.code === 'INTERNAL_SERVER_ERROR') {
-      setPhoneApiError(
-        intl.formatMessage({ id: 'onboard.about.toast.error.title.phone' })
-      );
-    }
-  }, [intl, meUpdateMutation.error?.data?.code]);
 
   return (
     <OnboardLayout
@@ -185,7 +175,6 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
           }
         >
           <AboutProfessionalForm
-            phoneApiError={phoneApiError || ''}
             formId={formId}
             onSubmit={handleSubmit}
             initialValues={initialValues}
