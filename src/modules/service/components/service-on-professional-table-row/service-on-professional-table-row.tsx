@@ -111,7 +111,7 @@ export const ServiceOnProfessionalTableRow: FC<
         </div>
       </Accordion.Header>
       <Accordion.Content className={styles.AccordionContent}>
-        <div className='flex flex-col pb-6 pt-2'>
+        <div className='flex flex-col px-4 pb-6 pt-2 md:px-[25px]'>
           <EditorPreview value={data.description} />
         </div>
       </Accordion.Content>
