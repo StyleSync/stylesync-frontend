@@ -9,39 +9,48 @@ import eyebrows from '@/modules/landing/landing-image/eyebrows.jpg';
 
 export const services = [
   {
+    id: 'makeup',
     title: 'general.service.makeup',
     image: makeup,
+    name: '',
   },
   {
+    id: 'hair',
     title: 'general.service.hair',
     image: hair,
   },
   {
+    id: 'nails',
     title: 'general.service.nails',
     image: nails,
   },
 
   {
+    id: 'finess',
     title: 'general.service.fitness',
     image: finess,
   },
 
   {
+    id: 'eyebrows',
     title: 'general.service.eyebrows',
     image: eyebrows,
   },
 
   {
+    id: 'massage',
     title: 'general.service.massage',
     image: massage,
   },
 
   {
+    id: 'skincare',
     title: 'general.service.skincare',
     image: skincare,
   },
 
   {
+    id: 'psychology',
     title: 'general.service.psychology',
     image: psychology,
   },
