@@ -1,26 +1,29 @@
-import { useMemo, type FC, useState } from 'react';
-import timeGridPlugin from '@fullcalendar/timegrid';
+import { type FC, useMemo, useState } from 'react';
+
+// type
+import type { EventInput } from '@fullcalendar/core';
 import allLocale from '@fullcalendar/core/locales-all';
-import { useIntl } from 'react-intl';
-import dynamic from 'next/dynamic';
+import timeGridPlugin from '@fullcalendar/timegrid';
 import clsx from 'clsx';
+import dynamic from 'next/dynamic';
+import { useIntl } from 'react-intl';
+
+import { PointsBookingActions } from '@/modules/booking/components/points-booking-actions/points-booking-action';
 // containers
 import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
 // components
 import { Icon } from '@/modules/core/components/icon';
-import { PointsBookingActions } from '@/modules/booking/components/points-booking-actions/points-booking-action';
-
-// utils
-import { getTime } from '@/modules/schedule/utils/get-time';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
 // constants
 import { weekdays } from '@/modules/schedule/constants/schedule.constants';
-// type
-import type { EventInput } from '@fullcalendar/core';
+// utils
+import { getTime } from '@/modules/schedule/utils/get-time';
+
 import type { CalendarProps } from './calendar.interface';
-import styles from './calendarEvent.module.scss';
+
 import './calendar.scss';
+import styles from './calendarEvent.module.scss';
 
 const FullCalendar = dynamic(() => import('@fullcalendar/react'), {
   ssr: false,
@@ -30,6 +33,9 @@ export const Calendar: FC<CalendarProps> = () => {
   const intl = useIntl();
   // state
   const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
+  const [activeBookingCode, setActiveBookingCode] = useState<string | null>(
+    null
+  );
   // queries
   const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
   const { data: professionalEvents } = trpc.booking.list.useInfiniteQuery(
@@ -95,6 +101,7 @@ export const Calendar: FC<CalendarProps> = () => {
           start: new Date(event.startTime),
           end: new Date(event.endTime),
           status: event.status,
+          eventCode: 'code' in event ? (event.code as string) : null,
           className: clsx(styles.event, styles[`event_${event.status}`]),
         })) || []
     );
@@ -139,6 +146,12 @@ export const Calendar: FC<CalendarProps> = () => {
         nowIndicator
         eventClick={({ event }) => {
           setActiveBookingId(event.id);
+
+          const eventData = eventsList.find((e) => e.id === event.id);
+
+          if (eventData?.eventCode) {
+            setActiveBookingCode(eventData.eventCode);
+          }
         }}
         eventContent={({ event }) => {
           const startTime = getTime(event.start);
@@ -169,8 +182,10 @@ export const Calendar: FC<CalendarProps> = () => {
       />
       <BookingInfoDialog
         bookingId={activeBookingId}
+        bookingCode={activeBookingCode}
         onClose={() => {
           setActiveBookingId(null);
+          setActiveBookingCode(null);
         }}
       />
     </div>
