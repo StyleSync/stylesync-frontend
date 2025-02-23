@@ -1,12 +1,12 @@
 .ql-toolbar.ql-snow {
-  @apply px-[22px] py-4 border-none;
+  @apply border-none px-[22px] py-4;
 
   .ql-picker-options {
-    @apply border-none shadow px-4 py-2 rounded-xl;
+    @apply rounded-xl border-none px-4 py-2 shadow;
   }
 
   .ql-picker.ql-expanded .ql-picker-label {
-    @apply border-transparent transition rounded text-dark bg-gray-light;
+    @apply rounded border-transparent bg-gray-light text-dark transition;
   }
 }
 
@@ -14,6 +14,10 @@
   @apply border-none;
 
   .ql-editor {
-    @apply px-[32px] max-h-[400px] min-h-[200px] pb-6;
+    @apply max-h-[400px] min-h-[200px] px-[32px] pb-6;
   }
+}
+
+.ql-editor ul {
+  padding-left: 0 !important;
 }
