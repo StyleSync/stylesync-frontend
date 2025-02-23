@@ -1,13 +1,15 @@
 'use client';
 import { Swiper, SwiperSlide, type SwiperProps } from 'swiper/react';
-// components
-import { Typography } from '@/modules/core/components/typogrpahy';
-import { ServiceCard } from '@/modules/landing/components/service-card/service-card';
-import 'swiper/css';
-import { services } from './service-data';
+import { useRouter } from 'next/navigation';
 import { useIntl } from 'react-intl';
 import { useWindowSize } from 'usehooks-ts';
 import { useMemo } from 'react';
+// components
+import { Typography } from '@/modules/core/components/typogrpahy';
+import { ServiceCard } from '@/modules/landing/components/service-card';
+import { services } from './service-data';
+import 'swiper/css';
+import { trpc } from '@/modules/core/utils/trpc.utils';
 
 const windowSizes = {
   md: 800,
@@ -32,7 +34,9 @@ const getSlidesToDisplay = (windowWidth: number): number => {
 
 export const ServiceCardSection = () => {
   const intl = useIntl();
+  const router = useRouter();
   const windowSize = useWindowSize();
+  const serviceListQuery = trpc.service.list.useQuery();
   // memo
   const dynamicSwiperProps = useMemo<Partial<SwiperProps>>(() => {
     const offsetValues = {
@@ -63,6 +67,18 @@ export const ServiceCardSection = () => {
     };
   }, [windowSize]);
 
+  const handleServiceCardClick = (service: (typeof services)[number]) => {
+    const serviceId = serviceListQuery.data?.items?.find(
+      (s) => s.name === service.title
+    )?.id;
+
+    if (!serviceId) {
+      return;
+    }
+
+    router.push(`uk/app/search-pro?serviceId=${serviceId}`);
+  };
+
   return (
     <section className='z-0 mt-24 flex flex-col items-center'>
       <Typography
@@ -80,10 +96,15 @@ export const ServiceCardSection = () => {
         <Swiper className='h-full w-full' {...dynamicSwiperProps} grabCursor>
           {services.map((card, index) => (
             <SwiperSlide className='h-fit w-full pb-14 pt-4' key={index}>
-              <ServiceCard
-                image={card.image}
-                title={intl.formatMessage({ id: card.title })}
-              />
+              <button
+                className='block h-full w-full'
+                onClick={() => handleServiceCardClick(card)}
+              >
+                <ServiceCard
+                  image={card.image}
+                  title={intl.formatMessage({ id: card.title })}
+                />
+              </button>
             </SwiperSlide>
           ))}
         </Swiper>
