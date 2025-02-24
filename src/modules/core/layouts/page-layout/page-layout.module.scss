@@ -6,13 +6,13 @@
   display: flex;
   width: 100%;
   column-gap: utils.spacing(4);
-  min-height: 100vh;
+  min-height: 100dvh;
 
   .content {
     position: relative;
     display: flex;
     flex: 1;
-    max-height: 100vh;
+    max-height: 100dvh;
     padding: calc(#{utils.spacing(3)} + #{variables.$header-height}) utils.spacing(3) utils.spacing(3);
 
     @include mixins.phone {
