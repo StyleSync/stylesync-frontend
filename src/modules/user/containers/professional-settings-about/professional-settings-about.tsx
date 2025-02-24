@@ -45,6 +45,8 @@ export const ProfessionalSettingsAbout: FC = () => {
       about: me?.professional?.about ?? '',
       instagram: me?.professional?.instagram ?? '',
       facebook: me?.professional?.facebook ?? '',
+      nickname: me?.nickname ?? '',
+      tiktok: me?.professional?.tiktok ?? '',
     }),
     [me]
   );
@@ -53,7 +55,8 @@ export const ProfessionalSettingsAbout: FC = () => {
 
   const handleSubmit = useCallback(
     async (
-      values: AboutProfessionalFormValues & { avatar?: File | string | null }
+      values: AboutProfessionalFormValues & { avatar?: File | string | null },
+      onError: (error: any) => void
     ) => {
       let avatarUrl: string | null = null;
 
@@ -73,12 +76,14 @@ export const ProfessionalSettingsAbout: FC = () => {
           firstName: values.firstName || undefined,
           lastName: values.lastName || undefined,
           phone: values.phone || undefined,
+          nickname: values.nickname || undefined,
         }),
         me?.userType !== 'CUSTOMER' &&
           proUpdate.mutateAsync({
             about: values.about || '',
             instagram: values.instagram || '',
             facebook: values.facebook || '',
+            tiktok: values.tiktok || '',
           }),
       ])
         .then(() => {
@@ -96,7 +101,7 @@ export const ProfessionalSettingsAbout: FC = () => {
             }),
           });
         })
-        .catch(() => {
+        .catch((error) => {
           showToast({
             variant: 'error',
             title: ERROR_MESSAGE.SOMETHING_WENT_WRONG,
@@ -104,9 +109,13 @@ export const ProfessionalSettingsAbout: FC = () => {
               id: 'professional.settings.about.toast.error.description',
             }),
           });
+
+          if (error) {
+            onError(error);
+          }
         });
     },
-    [userUpdate, proUpdate, avatarUpload, intl]
+    [userUpdate, proUpdate, avatarUpload, intl, me?.userType, queryClient]
   );
 
   return (

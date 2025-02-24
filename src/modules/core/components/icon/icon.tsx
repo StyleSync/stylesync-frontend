@@ -75,6 +75,8 @@ import Filter from '@/assets/icons/filter.svg?icon';
 import Eyebrows from '@/assets/icons/eyebrows.svg?icon';
 import Skincare from '@/assets/icons/skincare.svg?icon';
 import Profile from '@/assets/icons/profile.svg?icon';
+import QuestionIcon from '@/assets/icons/question.svg?icon';
+import Tiktok from '@/assets/icons/tiktok.svg?icon';
 
 import type { SVGComponentElement } from './icon.interface';
 
@@ -154,6 +156,8 @@ export const icons = {
   filter: Filter,
   eyebrows: Eyebrows,
   skincare: Skincare,
+  qustion: QuestionIcon,
+  tiktok: Tiktok,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;
