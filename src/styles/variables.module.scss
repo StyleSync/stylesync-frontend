@@ -8,9 +8,9 @@ $grey-light-color: #fafbfc;
 $error-color: #ff62a5;
 $error-light-color: #ffdbeb;
 $success-color: #4bb543;
-$orange-color: #FA714E;
+$orange-color: #fa714e;
 $green-color: #4bb543;
-$green-light-color: #DCFFE5;
+$green-light-color: #dcffe5;
 
 // gradients
 $instagram-gradient: radial-gradient(
@@ -21,6 +21,7 @@ $instagram-gradient: radial-gradient(
   #4c63d2 100%
 );
 $facebook-gradient: linear-gradient(0deg, #0062e0 0%, #19afff 100%);
+$tiktok-gradient: linear-gradient(135deg, #010101 0%, #1d1d1d 50%, #ff0050 95%);
 
 // transitions
 $transition-ultrafast: 0.3s;

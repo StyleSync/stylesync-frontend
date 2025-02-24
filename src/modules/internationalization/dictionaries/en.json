@@ -106,7 +106,7 @@
   "location.search.input.label": "Address *",
 
   "onboard.about.toast.error.title": "Ooops, something went wrong...",
-  "onboard.about.toast.success.description": "Please review the entered data or try again later :)",
+  "onboard.about.toast.error.description": "Please review the entered data or try again later :)",
   "onboard.about.title": "About me",
   "onboard.errorBox.title": "Connection with server has been interrupted",
   "onboard.errorBox.description": "Please check your internet connection or try refreshing the page. If the issue persists, please contact our support team for assistance.",
@@ -223,6 +223,9 @@
   "user.about.professional.form.facebook": "Facebook",
   "user.about.professional.form.instagram": "Instagram",
   "user.about.professional.form.about": "About you",
+  "user.about.professional.form.nickname": "Nickname *",
+  "user.about.professional.form.nickname.dublicate": "Nickname already in use",
+  "user.about.professional.form.tiktok": "Tiktok",
 
   "user.professional.gallery.form.noAlbumsAdded": "No albums added",
   "user.professional.gallery.form.loadingAlbums": "Download albums...",
@@ -371,6 +374,8 @@
   "validation.email.required": "Email is required",
   "validation.facebook.invalid": "Invalid Facebook URL",
   "validation.instagram.invalid": "Invalid Instagram URL",
+  "validation.tiktok.invalid": "Invalid Tiktok URL",
+
   "validation.about.required": "About is required",
   "validation.firstName.firstLetterCapitalized": "The first letter of the first name must be uppercase.",
   "validation.lastName.firstLetterCapitalized": "The first letter of the last name must be uppercase.",
@@ -437,5 +442,10 @@
   "validation.break.slots.overap.each.other": "It seems some of your break slots overlap each other. Please double-check your schedule and ensure there are no conflicts. Thank you!",
 
   "privacy.policy": "Privacy Policy",
-  "privacy.terms": "Terms and Conditions"
+  "privacy.terms": "Terms and Conditions",
+
+  "onboard.about.toast.error.title.phone": "A user with this phone number is already registered.",
+  "nickname": "Nickname",
+
+  "nickname.contents": "a unique name used to identify your profile. It can contain only Latin letters, numbers, and special characters (if allowed), but no spaces. The maximum length is 32 characters."
 }

@@ -105,7 +105,7 @@
   "location.search.input.label": "Адреса *",
 
   "onboard.about.toast.error.title": "Ой, щось пішло не так...",
-  "onboard.about.toast.success.description": "Будь ласка, перевірте введені дані або спробуйте пізніше :)",
+  "onboard.about.toast.error.description": "Будь ласка, перевірте введені дані або спробуйте пізніше :)",
   "onboard.about.title": "Про мене",
   "onboard.errorBox.title": "Зв'язок з сервером було перервано",
   "onboard.errorBox.description": "Будь ласка, перевірте своє підключення до інтернету або спробуйте оновити сторінку. Якщо проблема залишається, будь ласка, зверніться до нашої служби підтримки для отримання допомоги.",
@@ -223,6 +223,9 @@
   "user.about.professional.form.facebook": "Facebook",
   "user.about.professional.form.instagram": "Instagram",
   "user.about.professional.form.about": "Про себе",
+  "user.about.professional.form.nickname": "Нікнейм *",
+  "user.about.professional.form.nickname.dublicate": "Цей нікнейм вже використовується",
+  "user.about.professional.form.tiktok": "Тікток",
 
   "user.professional.gallery.form.noAlbumsAdded": "Альбомів не додано",
   "user.professional.gallery.form.loadingAlbums": "Завантаження альбомів...",
@@ -370,6 +373,9 @@
   "validation.about.required": "Про себе є обов'язковим",
   "validation.firstName.firstLetterCapitalized": "Перша літера імені повинна бути великою",
   "validation.lastName.firstLetterCapitalized": "Перша літера прізвища повинна бути великою",
+  "validation.tiktok.invalid": "Невірний URL Tiktok",
+
+  "validation.nickname.minLength": "Нікнем повинен мати мінімум 2 символи",
 
   "professional.pro": "професіоналів",
   "professional.found": "Ми знайшли",
@@ -438,5 +444,9 @@
   "validation.break.slots.overap.each.other": "Здається, деякі з ваших перерв перекривають одна одну. Будь ласка, перевірте свій розклад і уникайте конфліктів. Дякуємо!",
 
   "privacy.policy": "Політика конфіденційності",
-  "privacy.terms": "Публічна оферта"
+  "privacy.terms": "Публічна оферта",
+
+  "onboard.about.toast.error.title.phone": "Користувач із таким номером телефону вже зареєстрований.",
+  "nickname": "Нікнейм",
+  "nickname.contents": "це унікальне ім’я, яке використовується для ідентифікації вашого профілю. Воно може містити лише латинські літери, цифри та спеціальні символи (якщо дозволено), але без пробілів. Максимальна довжина - 32 символи"
 }
