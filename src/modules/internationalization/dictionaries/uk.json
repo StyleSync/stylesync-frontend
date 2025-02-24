@@ -105,7 +105,7 @@
   "location.search.input.label": "Адреса *",
 
   "onboard.about.toast.error.title": "Ой, щось пішло не так...",
-  "onboard.about.toast.success.description": "Будь ласка, перевірте введені дані або спробуйте пізніше :)",
+  "onboard.about.toast.error.description": "Будь ласка, перевірте введені дані або спробуйте пізніше :)",
   "onboard.about.title": "Про мене",
   "onboard.errorBox.title": "Зв'язок з сервером було перервано",
   "onboard.errorBox.description": "Будь ласка, перевірте своє підключення до інтернету або спробуйте оновити сторінку. Якщо проблема залишається, будь ласка, зверніться до нашої служби підтримки для отримання допомоги.",

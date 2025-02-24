@@ -106,7 +106,7 @@
   "location.search.input.label": "Address *",
 
   "onboard.about.toast.error.title": "Ooops, something went wrong...",
-  "onboard.about.toast.success.description": "Please review the entered data or try again later :)",
+  "onboard.about.toast.error.description": "Please review the entered data or try again later :)",
   "onboard.about.title": "About me",
   "onboard.errorBox.title": "Connection with server has been interrupted",
   "onboard.errorBox.description": "Please check your internet connection or try refreshing the page. If the issue persists, please contact our support team for assistance.",

@@ -1,14 +1,13 @@
-import { useEffect, type ChangeEvent, type FC } from 'react';
+import { type ChangeEvent, type FC, useEffect } from 'react';
+
 import { useIntl } from 'react-intl';
-// components
+
+import { HoverTooltip } from '@/modules/core/components/hover-tooltip';
 import { Icon } from '@/modules/core/components/icon';
 import { TextField } from '@/modules/core/components/text-field';
-import { HoverTooltip } from '@/modules/core/components/hover-tooltip';
-// utils
+import { useDebounce } from '@/modules/core/hooks/use-debounce';
 import { trpc } from '@/modules/core/utils/trpc.utils';
-// hooks
-import { UseDebounce } from '@/modules/core/hooks/use-debounce';
-// types
+
 import { type NickNameFieldProps } from './nickname-field.interface';
 
 const nicknameRegax = /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':",.<>?/]{1,32}$/;
@@ -23,7 +22,9 @@ export const NickNameField: FC<NickNameFieldProps> = ({
 }) => {
   const intl = useIntl();
 
-  const debounceValue = UseDebounce(value);
+  const debounceValue = useDebounce(value);
+
+  const { data: me } = trpc.user.me.useQuery();
 
   const { data } = trpc.user.checkNickname.useQuery(
     { nickname: debounceValue || '' },
@@ -31,14 +32,14 @@ export const NickNameField: FC<NickNameFieldProps> = ({
   );
 
   useEffect(() => {
-    if (data?.available === false) {
+    if (data?.available === false && data?.userId !== me?.id) {
       setError('nickname', {
         message: intl.formatMessage({
           id: 'user.about.professional.form.nickname.dublicate',
         }),
       });
     }
-  }, [intl, setError, data?.available]);
+  }, [intl, setError, data?.available, me?.id, data?.userId]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     clearErrors('nickname');

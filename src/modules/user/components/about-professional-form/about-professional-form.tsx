@@ -1,24 +1,28 @@
 import { memo, useCallback, useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { Controller, useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
-// components
-import { TextField } from '@/modules/core/components/text-field';
+import { z } from 'zod';
+
 import { AvatarSelect } from '@/modules/core/components/avatar-select';
-import { PhoneField } from '@/modules/core/components/phone-field';
 import { NickNameField } from '@/modules/core/components/nickname-field';
-// utils
+import { PhoneField } from '@/modules/core/components/phone-field';
+import { TextField } from '@/modules/core/components/text-field';
+import { useImageInputState } from '@/modules/core/hooks/use-image-input-state';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { getPrismaErrorMessage } from '@/modules/user/utils/get-prisma-error-message';
-// hooks
-import { useImageInputState } from '@/modules/core/hooks/use-image-input-state';
-// type
+
 import type {
   AboutProfessionalFormProps,
   AboutProfessionalFormValues,
 } from './about-professional-form.interface';
+
 import styles from './about-professional-form.module.scss';
+
+export const PRISMA_ERRORS = {
+  UNIQUE_DUPLICATE: 'P2002',
+} as const;
 
 const defaultValues: AboutProfessionalFormValues = {
   firstName: '',
@@ -155,7 +159,9 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
 
     const handleError = useCallback(
       (error: any) => {
-        if (getPrismaErrorMessage(error, 'phone', 'P2002')) {
+        if (
+          getPrismaErrorMessage(error, 'phone', PRISMA_ERRORS.UNIQUE_DUPLICATE)
+        ) {
           setError('phone', {
             message: intl.formatMessage({
               id: 'onboard.about.toast.error.title.phone',
@@ -163,7 +169,13 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
           });
         }
 
-        if (getPrismaErrorMessage(error, 'nickname', 'P2002')) {
+        if (
+          getPrismaErrorMessage(
+            error,
+            'nickname',
+            PRISMA_ERRORS.UNIQUE_DUPLICATE
+          )
+        ) {
           setError('nickname', {
             message: intl.formatMessage({
               id: 'user.about.professional.form.nickname.dublicate',

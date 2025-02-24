@@ -111,7 +111,7 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
                   id: 'onboard.about.toast.error.title',
                 }),
                 description: intl.formatMessage({
-                  id: 'onboard.about.toast.success.description',
+                  id: 'onboard.about.toast.error.description',
                 }),
               });
               if (error) {
