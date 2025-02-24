@@ -5,7 +5,7 @@
     "prettier",
     "plugin:storybook/recommended"
   ],
-  "plugins": ["simple-import-sort", "no-relative-import-paths"],
+  "plugins": ["simple-import-sort", "no-relative-import-paths", "unused-imports"],
   "rules": {
     "simple-import-sort/imports": ["warn", {
       "groups": [
@@ -31,6 +31,17 @@
     "no-relative-import-paths/no-relative-import-paths": [
       "warn",
       { "allowSameFolder": true, "prefix": "@", "rootDir": "src" }
+    ],
+    "@typescript-eslint/no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "warn",
+    "unused-imports/no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
     ]
   },
   "settings": {
