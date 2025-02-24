@@ -1,19 +1,20 @@
 import {
-  type FC,
   type ChangeEvent,
+  type FC,
   useCallback,
+  useEffect,
   useRef,
   useState,
-  useEffect,
 } from 'react';
-import { useBoolean } from 'usehooks-ts';
+
 import clsx from 'clsx';
-// components
+import { useBoolean } from 'usehooks-ts';
+
+import { Button } from '@/modules/core/components/button';
 import { Popover } from '@/modules/core/components/popover';
 import { TextField } from '@/modules/core/components/text-field';
 import { TimeSelect } from '@/modules/core/components/time-select';
-import { Button } from '@/modules/core/components/button';
-// utils
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import {
   formatTimeRange,
   isTimeRangeString,
@@ -22,6 +23,7 @@ import {
 } from '@/modules/core/utils/time.utils';
 
 import type { TimeRangeFieldInterface } from './time-range-field.interface';
+
 import styles from './time-range-field.module.scss';
 
 export const TimeRangeField: FC<TimeRangeFieldInterface> = ({
@@ -40,6 +42,8 @@ export const TimeRangeField: FC<TimeRangeFieldInterface> = ({
   // refs
   const rootRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const deviceType = useDeviceType();
 
   useEffect(() => {
     if (isTimeRangeString(value)) {
@@ -151,6 +155,7 @@ export const TimeRangeField: FC<TimeRangeFieldInterface> = ({
             onChange={handleTextFieldChange}
             onFocus={startTimeSelection}
             variant='input'
+            readOnly={deviceType === 'mobile'}
           />
           <Button
             variant='secondary'
@@ -158,8 +163,7 @@ export const TimeRangeField: FC<TimeRangeFieldInterface> = ({
             type='button'
             disabled={!isTimeRangeString(value)}
             onClick={toggleTimeSelection}
-            className={clsx(styles.submitButton, {
-              [styles.small]: inputProps?.fieldSize === 'small',
+            className={clsx(styles.submitButton, styles.small, {
               [styles.error]: inputProps?.error === true,
               [styles.active]: isActive.value,
             })}

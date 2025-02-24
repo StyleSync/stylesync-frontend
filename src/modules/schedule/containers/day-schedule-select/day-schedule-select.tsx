@@ -1,39 +1,36 @@
 import { type FC, useCallback, useEffect } from 'react';
-import clsx from 'clsx';
-import { useBoolean } from 'usehooks-ts';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Controller, useFieldArray, useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { useIntl } from 'react-intl';
-import { useDeviceType } from '@/modules/core/hooks/use-device-type';
-import { getQueryKey } from '@trpc/react-query';
 
-// components
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
+import { getQueryKey } from '@trpc/react-query';
+import clsx from 'clsx';
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import { useIntl } from 'react-intl';
+import { useBoolean } from 'usehooks-ts';
+import { z } from 'zod';
+
 import { Button } from '@/modules/core/components/button';
-import { Typography } from '@/modules/core/components/typogrpahy';
-import { TimeRangeField } from '@/modules/core/components/time-range-field';
 import { Checkbox } from '@/modules/core/components/checkbox';
-// hooks
-import { useWeekdayScheduleSaveMutation } from '@/modules/schedule/hooks/use-weekday-schedule-save-mutation';
-// utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
-import { formatBreaks } from '@/modules/schedule/utils/breaks.utils';
+import { TimeRangeField } from '@/modules/core/components/time-range-field';
+import { Typography } from '@/modules/core/components/typogrpahy';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
+import { showToast } from '@/modules/core/providers/toast-provider';
 import {
   emptyTimeRange,
   formatTimeRange,
   parseTimeRange,
   Time,
 } from '@/modules/core/utils/time.utils';
-import { showToast } from '@/modules/core/providers/toast-provider';
-// constants
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { BreakTags } from '@/modules/schedule/components/break-tags';
 import { emptySchedule } from '@/modules/schedule/constants/schedule.constants';
-// types
+import { useWeekdayScheduleSaveMutation } from '@/modules/schedule/hooks/use-weekday-schedule-save-mutation';
 import type { DailySchedule } from '@/modules/schedule/types/schedule.types';
+import { formatBreaks } from '@/modules/schedule/utils/breaks.utils';
 
 import type { DayScheduleSelectProps } from './day-schedule-select.interface';
+
 import styles from './day-schedule-select.module.scss';
-import { BreakTags } from '@/modules/schedule/components/break-tags';
-import { useQueryClient } from '@tanstack/react-query';
 
 const workHoursSchema = z.string().refine((args) => {
   try {
@@ -324,12 +321,10 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
                 {fields.map((item, index) => (
                   <div key={item._id} className={styles.break}>
                     <Controller
-                      key={item._id}
                       control={form.control}
                       name={`breaks.${index}.timerange`}
                       render={({ field, fieldState }) => (
                         <TimeRangeField
-                          key={item._id}
                           value={field.value}
                           className={styles.timerange}
                           onChange={field.onChange}
@@ -338,6 +333,9 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
                               deviceType === 'mobile' ? 'medium' : 'small',
                             error: Boolean(fieldState.error),
                             disabled: weekdayScheduleSaveMutation.isLoading,
+                          }}
+                          popoverProps={{
+                            disablePortal: true,
                           }}
                         />
                       )}
