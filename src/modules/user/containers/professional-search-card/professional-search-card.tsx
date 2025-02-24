@@ -1,25 +1,28 @@
 import { type FC } from 'react';
-import { useIntl } from 'react-intl';
+
 import { useRouter } from 'next/navigation';
-// components
+import { useIntl } from 'react-intl';
+
 import { Avatar } from '@/modules/core/components/avatar';
-import { Typography } from '@/modules/core/components/typogrpahy';
 import { Icon } from '@/modules/core/components/icon';
-// utils
+import { Typography } from '@/modules/core/components/typogrpahy';
+import { trpc } from '@/modules/core/utils/trpc.utils';
 import { getFullName } from '@/modules/user/utils/user.utils';
-// types
+
 import type { ProfessionalSearchCardProps } from './professional-search-card.interface';
 
 export const ProfessionalSearchCard: FC<ProfessionalSearchCardProps> = ({
   professional,
 }) => {
   const intl = useIntl();
-
+  const { data: me } = trpc.user.me.useQuery();
   const router = useRouter();
 
   return (
     <div
-      onClick={() => router.push(`/app/profile/${professional.user.id}`)}
+      onClick={() =>
+        router.push(`/app/profile/${me?.nickname || professional.user.id}`)
+      }
       className='flex h-fit w-full cursor-pointer flex-col justify-between gap-y-0 overflow-hidden rounded-xl bg-white pb-6 shadow transition hover:shadow-accentShadow'
     >
       <div className='relative flex flex-col gap-x-4 object-fill'>

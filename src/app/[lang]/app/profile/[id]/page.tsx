@@ -1,87 +1,13 @@
-import { Suspense } from 'react';
-import clsx from 'clsx';
-
 import { getServerSession } from 'next-auth';
+
 import { authOptions } from '@/modules/auth/constants/auth-server.constants';
-import { ErrorBoundary } from 'react-error-boundary';
-// components
-import { AboutMe } from '@/modules/user/components/about-me';
-import { GallerySection } from '@/modules/user/components/gallery-section';
-import { UserServices } from '@/modules/user/components/user-services';
-import { ProfileSectionLayout } from '@/modules/user/components/profile-section-layout';
-import { ProLocation } from '@/modules/user/components/pro-location';
-import { ServiceTableSkeleton } from '@/modules/service/components/service-table-skeleton';
-// containers
-import { ProBookActions } from '@/modules/user/containers/pro-book-actions';
-import { ProfessionalInfoBigCard } from '@/modules/user/containers/professional-info-big-card';
-// providers
-import { BookingProvider } from '@/modules/booking/providers/booking-provider';
-
 // types
-import type { PageParams } from '@/modules/core/types/next.types';
-import styles from './profile.module.scss';
+import { ProfileClient } from '@/modules/user/containers/profile-client';
 
-export default async function Profile({ params }: PageParams<{ id: string }>) {
+export default async function Profile() {
   const session = await getServerSession(authOptions);
 
-  return (
-    <BookingProvider userId={params.id}>
-      <main className={styles.root}>
-        <section className={clsx(styles.section, styles.headerSection)}>
-          <Suspense
-            fallback={
-              <div className='h-[214px] w-full rounded-xl bg-black/10' />
-            }
-          >
-            <ProfessionalInfoBigCard userId={params.id} session={session} />
-          </Suspense>
-        </section>
-        <div className={styles.divider} />
-        <div className={styles.sectionGroup}>
-          <ProfileSectionLayout title='pro.layout.title.about' id='about-me'>
-            <Suspense
-              fallback={
-                <div className='flex flex-col gap-y-2'>
-                  <div className='skeleton flex h-4 w-[70%] rounded' />
-                  <div className='skeleton flex h-4 w-[80%] rounded' />
-                  <div className='skeleton flex h-4 w-[50%] rounded' />
-                </div>
-              }
-            >
-              <AboutMe userId={params.id} />
-            </Suspense>
-          </ProfileSectionLayout>
-          <ProfileSectionLayout
-            title='pro.layout.title.services'
-            id='profile-services'
-          >
-            <Suspense fallback={<ServiceTableSkeleton rows={3} />}>
-              <UserServices userId={params.id} session={session} />
-            </Suspense>
-          </ProfileSectionLayout>
-          <ErrorBoundary fallback={null}>
-            <ProfileSectionLayout
-              title='pro.layout.title.location'
-              id='profile-location'
-            >
-              <Suspense
-                fallback={
-                  <div className='flex flex-col gap-y-4'>
-                    <div className='skeleton h-4 w-[60%] rounded' />
-                    <div className='skeleton h-[400px] w-full rounded-xl' />
-                  </div>
-                }
-              >
-                <ProLocation userId={params.id} />
-              </Suspense>
-            </ProfileSectionLayout>
-          </ErrorBoundary>
-          <GallerySection userId={params.id} />
-        </div>
-        <ProBookActions userId={params.id} />
-      </main>
-    </BookingProvider>
-  );
+  return <ProfileClient session={session} />;
 }
 
 export const metadata = {
