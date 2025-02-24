@@ -46,6 +46,8 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
       about: me?.professional?.about ?? undefined,
       instagram: me?.professional?.instagram ?? undefined,
       facebook: me?.professional?.facebook ?? undefined,
+      nickname: me?.nickname ?? undefined,
+      tiktok: me?.professional?.tiktok ?? undefined,
     }),
     [me]
   );
@@ -56,7 +58,8 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
 
   const handleSubmit = useCallback(
     async (
-      values: AboutProfessionalFormValues & { avatar?: File | string | null }
+      values: AboutProfessionalFormValues & { avatar?: File | string | null },
+      onError: (error: any) => void
     ) => {
       if (!me) {
         return;
@@ -81,6 +84,7 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
 
       await meUpdateAsync({
         avatar: avatarUrl,
+        nickname: values.nickname || undefined,
         firstName: values.firstName || undefined,
         lastName: values.lastName || undefined,
         phone: values.phone || undefined,
@@ -93,22 +97,26 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
             about: values.about || undefined,
             instagram: values.instagram || undefined,
             facebook: values.facebook || undefined,
+            tiktok: values.tiktok || undefined,
           },
           {
             onSuccess: () => {
               meQuery.refetch();
               next();
             },
-            onError: () => {
+            onError: (error: any) => {
               showToast({
                 variant: 'error',
                 title: intl.formatMessage({
                   id: 'onboard.about.toast.error.title',
                 }),
                 description: intl.formatMessage({
-                  id: 'onboard.about.toast.success.description',
+                  id: 'onboard.about.toast.error.description',
                 }),
               });
+              if (error) {
+                onError(error);
+              }
             },
           }
         );
