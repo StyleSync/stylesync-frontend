@@ -9,6 +9,7 @@ import { AvatarSelect } from '@/modules/core/components/avatar-select';
 import { NickNameField } from '@/modules/core/components/nickname-field';
 import { PhoneField } from '@/modules/core/components/phone-field';
 import { TextField } from '@/modules/core/components/text-field';
+import { PRISMA_ERRORS } from '@/modules/core/constants/prisma-errors.constants';
 import { useImageInputState } from '@/modules/core/hooks/use-image-input-state';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { getPrismaErrorMessage } from '@/modules/user/utils/get-prisma-error-message';
@@ -19,10 +20,6 @@ import type {
 } from './about-professional-form.interface';
 
 import styles from './about-professional-form.module.scss';
-
-export const PRISMA_ERRORS = {
-  UNIQUE_DUPLICATE: 'P2002',
-} as const;
 
 const defaultValues: AboutProfessionalFormValues = {
   firstName: '',
