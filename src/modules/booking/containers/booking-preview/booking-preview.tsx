@@ -1,26 +1,24 @@
 'use client';
-import { useParams } from 'next/navigation';
 import { getHours, getMinutes, isAfter } from 'date-fns';
+import { useParams } from 'next/navigation';
 import { useIntl } from 'react-intl';
-// components
-import { Typography } from '@/modules/core/components/typogrpahy';
+import { useBoolean } from 'usehooks-ts';
+
+import { AddGoogleCalendarEventBtn } from '@/modules/booking/components/add-google-calendar-event';
 import { BookingPreviewDetailBox } from '@/modules/booking/components/booking-preview-detail-box/booking-preview-detail-box';
+import { BookingPreviewMap } from '@/modules/booking/components/booking-preview-map';
+import { BookingPreviewProgressbar } from '@/modules/booking/components/booking-preview-progressbar';
+import { BookingStatus } from '@/modules/booking/components/booking-status';
 import { Button } from '@/modules/core/components/button';
 import { Spinner } from '@/modules/core/components/spinner';
-import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
-import { AddGoogleCalendarEventBtn } from '@/modules/booking/components/add-google-calendar-event';
-import { BookingPreviewProgressbar } from '@/modules/booking/components/booking-preview-progressbar';
-import { BookingPreviewMap } from '@/modules/booking/components/booking-preview-map';
-import { BookingStatus } from '@/modules/booking/components/booking-status';
-// hooks
-import { useBoolean } from 'usehooks-ts';
-// utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
-import { formatDuration } from '@/modules/core/utils/time.utils';
-import { onQueryRetry } from '@/modules/core/utils/query-retry.utils';
-import { getAddressGoogleLink } from '@/modules/location/utils/address.utils';
+import { Typography } from '@/modules/core/components/typogrpahy';
 import { formatDateIntl } from '@/modules/core/utils/date.utils';
-// style
+import { onQueryRetry } from '@/modules/core/utils/query-retry.utils';
+import { formatDuration } from '@/modules/core/utils/time.utils';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { getAddressGoogleLink } from '@/modules/location/utils/address.utils';
+import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
+
 import 'react-circular-progressbar/dist/styles.css';
 
 const MILLISECONDS_IN_MINUTE = 60000;
@@ -98,7 +96,7 @@ export const BookingPreview = () => {
             <div className='flex flex-col gap-4'>
               <a
                 target='_blank'
-                href={`/app/profile/${professional.data?.userId}`}
+                href={`/app/profile/${professional.data?.user?.nickname || professional.data?.userId}`}
                 rel='noreferrer'
               >
                 <BookingPreviewDetailBox

@@ -1,33 +1,29 @@
 import { type FC, useMemo } from 'react';
-import { useIntl } from 'react-intl';
-// hooks
-import { useCopyToClipboard } from 'usehooks-ts';
-import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 
-// components
-import { Icon } from '@/modules/core/components/icon';
-import { DialogBottom } from '@/modules/core/components/dialog-bottom';
-import { Dialog } from '@/modules/core/components/dialog';
+import { useIntl } from 'react-intl';
+import {
+  EmailIcon,
+  EmailShareButton,
+  FacebookIcon,
+  FacebookShareButton,
+  TelegramIcon,
+  TelegramShareButton,
+  ViberIcon,
+  ViberShareButton,
+  WhatsappIcon,
+  WhatsappShareButton,
+} from 'react-share';
+import { useCopyToClipboard } from 'usehooks-ts';
+
 import { Button } from '@/modules/core/components/button';
-// types
-import { type ProfileModalLinksProps } from './profile-links-modal.interface';
-// utils
+import { Dialog } from '@/modules/core/components/dialog';
+import { DialogBottom } from '@/modules/core/components/dialog-bottom';
+import { Icon } from '@/modules/core/components/icon';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { generateProfileLink } from '@/modules/user/utils/generate-profile-link';
 
-// icons
-import {
-  EmailShareButton,
-  FacebookShareButton,
-  TelegramShareButton,
-  ViberShareButton,
-  WhatsappShareButton,
-  EmailIcon,
-  FacebookIcon,
-  TelegramIcon,
-  ViberIcon,
-  WhatsappIcon,
-} from 'react-share';
+import { type ProfileModalLinksProps } from './profile-links-modal.interface';
 
 export const ProfileLinksModal: FC<ProfileModalLinksProps> = ({
   isOpen,
@@ -50,8 +46,8 @@ export const ProfileLinksModal: FC<ProfileModalLinksProps> = ({
   const linkStyleSync = useMemo(() => {
     if (!me?.id) return '';
 
-    return generateProfileLink(intl.locale, me.id);
-  }, [intl.locale, me?.id]);
+    return generateProfileLink(intl.locale, me?.nickname || me?.id);
+  }, [intl.locale, me?.id, me?.nickname]);
 
   return (
     <DialogComponent

@@ -1,14 +1,15 @@
-import { router, privateProcedure } from '../trpc-helpers';
+import { Role } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
+
 import { prisma } from '@/server/prisma';
-import { Role } from '@prisma/client';
 import {
   defaultBookingSelect,
   defaultCompanySelect,
   defaultProfessionalSelect,
   defaultUserSelect,
 } from '@/server/selectors';
+import { privateProcedure, router } from '@/server/trpc-helpers';
 
 const maxTextLength = 32;
 
@@ -142,6 +143,7 @@ export const userRouter = router({
       return {
         available: !existingUser,
         userId: existingUser?.id,
+        userExist: !!existingUser,
       };
     }),
 });
