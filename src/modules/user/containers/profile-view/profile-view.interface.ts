@@ -1,6 +1,5 @@
 import type { Session } from 'next-auth';
 
-export type ProfileClientProps = {
-  userId: string;
+export type ProfileViewProps = {
   session: Session | null;
 };

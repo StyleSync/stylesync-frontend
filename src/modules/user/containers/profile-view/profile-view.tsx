@@ -1,12 +1,13 @@
 'use client';
 
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useMemo } from 'react';
 
 import clsx from 'clsx';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import { BookingProvider } from '@/modules/booking/providers/booking-provider';
+import { Spinner } from '@/modules/core/components/spinner';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { ServiceTableSkeleton } from '@/modules/service/components/service-table-skeleton';
 import { AboutMe } from '@/modules/user/components/about-me';
@@ -17,33 +18,35 @@ import { UserServices } from '@/modules/user/components/user-services';
 import { ProBookActions } from '@/modules/user/containers/pro-book-actions';
 import { ProfessionalInfoBigCard } from '@/modules/user/containers/professional-info-big-card';
 
-import styles from './profile-client.module.scss';
-import { Session } from 'next-auth';
-import { Spinner } from '@/modules/core/components/spinner';
+import { type ProfileViewProps } from './profile-view.interface';
 
-type Props = {
-  session: Session | null;
-};
+import styles from './profile-view.module.scss';
 
-export function ProfileClient({ session }: Props) {
-  const { id: pathId } = useParams<{ id: string }>();
+export function ProfileView({ session }: ProfileViewProps) {
+  const { id: queryId } = useParams<{ id: string }>();
 
-  const { data, isLoading } = trpc.user.checkNickname.useQuery({
-    nickname: pathId,
-  });
+  const { data, isLoading } = trpc.user.checkNickname.useQuery(
+    {
+      nickname: queryId,
+    },
+    { enabled: !!queryId }
+  );
 
-  const actualPathId = (data?.available ? data.userId : pathId) || '';
+  const userId = useMemo(
+    () => (data?.userExist ? data.userId : queryId) || '',
+    [data, queryId]
+  );
 
   if (isLoading) {
     return (
-      <div className='flex h-full items-center justify-center'>
-        <Spinner />
+      <div className='z-50 flex h-full items-center justify-center'>
+        <Spinner size={'large'} />
       </div>
     );
   }
 
   return (
-    <BookingProvider userId={actualPathId}>
+    <BookingProvider userId={userId}>
       <main className={styles.root}>
         <section className={clsx(styles.section, styles.headerSection)}>
           <Suspense
@@ -51,7 +54,7 @@ export function ProfileClient({ session }: Props) {
               <div className='h-[214px] w-full rounded-xl bg-black/10' />
             }
           >
-            <ProfessionalInfoBigCard userId={pathId} session={session} />
+            <ProfessionalInfoBigCard userId={userId} session={session} />
           </Suspense>
         </section>
         <div className={styles.divider} />
@@ -66,7 +69,7 @@ export function ProfileClient({ session }: Props) {
                 </div>
               }
             >
-              <AboutMe userId={pathId} />
+              <AboutMe userId={userId} />
             </Suspense>
           </ProfileSectionLayout>
           <ProfileSectionLayout
@@ -74,7 +77,7 @@ export function ProfileClient({ session }: Props) {
             id='profile-services'
           >
             <Suspense fallback={<ServiceTableSkeleton rows={3} />}>
-              <UserServices userId={pathId} session={session} />
+              <UserServices userId={userId} session={session} />
             </Suspense>
           </ProfileSectionLayout>
           <ErrorBoundary fallback={null}>
@@ -90,13 +93,13 @@ export function ProfileClient({ session }: Props) {
                   </div>
                 }
               >
-                <ProLocation userId={actualPathId} />
+                <ProLocation userId={userId} />
               </Suspense>
             </ProfileSectionLayout>
           </ErrorBoundary>
-          <GallerySection userId={actualPathId} />
+          <GallerySection userId={userId} />
         </div>
-        <ProBookActions userId={actualPathId} />
+        <ProBookActions userId={userId} />
       </main>
     </BookingProvider>
   );

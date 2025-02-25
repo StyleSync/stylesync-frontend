@@ -1,17 +1,22 @@
-import { privateProcedure, publicProcedure, router } from '../trpc-helpers';
+import { Day, Role } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
+
 import { prisma } from '@/server/prisma';
-import { Day, Role } from '@prisma/client';
 import {
   defaultProfessionalSelect,
   defaultServiceOnProfessionalSelect,
   defaultUserSelect,
 } from '@/server/selectors';
-import { defaultScheduleSelect } from '@/server/selectors/schedule';
-import { defaultLocationSelect } from '@/server/selectors/location';
-import { publicUserSelect } from '@/server/selectors/user';
 import { defaultAlbumSelect } from '@/server/selectors/album';
+import { defaultLocationSelect } from '@/server/selectors/location';
+import { defaultScheduleSelect } from '@/server/selectors/schedule';
+import { publicUserSelect } from '@/server/selectors/user';
+import {
+  privateProcedure,
+  publicProcedure,
+  router,
+} from '@/server/trpc-helpers';
 import { createUniqueArray } from '@/server/utils/helpers';
 import { getCursor } from '@/server/utils/prisma-utils';
 
@@ -152,6 +157,7 @@ export const professionalRouter = router({
               image: true,
               firstName: true,
               lastName: true,
+              nickname: true,
             },
           },
           location: {

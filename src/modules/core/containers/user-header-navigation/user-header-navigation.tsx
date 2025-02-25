@@ -34,7 +34,7 @@ export const UserHeaderNavigation: FC<{
       return [
         {
           icon: 'user',
-          href: `/app/profile/${session.user.id}`,
+          href: `/app/profile/${me?.nickname || session.user.id}`,
           title: intl.formatMessage({ id: 'user.header.navigation.profile' }),
         },
         {

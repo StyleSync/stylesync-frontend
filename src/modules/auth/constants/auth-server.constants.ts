@@ -25,6 +25,7 @@ export const authOptions: NextAuthOptions = {
             id: user.id,
             onboardingCompleted: user.onboardingCompleted,
             userType: user.userType,
+            nickname: user.nickname,
           },
         };
       }

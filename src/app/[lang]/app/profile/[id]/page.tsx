@@ -1,13 +1,12 @@
 import { getServerSession } from 'next-auth';
 
 import { authOptions } from '@/modules/auth/constants/auth-server.constants';
-// types
-import { ProfileClient } from '@/modules/user/containers/profile-client';
+import { ProfileView } from '@/modules/user/containers/profile-view';
 
 export default async function Profile() {
   const session = await getServerSession(authOptions);
 
-  return <ProfileClient session={session} />;
+  return <ProfileView session={session} />;
 }
 
 export const metadata = {

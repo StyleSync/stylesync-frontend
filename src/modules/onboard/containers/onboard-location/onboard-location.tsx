@@ -12,14 +12,13 @@ export const OnboardLocation: FC<ProOnboardStepProps> = ({ back }) => {
   const intl = useIntl();
   const { data: userData } = trpc.user.me.useQuery();
   const { mutateAsync: updateUser } = trpc.user.update.useMutation();
-  const { data: me } = trpc.user.me.useQuery();
 
   const router = useRouter();
 
   const handleSubmit = useCallback(async () => {
     await updateUser({ onboardingCompleted: true });
-    router.push(`/app/profile/${me?.nickname || userData?.id}`);
-  }, [router, updateUser, userData?.id, me?.nickname]);
+    router.push(`/app/profile/${userData?.nickname || userData?.id}`);
+  }, [router, updateUser, userData?.id, userData?.nickname]);
 
   return (
     <OnboardLayout
