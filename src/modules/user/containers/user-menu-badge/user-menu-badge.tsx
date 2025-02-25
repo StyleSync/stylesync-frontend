@@ -53,7 +53,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
   const handleSelect = useCallback(
     ({ id }: DropdownItem) => {
       if (id === 'my-profile') {
-        router.push(`/app/profile/${session?.user.id}`);
+        router.push(`/app/profile/${me?.nickname || session?.user.id}`);
       }
 
       if (id === 'my-bookings') {
@@ -74,7 +74,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
 
       isOpen.setFalse();
     },
-    [isOpen, router, session?.user.id, isOpenModalLinks]
+    [isOpen, router, session?.user.id, isOpenModalLinks, me?.nickname]
   );
 
   const dropdownItems: DropdownItem[] = useMemo(() => {

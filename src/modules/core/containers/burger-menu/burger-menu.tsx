@@ -9,13 +9,10 @@ import { useBoolean } from 'usehooks-ts';
 import { Avatar } from '@/modules/core/components/avatar';
 import { Button } from '@/modules/core/components/button';
 import { DialogFullScreen } from '@/modules/core/components/dialog-full-screen';
-// types
 import type { DialogFullScreenAnimationConfig } from '@/modules/core/components/dialog-full-screen/dialog-full-screen.interface';
 import { Emoji } from '@/modules/core/components/emoji';
 import { Placeholder } from '@/modules/core/components/placeholder';
-// components
 import { Typography } from '@/modules/core/components/typogrpahy';
-// utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { LocaleSelect } from '@/modules/internationalization/components/locale-select';
 import { ProfileLinksModal } from '@/modules/user/components/profile-links-modal';
@@ -186,7 +183,7 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ session }) => {
   const handleActionClick = useCallback(
     (action: BurgerMenuAction) => () => {
       if (action.id === 'my-profile') {
-        router.push(`/app/profile/${session?.user.id}`);
+        router.push(`/app/profile/${me?.nickname || session?.user.id}`);
       }
 
       if (action.id === 'my-bookings') {
@@ -212,7 +209,7 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ session }) => {
 
       isOpen.setFalse();
     },
-    [isOpen, router, session?.user.id, isOpenModalLinks]
+    [isOpen, router, session?.user.id, isOpenModalLinks, me?.nickname]
   );
 
   return (

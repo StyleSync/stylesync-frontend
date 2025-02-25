@@ -1,12 +1,11 @@
 import { type FC, useCallback } from 'react';
+
 import { useRouter } from 'next/navigation';
 import { useIntl } from 'react-intl';
+
 import { trpc } from '@/modules/core/utils/trpc.utils';
-// components
-import { OnboardLayout } from '@/modules/onboard/components/onboard-layout';
-// containers
 import { UserLocationSelectForm } from '@/modules/location/containers/user-location-select-form';
-// types
+import { OnboardLayout } from '@/modules/onboard/components/onboard-layout';
 import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboard/pro-onboard.interface';
 
 export const OnboardLocation: FC<ProOnboardStepProps> = ({ back }) => {
@@ -18,8 +17,8 @@ export const OnboardLocation: FC<ProOnboardStepProps> = ({ back }) => {
 
   const handleSubmit = useCallback(async () => {
     await updateUser({ onboardingCompleted: true });
-    router.push(`/app/profile/${userData?.id}`);
-  }, [router, updateUser, userData?.id]);
+    router.push(`/app/profile/${userData?.nickname || userData?.id}`);
+  }, [router, updateUser, userData?.id, userData?.nickname]);
 
   return (
     <OnboardLayout

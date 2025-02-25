@@ -1,12 +1,13 @@
 'use client';
-import { UserHeaderNavigation } from '@/modules/core/containers/user-header-navigation/user-header-navigation';
-import { Header } from '@/modules/core/components/header';
-import { UserMenuBadge } from '@/modules/user/containers/user-menu-badge';
 import clsx from 'clsx';
+import { usePathname } from 'next/navigation';
+import type { FC } from 'react';
+
+import { Header } from '@/modules/core/components/header';
+import { UserHeaderNavigation } from '@/modules/core/containers/user-header-navigation/user-header-navigation';
+import { UserMenuBadge } from '@/modules/user/containers/user-menu-badge';
 
 import { type AppHeaderProps } from './app-header.interface';
-import type { FC } from 'react';
-import { usePathname } from 'next/navigation';
 
 export const AppHeader: FC<AppHeaderProps> = ({ session }) => {
   const pathname = usePathname();

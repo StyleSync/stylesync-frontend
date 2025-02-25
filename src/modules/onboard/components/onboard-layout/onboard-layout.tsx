@@ -1,20 +1,18 @@
 import { type FC, Fragment, useCallback } from 'react';
-import { useIntl } from 'react-intl';
-import { useSession } from 'next-auth/react';
+
 import { useRouter } from 'next/navigation';
-// hooks
-import { useDeviceType } from '@/modules/core/hooks/use-device-type';
-// utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
-import { showToast } from '@/modules/core/providers/toast-provider';
-// components
+import { useSession } from 'next-auth/react';
+import { useIntl } from 'react-intl';
+
 import { Button } from '@/modules/core/components/button';
 import { Typography } from '@/modules/core/components/typogrpahy';
-// containers
 import { BottomFixedContent } from '@/modules/core/containers/bottom-fixed-content';
-// import { trpc } from '@/modules/core/utils/trpc.utils';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
+import { showToast } from '@/modules/core/providers/toast-provider';
+import { trpc } from '@/modules/core/utils/trpc.utils';
 
 import type { OnboardLayoutProps } from './onboard-layout.interface';
+
 import styles from './onboard-layout.module.scss';
 
 export const OnboardLayout: FC<OnboardLayoutProps> = ({
@@ -64,7 +62,7 @@ export const OnboardLayout: FC<OnboardLayoutProps> = ({
         onSuccess: () => {
           session.update();
           if (me.userType === 'PROFESSIONAL') {
-            router.replace(`/app/profile/${me.id}`);
+            router.replace(`/app/profile/${me?.nickname || me.id}`);
 
             return;
           }
