@@ -1,25 +1,26 @@
 'use client';
-import { type FC, useMemo, type ReactNode } from 'react';
+import { type FC, type ReactNode, useMemo } from 'react';
+
 import clsx from 'clsx';
 import { useIntl } from 'react-intl';
 
+import { Avatar } from '@/modules/core/components/avatar';
+import { Placeholder } from '@/modules/core/components/placeholder';
 // components
 import { Sidebar } from '@/modules/core/components/sidebar';
-import { Avatar } from '@/modules/core/components/avatar';
+// types
+import type { SidebarLinkGroup } from '@/modules/core/components/sidebar/sidebar.interface';
 import { Typography } from '@/modules/core/components/typogrpahy';
-import { Placeholder } from '@/modules/core/components/placeholder';
-// hooks
-import { useSettingsNavigation } from '@/modules/user/hooks/use-settings-navigation';
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
+// hooks
+import { useSettingsNavigation } from '@/modules/user/hooks/use-settings-navigation';
 import { getFullName } from '@/modules/user/utils/user.utils';
-// types
-import type { SidebarLinkGroup } from '@/modules/core/components/sidebar/sidebar.interface';
 
 import type { UserSettingsSidebarProps } from './professional-settings-sidebar.interface';
+
 import styles from './professional-settings-sidebar.module.scss';
-import { LocaleSelect } from '@/modules/internationalization/components/locale-select';
 
 export const ProfessionalSettingsSidebar: FC<UserSettingsSidebarProps> = () => {
   const intl = useIntl();
@@ -46,21 +47,6 @@ export const ProfessionalSettingsSidebar: FC<UserSettingsSidebarProps> = () => {
                 id: 'professional.settings.sidebar.about',
               }),
               icon: 'info',
-            },
-          ],
-        },
-        {
-          id: 'app',
-          title: intl.formatMessage({
-            id: 'professional.settings.sidebar.language',
-          }),
-          links: [
-            {
-              id: 'language',
-              icon: 'flag-ukraine',
-              renderItem: () => {
-                return <LocaleSelect />;
-              },
             },
           ],
         },
@@ -108,21 +94,6 @@ export const ProfessionalSettingsSidebar: FC<UserSettingsSidebarProps> = () => {
               id: 'professional.settings.sidebar.location',
             }),
             icon: 'location',
-          },
-        ],
-      },
-      {
-        id: 'app',
-        title: intl.formatMessage({
-          id: 'professional.settings.sidebar.language',
-        }),
-        links: [
-          {
-            id: 'language',
-            icon: 'flag-ukraine',
-            renderItem: () => {
-              return <LocaleSelect />;
-            },
           },
         ],
       },
