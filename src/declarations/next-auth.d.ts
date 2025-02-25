@@ -7,6 +7,7 @@ declare module 'next-auth' {
   export interface User extends DefaultUser {
     onboardingCompleted: null | boolean;
     userType: null | 'CUSTOMER' | 'PROFESSIONAL';
+    nickname?: string;
   }
 
   /**

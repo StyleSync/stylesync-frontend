@@ -1,19 +1,17 @@
 'use client';
 import { type FC, useCallback } from 'react';
+
+import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import clsx from 'clsx';
 import { useIntl } from 'react-intl';
 
-// components
-import { Typography } from '@/modules/core/components/typogrpahy';
 import { Button } from '@/modules/core/components/button';
 import { Stepper } from '@/modules/core/components/stepper';
-// hooks
-import { useOnboard } from '@/modules/onboard/hooks/use-onboard';
-// utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
+import { Typography } from '@/modules/core/components/typogrpahy';
 import { showToast } from '@/modules/core/providers/toast-provider';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { useOnboard } from '@/modules/onboard/hooks/use-onboard';
 
 import styles from './onboard-title.module.scss';
 
@@ -57,7 +55,7 @@ export const OnboardTitle: FC = () => {
       {
         onSuccess: () => {
           session.update();
-          router.replace(`/app/profile/${me.id}`);
+          router.replace(`/app/profile/${me?.nickname || me?.id}`);
         },
         onError: () => {
           showToast({
