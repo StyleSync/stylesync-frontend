@@ -1,15 +1,16 @@
 'use client';
 import { type FC, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+
 import clsx from 'clsx';
 import Link from 'next/link';
-import { createPortal } from 'react-dom';
 import { useBoolean, useEventListener } from 'usehooks-ts';
-// components
+
 import { Icon } from '@/modules/core/components/icon';
-// types
 import type { ChildrenProp } from '@/modules/core/types/react.types';
 
 import type { HeaderProps } from './header.interface';
+
 import styles from './header.module.scss';
 
 const PAGE_SCROLL_TRIGGER = 5;

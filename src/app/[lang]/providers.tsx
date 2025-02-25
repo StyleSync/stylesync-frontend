@@ -1,11 +1,12 @@
 'use client';
-import { SessionProvider } from 'next-auth/react';
-import type { Session } from 'next-auth';
-import type { ChildrenProp } from '@/modules/core/types/react.types';
-import { ToastProvider } from '@/modules/core/providers/toast-provider';
-import { BottomFixedContent } from '@/modules/core/containers/bottom-fixed-content';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import type { Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
+
+import { BottomFixedContent } from '@/modules/core/containers/bottom-fixed-content';
+import { ToastProvider } from '@/modules/core/providers/toast-provider';
+import type { ChildrenProp } from '@/modules/core/types/react.types';
 import { ProfessionalSearchProvider } from '@/modules/user/providers/professional-search-provider';
 
 export const Providers = ({

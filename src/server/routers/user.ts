@@ -9,7 +9,12 @@ import {
   defaultProfessionalSelect,
   defaultUserSelect,
 } from '@/server/selectors';
-import { privateProcedure, router } from '@/server/trpc-helpers';
+import { publicUserSelect } from '@/server/selectors/user';
+import {
+  privateProcedure,
+  publicProcedure,
+  router,
+} from '@/server/trpc-helpers';
 
 const maxTextLength = 32;
 
@@ -51,28 +56,23 @@ export const userRouter = router({
 
       return user;
     }),
-  get: privateProcedure
+  get: publicProcedure
     .input(
       z.object({
         id: z.string().min(1, 'Required'),
-        expand: z
-          .array(z.enum(['professional', 'company', 'bookings']))
-          .nullable(),
+        expand: z.array(z.enum(['professional', 'company'])).nullable(),
       })
     )
     .query(async ({ input }) => {
       const user = await prisma.user.findUnique({
         where: { id: input.id },
         select: {
-          ...defaultUserSelect,
+          ...publicUserSelect,
           professional: !!input?.expand?.includes('professional') && {
             select: defaultProfessionalSelect,
           },
           company: !!input?.expand?.includes('company') && {
             select: defaultCompanySelect,
-          },
-          bookings: !!input?.expand?.includes('bookings') && {
-            select: defaultBookingSelect,
           },
         },
       });
@@ -128,7 +128,7 @@ export const userRouter = router({
 
       return user;
     }),
-  checkNickname: privateProcedure
+  checkNickname: publicProcedure
     .input(
       z.object({
         nickname: z.string().min(1, 'Required').max(maxTextLength),

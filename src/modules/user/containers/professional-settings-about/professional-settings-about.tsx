@@ -1,20 +1,17 @@
 'use client';
 import { type FC, useCallback, useId, useMemo } from 'react';
-import { useIntl } from 'react-intl';
+
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
-// components
-import { ProfileSettingsTabContentLayout } from '@/modules/user/components/profile-settings-tab-content-layout';
-import { AboutProfessionalForm } from '@/modules/user/components/about-professional-form';
-// utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
-import { showToast } from '@/modules/core/providers/toast-provider';
-// hooks
-import { useAvatarUploadMutation } from '@/modules/user/hooks/use-avatar-upload-mutation';
-// constants
+import { useIntl } from 'react-intl';
+
 import { ERROR_MESSAGE } from '@/modules/core/constants/error-messages.constants';
-// types
+import { showToast } from '@/modules/core/providers/toast-provider';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { AboutProfessionalForm } from '@/modules/user/components/about-professional-form';
 import type { AboutProfessionalFormValues } from '@/modules/user/components/about-professional-form/about-professional-form.interface';
+import { ProfileSettingsTabContentLayout } from '@/modules/user/components/profile-settings-tab-content-layout';
+import { useAvatarUploadMutation } from '@/modules/user/hooks/use-avatar-upload-mutation';
 
 export const ProfessionalSettingsAbout: FC = () => {
   const intl = useIntl();
@@ -120,7 +117,7 @@ export const ProfessionalSettingsAbout: FC = () => {
 
   return (
     <ProfileSettingsTabContentLayout
-      title={intl.formatMessage({ id: 'professional.settings.about.title' })}
+      title={'professional.settings.about.title'}
       icon='info'
       isLoading={meQuery.isLoading}
       actions={[

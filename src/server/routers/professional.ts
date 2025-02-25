@@ -262,7 +262,7 @@ export const professionalRouter = router({
 
       return { items, nextCursor: getCursor(items, limit) };
     }),
-  getProfileCompletionStatus: publicProcedure
+  getProfileCompletionStatus: privateProcedure
     .input(
       z.object({
         id: z.string().min(1, 'Required'),
@@ -277,7 +277,7 @@ export const professionalRouter = router({
             select: defaultServiceOnProfessionalSelect,
           },
           user: {
-            select: publicUserSelect,
+            select: { ...publicUserSelect, avatar: true, phone: true },
           },
           schedule: {
             select: defaultScheduleSelect,

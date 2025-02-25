@@ -1,25 +1,22 @@
 'use client';
 import { useContext, useEffect, useMemo } from 'react';
+
 import clsx from 'clsx';
 import type { BBox } from 'geojson';
 import { useIntl } from 'react-intl';
-// components
-import { Button } from '@/modules/core/components/button';
-import { ProSearchField } from '@/modules/location/components/pro-search-field';
-import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
-// hooks
 import { useBoolean } from 'usehooks-ts';
-// containers
-import { ProfessionalSearchCard } from '@/modules/user/containers/professional-search-card';
-import { ProSearchFilter } from '@/modules/user/containers/pro-search-filter';
-import { Footer } from '@/modules/landing/containers/footer/footer';
-// contexts
-import { ProfessionalSearchContext } from '@/modules/user/providers/professional-search-provider';
-// utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
+
+import { Button } from '@/modules/core/components/button';
+import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
 import { mapDateToDayEnum } from '@/modules/core/utils/date.utils';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { Footer } from '@/modules/landing/containers/footer/footer';
+import { ProSearchField } from '@/modules/location/components/pro-search-field';
 import { bboxLargestSideInKm } from '@/modules/location/utils/bbox.utils';
-// styles
+import { ProSearchFilter } from '@/modules/user/containers/pro-search-filter';
+import { ProfessionalSearchCard } from '@/modules/user/containers/professional-search-card';
+import { ProfessionalSearchContext } from '@/modules/user/providers/professional-search-provider';
+
 import styles from './search-pro.module.scss';
 
 export default function SearchProPage() {
@@ -126,13 +123,11 @@ export default function SearchProPage() {
                   <>
                     {professionalList && professionalList.length ? (
                       professionalList.map((pro) => (
-                        <>
-                          <ProfessionalSearchCard
-                            // @ts-ignore todo: Will be fixed later. Expected different api query with different response.
-                            professional={pro}
-                            key={pro.id}
-                          />
-                        </>
+                        <ProfessionalSearchCard
+                          // @ts-ignore todo: Will be fixed later. Expected different api query with different response.
+                          professional={pro}
+                          key={pro.id}
+                        />
                       ))
                     ) : (
                       <div className='absolute left-0 top-0 flex h-full w-full flex-col gap-y-4'>

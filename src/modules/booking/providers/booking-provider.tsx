@@ -6,19 +6,18 @@ import {
   useEffect,
   useState,
 } from 'react';
-import type { ChildrenProp } from '@/modules/core/types/react.types';
-import { trpc } from '@/modules/core/utils/trpc.utils';
+
 import { useIntl } from 'react-intl';
 import { useBoolean } from 'usehooks-ts';
-// components
-import { ServiceBookingModal } from '@/modules/booking/components/service-booking-modal';
+
 import { BookingModalSuccess } from '@/modules/booking/components/modal-success';
-// types
+import { ServiceBookingModal } from '@/modules/booking/components/service-booking-modal';
 import type { CreateBookingRequestData } from '@/modules/booking/components/service-booking-modal/service-booking-modal.interface';
-import type { ServiceOnProfessionalListItem } from '@/modules/service/types/service.types';
-// utils
 import { showToast } from '@/modules/core/providers/toast-provider';
+import type { ChildrenProp } from '@/modules/core/types/react.types';
 import { mapDateToDayEnum } from '@/modules/core/utils/date.utils';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import type { ServiceOnProfessionalListItem } from '@/modules/service/types/service.types';
 
 type BookingContextValues = {
   book: (serviceOnProfessional?: ServiceOnProfessionalListItem) => void;
