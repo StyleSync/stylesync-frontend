@@ -1,26 +1,26 @@
 'use client';
 import { type FC, useCallback, useMemo } from 'react';
-import { useBoolean } from 'usehooks-ts';
+
 import clsx from 'clsx';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import { signIn, signOut } from 'next-auth/react';
-import { usePathname, useRouter } from 'next/navigation';
 import { useIntl } from 'react-intl';
-// components
+import { useBoolean } from 'usehooks-ts';
+
 import { Avatar } from '@/modules/core/components/avatar';
+import { Button } from '@/modules/core/components/button';
+import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
+import type { DropdownItem } from '@/modules/core/components/dropdown-menu/dropdown-menu.interface';
 import { Emoji } from '@/modules/core/components/emoji';
 import { Icon } from '@/modules/core/components/icon';
-import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
-import { Button } from '@/modules/core/components/button';
-import { ProfileLinksModal } from '@/modules/user/components/profile-links-modal';
-// containers
 import { BurgerMenu } from '@/modules/core/containers/burger-menu';
-// hooks
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
-// utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
-// types
-import type { DropdownItem } from '@/modules/core/components/dropdown-menu/dropdown-menu.interface';
+import { LocaleSelect } from '@/modules/internationalization/components/locale-select';
+import { ProfileLinksModal } from '@/modules/user/components/profile-links-modal';
+
 import type { UserMenuBadgeProps } from './user-menu-badge.interface';
+
 import styles from './user-menu-badge.module.scss';
 
 export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
@@ -30,6 +30,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
   const isOpenModalLinks = useBoolean();
   const pathname = usePathname();
   const router = useRouter();
+  const params = useParams();
   const deviceType = useDeviceType();
   // queries
   const { data: me } = trpc.user.me.useQuery(
@@ -157,6 +158,12 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
   if (!session) {
     return (
       <div className='flex items-center gap-x-2'>
+        <LocaleSelect
+          renderTrigger={(props) => (
+            <Button icon={props.icon} variant='light' onClick={props.toggle} />
+          )}
+          popoverProps={{ align: 'center' }}
+        />
         <Button
           text={intl.formatMessage({
             id: 'button.registration',
@@ -168,7 +175,11 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
               {
                 callbackUrl: '/app/profile',
               },
-              { prompt: 'signup', screen_hint: 'signup' }
+              {
+                prompt: 'signup',
+                screen_hint: 'signup',
+                ui_locales: params.lang as string,
+              }
             )
           }
         />
@@ -181,7 +192,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
               {
                 callbackUrl: '/app/profile',
               },
-              { prompt: 'login' }
+              { prompt: 'login', ui_locales: params.lang as string }
             )
           }
         />
@@ -192,6 +203,17 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
   return (
     <>
       <div className={styles.root}>
+        <LocaleSelect
+          renderTrigger={(props) => (
+            <Button
+              icon={props.icon}
+              variant='light'
+              onClick={props.toggle}
+              className='!rounded-xl'
+            />
+          )}
+          popoverProps={{ align: 'center' }}
+        />
         {me?.onboardingCompleted && (
           <div className='relative flex h-fit w-fit'>
             <Button

@@ -1,28 +1,31 @@
 import { type FC, useCallback, useMemo } from 'react';
-import { useIntl } from 'react-intl';
-import clsx from 'clsx';
-import { useBoolean } from 'usehooks-ts';
-import { signOut, useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 
-// components
-import { Typography } from '@/modules/core/components/typogrpahy';
-import { Button } from '@/modules/core/components/button';
+import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
+import { signOut, useSession } from 'next-auth/react';
+import { useIntl } from 'react-intl';
+import { useBoolean } from 'usehooks-ts';
+
 import { Avatar } from '@/modules/core/components/avatar';
-import { Emoji } from '@/modules/core/components/emoji';
+import { Button } from '@/modules/core/components/button';
 import { DialogFullScreen } from '@/modules/core/components/dialog-full-screen';
-import { Placeholder } from '@/modules/core/components/placeholder';
-import { ProfileLinksModal } from '@/modules/user/components/profile-links-modal';
-// utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
-import { getFullName } from '@/modules/user/utils/user.utils';
 // types
 import type { DialogFullScreenAnimationConfig } from '@/modules/core/components/dialog-full-screen/dialog-full-screen.interface';
+import { Emoji } from '@/modules/core/components/emoji';
+import { Placeholder } from '@/modules/core/components/placeholder';
+// components
+import { Typography } from '@/modules/core/components/typogrpahy';
+// utils
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { LocaleSelect } from '@/modules/internationalization/components/locale-select';
+import { ProfileLinksModal } from '@/modules/user/components/profile-links-modal';
+import { getFullName } from '@/modules/user/utils/user.utils';
 
 import type {
   BurgerMenuAction,
   BurgerMenuProps,
 } from './burger-menu.interface';
+
 import styles from './burger-menu.module.scss';
 
 const dialogAnimationConfig: Partial<DialogFullScreenAnimationConfig> = {
@@ -323,6 +326,9 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ session }) => {
                 />
               ))}
             </Placeholder>
+            <div className='mb-2 mt-auto px-4'>
+              <LocaleSelect />
+            </div>
           </div>
         </div>
       </DialogFullScreen>
