@@ -1,9 +1,9 @@
 import { prisma } from '@/server/prisma';
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
-import type { NextRequest } from 'next/server';
 import { BookingStatus } from '@prisma/client';
 import { subDays } from 'date-fns';
+import type { NextRequest } from 'next/server';
 
 export async function GET(request: NextRequest) {
   // eslint-disable-next-line no-console
@@ -33,5 +33,6 @@ export async function GET(request: NextRequest) {
   // eslint-disable-next-line no-console
   console.log(result);
 
+  // @ts-ignore
   return Response.json({ success: true });
 }

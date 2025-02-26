@@ -1,4 +1,4 @@
-import { minutesInHour, set, getMinutes, getHours } from 'date-fns';
+import { getHours, getMinutes, minutesInHour, set } from 'date-fns';
 import { type IntlShape } from 'react-intl';
 
 type TimeUnit = `${number}${number}`;
