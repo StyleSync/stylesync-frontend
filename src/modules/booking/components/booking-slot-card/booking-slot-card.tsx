@@ -1,6 +1,7 @@
 import { type FC } from 'react';
+
 import clsx from 'clsx';
-// utils
+
 import { formatTime } from '@/modules/core/utils/time.utils';
 
 type BookingSlotCardProps = {
@@ -21,14 +22,16 @@ export const BookingSlotCard: FC<BookingSlotCardProps> = ({
   return (
     <div
       className={clsx(
-        'flex cursor-pointer items-center justify-center rounded-xl border border-primary-light bg-transparent px-4 py-3 text-sm text-dark transition duration-300 hover:border-primary hover:text-primary',
+        'flex cursor-pointer items-center justify-center rounded-xl border border-primary-light bg-transparent px-10 py-3 text-sm text-dark transition duration-300 hover:border-primary hover:text-primary',
         {
           '!border-primary !bg-primary text-white hover:text-white': isActive,
         }
       )}
       onClick={onClick}
     >
-      <span className='text-inherit'>{formattedSlot}</span>
+      <span className='flex-nowrap text-center text-inherit'>
+        {formattedSlot}
+      </span>
     </div>
   );
 };

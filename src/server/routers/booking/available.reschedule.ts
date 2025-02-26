@@ -1,17 +1,18 @@
-import { privateProcedure } from '@/server/trpc-helpers';
-import { z } from 'zod';
 import { Day } from '@prisma/client';
-import type { AvailableBookingTime } from '@/server/types';
-import { prisma } from '@/server/prisma';
 import { TRPCError } from '@trpc/server';
-import { getProfessionalFromContext } from '@/server/utils/prisma-utils';
-import { defaultScheduleSelect } from '@/server/selectors/schedule';
 import { addHours } from 'date-fns';
+import { z } from 'zod';
+
+import { prisma } from '@/server/prisma';
+import { defaultScheduleSelect } from '@/server/selectors/schedule';
+import { privateProcedure } from '@/server/trpc-helpers';
+import type { AvailableBookingTime } from '@/server/types';
 import {
   getPossibleBookingTimes,
   isTimeWithinPeriods,
   isTimeWithinSchedule,
 } from '@/server/utils/helpers';
+import { getProfessionalFromContext } from '@/server/utils/prisma-utils';
 
 export const availableReschedule = privateProcedure
   .input(
@@ -129,7 +130,7 @@ export const availableReschedule = privateProcedure
 
     for (const time of possibleBookingTime) {
       if (
-        !isTimeWithinPeriods(time.startTime, time.endTime, availableTimeList) &&
+        // !isTimeWithinPeriods(time.startTime, time.endTime, availableTimeList) &&
         isTimeWithinSchedule(
           time.startTime,
           time.endTime,

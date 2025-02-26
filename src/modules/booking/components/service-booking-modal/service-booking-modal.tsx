@@ -1,30 +1,28 @@
-import { type FC, useState, useEffect, useCallback, useId } from 'react';
-import { useIntl } from 'react-intl';
+import { type FC, useCallback, useEffect, useId, useState } from 'react';
+
 import { startOfToday } from 'date-fns';
 import Image from 'next/image';
-// components
-import { Avatar } from '@/modules/core/components/avatar';
-import { Typography } from '@/modules/core/components/typogrpahy';
+import { useIntl } from 'react-intl';
+
+import Bg from '@/assets/images/bg-1.png';
 import { BookingForm } from '@/modules/booking/components/booking-form';
+import { type BookingFormValue } from '@/modules/booking/components/booking-form/booking-form';
 import { BookingTimeSelect } from '@/modules/booking/containers/booking-time-select';
-import { ServiceOnProfessionalSelect } from '@/modules/service/components/service-on-professional-select';
-import { DialogWizard } from '@/modules/core/components/dialog-wizard';
+import { Avatar } from '@/modules/core/components/avatar';
 import { Button } from '@/modules/core/components/button';
-// utils
+import { type DialogProps } from '@/modules/core/components/dialog/dialog.interface';
+import { DialogWizard } from '@/modules/core/components/dialog-wizard';
+import { Typography } from '@/modules/core/components/typogrpahy';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import { onQueryRetry } from '@/modules/core/utils/query-retry.utils';
-import { getFullName } from '@/modules/user/utils/user.utils';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
-// hooks
-import { useDeviceType } from '@/modules/core/hooks/use-device-type';
-// type
-import { type DialogProps } from '@/modules/core/components/dialog/dialog.interface';
-import { type AvailableBookingTime } from '@/server/types';
-import { type BookingFormValue } from '@/modules/booking/components/booking-form/booking-form';
-import { type ServiceBookingModalProps } from './service-booking-modal.interface';
+import { ServiceOnProfessionalSelect } from '@/modules/service/components/service-on-professional-select';
 import type { ServiceOnProfessionalListItem } from '@/modules/service/types/service.types';
-// assets
-import Bg from '@/assets/images/bg-1.png';
+import { getFullName } from '@/modules/user/utils/user.utils';
+import { type AvailableBookingTime } from '@/server/types';
+
+import { type ServiceBookingModalProps } from './service-booking-modal.interface';
 
 export const ServiceBookingModal: FC<
   Omit<DialogProps, 'children'> & ServiceBookingModalProps

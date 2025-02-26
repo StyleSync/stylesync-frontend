@@ -1,29 +1,28 @@
-import { useMemo, type FC, useRef } from 'react';
+import { type FC, useMemo, useRef } from 'react';
+
 import clsx from 'clsx';
-import { useIntl } from 'react-intl';
 import { addDays, isPast } from 'date-fns';
-// utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
+import { useIntl } from 'react-intl';
+import { Swiper, type SwiperRef, SwiperSlide } from 'swiper/react';
+
+import { BookingSlotCard } from '@/modules/booking/components/booking-slot-card';
+import { BookingTimeSelectNavigation } from '@/modules/booking/components/booking-time-select-navigation';
+import type { BookingTimeSelectProps } from '@/modules/booking/containers/booking-time-select/booking-time-select.interface';
+import { Spinner } from '@/modules/core/components/spinner';
+import { Typography } from '@/modules/core/components/typogrpahy';
 import {
   generateDates,
   mapDateToDayEnum,
 } from '@/modules/core/utils/date.utils';
+// utils
+import { trpc } from '@/modules/core/utils/trpc.utils';
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
 
-// components
-import { BookingTimeSelectNavigation } from '../../components/booking-time-select-navigation';
-import { Spinner } from '@/modules/core/components/spinner';
-import { Typography } from '@/modules/core/components/typogrpahy';
-// type
-import type { BookingTimeSelectProps } from '@/modules/booking/containers/booking-time-select/booking-time-select.interface';
-// Swiper components
-import { Swiper, SwiperSlide, type SwiperRef } from 'swiper/react';
-// Swiper styles
 import 'swiper/scss';
 import 'swiper/scss/navigation';
-// style
+
 import styles from './booking-time-select.module.scss';
-import { BookingSlotCard } from '@/modules/booking/components/booking-slot-card';
+import { AvailableBookingTime } from '@/server/types';
 
 export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
   selectedDay,
@@ -55,7 +54,7 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
     setSelectedTimeRange(null);
   };
 
-  const bookingAvalibleTimes = useMemo(() => {
+  const bookingAvailableTimes = useMemo(() => {
     if (bookingData.data) {
       return bookingData.data.filter(
         (timeSlot) => !isPast(new Date(timeSlot.startTime))
@@ -68,6 +67,25 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
   const generatedDates = useMemo(() => {
     return generateDates();
   }, []);
+
+  const groupedSlots = useMemo(() => {
+    const groups = bookingAvailableTimes.reduce<
+      { hour: number; slots: AvailableBookingTime[] }[]
+    >((acc, item) => {
+      const hour = new Date(item.startTime).getHours();
+      const existingGroup = acc.find((el) => el.hour === hour);
+
+      if (existingGroup) {
+        existingGroup.slots.push(item);
+      } else {
+        acc.push({ slots: [], hour });
+      }
+
+      return acc;
+    }, []);
+
+    return groups;
+  }, [bookingAvailableTimes]);
 
   return (
     <div className='flex flex-col'>
@@ -130,21 +148,37 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
             </div>
           ) : (
             <>
-              <div className='grid gap-2 [grid-template-columns:repeat(auto-fill,_minmax(120px,1fr))] [grid-template-rows:max-content]'>
-                {bookingAvalibleTimes.map((slot, index) => (
-                  <BookingSlotCard
-                    key={index}
-                    isActive={
-                      selectedTimeRange?.startTime === slot.startTime &&
-                      selectedTimeRange?.endTime === slot.endTime
-                    }
-                    startTime={slot.startTime}
-                    endTime={slot.endTime}
-                    onClick={() => setSelectedTimeRange(slot)}
-                  />
-                ))}
+              <div className='flex flex-col rounded-[20px] border border-primary-light'>
+                {groupedSlots.map(
+                  (group, index) =>
+                    group.slots.length > 0 && (
+                      <div
+                        className={`relative p-5 ${index === 0 ? '' : 'border-t border-primary-light'}`}
+                        key={group.hour}
+                      >
+                        <span className='absolute -top-3 left-1/2 -translate-x-1/2 transform bg-white px-4 text-sm text-gray'>
+                          {`${group.hour}:00`}
+                        </span>
+                        <div className='grid grid-cols-2 gap-4'>
+                          {group.slots.map((slot, index) => (
+                            <BookingSlotCard
+                              key={index}
+                              isActive={
+                                selectedTimeRange?.startTime ===
+                                  slot.startTime &&
+                                selectedTimeRange?.endTime === slot.endTime
+                              }
+                              startTime={slot.startTime}
+                              endTime={slot.endTime}
+                              onClick={() => setSelectedTimeRange(slot)}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    )
+                )}
               </div>
-              {bookingAvalibleTimes.length === 0 && (
+              {bookingAvailableTimes.length === 0 && (
                 <Typography className={styles.noAvailableTimeText}>
                   {intl.formatMessage({
                     id: 'booking.timeSelect.noAvailableTime',
