@@ -32,7 +32,7 @@
   "signUp.accountType.proCard.title": "Professional account",
   "signUp.accountType.proCard.description": "Provide services, manage bookings, get analytics and essential tools for business",
   "signUp.accountType.clientCard.title": "Client account",
-  "signUp.accountType.clientCard.description": "Choose and book services, find Pro’s, and make payments with security and comfort",
+  "signUp.accountType.clientCard.description": "Choose and book services, find Pro's, and make payments with security and comfort",
   "signUp.accountType.clientCard.badge": "Soon",
   "signUp.social.google": "Sign up with Google",
   "signUp.social.instagram": "Sign up with Instagram",
@@ -447,5 +447,10 @@
   "onboard.about.toast.error.title.phone": "A user with this phone number is already registered.",
   "nickname": "Nickname",
 
-  "nickname.contents": "a unique name used to identify your profile. It can contain only Latin letters, numbers, and special characters (if allowed), but no spaces. The maximum length is 32 characters."
+  "nickname.contents": "a unique name used to identify your profile. It can contain only Latin letters, numbers, and special characters (if allowed), but no spaces. The maximum length is 32 characters.",
+
+  "profile.notFound.title": "Profile not found",
+  "profile.notFound.description": "This profile has either been deleted or not been created yet.",
+  "profile.notFound.searchPros": "Search for professionals",
+  "profile.notFound.goHome": "Go to homepage"
 }

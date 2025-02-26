@@ -1,17 +1,13 @@
 import { type FC, useCallback, useRef } from 'react';
+
 import { useIntl } from 'react-intl';
 
-// containers
-import { UserLocationSelectForm } from '@/modules/location/containers/user-location-select-form';
-// components
-import { ProfileSettingsTabContentLayout } from '@/modules/user/components/profile-settings-tab-content-layout';
-// utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
-import { onQueryRetry } from '@/modules/core/utils/query-retry.utils';
-
-// types
-import type { Address } from '@/modules/location/types/address.types';
 import { showToast } from '@/modules/core/providers/toast-provider';
+import { onQueryRetry } from '@/modules/core/utils/query-retry.utils';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { UserLocationSelectForm } from '@/modules/location/containers/user-location-select-form';
+import type { Address } from '@/modules/location/types/address.types';
+import { ProfileSettingsTabContentLayout } from '@/modules/user/components/profile-settings-tab-content-layout';
 
 export const ProfessionalSettingsLocation: FC = () => {
   const intl = useIntl();
@@ -162,9 +158,7 @@ export const ProfessionalSettingsLocation: FC = () => {
 
   return (
     <ProfileSettingsTabContentLayout
-      title={intl.formatMessage({
-        id: 'professional.settings.location.title',
-      })}
+      title={'professional.settings.location.title'}
       icon='location'
       isLoading={locationQuery.isLoading}
       actions={[

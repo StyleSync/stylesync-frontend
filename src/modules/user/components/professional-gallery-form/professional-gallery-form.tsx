@@ -1,24 +1,21 @@
 import { type FC, useState } from 'react';
-import { useIntl } from 'react-intl';
 
-// components
+import type { Album } from '@prisma/client';
+import { useIntl } from 'react-intl';
+import { useBoolean } from 'usehooks-ts';
+
 import { Button } from '@/modules/core/components/button';
+import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
 import { Placeholder } from '@/modules/core/components/placeholder';
-import { AlbumAddModal } from '@/modules/settings/components/album-add-modal';
-import { AlbumCard } from '@/modules/gallery/components/album-card';
-import { AlbumDetails } from '@/modules/gallery/components/album-details';
 import { Spinner } from '@/modules/core/components/spinner';
 import { Typography } from '@/modules/core/components/typogrpahy';
-import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
-// hooks
-import { useBoolean } from 'usehooks-ts';
-// utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
-// types
-import type { ProfessionalGalleryFormProps } from './professional-gallery-form.interface';
-import type { Album } from '@prisma/client';
+import { AlbumCard } from '@/modules/gallery/components/album-card';
+import { AlbumDetails } from '@/modules/gallery/components/album-details';
+import { AlbumAddModal } from '@/modules/settings/components/album-add-modal';
 
-// style
+import type { ProfessionalGalleryFormProps } from './professional-gallery-form.interface';
+
 import styles from './professional-gallery-form.module.scss';
 
 export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
@@ -106,12 +103,11 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
           />
           <div className='mt-5 grid grid-cols-1 gap-4 md:mt-8 md:grid-cols-3 xl:grid-cols-5'>
             {albumsList?.map((album) => (
-              <>
+              <div key={album.id}>
                 <AlbumCard
                   isMoreButtonVisible
                   onEditClick={setAlbunToEdit}
                   album={album}
-                  key={album.id}
                   name={album.title}
                   onClick={() => setActiveAlbum(album)}
                 />
@@ -120,7 +116,7 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
                   onLoadMore={albumData.fetchNextPage}
                   isNextPageLoading={albumData.isFetchingNextPage}
                 />
-              </>
+              </div>
             ))}
           </div>
         </>

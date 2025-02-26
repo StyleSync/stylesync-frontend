@@ -1,21 +1,19 @@
 'use client';
 import { type FC, useMemo } from 'react';
-import { usePathname } from 'next/navigation';
+
 import clsx from 'clsx';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import type { Session } from 'next-auth';
 import { useIntl } from 'react-intl';
-// containers
-import { BookingsBadge } from '@/modules/booking/containers/bookings-badge/bookings-badge';
 
-// components
+import { BookingsBadge } from '@/modules/booking/containers/bookings-badge/bookings-badge';
+import { Icon, type IconName } from '@/modules/core/components/icon';
 import { Typography } from '@/modules/core/components/typogrpahy';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { ProSearchField } from '@/modules/location/components/pro-search-field';
 
 import styles from './user-header-navigation.module.scss';
-import type { Session } from 'next-auth';
-import { ProSearchField } from '@/modules/location/components/pro-search-field';
-import { Icon, type IconName } from '@/modules/core/components/icon';
-// utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
 
 export const UserHeaderNavigation: FC<{
   session: Session | null;
@@ -23,7 +21,9 @@ export const UserHeaderNavigation: FC<{
   const intl = useIntl();
   const pathname = usePathname();
   // queries
-  const { data: me } = trpc.user.me.useQuery();
+  const { data: me } = trpc.user.me.useQuery(undefined, {
+    enabled: !!session,
+  });
 
   const userLinks = useMemo(() => {
     if (!me?.onboardingCompleted) {

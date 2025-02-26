@@ -1,13 +1,17 @@
 'use client';
 import { type FC } from 'react';
+
 import clsx from 'clsx';
 import { useIntl } from 'react-intl';
+
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
+
 // type
 import type { ProfileErrorBoundaryProps } from './profile-error-boundary.interface';
+
 import styles from './profile-error-boundary.module.scss';
 
 export const ProfileErrorBoundary: FC<ProfileErrorBoundaryProps> = ({

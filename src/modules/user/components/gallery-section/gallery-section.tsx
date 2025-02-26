@@ -1,20 +1,18 @@
 'use client';
 import { type FC, useState } from 'react';
-import { useIntl } from 'react-intl';
-import clsx from 'clsx';
-// components
-import { AlbumCard } from '@/modules/gallery/components/album-card';
-import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
-import { ProfileSectionLayout } from '@/modules/user/components/profile-section-layout';
-// utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
 
-import styles from './gallery-section.module.scss';
+import clsx from 'clsx';
+
+import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { AlbumCard } from '@/modules/gallery/components/album-card';
+import { ProfileSectionLayout } from '@/modules/user/components/profile-section-layout';
+
 import type { GallerySectionProps } from './gallery-section.inerface';
 
-export const GallerySection: FC<GallerySectionProps> = ({ userId }) => {
-  const intl = useIntl();
+import styles from './gallery-section.module.scss';
 
+export const GallerySection: FC<GallerySectionProps> = ({ userId }) => {
   const [activeAlbum, setActiveAlbum] = useState<string | null>(null);
 
   const [professional] = trpc.professional.get.useSuspenseQuery({
@@ -42,7 +40,7 @@ export const GallerySection: FC<GallerySectionProps> = ({ userId }) => {
   if (isLoading) {
     return (
       <ProfileSectionLayout
-        title={intl.formatMessage({ id: 'pro.layout.title.gallery' })}
+        title={'pro.layout.title.gallery'}
         id='profile-gallery'
       >
         <div className={styles.root}>
@@ -63,7 +61,7 @@ export const GallerySection: FC<GallerySectionProps> = ({ userId }) => {
 
   return (
     <ProfileSectionLayout
-      title={intl.formatMessage({ id: 'pro.layout.title.gallery' })}
+      title={'pro.layout.title.gallery'}
       id='profile-gallery'
     >
       <div

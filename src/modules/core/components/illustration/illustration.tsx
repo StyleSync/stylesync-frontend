@@ -1,7 +1,7 @@
-import { type FC, type SVGAttributes, memo } from 'react';
-// illustrations
-import FolderIllustration from '@/assets/illustrations/folder.svg?icon';
+import { type FC, memo, type SVGAttributes } from 'react';
+
 import FilesIllustration from '@/assets/illustrations/files.svg?icon';
+import FolderIllustration from '@/assets/illustrations/folder.svg?icon';
 
 export const illustrations = {
   folder: FolderIllustration,
