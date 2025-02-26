@@ -1,25 +1,23 @@
 import { type FC, type ReactNode, useMemo } from 'react';
-import { useIntl } from 'react-intl';
-import clsx from 'clsx';
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-// components
-import { Divider } from '@/modules/core/components/divider';
-import { Button } from '@/modules/core/components/button';
-import { Typography } from '@/modules/core/components/typogrpahy';
-import { Icon } from '@/modules/core/components/icon';
-import { Spinner } from '@/modules/core/components/spinner';
-import { Placeholder } from '@/modules/core/components/placeholder';
-// hooks
-import { useDeviceType } from '@/modules/core/hooks/use-device-type';
-import { useSettingsNavigation } from '@/modules/user/hooks/use-settings-navigation';
-// utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
-// type
-import type { ProfileSettingsTabContentLayoutProps } from './profile-settings-tab-content-layout.interface';
-import type { ButtonProps } from '@/modules/core/components/button/button.interface';
-// style
-import 'react-circular-progressbar/dist/styles.css';
 
+import clsx from 'clsx';
+import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
+import { useIntl } from 'react-intl';
+
+import { Button } from '@/modules/core/components/button';
+import type { ButtonProps } from '@/modules/core/components/button/button.interface';
+import { Divider } from '@/modules/core/components/divider';
+import { Icon } from '@/modules/core/components/icon';
+import { Placeholder } from '@/modules/core/components/placeholder';
+import { Spinner } from '@/modules/core/components/spinner';
+import { Typography } from '@/modules/core/components/typogrpahy';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { useSettingsNavigation } from '@/modules/user/hooks/use-settings-navigation';
+
+import type { ProfileSettingsTabContentLayoutProps } from './profile-settings-tab-content-layout.interface';
+
+import 'react-circular-progressbar/dist/styles.css';
 import styles from './profile-settings-tab-content-layout.module.scss';
 
 export const ProfileSettingsTabContentLayout: FC<
@@ -36,7 +34,7 @@ export const ProfileSettingsTabContentLayout: FC<
         id: me?.id || '',
       },
       {
-        enabled: !!me,
+        enabled: me?.userType === 'PROFESSIONAL',
       }
     );
   // memo
