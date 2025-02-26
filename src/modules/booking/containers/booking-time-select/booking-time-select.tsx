@@ -14,15 +14,14 @@ import {
   generateDates,
   mapDateToDayEnum,
 } from '@/modules/core/utils/date.utils';
-// utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
+import { type AvailableBookingTime } from '@/server/types';
 
 import 'swiper/scss';
 import 'swiper/scss/navigation';
 
 import styles from './booking-time-select.module.scss';
-import { AvailableBookingTime } from '@/server/types';
 
 export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
   selectedDay,
@@ -78,7 +77,7 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
       if (existingGroup) {
         existingGroup.slots.push(item);
       } else {
-        acc.push({ slots: [], hour });
+        acc.push({ slots: [item], hour });
       }
 
       return acc;
@@ -138,7 +137,7 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
         </Swiper>
       </div>
       {selectedDay && (
-        <div className='w-full pt-6'>
+        <div className='mb-4 w-full pt-6'>
           {bookingData.isLoading ? (
             <div className={styles.spinnerContainer}>
               <Spinner size='small' />
@@ -148,7 +147,11 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
             </div>
           ) : (
             <>
-              <div className='flex flex-col rounded-[20px] border border-primary-light'>
+              <div
+                className={clsx('flex flex-col rounded-[20px]', {
+                  'border border-primary-light': groupedSlots.length > 0,
+                })}
+              >
                 {groupedSlots.map(
                   (group, index) =>
                     group.slots.length > 0 && (
@@ -160,9 +163,9 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
                           {`${group.hour}:00`}
                         </span>
                         <div className='grid grid-cols-2 gap-4'>
-                          {group.slots.map((slot, index) => (
+                          {group.slots.map((slot, groupIndex) => (
                             <BookingSlotCard
-                              key={index}
+                              key={groupIndex}
                               isActive={
                                 selectedTimeRange?.startTime ===
                                   slot.startTime &&

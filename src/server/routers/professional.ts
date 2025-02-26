@@ -11,7 +11,10 @@ import {
 import { defaultAlbumSelect } from '@/server/selectors/album';
 import { defaultLocationSelect } from '@/server/selectors/location';
 import { defaultScheduleSelect } from '@/server/selectors/schedule';
-import { publicUserSelect } from '@/server/selectors/user';
+import {
+  professionalUserSelect,
+  publicUserSelect,
+} from '@/server/selectors/user';
 import {
   privateProcedure,
   publicProcedure,
@@ -47,7 +50,7 @@ export const professionalRouter = router({
             select: defaultServiceOnProfessionalSelect,
           },
           user: !!input?.expand?.includes('user') && {
-            select: publicUserSelect,
+            select: professionalUserSelect,
           },
           schedule: !!input?.expand?.includes('schedule') && {
             select: defaultScheduleSelect,
@@ -151,14 +154,7 @@ export const professionalRouter = router({
         select: {
           ...defaultProfessionalSelect,
           user: {
-            select: {
-              id: true,
-              avatar: true,
-              image: true,
-              firstName: true,
-              lastName: true,
-              nickname: true,
-            },
+            select: professionalUserSelect,
           },
           location: {
             select: defaultLocationSelect,
