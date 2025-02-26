@@ -3,10 +3,12 @@
 import { Suspense, useMemo } from 'react';
 
 import clsx from 'clsx';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { ErrorBoundary } from 'react-error-boundary';
+import { useIntl } from 'react-intl';
 
 import { BookingProvider } from '@/modules/booking/providers/booking-provider';
+import { ErrorView } from '@/modules/core/components/error-view';
 import { Spinner } from '@/modules/core/components/spinner';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { ServiceTableSkeleton } from '@/modules/service/components/service-table-skeleton';
@@ -24,12 +26,20 @@ import styles from './profile-view.module.scss';
 
 export function ProfileView({ session }: ProfileViewProps) {
   const { id: queryId } = useParams<{ id: string }>();
+  const router = useRouter();
+  const intl = useIntl();
 
-  const { data, isLoading } = trpc.user.checkNickname.useQuery(
+  const { data, isLoading, isError } = trpc.user.checkNickname.useQuery(
     {
       nickname: queryId,
     },
-    { enabled: !!queryId }
+    {
+      enabled: !!queryId,
+      retry: 0,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: true,
+    }
   );
 
   const userId = useMemo(
@@ -37,11 +47,44 @@ export function ProfileView({ session }: ProfileViewProps) {
     [data, queryId]
   );
 
-  if (isLoading) {
+  const { isLoading: isProfessionalLoading, isError: isProfessionalError } =
+    trpc.professional.get.useQuery(
+      {
+        id: userId,
+        expand: ['user'],
+      },
+      {
+        enabled: userId !== '',
+        retry: 0,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        refetchOnReconnect: true,
+      }
+    );
+
+  if (isLoading || isProfessionalLoading) {
     return (
-      <div className='z-50 flex h-full items-center justify-center'>
+      <div className='z-50 flex h-[100dvh] items-center justify-center'>
         <Spinner size={'large'} />
       </div>
+    );
+  }
+
+  if (isError || isProfessionalError) {
+    return (
+      <ErrorView
+        errorCode='404'
+        title={intl.formatMessage({ id: 'profile.notFound.title' })}
+        description={intl.formatMessage({ id: 'profile.notFound.description' })}
+        primaryAction={{
+          text: intl.formatMessage({ id: 'profile.notFound.searchPros' }),
+          onClick: () => router.push('/app/search-pro'),
+        }}
+        secondaryAction={{
+          text: intl.formatMessage({ id: 'profile.notFound.goHome' }),
+          onClick: () => router.push('/'),
+        }}
+      />
     );
   }
 

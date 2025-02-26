@@ -1,13 +1,12 @@
 import { type FC } from 'react';
+
 import { useIntl } from 'react-intl';
-// components
-import { ProfileSettingsTabContentLayout } from '@/modules/user/components/profile-settings-tab-content-layout';
-import { Placeholder } from '@/modules/core/components/placeholder';
+
 import { ErrorBox } from '@/modules/core/components/error-box';
-// containers
+import { Placeholder } from '@/modules/core/components/placeholder';
 import { ProfessionalServicesForm } from '@/modules/service/containers/professional-services-form';
-// hooks
 import { useServiceOnProfessionalGroups } from '@/modules/service/hooks/use-service-on-professional-groups';
+import { ProfileSettingsTabContentLayout } from '@/modules/user/components/profile-settings-tab-content-layout';
 
 export const ProfessionalSettingsServices: FC = () => {
   const intl = useIntl();
@@ -17,7 +16,7 @@ export const ProfessionalSettingsServices: FC = () => {
 
   return (
     <ProfileSettingsTabContentLayout
-      title={intl.formatMessage({ id: 'professional.settings.services.title' })}
+      title={'professional.settings.services.title'}
       icon='beauty-service'
       isLoading={isGroupsLoading}
       hideActions={isGroupsLoading || isGroupsLoadingError}

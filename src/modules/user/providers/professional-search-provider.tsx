@@ -5,10 +5,12 @@ import {
   useEffect,
   useState,
 } from 'react';
-import type { ChildrenProp } from '@/modules/core/types/react.types';
+
 import type { GeocodingFeature } from '@mapbox/search-js-core';
-import { useBrowserLocationDetails } from '@/modules/location/hooks/use-browser-location-details';
 import { useBoolean } from 'usehooks-ts';
+
+import type { ChildrenProp } from '@/modules/core/types/react.types';
+import { useBrowserLocationDetails } from '@/modules/location/hooks/use-browser-location-details';
 
 type SelectedServices = {
   isAll: boolean;

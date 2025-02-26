@@ -1,6 +1,7 @@
-import type { FC } from 'react';
-import type { ChildrenProp } from '@/modules/core/types/react.types';
 import type { Metadata } from 'next';
+import type { FC } from 'react';
+
+import type { ChildrenProp } from '@/modules/core/types/react.types';
 
 // PWA Metadata
 export const metadata: Metadata = {
