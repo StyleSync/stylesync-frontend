@@ -182,7 +182,7 @@ export const ServiceBookingModal: FC<
             </div>
           </div>
         </div>
-        <div className='relative z-10 flex-1 overflow-scroll bg-white px-6 pt-6 shadow'>
+        <div className='relative z-10 flex-1 overflow-scroll bg-white px-5 pt-6 shadow sm:px-6'>
           {step === 'service' && (
             <ServiceOnProfessionalSelect
               professional={professional}
