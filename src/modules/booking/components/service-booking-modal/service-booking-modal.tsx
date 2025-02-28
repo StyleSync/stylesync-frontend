@@ -158,7 +158,7 @@ export const ServiceBookingModal: FC<
       handleModalClose={handleModalClose}
       isNextLoading={isLoading}
       {...props}
-      classes={{ content: '!h-dvh !overflow-hidden w-full' }}
+      classes={{ content: '!h-dvh !overflow-hidden' }}
     >
       <div className='relative flex w-full flex-1 flex-col overflow-hidden sm:w-[620px]'>
         <Image
