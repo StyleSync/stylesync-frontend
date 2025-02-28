@@ -1,13 +1,14 @@
 import { type FC } from 'react';
-// components
-import { Typography } from '@/modules/core/components/typogrpahy';
-// types
-import type { ServiceCardProps } from './service-card.interface';
+
 import Image from 'next/image';
+
+import { Typography } from '@/modules/core/components/typogrpahy';
+
+import type { ServiceCardProps } from './service-card.interface';
 
 export const ServiceCard: FC<ServiceCardProps> = ({ title, image }) => {
   return (
-    <div className='relative z-10 flex aspect-[14/8] w-full items-center justify-center overflow-hidden rounded-[20px] shadow transition hover:z-10 hover:scale-105 hover:shadow-accentShadow'>
+    <div className='relative z-10 flex aspect-[14/8] w-full items-center justify-center overflow-hidden rounded-[20px] shadow md:transition md:hover:z-10 md:hover:scale-105 md:hover:shadow-accentShadow'>
       <div className='relative z-40 flex items-center'>
         <Typography
           className='whitespace-nowrap !text-3xl !text-white'
