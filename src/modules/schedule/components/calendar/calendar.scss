@@ -125,6 +125,7 @@
     font-size: 18px !important;
     font-weight: 500 !important;
     color: variables.$dark-color !important;
+    min-width: 230px;
     @include mixins.phone {
       font-size: 14px !important;
     }
