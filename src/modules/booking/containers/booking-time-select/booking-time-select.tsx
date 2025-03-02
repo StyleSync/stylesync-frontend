@@ -156,7 +156,7 @@ export const BookingTimeSelect: FC<BookingTimeSelectProps> = ({
                   (group, index) =>
                     group.slots.length > 0 && (
                       <div
-                        className={`relative p-5 ${index === 0 ? '' : 'border-t border-primary-light'}`}
+                        className={`relative px-3 py-5 sm:px-5 ${index === 0 ? '' : 'border-t border-primary-light'}`}
                         key={group.hour}
                       >
                         <span className='absolute -top-3 left-1/2 -translate-x-1/2 transform bg-white px-4 text-sm text-gray'>
