@@ -29,7 +29,7 @@ export const BookingSlotCard: FC<BookingSlotCardProps> = ({
       )}
       onClick={onClick}
     >
-      <span className='flex-nowrap text-center text-inherit'>
+      <span className='whitespace-nowrap text-center text-inherit'>
         {formattedSlot}
       </span>
     </div>
