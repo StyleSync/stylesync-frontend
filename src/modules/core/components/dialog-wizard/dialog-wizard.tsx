@@ -1,14 +1,16 @@
 import { type FC } from 'react';
+
+import clsx from 'clsx';
 import { useIntl } from 'react-intl';
 
-import type { DialogWizardProps } from './dialog-wizard.interface';
-import { Dialog } from '@/modules/core/components/dialog';
 import { Button } from '@/modules/core/components/button';
+import { Dialog } from '@/modules/core/components/dialog';
 import { Typography } from '@/modules/core/components/typogrpahy';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
+
+import type { DialogWizardProps } from './dialog-wizard.interface';
 
 import styles from './dialog-wizard.module.scss';
-import { useDeviceType } from '@/modules/core/hooks/use-device-type';
-import clsx from 'clsx';
 
 export const DialogWizard: FC<DialogWizardProps> = ({
   steps,
