@@ -176,7 +176,6 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
                 callbackUrl: '/app/profile',
               },
               {
-                prompt: 'signup',
                 screen_hint: 'signup',
                 ui_locales: params.lang as string,
               }
@@ -192,7 +191,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
               {
                 callbackUrl: '/app/profile',
               },
-              { prompt: 'login', ui_locales: params.lang as string }
+              { ui_locales: params.lang as string }
             )
           }
         />
