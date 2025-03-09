@@ -1,20 +1,18 @@
 import { type FC, useCallback, useId, useMemo } from 'react';
-import { useIntl } from 'react-intl';
+
 import { useRouter } from 'next/navigation';
-// components
+import { useIntl } from 'react-intl';
+
 import { ErrorBox } from '@/modules/core/components/error-box';
 import { Placeholder } from '@/modules/core/components/placeholder';
-import { OnboardLayout } from '@/modules/onboard/components/onboard-layout';
-import { AboutProfessionalForm } from '@/modules/user/components/about-professional-form';
 import { Spinner } from '@/modules/core/components/spinner';
-// hooks
-import { useAvatarUploadMutation } from '@/modules/user/hooks/use-avatar-upload-mutation';
-// utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
 import { showToast } from '@/modules/core/providers/toast-provider';
-// types
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { OnboardLayout } from '@/modules/onboard/components/onboard-layout';
 import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboard/pro-onboard.interface';
+import { AboutProfessionalForm } from '@/modules/user/components/about-professional-form';
 import type { AboutProfessionalFormValues } from '@/modules/user/components/about-professional-form/about-professional-form.interface';
+import { useAvatarUploadMutation } from '@/modules/user/hooks/use-avatar-upload-mutation';
 
 export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
   const intl = useIntl();
@@ -82,48 +80,54 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
         }
       }
 
-      await meUpdateAsync({
-        avatar: avatarUrl,
-        nickname: values.nickname || undefined,
-        firstName: values.firstName || undefined,
-        lastName: values.lastName || undefined,
-        phone: values.phone || undefined,
-        onboardingCompleted: me.userType === 'CUSTOMER',
-      });
+      try {
+        await meUpdateAsync({
+          avatar: avatarUrl,
+          nickname: values.nickname || undefined,
+          firstName: values.firstName || undefined,
+          lastName: values.lastName || undefined,
+          phone: values.phone || undefined,
+          onboardingCompleted: me.userType === 'CUSTOMER',
+        });
 
-      if (me.userType === 'PROFESSIONAL') {
-        professionalMutation(
-          {
-            about: values.about || undefined,
-            instagram: values.instagram || undefined,
-            facebook: values.facebook || undefined,
-            tiktok: values.tiktok || undefined,
-          },
-          {
-            onSuccess: () => {
-              meQuery.refetch();
-              next();
+        if (me.userType === 'PROFESSIONAL') {
+          professionalMutation(
+            {
+              about: values.about || undefined,
+              instagram: values.instagram || undefined,
+              facebook: values.facebook || undefined,
+              tiktok: values.tiktok || undefined,
             },
-            onError: (error: any) => {
-              showToast({
-                variant: 'error',
-                title: intl.formatMessage({
-                  id: 'onboard.about.toast.error.title',
-                }),
-                description: intl.formatMessage({
-                  id: 'onboard.about.toast.error.description',
-                }),
-              });
-              if (error) {
-                onError(error);
-              }
-            },
-          }
-        );
-      }
+            {
+              onSuccess: () => {
+                meQuery.refetch();
+                next();
+              },
+              onError: (error: any) => {
+                showToast({
+                  variant: 'error',
+                  title: intl.formatMessage({
+                    id: 'onboard.about.toast.error.title',
+                  }),
+                  description: intl.formatMessage({
+                    id: 'onboard.about.toast.error.description',
+                  }),
+                });
+                if (error) {
+                  onError(error);
+                }
+              },
+            }
+          );
+        }
 
-      if (me.userType === 'CUSTOMER') {
-        router.push(`/app/my-bookings`);
+        if (me.userType === 'CUSTOMER') {
+          router.push(`/app/my-bookings`);
+        }
+      } catch (error) {
+        if (error) {
+          onError(error);
+        }
       }
     },
     [

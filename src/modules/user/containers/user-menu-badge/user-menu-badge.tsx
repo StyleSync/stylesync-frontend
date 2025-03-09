@@ -46,7 +46,7 @@ export const UserMenuBadge: FC<UserMenuBadgeProps> = ({ session }) => {
         id: session?.user?.id || '',
       },
       {
-        enabled: me?.userType === 'PROFESSIONAL',
+        enabled: me?.userType === 'PROFESSIONAL' && !!me.professional,
       }
     );
 

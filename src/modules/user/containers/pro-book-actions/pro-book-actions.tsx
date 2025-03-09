@@ -1,25 +1,21 @@
 'use client';
-import { useContext, type FC } from 'react';
-import { useSession } from 'next-auth/react';
-import { useParams, usePathname } from 'next/navigation';
-import { useIntl } from 'react-intl';
-// context
-import { BookingContext } from '@/modules/booking/providers/booking-provider';
-// components
-import { Button } from '@/modules/core/components/button';
-import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
-// container
-import { BottomFixedContent } from '@/modules/core/containers/bottom-fixed-content';
-// hooks
-import { useDeviceType } from '@/modules/core/hooks/use-device-type';
-// utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
+import { type FC, useContext } from 'react';
 
-// type
-import type { ProBookActionsProps } from './pro-book-actions.interface';
-// style
-import styles from './pro-book-actions.module.scss';
+import { useParams, usePathname } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { useIntl } from 'react-intl';
 import { useBoolean } from 'usehooks-ts';
+
+import { BookingContext } from '@/modules/booking/providers/booking-provider';
+import { Button } from '@/modules/core/components/button';
+import { BottomFixedContent } from '@/modules/core/containers/bottom-fixed-content';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
+
+import type { ProBookActionsProps } from './pro-book-actions.interface';
+
+import styles from './pro-book-actions.module.scss';
 
 export const ProBookActions: FC<ProBookActionsProps> = ({ userId }) => {
   const intl = useIntl();
@@ -39,7 +35,7 @@ export const ProBookActions: FC<ProBookActionsProps> = ({ userId }) => {
 
   const isProProfile = pathname.includes('/app/profile/') && 'id' in params;
   const isOwner =
-    session.status === 'authenticated' && session.data.user.id === params.id;
+    session.status === 'authenticated' && session.data.user.id === userId;
 
   if (deviceType !== 'mobile') {
     return null;

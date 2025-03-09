@@ -37,8 +37,6 @@ export function ProfileView({ session }: ProfileViewProps) {
       enabled: !!queryId,
       retry: 0,
       refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: true,
     }
   );
 

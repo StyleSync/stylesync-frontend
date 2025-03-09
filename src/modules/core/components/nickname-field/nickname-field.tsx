@@ -28,7 +28,7 @@ export const NickNameField: FC<NickNameFieldProps> = ({
 
   const { data } = trpc.user.checkNickname.useQuery(
     { nickname: debounceValue || '' },
-    { enabled: !!debounceValue }
+    { enabled: !!debounceValue, staleTime: 0 }
   );
 
   useEffect(() => {

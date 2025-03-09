@@ -1,4 +1,4 @@
-import { type FC, Fragment, useCallback } from 'react';
+import { type FC, type ReactNode, useCallback } from 'react';
 
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
@@ -15,6 +15,10 @@ import type { OnboardLayoutProps } from './onboard-layout.interface';
 
 import styles from './onboard-layout.module.scss';
 
+const ChildrenContainer = ({ children }: { children: ReactNode }) => {
+  return children;
+};
+
 export const OnboardLayout: FC<OnboardLayoutProps> = ({
   children,
   meta,
@@ -27,7 +31,7 @@ export const OnboardLayout: FC<OnboardLayoutProps> = ({
   const router = useRouter();
 
   const ActionsContainer =
-    deviceType === 'mobile' ? BottomFixedContent.Item : Fragment;
+    deviceType === 'mobile' ? BottomFixedContent.Item : ChildrenContainer;
 
   // queries
   const { data: me, ...meQuery } = trpc.user.me.useQuery({
