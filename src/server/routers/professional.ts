@@ -24,7 +24,7 @@ import { createUniqueArray } from '@/server/utils/helpers';
 import { getCursor } from '@/server/utils/prisma-utils';
 
 const maxTextLength = 100;
-const maxLargeTextLength = 140;
+const maxLargeTextLength = 1000;
 const defaultLimit = 10;
 const maxLimit = 100;
 
