@@ -172,6 +172,9 @@ export const professionalRouter = router({
           },
         },
         where: {
+          user: {
+            isSearchable: true,
+          },
           OR: [
             {
               user: {
