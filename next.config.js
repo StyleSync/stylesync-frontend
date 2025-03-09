@@ -61,7 +61,8 @@ const nextConfig = {
   },
   images: {
     domains: [
-      'xt2ksujn9lffn1o7.public.blob.vercel-storage.com, nepf1awntedwwqen.public.blob.vercel-storage.com',
+      'xt2ksujn9lffn1o7.public.blob.vercel-storage.com',
+      'nepf1awntedwwqen.public.blob.vercel-storage.com',
     ],
   },
 };
