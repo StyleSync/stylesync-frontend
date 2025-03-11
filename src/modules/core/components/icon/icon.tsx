@@ -60,7 +60,6 @@ import MessengerLogoIcon from '@/assets/icons/messenger-logo.svg?icon';
 import MinusIcon from '@/assets/icons/minus.svg?icon';
 import NailsIcon from '@/assets/icons/nails.svg?icon';
 import PencilIcon from '@/assets/icons/pencil.svg?icon';
-// icons
 import PhoneIcon from '@/assets/icons/phone.svg?icon';
 import PlusIcon from '@/assets/icons/plus.svg?icon';
 import Profile from '@/assets/icons/profile.svg?icon';
