@@ -313,6 +313,7 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
         )}
         {me?.userType === 'PROFESSIONAL' && (
           <TextField
+            showCharacterCount
             {...form.register('about')}
             error={getErrorMessage(form.formState.errors.about?.message)}
             variant='textarea'

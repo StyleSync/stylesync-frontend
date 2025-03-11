@@ -3,6 +3,7 @@ import type {
   ReactNode,
   TextareaHTMLAttributes,
 } from 'react';
+
 import type { SupportedFonts } from '@/styles/styles.types';
 
 type Variant = 'input' | 'textarea';
@@ -20,6 +21,7 @@ type TextFieldGeneralProps = {
   font?: SupportedFonts;
   startAdornment?: ReactNode;
   endAdornment?: ReactNode;
+  showCharacterCount?: boolean;
 };
 
 export type InputProps = {
