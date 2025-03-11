@@ -32,7 +32,7 @@ const defaultValues: AboutProfessionalFormValues = {
   tiktok: '',
   nickname: '',
 };
-
+const THOUSAND = 1000;
 const THIRTY_TWO = 32;
 const phoneRegex = /^(\+\d{1,3}[- ]?)?\d{10}$/;
 const nameRegex = /^[A-Za-zА-Яа-яІіЇїЄєҐґ']+$/;
@@ -84,7 +84,7 @@ const validationSchema: z.Schema<AboutProfessionalFormValues> = z.object({
       (value) => !value || instagramRegex.test(value),
       'validation.instagram.invalid'
     ),
-  about: z.string(),
+  about: z.string().max(THOUSAND, 'validation.about.maxLength'),
   tiktok: z
     .string()
     .max(100)
@@ -314,7 +314,7 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
         {me?.userType === 'PROFESSIONAL' && (
           <TextField
             {...form.register('about')}
-            error={Boolean(form.formState.errors.about)}
+            error={getErrorMessage(form.formState.errors.about?.message)}
             variant='textarea'
             label={intl.formatMessage({
               id: 'user.about.professional.form.about',

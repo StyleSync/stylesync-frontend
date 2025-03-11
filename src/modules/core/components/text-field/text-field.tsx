@@ -1,18 +1,18 @@
-import { type ForwardedRef, forwardRef, useRef, useEffect } from 'react';
+import { type ForwardedRef, forwardRef, useEffect, useRef } from 'react';
+
 import clsx from 'clsx';
 import { useBoolean } from 'usehooks-ts';
-// components
+
 import { Typography } from '@/modules/core/components/typogrpahy';
-// fonts
-import { fonts } from '@/styles/fonts';
-// hooks
 import { useCombinedRefs } from '@/modules/core/hooks/use-combined-refs';
+import { fonts } from '@/styles/fonts';
 
 import {
-  type TextFieldProps,
   isInputProps,
   isTextAreaProps,
+  type TextFieldProps,
 } from './text-field.interface';
+
 import styles from './text-field.module.scss';
 
 export const TextField = forwardRef<

@@ -1,9 +1,11 @@
 import { forwardRef } from 'react';
+
 import clsx from 'clsx';
-// fonts
+
 import { fonts } from '@/styles/fonts';
 
 import type { TypographyProps } from './typography.interface';
+
 import styles from './typography.module.scss';
 
 const Typography = forwardRef<HTMLElement, TypographyProps>(

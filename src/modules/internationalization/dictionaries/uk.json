@@ -376,6 +376,7 @@
   "validation.firstName.firstLetterCapitalized": "Перша літера імені повинна бути великою",
   "validation.lastName.firstLetterCapitalized": "Перша літера прізвища повинна бути великою",
   "validation.tiktok.invalid": "Невірний URL Tiktok",
+  "validation.about.maxLength": "Ви перевищили ліміт символів",
 
   "validation.nickname.minLength": "Нікнем повинен мати мінімум 2 символи",
 

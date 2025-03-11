@@ -173,6 +173,6 @@
   position: absolute;
   color: variables.$error-color;
   font-size: 12px;
-  top: 50px;
+  top: calc(100% + 2px);
   left: 33px;
 }
