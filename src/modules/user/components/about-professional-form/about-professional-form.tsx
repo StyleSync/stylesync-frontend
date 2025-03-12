@@ -10,6 +10,7 @@ import { NickNameField } from '@/modules/core/components/nickname-field';
 import { PhoneField } from '@/modules/core/components/phone-field';
 import { TextField } from '@/modules/core/components/text-field';
 import { PRISMA_ERRORS } from '@/modules/core/constants/prisma-errors.constants';
+import { useDebounce } from '@/modules/core/hooks/use-debounce';
 import { useImageInputState } from '@/modules/core/hooks/use-image-input-state';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { getPrismaErrorMessage } from '@/modules/user/utils/get-prisma-error-message';
@@ -139,7 +140,7 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
     const { data: me } = trpc.user.me.useQuery();
 
     // form
-    const { reset, setError, clearErrors, ...form } =
+    const { reset, setError, clearErrors, watch, ...form } =
       useForm<AboutProfessionalFormValues>({
         defaultValues,
         resolver:
@@ -147,6 +148,9 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
             ? zodResolver(validationSchema)
             : zodResolver(validationSchemaCustomer),
       });
+
+    const aboutValue = watch('about', '');
+    const debounceAbout = useDebounce(aboutValue);
     // state
     const avatar = useImageInputState(initialValues?.avatar);
 
@@ -313,6 +317,7 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
         )}
         {me?.userType === 'PROFESSIONAL' && (
           <TextField
+            charCount={debounceAbout?.length}
             showCharacterCount
             {...form.register('about')}
             error={getErrorMessage(form.formState.errors.about?.message)}

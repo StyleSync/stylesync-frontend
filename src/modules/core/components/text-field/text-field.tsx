@@ -1,10 +1,4 @@
-import {
-  type ForwardedRef,
-  forwardRef,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { type ForwardedRef, forwardRef, useEffect, useRef } from 'react';
 
 import clsx from 'clsx';
 import { useBoolean } from 'usehooks-ts';
@@ -35,6 +29,7 @@ export const TextField = forwardRef<
       endAdornment,
       font = 'INTER',
       variant = 'input',
+      charCount,
       showCharacterCount = false,
       ...props
     },
@@ -42,7 +37,6 @@ export const TextField = forwardRef<
   ) => {
     // state
     const hasText = useBoolean();
-    const [charCount, setCharCount] = useState(0);
 
     // refs
     const textFieldRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
@@ -53,25 +47,12 @@ export const TextField = forwardRef<
     useEffect(() => {
       const textFieldElement = combinedRefs.current;
 
-      if (textFieldElement) {
-        const initialValue = textFieldElement.value.trim();
-
-        setCharCount(initialValue.length);
-        hasText.setValue(Boolean(initialValue));
-      }
-    }, [combinedRefs, hasText]);
-
-    useEffect(() => {
-      const textFieldElement = combinedRefs.current;
-
       hasText.setValue(Boolean(textFieldElement?.value));
 
       const onChange = () => {
         const inputValue = textFieldElement?.value.trim() || '';
 
         hasText.setValue(Boolean(inputValue));
-
-        setCharCount(inputValue.length);
       };
 
       textFieldElement?.addEventListener('change', onChange);
