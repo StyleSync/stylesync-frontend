@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useIntl } from 'react-intl';
 
 import { Avatar } from '@/modules/core/components/avatar';
-import { Icon } from '@/modules/core/components/icon';
+import { Icon, type IconName } from '@/modules/core/components/icon';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { getFullName } from '@/modules/user/utils/user.utils';
 
@@ -56,7 +56,31 @@ export const ProfessionalSearchCard: FC<ProfessionalSearchCardProps> = ({
             {/*   </Typography> */}
             {/* </div> */}
             <div className='flex w-fit items-center gap-x-2 text-dark'>
-              <Icon name='beauty-service' className='h-4 w-4 !text-gray' />
+              {professional.mainServices.length > 2 ? (
+                <Icon
+                  name='clipboard'
+                  className='ml-[-1px] h-4 w-4 !text-gray'
+                />
+              ) : (
+                professional.mainServices.map((service) => (
+                  <Icon
+                    key={service.id}
+                    name={service.icon as IconName}
+                    className='h-4 w-4 !text-gray'
+                  />
+                ))
+              )}
+              {/* {professional.mainServices.map((service) => (
+                <Icon
+                  key={service.id}
+                  name={
+                    professional.mainServices.length <= 2
+                      ? (service.icon as IconName)
+                      : 'clipboard'
+                  }
+                  className='h-4 w-4 !text-gray'
+                />
+              ))} */}
               {professional.mainServices.map((service, index) => (
                 <Typography
                   key={service.id}
