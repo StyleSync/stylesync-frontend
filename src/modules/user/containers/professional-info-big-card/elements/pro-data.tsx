@@ -1,17 +1,18 @@
-import { useContext, type FC } from 'react';
-import { useBoolean } from 'usehooks-ts';
+import { type FC, useContext } from 'react';
+
 import { useIntl } from 'react-intl';
+import { useBoolean } from 'usehooks-ts';
+
+// context
+import { BookingContext } from '@/modules/booking/providers/booking-provider';
+import { Button } from '@/modules/core/components/button';
 // components
 import { Icon } from '@/modules/core/components/icon';
 import { Typography } from '@/modules/core/components/typogrpahy';
-import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
-import { Button } from '@/modules/core/components/button';
-// context
-import { BookingContext } from '@/modules/booking/providers/booking-provider';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
-
-import type { ProDataProps } from '../professional-info-big-card.interface';
+import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
+import type { ProDataProps } from '@/modules/user/containers/professional-info-big-card/professional-info-big-card.interface';
 
 export const ProData: FC<ProDataProps> = ({ professional, session }) => {
   const intl = useIntl();
@@ -36,8 +37,10 @@ export const ProData: FC<ProDataProps> = ({ professional, session }) => {
         <div className='flex w-fit items-center gap-x-2 text-dark'>
           <Icon name='menu' className='h-4 w-4 !text-gray' />
           <Typography variant='body2' className='!text-inherit'>
-            {serviceOnProfessionalList.data?.pages.length}{' '}
-            {intl.formatMessage({ id: 'pro.data.services' })}
+            {intl.formatMessage(
+              { id: 'pro.data.services' },
+              { count: serviceOnProfessionalList.data?.pages.length }
+            )}
           </Typography>
         </div>
         {/* todo: show this label if doesn't have bookings for last 7 days and the user has been registered less than 1 week ago  */}
