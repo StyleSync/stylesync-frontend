@@ -38,6 +38,7 @@ import GoogleLogoIcon from '@/assets/icons/google-logo.svg?icon';
 import GoogleLogoLanding from '@/assets/icons/google-play-logo.svg?icon';
 import HaircutIcon from '@/assets/icons/haircut.svg?icon';
 import HeartIcon from '@/assets/icons/heart.svg?icon';
+import Parmanent from '@/assets/icons/highlighter.svg?icon';
 import HorizontalPoints from '@/assets/icons/horizontal-points.svg?icon';
 import ImageIcon from '@/assets/icons/image.svg?icon';
 import ImageNotFoundIcon from '@/assets/icons/image-not-found.svg?icon';
@@ -47,6 +48,7 @@ import InstagramIcon from '@/assets/icons/instagram.svg?icon';
 import InstagramLanding from '@/assets/icons/instagram-landing.svg?icon';
 import InstagramLogoIcon from '@/assets/icons/instagram-logo.svg?icon';
 import InstagramLogoCircleContainedIcon from '@/assets/icons/instagram-logo-circle-contained.svg?icon';
+import Lips from '@/assets/icons/lips.svg?icon';
 import List from '@/assets/icons/list.svg?icon';
 import LocationIcon from '@/assets/icons/location.svg?icon';
 import LogOutIcon from '@/assets/icons/log-out.svg?icon';
@@ -58,7 +60,6 @@ import MessengerLogoIcon from '@/assets/icons/messenger-logo.svg?icon';
 import MinusIcon from '@/assets/icons/minus.svg?icon';
 import NailsIcon from '@/assets/icons/nails.svg?icon';
 import PencilIcon from '@/assets/icons/pencil.svg?icon';
-// icons
 import PhoneIcon from '@/assets/icons/phone.svg?icon';
 import PlusIcon from '@/assets/icons/plus.svg?icon';
 import Profile from '@/assets/icons/profile.svg?icon';
@@ -161,6 +162,8 @@ export const icons = {
   qustion: QuestionIcon,
   tiktok: Tiktok,
   clipboard: Clipboard,
+  'parmanent-makeup': Parmanent,
+  lips: Lips,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;
