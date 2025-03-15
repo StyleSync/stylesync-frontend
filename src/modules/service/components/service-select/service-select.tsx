@@ -1,19 +1,19 @@
 import { type FC, useCallback, useMemo } from 'react';
-import { useBoolean } from 'usehooks-ts';
+
 import clsx from 'clsx';
 import { useIntl } from 'react-intl';
-// components
-import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
+import { useBoolean } from 'usehooks-ts';
+
 import { Button } from '@/modules/core/components/button';
-// hooks
-import { useDeviceType } from '@/modules/core/hooks/use-device-type';
-// types
-import type { IconName } from '@/modules/core/components/icon';
 import type { ButtonProps } from '@/modules/core/components/button/button.interface';
-import type { PopoverProps } from '@/modules/core/components/popover/popover.interface';
+import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
 import type { DropdownItem } from '@/modules/core/components/dropdown-menu/dropdown-menu.interface';
+import type { IconName } from '@/modules/core/components/icon';
+import type { PopoverProps } from '@/modules/core/components/popover/popover.interface';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 
 import type { ServiceSelectProps } from './service-select.interface';
+
 import styles from './service-select.module.scss';
 
 export const ServiceSelect: FC<ServiceSelectProps> = ({
@@ -95,6 +95,8 @@ export const ServiceSelect: FC<ServiceSelectProps> = ({
         disablePortal: true,
         align: 'start',
         ...popoverProps,
+        classes: { content: 'max-h-[340px] overflow-y-auto' },
+        side: 'bottom',
       }}
     />
   );

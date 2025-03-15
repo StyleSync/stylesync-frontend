@@ -1,19 +1,17 @@
 import { type FC, useCallback, useMemo } from 'react';
+
+import type { Service } from '@prisma/client';
 import { useIntl } from 'react-intl';
 
-// components
-import { ServiceSelect } from '@/modules/service/components/service-select';
-import { Placeholder } from '@/modules/core/components/placeholder';
 import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
-// containers
-import { ServiceConstructorTable } from '@/modules/service/containers/service-constructor-table';
-// utils
+import { Placeholder } from '@/modules/core/components/placeholder';
 import { trpc } from '@/modules/core/utils/trpc.utils';
+import { ServiceSelect } from '@/modules/service/components/service-select';
+import { ServiceConstructorTable } from '@/modules/service/containers/service-constructor-table';
 import { sortServiceOnProfessionalGroups } from '@/modules/service/utils/service.utils';
-// types
-import type { Service } from '@prisma/client';
 
 import type { ProfessionalServicesFormProps } from './professional-services-form.interface';
+
 import styles from './professional-services-form.module.scss';
 
 export const ProfessionalServicesForm: FC<ProfessionalServicesFormProps> = ({
