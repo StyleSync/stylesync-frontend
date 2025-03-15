@@ -378,6 +378,7 @@
   "validation.facebook.invalid": "Invalid Facebook URL",
   "validation.instagram.invalid": "Invalid Instagram URL",
   "validation.tiktok.invalid": "Invalid Tiktok URL",
+  "validation.about.maxLength": "You have exceeded the character limit.",
 
   "validation.about.required": "About is required",
   "validation.firstName.firstLetterCapitalized": "The first letter of the first name must be uppercase.",
