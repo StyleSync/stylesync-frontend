@@ -318,8 +318,9 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
         {me?.userType === 'PROFESSIONAL' && (
           <TextField
             charCount={debounceAbout?.length}
-            showCharacterCount
             {...form.register('about')}
+            showCharacterCount
+            maxCharacterCount={1000}
             error={getErrorMessage(form.formState.errors.about?.message)}
             variant='textarea'
             label={intl.formatMessage({

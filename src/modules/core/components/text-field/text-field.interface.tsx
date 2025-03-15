@@ -23,6 +23,7 @@ type TextFieldGeneralProps = {
   endAdornment?: ReactNode;
   showCharacterCount?: boolean;
   charCount?: number;
+  maxCharacterCount?: number;
 };
 
 export type InputProps = {

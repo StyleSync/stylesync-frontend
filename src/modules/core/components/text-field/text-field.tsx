@@ -31,6 +31,7 @@ export const TextField = forwardRef<
       variant = 'input',
       charCount,
       showCharacterCount = false,
+      maxCharacterCount = 1000,
       ...props
     },
     ref
@@ -144,8 +145,12 @@ export const TextField = forwardRef<
         )}
 
         {showCharacterCount && (
-          <div className='absolute bottom-1 right-3 text-sm text-gray'>
-            {charCount} / 1000
+          <div
+            className={clsx('absolute bottom-1 right-3 text-sm text-gray', {
+              'text-red-500': (charCount || 0) > maxCharacterCount,
+            })}
+          >
+            {charCount || 0} / {maxCharacterCount}
           </div>
         )}
       </div>
