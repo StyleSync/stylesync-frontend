@@ -1,11 +1,11 @@
-import nails from '@/modules/landing/landing-image/nails.jpg';
-import hair from '@/modules/landing/landing-image/hair.jpg';
-import finess from '@/modules/landing/landing-image/fitness.jpg';
-import makeup from '@/modules/landing/landing-image/makeup.jpg';
-import skincare from '@/modules/landing/landing-image/skincare.jpg';
-import massage from '@/modules/landing/landing-image/massage.jpg';
-import psychology from '@/modules/landing/landing-image/psychology.jpg';
 import eyebrows from '@/modules/landing/landing-image/eyebrows.jpg';
+import finess from '@/modules/landing/landing-image/fitness.jpg';
+import hair from '@/modules/landing/landing-image/hair.jpg';
+import makeup from '@/modules/landing/landing-image/makeup.jpg';
+import massage from '@/modules/landing/landing-image/massage.jpg';
+import nails from '@/modules/landing/landing-image/nails.jpg';
+import psychology from '@/modules/landing/landing-image/psychology.jpg';
+import skincare from '@/modules/landing/landing-image/skincare.jpg';
 
 export const services = [
   {

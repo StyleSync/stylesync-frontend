@@ -1,18 +1,18 @@
-import { type ForwardedRef, forwardRef, useRef, useEffect } from 'react';
+import { type ForwardedRef, forwardRef, useEffect, useRef } from 'react';
+
 import clsx from 'clsx';
 import { useBoolean } from 'usehooks-ts';
-// components
+
 import { Typography } from '@/modules/core/components/typogrpahy';
-// fonts
-import { fonts } from '@/styles/fonts';
-// hooks
 import { useCombinedRefs } from '@/modules/core/hooks/use-combined-refs';
+import { fonts } from '@/styles/fonts';
 
 import {
-  type TextFieldProps,
   isInputProps,
   isTextAreaProps,
+  type TextFieldProps,
 } from './text-field.interface';
+
 import styles from './text-field.module.scss';
 
 export const TextField = forwardRef<
@@ -29,12 +29,16 @@ export const TextField = forwardRef<
       endAdornment,
       font = 'INTER',
       variant = 'input',
+      charCount,
+      showCharacterCount = false,
+      maxCharacterCount = 1000,
       ...props
     },
     ref
   ) => {
     // state
     const hasText = useBoolean();
+
     // refs
     const textFieldRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
     const combinedRefs = useCombinedRefs<
@@ -47,7 +51,7 @@ export const TextField = forwardRef<
       hasText.setValue(Boolean(textFieldElement?.value));
 
       const onChange = () => {
-        const inputValue = textFieldElement?.value.trim();
+        const inputValue = textFieldElement?.value.trim() || '';
 
         hasText.setValue(Boolean(inputValue));
       };
@@ -138,6 +142,16 @@ export const TextField = forwardRef<
           >
             {error}
           </Typography>
+        )}
+
+        {showCharacterCount && (
+          <div
+            className={clsx('absolute bottom-1 right-3 text-sm text-gray', {
+              'text-red-500': (charCount || 0) > maxCharacterCount,
+            })}
+          >
+            {charCount || 0} / {maxCharacterCount}
+          </div>
         )}
       </div>
     );

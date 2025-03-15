@@ -10,6 +10,7 @@ import { NickNameField } from '@/modules/core/components/nickname-field';
 import { PhoneField } from '@/modules/core/components/phone-field';
 import { TextField } from '@/modules/core/components/text-field';
 import { PRISMA_ERRORS } from '@/modules/core/constants/prisma-errors.constants';
+import { useDebounce } from '@/modules/core/hooks/use-debounce';
 import { useImageInputState } from '@/modules/core/hooks/use-image-input-state';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { getPrismaErrorMessage } from '@/modules/user/utils/get-prisma-error-message';
@@ -32,7 +33,7 @@ const defaultValues: AboutProfessionalFormValues = {
   tiktok: '',
   nickname: '',
 };
-
+const THOUSAND = 1000;
 const THIRTY_TWO = 32;
 const phoneRegex = /^(\+\d{1,3}[- ]?)?\d{10}$/;
 const nameRegex = /^[A-Za-zА-Яа-яІіЇїЄєҐґ']+$/;
@@ -84,7 +85,7 @@ const validationSchema: z.Schema<AboutProfessionalFormValues> = z.object({
       (value) => !value || instagramRegex.test(value),
       'validation.instagram.invalid'
     ),
-  about: z.string(),
+  about: z.string().max(THOUSAND, 'validation.about.maxLength'),
   tiktok: z
     .string()
     .max(100)
@@ -139,7 +140,7 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
     const { data: me } = trpc.user.me.useQuery();
 
     // form
-    const { reset, setError, clearErrors, ...form } =
+    const { reset, setError, clearErrors, watch, ...form } =
       useForm<AboutProfessionalFormValues>({
         defaultValues,
         resolver:
@@ -147,6 +148,9 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
             ? zodResolver(validationSchema)
             : zodResolver(validationSchemaCustomer),
       });
+
+    const aboutValue = watch('about', '');
+    const debounceAbout = useDebounce(aboutValue);
     // state
     const avatar = useImageInputState(initialValues?.avatar);
 
@@ -313,8 +317,11 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
         )}
         {me?.userType === 'PROFESSIONAL' && (
           <TextField
+            charCount={debounceAbout?.length}
             {...form.register('about')}
-            error={Boolean(form.formState.errors.about)}
+            showCharacterCount
+            maxCharacterCount={1000}
+            error={getErrorMessage(form.formState.errors.about?.message)}
             variant='textarea'
             label={intl.formatMessage({
               id: 'user.about.professional.form.about',

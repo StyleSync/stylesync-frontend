@@ -1,16 +1,14 @@
 import { type FC } from 'react';
+
 import { useIntl } from 'react-intl';
 
-// components
-import { OnboardLayout } from '@/modules/onboard/components/onboard-layout';
-import { ProfessionalServicesForm } from '@/modules/service/containers/professional-services-form';
 import { ErrorBox } from '@/modules/core/components/error-box';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { Spinner } from '@/modules/core/components/spinner';
-// hooks
-import { useServiceOnProfessionalGroups } from '@/modules/service/hooks/use-service-on-professional-groups';
-// types
+import { OnboardLayout } from '@/modules/onboard/components/onboard-layout';
 import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboard/pro-onboard.interface';
+import { ProfessionalServicesForm } from '@/modules/service/containers/professional-services-form';
+import { useServiceOnProfessionalGroups } from '@/modules/service/hooks/use-service-on-professional-groups';
 
 export const OnboardServices: FC<ProOnboardStepProps> = ({ next, back }) => {
   const intl = useIntl();

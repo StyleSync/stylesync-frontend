@@ -18,6 +18,9 @@
   "general.service.skincare": "Skincare",
   "general.service.eyebrows": "Eyebrows",
   "general.service.massage": "Massage",
+  "general.service.lips": "Lips",
+  "general.service.parmanent-makeup": "Permanent Makeup",
+
   "general.service.psychology": "Psychology",
 
   "general.service.other": "Other",
@@ -375,6 +378,7 @@
   "validation.facebook.invalid": "Invalid Facebook URL",
   "validation.instagram.invalid": "Invalid Instagram URL",
   "validation.tiktok.invalid": "Invalid Tiktok URL",
+  "validation.about.maxLength": "You have exceeded the character limit.",
 
   "validation.about.required": "About is required",
   "validation.firstName.firstLetterCapitalized": "The first letter of the first name must be uppercase.",
@@ -390,7 +394,7 @@
   "filter.all.dates": "All dates",
 
   "professional.search.card.services": "Makeup, hair, nails",
-  "pro.data.services": "services provided",
+  "pro.data.services": "{count, plural, one {# service provided} other {# services provided}}",
   "pro.data.last.7.days": "14 services booked in the last 7 days",
 
   "pro.layout.title.about": "About me",

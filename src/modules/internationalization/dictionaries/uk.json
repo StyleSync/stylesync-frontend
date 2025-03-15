@@ -18,6 +18,8 @@
   "general.service.skincare": "Догляд за шкірою",
   "general.service.eyebrows": "Брови",
   "general.service.massage": "Масаж",
+  "general.service.lips": "Губи",
+  "general.service.parmanent-makeup": "Перманентний макіяж",
   "general.service.psychology": "Психологія",
   "general.service.other": "Інше",
 
@@ -374,6 +376,7 @@
   "validation.firstName.firstLetterCapitalized": "Перша літера імені повинна бути великою",
   "validation.lastName.firstLetterCapitalized": "Перша літера прізвища повинна бути великою",
   "validation.tiktok.invalid": "Невірний URL Tiktok",
+  "validation.about.maxLength": "Ви перевищили ліміт символів",
 
   "validation.nickname.minLength": "Нікнем повинен мати мінімум 2 символи",
 
@@ -391,7 +394,7 @@
 
   "professional.search.card.services": "Макіяж, зачіска, нігті",
 
-  "pro.data.services": "наданих послуг",
+  "pro.data.services": "{count, plural, one {# надана послуга} few {# надані послуги} many {# наданих послуг} other {# наданих послуг}}",
   "pro.data.last.7.days": "За останні 7 днів заброньовано 14 послуг",
 
   "pro.layout.title.about": "Про мене",
@@ -449,7 +452,7 @@
   "onboard.about.toast.error.title.phone": "Користувач із таким номером телефону вже зареєстрований.",
   "nickname": "Нікнейм",
   "nickname.contents": "це унікальне ім'я, яке використовується для ідентифікації вашого профілю. Воно може містити лише латинські літери, цифри та спеціальні символи (якщо дозволено), але без пробілів. Максимальна довжина - 32 символи",
-  
+
   "profile.notFound.title": "Профіль не знайдено",
   "profile.notFound.description": "Цей профіль був видалений або ще не створений.",
   "profile.notFound.searchPros": "Шукати професіоналів",
