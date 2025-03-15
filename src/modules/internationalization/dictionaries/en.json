@@ -390,7 +390,7 @@
   "filter.all.dates": "All dates",
 
   "professional.search.card.services": "Makeup, hair, nails",
-  "pro.data.services": "services provided",
+  "pro.data.services": "{count, plural, one {# service provided} other {# services provided}}",
   "pro.data.last.7.days": "14 services booked in the last 7 days",
 
   "pro.layout.title.about": "About me",
