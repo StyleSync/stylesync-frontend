@@ -1,7 +1,10 @@
 import { type FC } from 'react';
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+
+import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import { useIntl } from 'react-intl';
+
 import { Typography } from '@/modules/core/components/typogrpahy';
+
 // type
 import type { BookingPreviewProgressbarProps } from './booking-preview-progressbar.interface';
 
@@ -29,20 +32,13 @@ export const BookingPreviewProgressbar: FC<BookingPreviewProgressbarProps> = ({
   );
 
   const hoursRemaining = Math.floor(
-    (timeRemaining %
-      (MILLISECONDS_IN_SECOND *
-        SECONDS_IN_MINUTE *
-        MINUTES_IN_HOUR *
-        HOURS_IN_DAY)) /
-      (MILLISECONDS_IN_SECOND * SECONDS_IN_MINUTE * MINUTES_IN_HOUR)
+    timeRemaining /
+      (MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND)
   );
 
   const minutesRemaning = Math.floor(
     (timeRemaining %
-      (MILLISECONDS_IN_SECOND *
-        SECONDS_IN_MINUTE *
-        SECONDS_IN_MINUTE *
-        MINUTES_IN_HOUR)) /
+      (MILLISECONDS_IN_SECOND * SECONDS_IN_MINUTE * MINUTES_IN_HOUR)) /
       (MILLISECONDS_IN_SECOND * SECONDS_IN_MINUTE)
   );
 
@@ -56,7 +52,13 @@ export const BookingPreviewProgressbar: FC<BookingPreviewProgressbarProps> = ({
   );
 
   // Calculate the percentage of time passed
-  const percents = timeRemaining > 0 ? (daysWaited * 100) / daysRemaining : 100;
+  let percents = 100;
+
+  if (daysRemaining > 0) {
+    percents = (daysWaited * 100) / daysRemaining;
+  } else if (timeRemaining > 0) {
+    percents = 100 - (minutesRemaning / 60) * 100;
+  }
 
   let timeLeftMessage = '';
 
@@ -71,14 +73,14 @@ export const BookingPreviewProgressbar: FC<BookingPreviewProgressbarProps> = ({
     if (daysRemaining <= 0 && hoursRemaining > 0) {
       timeLeftMessage = intl.formatMessage(
         { id: 'progressbar.hoursRemaining' },
-        { count: hoursRemaining }
+        { count: Number(hoursRemaining) }
       );
     }
 
     if (daysRemaining <= 0 && hoursRemaining <= 0 && minutesRemaning > 0) {
       timeLeftMessage = intl.formatMessage(
         { id: 'progressbar.minutesRemaning' },
-        { count: minutesRemaning }
+        { count: Number(minutesRemaning) }
       );
     }
   }
@@ -89,13 +91,13 @@ export const BookingPreviewProgressbar: FC<BookingPreviewProgressbarProps> = ({
         strokeWidth={5}
         value={percents}
         styles={buildStyles({
-          pathColor: daysRemaining > 0 ? '#3b82ef' : '#4bb543',
+          pathColor: daysRemaining >= 0 ? '#3b82ef' : '#4bb543',
           trailColor: '#d8e6fc',
         })}
       />
       <div className='absolute bottom-0 left-0 right-0 top-0 flex flex-col items-center justify-center'>
         <span className='text-sm text-gray-accent'>
-          {daysRemaining > 0
+          {daysRemaining >= 0
             ? intl.formatMessage({ id: 'progressbar.title.lost' })
             : intl.formatMessage({ id: 'progressbar.finished' })}
         </span>
