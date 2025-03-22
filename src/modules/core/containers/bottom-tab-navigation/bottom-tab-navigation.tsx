@@ -1,22 +1,21 @@
 'use client';
-import { type FC, useMemo, type ReactNode } from 'react';
+import { type FC, type ReactNode, useMemo } from 'react';
+
 import clsx from 'clsx';
-import { useIntl } from 'react-intl';
 import { usePathname, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-// components
-import { Button } from '@/modules/core/components/button';
-// containers
+import { useIntl } from 'react-intl';
+
 import { BookingsBadge } from '@/modules/booking/containers/bookings-badge/bookings-badge';
-import { BottomFixedContent } from '@/modules/core/containers/bottom-fixed-content';
-// hooks
-import { useDeviceType } from '@/modules/core/hooks/use-device-type';
-// utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
-// types
+import { Button } from '@/modules/core/components/button';
 import type { IconName } from '@/modules/core/components/icon';
+import { BottomFixedContent } from '@/modules/core/containers/bottom-fixed-content';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
+import { useQueryParams } from '@/modules/core/hooks/use-search-params';
+import { trpc } from '@/modules/core/utils/trpc.utils';
 
 import type { BottomTabNavigationProps } from './bottom-tab-navigation.interface';
+
 import styles from './bottom-tab-navigation.module.scss';
 
 export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
@@ -25,6 +24,7 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
   const pathname = usePathname();
   const router = useRouter();
   const intl = useIntl();
+  const { clearAllQueryParams } = useQueryParams();
 
   const { data: me } = trpc.user.me.useQuery(
     { expand: [] },
@@ -100,20 +100,30 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
   return (
     <BottomFixedContent.Item orderIndex={0}>
       <div className={styles.root}>
-        {userLinks.map((link) => (
-          <Button
-            key={link.href}
-            className={clsx(styles.tab, {
-              [styles.active]: pathname.endsWith(link.href),
-            })}
-            icon={link.icon}
-            text={link.title}
-            onClick={() => router.push(link.href)}
-            variant='unstyled'
-            rippleColor='transparent'
-            slotEnd={link.slotEnd}
-          />
-        ))}
+        {userLinks.map((link) => {
+          const isActive = pathname.endsWith(link.href);
+
+          return (
+            <Button
+              key={link.href}
+              className={clsx(styles.tab, {
+                [styles.active]: isActive,
+              })}
+              icon={link.icon}
+              text={link.title}
+              onClick={() => {
+                if (isActive) {
+                  clearAllQueryParams();
+                }
+
+                router.replace(link.href);
+              }}
+              variant='unstyled'
+              rippleColor='transparent'
+              slotEnd={link.slotEnd}
+            />
+          );
+        })}
       </div>
     </BottomFixedContent.Item>
   );

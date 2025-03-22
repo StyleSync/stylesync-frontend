@@ -15,6 +15,7 @@
     padding: utils.spacing(2, 3);
     background-color: rgba(variables.$primary-light-color, 0.3);
     align-items: flex-start;
+
     @include mixins.phone {
       flex-direction: column;
       padding: utils.spacing(2.5, 1.5);
@@ -22,6 +23,9 @@
   }
 
   @include mixins.phone {
+    padding-left: 0;
+    padding-right: 0;
+
     &:first-child {
       border-top: none;
     }
@@ -30,6 +34,7 @@
   &:last-child {
     border-bottom: none;
   }
+
   .container {
     display: flex;
     flex: 1;

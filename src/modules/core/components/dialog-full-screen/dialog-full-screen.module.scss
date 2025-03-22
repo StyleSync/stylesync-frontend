@@ -1,4 +1,5 @@
 @use '@/styles/variables.module';
+@use '@/styles/utils';
 
 .overlay {
   position: fixed;
@@ -8,6 +9,11 @@
   bottom: 0;
   z-index: calc(#{variables.$level-dialog-1} - 1);
   background-color: variables.$dark-color;
+
+  &.bottomTabPadding {
+    bottom: variables.$bottom-tab-bar-height;
+    z-index: calc(#{variables.$bottom-fixed-content-z-index} - 2);
+  }
 }
 
 .content {
@@ -22,5 +28,10 @@
   z-index: variables.$level-dialog-1;
   display: flex;
   background-color: #fff;
-  box-shadow: variables.$main-box-shadow;
+
+  &.bottomTabPadding {
+    bottom: variables.$bottom-tab-bar-height;
+    height: calc(100% - variables.$bottom-tab-bar-height);
+    z-index: calc(#{variables.$bottom-fixed-content-z-index} - 1);
+  }
 }

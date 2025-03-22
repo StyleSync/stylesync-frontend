@@ -7,6 +7,7 @@
   min-width: 80% !important;
   max-width: 80% !important;
   border-top-left-radius: variables.$border-radius-large !important;
+  box-shadow: variables.$main-box-shadow !important;
 }
 
 .dialogOverlay {
@@ -93,9 +94,10 @@
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      height: 50px;
+      height: 60px;
       width: 100%;
       padding: 0 utils.spacing(4);
+      column-gap: utils.spacing(2);
       border-radius:0;
       color: variables.$dark-color;
 

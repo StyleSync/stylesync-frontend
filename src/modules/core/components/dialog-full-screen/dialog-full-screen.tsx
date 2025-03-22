@@ -1,20 +1,22 @@
 import React, {
-  type FC,
   type CSSProperties,
+  type FC,
   useCallback,
   useEffect,
   useRef,
   useState,
 } from 'react';
-import { animated, Controller } from '@react-spring/web';
+
 import * as Dialog from '@radix-ui/react-dialog';
-import { useBoolean } from 'usehooks-ts';
+import { animated, Controller } from '@react-spring/web';
 import clsx from 'clsx';
+import { useBoolean } from 'usehooks-ts';
 
 import type {
   DialogFullScreenAnimationConfig,
   DialogFullScreenProps,
 } from './dialog-full-screen.interface';
+
 import styles from './dialog-full-screen.module.scss';
 
 const IN_OUT_ANIMATION_DURATION = 200;
@@ -105,6 +107,7 @@ export const DialogFullScreen: FC<DialogFullScreenProps> = ({
   onOpenChange,
   classes,
   closeOnOutsideClick = false,
+  applyMobileBottomTabPadding = false,
   animationConfig = defaultAnimationConfig,
 }) => {
   const config = { ...defaultAnimationConfig, ...animationConfig };
@@ -309,14 +312,26 @@ export const DialogFullScreen: FC<DialogFullScreenProps> = ({
       <Dialog.Portal>
         <Dialog.Overlay asChild>
           <animated.div
-            className={clsx(styles.overlay, classes?.overlay)}
+            className={clsx(
+              styles.overlay,
+              {
+                [styles.bottomTabPadding]: applyMobileBottomTabPadding,
+              },
+              classes?.overlay
+            )}
             style={overlayAnimationController.springs}
             ref={overlayRef}
           />
         </Dialog.Overlay>
         <Dialog.Content>
           <animated.div
-            className={clsx(styles.content, classes?.content)}
+            className={clsx(
+              styles.content,
+              {
+                [styles.bottomTabPadding]: applyMobileBottomTabPadding,
+              },
+              classes?.content
+            )}
             onTouchStart={handleContentTouchStart}
             onTouchEnd={handleContentTouchEnd}
             style={contentAnimationController.springs}
