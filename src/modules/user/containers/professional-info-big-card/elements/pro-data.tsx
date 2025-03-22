@@ -34,15 +34,18 @@ export const ProData: FC<ProDataProps> = ({ professional, session }) => {
   return (
     <div className='z-10 flex w-full items-center justify-between bg-white px-6 py-5'>
       <div className='flex flex-col gap-y-3'>
-        <div className='flex w-fit items-center gap-x-2 text-dark'>
-          <Icon name='menu' className='h-4 w-4 !text-gray' />
-          <Typography variant='body2' className='!text-inherit'>
-            {intl.formatMessage(
-              { id: 'pro.data.services' },
-              { count: serviceOnProfessionalList.data?.pages.length }
-            )}
-          </Typography>
-        </div>
+        {(serviceOnProfessionalList.data?.pages.length ?? 0) > 1 && (
+          <div className='flex w-fit items-center gap-x-2 text-dark'>
+            <Icon name='menu' className='h-4 w-4 !text-gray' />
+            <Typography variant='body2' className='!text-inherit'>
+              {intl.formatMessage(
+                { id: 'pro.data.services' },
+                { count: serviceOnProfessionalList.data?.pages.length }
+              )}
+            </Typography>
+          </div>
+        )}
+
         {/* todo: show this label if doesn't have bookings for last 7 days and the user has been registered less than 1 week ago  */}
         {/* <div className='flex w-fit items-center gap-x-2 text-green'> */}
         {/*   <Icon name='time' className='w-4 h-4' /> */}
