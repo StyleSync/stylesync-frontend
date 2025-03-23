@@ -1,18 +1,20 @@
 'use client';
-import type { ReactElement, FC } from 'react';
+import type { FC, ReactElement } from 'react';
+
 // components
 import { DialogFullScreen } from '@/modules/core/components/dialog-full-screen';
-// containers
-import { ProfessionalSettingsAbout } from '@/modules/user/containers/professional-settings-about';
-import { ProfessionalSettingsServices } from '@/modules/user/containers/professional-settings-services';
-import { ProfessionalSettingsSchedule } from '@/modules/user/containers/professional-settings-schedule';
-import { ProfessionalSettingsGallery } from '@/modules/settings/containers/professional-settings-gallery';
-import { ProfessionalSettingsLocation } from '@/modules/settings/containers/professional-settings-location';
-// hooks
-import { useSettingsNavigation } from '@/modules/user/hooks/use-settings-navigation';
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
+import { ProfessionalSettingsGallery } from '@/modules/settings/containers/professional-settings-gallery';
+import { ProfessionalSettingsLocation } from '@/modules/settings/containers/professional-settings-location';
+// containers
+import { ProfessionalSettingsAbout } from '@/modules/user/containers/professional-settings-about';
+import { ProfessionalSettingsSchedule } from '@/modules/user/containers/professional-settings-schedule';
+import { ProfessionalSettingsServices } from '@/modules/user/containers/professional-settings-services';
+// hooks
+import { useSettingsNavigation } from '@/modules/user/hooks/use-settings-navigation';
+
 import type { ProfileSettingsContentProps } from './profile-settings-content.interface';
 
 const contentMap: Record<string, ReactElement> = {
@@ -34,7 +36,11 @@ export const ProfileSettingsContent: FC<ProfileSettingsContentProps> = () => {
 
   if (deviceType === 'mobile') {
     return (
-      <DialogFullScreen isOpen={!!active} onOpenChange={reset}>
+      <DialogFullScreen
+        isOpen={!!active}
+        onOpenChange={reset}
+        applyMobileBottomTabPadding
+      >
         {stepElement}
       </DialogFullScreen>
     );

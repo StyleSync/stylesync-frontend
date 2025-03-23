@@ -56,9 +56,6 @@ export const ProfessionalSettingsSidebar: FC<UserSettingsSidebarProps> = () => {
     return [
       {
         id: 'profile',
-        title: intl.formatMessage({
-          id: 'professional.settings.sidebar.profile',
-        }),
         links: [
           {
             id: 'services',

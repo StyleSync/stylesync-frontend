@@ -1,9 +1,11 @@
 import { type FC, type ReactNode, useMemo } from 'react';
 
 import clsx from 'clsx';
+import Image from 'next/image';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import { useIntl } from 'react-intl';
 
+import Bg from '@/assets/images/bg-1.png';
 import { Button } from '@/modules/core/components/button';
 import type { ButtonProps } from '@/modules/core/components/button/button.interface';
 import { Divider } from '@/modules/core/components/divider';
@@ -39,24 +41,23 @@ export const ProfileSettingsTabContentLayout: FC<
     );
   // memo
   const _actions = useMemo<(ButtonProps | { actionNode: ReactNode })[]>(() => {
-    if (deviceType === 'mobile') {
-      return [
-        {
-          text: intl.formatMessage({ id: 'button.back' }),
-          variant: 'secondary',
-          onClick: reset,
-        },
-        ...(actions ?? []),
-      ];
-    }
-
     const filterActions = actions?.filter((item) => !item.isMobile);
 
     return filterActions ?? [];
-  }, [actions, deviceType, reset, intl]);
+  }, [actions]);
 
   return (
     <div className={styles.root}>
+      {deviceType === 'mobile' && (
+        <Image
+          className='absolute bottom-0 left-0 right-0 top-0 z-[-1] h-full w-full object-cover opacity-20'
+          src={Bg.src}
+          width={Bg.width}
+          height={Bg.height}
+          blurDataURL={Bg.blurDataURL}
+          alt='background'
+        />
+      )}
       <div className={styles.title}>
         {deviceType === 'mobile' && (
           <Button
@@ -76,6 +77,13 @@ export const ProfileSettingsTabContentLayout: FC<
       <div className='flex flex-1 gap-x-6 overflow-y-auto pb-0 md:overflow-y-visible'>
         <div className={styles.content}>
           <div className={styles.scrolledContent}>
+            {deviceType === 'mobile' && (
+              <span className='text-2xl font-medium text-dark'>
+                {intl.formatMessage({
+                  id: title,
+                })}
+              </span>
+            )}
             <Placeholder
               isActive={isLoading}
               placeholder={<Spinner size='medium' />}

@@ -1,23 +1,25 @@
 import { type FC, useCallback } from 'react';
-import clsx from 'clsx';
-import { useQueryClient } from '@tanstack/react-query';
-import { useIntl } from 'react-intl';
-import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 
-// containers
-import { DayScheduleSelect } from '@/modules/schedule/containers/day-schedule-select';
+import { useQueryClient } from '@tanstack/react-query';
+import clsx from 'clsx';
+import { useIntl } from 'react-intl';
+
+import { ErrorBox } from '@/modules/core/components/error-box';
 // components
 import { Icon } from '@/modules/core/components/icon';
-import { Typography } from '@/modules/core/components/typogrpahy';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { Spinner } from '@/modules/core/components/spinner';
-import { ErrorBox } from '@/modules/core/components/error-box';
-// constants
-import { weekdays } from '@/modules/schedule/constants/schedule.constants';
+import { Typography } from '@/modules/core/components/typogrpahy';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
+// constants
+import { weekdays } from '@/modules/schedule/constants/schedule.constants';
+// containers
+import { DayScheduleSelect } from '@/modules/schedule/containers/day-schedule-select';
 
 import type { WeeklyScheduleFormProps } from './schedule-form.interface';
+
 import styles from './schedule-form.module.scss';
 
 export const WeeklyScheduleForm: FC<WeeklyScheduleFormProps> = () => {

@@ -1,6 +1,7 @@
-import type { ChildrenProp } from '@/modules/core/types/react.types';
-import type { ReactNode, CSSProperties } from 'react';
 import type { SpringConfig } from '@react-spring/web';
+import type { CSSProperties, ReactNode } from 'react';
+
+import type { ChildrenProp } from '@/modules/core/types/react.types';
 
 type EntityAnimationConfig = {
   cssOpen: CSSProperties;
@@ -25,4 +26,5 @@ export type DialogFullScreenProps = ChildrenProp & {
   };
   // useful if modal contains elements that portals outside modal (eg popups) and should not trigger modal closing
   closeOnOutsideClick?: boolean;
+  applyMobileBottomTabPadding?: boolean;
 };

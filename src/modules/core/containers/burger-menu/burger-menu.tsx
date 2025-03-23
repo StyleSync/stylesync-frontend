@@ -319,6 +319,7 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ session }) => {
                   onClick={handleActionClick(action)}
                   typographyProps={{
                     weight: 'medium',
+                    variant: 'body1',
                   }}
                 />
               ))}

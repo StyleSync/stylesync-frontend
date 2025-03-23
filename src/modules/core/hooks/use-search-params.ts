@@ -35,5 +35,14 @@ export function useQueryParams<T = {}>() {
     router.push(`${pathname}${query}`);
   }
 
-  return { queryParams, setQueryParams, clearQueryParams };
+  function clearAllQueryParams() {
+    clearQueryParams(Object.keys(queryParams) as (keyof T)[]);
+  }
+
+  return {
+    queryParams,
+    setQueryParams,
+    clearQueryParams,
+    clearAllQueryParams,
+  };
 }

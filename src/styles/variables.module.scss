@@ -46,12 +46,14 @@ $screen-desktop: 1920px;
 $header-height: 74px;
 $header-height-mobile: 62px;
 $sidebar-width: calc((100vw - 968px) / 2);
-$bottom-tab-bar-height: 111px;
+$bottom-tab-bar-height: 76px;
 
 // z-index
 $level-dialog-1: 100;
 $level-dialog-2: 200;
 $level-dialog-3: 300;
+
+$bottom-fixed-content-z-index: 90;
 
 :export {
   // colors

@@ -1,11 +1,14 @@
 import { type FC, Fragment, useCallback } from 'react';
+
 import clsx from 'clsx';
-// components
-import { Typography } from '@/modules/core/components/typogrpahy';
+
 import { Button } from '@/modules/core/components/button';
 import { Icon } from '@/modules/core/components/icon';
+// components
+import { Typography } from '@/modules/core/components/typogrpahy';
 
 import type { SidebarLink, SidebarProps } from './sidebar.interface';
+
 import styles from './sidebar.module.scss';
 
 export const Sidebar: FC<SidebarProps> = ({
@@ -51,6 +54,9 @@ export const Sidebar: FC<SidebarProps> = ({
                       onClick={handleLinkClick(link)}
                       variant='unstyled'
                       iconEnd='chevron-right'
+                      classes={{
+                        text: '!text-base !font-semibold lg:!font-normal',
+                      }}
                     />
                   )}
                 </Fragment>
