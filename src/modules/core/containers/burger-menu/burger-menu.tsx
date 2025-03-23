@@ -1,8 +1,8 @@
 import { type FC, useCallback, useMemo } from 'react';
 
 import clsx from 'clsx';
-import { useRouter } from 'next/navigation';
-import { signOut, useSession } from 'next-auth/react';
+import { useParams, useRouter } from 'next/navigation';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import { useIntl } from 'react-intl';
 import { useBoolean } from 'usehooks-ts';
 
@@ -84,6 +84,7 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ session }) => {
   const intl = useIntl();
   const router = useRouter();
   const isOpen = useBoolean();
+  const params = useParams();
   const isOpenModalLinks = useBoolean();
 
   const { status } = useSession();
@@ -204,12 +205,28 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ session }) => {
       }
 
       if (action.id === 'sign-in') {
-        router.push('/auth/sign-in');
+        signIn(
+          'auth0',
+          {
+            callbackUrl: '/app/profile',
+          },
+          {
+            prompt: 'login',
+            ui_locales: params?.lang as string,
+          }
+        );
       }
 
       isOpen.setFalse();
     },
-    [isOpen, router, session?.user.id, isOpenModalLinks, me?.nickname]
+    [
+      isOpen,
+      router,
+      session?.user.id,
+      isOpenModalLinks,
+      me?.nickname,
+      params?.lang,
+    ]
   );
 
   return (
