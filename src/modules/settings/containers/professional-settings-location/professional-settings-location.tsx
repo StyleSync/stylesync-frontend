@@ -130,10 +130,10 @@ export const ProfessionalSettingsLocation: FC = () => {
             showToast({
               variant: 'error',
               title: intl.formatMessage({
-                id: 'professional.settings.location.toast.error.title.delete',
+                id: 'professional.settings.location.toast.success.title.delete',
               }),
               description: intl.formatMessage({
-                id: 'professional.settings.location.toast.error.description.delete',
+                id: 'professional.settings.location.toast.success.description.delete',
               }),
             });
           },
@@ -142,10 +142,10 @@ export const ProfessionalSettingsLocation: FC = () => {
             showToast({
               variant: 'success',
               title: intl.formatMessage({
-                id: 'professional.settings.location.toast.error.title.delete',
+                id: 'professional.settings.location.toast.success.title.delete',
               }),
               description: intl.formatMessage({
-                id: 'professional.settings.location.toast.error.description.delete',
+                id: 'professional.settings.location.toast.success.description.delete',
               }),
             });
           },
