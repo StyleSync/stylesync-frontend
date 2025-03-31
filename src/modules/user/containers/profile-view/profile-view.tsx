@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useEffect, useMemo } from 'react';
+import { Suspense, useMemo } from 'react';
 
 import clsx from 'clsx';
 import { useParams, useRouter } from 'next/navigation';
@@ -61,14 +61,6 @@ export function ProfileView({ session }: ProfileViewProps) {
         refetchOnReconnect: true,
       }
     );
-
-  useEffect(() => {
-    document.body.classList.add('scrollbarHidden');
-
-    return () => {
-      document.body.classList.remove('scrollbarHidden');
-    };
-  }, []);
 
   if (isLoading || isProfessionalLoading) {
     return (
