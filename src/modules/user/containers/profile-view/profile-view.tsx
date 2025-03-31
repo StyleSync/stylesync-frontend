@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useMemo } from 'react';
+import { Suspense, useEffect, useMemo } from 'react';
 
 import clsx from 'clsx';
 import { useParams, useRouter } from 'next/navigation';
@@ -10,6 +10,7 @@ import { useIntl } from 'react-intl';
 import { BookingProvider } from '@/modules/booking/providers/booking-provider';
 import { ErrorView } from '@/modules/core/components/error-view';
 import { Spinner } from '@/modules/core/components/spinner';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { ServiceTableSkeleton } from '@/modules/service/components/service-table-skeleton';
 import { AboutMe } from '@/modules/user/components/about-me';
@@ -28,6 +29,7 @@ export function ProfileView({ session }: ProfileViewProps) {
   const { id: queryId } = useParams<{ id: string }>();
   const router = useRouter();
   const intl = useIntl();
+  const deviceType = useDeviceType();
 
   const { data, isLoading, isError } = trpc.user.checkNickname.useQuery(
     {
@@ -59,6 +61,16 @@ export function ProfileView({ session }: ProfileViewProps) {
         refetchOnReconnect: true,
       }
     );
+
+  useEffect(() => {
+    if (deviceType === 'mobile' && document?.body) {
+      document.body.classList.add('scrollbarHidden');
+
+      return () => {
+        document.body.classList.remove('scrollbarHidden');
+      };
+    }
+  }, [deviceType]);
 
   if (isLoading || isProfessionalLoading) {
     return (

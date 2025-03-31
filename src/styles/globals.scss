@@ -9,6 +9,11 @@
 :root {
   --bottom-fixed-content-height: 0px;
 }
+.scrollbarHidden {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
 
 * {
   box-sizing: border-box;
