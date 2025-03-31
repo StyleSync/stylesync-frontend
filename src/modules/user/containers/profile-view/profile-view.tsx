@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useMemo } from 'react';
+import { Suspense, useEffect, useMemo } from 'react';
 
 import clsx from 'clsx';
 import { useParams, useRouter } from 'next/navigation';
@@ -47,6 +47,16 @@ export function ProfileView({ session }: ProfileViewProps) {
     [data, queryId]
   );
 
+  useEffect(() => {
+    if (deviceType === 'mobile' && document?.body) {
+      document.body.classList.add('overflow-hidden');
+
+      return () => {
+        document.body.classList.remove('overflow-hidden');
+      };
+    }
+  }, [deviceType]);
+
   const { isLoading: isProfessionalLoading, isError: isProfessionalError } =
     trpc.professional.get.useQuery(
       {
@@ -90,7 +100,12 @@ export function ProfileView({ session }: ProfileViewProps) {
 
   return (
     <BookingProvider userId={userId}>
-      <main className={styles.root}>
+      <main
+        className={clsx(
+          styles.root,
+          deviceType === 'mobile' && 'h-[100dvh] overflow-auto hide-scrollbar'
+        )}
+      >
         <section className={clsx(styles.section, styles.headerSection)}>
           <Suspense
             fallback={
