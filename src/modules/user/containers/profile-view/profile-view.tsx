@@ -63,14 +63,12 @@ export function ProfileView({ session }: ProfileViewProps) {
     );
 
   useEffect(() => {
-    if (deviceType === 'mobile' && document?.body) {
-      document.body.classList.add('scrollbarHidden');
+    document.body.classList.add('scrollbarHidden');
 
-      return () => {
-        document.body.classList.remove('scrollbarHidden');
-      };
-    }
-  }, [deviceType]);
+    return () => {
+      document.body.classList.remove('scrollbarHidden');
+    };
+  }, []);
 
   if (isLoading || isProfessionalLoading) {
     return (
