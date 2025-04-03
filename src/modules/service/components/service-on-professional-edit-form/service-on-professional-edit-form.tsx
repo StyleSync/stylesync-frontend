@@ -1,34 +1,34 @@
 import { type FC, useCallback, useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { useIntl } from 'react-intl';
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
-// components
-import { TextField } from '@/modules/core/components/text-field';
-import { PriceField } from '@/modules/core/components/price-field';
-import { TimeField } from '@/modules/core/components/time-field';
+import { Controller, useForm } from 'react-hook-form';
+import { useIntl } from 'react-intl';
+import { z } from 'zod';
+
 import { Button } from '@/modules/core/components/button';
 import { Dialog } from '@/modules/core/components/dialog';
+import { EditorField } from '@/modules/core/components/editor-field';
+import { PriceField } from '@/modules/core/components/price-field';
+import { TextField } from '@/modules/core/components/text-field';
+import { TimeField } from '@/modules/core/components/time-field';
 import { Typography } from '@/modules/core/components/typogrpahy';
-// utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
+import { showToast } from '@/modules/core/providers/toast-provider';
 import {
   formatDuration,
   Time,
   type TimeValue,
 } from '@/modules/core/utils/time.utils';
-import { showToast } from '@/modules/core/providers/toast-provider';
-// types
+import { trpc } from '@/modules/core/utils/trpc.utils';
 import type { ServiceOnProfessionalEditableFields } from '@/modules/service/types/service.types';
+
 import type {
   ServiceOnProfessionalEditFormProps,
   ServiceOnProfessionalFormValues,
 } from './service-on-professional-edit-form.interface';
-import styles from './service-on-professional-edit-form.module.scss';
 
-import { EditorField } from '@/modules/core/components/editor-field';
+import styles from './service-on-professional-edit-form.module.scss';
 
 const validationSchema = z.object({
   title: z.string().min(1),
@@ -213,7 +213,8 @@ export const ServiceOnProfessionalEditForm: FC<
                     formatValue={(value: string) => {
                       return formatDuration(
                         Time.toMinuteDuration(value as TimeValue),
-                        intl
+                        intl,
+                        true
                       );
                     }}
                     onChange={field.onChange}
@@ -222,6 +223,7 @@ export const ServiceOnProfessionalEditForm: FC<
                         id: 'serviceOn.professional.edit.duration.label',
                       }),
                       error: Boolean(fieldState.error),
+                      className: '!pr-3',
                     }}
                   />
                 )}

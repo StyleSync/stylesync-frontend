@@ -224,17 +224,22 @@ export const shortFormatDuration = (
 export const emptyTimeRange = formatTimeRange(new Time(), new Time());
 
 // formatter duration
-export const formatDuration = (duration: number, intl?: IntlShape): string => {
+export const formatDuration = (
+  duration: number,
+  intl?: IntlShape,
+  isDurationShort?: boolean
+): string => {
   const hours = Math.floor(duration / 60);
   const minutes = duration % 60;
 
   let formattedDuration = '';
 
   if (hours > 0) {
-    formattedDuration += ` ${intl?.formatMessage(
-      { id: 'duration.hour' },
-      { count: hours }
-    )}`;
+    formattedDuration += ` ${
+      isDurationShort
+        ? intl?.formatMessage({ id: 'duration.hour.min' }, { count: hours })
+        : intl?.formatMessage({ id: 'duration.hour' }, { count: hours })
+    }`;
   }
 
   if (minutes > 0) {
@@ -242,10 +247,11 @@ export const formatDuration = (duration: number, intl?: IntlShape): string => {
       formattedDuration += ' ';
     }
 
-    formattedDuration += ` ${intl?.formatMessage(
-      { id: 'duration.minute' },
-      { count: minutes }
-    )}`;
+    formattedDuration += ` ${
+      isDurationShort
+        ? intl?.formatMessage({ id: 'duration.minute.min' }, { count: minutes })
+        : intl?.formatMessage({ id: 'duration.minute' }, { count: minutes })
+    }`;
   }
 
   return formattedDuration;
