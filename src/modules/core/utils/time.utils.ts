@@ -227,7 +227,7 @@ export const emptyTimeRange = formatTimeRange(new Time(), new Time());
 export const formatDuration = (
   duration: number,
   intl?: IntlShape,
-  isDurationShort?: boolean
+  options?: { isShortDuration: boolean }
 ): string => {
   const hours = Math.floor(duration / 60);
   const minutes = duration % 60;
@@ -236,7 +236,7 @@ export const formatDuration = (
 
   if (hours > 0) {
     formattedDuration += ` ${
-      isDurationShort
+      options?.isShortDuration
         ? intl?.formatMessage({ id: 'duration.hour.min' }, { count: hours })
         : intl?.formatMessage({ id: 'duration.hour' }, { count: hours })
     }`;
@@ -248,7 +248,7 @@ export const formatDuration = (
     }
 
     formattedDuration += ` ${
-      isDurationShort
+      options?.isShortDuration
         ? intl?.formatMessage({ id: 'duration.minute.min' }, { count: minutes })
         : intl?.formatMessage({ id: 'duration.minute' }, { count: minutes })
     }`;

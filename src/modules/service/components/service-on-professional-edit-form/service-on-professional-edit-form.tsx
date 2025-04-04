@@ -214,7 +214,7 @@ export const ServiceOnProfessionalEditForm: FC<
                       return formatDuration(
                         Time.toMinuteDuration(value as TimeValue),
                         intl,
-                        true
+                        { isShortDuration: true }
                       );
                     }}
                     onChange={field.onChange}
