@@ -280,6 +280,9 @@
   "duration.hour": "{count, plural, one {# hour} other {# hours}}",
   "duration.minute": "{count, plural, one {# minute} other {# minutes}}",
 
+  "duration.hour.min": "{count, plural, one {# hr} other {# hrs}}",
+  "duration.minute.min": "{count, plural, one {# min} other {# min}}",
+
   "duration.hour.short": "{count}h",
   "duration.minute.short": "{count}min",
 
