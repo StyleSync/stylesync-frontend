@@ -1,23 +1,25 @@
 import { type FC, useMemo, useState } from 'react';
+
+import { useQueryClient } from '@tanstack/react-query';
+import { getQueryKey } from '@trpc/react-query';
 import { addDays, isPast } from 'date-fns';
 import { useIntl } from 'react-intl';
-import { getQueryKey } from '@trpc/react-query';
 
+import { BookingSlotCard } from '@/modules/booking/components/booking-slot-card';
+import { BookingTimeSelectNavigation } from '@/modules/booking/components/booking-time-select-navigation';
+import { Button } from '@/modules/core/components/button';
+import { DateSlider } from '@/modules/core/components/date-slider';
 // components
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { Spinner } from '@/modules/core/components/spinner';
-import { BookingSlotCard } from '@/modules/booking/components/booking-slot-card';
-import { Button } from '@/modules/core/components/button';
-import { DateSlider } from '@/modules/core/components/date-slider';
+import { showToast } from '@/modules/core/providers/toast-provider';
+import { mapDateToDayEnum } from '@/modules/core/utils/date.utils';
 // utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
-import { mapDateToDayEnum } from '@/modules/core/utils/date.utils';
+import { type AvailableBookingTime } from '@/server/types';
+
 // types
 import type { BookingRescheduleFormProps } from './booking-reschedule-form.interface';
-import { type AvailableBookingTime } from '@/server/types';
-import { showToast } from '@/modules/core/providers/toast-provider';
-import { useQueryClient } from '@tanstack/react-query';
-import { BookingTimeSelectNavigation } from '@/modules/booking/components/booking-time-select-navigation';
 
 export const BookingRescheduleForm: FC<BookingRescheduleFormProps> = ({
   bookingId,

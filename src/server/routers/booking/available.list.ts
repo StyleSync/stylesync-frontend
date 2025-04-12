@@ -57,15 +57,17 @@ export const availableList = publicProcedure
     );
 
     // first we check if we have specific schedule for the day
-    // temporary commented out as we don't have specific day schedule yet
-    // const specificDaySchedule = await prisma.schedule.findFirst({
-    //   where: {
-    //     professionalId: professional.id,
-    //     isSpecificDay: true,
-    //     day: input.day,
-    //   },
-    //   select: defaultScheduleSelect,
-    // });
+    const specificDaySchedule = await prisma.schedule.findFirst({
+      where: {
+        professionalId: professional.id,
+        isSpecificDay: true,
+        day: input.day,
+        specificDay: input.dayTime,
+        specificMonth: input.monthTime,
+        specificYear: input.yearTime,
+      },
+      select: defaultScheduleSelect,
+    });
 
     const defaultDaySchedule = await prisma.schedule.findFirst({
       where: {
@@ -76,9 +78,7 @@ export const availableList = publicProcedure
       select: defaultScheduleSelect,
     });
 
-    // commented out until we return specific day schedule
-    // const currentDaySchedule = specificDaySchedule ?? defaultDaySchedule;
-    const currentDaySchedule = defaultDaySchedule;
+    const currentDaySchedule = specificDaySchedule ?? defaultDaySchedule;
 
     if (!currentDaySchedule) {
       throw new TRPCError({

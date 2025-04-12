@@ -1,19 +1,20 @@
-import { privateProcedure } from '@/server/trpc-helpers';
-import { z } from 'zod';
 import { Day } from '@prisma/client';
-import { prisma } from '@/server/prisma';
 import { TRPCError } from '@trpc/server';
-import { checkProfessionalAccessToBooking } from '@/server/utils/prisma-utils';
-import { defaultScheduleSelect } from '@/server/selectors/schedule';
 import { addHours, isAfter } from 'date-fns';
-import {
-  isTimeWithinPeriods,
-  isTimeWithinSchedule,
-} from '@/server/utils/helpers';
+import { z } from 'zod';
+
+import { prisma } from '@/server/prisma';
 import {
   defaultBookingSelect,
   defaultServiceOnProfessionalSelect,
 } from '@/server/selectors';
+import { defaultScheduleSelect } from '@/server/selectors/schedule';
+import { privateProcedure } from '@/server/trpc-helpers';
+import {
+  isTimeWithinPeriods,
+  isTimeWithinSchedule,
+} from '@/server/utils/helpers';
+import { checkProfessionalAccessToBooking } from '@/server/utils/prisma-utils';
 
 export const rescheduleBooking = privateProcedure
   .input(
@@ -31,6 +32,9 @@ export const rescheduleBooking = privateProcedure
         Day.SATURDAY,
         Day.SUNDAY,
       ]),
+      yearTime: z.number().optional(),
+      monthTime: z.number().optional(),
+      dayTime: z.number().optional(),
     })
   )
   .mutation(async ({ input, ctx }) => {
@@ -53,7 +57,19 @@ export const rescheduleBooking = privateProcedure
       });
     }
 
-    const selectedDaySchedule = await prisma.schedule.findFirst({
+    const specificDaySchedule = await prisma.schedule.findFirst({
+      where: {
+        professionalId: professional.id,
+        isSpecificDay: true,
+        day: input.day,
+        specificDay: input.dayTime ?? -1,
+        specificMonth: input.monthTime ?? -1,
+        specificYear: input.yearTime ?? -1,
+      },
+      select: defaultScheduleSelect,
+    });
+
+    const defaultDaySchedule = await prisma.schedule.findFirst({
       where: {
         professionalId: professional.id,
         isSpecificDay: false,
@@ -61,6 +77,8 @@ export const rescheduleBooking = privateProcedure
       },
       select: defaultScheduleSelect,
     });
+
+    const selectedDaySchedule = specificDaySchedule ?? defaultDaySchedule;
 
     if (
       selectedDaySchedule &&

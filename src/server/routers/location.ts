@@ -1,8 +1,13 @@
-import { privateProcedure, publicProcedure, router } from '../trpc-helpers';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
+
 import { prisma } from '@/server/prisma';
 import { defaultLocationSelect } from '@/server/selectors';
+import {
+  privateProcedure,
+  publicProcedure,
+  router,
+} from '@/server/trpc-helpers';
 import {
   getCursor,
   getProfessionalFromContext,
