@@ -1,14 +1,19 @@
-import { privateProcedure, publicProcedure, router } from '../trpc-helpers';
-import { TRPCError } from '@trpc/server';
-import { z } from 'zod';
-import { prisma } from '@/server/prisma';
 import { Day } from '@prisma/client';
+import { TRPCError } from '@trpc/server';
+import { isAfter } from 'date-fns';
+import { z } from 'zod';
+
+import { prisma } from '@/server/prisma';
 import { defaultScheduleSelect } from '@/server/selectors/schedule';
+import {
+  privateProcedure,
+  publicProcedure,
+  router,
+} from '@/server/trpc-helpers';
 import {
   getCursor,
   getProfessionalFromContext,
 } from '@/server/utils/prisma-utils';
-import { isAfter } from 'date-fns';
 
 const defaultLimit = 10;
 const maxLimit = 100;
@@ -74,12 +79,25 @@ export const scheduleRouter = router({
         specificDay: z.number().optional(),
         specificMonth: z.number().optional(),
         specificYear: z.number().optional(),
+        breaks: z
+          .array(
+            z.object({
+              start: z.string().datetime(),
+              end: z.string().datetime(),
+            })
+          )
+          .optional(),
       })
     )
     .mutation(async ({ input, ctx }) => {
       if (
         input.isSpecificDay &&
-        (!input.specificDay || !input.specificMonth || !input.specificYear)
+        (!input.specificDay ||
+          !input.specificMonth ||
+          !input.specificYear ||
+          input.specificDay === -1 ||
+          input.specificMonth === -1 ||
+          input.specificYear === -1)
       ) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
@@ -132,13 +150,130 @@ export const scheduleRouter = router({
         }
       }
 
-      return prisma.schedule.create({
+      const { breaks, ...rest } = input;
+
+      const createResult = await prisma.schedule.create({
         data: {
-          ...input,
+          ...rest,
           professionalId: professional.id,
         },
         select: defaultScheduleSelect,
       });
+
+      if (breaks) {
+        await prisma.break.createMany({
+          data: breaks.map((breakItem) => ({
+            ...breakItem,
+            scheduleId: createResult.id,
+          })),
+        });
+      }
+
+      return createResult;
+    }),
+  createBulk: privateProcedure
+    .input(
+      z.object({
+        schedules: z.array(
+          z.object({
+            start: z.string().datetime(),
+            end: z.string().datetime(),
+            day: z.enum([
+              Day.MONDAY,
+              Day.TUESDAY,
+              Day.WEDNESDAY,
+              Day.THURSDAY,
+              Day.FRIDAY,
+              Day.SATURDAY,
+              Day.SUNDAY,
+            ]),
+            isSpecificDay: z.literal(true),
+            specificDay: z.number(),
+            specificMonth: z.number(),
+            specificYear: z.number(),
+            breaks: z
+              .array(
+                z.object({
+                  start: z.string().datetime(),
+                  end: z.string().datetime(),
+                })
+              )
+              .optional(),
+          })
+        ),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const professional = await getProfessionalFromContext(ctx);
+
+      // Validate all schedules before creating
+      for (const schedule of input.schedules) {
+        if (isAfter(new Date(schedule.start), new Date(schedule.end))) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: `End Date should be after Start Date`,
+          });
+        }
+
+        if (
+          schedule.specificDay === -1 ||
+          schedule.specificMonth === -1 ||
+          schedule.specificYear === -1
+        ) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: `Specific day is required`,
+          });
+        }
+
+        const existingSchedule = await prisma.schedule.findFirst({
+          where: {
+            professionalId: professional.id,
+            isSpecificDay: true,
+            specificDay: schedule.specificDay,
+            specificMonth: schedule.specificMonth,
+            specificYear: schedule.specificYear,
+          },
+        });
+
+        if (existingSchedule) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: `There is already a schedule for ${schedule.specificYear}-${schedule.specificMonth}-${schedule.specificDay}`,
+          });
+        }
+      }
+
+      // Create all schedules in a transaction
+      const results = await prisma.$transaction(async (tx) => {
+        const createdSchedules = [];
+
+        for (const schedule of input.schedules) {
+          const { breaks, ...scheduleData } = schedule;
+          const createResult = await tx.schedule.create({
+            data: {
+              ...scheduleData,
+              professionalId: professional.id,
+            },
+            select: defaultScheduleSelect,
+          });
+
+          if (breaks) {
+            await tx.break.createMany({
+              data: breaks.map((breakItem) => ({
+                ...breakItem,
+                scheduleId: createResult.id,
+              })),
+            });
+          }
+
+          createdSchedules.push(createResult);
+        }
+
+        return createdSchedules;
+      });
+
+      return results;
     }),
   update: privateProcedure
     .input(

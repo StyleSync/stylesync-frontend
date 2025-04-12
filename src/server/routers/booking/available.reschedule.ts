@@ -73,7 +73,20 @@ export const availableReschedule = privateProcedure
       });
     }
 
-    const currentDaySchedule = await prisma.schedule.findFirst({
+    // first we check if we have specific schedule for the day
+    const specificDaySchedule = await prisma.schedule.findFirst({
+      where: {
+        professionalId: professional.id,
+        isSpecificDay: true,
+        day: input.day,
+        specificDay: input.dayTime,
+        specificMonth: input.monthTime,
+        specificYear: input.yearTime,
+      },
+      select: defaultScheduleSelect,
+    });
+
+    const defaultDaySchedule = await prisma.schedule.findFirst({
       where: {
         professionalId: professional.id,
         isSpecificDay: false,
@@ -81,6 +94,8 @@ export const availableReschedule = privateProcedure
       },
       select: defaultScheduleSelect,
     });
+
+    const currentDaySchedule = specificDaySchedule ?? defaultDaySchedule;
 
     if (!currentDaySchedule) {
       throw new TRPCError({
