@@ -1,17 +1,17 @@
 import {
-  type MutableRefObject,
   createRef,
   type FC,
+  type MutableRefObject,
   useEffect,
   useState,
 } from 'react';
+
 import * as RadixToast from '@radix-ui/react-toast';
-// components
+
 import { Toast } from '@/modules/core/components/toast';
-// types
-import type { ChildrenProp } from '@/modules/core/types/react.types';
 import type { ToastProps } from '@/modules/core/components/toast/toast.interface';
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
+import type { ChildrenProp } from '@/modules/core/types/react.types';
 
 type ToastData = Omit<ToastProps, 'isOpen' | 'onClose'>;
 
@@ -35,6 +35,7 @@ export const ToastProvider: FC<ChildrenProp> = ({ children }) => {
 
   return (
     <RadixToast.Provider
+      duration={1800}
       swipeDirection={deviceType === 'mobile' ? 'up' : 'right'}
     >
       {children}
