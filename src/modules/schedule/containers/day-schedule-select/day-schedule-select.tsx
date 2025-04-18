@@ -10,7 +10,7 @@ import { useBoolean } from 'usehooks-ts';
 import { z } from 'zod';
 
 import { Button } from '@/modules/core/components/button';
-import { Checkbox } from '@/modules/core/components/checkbox';
+import { Switch } from '@/modules/core/components/switch';
 import { TimeRangeField } from '@/modules/core/components/time-range-field';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
@@ -187,6 +187,10 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
     });
   }, [append]);
 
+  const handleCloseEdit = () => {
+    isEdit.setValue(false);
+  };
+
   return (
     <form
       className={clsx(styles.root, { [styles.edit]: isEdit.value })}
@@ -256,7 +260,7 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
           <div className={clsx(styles.cell, styles.weekday)}>
             <Typography
               className={styles.weekday}
-              variant='body1'
+              variant='subtitle'
               weight='medium'
             >
               {intl.formatMessage({
@@ -264,12 +268,11 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
               })}
             </Typography>
             <label className={styles.dayoff}>
-              <Checkbox
-                value={isWorkingDay.value}
+              <Switch
+                checked={isWorkingDay.value}
                 onChange={isWorkingDay.toggle}
-                size='medium'
               />
-              <Typography variant='small'>
+              <Typography variant='body2'>
                 {intl.formatMessage({ id: 'schedule.working.day' })}
               </Typography>
             </label>
@@ -290,9 +293,10 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
                     label={intl.formatMessage({ id: 'schedule.working.hours' })}
                     onChange={field.onChange}
                     inputProps={{
-                      fieldSize: deviceType === 'mobile' ? 'medium' : 'small',
+                      fieldSize: 'high',
                       error: Boolean(fieldState.error),
                       disabled: weekdayScheduleSaveMutation.isLoading,
+                      bigbtn: true,
                     }}
                     popoverProps={{
                       disablePortal: true,
@@ -301,17 +305,22 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
                 )}
               />
             </div>
-            {deviceType === 'mobile' &&
-              isWorkingDay.value &&
-              fields.length > 0 && (
+            {deviceType === 'mobile' && isWorkingDay.value && (
+              <div className='flex items-center gap-4'>
                 <Typography
                   className='mb-3 mt-4'
-                  variant='body2'
+                  variant='body1'
                   weight='medium'
                 >
                   {intl.formatMessage({ id: 'schedule.form.breaks' })}
                 </Typography>
-              )}
+                <Button
+                  icon='plus'
+                  className='!h-8 !w-8 !bg-primary-light !text-primary'
+                  onClick={handleAddBreak}
+                />
+              </div>
+            )}
             <div
               className={clsx(styles.cell, styles.xPadding, {
                 [styles.disabled]: !isWorkingDay.value,
@@ -376,9 +385,9 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
               {isWorkingDay.value && (
                 <Button
                   className='flex-1'
-                  onClick={handleAddBreak}
-                  text={intl.formatMessage({ id: 'button.add.break' })}
+                  text={intl.formatMessage({ id: 'button.cancel' })}
                   variant='outlined'
+                  onClick={handleCloseEdit}
                 />
               )}
 

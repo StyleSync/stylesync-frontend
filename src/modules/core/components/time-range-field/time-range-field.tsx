@@ -166,6 +166,7 @@ export const TimeRangeField: FC<TimeRangeFieldInterface> = ({
             className={clsx(styles.submitButton, styles.small, {
               [styles.error]: inputProps?.error === true,
               [styles.active]: isActive.value,
+              [styles.bigbtn]: (inputProps as any)?.bigbtn,
             })}
           />
         </div>

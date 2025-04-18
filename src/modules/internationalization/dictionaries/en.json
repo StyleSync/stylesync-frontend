@@ -136,6 +136,9 @@
   "schedule.form.breaks": "Breaks",
   "schedule.no.breaks": "No breaks",
   "schedule.breaks": "Break at",
+  "schedule.weekly": "Weekly schedule",
+  "schedule.weekly.descrioption": "Set your regular working hours for each day of the week. These settings apply to all weeks by default but can be overridden by Daily schedule",
+  "daily.schedule.description": "You can use this setting to define a custom schedule for any day or/and use this setting to override your weekly schedule for special days, holidays, or one-time changes",
 
   "service.constructor.table.toast.error": "Unable to delete",
   "service.constructor.add.sevice": "Add service",

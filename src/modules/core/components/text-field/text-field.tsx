@@ -88,6 +88,7 @@ export const TextField = forwardRef<
               {
                 [styles.small]: props.fieldSize === 'small',
                 [styles.medium]: props.fieldSize === 'medium',
+                [styles.high]: props.fieldSize === 'high',
               },
               fonts[font].className
             )}

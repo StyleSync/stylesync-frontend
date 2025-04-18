@@ -1,21 +1,19 @@
-import { type FC, useCallback } from 'react';
+import { type FC, useCallback, useState } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { useIntl } from 'react-intl';
 
+// import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { ErrorBox } from '@/modules/core/components/error-box';
-// components
 import { Icon } from '@/modules/core/components/icon';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { Spinner } from '@/modules/core/components/spinner';
+import { Switch } from '@/modules/core/components/switch';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
-// utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
-// constants
 import { weekdays } from '@/modules/schedule/constants/schedule.constants';
-// containers
 import { DayScheduleSelect } from '@/modules/schedule/containers/day-schedule-select';
 
 import type { WeeklyScheduleFormProps } from './schedule-form.interface';
@@ -26,6 +24,9 @@ export const WeeklyScheduleForm: FC<WeeklyScheduleFormProps> = () => {
   const intl = useIntl();
   const deviceType = useDeviceType();
   const queryClient = useQueryClient();
+
+  const [isEnabled, setIsEnabled] = useState(false);
+
   // queries
   const { data: me } = trpc.user.me.useQuery({ expand: ['professional'] });
   const { data: weekSchedule, ...weekScheduleQuery } =
@@ -67,6 +68,21 @@ export const WeeklyScheduleForm: FC<WeeklyScheduleFormProps> = () => {
         }
       >
         <div className={styles.root}>
+          <div className='flex flex-col gap-4'>
+            <div className='flex justify-between'>
+              <span className='text-2xl font-medium text-dark'>
+                {intl.formatMessage({ id: 'schedule.weekly' })}
+              </span>
+              <Switch
+                checked={isEnabled}
+                onChange={(val) => setIsEnabled(val)}
+              />
+            </div>
+            <span className='text-dark'>
+              {intl.formatMessage({ id: 'schedule.weekly.description' })}
+            </span>
+          </div>
+
           {deviceType !== 'mobile' && (
             <div className={styles.header}>
               <div className={styles.cell}>
@@ -90,16 +106,17 @@ export const WeeklyScheduleForm: FC<WeeklyScheduleFormProps> = () => {
               <div className={clsx(styles.cell, styles.actions)} />
             </div>
           )}
-          {weekdays.map((weekday) => (
-            <DayScheduleSelect
-              key={weekday}
-              weekday={weekday}
-              dailySchedule={weekSchedule?.find(
-                (dailySchedule) => dailySchedule.day === weekday
-              )}
-              onUpdate={handleUpdate}
-            />
-          ))}
+          {isEnabled &&
+            weekdays.map((weekday) => (
+              <DayScheduleSelect
+                key={weekday}
+                weekday={weekday}
+                dailySchedule={weekSchedule?.find(
+                  (dailySchedule) => dailySchedule.day === weekday
+                )}
+                onUpdate={handleUpdate}
+              />
+            ))}
         </div>
       </Placeholder>
     </Placeholder>
