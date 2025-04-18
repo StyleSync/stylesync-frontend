@@ -68,16 +68,18 @@ export const ProfileSettingsTabContentLayout: FC<
           />
         )}
         {icon && deviceType !== 'mobile' && <Icon name={icon} />}
-        <Typography variant='body1' weight='medium'>
-          {intl.formatMessage({
-            id: title,
-          })}
-        </Typography>
+        {title && (
+          <Typography variant='body1' weight='medium'>
+            {intl.formatMessage({
+              id: title,
+            })}
+          </Typography>
+        )}
       </div>
       <div className='flex flex-1 gap-x-6 overflow-y-auto pb-0 md:overflow-y-visible'>
         <div className={styles.content}>
           <div className={styles.scrolledContent}>
-            {deviceType === 'mobile' && (
+            {deviceType === 'mobile' && title && (
               <span className='text-2xl font-medium text-dark'>
                 {intl.formatMessage({
                   id: title,

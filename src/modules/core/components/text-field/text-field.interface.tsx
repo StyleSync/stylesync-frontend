@@ -28,7 +28,7 @@ type TextFieldGeneralProps = {
 
 export type InputProps = {
   variant: 'input';
-  fieldSize?: 'small' | 'medium';
+  fieldSize?: 'small' | 'medium' | 'high';
 } & TextFieldGeneralProps &
   InputHTMLAttributes<HTMLInputElement>;
 

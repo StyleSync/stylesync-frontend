@@ -103,6 +103,13 @@
     padding: utils.spacing(0, 3);
   }
 
+  &.high {
+    height: 60px;
+    font-size: 16px;
+    padding: utils.spacing(0, 3);
+    background: white;
+  }
+
   &:disabled {
     background-color: variables.$grey-light-color;
   }

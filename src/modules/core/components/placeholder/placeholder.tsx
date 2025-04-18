@@ -1,10 +1,12 @@
 import { type FC } from 'react';
+
 import clsx from 'clsx';
-// components
+
 import { Illustration } from '@/modules/core/components/illustration';
 import { Typography } from '@/modules/core/components/typogrpahy';
 
 import type { PlaceholderProps } from './placeholder.interface';
+
 import styles from './placeholder.module.scss';
 
 const renderPlaceholder = (placeholder: PlaceholderProps['placeholder']) => {
