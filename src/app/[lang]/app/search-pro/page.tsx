@@ -3,10 +3,13 @@ import { useContext, useEffect, useMemo } from 'react';
 
 import clsx from 'clsx';
 import type { BBox } from 'geojson';
+import Image from 'next/image';
 import { useIntl } from 'react-intl';
-import { useBoolean } from 'usehooks-ts';
+import { useBoolean, useEventListener } from 'usehooks-ts';
 
+import Bg from '@/assets/images/bg-1.png';
 import { Button } from '@/modules/core/components/button';
+import { Header } from '@/modules/core/components/header';
 import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
 import { mapDateToDayEnum } from '@/modules/core/utils/date.utils';
 import { trpc } from '@/modules/core/utils/trpc.utils';
@@ -19,9 +22,10 @@ import { ProfessionalSearchContext } from '@/modules/user/providers/professional
 
 import styles from './search-pro.module.scss';
 
+const PAGE_SCROLL_TRIGGER = 16;
+
 export default function SearchProPage() {
   const intl = useIntl();
-
   // context
   const {
     date,
@@ -30,6 +34,8 @@ export default function SearchProPage() {
     searchQuery,
     activateBrowserLocationSearch,
   } = useContext(ProfessionalSearchContext);
+  // state
+  const isPageScrolled = useBoolean();
   // memo
   const queryFilter = useMemo<
     Parameters<typeof trpc.professional.list.useQuery>[0]
@@ -79,15 +85,45 @@ export default function SearchProPage() {
     activateBrowserLocationSearch();
   }, [activateBrowserLocationSearch]);
 
+  useEventListener('scroll', () => {
+    if (window.scrollY >= PAGE_SCROLL_TRIGGER) {
+      isPageScrolled.setTrue();
+
+      return;
+    }
+
+    isPageScrolled.setFalse();
+  });
+
   return (
     <>
+      <Header.BottomContent>
+        <>
+          <div className='relative flex w-full items-end justify-center pb-4 pt-8 lg:hidden'>
+            <ProSearchField />
+          </div>
+          <div
+            className={clsx(
+              'absolute left-0 top-0 z-[-1] h-full w-full overflow-hidden rounded-b-[30px] transition-all duration-300 lg:hidden',
+              {
+                '!rounded-b-[0px]': isPageScrolled.value,
+              }
+            )}
+          >
+            <Image
+              className='absolute bottom-0 left-0 right-0 h-[400px] object-cover'
+              src={Bg.src}
+              width={Bg.width}
+              height={Bg.height}
+              blurDataURL={Bg.blurDataURL}
+              alt='background'
+            />
+          </div>
+        </>
+      </Header.BottomContent>
       <main className={clsx(styles.root)}>
-        <section className='flex w-full flex-1 px-6 md:px-[40px]'>
+        <section className='mt-[100px] flex w-full flex-1 px-6 md:mt-0 md:px-[40px]'>
           <div className='flex flex-1 flex-col py-6 md:py-12'>
-            <div className='flex gap-5 lg:hidden'>
-              <ProSearchField />
-            </div>
-
             <div className='mt-6 flex flex-row items-center gap-x-4 lg:mt-0'>
               {isLoading ? (
                 <div className='skeleton h-5 w-[80%] max-w-[250px] rounded' />
