@@ -1,11 +1,13 @@
 import { type FC, Fragment, useCallback, useRef } from 'react';
-import clsx from 'clsx';
+
+import { type PointerDownOutsideEvent } from '@radix-ui/react-dismissable-layer';
 import * as RPopover from '@radix-ui/react-popover';
+import clsx from 'clsx';
 import { Transition } from 'react-transition-group';
 import { useResizeObserver } from 'usehooks-ts';
-import { type PointerDownOutsideEvent } from '@radix-ui/react-dismissable-layer';
 
 import type { PopoverProps } from './popover.interface';
+
 import styles from './popover.module.scss';
 
 const IN_OUT_ANIMATION_DURATION = 200;
