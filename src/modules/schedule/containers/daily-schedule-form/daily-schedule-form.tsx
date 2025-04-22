@@ -1,15 +1,40 @@
-import { useState } from 'react';
+import { type FC, useState } from 'react';
+
+import { Controller, useForm } from 'react-hook-form';
+import { useIntl } from 'react-intl';
+
+import { Button } from '@/modules/core/components/button';
 import { Switch } from '@/modules/core/components/switch';
 import { TimeRangeField } from '@/modules/core/components/time-range-field';
 import { Typography } from '@/modules/core/components/typogrpahy';
-import { Controller, useForm } from 'react-hook-form';
-import { Button } from '@/modules/core/components/button';
-import { useIntl } from 'react-intl';
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
+import { trpc } from '@/modules/core/utils/trpc.utils';
 
-export const DailyScheduleForm = () => {
+type DailyScheduleFormProps = {
+  date: Date;
+};
+
+export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({ date }) => {
   const { formatMessage } = useIntl();
   const deviceType = useDeviceType();
+
+  // queries
+  const { data: me } = trpc.user.me.useQuery({
+    expand: ['professional'],
+  });
+
+  const specificDayScheduleQuery =
+    trpc.schedule.getSpecificDaySchedule.useQuery(
+      {
+        professionalId: me?.professional?.id || '',
+        specificDay: date.getDate(),
+        specificMonth: date.getMonth(),
+        specificYear: date.getFullYear(),
+      },
+      {
+        enabled: !!me?.professional?.id,
+      }
+    );
 
   const [isWorkdayEnabled, setIsWorkdayEnabled] = useState(false);
   const form = useForm();

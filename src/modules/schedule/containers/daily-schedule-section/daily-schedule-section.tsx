@@ -9,10 +9,13 @@ import { useIntl, FormattedMessage } from 'react-intl';
 
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import { DailyScheduleForm } from '@/modules/schedule/containers/daily-schedule-form';
+import { isSameDay } from 'date-fns';
 
 export const DailyScheduleSection = () => {
   const { locale, formatMessage } = useIntl();
   const deviceType = useDeviceType();
+
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const [isWorkdayEnabled, setIsWorkdayEnabled] = useState(false);
 
@@ -23,7 +26,7 @@ export const DailyScheduleSection = () => {
   }, [locale]);
 
   return (
-    <div className='mb-[100px] flex flex-col gap-8 md:gap-[50px]'>
+    <div className='mb-[100px] flex w-full flex-col gap-8 md:gap-[50px]'>
       <span className='inline-block max-w-[800px]'>
         <FormattedMessage
           id='daily.schedule.description'
@@ -52,6 +55,16 @@ export const DailyScheduleSection = () => {
               adapterLocale={dateFnsLocale}
             >
               <DateCalendar
+                value={selectedDate}
+                onChange={(value) => {
+                  setSelectedDate((prev) => {
+                    if (prev && isSameDay(prev, value)) {
+                      return null;
+                    }
+
+                    return value;
+                  });
+                }}
                 sx={{
                   width: '100%',
                   '& .MuiPickersCalendarHeader-root': {
@@ -88,7 +101,7 @@ export const DailyScheduleSection = () => {
             </LocalizationProvider>
           </div>
         </div>
-        <DailyScheduleForm />
+        {selectedDate && <DailyScheduleForm date={selectedDate} />}
       </div>
     </div>
   );
