@@ -40,6 +40,36 @@ export const scheduleRouter = router({
 
       return schedule;
     }),
+  getSpecificDaySchedule: privateProcedure
+    .input(
+      z.object({
+        professionalId: z.string().min(1, 'Required'),
+        specificDay: z.number(),
+        specificMonth: z.number(),
+        specificYear: z.number(),
+      })
+    )
+    .query(async ({ input }) => {
+      const schedule = await prisma.schedule.findMany({
+        where: {
+          professionalId: input.professionalId,
+          isSpecificDay: true,
+          specificDay: input.specificDay,
+          specificMonth: input.specificMonth,
+          specificYear: input.specificYear,
+        },
+        select: defaultScheduleSelect,
+      });
+
+      if (!schedule) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `No schedule for professional'`,
+        });
+      }
+
+      return schedule;
+    }),
   getWeekSchedule: privateProcedure
     .input(
       z.object({
@@ -381,6 +411,14 @@ export const scheduleRouter = router({
         where: {
           isSpecificDay: true,
           professionalId: input.professionalId,
+          start: {
+            gte: input.startDate ?? new Date(),
+            lte: input.endDate ?? new Date(),
+          },
+          end: {
+            gte: input.startDate ?? new Date(),
+            lte: input.endDate ?? new Date(),
+          },
         },
         select: defaultScheduleSelect,
         take: limit + 1,
