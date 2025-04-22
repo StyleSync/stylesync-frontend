@@ -67,8 +67,8 @@ export const WeeklyScheduleForm: FC<WeeklyScheduleFormProps> = () => {
           />
         }
       >
-        <div className={styles.root}>
-          <div className='flex flex-col gap-4'>
+        <div id='divFirst' className={styles.root}>
+          <div className='mb-6 flex flex-col gap-4'>
             <div className='flex justify-between'>
               <span className='text-2xl font-medium text-dark'>
                 {intl.formatMessage({ id: 'schedule.weekly' })}
@@ -83,7 +83,7 @@ export const WeeklyScheduleForm: FC<WeeklyScheduleFormProps> = () => {
             </span>
           </div>
 
-          {deviceType !== 'mobile' && (
+          {deviceType !== 'mobile' && isEnabled && (
             <div className={styles.header}>
               <div className={styles.cell}>
                 <Icon name='calendar' />
