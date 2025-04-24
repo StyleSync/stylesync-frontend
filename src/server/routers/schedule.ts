@@ -280,7 +280,19 @@ export const scheduleRouter = router({
 
       // Create all schedules in a transaction
       const results = await prisma.$transaction(async (tx) => {
-        const createdSchedules = [];
+        const createdSchedules: {
+          id: string;
+          start: Date;
+          end: Date;
+          day: Day;
+          isSpecificDay: boolean;
+          specificDay: number | null;
+          specificMonth: number | null;
+          specificYear: number | null;
+          breaks: { id: string; start: Date; end: Date }[];
+          createdAt: Date;
+          updatedAt: Date;
+        }[] = [];
 
         for (const schedule of input.schedules) {
           const { breaks, ...scheduleData } = schedule;
@@ -395,6 +407,58 @@ export const scheduleRouter = router({
       return prisma.schedule.delete({
         where: { id: input.id },
       });
+    }),
+  deleteBulk: privateProcedure
+    .input(
+      z.object({
+        ids: z.array(z.string().min(1, 'Required')),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const professional = await getProfessionalFromContext(ctx);
+
+      // First verify all schedules exist and belong to the professional
+      const schedules = await prisma.schedule.findMany({
+        where: {
+          id: { in: input.ids },
+        },
+        select: {
+          id: true,
+          professionalId: true,
+        },
+      });
+
+      // Check if all requested schedules exist
+      const foundIds = new Set(schedules.map((s) => s.id));
+      const missingIds = input.ids.filter((id) => !foundIds.has(id));
+
+      if (missingIds.length > 0) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `No schedules found with ids: ${missingIds.join(', ')}`,
+        });
+      }
+
+      // Check if all schedules belong to the professional
+      const unauthorizedSchedules = schedules.filter(
+        (s) => s.professionalId !== professional.id
+      );
+
+      if (unauthorizedSchedules.length > 0) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: `You dont have permission to delete schedules with ids: ${unauthorizedSchedules.map((s) => s.id).join(', ')}`,
+        });
+      }
+
+      // Delete all schedules in a transaction
+      return prisma.$transaction(
+        input.ids.map((id) =>
+          prisma.schedule.delete({
+            where: { id },
+          })
+        )
+      );
     }),
   list: publicProcedure
     .input(
