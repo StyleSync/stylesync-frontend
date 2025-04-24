@@ -264,12 +264,16 @@ export const scheduleRouter = router({
             specificMonth: schedule.specificMonth,
             specificYear: schedule.specificYear,
           },
+          select: {
+            id: true,
+          },
         });
 
-        if (existingSchedule) {
-          throw new TRPCError({
-            code: 'BAD_REQUEST',
-            message: `There is already a schedule for ${schedule.specificYear}-${schedule.specificMonth}-${schedule.specificDay}`,
+        if (existingSchedule?.id) {
+          await prisma.schedule.delete({
+            where: {
+              id: existingSchedule.id,
+            },
           });
         }
       }
