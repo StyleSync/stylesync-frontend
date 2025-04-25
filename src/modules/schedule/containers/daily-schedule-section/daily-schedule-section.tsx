@@ -25,6 +25,10 @@ export const DailyScheduleSection = () => {
     return enUS;
   }, [locale]);
 
+  const handleResetSelectDate = () => {
+    setSelectedDate(null);
+  };
+
   return (
     <div className='mb-[100px] flex w-full flex-col gap-8 md:gap-[50px]'>
       <span className='inline-block max-w-[800px]'>
@@ -101,7 +105,12 @@ export const DailyScheduleSection = () => {
             </LocalizationProvider>
           </div>
         </div>
-        {selectedDate && <DailyScheduleForm date={selectedDate} />}
+        {selectedDate && (
+          <DailyScheduleForm
+            handleReset={handleResetSelectDate}
+            date={selectedDate}
+          />
+        )}
       </div>
     </div>
   );
