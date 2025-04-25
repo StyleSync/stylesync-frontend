@@ -98,8 +98,7 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
 
   const dailyScheduleCreate =
     trpc.schedule.createBulk.useMutation(crudMutationOpts);
-  const dailyScheduleUpdate =
-    trpc.schedule.update.useMutation(crudMutationOpts);
+
   const dailyScheduleDelete =
     trpc.schedule.delete.useMutation(crudMutationOpts);
 
@@ -121,27 +120,6 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
               variant: 'success',
               title: 'Розклад очищено',
               description: 'Цей день позначено як вихідний.',
-            });
-          },
-        }
-      );
-
-      return;
-    }
-
-    if (existingSchedule) {
-      dailyScheduleUpdate.mutate(
-        {
-          id: existingSchedule.id,
-          start: start.toISOString(),
-          end: end.toISOString(),
-        },
-        {
-          onSuccess: () => {
-            showToast({
-              variant: 'success',
-              title: 'Розклад оновлено',
-              description: 'Час роботи успішно збережено.',
             });
           },
         }
