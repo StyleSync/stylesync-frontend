@@ -1,4 +1,4 @@
-import { type FC, useCallback, useState } from 'react';
+import { type FC, useCallback, useEffect, useState } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
@@ -38,6 +38,14 @@ export const WeeklyScheduleForm: FC<WeeklyScheduleFormProps> = () => {
         enabled: Boolean(me?.professional),
       }
     );
+
+  useEffect(() => {
+    if (weekSchedule) {
+      const isWeekScheduleExist = weekSchedule.length > 0;
+
+      setIsEnabled((val) => isWeekScheduleExist || val);
+    }
+  }, [weekSchedule]);
 
   const handleUpdate = useCallback(() => {
     if (!me?.professional) {

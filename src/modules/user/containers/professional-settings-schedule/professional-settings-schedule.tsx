@@ -15,9 +15,8 @@ export const ProfessionalSettingsSchedule: FC = () => {
       title={'professional.settings.schedule.title'}
       icon='calendar'
     >
-      <div className='flex flex-col'>
+      <div className='flex flex-col gap-[50px] md:gap-[100px]'>
         <DailyScheduleSection />
-
         <WeeklyScheduleForm schedule={schedule} setSchedule={setSchedule} />
       </div>
     </ProfileSettingsTabContentLayout>

@@ -1,4 +1,4 @@
 export type DailyScheduleFormProps = {
-  date: Date;
+  dates: Date[];
   handleReset: () => void;
 };

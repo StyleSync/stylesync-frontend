@@ -1,23 +1,44 @@
-import { useMemo, useState } from 'react';
+import { type ReactNode, useMemo, useRef, useState } from 'react';
 
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import {
+  PickersDay,
+  type PickersDayProps,
+} from '@mui/x-date-pickers/PickersDay';
+import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
+import { isSameDay, startOfDay } from 'date-fns';
 import { enUS, uk } from 'date-fns/locale';
-import { Controller, useForm } from 'react-hook-form';
-import { useIntl, FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import { DailyScheduleForm } from '@/modules/schedule/containers/daily-schedule-form';
-import { isSameDay } from 'date-fns';
+
+const renderCalendarDay = (
+  props: PickersDayProps<Date> & { selectedDates?: number[] }
+): ReactNode => {
+  const { selectedDates = [], day, outsideCurrentMonth, ...other } = props;
+
+  const isActive = selectedDates.some((date) => isSameDay(date, day));
+
+  return (
+    <PickersDay
+      {...other}
+      outsideCurrentMonth={outsideCurrentMonth}
+      day={day}
+      className={
+        isActive ? '!bg-primary !text-white' : '!bg-transparent !text-dark'
+      }
+    />
+  );
+};
 
 export const DailyScheduleSection = () => {
   const { locale, formatMessage } = useIntl();
   const deviceType = useDeviceType();
+  const calendarWrapperRef = useRef<HTMLDivElement>(null);
 
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-
-  const [isWorkdayEnabled, setIsWorkdayEnabled] = useState(false);
+  const [selectedDates, setSelectedDates] = useState<Date[]>([]);
 
   const dateFnsLocale = useMemo(() => {
     if (locale === 'uk') return uk;
@@ -26,11 +47,11 @@ export const DailyScheduleSection = () => {
   }, [locale]);
 
   const handleResetSelectDate = () => {
-    setSelectedDate(null);
+    setSelectedDates([]);
   };
 
   return (
-    <div className='mb-[100px] flex w-full flex-col gap-8 md:gap-[50px]'>
+    <div className='flex w-full flex-col gap-8 md:gap-[50px]'>
       <span className='inline-block max-w-[800px]'>
         <FormattedMessage
           id='daily.schedule.description'
@@ -53,21 +74,35 @@ export const DailyScheduleSection = () => {
 
       <div className='flex flex-col gap-5 md:flex-row'>
         <div className='flex w-full flex-col md:w-1/2'>
-          <div className='h-full w-full max-w-[400px] flex-col md:flex md:min-h-[390px] md:gap-4 md:border-r md:border-gray-light'>
+          <div
+            ref={calendarWrapperRef}
+            className='h-full w-full max-w-[400px] flex-col md:flex md:min-h-[390px] md:gap-4 md:border-r md:border-gray-light'
+          >
             <LocalizationProvider
               dateAdapter={AdapterDateFns}
               adapterLocale={dateFnsLocale}
             >
-              <DateCalendar
-                value={selectedDate}
+              <StaticDatePicker
+                value={new Date()}
                 onChange={(value) => {
-                  setSelectedDate((prev) => {
-                    if (prev && isSameDay(prev, value)) {
-                      return null;
+                  setSelectedDates((prev) => {
+                    if (!value) return prev;
+
+                    if (value && prev.some((item) => isSameDay(item, value))) {
+                      return prev.filter((item) => !isSameDay(item, value));
                     }
 
-                    return value;
+                    return [...prev, startOfDay(value)];
                   });
+                }}
+                slots={{
+                  day: renderCalendarDay,
+                  layout: ({ children }) => <div>{children}</div>,
+                }}
+                slotProps={{
+                  day: {
+                    selectedDates,
+                  } as any,
                 }}
                 sx={{
                   width: '100%',
@@ -105,10 +140,10 @@ export const DailyScheduleSection = () => {
             </LocalizationProvider>
           </div>
         </div>
-        {selectedDate && (
+        {selectedDates.length > 0 && (
           <DailyScheduleForm
             handleReset={handleResetSelectDate}
-            date={selectedDate}
+            dates={selectedDates}
           />
         )}
       </div>
