@@ -1,13 +1,12 @@
 import { type FC, useCallback, useEffect, useMemo } from 'react';
 
 import { Controller, useForm, useFieldArray } from 'react-hook-form';
-import { useIntl } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import { Button } from '@/modules/core/components/button';
 import { Switch } from '@/modules/core/components/switch';
 import { TimeRangeField } from '@/modules/core/components/time-range-field';
 import { Typography } from '@/modules/core/components/typogrpahy';
-import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { z } from 'zod';
 import {
@@ -30,6 +29,10 @@ import { useBoolean } from 'usehooks-ts';
 import { showToast } from '@/modules/core/providers/toast-provider';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { Spinner } from '@/modules/core/components/spinner';
+import { DayOverrideModal } from '@/modules/schedule/containers/day-override-modal';
+import { useQueryClient } from '@tanstack/react-query';
+import { getQueryKey } from '@trpc/react-query';
+import { Icon } from '@/modules/core/components/icon';
 
 const crudMutationOpts = {
   useErrorBoundary: true,
@@ -62,16 +65,26 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
   handleReset,
 }) => {
   const { formatMessage, locale } = useIntl();
-  const deviceType = useDeviceType();
   const isWorkdayEnabled = useBoolean();
+  const isOpenModalDayOverride = useBoolean();
+  const queryClient = useQueryClient();
+
+  const datesKey = useMemo(() => {
+    return dates.map((d) => d.toISOString()).join(',');
+  }, [dates]);
 
   // Format the date for display based on current locale
   const dateLocale = locale === 'uk' ? uk : enUS;
   const formattedDate = useMemo(() => {
     return dates
-      .map((date) => format(date, 'd MMM', { locale: dateLocale }))
-      .join(', ')
-      .replaceAll('.', '');
+      .map((date) => format(date, 'dd.MM.yyyy', { locale: dateLocale }))
+      .join(', ');
+  }, [dates, dateLocale]);
+
+  const formattedDate2 = useMemo(() => {
+    return dates
+      .map((date) => format(date, 'dd MMM yyyy', { locale: dateLocale }))
+      .join(', ');
   }, [dates, dateLocale]);
 
   // queries
@@ -104,15 +117,14 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
       }
     );
 
-  const { data: weekSchedule, ...weekScheduleQuery } =
-    trpc.schedule.getWeekSchedule.useQuery(
-      {
-        professionalId: me?.professional?.id ?? '',
-      },
-      {
-        enabled: !!me?.professional,
-      }
-    );
+  const { data: weekSchedule } = trpc.schedule.getWeekSchedule.useQuery(
+    {
+      professionalId: me?.professional?.id ?? '',
+    },
+    {
+      enabled: !!me?.professional,
+    }
+  );
 
   const weekdaySchedule = useMemo(() => {
     if (dates.length === 1 && weekSchedule) {
@@ -154,7 +166,7 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
           onSuccess: () => {
             showToast({
               variant: 'success',
-              title: 'Графік на день видалено',
+              title: formatMessage({ id: 'daily.toast.schedule.deleted' }),
             });
           },
         }
@@ -191,7 +203,7 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
         onSuccess: () => {
           showToast({
             variant: 'success',
-            title: 'Графік успішно збережено',
+            title: formatMessage({ id: 'daily.toast.schedule.saved' }),
           });
         },
       }
@@ -204,6 +216,43 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
     keyName: '_id',
   });
 
+  const handleResetToWeeklySchedule = () => {
+    if (!weekdaySchedule) {
+      return;
+    }
+
+    reset({
+      workHours: formatTimeRange(
+        Time.fromDate(weekdaySchedule.start),
+        Time.fromDate(weekdaySchedule.end)
+      ),
+      breaks: weekdaySchedule.breaks.map((item) => ({
+        timerange: formatTimeRange(
+          Time.fromDate(item.start),
+          Time.fromDate(item.end)
+        ),
+      })),
+    });
+
+    isWorkdayEnabled.setTrue();
+    isOpenModalDayOverride.setFalse();
+
+    if (specificDayScheduleQuery.data) {
+      dailyScheduleDelete.mutate(
+        {
+          id: specificDayScheduleQuery.data.id,
+        },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries(getQueryKey(trpc.schedule.list));
+          },
+        }
+      );
+    }
+
+    return;
+  };
+
   const handleAddBreak = useCallback(() => {
     append({
       timerange: emptyTimeRange,
@@ -211,13 +260,11 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
   }, [append]);
 
   useEffect(() => {
-    // if (specificDayScheduleQuery.isLoading || dates.length === 0) {
-    //   console.log('not ready to reset');
-    //   return;
-    // }
+    if (specificDayScheduleQuery.isLoading || dates.length === 0) {
+      return;
+    }
 
     if (dates.length > 1) {
-      console.log('reset as dates.length > 1');
       reset({
         workHours: emptyTimeRange,
         breaks: [],
@@ -231,7 +278,6 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
     const existingSchedule = specificDayScheduleQuery.data || weekdaySchedule;
 
     if (existingSchedule) {
-      console.log('reset according to existing schedule');
       reset({
         workHours: formatTimeRange(
           Time.fromDate(existingSchedule.start),
@@ -250,15 +296,13 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
       return;
     }
 
-    console.log('should reset to day off in the end');
-
     reset({ ...emptySchedule.MONDAY });
     isWorkdayEnabled.setFalse();
   }, [
     // need to be careful with this dependency
     specificDayScheduleQuery.data?.id,
     weekdaySchedule,
-    JSON.stringify(dates),
+    datesKey,
   ]);
 
   return (
@@ -267,9 +311,24 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
       className='inline-block w-full max-w-[400px] md:w-1/2'
     >
       <div className='flex flex-col gap-6 md:pt-[22px]'>
-        <Typography variant='subtitle' weight='medium' className='capitalize'>
-          {formattedDate}
-        </Typography>
+        {dates.length > 1 ? (
+          <Typography variant='subtitle' weight='medium'>
+            {formatMessage(
+              { id: 'modal.override.selected.dates' },
+              { count: dates.length }
+            )}
+          </Typography>
+        ) : (
+          <Typography variant='subtitle' weight='medium'>
+            {formattedDate2}
+          </Typography>
+        )}
+
+        {dates.length > 1 && (
+          <Typography variant='body2' weight='medium' className='!text-gray'>
+            {formattedDate}
+          </Typography>
+        )}
 
         <Placeholder
           placeholder={
@@ -280,50 +339,68 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
           isActive={specificDayScheduleQuery.isLoading}
         >
           {isAccordingToWeeklySchedule && (
-            <div className='flex items-center'>
+            <div className='flex items-center gap-[10px]'>
+              <Icon name='calendar' width={20} height={20} />
+
               <span className='text-sm font-normal'>
-                According to the weekly schedule
+                <FormattedMessage
+                  id='according.to.weekly.schedule'
+                  values={{
+                    highlight: (chunks) => (
+                      <span
+                        onClick={() =>
+                          document
+                            .getElementById('divFirst')
+                            ?.scrollIntoView({ behavior: 'smooth' })
+                        }
+                        className='cursor-pointer font-semibold text-primary'
+                      >
+                        {chunks}
+                      </span>
+                    ),
+                  }}
+                />
               </span>
             </div>
           )}
           {isOverridesWeeklySchedule && (
-            <div className='flex items-center'>
-              <span className='text-sm font-normal'>
-                Overrides weekly schedule
-              </span>
-              <Button
-                icon='arrow-left'
-                variant='secondary'
-                className='h-[20px] w-[20px] text-destructive'
-                onClick={() => {
-                  // todo: move outside jsx
-                  if (!weekdaySchedule) {
-                    return;
-                  }
+            <div className='flex items-center gap-5'>
+              <div className='flex items-center gap-[10px]'>
+                <Icon name='calendar' width={20} height={20} />
 
-                  reset({
-                    workHours: formatTimeRange(
-                      Time.fromDate(weekdaySchedule.start),
-                      Time.fromDate(weekdaySchedule.end)
-                    ),
-                    breaks: weekdaySchedule.breaks.map((item) => ({
-                      timerange: formatTimeRange(
-                        Time.fromDate(item.start),
-                        Time.fromDate(item.end)
+                <span className='text-sm font-normal'>
+                  <FormattedMessage
+                    id='overrides.weekly.schedule'
+                    values={{
+                      highlight: (chunks) => (
+                        <span
+                          onClick={() =>
+                            document
+                              .getElementById('divFirst')
+                              ?.scrollIntoView({ behavior: 'smooth' })
+                          }
+                          className='cursor-pointer font-semibold text-primary'
+                        >
+                          {chunks}
+                        </span>
                       ),
-                    })),
-                  });
+                    }}
+                  />
+                </span>
+              </div>
 
-                  isWorkdayEnabled.setTrue();
-
-                  if (specificDayScheduleQuery.data) {
-                    dailyScheduleDelete.mutate({
-                      id: specificDayScheduleQuery.data.id,
-                    });
-                  }
-
-                  return;
-                }}
+              <DayOverrideModal
+                dates={dates}
+                handleResetToWeeklySchedule={handleResetToWeeklySchedule}
+                isOpen={isOpenModalDayOverride.value}
+                onOpenChange={isOpenModalDayOverride.setValue}
+                trigger={
+                  <Button
+                    icon='arrow-left-curved'
+                    variant='secondary'
+                    className='h-[18px] w-[18px] text-destructive'
+                  />
+                }
               />
             </div>
           )}
@@ -331,7 +408,7 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
             <div className='flex items-center gap-2'>
               <Switch
                 checked={isWorkdayEnabled.value}
-                onChange={(val) => isWorkdayEnabled.setValue(val)}
+                onChange={isWorkdayEnabled.setValue}
               />
               <Typography variant='body2'>
                 {formatMessage({ id: 'schedule.working.day' })}

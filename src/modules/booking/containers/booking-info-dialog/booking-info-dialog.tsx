@@ -1,33 +1,30 @@
 import { type FC, useCallback, useMemo } from 'react';
+
+import { useQueryClient } from '@tanstack/react-query';
+import { getQueryKey } from '@trpc/react-query';
 import clsx from 'clsx';
 import { useIntl } from 'react-intl';
-import { useQueryClient } from '@tanstack/react-query';
 import { useBoolean } from 'usehooks-ts';
-// components
-import { Button } from '@/modules/core/components/button';
-import { DialogBottom } from '@/modules/core/components/dialog-bottom';
-import { Dialog } from '@/modules/core/components/dialog';
-import { Spinner } from '@/modules/core/components/spinner';
-import { Placeholder } from '@/modules/core/components/placeholder';
+
 import { BookingStatus } from '@/modules/booking/components/booking-status';
-import { Icon } from '@/modules/core/components/icon';
-// containers
-import { BookingRescheduleForm } from '@/modules/booking/containers/booking-reschedule-form';
-// hooks
-import { useDeviceType } from '@/modules/core/hooks/use-device-type';
-// utils
-import { showToast } from '@/modules/core/providers/toast-provider';
-// utils
-import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
-import { trpc } from '@/modules/core/utils/trpc.utils';
-// constants
 import { bookingStatusMetadata } from '@/modules/booking/constants/booking.constants';
-import { getQueryKey } from '@trpc/react-query';
+import { BookingRescheduleForm } from '@/modules/booking/containers/booking-reschedule-form';
+import { Button } from '@/modules/core/components/button';
+import { Dialog } from '@/modules/core/components/dialog';
+import { DialogBottom } from '@/modules/core/components/dialog-bottom';
+import { Icon } from '@/modules/core/components/icon';
+import { Placeholder } from '@/modules/core/components/placeholder';
+import { Spinner } from '@/modules/core/components/spinner';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
+import { showToast } from '@/modules/core/providers/toast-provider';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
 
 import type {
-  BookingInfoDialogProps,
   Action,
+  BookingInfoDialogProps,
 } from './booking-info-dialog.interface';
+
 import styles from './booking-info-dialog.module.scss';
 
 export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({

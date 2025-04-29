@@ -34,7 +34,7 @@ const renderCalendarDay = (
 };
 
 export const DailyScheduleSection = () => {
-  const { locale, formatMessage } = useIntl();
+  const { locale } = useIntl();
   const deviceType = useDeviceType();
   const calendarWrapperRef = useRef<HTMLDivElement>(null);
 
@@ -97,7 +97,6 @@ export const DailyScheduleSection = () => {
                 }}
                 slots={{
                   day: renderCalendarDay,
-                  layout: ({ children }) => <div>{children}</div>,
                 }}
                 slotProps={{
                   day: {
@@ -111,9 +110,17 @@ export const DailyScheduleSection = () => {
                     paddingLeft: '0',
                     paddingRight: '0',
                   },
+
+                  '& .MuiPickersLayout-root': {
+                    backgroundColor: 'red',
+                  },
+
                   '& .MuiDayCalendar-weekDayLabel': {
                     width: '100%',
+                    fontSize: '16px',
                   },
+                  '& .MuiButtonBase-root': { fontSize: '16px' },
+                  '& .MuiPickersCalendarHeader-label': { marginRight: '140px' },
                   '& .MuiPickersDay-root': {
                     width: '40px',
                     height: '40px',
@@ -129,12 +136,22 @@ export const DailyScheduleSection = () => {
                     {
                       width: '40px',
                       height: '40px',
+                      color: 'red',
                     },
-                  '& .MuiDateCalendar-root': {
+
+                  '& .MuiPickersCalendar-root': {
                     height: '100% !important',
                     maxHeight: '440px !important',
                     overflow: 'visible !important',
                   },
+                  '& .MuiPickersCalendarHeader-labelContainer': {
+                    margin: '0 auto',
+                  },
+                  '& .MuiPickersCalendarHeader-switchViewButton': {
+                    display: 'none',
+                  },
+                  '& .MuiPickersToolbar-root': { display: 'none' },
+                  '& .MuiDialogActions-root': { display: 'none' },
                 }}
               />
             </LocalizationProvider>
