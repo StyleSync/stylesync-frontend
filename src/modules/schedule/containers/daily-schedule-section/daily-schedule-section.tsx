@@ -105,14 +105,11 @@ export const DailyScheduleSection = () => {
                 }}
                 sx={{
                   width: '100%',
+                  backgroundColor: 'transparent',
                   '& .MuiPickersCalendarHeader-root': {
                     width: deviceType === 'mobile' ? '103%' : '100%',
                     paddingLeft: '0',
                     paddingRight: '0',
-                  },
-
-                  '& .MuiPickersLayout-root': {
-                    backgroundColor: 'red',
                   },
 
                   '& .MuiDayCalendar-weekDayLabel': {
