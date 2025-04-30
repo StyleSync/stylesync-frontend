@@ -1,0 +1,171 @@
+import {
+  type ChangeEvent,
+  type FC,
+  useCallback,
+  useEffect,
+  useRef,
+} from 'react';
+
+import clsx from 'clsx';
+import { useBoolean } from 'usehooks-ts';
+
+import { Button } from '@/modules/core/components/button';
+import { Popover } from '@/modules/core/components/popover';
+import { TextField } from '@/modules/core/components/text-field';
+import { TimeSelect } from '@/modules/core/components/time-select';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
+import {
+  formatTimeRange,
+  isTimeRangeString,
+  parseTimeRange,
+} from '@/modules/core/utils/time.utils';
+
+import type { TimeRangeFieldInterface } from './time-range-field.interface';
+
+import styles from './time-range-field.module.scss';
+
+export const TimeRangeField: FC<TimeRangeFieldInterface> = ({
+  value,
+  onChange,
+  inputProps,
+  label,
+  popoverProps,
+  className,
+  style,
+}) => {
+  // state
+  const isActive = useBoolean();
+  const [startTime, endTime] = parseTimeRange(value);
+  // refs
+  const rootRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const deviceType = useDeviceType();
+
+  const startTimeSelection = useCallback(() => {
+    isActive.setTrue();
+  }, [isActive]);
+
+  const finishTimeSelection = useCallback(() => {
+    isActive.setFalse();
+    inputRef.current?.blur();
+  }, []);
+
+  const toggleTimeSelection = useCallback(() => {
+    isActive.value ? finishTimeSelection() : startTimeSelection();
+  }, [finishTimeSelection, isActive.value, startTimeSelection]);
+
+  const handleTextFieldChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      // Remove any non-digit characters from the input value
+      const sanitizedValue = e.target.value.replace(/\D/g, '');
+
+      // Format the sanitized value with `:`, `-` signs
+      let formattedValue = '';
+
+      for (let i = 0; i < sanitizedValue.length; i++) {
+        const MAX_LENGTH = 8;
+        const TIME_DIVIDER_1_INDEX = 3;
+        const TIME_DIVIDER_2_INDEX = 7;
+        const TIME_RANGE_DIVIDER_INDEX = 5;
+
+        if (i === TIME_DIVIDER_1_INDEX - 1) {
+          formattedValue += ':';
+        }
+
+        if (i === TIME_RANGE_DIVIDER_INDEX - 1) {
+          formattedValue += ' - ';
+        }
+
+        if (i === TIME_DIVIDER_2_INDEX - 1) {
+          formattedValue += ':';
+        }
+
+        if (i >= MAX_LENGTH) {
+          formattedValue = formattedValue.slice(0, -1) + sanitizedValue[i];
+        } else {
+          formattedValue += sanitizedValue[i];
+        }
+      }
+
+      onChange(formattedValue);
+    },
+    [onChange]
+  );
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        finishTimeSelection();
+      }
+    },
+    [finishTimeSelection]
+  );
+
+  useEffect(() => {
+    if (isActive.value) {
+      document.addEventListener('keydown', handleKeyDown);
+    } else {
+      document.removeEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleKeyDown, isActive.value]);
+
+  return (
+    <Popover
+      isOpen={isActive.value}
+      onClose={finishTimeSelection}
+      {...popoverProps}
+      trigger={
+        <div
+          className={clsx(styles.root, className)}
+          style={style}
+          ref={rootRef}
+        >
+          <TextField
+            label={label}
+            {...inputProps}
+            ref={inputRef}
+            value={value}
+            onChange={handleTextFieldChange}
+            onFocus={startTimeSelection}
+            variant='input'
+            readOnly={deviceType === 'mobile'}
+          />
+          <Button
+            variant='secondary'
+            icon={isActive.value ? 'check-mark' : 'pencil'}
+            type='button'
+            disabled={!isTimeRangeString(value)}
+            onClick={toggleTimeSelection}
+            className={clsx(styles.submitButton, styles.small, {
+              [styles.error]: inputProps?.error === true,
+              [styles.active]: isActive.value,
+              [styles.bigbtn]: (inputProps as any)?.bigbtn,
+            })}
+          />
+        </div>
+      }
+      followTriggerWidth
+      disableAutofocus
+    >
+      <div className={styles.selectors}>
+        <TimeSelect
+          value={startTime}
+          onChange={(time) => {
+            onChange(formatTimeRange(time, endTime));
+          }}
+        />
+        <div className={styles.divider} />
+        <TimeSelect
+          value={endTime}
+          onChange={(time) => onChange(formatTimeRange(startTime, time))}
+        />
+      </div>
+    </Popover>
+  );
+};

@@ -1,15 +1,13 @@
-import { type FC, useCallback, useEffect, useState } from 'react';
+import { type FC, useCallback } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { useIntl } from 'react-intl';
 
-// import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { ErrorBox } from '@/modules/core/components/error-box';
 import { Icon } from '@/modules/core/components/icon';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { Spinner } from '@/modules/core/components/spinner';
-import { Switch } from '@/modules/core/components/switch';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import { trpc } from '@/modules/core/utils/trpc.utils';
@@ -25,8 +23,6 @@ export const WeeklyScheduleForm: FC<WeeklyScheduleFormProps> = () => {
   const deviceType = useDeviceType();
   const queryClient = useQueryClient();
 
-  const [isEnabled, setIsEnabled] = useState(false);
-
   // queries
   const { data: me } = trpc.user.me.useQuery({ expand: ['professional'] });
   const { data: weekSchedule, ...weekScheduleQuery } =
@@ -38,14 +34,6 @@ export const WeeklyScheduleForm: FC<WeeklyScheduleFormProps> = () => {
         enabled: Boolean(me?.professional),
       }
     );
-
-  useEffect(() => {
-    if (weekSchedule) {
-      const isWeekScheduleExist = weekSchedule.length > 0;
-
-      setIsEnabled((val) => isWeekScheduleExist || val);
-    }
-  }, [weekSchedule]);
 
   const handleUpdate = useCallback(() => {
     if (!me?.professional) {
@@ -81,17 +69,13 @@ export const WeeklyScheduleForm: FC<WeeklyScheduleFormProps> = () => {
               <span className='text-2xl font-medium text-dark'>
                 {intl.formatMessage({ id: 'schedule.weekly' })}
               </span>
-              <Switch
-                checked={isEnabled}
-                onChange={(val) => setIsEnabled(val)}
-              />
             </div>
             <span className='text-dark'>
               {intl.formatMessage({ id: 'schedule.weekly.description' })}
             </span>
           </div>
 
-          {deviceType !== 'mobile' && isEnabled && (
+          {deviceType !== 'mobile' && (
             <div className={styles.header}>
               <div className={styles.cell}>
                 <Icon name='calendar' />
@@ -114,17 +98,16 @@ export const WeeklyScheduleForm: FC<WeeklyScheduleFormProps> = () => {
               <div className={clsx(styles.cell, styles.actions)} />
             </div>
           )}
-          {isEnabled &&
-            weekdays.map((weekday) => (
-              <DayScheduleSelect
-                key={weekday}
-                weekday={weekday}
-                dailySchedule={weekSchedule?.find(
-                  (dailySchedule) => dailySchedule.day === weekday
-                )}
-                onUpdate={handleUpdate}
-              />
-            ))}
+          {weekdays.map((weekday) => (
+            <DayScheduleSelect
+              key={weekday}
+              weekday={weekday}
+              dailySchedule={weekSchedule?.find(
+                (dailySchedule) => dailySchedule.day === weekday
+              )}
+              onUpdate={handleUpdate}
+            />
+          ))}
         </div>
       </Placeholder>
     </Placeholder>

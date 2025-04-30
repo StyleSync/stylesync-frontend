@@ -5,7 +5,7 @@ import { useIntl, FormattedMessage } from 'react-intl';
 
 import { Button } from '@/modules/core/components/button';
 import { Switch } from '@/modules/core/components/switch';
-import { TimeRangeField } from '@/modules/core/components/time-range-field';
+import { TimeRangeField } from '@/modules/core/components/time-range-field-v2';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { z } from 'zod';
@@ -69,10 +69,6 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
   const isOpenModalDayOverride = useBoolean();
   const queryClient = useQueryClient();
 
-  const datesKey = useMemo(() => {
-    return dates.map((d) => d.toISOString()).join(',');
-  }, [dates]);
-
   // Format the date for display based on current locale
   const dateLocale = locale === 'uk' ? uk : enUS;
   const formattedDate = useMemo(() => {
@@ -94,12 +90,14 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
 
   const {
     formState: { isDirty },
-    watch,
     reset,
     control,
     handleSubmit,
   } = useForm<DayScheduleFormValues>({
-    defaultValues: emptySchedule.MONDAY,
+    defaultValues: {
+      workHours: emptyTimeRange,
+      breaks: [],
+    },
     resolver: zodResolver(validationSchema),
   });
 
@@ -117,7 +115,7 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
       }
     );
 
-  const { data: weekSchedule } = trpc.schedule.getWeekSchedule.useQuery(
+  const weekScheduleQuery = trpc.schedule.getWeekSchedule.useQuery(
     {
       professionalId: me?.professional?.id ?? '',
     },
@@ -127,14 +125,14 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
   );
 
   const weekdaySchedule = useMemo(() => {
-    if (dates.length === 1 && weekSchedule) {
-      return weekSchedule.find(
+    if (dates.length === 1 && weekScheduleQuery.data) {
+      return weekScheduleQuery.data.find(
         (item) => item.day === mapDateToDayEnum(dates[0])
       );
     }
 
     return null;
-  }, [weekSchedule, dates]);
+  }, [weekScheduleQuery.data, dates]);
 
   const isAccordingToWeeklySchedule =
     !specificDayScheduleQuery.data && weekdaySchedule && !isDirty;
@@ -244,7 +242,9 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
         },
         {
           onSuccess: () => {
-            queryClient.invalidateQueries(getQueryKey(trpc.schedule.list));
+            const queryKey = getQueryKey(trpc.schedule.getSpecificDaySchedule);
+
+            queryClient.resetQueries({ queryKey, exact: false });
           },
         }
       );
@@ -260,10 +260,6 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
   }, [append]);
 
   useEffect(() => {
-    if (specificDayScheduleQuery.isLoading || dates.length === 0) {
-      return;
-    }
-
     if (dates.length > 1) {
       reset({
         workHours: emptyTimeRange,
@@ -300,9 +296,9 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
     isWorkdayEnabled.setFalse();
   }, [
     // need to be careful with this dependency
-    specificDayScheduleQuery.data?.id,
+    specificDayScheduleQuery.data,
     weekdaySchedule,
-    datesKey,
+    dates.length,
   ]);
 
   return (
@@ -516,6 +512,7 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
               isLoading={
                 dailyScheduleCreate.isLoading || dailyScheduleDelete.isLoading
               }
+              disabled={!isDirty}
             />
           </div>
         </Placeholder>

@@ -1,0 +1,74 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+
+.root {
+  position: relative;
+  min-width: 220px;
+
+  .submitButton {
+    position: absolute;
+    top: 50%;
+    right: 4px;
+    transform: translateY(-50%);
+    border: none;
+    background-color: rgba(variables.$grey-color, 0.15);
+    color: variables.$grey-color;
+
+    svg {
+      position: relative;
+      left: 1px;
+      bottom: 1px;
+      width: 18px;
+      height: 18px;
+    }
+
+    &.small {
+      width: 33px;
+      height: 33px;
+    }
+
+    &.bigbtn {
+      width: 40px;
+      height: 40px;
+      margin-right: 6px;
+    }
+
+    &.error {
+      background-color: rgba(variables.$error-color, 0.15);
+      color: variables.$error-color;
+    }
+
+    &.active {
+      background-color: variables.$primary-light-color;
+      color: variables.$primary-color;
+
+      svg {
+        width: 20px;
+        height: 20px;
+        left: 0;
+        bottom: -1px;
+      }
+    }
+
+    &:hover {
+      background-color: variables.$primary-light-color;
+      color: variables.$primary-color;
+    }
+
+    &:disabled {
+      background-color: transparent;
+    }
+  }
+}
+
+.selectors {
+  display: flex;
+  align-items: center;
+  column-gap: utils.spacing(1);
+}
+
+.divider {
+  width: 1px;
+  height: 180px;
+  background-color: variables.$primary-light-color;
+}
