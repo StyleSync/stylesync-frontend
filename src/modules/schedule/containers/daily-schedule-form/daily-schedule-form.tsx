@@ -203,6 +203,10 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
             variant: 'success',
             title: formatMessage({ id: 'daily.toast.schedule.saved' }),
           });
+
+          if (dates.length > 1) {
+            handleReset();
+          }
         },
       }
     );
