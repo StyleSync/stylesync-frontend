@@ -61,7 +61,7 @@ export const TextField = forwardRef<
       return () => {
         textFieldElement?.removeEventListener('input', onChange);
       };
-    }, [hasText.setValue, combinedRefs]);
+    }, [combinedRefs, hasText]);
 
     return (
       <div
