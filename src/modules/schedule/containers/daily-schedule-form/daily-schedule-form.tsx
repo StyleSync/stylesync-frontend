@@ -22,7 +22,7 @@ import styles from './daily-schedule-form.module.scss';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { emptySchedule } from '@/modules/schedule/constants/schedule.constants';
 import { mapDateToDayEnum } from '@/modules/core/utils/date.utils';
-import { format } from 'date-fns';
+import { add, differenceInMinutes, format, startOfDay } from 'date-fns';
 import { uk, enUS } from 'date-fns/locale';
 import { DailyScheduleFormProps } from './daily-schedule-form.interface';
 import { useBoolean } from 'usehooks-ts';
@@ -157,18 +157,47 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
       Date.now()
     );
 
-    if (!isWorkdayEnabled.value && existingSchedule && !isMultipleDates) {
-      dailyScheduleDelete.mutate(
-        { id: existingSchedule.id },
-        {
-          onSuccess: () => {
-            showToast({
-              variant: 'success',
-              title: formatMessage({ id: 'daily.toast.schedule.deleted' }),
-            });
+    if (!isWorkdayEnabled.value && !isMultipleDates) {
+      if (existingSchedule) {
+        dailyScheduleDelete.mutate(
+          { id: existingSchedule.id },
+          {
+            onSuccess: () => {
+              showToast({
+                variant: 'success',
+                title: formatMessage({ id: 'daily.toast.schedule.deleted' }),
+              });
+            },
+          }
+        );
+      }
+
+      if (weekdaySchedule) {
+        // create schedule with 1 second duration that represents day off
+        dailyScheduleCreate.mutate(
+          {
+            schedules: dates.map((date) => ({
+              day: mapDateToDayEnum(date),
+              start: startOfDay(date).toISOString(),
+              end: add(startOfDay(date), { seconds: 1 }).toISOString(),
+              isSpecificDay: true,
+              specificDay: date.getDate(),
+              specificMonth: date.getMonth(),
+              specificYear: date.getFullYear(),
+              breaks: [],
+            })),
           },
-        }
-      );
+          {
+            onSuccess: () => {
+              const queryKey = getQueryKey(
+                trpc.schedule.getSpecificDaySchedule
+              );
+
+              queryClient.resetQueries({ queryKey, exact: false });
+            },
+          }
+        );
+      }
 
       return;
     }
@@ -277,7 +306,11 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
 
     const existingSchedule = specificDayScheduleQuery.data || weekdaySchedule;
 
-    if (existingSchedule) {
+    const isExistingScheduleDayOff =
+      !!existingSchedule &&
+      differenceInMinutes(existingSchedule.end, existingSchedule.start) < 15;
+
+    if (existingSchedule && !isExistingScheduleDayOff) {
       reset({
         workHours: formatTimeRange(
           Time.fromDate(existingSchedule.start),
@@ -516,7 +549,6 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
               isLoading={
                 dailyScheduleCreate.isLoading || dailyScheduleDelete.isLoading
               }
-              disabled={!isDirty}
             />
           </div>
         </Placeholder>
