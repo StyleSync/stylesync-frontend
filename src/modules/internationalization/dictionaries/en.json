@@ -102,7 +102,7 @@
   "photo.modal.upload.toast.error.description": "Oops",
   "photo.modal.upload.toast.success.description": "Photo has been added",
   "photo.modal.upload.dropHere": "Drop photos here",
-  "photo.modal.upload.supports": "Supports: PNG, JPG, JPEG, WEBP",
+  "photo.modal.upload.supports": "Please select a single image in PNG, JPG, JPEG, or WEBP format",
 
   "location.search.placeholder.typing": "Begin typing your location",
   "location.search.placeholder.notFound": "Location was not found",
