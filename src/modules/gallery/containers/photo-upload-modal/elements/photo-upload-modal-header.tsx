@@ -1,14 +1,13 @@
 import { type FC, useMemo } from 'react';
+
 import { useIntl } from 'react-intl';
 
-// components
 import { Button } from '@/modules/core/components/button';
 import { Typography } from '@/modules/core/components/typogrpahy';
-
 import type {
   PhotoUploadModalHeaderProps,
   PhotoUploadStep,
-} from '../photo-upload-modal.interface';
+} from '@/modules/gallery/containers/photo-upload-modal/photo-upload-modal.interface';
 
 export const PhotoUploadModalHeader: FC<PhotoUploadModalHeaderProps> = ({
   state,
@@ -41,7 +40,7 @@ export const PhotoUploadModalHeader: FC<PhotoUploadModalHeaderProps> = ({
   const { title } = metadata[state.step];
 
   return (
-    <div className='relative z-10 flex h-[64px] w-full items-center justify-center shadow md:h-[44px]'>
+    <div className='relative z-10 flex h-[64px] w-full flex-none items-center justify-center shadow md:h-[44px]'>
       {state.step !== 'select' && state.step !== 'preview' && (
         <Button
           variant='outlined'
