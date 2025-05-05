@@ -100,7 +100,7 @@
   "photo.modal.upload.toast.error.description": "Ой",
   "photo.modal.upload.toast.success.description": "Фото додано",
   "photo.modal.upload.dropHere": "Перетягніть фото сюди",
-  "photo.modal.upload.supports": "Підтримує: PNG, JPG, JPEG, WEBP",
+  "photo.modal.upload.supports": "Будь ласка, виберіть одне зображення у форматі PNG, JPG, JPEG або WEBP",
 
   "location.search.placeholder.typing": "Почніть вводити ваше місцезнаходження",
   "location.search.placeholder.notFound": "Місцезнаходження не знайдено",
