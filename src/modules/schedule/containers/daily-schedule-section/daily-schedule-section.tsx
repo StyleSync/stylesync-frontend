@@ -85,10 +85,10 @@ export const DailyScheduleSection = () => {
               <StaticDatePicker
                 value={new Date()}
                 onChange={(value) => {
-                  setSelectedDates((prev) => {
-                    if (!value) return prev;
+                  if (!value) return;
 
-                    if (value && prev.some((item) => isSameDay(item, value))) {
+                  setSelectedDates((prev) => {
+                    if (prev.some((item) => isSameDay(item, value))) {
                       return prev.filter((item) => !isSameDay(item, value));
                     }
 
@@ -149,6 +149,7 @@ export const DailyScheduleSection = () => {
                   },
                   '& .MuiPickersToolbar-root': { display: 'none' },
                   '& .MuiDialogActions-root': { display: 'none' },
+                  '& .MuiPickersDay-today': { border: '1px solid' },
                 }}
               />
             </LocalizationProvider>

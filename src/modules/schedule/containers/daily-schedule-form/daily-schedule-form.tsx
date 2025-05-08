@@ -48,7 +48,7 @@ const workHoursSchema = z.string().refine((args) => {
   }
 });
 
-const validationSchema = z.object({
+const workDaysSchema = z.object({
   workHours: workHoursSchema,
   breaks: z.array(
     z.object({
@@ -98,7 +98,7 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
       workHours: emptyTimeRange,
       breaks: [],
     },
-    resolver: zodResolver(validationSchema),
+    resolver: zodResolver(workDaysSchema),
   });
 
   const specificDayScheduleQuery =
@@ -110,7 +110,7 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
         specificYear: dates[0]?.getFullYear(),
       },
       {
-        enabled: !!me?.professional?.id && dates.length === 1,
+        enabled: !!me?.professional?.id && dates.length === 1 && !!dates[0],
         retry: false,
       }
     );
