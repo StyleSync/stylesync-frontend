@@ -106,6 +106,7 @@ export const scheduleRouter = router({
           Day.SUNDAY,
         ]),
         isSpecificDay: z.boolean(),
+        isDayOff: z.boolean().optional(),
         specificDay: z.number().optional(),
         specificMonth: z.number().optional(),
         specificYear: z.number().optional(),
@@ -218,6 +219,7 @@ export const scheduleRouter = router({
               Day.SUNDAY,
             ]),
             isSpecificDay: z.literal(true),
+            isDayOff: z.boolean().optional(),
             specificDay: z.number(),
             specificMonth: z.number(),
             specificYear: z.number(),
@@ -327,6 +329,7 @@ export const scheduleRouter = router({
         id: z.string().min(1, 'Required'),
         start: z.string().datetime().optional(),
         end: z.string().datetime().optional(),
+        isDayOff: z.boolean().optional(),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -495,5 +498,36 @@ export const scheduleRouter = router({
       });
 
       return { items, nextCursor: getCursor(items, limit) };
+    }),
+  listByDay: publicProcedure
+    .input(
+      z.object({
+        professionalId: z.string().min(1, 'Required'),
+        days: z.array(
+          z.object({
+            specificDay: z.number(),
+            specificMonth: z.number(),
+            specificYear: z.number(),
+          })
+        ),
+      })
+    )
+    .query(async ({ input }) => {
+      const schedules = await prisma.schedule.findMany({
+        where: {
+          isSpecificDay: true,
+          professionalId: input.professionalId,
+          OR: input.days.map((day) => ({
+            AND: [
+              { specificDay: day.specificDay },
+              { specificMonth: day.specificMonth },
+              { specificYear: day.specificYear },
+            ],
+          })),
+        },
+        select: defaultScheduleSelect,
+      });
+
+      return schedules;
     }),
 });
