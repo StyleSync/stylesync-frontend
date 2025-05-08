@@ -1,4 +1,5 @@
 import { Prisma } from '@prisma/client';
+
 import { defaultBreakSelect } from '@/server/selectors/break';
 
 export const defaultScheduleSelect = Prisma.validator<Prisma.ScheduleSelect>()({
@@ -7,6 +8,7 @@ export const defaultScheduleSelect = Prisma.validator<Prisma.ScheduleSelect>()({
   end: true,
   day: true,
   isSpecificDay: true,
+  isDayOff: true,
   specificDay: true,
   specificMonth: true,
   specificYear: true,

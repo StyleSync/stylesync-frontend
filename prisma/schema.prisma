@@ -162,6 +162,7 @@ model Schedule {
   end            DateTime
   day            Day
   isSpecificDay  Boolean
+  isDayOff       Boolean      @default(false)
   specificYear   Int?
   specificMonth  Int?
   specificDay    Int?
