@@ -1,6 +1,7 @@
 import { type FC, useState } from 'react';
 
 import { emptySchedule } from '@/modules/schedule/constants/schedule.constants';
+import { DailyScheduleSection } from '@/modules/schedule/containers/daily-schedule-section';
 import { WeeklyScheduleForm } from '@/modules/schedule/containers/schedule-form';
 import type { WeeklySchedule } from '@/modules/schedule/types/schedule.types';
 import { ProfileSettingsTabContentLayout } from '@/modules/user/components/profile-settings-tab-content-layout';
@@ -14,7 +15,10 @@ export const ProfessionalSettingsSchedule: FC = () => {
       title={'professional.settings.schedule.title'}
       icon='calendar'
     >
-      <WeeklyScheduleForm schedule={schedule} setSchedule={setSchedule} />
+      <div className='flex flex-col gap-[50px] md:gap-[100px]'>
+        <DailyScheduleSection />
+        <WeeklyScheduleForm schedule={schedule} setSchedule={setSchedule} />
+      </div>
     </ProfileSettingsTabContentLayout>
   );
 };

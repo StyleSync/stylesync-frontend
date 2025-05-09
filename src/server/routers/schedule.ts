@@ -61,14 +61,14 @@ export const scheduleRouter = router({
         select: defaultScheduleSelect,
       });
 
-      if (!schedule) {
+      if (!schedule || schedule.length === 0) {
         throw new TRPCError({
           code: 'NOT_FOUND',
           message: `No schedule for professional'`,
         });
       }
 
-      return schedule;
+      return schedule[0];
     }),
   getWeekSchedule: privateProcedure
     .input(

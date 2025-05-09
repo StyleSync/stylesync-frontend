@@ -4,7 +4,6 @@ import {
   useCallback,
   useEffect,
   useRef,
-  useState,
 } from 'react';
 
 import clsx from 'clsx';
@@ -19,7 +18,6 @@ import {
   formatTimeRange,
   isTimeRangeString,
   parseTimeRange,
-  Time,
 } from '@/modules/core/utils/time.utils';
 
 import type { TimeRangeFieldInterface } from './time-range-field.interface';
@@ -37,26 +35,12 @@ export const TimeRangeField: FC<TimeRangeFieldInterface> = ({
 }) => {
   // state
   const isActive = useBoolean();
-  const [startTime, setStartTime] = useState(new Time());
-  const [endTime, setEndTime] = useState(new Time());
+  const [startTime, endTime] = parseTimeRange(value);
   // refs
   const rootRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const deviceType = useDeviceType();
-
-  useEffect(() => {
-    if (isTimeRangeString(value)) {
-      const [_startTime, _endTime] = parseTimeRange(value);
-
-      setStartTime(_startTime);
-      setEndTime(_endTime);
-    }
-  }, [value]);
-
-  useEffect(() => {
-    onChange(formatTimeRange(startTime, endTime));
-  }, [startTime, endTime]);
 
   const startTimeSelection = useCallback(() => {
     isActive.setTrue();
@@ -65,12 +49,7 @@ export const TimeRangeField: FC<TimeRangeFieldInterface> = ({
   const finishTimeSelection = useCallback(() => {
     isActive.setFalse();
     inputRef.current?.blur();
-
-    if (!isTimeRangeString(value)) {
-      setStartTime(new Time());
-      setEndTime(new Time());
-    }
-  }, [isActive, value]);
+  }, []);
 
   const toggleTimeSelection = useCallback(() => {
     isActive.value ? finishTimeSelection() : startTimeSelection();
@@ -175,9 +154,17 @@ export const TimeRangeField: FC<TimeRangeFieldInterface> = ({
       disableAutofocus
     >
       <div className={styles.selectors}>
-        <TimeSelect value={startTime} onChange={setStartTime} />
+        <TimeSelect
+          value={startTime}
+          onChange={(time) => {
+            onChange(formatTimeRange(time, endTime));
+          }}
+        />
         <div className={styles.divider} />
-        <TimeSelect value={endTime} onChange={setEndTime} />
+        <TimeSelect
+          value={endTime}
+          onChange={(time) => onChange(formatTimeRange(startTime, time))}
+        />
       </div>
     </Popover>
   );

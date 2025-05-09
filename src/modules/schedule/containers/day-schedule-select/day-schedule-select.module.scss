@@ -6,10 +6,14 @@
   position: relative;
   display: flex;
   padding: utils.spacing(3);
-  border-top: 1px solid variables.$primary-light-color;
+  border-bottom: 1px solid variables.$primary-light-color;
   column-gap: utils.spacing(4);
   overflow: hidden;
   align-items: center;
+
+  &::first-child {
+    border-top: none;
+  }
 
   &.edit {
     padding: utils.spacing(2, 3);
@@ -29,10 +33,6 @@
     &:first-child {
       border-top: none;
     }
-  }
-
-  &:last-child {
-    border-bottom: none;
   }
 
   .container {
@@ -102,6 +102,12 @@
     display: flex;
     align-items: center;
     column-gap: utils.spacing(0.5);
+    padding-top: 24px;
+    @include mixins.phone {
+      column-gap: 10px;
+      margin-left: 9px;
+      padding-bottom: 32px;
+    }
   }
 
   .breaks {

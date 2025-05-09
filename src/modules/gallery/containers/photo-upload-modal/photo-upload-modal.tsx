@@ -1,42 +1,41 @@
 import { type FC, useCallback, useEffect, useRef, useState } from 'react';
-import { Cropper, type CropperRef } from 'react-advanced-cropper';
+
+import { animated, useSpringValue } from '@react-spring/web';
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
-import Image from 'next/image';
 import clsx from 'clsx';
+import Image from 'next/image';
+import { Cropper, type CropperRef } from 'react-advanced-cropper';
 import { useDropzone } from 'react-dropzone';
-import { animated, useSpringValue } from '@react-spring/web';
 import { useIntl } from 'react-intl';
 
+import { Avatar } from '@/modules/core/components/avatar';
+import { Button } from '@/modules/core/components/button';
 // components
 import { Dialog } from '@/modules/core/components/dialog';
-import { Typography } from '@/modules/core/components/typogrpahy';
 import { Icon } from '@/modules/core/components/icon';
-import { Button } from '@/modules/core/components/button';
-import { Avatar } from '@/modules/core/components/avatar';
-import { TextField } from '@/modules/core/components/text-field';
 import { Placeholder } from '@/modules/core/components/placeholder';
-// hooks
-import { useImageUploadMutation } from '@/modules/user/hooks/use-image-upload-mutation';
+import { Spinner } from '@/modules/core/components/spinner';
+import { TextField } from '@/modules/core/components/text-field';
+import { Typography } from '@/modules/core/components/typogrpahy';
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
-// utils
-import { getFullName } from '@/modules/user/utils/user.utils';
-import { trpc } from '@/modules/core/utils/trpc.utils';
 import { showToast } from '@/modules/core/providers/toast-provider';
 import { dataURLtoBlob } from '@/modules/core/utils/file.utils';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+// hooks
+import { useImageUploadMutation } from '@/modules/user/hooks/use-image-upload-mutation';
+// utils
+import { getFullName } from '@/modules/user/utils/user.utils';
+
+import { PhotoUploadModalHeader } from './elements/photo-upload-modal-header';
+import type {
+  PhotoUploadModalProps,
+  PhotoUploadState,
+} from './photo-upload-modal.interface';
 
 import 'react-advanced-cropper/dist/style.css';
 import 'react-advanced-cropper/dist/themes/bubble.css';
-
-import { PhotoUploadModalHeader } from './elements/photo-upload-modal-header';
-
 import styles from './photo-upload-modal.module.scss';
-
-import type {
-  PhotoUploadState,
-  PhotoUploadModalProps,
-} from './photo-upload-modal.interface';
-import { Spinner } from '@/modules/core/components/spinner';
 
 export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
   isOpen,

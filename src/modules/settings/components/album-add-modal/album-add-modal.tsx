@@ -1,23 +1,22 @@
-import { useEffect, type FC } from 'react';
-import { z } from 'zod';
+import { type FC, useEffect } from 'react';
+
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useIntl } from 'react-intl';
-// hooks
-import { useForm } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
-// components
-import { Dialog } from '@/modules/core/components/dialog';
-import { Typography } from '@/modules/core/components/typogrpahy';
-import { TextField } from '@/modules/core/components/text-field';
+import { useForm } from 'react-hook-form';
+import { useIntl } from 'react-intl';
+import { z } from 'zod';
+
 import { Button } from '@/modules/core/components/button';
-// types
-import { type AlbumAddModalProps } from './album-add-modal.interface';
+import { Dialog } from '@/modules/core/components/dialog';
 import { type DialogProps } from '@/modules/core/components/dialog/dialog.interface';
-// utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
+import { TextField } from '@/modules/core/components/text-field';
+import { Typography } from '@/modules/core/components/typogrpahy';
 import { showToast } from '@/modules/core/providers/toast-provider';
-// styles
+import { trpc } from '@/modules/core/utils/trpc.utils';
+
+import { type AlbumAddModalProps } from './album-add-modal.interface';
+
 import styles from './album-add-modal.module.scss';
 
 const defaultValues = {

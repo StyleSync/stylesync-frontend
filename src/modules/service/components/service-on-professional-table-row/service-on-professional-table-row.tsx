@@ -1,21 +1,24 @@
 import React, { type FC, useContext } from 'react';
-import clsx from 'clsx';
+
 import * as Accordion from '@radix-ui/react-accordion';
+import clsx from 'clsx';
+import { useIntl } from 'react-intl';
+
+import { BookingContext } from '@/modules/booking/providers/booking-provider';
+import { Button } from '@/modules/core/components/button';
+import { isEditorFieldEmpty } from '@/modules/core/components/editor-field/editor-field';
+import { EditorPreview } from '@/modules/core/components/editor-preview';
+import { Icon } from '@/modules/core/components/icon';
 // components
 import { Typography } from '@/modules/core/components/typogrpahy';
-import { Button } from '@/modules/core/components/button';
-import { EditorPreview } from '@/modules/core/components/editor-preview';
 // hooks
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 // utils
 import { formatDuration } from '@/modules/core/utils/time.utils';
 
 import type { ServiceOnProfessionalTableRowProps } from './service-on-professional-table-row.interface';
+
 import styles from './service-on-professional-table-row.module.scss';
-import { isEditorFieldEmpty } from '@/modules/core/components/editor-field/editor-field';
-import { useIntl } from 'react-intl';
-import { BookingContext } from '@/modules/booking/providers/booking-provider';
-import { Icon } from '@/modules/core/components/icon';
 
 export const ServiceOnProfessionalTableRow: FC<
   ServiceOnProfessionalTableRowProps

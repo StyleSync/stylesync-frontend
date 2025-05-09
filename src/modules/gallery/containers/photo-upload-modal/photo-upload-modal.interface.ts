@@ -1,5 +1,6 @@
-import type { DialogProps } from '@/modules/core/types/dialog.types';
 import type { ReactNode } from 'react';
+
+import type { DialogProps } from '@/modules/core/types/dialog.types';
 
 export type PhotoUploadModalProps = DialogProps & {
   trigger?: ReactNode;
