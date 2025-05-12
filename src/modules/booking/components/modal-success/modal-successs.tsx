@@ -1,20 +1,19 @@
 import { type FC } from 'react';
+
 import { Currency } from '@prisma/client';
 import { useIntl } from 'react-intl';
 
-// components
+import { BookingStatus } from '@/modules/booking/components/booking-status';
+import { InfoBox } from '@/modules/booking/components/modal-success-infobox';
 import { Button } from '@/modules/core/components/button';
 import { Dialog } from '@/modules/core/components/dialog';
-import { Typography } from '@/modules/core/components/typogrpahy';
 import { Icon } from '@/modules/core/components/icon';
-import { InfoBox } from '@/modules/booking/components/modal-success-infobox';
-// type
-import { type BookingModalSuccessProps } from './modal-success.interface';
-// utils
+import { Typography } from '@/modules/core/components/typogrpahy';
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
-// style
+
+import { type BookingModalSuccessProps } from './modal-success.interface';
+
 import styles from './modal-success.module.scss';
-import { BookingStatus } from '@/modules/booking/components/booking-status';
 
 export const BookingModalSuccess: FC<BookingModalSuccessProps> = ({
   bookingData,

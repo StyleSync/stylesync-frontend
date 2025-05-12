@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
-import { useGeocodingCore } from '@mapbox/search-js-react';
 import type { GeocodingOptions } from '@mapbox/search-js-core';
+import { useGeocodingCore } from '@mapbox/search-js-react';
+import { useQuery } from '@tanstack/react-query';
 
 const GEOCODING_SUGGESTIONS_CACHE_KEY = 'GEOCODING_SUGGESTIONS';
 

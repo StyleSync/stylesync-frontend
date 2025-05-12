@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-// components
 
 import { PasswordRequirements } from './password-requirements';
 

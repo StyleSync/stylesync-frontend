@@ -1,5 +1,6 @@
-import { trpc } from '@/modules/core/utils/trpc.utils';
 import { useMutation } from '@tanstack/react-query';
+
+import { trpc } from '@/modules/core/utils/trpc.utils';
 
 const MUTATION_KEY = 'SERVICE_ON_PROFESSIONAL_GROUP_DELETE';
 

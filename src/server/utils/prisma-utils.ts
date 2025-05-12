@@ -1,3 +1,5 @@
+import { TRPCError } from '@trpc/server';
+
 import type { Context } from '@/server/context';
 import { prisma } from '@/server/prisma';
 import {
@@ -5,7 +7,6 @@ import {
   defaultProfessionalSelect,
   defaultServiceOnProfessionalSelect,
 } from '@/server/selectors';
-import { TRPCError } from '@trpc/server';
 
 export const getProfessionalFromContext = async (ctx: Context) => {
   const { id } = ctx.user;

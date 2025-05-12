@@ -1,5 +1,6 @@
+import type { UseFormClearErrors, UseFormSetError } from 'react-hook-form';
+
 import { type AboutProfessionalFormValues } from '@/modules/user/components/about-professional-form/about-professional-form.interface';
-import type { UseFormSetError, UseFormClearErrors } from 'react-hook-form';
 
 export type NickNameFieldProps = {
   value: string | undefined;

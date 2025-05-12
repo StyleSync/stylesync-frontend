@@ -1,19 +1,20 @@
 import { type FC, useCallback, useEffect, useRef } from 'react';
+
 import * as RadixDialog from '@radix-ui/react-dialog';
 import {
-  Controller,
   animated,
+  Controller,
   easings,
   type SpringConfig,
 } from '@react-spring/web';
 import { useBoolean, useScreen } from 'usehooks-ts';
-// hooks
+
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import { useTouchDirectionDrag } from '@/modules/core/hooks/use-touch-direction-drag';
-// utils
 import { reassignCssProperties } from '@/modules/core/utils/css.utils';
 
 import type { BottomActionsProps } from './dialog-bottom.interface';
+
 import styles from './dialog-bottom.module.scss';
 
 const DRAG_OFFSET_CLOSE_BREAKDOWN = 100;

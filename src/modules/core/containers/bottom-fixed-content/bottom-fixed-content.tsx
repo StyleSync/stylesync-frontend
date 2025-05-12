@@ -1,20 +1,21 @@
 'use client';
 import {
+  createContext,
   type FC,
   type ReactNode,
-  createContext,
-  useEffect,
-  useRef,
-  useState,
   useCallback,
   useContext,
+  useEffect,
   useId,
   useMemo,
+  useRef,
+  useState,
 } from 'react';
-// types
+
 import type { ChildrenProp } from '@/modules/core/types/react.types';
 
 import type { BottomFixedContentProps } from './bottom-fixed-content.interface';
+
 import styles from './bottom-fixed-content.module.scss';
 
 type RenderElement = {

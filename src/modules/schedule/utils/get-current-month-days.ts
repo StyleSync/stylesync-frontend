@@ -1,4 +1,4 @@
-import { startOfMonth, endOfMonth, eachDayOfInterval } from 'date-fns';
+import { eachDayOfInterval, endOfMonth, startOfMonth } from 'date-fns';
 
 export const getDaysOfCurrentMonth = (date: Date) => {
   const startDay = startOfMonth(date);

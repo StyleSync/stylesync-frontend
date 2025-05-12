@@ -1,5 +1,5 @@
-import type { Currency } from '@/modules/core/types/currency.types';
 import type { IconName } from '@/modules/core/components/icon';
+import type { Currency } from '@/modules/core/types/currency.types';
 
 export const currencies: Currency[] = ['UAH', 'USD', 'EUR'];
 

@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 import { getServerSession, type Session } from 'next-auth';
+
 import { authOptions } from '@/modules/auth/constants/auth-server.constants';
 
 type PageGuardConfig = {

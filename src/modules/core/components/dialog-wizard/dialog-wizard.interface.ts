@@ -1,5 +1,5 @@
-import type { DialogProps } from '@/modules/core/components/dialog/dialog.interface';
 import type { ButtonProps } from '@/modules/core/components/button/button.interface';
+import type { DialogProps } from '@/modules/core/components/dialog/dialog.interface';
 
 export type DialogWizardStep = {
   id: string;

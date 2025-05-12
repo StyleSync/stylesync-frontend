@@ -1,12 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import superjson from 'superjson';
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { httpBatchLink, getFetch, loggerLink } from '@trpc/client';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { createTRPCReact } from '@trpc/react-query';
 import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental';
+import { getFetch, httpBatchLink, loggerLink } from '@trpc/client';
+import { createTRPCReact } from '@trpc/react-query';
+import superjson from 'superjson';
+
 import type { AppRouter } from '@/server/routers/_app';
 const trpc = createTRPCReact<AppRouter>();
 

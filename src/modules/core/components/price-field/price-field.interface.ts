@@ -1,5 +1,5 @@
-import type { Currency } from '@/modules/core/types/currency.types';
 import type { InputProps } from '@/modules/core/components/text-field/text-field.interface';
+import type { Currency } from '@/modules/core/types/currency.types';
 
 export type PriceFieldProps = {
   price: string;

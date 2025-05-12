@@ -1,10 +1,10 @@
 import type { FC } from 'react';
+
 import { Avatar } from '@/modules/core/components/avatar';
 import { Typography } from '@/modules/core/components/typogrpahy';
-import { getFullName } from '@/modules/user/utils/user.utils';
+import type { UserDataProps } from '@/modules/user/containers/professional-info-big-card/professional-info-big-card.interface';
 import styles from '@/modules/user/containers/professional-info-big-card/professional-info-big-card.module.scss';
-
-import type { UserDataProps } from '../professional-info-big-card.interface';
+import { getFullName } from '@/modules/user/utils/user.utils';
 
 export const UserData: FC<UserDataProps> = ({ professional }) => {
   return (

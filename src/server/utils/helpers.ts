@@ -1,3 +1,4 @@
+import { type Break, Day, type Schedule } from '@prisma/client';
 import {
   addMinutes,
   differenceInMinutes,
@@ -5,7 +6,7 @@ import {
   isBefore,
   isSameDay,
 } from 'date-fns';
-import { type Break, Day, type Schedule } from '@prisma/client';
+
 import type { AvailableBookingTime } from '@/server/types';
 
 export const mapDateToDayEnum = (dateString: string) => {

@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
-// components
+import { useBoolean } from 'usehooks-ts';
+
+import { Button } from '@/modules/core/components/button';
 import { Typography } from '@/modules/core/components/typogrpahy';
 
 import { Popover } from './popover';
-import { useBoolean } from 'usehooks-ts';
-import { Button } from '@/modules/core/components/button';
 
 const meta: Meta<typeof Popover> = {
   title: 'Core UI/Popover',

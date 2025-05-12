@@ -1,19 +1,17 @@
 import { type FC, useMemo } from 'react';
-import { useIntl } from 'react-intl';
-import { isSameDay } from 'date-fns';
-import { uk, enUS } from 'date-fns/locale';
-// mui calendar
+
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-// hooks
+import { isSameDay } from 'date-fns';
+import { enUS, uk } from 'date-fns/locale';
+import { useIntl } from 'react-intl';
 import { useBoolean } from 'usehooks-ts';
-// components
-import { Popover } from '@/modules/core/components/popover';
+
 import { Button } from '@/modules/core/components/button';
-// utils
+import { Popover } from '@/modules/core/components/popover';
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
-// types
+
 import type { DateSelectProps } from './date-select.interface';
 
 export const DateSelect: FC<DateSelectProps> = ({

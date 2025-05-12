@@ -1,15 +1,15 @@
 import React, { type FC, useRef } from 'react';
+
 import clsx from 'clsx';
 import ReactQuill from 'react-quill';
-// components
-import { Typography } from '@/modules/core/components/typogrpahy';
-// styles
-import 'react-quill/dist/quill.snow.css';
 
-import styles from './editor-field.module.scss';
-import './editor-field.scss';
+import { Typography } from '@/modules/core/components/typogrpahy';
 
 import { type EditorProps } from './editor-field.interface';
+
+import 'react-quill/dist/quill.snow.css';
+import './editor-field.scss';
+import styles from './editor-field.module.scss';
 
 export const isEditorFieldEmpty = (value: string) => {
   return (

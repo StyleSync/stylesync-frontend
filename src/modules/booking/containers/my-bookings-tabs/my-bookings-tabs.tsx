@@ -1,16 +1,15 @@
 'use client';
 import { type FC, useCallback } from 'react';
+
 import { useIntl } from 'react-intl';
-// components
-import { Tabs } from '@/modules/core/components/tabs';
-// hooks
+
 import { useMyBookingsTab } from '@/modules/booking/hooks/use-my-bookings-tab';
-// types
+import { Tabs } from '@/modules/core/components/tabs';
 import type { Tab } from '@/modules/core/components/tabs/tabs.interface';
 
 import type {
-  MyBookingsTabsProps,
   MyBookingsTabKey,
+  MyBookingsTabsProps,
 } from './my-bookings-tabs.interface';
 
 export const myBookingsDefaultTab: MyBookingsTabKey = 'list';

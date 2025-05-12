@@ -1,6 +1,7 @@
+import { useMemo } from 'react';
+
 import { useBrowserLocation } from '@/modules/location/hooks/use-browser-location';
 import { useReverseGeocodingQuery } from '@/modules/location/hooks/use-reverse-geocoding-query';
-import { useMemo } from 'react';
 
 type UseBrowserLocationDetailsOptions = {
   browserLocationSearchEnabled?: boolean;

@@ -1,5 +1,6 @@
-import type { ServiceOnProfessional } from '@/modules/service/types/service.types';
 import type { Currency } from '@prisma/client';
+
+import type { ServiceOnProfessional } from '@/modules/service/types/service.types';
 
 export type ServiceOnProfessionalEditFormProps = {
   isActive: boolean;

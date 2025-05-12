@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { addHours } from 'date-fns';
 
 import { BookingInfoCard } from './booking-info-card';
-import { addHours } from 'date-fns';
 
 const meta: Meta<typeof BookingInfoCard> = {
   title: 'Booking/BookingInfoCard',

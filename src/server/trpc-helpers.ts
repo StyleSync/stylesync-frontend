@@ -1,8 +1,9 @@
+import { Prisma } from '@prisma/client';
 import { initTRPC, TRPCError } from '@trpc/server';
 import superjson from 'superjson';
-import type { Context } from './context';
 import { ZodError } from 'zod';
-import { Prisma } from '@prisma/client';
+
+import type { Context } from './context';
 // Avoid exporting the entire t-object
 // since it's not very descriptive.
 // For instance, the use of a t variable

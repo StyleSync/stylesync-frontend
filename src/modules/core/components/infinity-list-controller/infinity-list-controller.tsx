@@ -1,4 +1,5 @@
 import { type FC, useEffect } from 'react';
+
 import { useIntersectionObserver } from 'usehooks-ts';
 
 type InfinityListControllerProps = {

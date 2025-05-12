@@ -1,19 +1,20 @@
 import {
-  type FC,
   type ChangeEvent,
   createContext,
+  type FC,
+  useCallback,
   useContext,
   useRef,
-  useCallback,
 } from 'react';
-// hooks
+
 import { useRipple } from '@/modules/core/hooks/use-ripple';
 
 import type {
   RadioButtonProps,
-  RadioGroupProps,
   RadioGroupContextValue,
+  RadioGroupProps,
 } from './radio-button.interface';
+
 import styles from './radio-button.module.scss';
 
 const RadioGroupContext = createContext<RadioGroupContextValue>({

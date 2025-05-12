@@ -1,7 +1,9 @@
 import { type FC } from 'react';
+
 import clsx from 'clsx';
 
 import { Icon } from '@/modules/core/components/icon';
+
 import type { ZoomProps } from './zoom-control.interface';
 
 import styles from './zoom-control.module.scss';

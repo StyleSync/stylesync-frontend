@@ -1,7 +1,8 @@
 'use client';
 import { type FC } from 'react';
+
 import clsx from 'clsx';
-// hooks
+
 import { useOnboard } from '@/modules/onboard/hooks/use-onboard';
 
 import styles from './pro-onboard.module.scss';

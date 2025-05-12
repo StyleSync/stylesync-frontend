@@ -2,17 +2,15 @@
 import Image from 'next/image';
 import { useIntl } from 'react-intl';
 
-// components
-import { Typography } from '@/modules/core/components/typogrpahy';
-// import { Icon } from '@/modules/core/components/icon';
-import { IphoneLayout } from '@/modules/core/components/iphone-layout';
-// assets
-import net from '@/modules/landing/landing-image/big-net.png';
+import searchEn from '@/assets/images/en-pro-search.png';
 // import google from '@/modules/landing/landing-image/google-play-badge.png';
 import profileEn from '@/assets/images/profile2en.png';
 import profileUk from '@/assets/images/profile2uk.png';
 import searchUk from '@/assets/images/uk-pro-search.png';
-import searchEn from '@/assets/images/en-pro-search.png';
+// import { Icon } from '@/modules/core/components/icon';
+import { IphoneLayout } from '@/modules/core/components/iphone-layout';
+import { Typography } from '@/modules/core/components/typogrpahy';
+import net from '@/modules/landing/landing-image/big-net.png';
 
 export const MobileAppSection = () => {
   const intl = useIntl();

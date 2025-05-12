@@ -1,7 +1,8 @@
+import { useState } from 'react';
+
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { PhoneField } from './phone-field';
-import { useState } from 'react';
 
 const meta: Meta<typeof PhoneField> = {
   title: 'Core UI/PhoneField',

@@ -1,13 +1,15 @@
 import React, { type FC } from 'react';
+
+import useElementSize from '@custom-react-hooks/use-element-size';
 import clsx from 'clsx';
 import Image from 'next/image';
-// assets
+
 import MacBrowserChromeToolbar from '@/assets/icons/mac-browser-chrome-toolbar.svg?icon';
+import { Icon } from '@/modules/core/components/icon';
 
 import type { BrowserViewProps } from './browser-view.interface';
+
 import styles from './browser-view.module.scss';
-import { Icon } from '@/modules/core/components/icon';
-import useElementSize from '@custom-react-hooks/use-element-size';
 
 const defaultWidthPx = 850;
 const defaultFontSizePx = 10;

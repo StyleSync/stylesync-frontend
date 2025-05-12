@@ -1,21 +1,21 @@
-import { type FC, type ChangeEvent, type FocusEvent, useCallback } from 'react';
-import { useBoolean } from 'usehooks-ts';
+import { type ChangeEvent, type FC, type FocusEvent, useCallback } from 'react';
+
 import clsx from 'clsx';
-// components
+import { useBoolean } from 'usehooks-ts';
+
+import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
 import { Icon } from '@/modules/core/components/icon';
 import { TextField } from '@/modules/core/components/text-field';
 import { Typography } from '@/modules/core/components/typogrpahy';
-import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
-// constants
 import {
   currencies,
   currencyMeta,
 } from '@/modules/core/constants/currency.constants';
-// utils
-import { formatPrice } from '@/modules/core/utils/price.utils';
-// types
 import type { Currency } from '@/modules/core/types/currency.types';
+import { formatPrice } from '@/modules/core/utils/price.utils';
+
 import type { PriceFieldProps } from './price-field.interface';
+
 import styles from './price-field.module.scss';
 
 export const PriceField: FC<PriceFieldProps> = ({

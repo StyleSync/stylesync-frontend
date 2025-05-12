@@ -1,9 +1,9 @@
 'use client';
-// components
-import { Typography } from '@/modules/core/components/typogrpahy';
+import { useIntl } from 'react-intl';
+
 import { Divider } from '@/modules/core/components/divider';
 import { Icon } from '@/modules/core/components/icon';
-import { useIntl } from 'react-intl';
+import { Typography } from '@/modules/core/components/typogrpahy';
 
 export const Footer = () => {
   const intl = useIntl();

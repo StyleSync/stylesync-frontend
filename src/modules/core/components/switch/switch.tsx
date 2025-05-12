@@ -1,10 +1,13 @@
-import { type FC, useState } from 'react';
-import { SwitchProps } from './switch.interface';
+import { type FC } from 'react';
+
 import clsx from 'clsx';
+
+import { SwitchProps } from './switch.interface';
 
 export const Switch: FC<SwitchProps> = ({ checked = false, onChange }) => {
   const toggle = () => {
     const newValue = !checked;
+
     onChange?.(newValue);
   };
 

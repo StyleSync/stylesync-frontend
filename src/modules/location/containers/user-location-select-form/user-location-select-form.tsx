@@ -6,19 +6,20 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useIntl } from 'react-intl';
 
 import type L from 'leaflet';
 import dynamic from 'next/dynamic';
+import { useIntl } from 'react-intl';
+
 import { Button } from '@/modules/core/components/button';
-// types
-import type { Address } from '@/modules/location/types/address.types';
 import type { UserMarker } from '@/modules/location/components/map/map.interface';
+import type { Address } from '@/modules/location/types/address.types';
 
 import type {
-  UserLocationSelectFormProps,
   UserLocationSelectFormHandle,
+  UserLocationSelectFormProps,
 } from './user-location-select-form.interface';
+
 import styles from './user-location-select-form.module.scss';
 
 const ADDRESS_ZOOM = 17;

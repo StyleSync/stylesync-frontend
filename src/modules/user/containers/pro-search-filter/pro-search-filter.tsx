@@ -2,20 +2,22 @@
 
 import { type FC, useContext, useEffect } from 'react';
 
-import type { ProSearchFilterProps } from './pro-search-filter.interface';
-import { Typography } from '@/modules/core/components/typogrpahy';
+import { animated, useTransition } from '@react-spring/web';
+import clsx from 'clsx';
+import { useIntl } from 'react-intl';
+
+import { Button } from '@/modules/core/components/button';
 import { Checkbox } from '@/modules/core/components/checkbox';
 import { DateSelect } from '@/modules/core/components/date-select';
-import clsx from 'clsx';
-import { Button } from '@/modules/core/components/button';
-import type { ChildrenProp } from '@/modules/core/types/react.types';
-import { useDeviceType } from '@/modules/core/hooks/use-device-type';
-import { animated, useTransition } from '@react-spring/web';
 import { DialogFullScreen } from '@/modules/core/components/dialog-full-screen';
-import { trpc } from '@/modules/core/utils/trpc.utils';
-import { useIntl } from 'react-intl';
-import { ProfessionalSearchContext } from '@/modules/user/providers/professional-search-provider';
+import { Typography } from '@/modules/core/components/typogrpahy';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import { useQueryParams } from '@/modules/core/hooks/use-search-params';
+import type { ChildrenProp } from '@/modules/core/types/react.types';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { ProfessionalSearchContext } from '@/modules/user/providers/professional-search-provider';
+
+import type { ProSearchFilterProps } from './pro-search-filter.interface';
 
 const FilterWrapper: FC<
   ChildrenProp & {

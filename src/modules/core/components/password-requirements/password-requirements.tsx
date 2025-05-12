@@ -1,19 +1,20 @@
 import React, { type FC, useEffect } from 'react';
-import { useBoolean } from 'usehooks-ts';
+
 import clsx from 'clsx';
-// components
-import { Typography } from '@/modules/core/components/typogrpahy';
-// validation
+import { useIntl } from 'react-intl';
+import { useBoolean } from 'usehooks-ts';
+
 import {
-  uppercaseCharacterRegex,
-  lowercaseCharacterRegex,
   digitRegex,
+  lowercaseCharacterRegex,
   passwordMinLength,
+  uppercaseCharacterRegex,
 } from '@/modules/auth/validation/schemas/password-validation.schemas';
+import { Typography } from '@/modules/core/components/typogrpahy';
 
 import type { PasswordStrengthBarProps } from './password-requirements.interface';
+
 import styles from './password-requirements.module.scss';
-import { useIntl } from 'react-intl';
 
 export const PasswordRequirements: FC<PasswordStrengthBarProps> = ({
   password,

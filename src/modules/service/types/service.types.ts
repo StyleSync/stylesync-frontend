@@ -1,4 +1,4 @@
-import type { Service, Currency, Prisma } from '@prisma/client';
+import type { Currency, Prisma, Service } from '@prisma/client';
 
 export type ServiceOnProfessional = {
   id: string;

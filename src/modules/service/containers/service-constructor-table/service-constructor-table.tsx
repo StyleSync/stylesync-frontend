@@ -1,28 +1,26 @@
 import { type FC, useCallback } from 'react';
-import { useIntl } from 'react-intl';
-import { v4 } from 'uuid';
+
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
 import clsx from 'clsx';
-// components
-import { Button } from '@/modules/core/components/button';
-import { Tag } from '@/modules/core/components/tag';
-import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
-// containers
-import { ServiceConstructorRow } from '@/modules/service/containers/service-constructor-row';
-import { ServiceOnProfessionalEditForm } from '@/modules/service/components/service-on-professional-edit-form';
-// hooks
-import { useServiceOnProfessionalGroupDelete } from '@/modules/service/hooks/use-service-on-professional-group-delete';
+import { useIntl } from 'react-intl';
 import { useBoolean } from 'usehooks-ts';
-// types
+import { v4 } from 'uuid';
+
+import { Button } from '@/modules/core/components/button';
+import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
+import type { DropdownItem } from '@/modules/core/components/dropdown-menu/dropdown-menu.interface';
 import type { IconName } from '@/modules/core/components/icon';
-// utils
+import { Tag } from '@/modules/core/components/tag';
 import { showToast } from '@/modules/core/providers/toast-provider';
 import { trpc } from '@/modules/core/utils/trpc.utils';
+import { ServiceOnProfessionalEditForm } from '@/modules/service/components/service-on-professional-edit-form';
+import { ServiceConstructorRow } from '@/modules/service/containers/service-constructor-row';
+import { useServiceOnProfessionalGroupDelete } from '@/modules/service/hooks/use-service-on-professional-group-delete';
 
 import type { ServiceConstructorTableProps } from './service-constructor-table.interface';
+
 import styles from './service-constructor-table.module.scss';
-import type { DropdownItem } from '@/modules/core/components/dropdown-menu/dropdown-menu.interface';
 
 export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
   service,

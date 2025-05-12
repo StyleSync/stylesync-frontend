@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-// constants
+
+import type { Meta, StoryObj } from '@storybook/react';
+
 import { currencies } from '@/modules/core/constants/currency.constants';
-// types
 import type { Currency } from '@/modules/core/types/currency.types';
 
 import { PriceField } from './price-field';

@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react';
 import type { Booking, ServiceOnProfessional } from '@prisma/client';
+import type { ReactNode } from 'react';
 
 export type BookingListGroup = {
   id: string;

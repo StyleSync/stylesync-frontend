@@ -1,8 +1,8 @@
-import { Inter } from 'next/font/google';
 import { GeistSans } from 'geist/font/sans';
-// types
-import type { SupportedFonts } from '@/styles/styles.types';
 import type { NextFont } from 'next/dist/compiled/@next/font';
+import { Inter } from 'next/font/google';
+
+import type { SupportedFonts } from '@/styles/styles.types';
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],

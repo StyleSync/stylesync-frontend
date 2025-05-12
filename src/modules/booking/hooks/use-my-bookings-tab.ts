@@ -1,10 +1,8 @@
-// hooks
-import { useQueryParams } from '@/modules/core/hooks/use-search-params';
-// constants
-import { myBookingsDefaultTab } from '@/modules/booking/containers/my-bookings-tabs/my-bookings-tabs';
-// types
-import type { MyBookingsTabKey } from '@/modules/booking/containers/my-bookings-tabs/my-bookings-tabs.interface';
 import { useCallback } from 'react';
+
+import { myBookingsDefaultTab } from '@/modules/booking/containers/my-bookings-tabs/my-bookings-tabs';
+import type { MyBookingsTabKey } from '@/modules/booking/containers/my-bookings-tabs/my-bookings-tabs.interface';
+import { useQueryParams } from '@/modules/core/hooks/use-search-params';
 
 type UseMyBookingsTabResult = {
   activeTab: MyBookingsTabKey;

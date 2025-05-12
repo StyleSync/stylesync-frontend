@@ -1,4 +1,5 @@
 import type { Session } from 'next-auth';
+
 import type { AppRouterOutputs } from '@/server/types';
 
 export type ProfileInfoBigCardProps = {

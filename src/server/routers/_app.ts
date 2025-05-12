@@ -1,14 +1,14 @@
-import { router } from '@/server/trpc-helpers';
-import { userRouter } from '@/server/routers/user';
+import { albumRouter } from '@/server/routers/album';
+import { bookingRouter } from '@/server/routers/booking';
+import { breakRouter } from '@/server/routers/break';
+import { locationRouter } from '@/server/routers/location';
+import { portfolioRouter } from '@/server/routers/portfolio';
 import { professionalRouter } from '@/server/routers/professional';
+import { scheduleRouter } from '@/server/routers/schedule';
 import { serviceRouter } from '@/server/routers/service';
 import { serviceOnProfessionalRouter } from '@/server/routers/service-on-professional';
-import { scheduleRouter } from '@/server/routers/schedule';
-import { breakRouter } from '@/server/routers/break';
-import { portfolioRouter } from '@/server/routers/portfolio';
-import { locationRouter } from '@/server/routers/location';
-import { bookingRouter } from '@/server/routers/booking';
-import { albumRouter } from '@/server/routers/album';
+import { userRouter } from '@/server/routers/user';
+import { router } from '@/server/trpc-helpers';
 
 export const appRouter = router({
   user: userRouter,

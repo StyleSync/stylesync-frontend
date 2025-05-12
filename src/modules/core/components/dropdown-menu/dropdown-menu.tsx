@@ -1,12 +1,12 @@
 import clsx from 'clsx';
-// components
+
 import { Icon } from '@/modules/core/components/icon';
+import { Placeholder } from '@/modules/core/components/placeholder';
 import { Popover } from '@/modules/core/components/popover';
 import { Typography } from '@/modules/core/components/typogrpahy';
-import { Placeholder } from '@/modules/core/components/placeholder';
 
-// types
 import type { DropdownMenuProps } from './dropdown-menu.interface';
+
 import styles from './dropdown-menu.module.scss';
 
 export function DropdownMenu<OptionData = undefined>({

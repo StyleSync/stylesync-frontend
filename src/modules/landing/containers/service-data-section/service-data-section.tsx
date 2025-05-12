@@ -1,18 +1,17 @@
 'use client';
 import Image from 'next/image';
 import { useIntl } from 'react-intl';
-// components
+
+import searchEn from '@/assets/images/en-pro-search.png';
+import MyBookingsScreenshot from '@/assets/images/my-bookings-screenshot.png';
+import profileEn from '@/assets/images/profile1en.png';
+import profileUk from '@/assets/images/profile1uk.png';
+import ServicesSettingsScreenshot from '@/assets/images/services-settings-screenshot.png';
+import searchUk from '@/assets/images/uk-pro-search.png';
+import { BrowserView } from '@/modules/core/components/browser-view';
 import { Button } from '@/modules/core/components/button';
 import { IphoneLayout } from '@/modules/core/components/iphone-layout';
-import { BrowserView } from '@/modules/core/components/browser-view';
-// assets
-import ServicesSettingsScreenshot from '@/assets/images/services-settings-screenshot.png';
-import MyBookingsScreenshot from '@/assets/images/my-bookings-screenshot.png';
 import bg from '@/modules/landing/landing-image/bg.png';
-import profileUk from '@/assets/images/profile1uk.png';
-import profileEn from '@/assets/images/profile1en.png';
-import searchUk from '@/assets/images/uk-pro-search.png';
-import searchEn from '@/assets/images/en-pro-search.png';
 
 export const ServiceDataSection = () => {
   const intl = useIntl();

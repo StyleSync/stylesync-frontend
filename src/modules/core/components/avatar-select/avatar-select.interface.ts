@@ -1,5 +1,6 @@
-import type { StylingProps } from '@/styles/styles.types';
 import type { InputHTMLAttributes } from 'react';
+
+import type { StylingProps } from '@/styles/styles.types';
 
 export type AvatarSelectProps = {
   value?: string;

@@ -1,11 +1,10 @@
-import { useMemo, type FC } from 'react';
+import { type FC, useMemo } from 'react';
+
 import clsx from 'clsx';
 import { endOfToday, startOfToday } from 'date-fns';
-// components
-import { Badge } from '@/modules/core/components/badge';
-// constants
+
 import { bookingStatusMetadata } from '@/modules/booking/constants/booking.constants';
-// utils
+import { Badge } from '@/modules/core/components/badge';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 
 type BookingsBadgeProps = {

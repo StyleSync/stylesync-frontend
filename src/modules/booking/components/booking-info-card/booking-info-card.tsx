@@ -1,15 +1,13 @@
 import { type FC, useMemo, useRef } from 'react';
+
 import clsx from 'clsx';
 import { useIntl } from 'react-intl';
-// hooks
-import { useRipple } from '@/modules/core/hooks/use-ripple';
-// utils
-import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
-// constants
-import { bookingStatusMetadata } from '@/modules/booking/constants/booking.constants';
-// components
-import { Icon } from '@/modules/core/components/icon';
+
 import { BookingStatus } from '@/modules/booking/components/booking-status';
+import { bookingStatusMetadata } from '@/modules/booking/constants/booking.constants';
+import { Icon } from '@/modules/core/components/icon';
+import { useRipple } from '@/modules/core/hooks/use-ripple';
+import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
 
 import type { BookingInfoCardProps } from './booking-info-card.interface';
 

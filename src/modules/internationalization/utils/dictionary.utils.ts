@@ -1,8 +1,7 @@
-import 'server-only';
-// constants
 import { dictionaries } from '@/modules/internationalization/constants/i18n.constants';
-// types
 import type { Locale } from '@/modules/internationalization/types/i18n.types';
+
+import 'server-only';
 
 export const getDictionary = async (locale: Locale) => {
   if (locale in dictionaries) {

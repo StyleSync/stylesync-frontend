@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
-import { useGeocodingCore } from '@mapbox/search-js-react';
 import { type LngLatLike } from '@mapbox/search-js-core/dist/LngLat';
+import { useGeocodingCore } from '@mapbox/search-js-react';
+import { useQuery } from '@tanstack/react-query';
 
 const CITY_BY_LOCATION_CACHE_KEY = 'CITY_BY_LOCATION';
 

@@ -1,21 +1,20 @@
 'use client';
 import React, { type FC, useCallback } from 'react';
-import clsx from 'clsx';
-import { useForm } from 'react-hook-form';
+
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useIntl } from 'react-intl';
+import clsx from 'clsx';
 import Link from 'next/link';
+import { useForm } from 'react-hook-form';
+import { useIntl } from 'react-intl';
 import { z } from 'zod';
-// components
-import { Button } from '@/modules/core/components/button';
-import { Typography } from '@/modules/core/components/typogrpahy';
-import { Divider } from '@/modules/core/components/divider';
-import { TextField } from '@/modules/core/components/text-field';
-import { GradientButton } from '@/modules/core/components/gradient-button';
-// types
-import type { SignUpUserData } from '@/modules/auth/types/sign-up.types';
+
 import type { UserCredentials } from '@/modules/auth/types/auth.types';
-// scss
+import type { SignUpUserData } from '@/modules/auth/types/sign-up.types';
+import { Button } from '@/modules/core/components/button';
+import { Divider } from '@/modules/core/components/divider';
+import { GradientButton } from '@/modules/core/components/gradient-button';
+import { TextField } from '@/modules/core/components/text-field';
+import { Typography } from '@/modules/core/components/typogrpahy';
 import scssVariables from '@/styles/variables.module.scss';
 
 import styles from './sign-in-form.module.scss';

@@ -1,10 +1,11 @@
 'use client';
+import clsx from 'clsx';
+import { usePathname, useRouter } from 'next/navigation';
+import { useIntl } from 'react-intl';
+
+import { Button } from '@/modules/core/components/button';
 import type { ChildrenProp } from '@/modules/core/types/react.types';
 import { Footer } from '@/modules/landing/containers/footer/footer';
-import { Button } from '@/modules/core/components/button';
-import { usePathname, useRouter } from 'next/navigation';
-import clsx from 'clsx';
-import { useIntl } from 'react-intl';
 
 export default function PrivacyLayout({ children }: ChildrenProp) {
   const pathname = usePathname();

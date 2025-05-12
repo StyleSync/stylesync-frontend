@@ -1,13 +1,14 @@
 import { type FC } from 'react';
-import { useIntl } from 'react-intl';
+
 import { type Role } from '@prisma/client';
-// components
+import { useIntl } from 'react-intl';
+
 import { AccountTypeCard } from '@/modules/auth/components/account-type-card';
 import { RadioButton } from '@/modules/core/components/radio-button';
-// types
 import type { AccountTypeDisplayData } from '@/modules/user/types/account.types';
 
 import type { AccountTypeSelectProps } from './account-type-select.interface';
+
 import styles from './account-type-select.module.scss';
 
 export const AccountTypeSelect: FC<AccountTypeSelectProps> = ({

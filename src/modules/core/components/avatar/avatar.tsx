@@ -1,12 +1,14 @@
 import { type FC } from 'react';
+
 import clsx from 'clsx';
 import Image from 'next/image';
-// components
+import { useBoolean } from 'usehooks-ts';
+
 import { Icon } from '@/modules/core/components/icon';
 
 import type { AvatarProps, AvatarSize } from './avatar.interface';
+
 import styles from './avatar.module.scss';
-import { useBoolean } from 'usehooks-ts';
 
 const SIZES: Record<AvatarSize, number> = {
   small: 40,

@@ -1,7 +1,5 @@
-// containers
-import { ExistingAccountTypeSelect } from '@/modules/user/containers/existing-account-type-select';
-// utils
 import { pageGuard } from '@/modules/core/utils/route.utils';
+import { ExistingAccountTypeSelect } from '@/modules/user/containers/existing-account-type-select';
 
 import styles from './account-type.module.scss';
 

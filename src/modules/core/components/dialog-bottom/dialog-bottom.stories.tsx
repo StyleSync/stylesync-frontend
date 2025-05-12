@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { useBoolean } from 'usehooks-ts';
+
+import { Button } from '@/modules/core/components/button';
 
 import { DialogBottom } from './dialog-bottom';
-import { useBoolean } from 'usehooks-ts';
-import { Button } from '@/modules/core/components/button';
 
 const meta: Meta<typeof DialogBottom> = {
   title: 'Core UI/DialogBottom',

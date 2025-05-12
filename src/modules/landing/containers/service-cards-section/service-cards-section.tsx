@@ -1,15 +1,18 @@
 'use client';
-import { Swiper, SwiperSlide, type SwiperProps } from 'swiper/react';
+import { useMemo } from 'react';
+
 import { useRouter } from 'next/navigation';
 import { useIntl } from 'react-intl';
+import { Swiper, type SwiperProps, SwiperSlide } from 'swiper/react';
 import { useWindowSize } from 'usehooks-ts';
-import { useMemo } from 'react';
-// components
+
 import { Typography } from '@/modules/core/components/typogrpahy';
-import { ServiceCard } from '@/modules/landing/components/service-card';
-import { services } from './service-data';
-import 'swiper/css';
 import { trpc } from '@/modules/core/utils/trpc.utils';
+import { ServiceCard } from '@/modules/landing/components/service-card';
+
+import 'swiper/css';
+
+import { services } from './service-data';
 
 const windowSizes = {
   md: 800,

@@ -1,6 +1,6 @@
 import type L from 'leaflet';
-import type { MarkerProps } from 'react-leaflet';
 import type { RefObject } from 'preact/compat';
+import type { MarkerProps } from 'react-leaflet';
 
 export type UserMarker = {
   lat: number;

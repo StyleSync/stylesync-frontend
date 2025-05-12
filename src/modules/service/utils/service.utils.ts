@@ -1,11 +1,9 @@
-// utils
+import { alphabetCompare } from '@/modules/core/utils/array.utils';
 import { isObjEqualDeep } from '@/modules/core/utils/object.utils';
-// types
 import type {
   ServiceOnProfessional,
   ServiceOnProfessionalGroup,
 } from '@/modules/service/types/service.types';
-import { alphabetCompare } from '@/modules/core/utils/array.utils';
 
 export const isServiceOnProfessionalEqual = (
   s1: Partial<ServiceOnProfessional>,

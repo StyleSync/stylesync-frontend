@@ -1,15 +1,13 @@
 import { useContext } from 'react';
-import { useBoolean } from 'usehooks-ts';
+
 import { useIntl } from 'react-intl';
-// components
+import { useBoolean } from 'usehooks-ts';
+
+import { BookingContext } from '@/modules/booking/providers/booking-provider';
 import { Button } from '@/modules/core/components/button';
 import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
-// hooks
-import { useDeviceType } from '@/modules/core/hooks/use-device-type';
-// context
-import { BookingContext } from '@/modules/booking/providers/booking-provider';
-
 import { type DropdownItem } from '@/modules/core/components/dropdown-menu/dropdown-menu.interface';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 
 export const PointsBookingActions = () => {
   const intl = useIntl();

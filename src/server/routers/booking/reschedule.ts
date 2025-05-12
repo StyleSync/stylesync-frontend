@@ -128,7 +128,7 @@ export const rescheduleBooking = privateProcedure
       });
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line unused-imports/no-unused-vars
     const { day, bookingId, date, ...createData } = input;
 
     const booking = await prisma.booking.update({

@@ -1,18 +1,17 @@
 'use client';
 import { type FC } from 'react';
-import Image from 'next/image';
+
 import clsx from 'clsx';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useIntl } from 'react-intl';
-// components
-import { Button } from '@/modules/core/components/button';
-import { Typography } from '@/modules/core/components/typogrpahy';
-import { Icon, type IconName } from '@/modules/core/components/icon';
-// types
-import type { StylingProps } from '@/styles/styles.types';
-// assets
+
 import pictureV2 from '@/assets/images/banner-girlV2.png';
 import Bg from '@/assets/images/bg-1.png';
+import { Button } from '@/modules/core/components/button';
+import { Icon, type IconName } from '@/modules/core/components/icon';
+import { Typography } from '@/modules/core/components/typogrpahy';
+import type { StylingProps } from '@/styles/styles.types';
 
 import styles from './intro-section.module.scss';
 

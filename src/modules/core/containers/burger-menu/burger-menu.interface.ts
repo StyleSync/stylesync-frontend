@@ -1,5 +1,6 @@
-import type { IconName } from '@/modules/core/components/icon';
 import type { Session } from 'next-auth';
+
+import type { IconName } from '@/modules/core/components/icon';
 
 export type BurgerMenuProps = {
   session?: Session | null;

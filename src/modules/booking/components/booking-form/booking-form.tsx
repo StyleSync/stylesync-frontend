@@ -1,17 +1,17 @@
 import { type FC, useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { z } from 'zod';
+
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Controller, useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
-// components
-import { TextField } from '@/modules/core/components/text-field';
-import { PhoneField } from '@/modules/core/components/phone-field';
+import { z } from 'zod';
+
 import { Checkbox } from '@/modules/core/components/checkbox';
-// utils
+import { PhoneField } from '@/modules/core/components/phone-field';
+import { TextField } from '@/modules/core/components/text-field';
 import { trpc } from '@/modules/core/utils/trpc.utils';
-// type
+
 import type { BookingFormProps } from './booking-form.interface';
-// styles
+
 import styles from './booking-form.module.scss';
 
 const defaultValues = {

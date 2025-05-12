@@ -1,6 +1,9 @@
 import { type FC } from 'react';
+
 import * as Tooltip from '@radix-ui/react-tooltip';
+
 import { type HoverTooltipProps } from './hover-tooltip.interface';
+
 import styles from './hover-tooltip.module.scss';
 
 export const HoverTooltip: FC<HoverTooltipProps> = ({ trigger, content }) => {

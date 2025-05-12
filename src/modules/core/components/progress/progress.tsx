@@ -1,8 +1,9 @@
 import { type FC } from 'react';
-// styles
+
 import scssVariables from '@/styles/variables.module.scss';
 
 import type { ProgressProps } from './progress.interface';
+
 import styles from './progress.module.scss';
 
 export const Progress: FC<ProgressProps> = ({ progress, color }) => {

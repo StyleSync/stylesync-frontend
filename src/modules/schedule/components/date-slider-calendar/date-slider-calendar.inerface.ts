@@ -1,5 +1,7 @@
 import { type MutableRefObject } from 'react';
+
 import { type Swiper } from 'swiper/types';
+
 import { type AppRouterOutputs } from '@/server/types';
 
 export type DateSliderCalendarProps = {

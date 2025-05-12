@@ -1,13 +1,12 @@
 import { type FC } from 'react';
 
-// components
+import clsx from 'clsx';
+
 import { Typography } from '@/modules/core/components/typogrpahy';
-// type
+
 import { type InfoBoxProps } from './info-box.interface';
 
-// style
 import styles from './info-box.module.scss';
-import clsx from 'clsx';
 
 export const InfoBox: FC<InfoBoxProps> = ({ title, content, status }) => {
   return (

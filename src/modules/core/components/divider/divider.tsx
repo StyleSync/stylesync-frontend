@@ -1,9 +1,11 @@
 import React, { type FC } from 'react';
+
 import clsx from 'clsx';
-// components
+
 import { Typography } from '@/modules/core/components/typogrpahy';
 
 import type { DividerProps } from './divider.interface';
+
 import styles from './divider.module.scss';
 
 export const Divider: FC<DividerProps> = ({

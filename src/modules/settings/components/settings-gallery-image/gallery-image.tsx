@@ -1,22 +1,19 @@
-import type { FC } from 'react';
-import Image from 'next/image';
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
+import clsx from 'clsx';
+import Image from 'next/image';
+import type { FC } from 'react';
 import { useIntl } from 'react-intl';
+import { useBoolean } from 'usehooks-ts';
 
-// components
 import { Icon } from '@/modules/core/components/icon';
-import { PhotoUploadModal } from '@/modules/gallery/containers/photo-upload-modal';
-// utils
 import { showToast } from '@/modules/core/providers/toast-provider';
 import { trpc } from '@/modules/core/utils/trpc.utils';
-// hooks
-import { useBoolean } from 'usehooks-ts';
-// type
+import { PhotoUploadModal } from '@/modules/gallery/containers/photo-upload-modal';
+
 import type { GalleryImageProps } from './gallery-image.interface';
-// style
+
 import styles from './gallery-image.module.scss';
-import clsx from 'clsx';
 
 export const GalleyImage: FC<GalleryImageProps> = ({ image }) => {
   const intl = useIntl();

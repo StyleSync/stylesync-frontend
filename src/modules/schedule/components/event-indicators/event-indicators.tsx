@@ -1,11 +1,12 @@
 import { type FC } from 'react';
+
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';
-import { isSameDay } from 'date-fns';
-// constants
-import { bookingStatusMetadata } from '@/modules/booking/constants/booking.constants';
-// type
-import { type EventIndicatorsProps } from './event-indicators.inerface';
 import { type BookingStatus } from '@prisma/client';
+import { isSameDay } from 'date-fns';
+
+import { bookingStatusMetadata } from '@/modules/booking/constants/booking.constants';
+
+import { type EventIndicatorsProps } from './event-indicators.inerface';
 
 export const EventIndicators: FC<EventIndicatorsProps> = (props) => {
   const { day, events, outsideCurrentMonth } = props;

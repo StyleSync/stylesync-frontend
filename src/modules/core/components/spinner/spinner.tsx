@@ -1,8 +1,9 @@
 import { type FC, type SVGProps } from 'react';
-// styles
+
 import scssVariables from '@/styles/variables.module.scss';
 
 import type { SpinnerProps, SpinnerSize } from './spinner.interface';
+
 import styles from './spinner.module.scss';
 
 const getSizeParams = (size: SpinnerSize): SVGProps<SVGSVGElement> => {

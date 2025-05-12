@@ -1,13 +1,13 @@
 import { type FC } from 'react';
-import { useBoolean } from 'usehooks-ts';
+
 import { FlagImage, usePhoneInput } from 'react-international-phone';
-// components
-import { TextField } from '@/modules/core/components/text-field';
+import { useBoolean } from 'usehooks-ts';
+
 import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
 import { Icon } from '@/modules/core/components/icon';
-// constants
+import { TextField } from '@/modules/core/components/text-field';
 import { countries } from '@/modules/core/constants/country.constants';
-// types
+
 import type { PhoneFieldProps } from './phone-field.interface';
 
 export const PhoneField: FC<PhoneFieldProps> = ({

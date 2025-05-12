@@ -1,7 +1,7 @@
+import { faker } from '@faker-js/faker';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { ErrorBox } from './error-box';
-import { faker } from '@faker-js/faker';
 
 const meta: Meta<typeof ErrorBox> = {
   title: 'Core UI/ErrorBox',

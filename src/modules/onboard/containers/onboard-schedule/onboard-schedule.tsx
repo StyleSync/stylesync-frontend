@@ -1,14 +1,11 @@
 import { type FC, useState } from 'react';
+
 import { useIntl } from 'react-intl';
 
-// components
 import { OnboardLayout } from '@/modules/onboard/components/onboard-layout';
-// containers
-import { WeeklyScheduleForm } from '@/modules/schedule/containers/schedule-form';
-// constants
-import { emptySchedule } from '@/modules/schedule/constants/schedule.constants';
-// types
 import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboard/pro-onboard.interface';
+import { emptySchedule } from '@/modules/schedule/constants/schedule.constants';
+import { WeeklyScheduleForm } from '@/modules/schedule/containers/schedule-form';
 import type { WeeklySchedule } from '@/modules/schedule/types/schedule.types';
 
 export const OnboardSchedule: FC<ProOnboardStepProps> = ({ next, back }) => {

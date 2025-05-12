@@ -1,8 +1,6 @@
-import type { Optional } from 'utility-types';
-import { format } from 'date-fns';
-
-// types
 import type { Break } from '@prisma/client';
+import { format } from 'date-fns';
+import type { Optional } from 'utility-types';
 
 export const isBreaksEqual = (
   break1: Optional<Break, 'scheduleId' | 'createdAt' | 'updatedAt'>,

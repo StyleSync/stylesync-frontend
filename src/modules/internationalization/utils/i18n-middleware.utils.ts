@@ -1,9 +1,8 @@
-import { type NextRequest, NextResponse } from 'next/server';
-import Negotiator from 'negotiator';
 import { match as matchLocale } from '@formatjs/intl-localematcher';
-// constants
+import Negotiator from 'negotiator';
+import { type NextRequest, NextResponse } from 'next/server';
+
 import { i18nConfig } from '@/modules/internationalization/constants/i18n.constants';
-// types
 import type { Locale } from '@/modules/internationalization/types/i18n.types';
 
 function getRecommendedLocale(request: NextRequest): string {

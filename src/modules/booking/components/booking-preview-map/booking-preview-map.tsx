@@ -1,6 +1,7 @@
 import { type FC } from 'react';
+
 import dynamic from 'next/dynamic';
-// type
+
 import type { BookingPreviewMapProps } from './booking-preview-map.interface';
 
 const Map = dynamic(

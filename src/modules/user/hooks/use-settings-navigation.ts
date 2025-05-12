@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-// hooks
+
 import { useQueryParams } from '@/modules/core/hooks/use-search-params';
 
 const defaultTabKey = 'services';

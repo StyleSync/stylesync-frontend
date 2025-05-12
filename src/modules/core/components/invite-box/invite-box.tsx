@@ -1,13 +1,13 @@
 'use client';
-import type { FC } from 'react';
 import clsx from 'clsx';
-// library
+import type { FC } from 'react';
 import { useCopyToClipboard } from 'usehooks-ts';
-// components
-import { Typography } from '@/modules/core/components/typogrpahy';
+
 import { Icon } from '@/modules/core/components/icon';
+import { Typography } from '@/modules/core/components/typogrpahy';
 
 import type { InviteBoxProps } from './invite-box.interface';
+
 import styles from './invite-box.module.scss';
 
 export const InviteBox: FC<InviteBoxProps> = ({

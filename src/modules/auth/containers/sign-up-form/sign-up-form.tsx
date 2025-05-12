@@ -1,27 +1,26 @@
 'use client';
 import React, { type FC, useCallback, useId, useMemo, useState } from 'react';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import type { Role } from '@prisma/client';
 import clsx from 'clsx';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Transition } from 'react-transition-group';
 import { useIntl } from 'react-intl';
-// components
-import { Button } from '@/modules/core/components/button';
-import { Stepper } from '@/modules/core/components/stepper';
-import { Typography } from '@/modules/core/components/typogrpahy';
-import { Divider } from '@/modules/core/components/divider';
-// containers
+import { Transition } from 'react-transition-group';
+
 import { AccountTypeSelect } from '@/modules/auth/components/account-type-select';
 import { AccountCredentialsForm } from '@/modules/auth/containers/account-credentials-form';
-// validation
-import { signUpFormValidationSchema } from '@/modules/auth/validation/schemas/sign-up-validation.schemas';
-// types
-import type { ButtonProps } from '@/modules/core/components/button/button.interface';
 import type { SignUpUserData } from '@/modules/auth/types/sign-up.types';
+import { signUpFormValidationSchema } from '@/modules/auth/validation/schemas/sign-up-validation.schemas';
+import { Button } from '@/modules/core/components/button';
+import type { ButtonProps } from '@/modules/core/components/button/button.interface';
+import { Divider } from '@/modules/core/components/divider';
+import { Stepper } from '@/modules/core/components/stepper';
+import { Typography } from '@/modules/core/components/typogrpahy';
 
-import type { SignUpStepValue, SignUpStep } from './sign-up-form.interface';
+import type { SignUpStep, SignUpStepValue } from './sign-up-form.interface';
+
 import styles from './sign-up-form.module.scss';
-import type { Role } from '@prisma/client';
 
 export const defaultValues: SignUpUserData = {
   email: '',

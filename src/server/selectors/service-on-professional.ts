@@ -1,6 +1,7 @@
 import { Prisma } from '@prisma/client';
-import { defaultServiceSelect } from '@/server/selectors/service';
+
 import { defaultProfessionalSelect } from '@/server/selectors/professional';
+import { defaultServiceSelect } from '@/server/selectors/service';
 
 export const defaultServiceOnProfessionalSelect =
   Prisma.validator<Prisma.ServiceOnProfessionalSelect>()({

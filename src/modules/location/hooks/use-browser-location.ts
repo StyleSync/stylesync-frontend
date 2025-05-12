@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
 import type { LngLatLike } from '@mapbox/search-js-core/dist/LngLat';
+import { useQuery } from '@tanstack/react-query';
 
 const BROWSER_LOCATION_CACHE_KEY = 'BROWSER_LOCATION';
 

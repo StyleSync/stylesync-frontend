@@ -1,5 +1,6 @@
 'use client';
 import { type FC } from 'react';
+
 import { IntlProvider as ReactIntlProvider } from 'react-intl';
 
 import type { IntlProviderProps } from './intl-provider.interface';

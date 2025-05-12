@@ -1,10 +1,11 @@
 import { type FC } from 'react';
+
 import clsx from 'clsx';
-// constants
+import { useIntl } from 'react-intl';
+
 import { bookingStatusMetadata } from '@/modules/booking/constants/booking.constants';
 
 import type { BookingStatusProps } from './booking-status.interface';
-import { useIntl } from 'react-intl';
 
 export const BookingStatus: FC<BookingStatusProps> = ({ status }) => {
   const intl = useIntl();

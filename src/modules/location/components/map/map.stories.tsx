@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import 'leaflet/dist/leaflet.css';
 
 import { Map } from './map';
+
+import 'leaflet/dist/leaflet.css';
 
 const meta: Meta<typeof Map> = {
   title: 'Location UI/Map',

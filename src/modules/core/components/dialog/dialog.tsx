@@ -1,17 +1,19 @@
 import React, { type FC, useEffect } from 'react';
+
 import * as RadixDialog from '@radix-ui/react-dialog';
 import {
+  animated,
   Controller,
   easings,
-  animated,
   type SpringConfig,
 } from '@react-spring/web';
-import { useBoolean } from 'usehooks-ts';
 import clsx from 'clsx';
-// components
+import { useBoolean } from 'usehooks-ts';
+
 import { Button } from '@/modules/core/components/button';
 
 import type { DialogProps } from './dialog.interface';
+
 import styles from './dialog.module.scss';
 
 const IN_OUT_ANIMATION_DURATION = 200;

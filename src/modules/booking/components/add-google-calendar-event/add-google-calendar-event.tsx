@@ -1,8 +1,9 @@
-import { useCallback, type FC } from 'react';
+import { type FC, useCallback } from 'react';
+
 import { useIntl } from 'react-intl';
-// components
+
 import { Button } from '@/modules/core/components/button';
-// types
+
 import type { DownloadIcsButtonProps } from './add-google-calendar-event.interface';
 
 const MILLISECONDS_IN_MINUTE = 1000;

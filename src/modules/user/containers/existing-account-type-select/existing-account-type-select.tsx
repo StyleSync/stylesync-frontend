@@ -1,16 +1,16 @@
 'use client';
 import { type FC, useCallback, useState } from 'react';
+
 import type { Role } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import { useIntl } from 'react-intl';
-// components
+
 import { AccountTypeSelect } from '@/modules/auth/components/account-type-select';
 import { Button } from '@/modules/core/components/button';
-// utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
-// type
+
 import type { ExistingAccountTypeSelectProps } from './existing-account-type-select.interface';
-// style
+
 import styles from './existing-account-type-select.module.scss';
 
 export const ExistingAccountTypeSelect: FC<

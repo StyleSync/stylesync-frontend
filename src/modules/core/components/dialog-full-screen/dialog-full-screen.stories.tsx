@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { useBoolean } from 'usehooks-ts';
+
+import { Button } from '@/modules/core/components/button';
 
 import { DialogFullScreen } from './dialog-full-screen';
-import { Button } from '@/modules/core/components/button';
-import { useBoolean } from 'usehooks-ts';
 
 const meta: Meta<typeof DialogFullScreen> = {
   title: 'Core UI/DialogFullScreen',

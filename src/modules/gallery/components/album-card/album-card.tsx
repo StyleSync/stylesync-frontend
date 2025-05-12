@@ -1,25 +1,24 @@
-import React, { type FC, useRef, useCallback } from 'react';
-import Image from 'next/image';
-import clsx from 'clsx';
-import { useIntl } from 'react-intl';
-// hooks
+import React, { type FC, useCallback, useRef } from 'react';
+
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
+import clsx from 'clsx';
+import Image from 'next/image';
+import { useIntl } from 'react-intl';
 import { useBoolean } from 'usehooks-ts';
-import { useDeviceType } from '@/modules/core/hooks/use-device-type';
-// components
-import { Typography } from '@/modules/core/components/typogrpahy';
+
 import { Button } from '@/modules/core/components/button';
-import { Gallery } from '@/modules/core/components/gallery';
 import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
-import { AlbumAddModal } from '@/modules/settings/components/album-add-modal';
-// utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
-import { showToast } from '@/modules/core/providers/toast-provider';
-// types
 import type { DropdownItem } from '@/modules/core/components/dropdown-menu/dropdown-menu.interface';
+import { Gallery } from '@/modules/core/components/gallery';
+import { Typography } from '@/modules/core/components/typogrpahy';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
+import { showToast } from '@/modules/core/providers/toast-provider';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { AlbumAddModal } from '@/modules/settings/components/album-add-modal';
+
 import type { AlbumCardProps } from './album-card.interface';
-// style
+
 import styles from './album-card.module.scss';
 
 const IMAGES_PREVIEW_LENGTH = 4;

@@ -1,10 +1,11 @@
 import { type FC } from 'react';
+
 import { useIntl } from 'react-intl';
 
-// components
 import { Typography } from '@/modules/core/components/typogrpahy';
 
 import type { BreakTagsProps } from './break-tags.interface';
+
 import styles from './break-tags.module.scss';
 
 export const BreakTags: FC<BreakTagsProps> = ({ breaks, isLoading, error }) => {

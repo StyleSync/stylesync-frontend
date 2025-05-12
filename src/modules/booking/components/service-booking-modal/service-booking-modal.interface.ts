@@ -1,9 +1,9 @@
 import { type BookingFormValue } from '@/modules/booking/components/booking-form/booking-form';
+import type { ServiceOnProfessionalListItem } from '@/modules/service/types/service.types';
 import {
   type AppRouterOutputs,
   type AvailableBookingTime,
 } from '@/server/types';
-import type { ServiceOnProfessionalListItem } from '@/modules/service/types/service.types';
 
 export type CreateBookingRequestData = BookingFormValue & {
   serviceOnProfessional: string;

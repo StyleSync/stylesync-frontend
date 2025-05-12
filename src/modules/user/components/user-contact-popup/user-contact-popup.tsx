@@ -1,10 +1,12 @@
 import { type FC } from 'react';
+
 import clsx from 'clsx';
-// components
-import { Popover } from '@/modules/core/components/popover';
+
 import { Button } from '@/modules/core/components/button';
+import { Popover } from '@/modules/core/components/popover';
 
 import type { UserContactPopupProps } from './user-contact-popup.interface';
+
 import styles from './user-contact-popup.module.scss';
 
 export const UserContactPopup: FC<UserContactPopupProps> = ({

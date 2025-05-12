@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { GradientButton } from './gradient-button';
-
 import scssVariables from '@/styles/variables.module.scss';
+
+import { GradientButton } from './gradient-button';
 
 const meta: Meta<typeof GradientButton> = {
   title: 'Core UI/GradientButton',

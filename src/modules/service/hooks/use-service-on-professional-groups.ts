@@ -1,9 +1,8 @@
-import { trpc } from '@/modules/core/utils/trpc.utils';
 import { useEffect, useMemo, useState } from 'react';
-// utils
-import { getGroupOfServiceOnProfessionalList } from '@/modules/service/utils/service.utils';
-// types
+
+import { trpc } from '@/modules/core/utils/trpc.utils';
 import type { ServiceOnProfessionalGroup } from '@/modules/service/types/service.types';
+import { getGroupOfServiceOnProfessionalList } from '@/modules/service/utils/service.utils';
 
 export const useServiceOnProfessionalGroups = () => {
   // queries

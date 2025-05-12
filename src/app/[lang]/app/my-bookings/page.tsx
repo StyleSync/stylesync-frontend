@@ -1,8 +1,6 @@
-// containers
-import { MyBookingsTabs } from '@/modules/booking/containers/my-bookings-tabs';
 import { MyBookingsContent } from '@/modules/booking/containers/my-bookings-content';
+import { MyBookingsTabs } from '@/modules/booking/containers/my-bookings-tabs';
 import { BookingProvider } from '@/modules/booking/providers/booking-provider';
-// utils
 import { pageGuard } from '@/modules/core/utils/route.utils';
 
 import styles from './my-bookings.module.scss';

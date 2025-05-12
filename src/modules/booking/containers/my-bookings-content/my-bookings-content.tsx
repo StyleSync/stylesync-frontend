@@ -1,15 +1,14 @@
 'use client';
 import { Suspense } from 'react';
-// components
-import { BookingsList } from '@/modules/booking/components/bookings-list';
-import { Calendar } from '@/modules/schedule/components/calendar';
-import { CalendarMobile } from '@/modules/schedule/components/mobile-calendar';
+
 import { BookingsUserList } from '@/modules/booking/components/booking-user-list';
-// utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
-// hooks
+import { BookingsList } from '@/modules/booking/components/bookings-list';
 import { useMyBookingsTab } from '@/modules/booking/hooks/use-my-bookings-tab';
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { Calendar } from '@/modules/schedule/components/calendar';
+import { CalendarMobile } from '@/modules/schedule/components/mobile-calendar';
+
 // style
 import styles from './my-bookings-content.module.scss';
 

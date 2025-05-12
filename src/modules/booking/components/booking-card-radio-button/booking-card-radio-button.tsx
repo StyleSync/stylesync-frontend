@@ -1,12 +1,13 @@
 import { type FC } from 'react';
+
 import { useIntl } from 'react-intl';
-// components
-import { Typography } from '@/modules/core/components/typogrpahy';
+
 import { RadioButton } from '@/modules/core/components/radio-button';
-// utils
+import { Typography } from '@/modules/core/components/typogrpahy';
 import { formatDuration } from '@/modules/core/utils/time.utils';
-// type
+
 import type { BaseCardWithRadioButtonProps } from './booking-card-radio-button.interface';
+
 import styles from './booking-card-radio-button.module.scss';
 
 export const BaseCardWithRadioButton: FC<BaseCardWithRadioButtonProps> = ({

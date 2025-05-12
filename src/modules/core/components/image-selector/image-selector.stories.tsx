@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-// components
+
 import { Typography } from '@/modules/core/components/typogrpahy';
 
 import { ImageSelector } from '././image-selector';

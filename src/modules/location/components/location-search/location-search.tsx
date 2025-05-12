@@ -1,20 +1,20 @@
 import {
-  type FC,
   type ChangeEvent,
+  type FC,
   useCallback,
-  useState,
   useEffect,
+  useState,
 } from 'react';
-// components
-import { TextField } from '@/modules/core/components/text-field';
-// hooks
-import { useBoolean, useDebounceValue } from 'usehooks-ts';
-// types
-import type { LocationSearchProps } from './location-search.interface';
-import { useGeocodingSuggestionsQuery } from '@/modules/location/hooks/use-geocoding-suggestions-query';
+
 import type { GeocodingFeature } from '@mapbox/search-js-core';
+import { useBoolean, useDebounceValue } from 'usehooks-ts';
+
 import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
 import type { DropdownItem } from '@/modules/core/components/dropdown-menu/dropdown-menu.interface';
+import { TextField } from '@/modules/core/components/text-field';
+import { useGeocodingSuggestionsQuery } from '@/modules/location/hooks/use-geocoding-suggestions-query';
+
+import type { LocationSearchProps } from './location-search.interface';
 
 const SEARCH_DEBOUNCE_DELAY = 200;
 

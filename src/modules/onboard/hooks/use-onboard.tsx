@@ -1,17 +1,14 @@
 import { useCallback, useMemo } from 'react';
+
 import { useIntl } from 'react-intl';
 
-// containers
+import { useQueryParams } from '@/modules/core/hooks/use-search-params';
+import { percentOf } from '@/modules/core/utils/math.utils';
 import { OnboardAbout } from '@/modules/onboard/containers/onboard-about';
-import { OnboardServices } from '@/modules/onboard/containers/onboard-services';
-import { OnboardSchedule } from '@/modules/onboard/containers/onboard-schedule';
 import { OnboardGallery } from '@/modules/onboard/containers/onboard-gallery';
 import { OnboardLocation } from '@/modules/onboard/containers/onboard-location';
-// hooks
-import { useQueryParams } from '@/modules/core/hooks/use-search-params';
-// utils
-import { percentOf } from '@/modules/core/utils/math.utils';
-// types
+import { OnboardSchedule } from '@/modules/onboard/containers/onboard-schedule';
+import { OnboardServices } from '@/modules/onboard/containers/onboard-services';
 import type { ProOnboardData } from '@/modules/onboard/containers/pro-onboard/pro-onboard.interface';
 
 const steps = ['about', 'services', 'schedule', 'gallery', 'location'] as const;

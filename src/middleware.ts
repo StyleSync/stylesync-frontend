@@ -1,5 +1,5 @@
 import { type NextRequest } from 'next/server';
-// utils
+
 import { createI18nRedirect } from '@/modules/internationalization/utils/i18n-middleware.utils';
 
 export function middleware(request: NextRequest) {

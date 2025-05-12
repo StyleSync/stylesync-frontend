@@ -1,15 +1,15 @@
 'use client';
 import { type FC } from 'react';
-// components
-import { Typography } from '@/modules/core/components/typogrpahy';
-// utils
-import { trpc } from '@/modules/core/utils/trpc.utils';
-import { onQueryRetry } from '@/modules/core/utils/query-retry.utils';
 
-// type
-import type { ProLocationProps } from './pro-location.interface';
-import styles from './pro-location.module.scss';
 import dynamic from 'next/dynamic';
+
+import { Typography } from '@/modules/core/components/typogrpahy';
+import { onQueryRetry } from '@/modules/core/utils/query-retry.utils';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+
+import type { ProLocationProps } from './pro-location.interface';
+
+import styles from './pro-location.module.scss';
 
 const Map = dynamic(
   () => import('@/modules/location/components/map').then((res) => res.Map),

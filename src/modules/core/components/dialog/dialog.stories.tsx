@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useBoolean } from 'usehooks-ts';
-// components
+
 import { Typography } from '@/modules/core/components/typogrpahy';
 
 import { Dialog } from './dialog';

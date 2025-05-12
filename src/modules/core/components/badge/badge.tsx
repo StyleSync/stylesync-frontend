@@ -1,6 +1,6 @@
-import type { FC } from 'react';
 import clsx from 'clsx';
-// types
+import type { FC } from 'react';
+
 import type { ChildrenProp } from '@/modules/core/types/react.types';
 
 type BadgeProps = {

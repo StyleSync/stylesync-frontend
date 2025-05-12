@@ -1,13 +1,14 @@
-import { useMemo, type FC } from 'react';
-import styles from '@/modules/booking/containers/booking-time-select/booking-time-select.module.scss';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { type FC, useMemo } from 'react';
 
 import clsx from 'clsx';
-import { Typography } from '@/modules/core/components/typogrpahy';
-import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
-import { generateDates } from '@/modules/core/utils/date.utils';
-import { useIntl } from 'react-intl';
 import { isSameDay } from 'date-fns';
+import { useIntl } from 'react-intl';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import styles from '@/modules/booking/containers/booking-time-select/booking-time-select.module.scss';
+import { Typography } from '@/modules/core/components/typogrpahy';
+import { generateDates } from '@/modules/core/utils/date.utils';
+import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
 
 type DateSliderProps = {
   selectedDate: string | null;

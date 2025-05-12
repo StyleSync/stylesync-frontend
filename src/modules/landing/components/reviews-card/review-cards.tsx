@@ -1,10 +1,11 @@
 import { type FC } from 'react';
+
 import Image from 'next/image';
-// components
-import { Typography } from '@/modules/core/components/typogrpahy';
-// types
-import type { ReviewCardProps } from './review-cards.interface';
+
 import img from '@/assets/images/girl.png';
+import { Typography } from '@/modules/core/components/typogrpahy';
+
+import type { ReviewCardProps } from './review-cards.interface';
 
 export const ReviewCard: FC<ReviewCardProps> = ({ text, name, occupation }) => {
   return (

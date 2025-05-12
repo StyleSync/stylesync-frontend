@@ -1,4 +1,5 @@
 import type { InputHTMLAttributes } from 'react';
+
 import type { ChildrenProp } from '@/modules/core/types/react.types';
 
 export type ImageSelectorProps = {

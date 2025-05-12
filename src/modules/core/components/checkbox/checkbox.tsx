@@ -1,9 +1,11 @@
-import { useRef, forwardRef } from 'react';
+import { forwardRef, useRef } from 'react';
+
 import clsx from 'clsx';
-// hooks
+
 import { useRipple } from '@/modules/core/hooks/use-ripple';
 
 import type { CheckboxProps } from './checkbox.inerface';
+
 import styles from './checkbox.module.scss';
 
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(

@@ -1,8 +1,8 @@
 import { type FC } from 'react';
-// components
-import { Typography } from '@/modules/core/components/typogrpahy';
+
 import { Avatar } from '@/modules/core/components/avatar';
-// type
+import { Typography } from '@/modules/core/components/typogrpahy';
+
 import type { BookingPreviewDetailProps } from './booking-preview-detail-box.interface';
 
 export const BookingPreviewDetailBox: FC<BookingPreviewDetailProps> = ({

@@ -1,8 +1,10 @@
+import { useState } from 'react';
+
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { LocationSearch } from './location-search';
-import { useState } from 'react';
 import type { Address } from '@/modules/location/types/address.types';
+
+import { LocationSearch } from './location-search';
 
 const meta: Meta<typeof LocationSearch> = {
   title: 'Location UI/LocationSearch',

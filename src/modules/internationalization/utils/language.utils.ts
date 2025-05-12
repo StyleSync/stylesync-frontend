@@ -1,6 +1,6 @@
 import { setCookie } from 'cookies-next';
 import { addYears } from 'date-fns';
-// types
+
 import type { Locale } from '@/modules/internationalization/types/i18n.types';
 
 export const saveLocale = (locale: Locale) => {

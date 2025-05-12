@@ -1,5 +1,5 @@
-import { eachDayOfInterval, getDay, startOfDay } from 'date-fns';
 import { Day } from '@prisma/client';
+import { eachDayOfInterval, getDay, startOfDay } from 'date-fns';
 import { type IntlShape } from 'react-intl';
 
 export const generateDates = () => {

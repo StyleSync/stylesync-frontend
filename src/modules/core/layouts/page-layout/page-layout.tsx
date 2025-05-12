@@ -1,11 +1,12 @@
 'use client';
-import type { FC } from 'react';
 import clsx from 'clsx';
-// components
+import type { FC } from 'react';
+
 import { Header } from '@/modules/core/components/header';
 import { Icon } from '@/modules/core/components/icon';
 
 import type { PageLayoutProps } from './page-layout.interface';
+
 import styles from './page-layout.module.scss';
 
 export const PageLayout: FC<PageLayoutProps> = ({

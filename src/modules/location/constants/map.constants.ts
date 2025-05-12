@@ -1,4 +1,5 @@
 import { divIcon } from 'leaflet';
+
 import styles from '@/modules/location/components/map/map.module.scss';
 
 const ICON_ANCHOR_X = 20;

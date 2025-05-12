@@ -1,10 +1,12 @@
 import { forwardRef } from 'react';
+
 import clsx from 'clsx';
-// components
+
 import { Icon } from '@/modules/core/components/icon';
 import { Typography } from '@/modules/core/components/typogrpahy';
 
 import type { TabsProps } from './tabs.interface';
+
 import styles from './tabs.module.scss';
 
 const Tabs = forwardRef<HTMLDivElement, TabsProps>(

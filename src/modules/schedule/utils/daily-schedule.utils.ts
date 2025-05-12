@@ -1,8 +1,7 @@
 import { type IntlShape } from 'react-intl';
-// utils
-import { parseTimeRange, Time } from '@/modules/core/utils/time.utils';
+
 import { isArrContainDuplications } from '@/modules/core/utils/array.utils';
-// types
+import { parseTimeRange, Time } from '@/modules/core/utils/time.utils';
 import type { DailySchedule } from '@/modules/schedule/types/schedule.types';
 
 type ValidationResult =

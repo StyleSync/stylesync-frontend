@@ -1,4 +1,5 @@
 import type { FC, ReactNode } from 'react';
+
 import type { IconName } from '@/modules/core/components/icon';
 
 export type SidebarLink = {

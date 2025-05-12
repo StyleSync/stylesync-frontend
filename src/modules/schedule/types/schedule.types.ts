@@ -1,5 +1,6 @@
-import type { weekdays } from '@/modules/schedule/constants/schedule.constants';
 import type { Day } from '@prisma/client';
+
+import type { weekdays } from '@/modules/schedule/constants/schedule.constants';
 
 export type Weekday = (typeof weekdays)[number];
 

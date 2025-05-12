@@ -1,37 +1,36 @@
 import { type FC, useCallback, useEffect, useMemo } from 'react';
 
-import { Controller, useForm, useFieldArray } from 'react-hook-form';
-import { useIntl, FormattedMessage } from 'react-intl';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
+import { getQueryKey } from '@trpc/react-query';
+import { add, differenceInMinutes, format, startOfDay } from 'date-fns';
+import { enUS, uk } from 'date-fns/locale';
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useBoolean } from 'usehooks-ts';
+import { z } from 'zod';
 
 import { Button } from '@/modules/core/components/button';
+import { Icon } from '@/modules/core/components/icon';
+import { Placeholder } from '@/modules/core/components/placeholder';
+import { Spinner } from '@/modules/core/components/spinner';
 import { Switch } from '@/modules/core/components/switch';
 import { TimeRangeField } from '@/modules/core/components/time-range-field-v2';
 import { Typography } from '@/modules/core/components/typogrpahy';
-import { trpc } from '@/modules/core/utils/trpc.utils';
-import { z } from 'zod';
+import { showToast } from '@/modules/core/providers/toast-provider';
+import { mapDateToDayEnum } from '@/modules/core/utils/date.utils';
 import {
   emptyTimeRange,
   formatTimeRange,
   parseTimeRange,
   Time,
 } from '@/modules/core/utils/time.utils';
-import clsx from 'clsx';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { emptySchedule } from '@/modules/schedule/constants/schedule.constants';
+import { DayOverrideModal } from '@/modules/schedule/containers/day-override-modal';
 import type { DailySchedule } from '@/modules/schedule/types/schedule.types';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { emptySchedule } from '@/modules/schedule/constants/schedule.constants';
-import { mapDateToDayEnum } from '@/modules/core/utils/date.utils';
-import { add, differenceInMinutes, format, startOfDay } from 'date-fns';
-import { uk, enUS } from 'date-fns/locale';
 import { DailyScheduleFormProps } from './daily-schedule-form.interface';
-import { useBoolean } from 'usehooks-ts';
-import { showToast } from '@/modules/core/providers/toast-provider';
-import { Placeholder } from '@/modules/core/components/placeholder';
-import { Spinner } from '@/modules/core/components/spinner';
-import { DayOverrideModal } from '@/modules/schedule/containers/day-override-modal';
-import { useQueryClient } from '@tanstack/react-query';
-import { getQueryKey } from '@trpc/react-query';
-import { Icon } from '@/modules/core/components/icon';
 
 const crudMutationOpts = {
   useErrorBoundary: true,
@@ -242,7 +241,7 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
 
   const { fields, append, remove } = useFieldArray({
     name: 'breaks',
-    control: control,
+    control,
     keyName: '_id',
   });
 
@@ -305,9 +304,12 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
 
     const existingSchedule = specificDayScheduleQuery.data || weekdaySchedule;
 
+    const maxMinutes = 15;
+
     const isExistingScheduleDayOff =
       !!existingSchedule &&
-      differenceInMinutes(existingSchedule.end, existingSchedule.start) < 15;
+      differenceInMinutes(existingSchedule.end, existingSchedule.start) <
+        maxMinutes;
 
     if (existingSchedule && !isExistingScheduleDayOff) {
       reset({

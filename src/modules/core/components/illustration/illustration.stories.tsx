@@ -1,13 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
-// components
+
 import { Typography } from '@/modules/core/components/typogrpahy';
-// constants
 import scssVariables from '@/styles/variables.module.scss';
 
 import {
   Illustration,
-  illustrations,
   type IllustrationName,
+  illustrations,
 } from './illustration';
 
 const meta: Meta<typeof Illustration> = {

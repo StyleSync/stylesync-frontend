@@ -1,6 +1,6 @@
 import type {
-  i18nConfig,
   dictionaries,
+  i18nConfig,
 } from '@/modules/internationalization/constants/i18n.constants';
 
 export type Locale = (typeof i18nConfig)['locales'][number];

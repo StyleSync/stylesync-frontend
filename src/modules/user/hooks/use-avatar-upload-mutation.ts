@@ -1,6 +1,6 @@
 import { useMutation, type UseMutationOptions } from '@tanstack/react-query';
-import { upload } from '@vercel/blob/client';
 import type { PutBlobResult } from '@vercel/blob';
+import { upload } from '@vercel/blob/client';
 
 const AVATAR_UPLOAD_CACHE_KEY = 'AVATAR_UPLOAD';
 

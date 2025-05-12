@@ -1,24 +1,22 @@
 import { type FC, useMemo } from 'react';
+
 import clsx from 'clsx';
 import { useIntl } from 'react-intl';
-// hooks
-import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import { useBoolean } from 'usehooks-ts';
-// containers
-import { PhotoUploadModal } from '@/modules/gallery/containers/photo-upload-modal/photo-upload-modal';
-// components
+
 import { Button } from '@/modules/core/components/button';
+import { type ButtonProps } from '@/modules/core/components/button/button.interface';
+import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
+import { Placeholder } from '@/modules/core/components/placeholder';
 import { Spinner } from '@/modules/core/components/spinner';
 import { Typography } from '@/modules/core/components/typogrpahy';
-import { Placeholder } from '@/modules/core/components/placeholder';
-import { SettingsGallery } from '@/modules/settings/components/settings-gallery';
-import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
-// utils
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import { trpc } from '@/modules/core/utils/trpc.utils';
-// type
-import { type ButtonProps } from '@/modules/core/components/button/button.interface';
+import { PhotoUploadModal } from '@/modules/gallery/containers/photo-upload-modal/photo-upload-modal';
+import { SettingsGallery } from '@/modules/settings/components/settings-gallery';
+
 import { type AlbumDetailsProps } from './album-details.interface';
-// style
+
 import styles from './album-details.module.scss';
 
 export const AlbumDetails: FC<AlbumDetailsProps> = ({

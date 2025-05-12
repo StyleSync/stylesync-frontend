@@ -1,14 +1,13 @@
 import { type FC, useCallback, useMemo } from 'react';
 
-import { RadioButton } from '@/modules/core/components/radio-button';
 import { BaseCardWithRadioButton } from '@/modules/booking/components/booking-card-radio-button';
 import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
-// utils
+import { RadioButton } from '@/modules/core/components/radio-button';
 import { trpc } from '@/modules/core/utils/trpc.utils';
-
-import styles from './service-on-professional-select.module.scss';
 import { type ServiceOnProfessionalSelectProps } from '@/modules/service/components/service-on-professional-select/service-on-professional-select.interface';
 import type { ServiceOnProfessionalListItem } from '@/modules/service/types/service.types';
+
+import styles from './service-on-professional-select.module.scss';
 
 export const ServiceOnProfessionalSelect: FC<
   ServiceOnProfessionalSelectProps

@@ -1,26 +1,25 @@
 import {
   type FC,
-  useState,
-  useEffect,
-  useRef,
   useCallback,
+  useEffect,
   useLayoutEffect,
+  useRef,
+  useState,
 } from 'react';
+
 import type L from 'leaflet';
-import { MapContainer, TileLayer, Marker } from 'react-leaflet';
-// components
+import { MapContainer, Marker, TileLayer } from 'react-leaflet';
+
+import { useCombinedRefs } from '@/modules/core/hooks/use-combined-refs';
 import { ZoomControl } from '@/modules/location/components/zoom';
-// constants
 import {
   proUserMarkerIcon,
   viewerUserMarkerIcon,
 } from '@/modules/location/constants/map.constants';
-// hooks
-import { useCombinedRefs } from '@/modules/core/hooks/use-combined-refs';
-// styles
-import 'leaflet/dist/leaflet.css';
 
 import type { MapProps } from './map.interface';
+
+import 'leaflet/dist/leaflet.css';
 import styles from './map.module.scss';
 
 const defaultCoordinates = { latitude: 48.3358856, longitude: 31.1788196 };

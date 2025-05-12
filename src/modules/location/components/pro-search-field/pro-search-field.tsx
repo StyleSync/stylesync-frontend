@@ -1,25 +1,26 @@
 'use client';
 import {
-  type FC,
   type ChangeEvent,
+  type FC,
   useCallback,
   useContext,
   useEffect,
   useState,
 } from 'react';
-// components
-import { Icon } from '@/modules/core/components/icon';
-import { Button } from '@/modules/core/components/button';
 
-import type { ProSearchFieldProps } from './pro-search-field.interface';
-import { Popover } from '@/modules/core/components/popover';
-import { TextField } from '@/modules/core/components/text-field';
-import { useBoolean } from 'usehooks-ts';
-import { useGeocodingSuggestionsQuery } from '@/modules/location/hooks/use-geocoding-suggestions-query';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
-import { ProfessionalSearchContext } from '@/modules/user/providers/professional-search-provider';
 import { useIntl } from 'react-intl';
+import { useBoolean } from 'usehooks-ts';
+
+import { Button } from '@/modules/core/components/button';
+import { Icon } from '@/modules/core/components/icon';
+import { Popover } from '@/modules/core/components/popover';
+import { TextField } from '@/modules/core/components/text-field';
+import { useGeocodingSuggestionsQuery } from '@/modules/location/hooks/use-geocoding-suggestions-query';
+import { ProfessionalSearchContext } from '@/modules/user/providers/professional-search-provider';
+
+import type { ProSearchFieldProps } from './pro-search-field.interface';
 
 export const ProSearchField: FC<ProSearchFieldProps> = () => {
   const intl = useIntl();

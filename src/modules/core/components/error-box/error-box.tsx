@@ -1,13 +1,14 @@
 import { type FC } from 'react';
+
 import clsx from 'clsx';
 import { useIntl } from 'react-intl';
 
-// components
-import { Typography } from '@/modules/core/components/typogrpahy';
-import { Icon } from '@/modules/core/components/icon';
 import { Button } from '@/modules/core/components/button';
+import { Icon } from '@/modules/core/components/icon';
+import { Typography } from '@/modules/core/components/typogrpahy';
 
 import type { ErrorBoxProps } from './error-box.interface';
+
 import styles from './error-box.module.scss';
 
 export const ErrorBox: FC<ErrorBoxProps> = ({

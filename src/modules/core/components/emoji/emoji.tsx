@@ -1,8 +1,9 @@
 import { type FC } from 'react';
+
 import Lottie from 'lottie-react';
-// animations
-import sunglasses from '@/assets/lottie-files/emoji/emoji-sunglasses.json';
+
 import heartEyes from '@/assets/lottie-files/emoji/emoji-heart-eyes.json';
+import sunglasses from '@/assets/lottie-files/emoji/emoji-sunglasses.json';
 import girl from '@/assets/lottie-files/emoji/girl.json';
 import pen from '@/assets/lottie-files/emoji/pen.json';
 

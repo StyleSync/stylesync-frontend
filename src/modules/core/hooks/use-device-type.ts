@@ -1,8 +1,8 @@
-import { useWindowSize } from 'usehooks-ts';
 import { useMemo } from 'react';
-// utils
+
+import { useWindowSize } from 'usehooks-ts';
+
 import { pxToNumber } from '@/modules/core/utils/css.utils';
-// styles
 import scssVariables from '@/styles/variables.module.scss';
 
 type DeviceType = 'mobile' | 'tablet' | 'desktop' | null;

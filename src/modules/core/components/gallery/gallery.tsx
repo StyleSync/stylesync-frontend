@@ -1,19 +1,19 @@
 import { type FC, useCallback, useMemo, useState } from 'react';
+
 import Image from 'next/image';
-// lightbox
 import Lightbox from 'yet-another-react-lightbox';
-import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
 import Captions from 'yet-another-react-lightbox/plugins/captions';
+import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
+
+import { Typography } from '@/modules/core/components/typogrpahy';
+
+import type { GalleryProps } from './gallery.interface';
+
 import 'yet-another-react-lightbox/plugins/captions.css';
 import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
-// components
-import { Typography } from '../typogrpahy';
-// types
-import type { GalleryProps } from './gallery.interface';
-// styles
-import styles from './gallery.module.scss';
 import './gallery.global.scss';
+import styles from './gallery.module.scss';
 
 export const Gallery: FC<GalleryProps> = ({
   images,

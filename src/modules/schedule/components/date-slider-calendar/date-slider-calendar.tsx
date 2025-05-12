@@ -1,18 +1,18 @@
-import { useMemo, type FC } from 'react';
-import { useIntl } from 'react-intl';
-import { uk, enUS } from 'date-fns/locale';
+import { type FC, useMemo } from 'react';
+
 import { endOfDay, format, isSameDay, startOfDay } from 'date-fns';
-//  components
-import { Typography } from '@/modules/core/components/typogrpahy';
-// constants
-import { bookingStatusMetadata } from '@/modules/booking/constants/booking.constants';
-// types
-import { type DateSliderCalendarProps } from './date-slider-calendar.inerface';
-// Swiper
+import { enUS, uk } from 'date-fns/locale';
+import { useIntl } from 'react-intl';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
+import { bookingStatusMetadata } from '@/modules/booking/constants/booking.constants';
+import styles from '@/modules/booking/containers/booking-time-select/booking-time-select.module.scss';
+import { Typography } from '@/modules/core/components/typogrpahy';
+
 import 'swiper/scss';
 import 'swiper/scss/navigation';
-import styles from '@/modules/booking/containers/booking-time-select/booking-time-select.module.scss';
+
+import { type DateSliderCalendarProps } from './date-slider-calendar.inerface';
 
 export const DateSliderCalendar: FC<DateSliderCalendarProps> = ({
   days,

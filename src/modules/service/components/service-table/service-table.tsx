@@ -1,14 +1,15 @@
 'use client';
 import { type FC } from 'react';
-import { useIntl } from 'react-intl';
+
 import * as Accordion from '@radix-ui/react-accordion';
-// components
+import { useIntl } from 'react-intl';
+
+import type { IconName } from '@/modules/core/components/icon';
 import { Tag } from '@/modules/core/components/tag';
 import { ServiceOnProfessionalTableRow } from '@/modules/service/components/service-on-professional-table-row';
-// types
-import type { IconName } from '@/modules/core/components/icon';
 
 import type { ServicesTableProps } from './service-table.interface';
+
 import styles from './service-table.module.scss';
 
 export const ServicesTable: FC<ServicesTableProps> = ({

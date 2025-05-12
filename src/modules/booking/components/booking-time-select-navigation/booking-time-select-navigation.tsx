@@ -1,16 +1,13 @@
-import { useMemo, type FC } from 'react';
+import { type FC, useMemo } from 'react';
+
 import { useIntl } from 'react-intl';
 
-// components
-import { Typography } from '@/modules/core/components/typogrpahy';
 import { Button } from '@/modules/core/components/button';
-// utils
+import { Typography } from '@/modules/core/components/typogrpahy';
 import { generateDates } from '@/modules/core/utils/date.utils';
-// type
-import type { BookingTimeSelectNavigationProps } from './booking-time-select.interface';
-// style
-// utils
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
+
+import type { BookingTimeSelectNavigationProps } from './booking-time-select.interface';
 
 export const BookingTimeSelectNavigation: FC<
   BookingTimeSelectNavigationProps

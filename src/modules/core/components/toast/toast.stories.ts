@@ -1,7 +1,7 @@
+import { faker } from '@faker-js/faker';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Toast } from './toast';
-import { faker } from '@faker-js/faker';
 
 const meta: Meta<typeof Toast> = {
   title: 'Core UI/Toast',

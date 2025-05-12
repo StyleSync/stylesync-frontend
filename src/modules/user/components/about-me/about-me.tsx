@@ -1,10 +1,9 @@
 'use client';
 import { type FC } from 'react';
+
 import { useIntl } from 'react-intl';
 
-// components
 import { Typography } from '@/modules/core/components/typogrpahy';
-// utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
 
 import styles from './about-me.module.scss';

@@ -283,7 +283,7 @@ export const bookingRouter = router({
         });
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line unused-imports/no-unused-vars
       const { day, date, yearTime, monthTime, dayTime, ...createData } = input;
 
       const booking = await prisma.booking.create({

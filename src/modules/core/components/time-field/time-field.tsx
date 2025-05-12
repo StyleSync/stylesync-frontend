@@ -1,23 +1,25 @@
 import {
-  type FC,
   type ChangeEvent,
+  type FC,
   useCallback,
+  useEffect,
   useRef,
   useState,
-  useEffect,
 } from 'react';
-import { useBoolean } from 'usehooks-ts';
+
+import clsx from 'clsx';
 import { Transition } from 'react-transition-group';
-// components
+import { useBoolean } from 'usehooks-ts';
+
+import { Button } from '@/modules/core/components/button';
+import { Popover } from '@/modules/core/components/popover';
 import { TextField } from '@/modules/core/components/text-field';
 import { TimeSelect } from '@/modules/core/components/time-select';
-import { Popover } from '@/modules/core/components/popover';
-import { Button } from '@/modules/core/components/button';
-// utils
 import { Time } from '@/modules/core/utils/time.utils';
+
 import type { TimeFieldProps } from './time-field.interface';
+
 import styles from './time-field.module.scss';
-import clsx from 'clsx';
 
 const SUBMIT_BUTTON_IN_OUT_DURATION = 200;
 

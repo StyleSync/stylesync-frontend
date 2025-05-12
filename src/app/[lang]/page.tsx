@@ -1,16 +1,14 @@
-import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
-import { authOptions } from '@/modules/auth/constants/auth-server.constants';
+import { getServerSession } from 'next-auth';
 
-// containers
-import { IntroSection } from '@/modules/landing/containers/intro-section';
-import { ServiceCardSection } from '@/modules/landing/containers/service-cards-section';
-// import { ReviewsSection } from '@/modules/landing/containers/reviews-swiper-section';
-import { MobileAppSection } from '@/modules/landing/containers/mobile-app-section';
-import { Footer } from '@/modules/landing/containers/footer/footer';
-import { ServiceDataSection } from '@/modules/landing/containers/service-data-section';
-import { LandingHeader } from '@/modules/landing/containers/header/landing-header';
+import { authOptions } from '@/modules/auth/constants/auth-server.constants';
 import { BottomTabNavigation } from '@/modules/core/containers/bottom-tab-navigation';
+import { Footer } from '@/modules/landing/containers/footer/footer';
+import { LandingHeader } from '@/modules/landing/containers/header/landing-header';
+import { IntroSection } from '@/modules/landing/containers/intro-section';
+import { MobileAppSection } from '@/modules/landing/containers/mobile-app-section';
+import { ServiceCardSection } from '@/modules/landing/containers/service-cards-section';
+import { ServiceDataSection } from '@/modules/landing/containers/service-data-section';
 
 export default async function Home() {
   const session = await getServerSession(authOptions);

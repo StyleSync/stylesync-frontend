@@ -1,11 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
-// components
-import { Typography } from '@/modules/core/components/typogrpahy';
+
 import { TextField } from '@/modules/core/components/text-field';
-// constants
+import { Typography } from '@/modules/core/components/typogrpahy';
 import scssVariables from '@/styles/variables.module.scss';
 
-import { Icon, icons, type IconName } from './icon';
+import { Icon, type IconName, icons } from './icon';
 
 const meta: Meta<typeof Icon> = {
   title: 'Core UI/Icon',

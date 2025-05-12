@@ -1,11 +1,11 @@
 import {
   type RefObject,
-  type TouchEventHandler,
   type TouchEvent as ReactTouchEvent,
+  type TouchEventHandler,
   useCallback,
   useRef,
 } from 'react';
-// utils
+
 import { reassignCssProperties } from '@/modules/core/utils/css.utils';
 
 type Direction = 'horizontal' | 'vertical';

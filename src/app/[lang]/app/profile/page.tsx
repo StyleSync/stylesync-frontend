@@ -1,5 +1,6 @@
-import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
+import { getServerSession } from 'next-auth';
+
 import { authOptions } from '@/modules/auth/constants/auth-server.constants';
 import { pageGuard } from '@/modules/core/utils/route.utils';
 

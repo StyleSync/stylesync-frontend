@@ -1,5 +1,5 @@
-import type { Address } from '@/modules/location/types/address.types';
 import type { InputProps } from '@/modules/core/components/text-field/text-field.interface';
+import type { Address } from '@/modules/location/types/address.types';
 
 export type LocationSearchProps = {
   value: Address | null;

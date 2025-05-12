@@ -1,11 +1,13 @@
 import { type FC, useCallback, useRef } from 'react';
+
 import clsx from 'clsx';
 import { useIntl } from 'react-intl';
-// components
+
 import { Avatar } from '@/modules/core/components/avatar';
 import { Button } from '@/modules/core/components/button';
 
 import type { AvatarSelectProps } from './avatar-select.interface';
+
 import styles from './avatar-select.module.scss';
 
 export const AvatarSelect: FC<AvatarSelectProps> = ({

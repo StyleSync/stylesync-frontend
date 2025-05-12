@@ -1,17 +1,17 @@
 import { type FC, useState } from 'react';
+
 import { useIntl } from 'react-intl';
-// components
-import { Typography } from '@/modules/core/components/typogrpahy';
-import { Placeholder } from '@/modules/core/components/placeholder';
+
 import { BookingInfoCard } from '@/modules/booking/components/booking-info-card';
-import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
-import { Spinner } from '@/modules/core/components/spinner';
-// containers
 import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
-// utils
+import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
+import { Placeholder } from '@/modules/core/components/placeholder';
+import { Spinner } from '@/modules/core/components/spinner';
+import { Typography } from '@/modules/core/components/typogrpahy';
 import { trpc } from '@/modules/core/utils/trpc.utils';
-// type
+
 import type { BookingsUserListProps } from './bookings-user-list.interface';
+
 import styles from './bookings-user-list.module.scss';
 
 const now = new Date().toISOString();

@@ -1,20 +1,21 @@
 import {
-  type UIEventHandler,
   type FC,
   memo,
+  type UIEventHandler,
   useCallback,
   useEffect,
   useRef,
   useState,
 } from 'react';
+
 import clsx from 'clsx';
-// components
+
 import { Typography } from '@/modules/core/components/typogrpahy';
-// utils
 import { range } from '@/modules/core/utils/array.utils';
 import { Time } from '@/modules/core/utils/time.utils';
 
 import type { TimeSelectProps } from './time-select.interface';
+
 import styles from './time-select.module.scss';
 
 const MINUTES_15 = 15;

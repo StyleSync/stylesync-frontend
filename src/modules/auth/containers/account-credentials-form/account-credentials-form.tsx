@@ -1,16 +1,17 @@
 import { type FC } from 'react';
-import { useBoolean } from 'usehooks-ts';
+
+import Link from 'next/link';
 import { type UseFormReturn } from 'react-hook-form';
 import { useIntl } from 'react-intl';
-import Link from 'next/link';
-// components
-import { TextField } from '@/modules/core/components/text-field';
-import { Typography } from '@/modules/core/components/typogrpahy';
+import { useBoolean } from 'usehooks-ts';
+
+import type { SignUpUserData } from '@/modules/auth/types/sign-up.types';
 import { Button } from '@/modules/core/components/button';
 import { PasswordRequirements } from '@/modules/core/components/password-requirements';
+import { TextField } from '@/modules/core/components/text-field';
+import { Typography } from '@/modules/core/components/typogrpahy';
 
 import styles from './account-credentials-form.module.scss';
-import type { SignUpUserData } from '@/modules/auth/types/sign-up.types';
 
 type AccountCredentialsFormProps = {
   form: UseFormReturn<SignUpUserData>;

@@ -1,9 +1,11 @@
 import { type FC } from 'react';
+
 import clsx from 'clsx';
-// styles
+
 import serviceTableStyles from '@/modules/service/components/service-table/service-table.module.scss';
 
 import type { ServiceTableSkeletonProps } from './service-table-skeleton.interface';
+
 import styles from './service-table-skeleton.module.scss';
 
 export const ServiceTableSkeleton: FC<ServiceTableSkeletonProps> = ({

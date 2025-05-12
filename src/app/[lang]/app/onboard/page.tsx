@@ -1,8 +1,6 @@
-// containers
-import { ProOnboard } from '@/modules/onboard/containers/pro-onboard';
-import { OnboardTitle } from '@/modules/onboard/containers/onboard-title';
-// utils
 import { pageGuard } from '@/modules/core/utils/route.utils';
+import { OnboardTitle } from '@/modules/onboard/containers/onboard-title';
+import { ProOnboard } from '@/modules/onboard/containers/pro-onboard';
 
 import styles from './onboard.module.scss';
 

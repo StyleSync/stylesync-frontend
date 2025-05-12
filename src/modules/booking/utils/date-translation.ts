@@ -1,5 +1,5 @@
-import { useIntl } from 'react-intl';
 import { format } from 'date-fns';
+import { useIntl } from 'react-intl';
 
 export const useFormattedDate = (
   value: string | undefined,

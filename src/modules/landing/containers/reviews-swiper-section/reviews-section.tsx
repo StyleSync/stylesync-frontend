@@ -1,12 +1,13 @@
 'use client';
 import Image from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
-// components
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import img from '@/assets/images/girl.png';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { ReviewCard } from '@/modules/landing/components/reviews-card/review-cards';
+
 import 'swiper/css';
-import img from '@/assets/images/girl.png';
 
 const testimonialsData1 = [
   {

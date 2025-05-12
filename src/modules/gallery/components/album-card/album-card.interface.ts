@@ -1,4 +1,4 @@
-import type { Portfolio, Album } from '@prisma/client';
+import type { Album, Portfolio } from '@prisma/client';
 
 export type AlbumCardProps = {
   isActive?: boolean;

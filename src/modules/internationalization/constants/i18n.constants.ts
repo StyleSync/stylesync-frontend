@@ -1,6 +1,7 @@
-import type { Locale as AppLocale } from '@/modules/internationalization/types/i18n.types';
 import type { Locale } from 'date-fns';
 import { enUS, uk } from 'date-fns/locale';
+
+import type { Locale as AppLocale } from '@/modules/internationalization/types/i18n.types';
 
 export const i18nConfig = {
   defaultLocale: 'uk',
