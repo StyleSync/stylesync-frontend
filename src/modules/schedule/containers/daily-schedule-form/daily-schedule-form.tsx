@@ -18,7 +18,6 @@ import {
 import clsx from 'clsx';
 import type { DailySchedule } from '@/modules/schedule/types/schedule.types';
 
-import styles from './daily-schedule-form.module.scss';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { emptySchedule } from '@/modules/schedule/constants/schedule.constants';
 import { mapDateToDayEnum } from '@/modules/core/utils/date.utils';
@@ -490,46 +489,44 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
                 />
               </div>
 
-              <div className={clsx(styles.cell, styles.xPadding)}>
-                <div className='flex w-full flex-wrap items-center gap-4'>
-                  {fields.map((item, index) => (
-                    <div
-                      key={item._id}
-                      className='flex w-full items-center gap-1'
-                    >
-                      <Controller
-                        control={control}
-                        name={`breaks.${index}.timerange`}
-                        render={({ field, fieldState }) => (
-                          <TimeRangeField
-                            className='flex-1'
-                            value={field.value}
-                            onChange={field.onChange}
-                            inputProps={{
-                              fieldSize: 'high',
-                              error: Boolean(fieldState.error),
-                              bigbtn: true,
-                              className: '!bg-transparent',
-                              classes: {
-                                fieldset: '!border-gray-accent !border',
-                              },
-                            }}
-                            popoverProps={{
-                              disablePortal: true,
-                            }}
-                          />
-                        )}
-                      />
-                      <Button
-                        className='h-[20px] w-[20px] text-destructive'
-                        onClick={() => remove(index)}
-                        variant='unstyled'
-                        icon='close'
-                        type='button'
-                      />
-                    </div>
-                  ))}
-                </div>
+              <div className='flex w-full flex-wrap items-center gap-4'>
+                {fields.map((item, index) => (
+                  <div
+                    key={item._id}
+                    className='flex w-full items-center gap-1'
+                  >
+                    <Controller
+                      control={control}
+                      name={`breaks.${index}.timerange`}
+                      render={({ field, fieldState }) => (
+                        <TimeRangeField
+                          className='flex-1'
+                          value={field.value}
+                          onChange={field.onChange}
+                          inputProps={{
+                            fieldSize: 'high',
+                            error: Boolean(fieldState.error),
+                            bigbtn: true,
+                            className: '!bg-transparent',
+                            classes: {
+                              fieldset: '!border-gray-accent !border',
+                            },
+                          }}
+                          popoverProps={{
+                            disablePortal: true,
+                          }}
+                        />
+                      )}
+                    />
+                    <Button
+                      className='h-[20px] w-[20px] text-destructive'
+                      onClick={() => remove(index)}
+                      variant='unstyled'
+                      icon='close'
+                      type='button'
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           )}
