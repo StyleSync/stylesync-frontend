@@ -6,6 +6,7 @@ import AppleLogoLanding from '@/assets/icons/apple-logo-landing.svg?icon';
 import ArrowBottomIcon from '@/assets/icons/arrow-bottom.svg?icon';
 import ArrowIncrease from '@/assets/icons/arrow-increase.svg?icon';
 import ArrowLeftIcon from '@/assets/icons/arrow-left.svg?icon';
+import ArowLeftCurved from '@/assets/icons/arrow-left-curved.svg?icon';
 import ArrowRightIcon from '@/assets/icons/arrow-right.svg?icon';
 import ArrowTopIcon from '@/assets/icons/arrow-top.svg?icon';
 import BeautyServiceIcon from '@/assets/icons/beauty-service.svg?icon';
@@ -164,6 +165,7 @@ export const icons = {
   clipboard: Clipboard,
   'parmanent-makeup': Parmanent,
   lips: Lips,
+  'arrow-left-curved': ArowLeftCurved,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;

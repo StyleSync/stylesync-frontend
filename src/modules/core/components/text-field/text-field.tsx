@@ -61,7 +61,7 @@ export const TextField = forwardRef<
       return () => {
         textFieldElement?.removeEventListener('input', onChange);
       };
-    }, [hasText, combinedRefs]);
+    }, [combinedRefs, hasText]);
 
     return (
       <div
@@ -88,6 +88,7 @@ export const TextField = forwardRef<
               {
                 [styles.small]: props.fieldSize === 'small',
                 [styles.medium]: props.fieldSize === 'medium',
+                [styles.high]: props.fieldSize === 'high',
               },
               fonts[font].className
             )}

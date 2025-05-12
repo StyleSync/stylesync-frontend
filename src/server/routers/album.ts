@@ -1,12 +1,17 @@
-import { privateProcedure, publicProcedure, router } from '../trpc-helpers';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
+
 import { prisma } from '@/server/prisma';
+import { defaultAlbumSelect } from '@/server/selectors/album';
+import {
+  privateProcedure,
+  publicProcedure,
+  router,
+} from '@/server/trpc-helpers';
 import {
   getCursor,
   getProfessionalFromContext,
 } from '@/server/utils/prisma-utils';
-import { defaultAlbumSelect } from '@/server/selectors/album';
 
 const maxLargeTextLength = 140;
 const defaultLimit = 10;

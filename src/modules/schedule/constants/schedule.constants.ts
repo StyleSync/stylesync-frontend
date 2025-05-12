@@ -1,12 +1,11 @@
+import { Day } from '@prisma/client';
 import { getDay } from 'date-fns';
-// utils
+
 import { formatTimeRange, Time } from '@/modules/core/utils/time.utils';
-// types
 import type {
   Weekday,
   WeeklySchedule,
 } from '@/modules/schedule/types/schedule.types';
-import { Day } from '@prisma/client';
 
 export const weekdays: Day[] = [
   Day.MONDAY,

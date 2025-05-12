@@ -5,17 +5,13 @@ import clsx from 'clsx';
 import { useIntl } from 'react-intl';
 
 import { ErrorBox } from '@/modules/core/components/error-box';
-// components
 import { Icon } from '@/modules/core/components/icon';
 import { Placeholder } from '@/modules/core/components/placeholder';
 import { Spinner } from '@/modules/core/components/spinner';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
-// utils
 import { trpc } from '@/modules/core/utils/trpc.utils';
-// constants
 import { weekdays } from '@/modules/schedule/constants/schedule.constants';
-// containers
 import { DayScheduleSelect } from '@/modules/schedule/containers/day-schedule-select';
 
 import type { WeeklyScheduleFormProps } from './schedule-form.interface';
@@ -26,6 +22,7 @@ export const WeeklyScheduleForm: FC<WeeklyScheduleFormProps> = () => {
   const intl = useIntl();
   const deviceType = useDeviceType();
   const queryClient = useQueryClient();
+
   // queries
   const { data: me } = trpc.user.me.useQuery({ expand: ['professional'] });
   const { data: weekSchedule, ...weekScheduleQuery } =
@@ -66,7 +63,18 @@ export const WeeklyScheduleForm: FC<WeeklyScheduleFormProps> = () => {
           />
         }
       >
-        <div className={styles.root}>
+        <div id='divFirst' className={styles.root}>
+          <div className='mb-6 flex flex-col gap-4'>
+            <div className='flex justify-between'>
+              <span className='text-2xl font-medium text-dark'>
+                {intl.formatMessage({ id: 'schedule.weekly' })}
+              </span>
+            </div>
+            <span className='text-dark'>
+              {intl.formatMessage({ id: 'schedule.weekly.description' })}
+            </span>
+          </div>
+
           {deviceType !== 'mobile' && (
             <div className={styles.header}>
               <div className={styles.cell}>

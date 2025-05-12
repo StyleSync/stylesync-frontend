@@ -5,5 +5,5 @@ export type ToastProps = {
   onClose: () => void;
   variant: ToastVariant;
   title: string;
-  description: string;
+  description?: string;
 };
