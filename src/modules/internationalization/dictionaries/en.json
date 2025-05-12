@@ -136,6 +136,17 @@
   "schedule.form.breaks": "Breaks",
   "schedule.no.breaks": "No breaks",
   "schedule.breaks": "Break at",
+  "schedule.weekly": "Weekly schedule",
+  "schedule.weekly.description": "Set your regular working hours for each day of the week. These settings apply to all weeks by default but can be overridden by Daily schedule",
+  "daily.schedule.description": "You can use this setting to define a custom schedule for any day or/and use this setting to override your <highlight>weekly schedule</highlight> for special days, holidays, or one-time changes.",
+  "daily.toast.schedule.deleted": "Day schedule deleted",
+  "daily.toast.schedule.saved": "Schedule successfully saved",
+  "according.to.weekly.schedule": "According to the <highlight>weekly schedule</highlight> ",
+  "overrides.weekly.schedule": "Overrides <highlight>weekly schedule</highlight> ",
+
+  "modal.override.selected.dates": "{count} dates selected",
+
+  "modal.reset.custom.schedule": "Reset the custom schedule for {date}, to align it with the weekly schedule",
 
   "service.constructor.table.toast.error": "Unable to delete",
   "service.constructor.add.sevice": "Add service",

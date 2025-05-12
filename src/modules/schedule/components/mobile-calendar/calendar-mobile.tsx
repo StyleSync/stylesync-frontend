@@ -3,35 +3,32 @@ import {
   type FC,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
-  useMemo,
 } from 'react';
+
+import type { CalendarApi, EventInput } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import FullCalendar from '@fullcalendar/react';
+import timeGridPlugin from '@fullcalendar/timegrid';
 import clsx from 'clsx';
-import { trpc } from '@/modules/core/utils/trpc.utils';
 import { endOfMonth, format, startOfDay, startOfMonth } from 'date-fns';
 import { useIntl } from 'react-intl';
-// fullcalendar
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import type { CalendarApi, EventInput } from '@fullcalendar/core';
-// components
-import { DateSelectCalendar } from '@/modules/schedule/components/data-select-calendar';
-import { DateSliderCalendar } from '../date-slider-calendar';
-import { Icon } from '@/modules/core/components/icon';
-import { PointsBookingActions } from '@/modules/booking/components/points-booking-actions/points-booking-action';
-// containers
-import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
-// constants
-import { weekdays } from '@/modules/schedule/constants/schedule.constants';
-// utils
-import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
-import { getDaysOfCurrentMonth } from '@/modules/schedule/utils/get-current-month-days';
-// type
 import { type Swiper } from 'swiper/types';
-import { type CalendarMobileProps } from './calendar-mobile.interface';
+
+import { PointsBookingActions } from '@/modules/booking/components/points-booking-actions/points-booking-action';
+import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
+import { Icon } from '@/modules/core/components/icon';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
 import styles from '@/modules/schedule/components/calendar/calendarEvent.module.scss';
+import { DateSelectCalendar } from '@/modules/schedule/components/data-select-calendar';
+import { DateSliderCalendar } from '@/modules/schedule/components/date-slider-calendar';
+import { weekdays } from '@/modules/schedule/constants/schedule.constants';
+import { getDaysOfCurrentMonth } from '@/modules/schedule/utils/get-current-month-days';
+
+import { type CalendarMobileProps } from './calendar-mobile.interface';
 
 const SPEED_TO_SLIDE = 500;
 

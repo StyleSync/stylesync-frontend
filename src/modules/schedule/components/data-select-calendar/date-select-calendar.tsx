@@ -1,18 +1,17 @@
-import { useMemo, type FC } from 'react';
-import { useBoolean } from 'usehooks-ts';
-import { useIntl } from 'react-intl';
-import { uk, enUS } from 'date-fns/locale';
-// mui calendar
+import { type FC, useMemo } from 'react';
+
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-// components
+import { enUS, uk } from 'date-fns/locale';
+import { useIntl } from 'react-intl';
+import { useBoolean } from 'usehooks-ts';
+
 import { Button } from '@/modules/core/components/button';
 import { Popover } from '@/modules/core/components/popover';
 import { EventIndicators } from '@/modules/schedule/components/event-indicators';
-// utils
 import { getDaysOfCurrentMonth } from '@/modules/schedule/utils/get-current-month-days';
-// types
+
 import type { DateSelectCalendarProps } from './data-select-calendat.interface';
 
 export const DateSelectCalendar: FC<DateSelectCalendarProps> = ({
