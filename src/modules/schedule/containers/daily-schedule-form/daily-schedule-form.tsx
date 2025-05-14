@@ -29,6 +29,7 @@ import { trpc } from '@/modules/core/utils/trpc.utils';
 import { emptySchedule } from '@/modules/schedule/constants/schedule.constants';
 import { DayOverrideModal } from '@/modules/schedule/containers/day-override-modal';
 import type { DailySchedule } from '@/modules/schedule/types/schedule.types';
+import { isScheduleDayOff } from '@/modules/schedule/utils/schedule.utils';
 
 import { DailyScheduleFormProps } from './daily-schedule-form.interface';
 
@@ -136,7 +137,10 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
     !specificDayScheduleQuery.data && weekdaySchedule && !isDirty;
 
   const isOverridesWeeklySchedule =
-    weekdaySchedule && (specificDayScheduleQuery.data || isDirty);
+    weekdaySchedule &&
+    ((specificDayScheduleQuery.data &&
+      !isScheduleDayOff(specificDayScheduleQuery.data)) ||
+      isDirty);
 
   const dailyScheduleCreate =
     trpc.schedule.createBulk.useMutation(crudMutationOpts);
@@ -165,6 +169,13 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
                 variant: 'success',
                 title: formatMessage({ id: 'daily.toast.schedule.deleted' }),
               });
+
+              const listByDayKey = getQueryKey(trpc.schedule.listByDay);
+
+              queryClient.resetQueries({
+                queryKey: listByDayKey,
+                exact: false,
+              });
             },
           }
         );
@@ -190,8 +201,13 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
               const queryKey = getQueryKey(
                 trpc.schedule.getSpecificDaySchedule
               );
+              const listByDayKey = getQueryKey(trpc.schedule.listByDay);
 
               queryClient.resetQueries({ queryKey, exact: false });
+              queryClient.resetQueries({
+                queryKey: listByDayKey,
+                exact: false,
+              });
             },
           }
         );
@@ -229,6 +245,13 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
           showToast({
             variant: 'success',
             title: formatMessage({ id: 'daily.toast.schedule.saved' }),
+          });
+
+          const listByDayKey = getQueryKey(trpc.schedule.listByDay);
+
+          queryClient.resetQueries({
+            queryKey: listByDayKey,
+            exact: false,
           });
 
           if (dates.length > 1) {
@@ -274,8 +297,10 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
         {
           onSuccess: () => {
             const queryKey = getQueryKey(trpc.schedule.getSpecificDaySchedule);
+            const listByDayKey = getQueryKey(trpc.schedule.listByDay);
 
             queryClient.resetQueries({ queryKey, exact: false });
+            queryClient.resetQueries({ queryKey: listByDayKey, exact: false });
           },
         }
       );
