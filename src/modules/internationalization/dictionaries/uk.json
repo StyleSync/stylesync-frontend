@@ -469,5 +469,7 @@
   "profile.notFound.title": "Профіль не знайдено",
   "profile.notFound.description": "Цей профіль був видалений або ще не створений.",
   "profile.notFound.searchPros": "Шукати професіоналів",
-  "profile.notFound.goHome": "На головну"
+  "profile.notFound.goHome": "На головну",
+  "day.off": "Вихідний день",
+  "working.day": "Робочи день"
 }
