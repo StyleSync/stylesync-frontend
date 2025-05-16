@@ -13,13 +13,13 @@ import {
   eachDayOfInterval,
   endOfMonth,
   isSameDay,
+  isToday,
   startOfDay,
   startOfMonth,
 } from 'date-fns';
 import { enUS, uk } from 'date-fns/locale';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import { mapDateToDayEnum } from '@/modules/core/utils/date.utils';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { DailyScheduleForm } from '@/modules/schedule/containers/daily-schedule-form';
@@ -55,26 +55,32 @@ const renderCalendarDay = (
     );
 
   const isSchedule = foundSchedule && !isScheduleDayOff(foundSchedule);
+  const showIndicators =
+    props.schedules !== undefined && props.weeklySchedule !== undefined;
 
   return (
     <PickersDay
       {...other}
       outsideCurrentMonth={outsideCurrentMonth}
       day={day}
-      className={
-        isActive ? '!bg-primary !text-white' : '!bg-transparent !text-dark'
-      }
+      className={clsx({
+        '!bg-primary !text-white': isActive,
+        '!bg-transparent !text-accent': !isActive && isToday(day),
+        '!bg-transparent !text-dark': !isActive && !isToday(day),
+      })}
     >
       {day.getDate()}
-      <div className='absolute bottom-0 left-1/2 -translate-x-1/2 -translate-y-[3px]'>
-        <div className='h-[5px] w-[5px] rounded-full' />
-        <div
-          className={clsx('h-[5px] w-[5px] rounded-full', {
-            '!bg-orange': foundSchedule && isSchedule,
-            '!bg-green': !foundSchedule || (foundSchedule && !isSchedule),
-          })}
-        />
-      </div>
+      {showIndicators && (
+        <div className='absolute bottom-0 left-1/2 -translate-x-1/2 -translate-y-[3px]'>
+          <div className='h-[5px] w-[5px] rounded-full' />
+          <div
+            className={clsx('h-[5px] w-[5px] rounded-full', {
+              '!bg-orange': foundSchedule && isSchedule,
+              '!bg-green': !foundSchedule || (foundSchedule && !isSchedule),
+            })}
+          />
+        </div>
+      )}
     </PickersDay>
   );
 };
@@ -83,7 +89,6 @@ const initialMonth = new Date();
 
 export const DailyScheduleSection = () => {
   const { locale, formatMessage } = useIntl();
-  const deviceType = useDeviceType();
   const calendarWrapperRef = useRef<HTMLDivElement>(null);
   const { data: me } = trpc.user.me.useQuery({
     expand: ['professional'],
@@ -199,7 +204,7 @@ export const DailyScheduleSection = () => {
                   width: '100%',
                   backgroundColor: 'transparent',
                   '& .MuiPickersCalendarHeader-root': {
-                    width: deviceType === 'mobile' ? '103%' : '100%',
+                    width: '100%',
                     paddingLeft: '0',
                     paddingRight: '0',
                   },
@@ -209,7 +214,7 @@ export const DailyScheduleSection = () => {
                     fontSize: '16px',
                   },
                   '& .MuiButtonBase-root': { fontSize: '16px' },
-                  '& .MuiPickersCalendarHeader-label': { marginRight: '140px' },
+                  '& .MuiPickersCalendarHeader-label': { marginRight: '170px' },
                   '& .MuiPickersDay-root': {
                     width: '40px',
                     height: '40px',
@@ -221,12 +226,6 @@ export const DailyScheduleSection = () => {
                     width: '40px',
                     height: '40px',
                   },
-                  '& .MuiButtonBase-root.MuiPickersDay-root.MuiPickersDay-today':
-                    {
-                      width: '40px',
-                      height: '40px',
-                      color: 'red',
-                    },
 
                   '& .MuiPickersCalendar-root': {
                     height: '100% !important',
@@ -241,11 +240,12 @@ export const DailyScheduleSection = () => {
                   },
                   '& .MuiPickersToolbar-root': { display: 'none' },
                   '& .MuiDialogActions-root': { display: 'none' },
-                  '& .MuiPickersDay-today': { border: '1px solid black' },
+                  '& .MuiDateCalendar-root': { width: '380px' },
+                  '& .MuiDayCalendar-weekContainer ': { margin: '4px 0' },
                 }}
               />
             </LocalizationProvider>
-            <div className='ml-[55px] flex flex-col gap-2'>
+            <div className='ml-[19px] flex flex-col gap-2 md:ml-[29px]'>
               <div className='flex items-center gap-2'>
                 <div className='h-[5px] w-[5px] rounded-full bg-green' />
                 <span className='text-sm text-dark'>
