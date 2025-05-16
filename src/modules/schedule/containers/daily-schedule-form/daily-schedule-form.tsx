@@ -160,7 +160,7 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
     );
 
     if (!isWorkdayEnabled.value && !isMultipleDates) {
-      if (existingSchedule) {
+      if (existingSchedule && !weekdaySchedule) {
         dailyScheduleDelete.mutate(
           { id: existingSchedule.id },
           {
@@ -194,6 +194,7 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
               specificMonth: date.getMonth(),
               specificYear: date.getFullYear(),
               breaks: [],
+              isDayOff: true,
             })),
           },
           {
@@ -248,11 +249,13 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
           });
 
           const listByDayKey = getQueryKey(trpc.schedule.listByDay);
+          const queryKey = getQueryKey(trpc.schedule.getSpecificDaySchedule);
 
           queryClient.resetQueries({
             queryKey: listByDayKey,
             exact: false,
           });
+          queryClient.resetQueries({ queryKey, exact: false });
 
           if (dates.length > 1) {
             handleReset();
