@@ -48,11 +48,11 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
             <BookingsBadge className='absolute left-[calc(50%+2px)] top-[4px]' />
           ),
         },
-        {
-          href: '/app/search-pro',
-          icon: 'search',
-          title: intl.formatMessage({ id: 'user.header.navigation.search' }),
-        },
+        // {
+        //   href: '/app/search-pro',
+        //   icon: 'search',
+        //   title: intl.formatMessage({ id: 'user.header.navigation.search' }),
+        // },
         {
           href: '/app/settings',
           icon: 'settings',
@@ -75,11 +75,11 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
           <BookingsBadge className='absolute left-[calc(50%+2px)] top-[4px]' />
         ),
       },
-      {
-        href: '/app/search-pro',
-        icon: 'search',
-        title: intl.formatMessage({ id: 'user.header.navigation.search' }),
-      },
+      // {
+      //   href: '/app/search-pro',
+      //   icon: 'search',
+      //   title: intl.formatMessage({ id: 'user.header.navigation.search' }),
+      // },
       {
         href: '/app/settings',
         icon: 'settings',
