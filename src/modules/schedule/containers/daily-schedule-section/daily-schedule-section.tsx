@@ -245,7 +245,7 @@ export const DailyScheduleSection = () => {
                 }}
               />
             </LocalizationProvider>
-            <div className='ml-[19px] flex flex-col gap-2 md:ml-[29px]'>
+            <div className='ml-[19px] mt-5 flex flex-col gap-2 md:ml-[29px] md:mt-0'>
               <div className='flex items-center gap-2'>
                 <div className='h-[5px] w-[5px] rounded-full bg-green' />
                 <span className='text-sm text-dark'>
