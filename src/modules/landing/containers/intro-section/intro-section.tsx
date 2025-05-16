@@ -3,12 +3,11 @@ import { type FC } from 'react';
 
 import clsx from 'clsx';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import { useIntl } from 'react-intl';
 
 import pictureV2 from '@/assets/images/banner-girlV2.png';
 import Bg from '@/assets/images/bg-1.png';
-import { Button } from '@/modules/core/components/button';
 import { Icon, type IconName } from '@/modules/core/components/icon';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import type { StylingProps } from '@/styles/styles.types';
@@ -34,7 +33,7 @@ const ServiceCircle: FC<{ iconName: IconName } & StylingProps> = ({
 };
 
 export const IntroSection = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const intl = useIntl();
 
   return (
@@ -53,7 +52,7 @@ export const IntroSection = () => {
         >
           {intl.formatMessage({ id: 'pages.landing.intro.subtitle' })}
         </Typography>
-        <Button
+        {/* <Button
           rippleColor='rgba(255,255,255,0.3)'
           className='z-10 mx-auto mt-7 !h-[52px] rounded-[26px] bg-gradient-to-r from-[#FA719A] to-[#FDA571] text-white shadow-accentShadow shadow-orange/20 transition hover:shadow-[#FC858C]/30'
           classes={{
@@ -64,7 +63,7 @@ export const IntroSection = () => {
           }}
           text={intl.formatMessage({ id: 'pages.landing.intro.book' })}
           variant='unstyled'
-        />
+        /> */}
       </div>
       <div className='relative flex flex-1'>
         <div className='absolute left-0 top-0 flex h-full w-full justify-center'>

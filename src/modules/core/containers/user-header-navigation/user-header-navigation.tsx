@@ -45,13 +45,13 @@ export const UserHeaderNavigation: FC<{
           }),
           badge: <BookingsBadge />,
         },
-        {
-          icon: 'search',
-          href: '/app/search-pro',
-          title: intl.formatMessage({
-            id: 'user.header.navigation.search',
-          }),
-        },
+        // {
+        //   icon: 'search',
+        //   href: '/app/search-pro',
+        //   title: intl.formatMessage({
+        //     id: 'user.header.navigation.search',
+        //   }),
+        // },
       ];
     }
 
@@ -64,13 +64,13 @@ export const UserHeaderNavigation: FC<{
         }),
         badge: <BookingsBadge />,
       },
-      {
-        icon: 'search',
-        href: '/app/search-pro',
-        title: intl.formatMessage({
-          id: 'user.header.navigation.search',
-        }),
-      },
+      // {
+      //   icon: 'search',
+      //   href: '/app/search-pro',
+      //   title: intl.formatMessage({
+      //     id: 'user.header.navigation.search',
+      //   }),
+      // },
     ];
   }, [session, intl, me?.userType, me?.onboardingCompleted]);
 
