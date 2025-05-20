@@ -1,4 +1,4 @@
-import type { FC, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import type { IconName } from '@/modules/core/components/icon';
 
@@ -7,7 +7,7 @@ export type SidebarLink = {
   name?: string;
   icon?: IconName;
   onClick?: () => void;
-  renderItem?: FC;
+  renderItem?: () => ReactNode;
 };
 
 export type SidebarLinkGroup = {
