@@ -6088,12 +6088,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"advanced-cropper@npm:~0.18.0":
-  version: 0.18.0
-  resolution: "advanced-cropper@npm:0.18.0"
+"advanced-cropper@npm:~0.17.1":
+  version: 0.17.1
+  resolution: "advanced-cropper@npm:0.17.1"
   dependencies:
     tslib: "npm:^2.4.0"
-  checksum: 10c0/a162e2f2741649bd75640dec0703996ffdf7de35390e5c14e6b0a1c3875dccc314552e576193370486d12533d42a12be894f05b1cfb6bd0e5364d7bfff21a2dd
+  checksum: 10c0/6e32a7a8c29da96ed707ae5bb1d46b0e4368bd16f60e4d0ad02172fd28be20853122a45525351c5811fce0a3dee5f9015cc89ec6b36067b9aee4f82d3edeed0c
   languageName: node
   linkType: hard
 
@@ -6595,10 +6595,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"attr-accept@npm:^2.2.2":
-  version: 2.2.2
-  resolution: "attr-accept@npm:2.2.2"
-  checksum: 10c0/f77c073ac9616a783f2df814a56f65f1c870193e8da6097139e30b3be84ecc19fb835b93e81315d1da4f19e80721f14e8c8075014205e00abd37b856fe030b80
+"attr-accept@npm:^2.2.4":
+  version: 2.2.5
+  resolution: "attr-accept@npm:2.2.5"
+  checksum: 10c0/9b4cb82213925cab2d568f71b3f1c7a7778f9192829aac39a281e5418cd00c04a88f873eb89f187e0bf786fa34f8d52936f178e62cbefb9254d57ecd88ada99b
   languageName: node
   linkType: hard
 
@@ -9576,12 +9576,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"file-selector@npm:^0.6.0":
-  version: 0.6.0
-  resolution: "file-selector@npm:0.6.0"
+"file-selector@npm:^2.1.0":
+  version: 2.1.2
+  resolution: "file-selector@npm:2.1.2"
   dependencies:
-    tslib: "npm:^2.4.0"
-  checksum: 10c0/477ca1b56274db9fee1a8a623c4bfef580389726a5fef843af8c1f2f17f70ec2d1e41b29115777c92e120a15f1cca734c6ef36bb48bfa2ee027c68da16cd0d28
+    tslib: "npm:^2.7.0"
+  checksum: 10c0/fe827e0e95410aacfcc3eabc38c29cc36055257f03c1c06b631a2b5af9730c142ad2c52f5d64724d02231709617bda984701f52bd1f4b7aca50fb6585a27c1d2
   languageName: node
   linkType: hard
 
@@ -13715,6 +13715,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss@npm:8.5.3":
+  version: 8.5.3
+  resolution: "postcss@npm:8.5.3"
+  dependencies:
+    nanoid: "npm:^3.3.8"
+    picocolors: "npm:^1.1.1"
+    source-map-js: "npm:^1.2.1"
+  checksum: 10c0/b75510d7b28c3ab728c8733dd01538314a18c52af426f199a3c9177e63eb08602a3938bfb66b62dc01350b9aed62087eabbf229af97a1659eb8d3513cec823b3
+  languageName: node
+  linkType: hard
+
 "postcss@npm:^8.2.14, postcss@npm:^8.4.23, postcss@npm:^8.4.33, postcss@npm:^8.4.38":
   version: 8.4.39
   resolution: "postcss@npm:8.4.39"
@@ -13723,17 +13734,6 @@ __metadata:
     picocolors: "npm:^1.0.1"
     source-map-js: "npm:^1.2.0"
   checksum: 10c0/16f5ac3c4e32ee76d1582b3c0dcf1a1fdb91334a45ad755eeb881ccc50318fb8d64047de4f1601ac96e30061df203f0f2e2edbdc0bfc49b9c57bc9fb9bedaea3
-  languageName: node
-  linkType: hard
-
-"postcss@npm:^8.5.3":
-  version: 8.5.3
-  resolution: "postcss@npm:8.5.3"
-  dependencies:
-    nanoid: "npm:^3.3.8"
-    picocolors: "npm:^1.1.1"
-    source-map-js: "npm:^1.2.1"
-  checksum: 10c0/b75510d7b28c3ab728c8733dd01538314a18c52af426f199a3c9177e63eb08602a3938bfb66b62dc01350b9aed62087eabbf229af97a1659eb8d3513cec823b3
   languageName: node
   linkType: hard
 
@@ -14141,25 +14141,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-advanced-cropper@npm:0.19.6":
-  version: 0.19.6
-  resolution: "react-advanced-cropper@npm:0.19.6"
+"react-advanced-cropper@npm:0.20.1":
+  version: 0.20.1
+  resolution: "react-advanced-cropper@npm:0.20.1"
   dependencies:
-    advanced-cropper: "npm:~0.18.0"
+    advanced-cropper: "npm:~0.17.1"
     classnames: "npm:^2.2.6"
     tslib: "npm:^2.4.0"
   peerDependencies:
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/3894d30d334fa7c692a28d457bddb63359c54eaf41788d16a6d279318fee941eb3dc07380b9908a5455496b1cc636718e9de30936ae1ab97c8a9c9155436220d
+    react: ">=16.8.0"
+  checksum: 10c0/e25ca82a00af084ad5f8d015856962797271285d5f74613d0aef9df2ba49bb26d8d2916154de0a0a09b6474cbed943d3a777f186c7769795fe818e02079bafd0
   languageName: node
   linkType: hard
 
-"react-circular-progressbar@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "react-circular-progressbar@npm:2.1.0"
+"react-circular-progressbar@npm:2.2.0":
+  version: 2.2.0
+  resolution: "react-circular-progressbar@npm:2.2.0"
   peerDependencies:
-    react: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/4019235abdf588baa97491fb53e258e83e467aecce14672120bca687719fa025efd4a3b63b44c7a59867ebba547ee6edf035f3b883585d46332c5334cf505c85
+    react: ">=0.14.0"
+  checksum: 10c0/77655598d48a826fff9a6fd2f6b61349bb2e762d1774c0bcd5a374916347e1d03821e51cd7ff0f294843f5088e569b0c266064af0a229403c510c238b3390a3b
   languageName: node
   linkType: hard
 
@@ -14202,36 +14202,36 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dropzone@npm:14.2.3":
-  version: 14.2.3
-  resolution: "react-dropzone@npm:14.2.3"
+"react-dropzone@npm:14.3.8":
+  version: 14.3.8
+  resolution: "react-dropzone@npm:14.3.8"
   dependencies:
-    attr-accept: "npm:^2.2.2"
-    file-selector: "npm:^0.6.0"
+    attr-accept: "npm:^2.2.4"
+    file-selector: "npm:^2.1.0"
     prop-types: "npm:^15.8.1"
   peerDependencies:
     react: ">= 16.8 || 18.0.0"
-  checksum: 10c0/6433517c53309aca1bb4f4a535aeee297345ca1e11b123676f46c7682ffab34a3428cbda106448fc92b5c9a5e0fa5d225bc188adebcd4d302366bf6b1f9c3fc1
+  checksum: 10c0/e17b1832783cda7b8824fe9370e99185d1abbdd5e4980b2985d6321c5768c8de18ff7b9ad550c809ee9743269dea608ff74d5208062754ce8377ad022897b278
   languageName: node
   linkType: hard
 
-"react-error-boundary@npm:4.0.13":
-  version: 4.0.13
-  resolution: "react-error-boundary@npm:4.0.13"
+"react-error-boundary@npm:6.0.0":
+  version: 6.0.0
+  resolution: "react-error-boundary@npm:6.0.0"
   dependencies:
     "@babel/runtime": "npm:^7.12.5"
   peerDependencies:
     react: ">=16.13.1"
-  checksum: 10c0/6f3e0e4d7669f680ccf49c08c9571519c6e31f04dcfc30a765a7136c7e6fbbbe93423dd5a9fce12107f8166e54133e9dd5c2079a00c7a38201ac811f7a28b8e7
+  checksum: 10c0/1914d600dee95a14f14af4afe9867b0d35c26c4f7826d23208800ba2a99728659029aad60a6ef95e13430b4d79c2c4c9b3585f50bf508450478760d2e4e732d8
   languageName: node
   linkType: hard
 
-"react-grid-gallery@npm:1.0.0":
-  version: 1.0.0
-  resolution: "react-grid-gallery@npm:1.0.0"
+"react-grid-gallery@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "react-grid-gallery@npm:1.0.1"
   peerDependencies:
     react: ">=16.14.0"
-  checksum: 10c0/416cb21e18b7e9dcc462b161efcbcb0a256e5d7ede03627486e29d4bb17a087a443a205ca59d88202775015eea3e4f29a806340bfb7d51895fd3d2fcdb671133
+  checksum: 10c0/0236e4f3bfbb0e63c2e5f9deb0b4a368a1672ba1edeea4d1d79eb61726f02d5555f983a116010802498e1d7fc25cea431434df9150026d39297cd6981fcd8bdd
   languageName: node
   linkType: hard
 
@@ -16154,18 +16154,18 @@ __metadata:
     next: "npm:14.2.23"
     next-auth: "npm:4.24.8"
     next-pwa: "npm:5.6.0"
-    postcss: "npm:^8.5.3"
+    postcss: "npm:8.5.3"
     prettier: "npm:3.3.2"
     prettier-plugin-tailwindcss: "npm:0.6.6"
     prisma: "npm:5.15.0"
     prisma-extension-soft-delete: "npm:1.0.1"
     react: "npm:18.3.1"
-    react-advanced-cropper: "npm:0.19.6"
-    react-circular-progressbar: "npm:^2.1.0"
+    react-advanced-cropper: "npm:0.20.1"
+    react-circular-progressbar: "npm:2.2.0"
     react-dom: "npm:18.3.1"
-    react-dropzone: "npm:14.2.3"
-    react-error-boundary: "npm:4.0.13"
-    react-grid-gallery: "npm:1.0.0"
+    react-dropzone: "npm:14.3.8"
+    react-error-boundary: "npm:6.0.0"
+    react-grid-gallery: "npm:^1.0.1"
     react-hook-form: "npm:7.51.5"
     react-international-phone: "npm:4.3.0"
     react-intl: "npm:6.6.8"
@@ -16652,7 +16652,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.8.0":
+"tslib@npm:^2.7.0, tslib@npm:^2.8.0":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62
