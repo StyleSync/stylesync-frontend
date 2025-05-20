@@ -26,7 +26,7 @@ const now = new Date();
 
 export const BookingPreview = () => {
   const params = useParams();
-  const code = params.code;
+  const code = params.code as string;
   const isContactOpen = useBoolean();
   const intl = useIntl();
 
