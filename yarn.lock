@@ -16248,7 +16248,7 @@ __metadata:
     usehooks-ts: "npm:3.1.1"
     utility-types: "npm:3.11.0"
     uuid: "npm:11.1.0"
-    yet-another-react-lightbox: "npm:3.19.0"
+    yet-another-react-lightbox: "npm:3.23.2"
     zod: "npm:3.23.8"
   languageName: unknown
   linkType: soft
@@ -17919,13 +17919,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yet-another-react-lightbox@npm:3.19.0":
-  version: 3.19.0
-  resolution: "yet-another-react-lightbox@npm:3.19.0"
+"yet-another-react-lightbox@npm:3.23.2":
+  version: 3.23.2
+  resolution: "yet-another-react-lightbox@npm:3.23.2"
   peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: 10c0/18c75b10b7a2c9989737f4b951a30cf900940d7b117ef18d9184ae611dcb9f6c8c1ce6e1b330e2b146e1acfd20db9007fcf5f7e72f6d6e3e6fbeb5fa6fcffd37
+    "@types/react": ^16 || ^17 || ^18 || ^19
+    "@types/react-dom": ^16 || ^17 || ^18 || ^19
+    react: ^16.8.0 || ^17 || ^18 || ^19
+    react-dom: ^16.8.0 || ^17 || ^18 || ^19
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    "@types/react-dom":
+      optional: true
+  checksum: 10c0/6ecfacedb16d96c050798e85cc0186e039f90d814a18ea4f04a76065e4803fc349e50a9d52dc8817c12d7c47fd091b32414e56b7d6402ad621197c5307d4ba3d
   languageName: node
   linkType: hard
 
