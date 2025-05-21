@@ -16181,7 +16181,7 @@ __metadata:
     stylelint-config-standard: "npm:36.0.0"
     superjson: "npm:2.2.2"
     svgo: "npm:3.3.2"
-    swiper: "npm:11.1.4"
+    swiper: "npm:11.2.7"
     tailwindcss: "npm:3.4.3"
     typescript: "npm:5.1.6"
     unique-string: "npm:3.0.0"
@@ -16318,10 +16318,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swiper@npm:11.1.4":
-  version: 11.1.4
-  resolution: "swiper@npm:11.1.4"
-  checksum: 10c0/a1e4b87f414f67f5da6a07b33d5ee20e54062d21f8bed88195d5d56decff6afddf683e130118b7fa12668de221f794ae63f6c073761b683a4b90bbd5eb585202
+"swiper@npm:11.2.7":
+  version: 11.2.7
+  resolution: "swiper@npm:11.2.7"
+  checksum: 10c0/6ac060760ad392e854253f068df10757cf684a8997c34ef26ce0286434d3411caa15d87ad48e0a248ba01c1b63d9d43116852e066ca500637187bf00260ec09a
   languageName: node
   linkType: hard
 
