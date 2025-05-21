@@ -16249,7 +16249,7 @@ __metadata:
     utility-types: "npm:3.11.0"
     uuid: "npm:11.1.0"
     yet-another-react-lightbox: "npm:3.23.2"
-    zod: "npm:3.23.8"
+    zod: "npm:3.25.16"
   languageName: unknown
   linkType: soft
 
@@ -17976,9 +17976,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:3.23.8":
-  version: 3.23.8
-  resolution: "zod@npm:3.23.8"
-  checksum: 10c0/8f14c87d6b1b53c944c25ce7a28616896319d95bc46a9660fe441adc0ed0a81253b02b5abdaeffedbeb23bdd25a0bf1c29d2c12dd919aef6447652dd295e3e69
+"zod@npm:3.25.16":
+  version: 3.25.16
+  resolution: "zod@npm:3.25.16"
+  checksum: 10c0/c2d687097d8c1e9ad160f719ef1e8dcd7df4b21662478514b52fa703aa9b3f32cd5ef8a2c4cbae8c63d349b0fbd6014bbc8b6994a2632ec6df101bd622295c19
   languageName: node
   linkType: hard
