@@ -24,10 +24,8 @@ export const ProfessionalSettingsAbout: FC = () => {
   });
 
   // mutations
-  const userUpdate = trpc.user.update.useMutation({ useErrorBoundary: false });
-  const proUpdate = trpc.professional.update.useMutation({
-    useErrorBoundary: false,
-  });
+  const userUpdate = trpc.user.update.useMutation();
+  const proUpdate = trpc.professional.update.useMutation();
   const avatarUpload = useAvatarUploadMutation();
   // memo
   const initialValues = useMemo<
@@ -48,7 +46,7 @@ export const ProfessionalSettingsAbout: FC = () => {
     [me]
   );
   const isSaveLoading =
-    userUpdate.isLoading || proUpdate.isLoading || avatarUpload.isLoading;
+    userUpdate.isPending || proUpdate.isPending || avatarUpload.isPending;
 
   const handleSubmit = useCallback(
     async (
@@ -119,7 +117,7 @@ export const ProfessionalSettingsAbout: FC = () => {
     <ProfileSettingsTabContentLayout
       title={'professional.settings.about.title'}
       icon='info'
-      isLoading={meQuery.isLoading}
+      isLoading={meQuery.isPending}
       actions={[
         {
           text: intl.formatMessage({ id: 'button.save' }),

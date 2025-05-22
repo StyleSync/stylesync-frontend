@@ -53,7 +53,7 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
   return (
     <div
       className={clsx(styles.root, {
-        'opacity-[0.7]': serviceOnProfessionalDeleteMutation.isLoading,
+        'opacity-[0.7]': serviceOnProfessionalDeleteMutation.isPending,
       })}
       ref={rootRef}
     >
@@ -73,7 +73,7 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
           <Button
             aria-label='Edit service'
             icon='pencil'
-            disabled={serviceOnProfessionalDeleteMutation.isLoading}
+            disabled={serviceOnProfessionalDeleteMutation.isPending}
             variant='outlined'
             onClick={isEdit.setTrue}
           />
@@ -82,7 +82,7 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
             aria-label='Delete service'
             icon='trash'
             variant='danger'
-            isLoading={serviceOnProfessionalDeleteMutation.isLoading}
+            isLoading={serviceOnProfessionalDeleteMutation.isPending}
             onClick={handleDelete}
           />
         </div>

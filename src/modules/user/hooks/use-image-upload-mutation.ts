@@ -11,14 +11,14 @@ export const useImageUploadMutation = (
     { name: string; blob: Blob }
   >
 ) => {
-  return useMutation<PutBlobResult, Error, { name: string; blob: Blob }>(
-    [AVATAR_UPLOAD_CACHE_KEY],
-    async (file) => {
+  return useMutation({
+    mutationKey: [AVATAR_UPLOAD_CACHE_KEY],
+    mutationFn: async (file: { name: string; blob: Blob }) => {
       return upload(file.name, file.blob, {
         access: 'public',
         handleUploadUrl: '/api/portfolio/upload',
       });
     },
-    options
-  );
+    ...options,
+  });
 };

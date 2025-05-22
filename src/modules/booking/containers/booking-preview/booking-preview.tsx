@@ -1,4 +1,5 @@
 'use client';
+import { TRPCClientError } from '@trpc/client';
 import { getHours, getMinutes, isAfter } from 'date-fns';
 import { useParams } from 'next/navigation';
 import { useIntl } from 'react-intl';
@@ -18,6 +19,7 @@ import { formatDuration } from '@/modules/core/utils/time.utils';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { getAddressGoogleLink } from '@/modules/location/utils/address.utils';
 import { UserContactPopup } from '@/modules/user/components/user-contact-popup';
+import type { AppRouter } from '@/server/routers/_app';
 
 import 'react-circular-progressbar/dist/styles.css';
 
@@ -58,7 +60,8 @@ export const BookingPreview = () => {
       id: bookingDetails.data?.serviceProfessional?.professional?.id || '',
     },
     {
-      retry: (retryCount, error) => onQueryRetry(retryCount, error),
+      retry: (retryCount, error) =>
+        onQueryRetry(retryCount, error as TRPCClientError<AppRouter>),
       // @ts-ignore
       enabled: !!bookingDetails.data?.serviceProfessional?.professional?.id,
     }

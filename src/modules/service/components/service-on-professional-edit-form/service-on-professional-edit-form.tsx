@@ -286,8 +286,8 @@ export const ServiceOnProfessionalEditForm: FC<
               text={intl.formatMessage({ id: 'button.save' })}
               type='submit'
               isLoading={
-                serviceOnProfessionalUpdateMutation.isLoading ||
-                serviceOnProfessionalCreateMutation.isLoading
+                serviceOnProfessionalUpdateMutation.isPending ||
+                serviceOnProfessionalCreateMutation.isPending
               }
             />
           </div>

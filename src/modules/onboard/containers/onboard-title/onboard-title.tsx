@@ -36,8 +36,8 @@ export const OnboardTitle: FC = () => {
   //
   const isLoading =
     meQuery.isLoading ||
-    meUpdateMutation.isLoading ||
-    professionalCreateMutation.isLoading;
+    meUpdateMutation.isPending ||
+    professionalCreateMutation.isPending;
 
   const skip = useCallback(async () => {
     if (!me) {

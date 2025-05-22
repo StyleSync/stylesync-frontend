@@ -7,14 +7,14 @@ const AVATAR_UPLOAD_CACHE_KEY = 'AVATAR_UPLOAD';
 export const useAvatarUploadMutation = (
   options?: UseMutationOptions<PutBlobResult, Error, File>
 ) => {
-  return useMutation<PutBlobResult, Error, File>(
-    [AVATAR_UPLOAD_CACHE_KEY],
-    async (file: File) => {
+  return useMutation({
+    mutationKey: [AVATAR_UPLOAD_CACHE_KEY],
+    mutationFn: async (file: File) => {
       return upload(file.name, file, {
         access: 'public',
         handleUploadUrl: '/api/avatar/upload',
       });
     },
-    options
-  );
+    ...options,
+  });
 };

@@ -155,9 +155,9 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
             : intl.formatMessage({ id: 'button.next' }),
         form: formId,
         isLoading:
-          professionalUpdateMutation.isLoading ||
-          professionalCreateMutation.isLoading ||
-          meUpdateMutation.isLoading,
+          professionalUpdateMutation.isPending ||
+          professionalCreateMutation.isPending ||
+          meUpdateMutation.isPending,
         disabled: meQuery.isLoading || meQuery.isError,
         type: 'submit',
       }}

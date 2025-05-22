@@ -53,7 +53,7 @@ export const BookingsList: FC<BookingsListProps> = ({ professionalId }) => {
   const pastEvents =
     pastEventsQuery.data?.pages.map((page) => page.items).flat() || [];
 
-  if (upcomingEventsQuery.isLoading || pastEventsQuery.isLoading) {
+  if (upcomingEventsQuery.isPending || pastEventsQuery.isPending) {
     return (
       <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
         <Spinner size='large' />

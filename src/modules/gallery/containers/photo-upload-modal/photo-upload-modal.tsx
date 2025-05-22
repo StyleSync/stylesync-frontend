@@ -304,9 +304,9 @@ export const PhotoUploadModal: FC<PhotoUploadModalProps> = ({
           onNextClick={handleNextClick}
           onSaveClick={handleSaveClick}
           isSaveLoading={
-            uploadMutation.isLoading ||
-            portfolioCreateMutation.isLoading ||
-            portfolioUpdateMutation.isLoading
+            uploadMutation.isPending ||
+            portfolioCreateMutation.isPending ||
+            portfolioUpdateMutation.isPending
           }
         />
         <div className='flex h-[100vh] flex-col md:h-[70vh] md:flex-row'>

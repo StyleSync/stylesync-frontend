@@ -29,7 +29,7 @@ export function ProfileView({ session }: ProfileViewProps) {
   const router = useRouter();
   const intl = useIntl();
 
-  const { data, isLoading, isError } = trpc.user.checkNickname.useQuery(
+  const { data, isPending, isError } = trpc.user.checkNickname.useQuery(
     {
       nickname: queryId,
     },
@@ -45,7 +45,7 @@ export function ProfileView({ session }: ProfileViewProps) {
     [data, queryId]
   );
 
-  const { isLoading: isProfessionalLoading, isError: isProfessionalError } =
+  const { isPending: isProfessionalPending, isError: isProfessionalError } =
     trpc.professional.get.useQuery(
       {
         id: userId,
@@ -60,7 +60,7 @@ export function ProfileView({ session }: ProfileViewProps) {
       }
     );
 
-  if (isLoading || isProfessionalLoading) {
+  if (isPending || isProfessionalPending) {
     return (
       <div className='z-50 flex h-[100dvh] items-center justify-center'>
         <Spinner size={'large'} />
