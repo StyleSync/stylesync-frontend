@@ -66,16 +66,16 @@ export const BookingRescheduleForm: FC<BookingRescheduleFormProps> = ({
             }),
           });
 
-          const queryKey = trpc.booking.get.getQueryKey({
+          const queryKey = getQueryKey(trpc.booking.get, {
             id: bookingId,
             expand: ['serviceProfessional'],
           });
 
           const listQueryKey = getQueryKey(trpc.booking.list);
 
-          queryClient.invalidateQueries(queryKey);
+          queryClient.invalidateQueries({ queryKey });
 
-          queryClient.invalidateQueries(listQueryKey);
+          queryClient.invalidateQueries({ queryKey: listQueryKey });
 
           onClose();
         },
@@ -169,7 +169,7 @@ export const BookingRescheduleForm: FC<BookingRescheduleFormProps> = ({
             className='flex-1 md:flex-[unset]'
             text={intl.formatMessage({ id: 'button.save' })}
             onClick={handleDateUpdate}
-            isLoading={bookingReschedule.isLoading}
+            isLoading={bookingReschedule.isPending}
             disabled={!selectedSlot}
           />
         </div>

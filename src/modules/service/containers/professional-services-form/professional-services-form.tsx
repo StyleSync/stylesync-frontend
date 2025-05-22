@@ -63,7 +63,7 @@ export const ProfessionalServicesForm: FC<ProfessionalServicesFormProps> = ({
         blackList={sortedServiceOnProfessionalGroups.map(
           (group) => group.service.id
         )}
-        isLoading={serviceListData.isLoading}
+        isLoading={serviceListData.isPending}
       />
 
       <InfinityListController

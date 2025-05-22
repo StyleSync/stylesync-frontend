@@ -1,4 +1,4 @@
-import { type FC, useCallback, useEffect, useRef } from 'react';
+import { type FC, RefObject, useCallback, useEffect, useRef } from 'react';
 
 import * as RadixDialog from '@radix-ui/react-dialog';
 import {
@@ -124,12 +124,15 @@ export const DialogBottom: FC<BottomActionsProps> = ({
     [screen, _isOpen.setFalse, onOpenChange]
   );
 
-  const touchDrag = useTouchDirectionDrag(contentRef, {
-    direction: 'vertical',
-    disabled: deviceType === 'mobile',
-    onDrag: handleDrag,
-    onDragEnd: handleDragEnd,
-  });
+  const touchDrag = useTouchDirectionDrag(
+    contentRef as RefObject<HTMLElement>,
+    {
+      direction: 'vertical',
+      disabled: deviceType === 'mobile',
+      onDrag: handleDrag,
+      onDragEnd: handleDragEnd,
+    }
+  );
 
   return (
     <RadixDialog.Root open={_isOpen.value} onOpenChange={onOpenChange}>

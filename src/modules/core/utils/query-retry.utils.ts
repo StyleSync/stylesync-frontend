@@ -1,9 +1,10 @@
-import type { TRPCClientErrorBase } from '@trpc/client';
-import type { DefaultErrorShape } from '@trpc/server';
+import { TRPCClientError } from '@trpc/client';
 
-export const onQueryRetry = <T extends DefaultErrorShape>(
+import type { AppRouter } from '@/server/routers/_app';
+
+export const onQueryRetry = (
   retryCount: number,
-  error: TRPCClientErrorBase<T>
+  error: TRPCClientError<AppRouter>
 ) => {
   if (error.data?.code === 'NOT_FOUND') {
     return false;

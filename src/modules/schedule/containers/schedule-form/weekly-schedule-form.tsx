@@ -1,6 +1,7 @@
 import { type FC, useCallback } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
+import { getQueryKey } from '@trpc/react-query';
 import clsx from 'clsx';
 import { useIntl } from 'react-intl';
 
@@ -40,11 +41,11 @@ export const WeeklyScheduleForm: FC<WeeklyScheduleFormProps> = () => {
       return;
     }
 
-    const queryKey = trpc.schedule.getWeekSchedule.getQueryKey({
-      professionalId: me.professional.id,
+    void queryClient.invalidateQueries({
+      queryKey: getQueryKey(trpc.schedule.getWeekSchedule, {
+        professionalId: me.professional.id,
+      }),
     });
-
-    void queryClient.invalidateQueries(queryKey);
   }, [me, queryClient]);
 
   return (

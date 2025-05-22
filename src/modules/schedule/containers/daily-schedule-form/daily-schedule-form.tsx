@@ -33,10 +33,6 @@ import { isScheduleDayOff } from '@/modules/schedule/utils/schedule.utils';
 
 import { DailyScheduleFormProps } from './daily-schedule-form.interface';
 
-const crudMutationOpts = {
-  useErrorBoundary: true,
-};
-
 const workHoursSchema = z.string().refine((args) => {
   try {
     const [start, end] = parseTimeRange(args);
@@ -142,11 +138,9 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
       !isScheduleDayOff(specificDayScheduleQuery.data)) ||
       isDirty);
 
-  const dailyScheduleCreate =
-    trpc.schedule.createBulk.useMutation(crudMutationOpts);
+  const dailyScheduleCreate = trpc.schedule.createBulk.useMutation();
 
-  const dailyScheduleDelete =
-    trpc.schedule.delete.useMutation(crudMutationOpts);
+  const dailyScheduleDelete = trpc.schedule.delete.useMutation();
 
   const onSubmit = (formValues: DayScheduleFormValues) => {
     const existingSchedule = specificDayScheduleQuery.data;
@@ -574,7 +568,7 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
               variant='primary'
               type='submit'
               isLoading={
-                dailyScheduleCreate.isLoading || dailyScheduleDelete.isLoading
+                dailyScheduleCreate.isPending || dailyScheduleDelete.isPending
               }
             />
           </div>

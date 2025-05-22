@@ -6,7 +6,10 @@ import {
   useState,
 } from 'react';
 
-import type { GeocodingFeature } from '@mapbox/search-js-core';
+import type {
+  GeocodingFeature,
+  GeocodingResponse,
+} from '@mapbox/search-js-core';
 import { useBoolean, useDebounceValue } from 'usehooks-ts';
 
 import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
@@ -30,7 +33,8 @@ export const LocationSearch: FC<LocationSearchProps> = ({
   const addressSuggestions = useGeocodingSuggestionsQuery(queryDebounced, {
     types: 'address',
   });
-  const suggestions = addressSuggestions.data?.features || [];
+  const suggestions =
+    (addressSuggestions.data as GeocodingResponse)?.features || [];
 
   useEffect(() => {
     if (!value) {
@@ -79,7 +83,7 @@ export const LocationSearch: FC<LocationSearchProps> = ({
 
   return (
     <DropdownMenu<GeocodingFeature>
-      items={suggestions.map((address) => ({
+      items={suggestions.map((address: GeocodingFeature) => ({
         id: address.id,
         text: address.properties.full_address,
         data: address,

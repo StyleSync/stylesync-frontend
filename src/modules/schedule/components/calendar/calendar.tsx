@@ -45,12 +45,18 @@ export const Calendar: FC<CalendarProps> = () => {
     },
     {
       enabled: !!me.professional?.id && me.userType === 'PROFESSIONAL',
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
   );
 
-  const { data: customerEvents } = trpc.booking.myBookings.useInfiniteQuery({
-    expand: ['serviceProfessional'],
-  });
+  const { data: customerEvents } = trpc.booking.myBookings.useInfiniteQuery(
+    {
+      expand: ['serviceProfessional'],
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    }
+  );
 
   const events = professionalEvents || customerEvents;
 

@@ -5,9 +5,7 @@ import { trpc } from '@/modules/core/utils/trpc.utils';
 const MUTATION_KEY = 'SERVICE_ON_PROFESSIONAL_GROUP_DELETE';
 
 export const useServiceOnProfessionalGroupDelete = () => {
-  const deleteMutation = trpc.serviceOnProfessional.delete.useMutation({
-    useErrorBoundary: false,
-  });
+  const deleteMutation = trpc.serviceOnProfessional.delete.useMutation();
 
   return useMutation({
     mutationKey: [MUTATION_KEY],

@@ -1,4 +1,7 @@
-import type { GeocodingOptions } from '@mapbox/search-js-core';
+import type {
+  GeocodingOptions,
+  GeocodingResponse,
+} from '@mapbox/search-js-core';
 import { useGeocodingCore } from '@mapbox/search-js-react';
 import { useQuery } from '@tanstack/react-query';
 
@@ -15,12 +18,12 @@ export const useGeocodingSuggestionsQuery = (
     accessToken: process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
   });
 
-  return useQuery({
+  return useQuery<GeocodingResponse>({
     queryKey: [GEOCODING_SUGGESTIONS_CACHE_KEY, searchText, optionsArg],
     queryFn: () => {
       return geocodingCore.suggest(searchText, optionsArg);
     },
-    keepPreviousData: true,
+    placeholderData: (previousData) => previousData,
     enabled: !!searchText && (queryOptions?.enabled ?? true),
   });
 };

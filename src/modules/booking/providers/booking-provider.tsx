@@ -128,7 +128,7 @@ export const BookingProvider: FC<ChildrenProp & { userId: string }> = ({
           onOpenChange={isBookingOpen.setValue}
           isOpen={isBookingOpen.value}
           onConfirm={handleConfirm}
-          isLoading={bookingCreate.isLoading}
+          isLoading={bookingCreate.isPending}
         />
       )}
       <BookingModalSuccess

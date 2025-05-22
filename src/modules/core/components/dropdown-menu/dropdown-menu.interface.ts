@@ -1,4 +1,4 @@
-import type { FC, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import type { IconName } from '@/modules/core/components/icon';
 import type { PopoverProps } from '@/modules/core/components/popover/popover.interface';
@@ -22,7 +22,7 @@ export type DropdownMenuProps<OptionData = undefined> = {
   onClose: () => void;
   isLoading?: boolean;
   onSelect?: (item: DropdownItem<OptionData>) => void;
-  render?: FC<DropdownItem<OptionData>>;
+  render?: (item: DropdownItem<OptionData>) => ReactNode;
   popoverProps?: Partial<Omit<PopoverProps, 'onClose' | 'isOpen' | 'trigger'>>;
   typographyProps?: TypographyProps;
   classes?: {

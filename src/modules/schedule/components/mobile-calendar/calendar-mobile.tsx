@@ -62,6 +62,7 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
     },
     {
       enabled: !!me.professional?.id && me.userType === 'PROFESSIONAL',
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
   );
 
@@ -78,6 +79,7 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
     },
     {
       enabled: me.userType === 'CUSTOMER',
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
   );
 

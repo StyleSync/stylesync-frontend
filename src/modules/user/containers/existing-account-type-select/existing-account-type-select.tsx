@@ -44,7 +44,7 @@ export const ExistingAccountTypeSelect: FC<
           text={intl.formatMessage({ id: 'button.save' })}
           onClick={handleSave}
           disabled={!userType}
-          isLoading={userUpdateMutation.isLoading}
+          isLoading={userUpdateMutation.isPending}
         />
       </div>
     </div>

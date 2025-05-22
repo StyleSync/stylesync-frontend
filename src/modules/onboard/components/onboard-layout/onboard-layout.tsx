@@ -45,9 +45,9 @@ export const OnboardLayout: FC<OnboardLayoutProps> = ({
   } = trpc.professional.create.useMutation();
 
   const isLoading =
-    meQuery.isLoading ||
-    meUpdateMutation.isLoading ||
-    professionalCreateMutation.isLoading;
+    meQuery.isPending ||
+    meUpdateMutation.isPending ||
+    professionalCreateMutation.isPending;
 
   const skip = useCallback(async () => {
     if (!me) {

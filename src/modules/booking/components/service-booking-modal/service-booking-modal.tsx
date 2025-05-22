@@ -1,5 +1,6 @@
 import { type FC, useCallback, useEffect, useId, useState } from 'react';
 
+import { type TRPCClientError } from '@trpc/client';
 import { startOfToday } from 'date-fns';
 import Image from 'next/image';
 import { useIntl } from 'react-intl';
@@ -20,6 +21,7 @@ import { formatI18n } from '@/modules/internationalization/utils/data-fns-intern
 import { ServiceOnProfessionalSelect } from '@/modules/service/components/service-on-professional-select';
 import type { ServiceOnProfessionalListItem } from '@/modules/service/types/service.types';
 import { getFullName } from '@/modules/user/utils/user.utils';
+import type { AppRouter } from '@/server/routers/_app';
 import { type AvailableBookingTime } from '@/server/types';
 
 import { type ServiceBookingModalProps } from './service-booking-modal.interface';
@@ -63,7 +65,8 @@ export const ServiceBookingModal: FC<
       id: professional.id || '',
     },
     {
-      retry: (retryCount, error) => onQueryRetry(retryCount, error),
+      retry: (retryCount, error) =>
+        onQueryRetry(retryCount, error as TRPCClientError<AppRouter>),
       enabled: !!professional.id,
     }
   );

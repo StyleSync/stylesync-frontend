@@ -160,7 +160,7 @@ export const AlbumAddModal: FC<
           />
           <Button
             isLoading={
-              createAlbumMutation.isLoading || renameAlbumMutation.isLoading
+              createAlbumMutation.isPending || renameAlbumMutation.isPending
             }
             type='submit'
             text={intl.formatMessage({ id: 'button.save' })}

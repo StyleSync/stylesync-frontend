@@ -61,7 +61,7 @@ export const GalleyImage: FC<GalleryImageProps> = ({ image }) => {
     <>
       <div
         className={clsx(styles.item, {
-          [styles.item_loading]: deletePhotoMutation.isLoading,
+          [styles.item_loading]: deletePhotoMutation.isPending,
         })}
         tabIndex={0}
       >

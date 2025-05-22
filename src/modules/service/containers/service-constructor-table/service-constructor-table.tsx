@@ -101,7 +101,7 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
             icon='trash'
             variant='danger'
             type='button'
-            isLoading={serviceOnProfessionalGroupDelete.isLoading}
+            isLoading={serviceOnProfessionalGroupDelete.isPending}
             onClick={handleTableRemoveClick}
           />
         </div>

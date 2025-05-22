@@ -98,15 +98,14 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
         },
         {
           onSuccess: () => {
-            const queryKey = trpc.booking.get.getQueryKey({
+            const queryKey = getQueryKey(trpc.booking.get, {
               id: bookingId || '',
               expand: ['serviceProfessional'],
             });
             const listQueryKey = getQueryKey(trpc.booking.list);
 
-            queryClient.invalidateQueries(queryKey);
-
-            queryClient.invalidateQueries(listQueryKey);
+            queryClient.invalidateQueries({ queryKey });
+            queryClient.invalidateQueries({ queryKey: listQueryKey });
           },
         }
       );
@@ -123,11 +122,11 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
       },
       {
         onSuccess: () => {
-          const queryKey = trpc.booking.list.getQueryKey();
+          const queryKey = getQueryKey(trpc.booking.list);
 
           onClose();
 
-          queryClient.invalidateQueries(queryKey);
+          queryClient.invalidateQueries({ queryKey });
 
           showToast({
             variant: 'info',
@@ -159,7 +158,7 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
           text: intl.formatMessage({ id: 'button.remove.history' }),
           icon: 'trash',
           variant: 'danger',
-          isLoading: bookingDeleteMutation.isLoading,
+          isLoading: bookingDeleteMutation.isPending,
         },
       ];
     }
@@ -218,7 +217,7 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
     return [];
   }, [
     formattedData,
-    bookingDeleteMutation.isLoading,
+    bookingDeleteMutation.isPending,
     intl,
     me?.userType,
     bookingQuery.data?.endTime,
@@ -281,7 +280,7 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
       >
         <div className={styles.root}>
           <Placeholder
-            isActive={!bookingId || bookingQuery.isLoading || !formattedData}
+            isActive={!bookingId || bookingQuery.isPending || !formattedData}
             placeholder={
               <div className='p-10'>
                 <Spinner size='medium' />
@@ -377,7 +376,7 @@ export const BookingInfoDialog: FC<BookingInfoDialogProps> = ({
                         text={action.text}
                         variant={action.variant}
                         disabled={
-                          bookingStatusUpdateMutation.isLoading &&
+                          bookingStatusUpdateMutation.isPending &&
                           ['reject', 'approve'].includes(action.id)
                         }
                         typographyProps={{

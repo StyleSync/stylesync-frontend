@@ -105,7 +105,7 @@ export const AlbumCard: FC<AlbumCardProps> = ({
       className={clsx(styles.root, {
         [styles.root_hidden]: hidden,
         [styles.root_active]: isActive,
-        [styles.root_loading]: deleteAlbumMutation.isLoading,
+        [styles.root_loading]: deleteAlbumMutation.isPending,
       })}
       ref={rootRef}
       onClick={!isActive ? onClick : undefined}

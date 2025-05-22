@@ -1,6 +1,6 @@
 import React, { type FC } from 'react';
 
-import useElementSize from '@custom-react-hooks/use-element-size';
+import { useElementSize } from '@custom-react-hooks/use-element-size';
 import clsx from 'clsx';
 import Image from 'next/image';
 

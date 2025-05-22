@@ -14,8 +14,9 @@ type UseWeekdayScheduleSaveParams = {
   scheduleId?: string;
 };
 
-const crudMutationOpts = {
-  useErrorBoundary: true,
+type BreakWithTimerange = {
+  id?: string;
+  timerange: string;
 };
 
 export const useWeekdayScheduleSaveMutation = (
@@ -41,114 +42,111 @@ export const useWeekdayScheduleSaveMutation = (
     }
   );
   // mutations
-  const { mutateAsync: scheduleCreate } =
-    trpc.schedule.create.useMutation(crudMutationOpts);
-  const { mutateAsync: scheduleUpdate } =
-    trpc.schedule.update.useMutation(crudMutationOpts);
-  const { mutateAsync: scheduleRemove } =
-    trpc.schedule.delete.useMutation(crudMutationOpts);
-  const { mutateAsync: breakCreate } =
-    trpc.break.create.useMutation(crudMutationOpts);
-  const { mutateAsync: breakUpdate } =
-    trpc.break.update.useMutation(crudMutationOpts);
-  const { mutateAsync: breakRemove } =
-    trpc.break.delete.useMutation(crudMutationOpts);
+  const { mutateAsync: scheduleCreate } = trpc.schedule.create.useMutation();
+  const { mutateAsync: scheduleUpdate } = trpc.schedule.update.useMutation();
+  const { mutateAsync: scheduleRemove } = trpc.schedule.delete.useMutation();
+  const { mutateAsync: breakCreate } = trpc.break.create.useMutation();
+  const { mutateAsync: breakUpdate } = trpc.break.update.useMutation();
+  const { mutateAsync: breakRemove } = trpc.break.delete.useMutation();
 
   return useMutation<
     string | undefined,
     Error,
     DailySchedule & { weekday: Day }
-  >(async (scheduleToSave) => {
-    const validation = validateDailySchedule(scheduleToSave, intl);
+  >({
+    mutationFn: async (scheduleToSave: DailySchedule & { weekday: Day }) => {
+      const validation = validateDailySchedule(scheduleToSave, intl);
 
-    if (!validation.isValid) {
-      throw new Error(validation.error.message);
-    }
+      if (!validation.isValid) {
+        throw new Error(validation.error.message);
+      }
 
-    if (!scheduleToSave.isActive) {
-      // !isActive means this day is day off and need to remove schedule & breaks
+      if (!scheduleToSave.isActive) {
+        // !isActive means this day is day off and need to remove schedule & breaks
 
-      if (scheduleBreaks) {
-        for (const breakToRemove of scheduleBreaks) {
-          await breakRemove({
-            id: breakToRemove.id,
-          });
+        if (scheduleBreaks) {
+          for (const breakToRemove of scheduleBreaks) {
+            await breakRemove({
+              id: breakToRemove.id,
+            });
+          }
         }
+
+        if (schedule) {
+          await scheduleRemove({ id: schedule.id });
+        }
+
+        return;
       }
 
-      if (schedule) {
-        await scheduleRemove({ id: schedule.id });
-      }
-
-      return;
-    }
-
-    const [start, end] = parseTimeRange(
-      scheduleToSave.workHours,
-      'date',
-      Date.now()
-    );
-
-    let scheduleId: string;
-
-    if (schedule) {
-      await scheduleUpdate({
-        id: schedule.id,
-        start: start.toISOString(),
-        end: end.toISOString(),
-      });
-      scheduleId = schedule.id;
-    } else {
-      const { id } = await scheduleCreate({
-        day: scheduleToSave.weekday,
-        start: start.toISOString(),
-        end: end.toISOString(),
-        isSpecificDay: false,
-      });
-
-      scheduleId = id;
-    }
-
-    const breaks = scheduleToSave.breaks.map((item) => {
-      const [breakStart, breakEnd] = parseTimeRange(
-        item.timerange,
+      const [start, end] = parseTimeRange(
+        scheduleToSave.workHours,
         'date',
         Date.now()
       );
 
-      return {
-        id: item.id,
-        start: breakStart,
-        end: breakEnd,
-      };
-    });
+      let scheduleId: string;
 
-    const { create, update, remove } = getCrudActionsOfList<
-      Optional<Break, 'scheduleId' | 'createdAt' | 'updatedAt'>
-    >(scheduleBreaks ?? [], breaks, isBreaksEqual);
+      if (schedule) {
+        await scheduleUpdate({
+          id: schedule.id,
+          start: start.toISOString(),
+          end: end.toISOString(),
+        });
+        scheduleId = schedule.id;
+      } else {
+        const { id } = await scheduleCreate({
+          day: scheduleToSave.weekday,
+          start: start.toISOString(),
+          end: end.toISOString(),
+          isSpecificDay: false,
+        });
 
-    for (const item of create) {
-      await breakCreate({
-        start: item.start.toISOString(),
-        end: item.end.toISOString(),
-        scheduleId,
+        scheduleId = id;
+      }
+
+      const breaks = scheduleToSave.breaks.map((item: BreakWithTimerange) => {
+        const [breakStart, breakEnd] = parseTimeRange(
+          item.timerange,
+          'date',
+          Date.now()
+        );
+
+        return {
+          id: item.id,
+          start: breakStart,
+          end: breakEnd,
+        };
       });
-    }
 
-    for (const item of update) {
-      await breakUpdate({
-        id: item.id,
-        start: item.start.toISOString(),
-        end: item.end.toISOString(),
-      });
-    }
+      const { create, update, remove } = getCrudActionsOfList<
+        Optional<Break, 'scheduleId' | 'createdAt' | 'updatedAt'>
+      >(scheduleBreaks ?? [], breaks, isBreaksEqual);
 
-    for (const item of remove) {
-      await breakRemove({
-        id: item.id,
-      });
-    }
+      for (const item of create) {
+        await breakCreate({
+          start: item.start.toISOString(),
+          end: item.end.toISOString(),
+          scheduleId,
+        });
+      }
 
-    return scheduleId;
-  }, options);
+      for (const item of update) {
+        await breakUpdate({
+          id: item.id,
+          start: item.start.toISOString(),
+          end: item.end.toISOString(),
+        });
+      }
+
+      for (const item of remove) {
+        await breakRemove({
+          id: item.id,
+        });
+      }
+
+      return scheduleId;
+    },
+    ...options,
+  });
 };

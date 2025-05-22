@@ -1,4 +1,4 @@
-import { type FC, useMemo, useRef } from 'react';
+import { type FC, RefObject, useMemo, useRef } from 'react';
 
 import clsx from 'clsx';
 import { useIntl } from 'react-intl';
@@ -17,7 +17,7 @@ export const BookingInfoCard: FC<BookingInfoCardProps> = ({
 }) => {
   const intl = useIntl();
   // refs
-  const rootRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null) as RefObject<HTMLElement>;
   // memo
   const { day, month, time } = useMemo(() => {
     return {
