@@ -5,6 +5,7 @@ import type { EventInput } from '@fullcalendar/core';
 import allLocale from '@fullcalendar/core/locales-all';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import clsx from 'clsx';
+import { endOfMonth, startOfMonth } from 'date-fns';
 import dynamic from 'next/dynamic';
 import { useIntl } from 'react-intl';
 
@@ -42,6 +43,9 @@ export const Calendar: FC<CalendarProps> = () => {
     {
       expand: ['serviceProfessional'],
       professionalId: me.professional?.id,
+      limit: 100,
+      startDate: startOfMonth(new Date()).toISOString(),
+      endDate: endOfMonth(new Date()).toISOString(),
     },
     {
       enabled: !!me.professional?.id && me.userType === 'PROFESSIONAL',
@@ -52,6 +56,9 @@ export const Calendar: FC<CalendarProps> = () => {
   const { data: customerEvents } = trpc.booking.myBookings.useInfiniteQuery(
     {
       expand: ['serviceProfessional'],
+      limit: 100,
+      startDate: startOfMonth(new Date()).toISOString(),
+      endDate: endOfMonth(new Date()).toISOString(),
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
