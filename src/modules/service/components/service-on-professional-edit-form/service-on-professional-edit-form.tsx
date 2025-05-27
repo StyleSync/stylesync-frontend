@@ -1,6 +1,7 @@
 import { type FC, useCallback, useEffect } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { type Currency } from '@prisma/client';
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
 import { Controller, useForm } from 'react-hook-form';
@@ -12,7 +13,7 @@ import { Dialog } from '@/modules/core/components/dialog';
 import { EditorField } from '@/modules/core/components/editor-field';
 import { PriceField } from '@/modules/core/components/price-field';
 import { TextField } from '@/modules/core/components/text-field';
-import { TimeField } from '@/modules/core/components/time-field';
+import { TimeField } from '@/modules/core/components/time-field-v2/time-field';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { showToast } from '@/modules/core/providers/toast-provider';
 import {
@@ -37,7 +38,7 @@ const validationSchema = z.object({
     .refine((arg) => Time.toMinuteDuration(arg as TimeValue) > 0),
   price: z.object({
     value: z.string().refine((arg) => !isNaN(+arg) && +arg > 0),
-    currency: z.string(),
+    currency: z.custom<Currency>(),
   }),
   description: z.string(),
 });
@@ -84,6 +85,15 @@ export const ServiceOnProfessionalEditForm: FC<
   useEffect(() => {
     form.reset(mapServiceOnProfessionalToFormValues(data));
   }, [data, form, form.reset]);
+
+  const formatValue = useCallback(
+    (value: string) => {
+      return formatDuration(Time.toMinuteDuration(value as TimeValue), intl, {
+        isShortDuration: true,
+      });
+    },
+    [intl]
+  );
 
   const handleSubmit = useCallback(
     (values: ServiceOnProfessionalFormValues) => {
@@ -210,13 +220,7 @@ export const ServiceOnProfessionalEditForm: FC<
                 render={({ field, fieldState }) => (
                   <TimeField
                     value={field.value}
-                    formatValue={(value: string) => {
-                      return formatDuration(
-                        Time.toMinuteDuration(value as TimeValue),
-                        intl,
-                        { isShortDuration: true }
-                      );
-                    }}
+                    formatValue={formatValue}
                     onChange={field.onChange}
                     inputProps={{
                       label: intl.formatMessage({
