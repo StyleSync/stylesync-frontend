@@ -1,24 +1,18 @@
-import { type FC, useMemo, useState } from 'react';
+import { type FC, useEffect, useMemo, useState } from 'react';
 
-// type
 import type { EventInput } from '@fullcalendar/core';
 import allLocale from '@fullcalendar/core/locales-all';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import clsx from 'clsx';
-import { endOfMonth, startOfMonth } from 'date-fns';
 import dynamic from 'next/dynamic';
 import { useIntl } from 'react-intl';
 
 import { PointsBookingActions } from '@/modules/booking/components/points-booking-actions/points-booking-action';
-// containers
 import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
-// components
 import { Icon } from '@/modules/core/components/icon';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
-// constants
 import { weekdays } from '@/modules/schedule/constants/schedule.constants';
-// utils
 import { getTime } from '@/modules/schedule/utils/get-time';
 
 import type { CalendarProps } from './calendar.interface';
@@ -39,13 +33,16 @@ export const Calendar: FC<CalendarProps> = () => {
   );
   // queries
   const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
-  const { data: professionalEvents } = trpc.booking.list.useInfiniteQuery(
+  const {
+    data: professionalEvents,
+    fetchNextPage: userFetchNextPage,
+    isFetchingNextPage: userIsFetchingNextPage,
+    hasNextPage: userHasNextPage,
+  } = trpc.booking.list.useInfiniteQuery(
     {
       expand: ['serviceProfessional'],
       professionalId: me.professional?.id,
       limit: 100,
-      startDate: startOfMonth(new Date()).toISOString(),
-      endDate: endOfMonth(new Date()).toISOString(),
     },
     {
       enabled: !!me.professional?.id && me.userType === 'PROFESSIONAL',
@@ -53,19 +50,21 @@ export const Calendar: FC<CalendarProps> = () => {
     }
   );
 
-  const { data: customerEvents } = trpc.booking.myBookings.useInfiniteQuery(
+  const {
+    data: customerEvents,
+    fetchNextPage: customerFetchNextPage,
+    isFetchingNextPage: customerIsFetchingNextPage,
+    hasNextPage: customerHasNextPage,
+  } = trpc.booking.myBookings.useInfiniteQuery(
     {
       expand: ['serviceProfessional'],
       limit: 100,
-      startDate: startOfMonth(new Date()).toISOString(),
-      endDate: endOfMonth(new Date()).toISOString(),
     },
     {
+      enabled: me.userType === 'CUSTOMER',
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
   );
-
-  const events = professionalEvents || customerEvents;
 
   const { data: weekSchedule } = trpc.schedule.getWeekSchedule.useQuery(
     {
@@ -75,6 +74,18 @@ export const Calendar: FC<CalendarProps> = () => {
       enabled: Boolean(me?.professional),
     }
   );
+
+  useEffect(() => {
+    if (userHasNextPage && !userIsFetchingNextPage) {
+      userFetchNextPage();
+    }
+  }, [userHasNextPage, userFetchNextPage, userIsFetchingNextPage]);
+
+  useEffect(() => {
+    if (customerHasNextPage && !customerIsFetchingNextPage) {
+      customerFetchNextPage();
+    }
+  }, [customerHasNextPage, customerFetchNextPage, customerIsFetchingNextPage]);
 
   const handleViewMount = ({ el }: { el: HTMLElement }) => {
     const timeZone = formatI18n(new Date(), 'zzzz', intl.locale).replace(
@@ -102,6 +113,8 @@ export const Calendar: FC<CalendarProps> = () => {
       };
     });
   }, [weekSchedule, intl.locale]);
+
+  const events = professionalEvents || customerEvents;
 
   const eventsList = useMemo(() => {
     return (
