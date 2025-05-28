@@ -1,10 +1,10 @@
-import { type FC, useMemo, useState } from 'react';
+import { type FC, useEffect, useMemo, useState } from 'react';
 
 import type { EventInput } from '@fullcalendar/core';
 import allLocale from '@fullcalendar/core/locales-all';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import clsx from 'clsx';
-import { endOfMonth } from 'date-fns';
+import { endOfMonth, startOfMonth } from 'date-fns';
 import dynamic from 'next/dynamic';
 import { useIntl } from 'react-intl';
 
@@ -45,7 +45,7 @@ export const Calendar: FC<CalendarProps> = () => {
       expand: ['serviceProfessional'],
       professionalId: me.professional?.id,
       limit: 100,
-      startDate: currentDate.toISOString(),
+      startDate: startOfMonth(currentDate).toISOString(),
       endDate: endOfMonth(currentDate).toISOString(),
     },
     {
@@ -63,7 +63,7 @@ export const Calendar: FC<CalendarProps> = () => {
     {
       expand: ['serviceProfessional'],
       limit: 100,
-      startDate: currentDate.toISOString(),
+      startDate: startOfMonth(currentDate).toISOString(),
       endDate: endOfMonth(currentDate).toISOString(),
     },
     {
@@ -81,24 +81,20 @@ export const Calendar: FC<CalendarProps> = () => {
     }
   );
 
-  const handleDatesSet = (info: { start: Date }) => {
-    setCurrentDate(info.start);
-
-    if (
-      me.userType === 'PROFESSIONAL' &&
-      userHasNextPage &&
-      !userIsFetchingNextPage
-    ) {
+  useEffect(() => {
+    if (userHasNextPage && !userIsFetchingNextPage) {
       userFetchNextPage();
     }
+  }, [userHasNextPage, userFetchNextPage, userIsFetchingNextPage]);
 
-    if (
-      me.userType === 'CUSTOMER' &&
-      customerHasNextPage &&
-      !customerIsFetchingNextPage
-    ) {
+  useEffect(() => {
+    if (customerHasNextPage && !customerIsFetchingNextPage) {
       customerFetchNextPage();
     }
+  }, [customerHasNextPage, customerFetchNextPage, customerIsFetchingNextPage]);
+
+  const handleDatesSet = (info: { start: Date }) => {
+    setCurrentDate(info.start);
   };
 
   const handleViewMount = ({ el }: { el: HTMLElement }) => {
