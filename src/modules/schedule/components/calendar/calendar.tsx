@@ -1,4 +1,4 @@
-import { type FC, useEffect, useMemo, useState } from 'react';
+import { type FC, useMemo, useState } from 'react';
 
 import type { EventInput } from '@fullcalendar/core';
 import allLocale from '@fullcalendar/core/locales-all';
@@ -75,17 +75,23 @@ export const Calendar: FC<CalendarProps> = () => {
     }
   );
 
-  useEffect(() => {
-    if (userHasNextPage && !userIsFetchingNextPage) {
+  const handleDatesSet = () => {
+    if (
+      me.userType === 'PROFESSIONAL' &&
+      userHasNextPage &&
+      !userIsFetchingNextPage
+    ) {
       userFetchNextPage();
     }
-  }, [userHasNextPage, userFetchNextPage, userIsFetchingNextPage]);
 
-  useEffect(() => {
-    if (customerHasNextPage && !customerIsFetchingNextPage) {
+    if (
+      me.userType === 'CUSTOMER' &&
+      customerHasNextPage &&
+      !customerIsFetchingNextPage
+    ) {
       customerFetchNextPage();
     }
-  }, [customerHasNextPage, customerFetchNextPage, customerIsFetchingNextPage]);
+  };
 
   const handleViewMount = ({ el }: { el: HTMLElement }) => {
     const timeZone = formatI18n(new Date(), 'zzzz', intl.locale).replace(
@@ -114,7 +120,10 @@ export const Calendar: FC<CalendarProps> = () => {
     });
   }, [weekSchedule, intl.locale]);
 
-  const events = professionalEvents || customerEvents;
+  const events = useMemo(
+    () => professionalEvents || customerEvents,
+    [professionalEvents, customerEvents]
+  );
 
   const eventsList = useMemo(() => {
     return (
@@ -137,6 +146,7 @@ export const Calendar: FC<CalendarProps> = () => {
     <div className='w-full pl-0 md:pl-8'>
       <PointsBookingActions />
       <FullCalendar
+        datesSet={handleDatesSet}
         locales={allLocale}
         locale={intl.locale}
         businessHours={businessHours}
