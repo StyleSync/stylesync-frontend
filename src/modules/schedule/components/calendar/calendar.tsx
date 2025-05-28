@@ -4,6 +4,7 @@ import type { EventInput } from '@fullcalendar/core';
 import allLocale from '@fullcalendar/core/locales-all';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import clsx from 'clsx';
+import { endOfMonth } from 'date-fns';
 import dynamic from 'next/dynamic';
 import { useIntl } from 'react-intl';
 
@@ -31,6 +32,7 @@ export const Calendar: FC<CalendarProps> = () => {
   const [activeBookingCode, setActiveBookingCode] = useState<string | null>(
     null
   );
+  const [currentDate, setCurrentDate] = useState(new Date());
   // queries
   const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
   const {
@@ -43,6 +45,8 @@ export const Calendar: FC<CalendarProps> = () => {
       expand: ['serviceProfessional'],
       professionalId: me.professional?.id,
       limit: 100,
+      startDate: currentDate.toISOString(),
+      endDate: endOfMonth(currentDate).toISOString(),
     },
     {
       enabled: !!me.professional?.id && me.userType === 'PROFESSIONAL',
@@ -59,6 +63,8 @@ export const Calendar: FC<CalendarProps> = () => {
     {
       expand: ['serviceProfessional'],
       limit: 100,
+      startDate: currentDate.toISOString(),
+      endDate: endOfMonth(currentDate).toISOString(),
     },
     {
       enabled: me.userType === 'CUSTOMER',
@@ -75,7 +81,9 @@ export const Calendar: FC<CalendarProps> = () => {
     }
   );
 
-  const handleDatesSet = () => {
+  const handleDatesSet = (info: { start: Date }) => {
+    setCurrentDate(info.start);
+
     if (
       me.userType === 'PROFESSIONAL' &&
       userHasNextPage &&
@@ -145,6 +153,7 @@ export const Calendar: FC<CalendarProps> = () => {
   return (
     <div className='w-full pl-0 md:pl-8'>
       <PointsBookingActions />
+
       <FullCalendar
         datesSet={handleDatesSet}
         locales={allLocale}
@@ -216,6 +225,7 @@ export const Calendar: FC<CalendarProps> = () => {
           );
         }}
       />
+
       <BookingInfoDialog
         bookingId={activeBookingId}
         bookingCode={activeBookingCode}
