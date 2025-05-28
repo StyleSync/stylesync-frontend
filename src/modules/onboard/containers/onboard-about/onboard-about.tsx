@@ -14,7 +14,7 @@ import { AboutProfessionalForm } from '@/modules/user/components/about-professio
 import type { AboutProfessionalFormValues } from '@/modules/user/components/about-professional-form/about-professional-form.interface';
 import { useAvatarUploadMutation } from '@/modules/user/hooks/use-avatar-upload-mutation';
 
-export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
+export const OnboardAbout: FC<ProOnboardStepProps> = ({ next, active }) => {
   const intl = useIntl();
   const formId = useId();
   const router = useRouter();
@@ -161,6 +161,7 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
         disabled: meQuery.isLoading || meQuery.isError,
         type: 'submit',
       }}
+      active={active}
     >
       <Placeholder
         isActive={meQuery.isLoading}
