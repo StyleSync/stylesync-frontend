@@ -10,7 +10,11 @@ import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboa
 import { ProfessionalServicesForm } from '@/modules/service/containers/professional-services-form';
 import { useServiceOnProfessionalGroups } from '@/modules/service/hooks/use-service-on-professional-groups';
 
-export const OnboardServices: FC<ProOnboardStepProps> = ({ next, back }) => {
+export const OnboardServices: FC<ProOnboardStepProps> = ({
+  next,
+  back,
+  active,
+}) => {
   const intl = useIntl();
 
   const { groups, setGroups, isGroupsLoading, isGroupsLoadingError } =
@@ -27,6 +31,7 @@ export const OnboardServices: FC<ProOnboardStepProps> = ({ next, back }) => {
       prevButtonProps={{
         onClick: back,
       }}
+      active={active}
     >
       <Placeholder
         isActive={isGroupsLoading}
