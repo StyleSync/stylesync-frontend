@@ -6,7 +6,11 @@ import { OnboardLayout } from '@/modules/onboard/components/onboard-layout';
 import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboard/pro-onboard.interface';
 import { ProfessionalGalleryForm } from '@/modules/user/components/professional-gallery-form';
 
-export const OnboardGallery: FC<ProOnboardStepProps> = ({ next, back }) => {
+export const OnboardGallery: FC<ProOnboardStepProps> = ({
+  next,
+  back,
+  active,
+}) => {
   const intl = useIntl();
 
   return (
@@ -20,6 +24,7 @@ export const OnboardGallery: FC<ProOnboardStepProps> = ({ next, back }) => {
       prevButtonProps={{
         onClick: back,
       }}
+      active={active}
     >
       <ProfessionalGalleryForm />
     </OnboardLayout>

@@ -78,13 +78,15 @@ export const OnboardTitle: FC = () => {
             <Typography variant='subtitle' weight='medium'>
               {intl.formatMessage({ id: 'onboard.title.title' })}
             </Typography>
-            <Button
-              className={styles.skip}
-              text={intl.formatMessage({ id: 'button.skip' })}
-              variant='outlined'
-              disabled={isLoading || meQuery.isError}
-              onClick={skip}
-            />
+            {active !== 'about' && (
+              <Button
+                className={styles.skip}
+                text={intl.formatMessage({ id: 'button.skip' })}
+                variant='outlined'
+                disabled={isLoading || meQuery.isError}
+                onClick={skip}
+              />
+            )}
           </div>
           <div className='pageContent'>
             <Stepper
