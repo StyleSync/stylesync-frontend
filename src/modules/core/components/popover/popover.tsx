@@ -1,6 +1,6 @@
-import { type FC, Fragment, useCallback, useRef } from 'react';
+import { type FC, Fragment, type RefObject, useCallback, useRef } from 'react';
 
-import { type PointerDownOutsideEvent } from '@radix-ui/react-dismissable-layer';
+import { type DismissableLayerProps } from '@radix-ui/react-dismissable-layer';
 import * as RPopover from '@radix-ui/react-popover';
 import clsx from 'clsx';
 import { Transition } from 'react-transition-group';
@@ -32,7 +32,7 @@ export const Popover: FC<PopoverProps> = ({
   const triggerRef = useRef<HTMLDivElement>(null);
   // state
   const { width } = useResizeObserver({
-    ref: triggerRef,
+    ref: triggerRef as RefObject<HTMLElement>,
   });
 
   // refs
@@ -40,16 +40,14 @@ export const Popover: FC<PopoverProps> = ({
     disablePortal ? Fragment : RPopover.Portal
   );
 
-  const handlePointerDownOutside = useCallback(
-    (e: PointerDownOutsideEvent) => {
+  const handlePointerDownOutside: DismissableLayerProps['onPointerDownOutside'] =
+    (e) => {
       if (triggerRef.current && triggerRef.current.contains(e.target as Node)) {
         return;
       }
 
       onClose();
-    },
-    [onClose]
-  );
+    };
 
   const handleOpenAutoFocus = useCallback(
     (e: Event) => {

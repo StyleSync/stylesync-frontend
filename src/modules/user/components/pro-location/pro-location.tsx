@@ -1,11 +1,13 @@
 'use client';
 import { type FC } from 'react';
 
+import { TRPCClientError } from '@trpc/client';
 import dynamic from 'next/dynamic';
 
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { onQueryRetry } from '@/modules/core/utils/query-retry.utils';
 import { trpc } from '@/modules/core/utils/trpc.utils';
+import type { AppRouter } from '@/server/routers/_app';
 
 import type { ProLocationProps } from './pro-location.interface';
 
@@ -29,7 +31,8 @@ export const ProLocation: FC<ProLocationProps> = ({ userId }) => {
       id: professional.id,
     },
     {
-      retry: (retryCount, error) => onQueryRetry(retryCount, error),
+      retry: (retryCount, error) =>
+        onQueryRetry(retryCount, error as TRPCClientError<AppRouter>),
     }
   );
 

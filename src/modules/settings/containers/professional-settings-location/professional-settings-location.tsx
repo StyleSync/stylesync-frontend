@@ -1,5 +1,6 @@
 import { type FC, useCallback, useRef } from 'react';
 
+import { TRPCClientError } from '@trpc/client';
 import { useIntl } from 'react-intl';
 
 import { showToast } from '@/modules/core/providers/toast-provider';
@@ -8,6 +9,7 @@ import { trpc } from '@/modules/core/utils/trpc.utils';
 import { UserLocationSelectForm } from '@/modules/location/containers/user-location-select-form';
 import type { Address } from '@/modules/location/types/address.types';
 import { ProfileSettingsTabContentLayout } from '@/modules/user/components/profile-settings-tab-content-layout';
+import type { AppRouter } from '@/server/routers/_app';
 
 export const ProfessionalSettingsLocation: FC = () => {
   const intl = useIntl();
@@ -20,7 +22,8 @@ export const ProfessionalSettingsLocation: FC = () => {
       },
       {
         enabled: Boolean(me?.professional?.id),
-        retry: (retryCount, error) => onQueryRetry(retryCount, error),
+        retry: (retryCount, error) =>
+          onQueryRetry(retryCount, error as TRPCClientError<AppRouter>),
       }
     );
   // mutations
@@ -33,9 +36,9 @@ export const ProfessionalSettingsLocation: FC = () => {
     getAddress: () => Address | null;
   }>(null);
   const isSaveLoading =
-    locationCreate.isLoading ||
-    locationUpdate.isLoading ||
-    locationDelete.isLoading;
+    locationCreate.isPending ||
+    locationUpdate.isPending ||
+    locationDelete.isPending;
 
   const handleSave = useCallback(async () => {
     if (!locationSelectFormRef.current) return;
@@ -160,7 +163,7 @@ export const ProfessionalSettingsLocation: FC = () => {
     <ProfileSettingsTabContentLayout
       title={'professional.settings.location.title'}
       icon='location'
-      isLoading={locationQuery.isLoading}
+      isLoading={locationQuery.isPending}
       actions={[
         {
           text: intl.formatMessage({ id: 'button.save' }),
@@ -168,7 +171,7 @@ export const ProfessionalSettingsLocation: FC = () => {
           onClick: handleSave,
         },
       ]}
-      hideActions={locationQuery.isLoading}
+      hideActions={locationQuery.isPending}
     >
       <UserLocationSelectForm location={location} ref={locationSelectFormRef} />
     </ProfileSettingsTabContentLayout>

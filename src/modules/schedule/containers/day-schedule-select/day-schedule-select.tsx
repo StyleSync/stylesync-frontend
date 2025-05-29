@@ -95,11 +95,11 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
           onUpdate && onUpdate();
 
           if (savedScheduleId) {
-            void queryClient.invalidateQueries(
-              trpc.break.getScheduleBreaks.getQueryKey({
+            void queryClient.invalidateQueries({
+              queryKey: getQueryKey(trpc.break.getScheduleBreaks, {
                 scheduleId: savedScheduleId,
-              })
-            );
+              }),
+            });
           }
 
           queryClient.invalidateQueries({
@@ -295,7 +295,7 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
                     inputProps={{
                       fieldSize: 'high',
                       error: Boolean(fieldState.error),
-                      disabled: weekdayScheduleSaveMutation.isLoading,
+                      disabled: weekdayScheduleSaveMutation.isPending,
                       bigbtn: true,
                     }}
                     popoverProps={{
@@ -341,7 +341,7 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
                             fieldSize:
                               deviceType === 'mobile' ? 'medium' : 'small',
                             error: Boolean(fieldState.error),
-                            disabled: weekdayScheduleSaveMutation.isLoading,
+                            disabled: weekdayScheduleSaveMutation.isPending,
                           }}
                           popoverProps={{
                             disablePortal: true,
@@ -376,7 +376,7 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
                 icon='check-mark'
                 variant='primary'
                 type='submit'
-                isLoading={weekdayScheduleSaveMutation.isLoading}
+                isLoading={weekdayScheduleSaveMutation.isPending}
               />
             </div>
           )}
@@ -396,7 +396,7 @@ export const DayScheduleSelect: FC<DayScheduleSelectProps> = ({
                 text={intl.formatMessage({ id: 'button.save' })}
                 variant='primary'
                 type='submit'
-                isLoading={weekdayScheduleSaveMutation.isLoading}
+                isLoading={weekdayScheduleSaveMutation.isPending}
               />
             </div>
           )}

@@ -6,13 +6,11 @@ const LOCATION_SEARCH_CACHE_KEY = 'LOCATION_SEARCH';
 const provider = new OpenStreetMapProvider();
 
 export const useLocationSearchQuery = (query: string) => {
-  return useQuery(
-    [LOCATION_SEARCH_CACHE_KEY, query],
-    async () => {
+  return useQuery({
+    queryKey: [LOCATION_SEARCH_CACHE_KEY, query],
+    queryFn: async () => {
       return provider.search({ query });
     },
-    {
-      keepPreviousData: true,
-    }
-  );
+    placeholderData: (previousData) => previousData,
+  });
 };

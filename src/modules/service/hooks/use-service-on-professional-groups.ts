@@ -18,6 +18,7 @@ export const useServiceOnProfessionalGroups = () => {
       },
       {
         enabled: Boolean(me?.professional?.id),
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
       }
     );
 

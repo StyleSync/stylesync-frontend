@@ -21,7 +21,7 @@
   }
 
   &_FINISHED {
-    background-color: #fff !important;
+    background-color: variables.$grey-color !important;
   }
 
   &_REJECTED {

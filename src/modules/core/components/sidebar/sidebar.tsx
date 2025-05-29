@@ -42,7 +42,7 @@ export const Sidebar: FC<SidebarProps> = ({
               {group.links.map((link, index) => (
                 <Fragment key={index}>
                   {link.renderItem ? (
-                    link.renderItem({})
+                    link.renderItem()
                   ) : (
                     <Button
                       className={clsx(styles.link, {

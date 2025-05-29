@@ -80,7 +80,7 @@ const createRipple =
   };
 
 export const useRipple = (
-  ref: RefObject<HTMLElement>,
+  ref: RefObject<HTMLElement | null>,
   options?: RippleOptions
 ) => {
   useEffect(() => {
