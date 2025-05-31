@@ -12,6 +12,7 @@ import clsx from 'clsx';
 import {
   eachDayOfInterval,
   endOfMonth,
+  isPast,
   isSameDay,
   isToday,
   startOfDay,
@@ -36,6 +37,7 @@ const renderCalendarDay = (
   const { selectedDates = [], day, outsideCurrentMonth, ...other } = props;
 
   const isActive = selectedDates.some((date) => isSameDay(date, day));
+  const _isPast = isPast(day) && !isToday(day);
 
   const selectedDay = {
     specificDay: day.getDate(),
@@ -63,16 +65,16 @@ const renderCalendarDay = (
       {...other}
       outsideCurrentMonth={outsideCurrentMonth}
       day={day}
-      className={clsx({
+      className={clsx('!rounded-xl !border-none !text-lg !font-medium', {
         '!bg-primary !text-white': isActive,
         '!bg-transparent !text-accent': !isActive && isToday(day),
         '!bg-transparent !text-dark': !isActive && !isToday(day),
+        '!text-gray': _isPast,
       })}
     >
       {day.getDate()}
       {showIndicators && (
-        <div className='absolute bottom-0 left-1/2 -translate-x-1/2 -translate-y-[3px]'>
-          <div className='h-[5px] w-[5px] rounded-full' />
+        <div className='absolute bottom-0 left-1/2 -translate-x-1/2'>
           <div
             className={clsx('h-[5px] w-[5px] rounded-full', {
               '!bg-orange': foundSchedule && isSchedule,
@@ -137,6 +139,8 @@ export const DailyScheduleSection = () => {
   const handleDateChange = (value: Date | null) => {
     if (!value) return;
 
+    if (isPast(value) && !isToday(value)) return;
+
     const normalizedDate = startOfDay(value);
 
     setSelectedDates((prev) => {
@@ -180,6 +184,20 @@ export const DailyScheduleSection = () => {
             ref={calendarWrapperRef}
             className='h-full w-full max-w-[400px] flex-col md:flex md:min-h-[390px] md:gap-4 md:border-r md:border-gray-light'
           >
+            <div className='mb-4 flex flex-col gap-2 md:ml-[29px] md:mt-0'>
+              <div className='flex items-center gap-2'>
+                <div className='h-[8px] w-[8px] rounded-full bg-green' />
+                <span className='text-sm font-medium text-dark'>
+                  {formatMessage({ id: 'day.off' })}
+                </span>
+              </div>
+              <div className='flex items-center gap-2'>
+                <div className='h-[8px] w-[8px] rounded-full bg-orange' />
+                <span className='text-sm font-medium text-dark'>
+                  {formatMessage({ id: 'working.day' })}
+                </span>
+              </div>
+            </div>
             <LocalizationProvider
               dateAdapter={AdapterDateFns}
               adapterLocale={dateFnsLocale}
@@ -190,7 +208,10 @@ export const DailyScheduleSection = () => {
                   setSelectedMonth(value);
                 }}
                 slots={{
+                  actionBar: () => null,
                   day: renderCalendarDay,
+                  toolbar: () => null,
+                  switchViewButton: () => null,
                 }}
                 slotProps={{
                   day: {
@@ -203,62 +224,29 @@ export const DailyScheduleSection = () => {
                 sx={{
                   width: '100%',
                   backgroundColor: 'transparent',
-                  '& .MuiPickersCalendarHeader-root': {
+                  '& .MuiDateCalendar-root': {
                     width: '100%',
-                    paddingLeft: '0',
-                    paddingRight: '0',
                   },
-
+                  '& .MuiDayCalendar-weekContainer': {
+                    justifyContent: 'space-between',
+                  },
+                  '& .MuiDayCalendar-header': {
+                    justifyContent: 'space-between',
+                  },
+                  '& .MuiPickersDay-root': {
+                    height: '40px',
+                  },
                   '& .MuiDayCalendar-weekDayLabel': {
-                    width: '100%',
                     fontSize: '16px',
                   },
-                  '& .MuiButtonBase-root': { fontSize: '16px' },
-                  '& .MuiPickersCalendarHeader-label': { marginRight: '170px' },
-                  '& .MuiPickersDay-root': {
-                    width: '40px',
-                    height: '40px',
-                    margin: '0 auto',
-                    aspectRatio: '1',
-                    transition: 'all 0.1s ease-in-out',
+                  '& .MuiPickersCalendarHeader-root': {
+                    paddingLeft: '8px',
+                    paddingRight: '0',
+                    marginBottom: '10px',
                   },
-                  '& .MuiButtonBase-root.MuiPickersDay-root.Mui-selected': {
-                    width: '40px',
-                    height: '40px',
-                  },
-
-                  '& .MuiPickersCalendar-root': {
-                    height: '100% !important',
-                    maxHeight: '440px !important',
-                    overflow: 'visible !important',
-                  },
-                  '& .MuiPickersCalendarHeader-labelContainer': {
-                    margin: '0 auto',
-                  },
-                  '& .MuiPickersCalendarHeader-switchViewButton': {
-                    display: 'none',
-                  },
-                  '& .MuiPickersToolbar-root': { display: 'none' },
-                  '& .MuiDialogActions-root': { display: 'none' },
-                  '& .MuiDateCalendar-root': { width: '380px' },
-                  '& .MuiDayCalendar-weekContainer ': { margin: '4px 0' },
                 }}
               />
             </LocalizationProvider>
-            <div className='ml-[19px] mt-5 flex flex-col gap-2 md:ml-[29px] md:mt-0'>
-              <div className='flex items-center gap-2'>
-                <div className='h-[5px] w-[5px] rounded-full bg-green' />
-                <span className='text-sm text-dark'>
-                  {formatMessage({ id: 'day.off' })}
-                </span>
-              </div>
-              <div className='flex items-center gap-2'>
-                <div className='h-[5px] w-[5px] rounded-full bg-orange' />
-                <span className='text-sm text-dark'>
-                  {formatMessage({ id: 'working.day' })}
-                </span>
-              </div>
-            </div>
           </div>
         </div>
         {selectedDates.length > 0 && (
