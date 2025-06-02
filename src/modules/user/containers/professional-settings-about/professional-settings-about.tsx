@@ -1,6 +1,7 @@
 'use client';
 import { type FC, useCallback, useId, useMemo } from 'react';
 
+import { sendGTMEvent } from '@next/third-parties/google';
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
 import { useIntl } from 'react-intl';
@@ -86,6 +87,25 @@ export const ProfessionalSettingsAbout: FC = () => {
             queryKey: getQueryKey(trpc.professional.getProfileCompletionStatus),
           });
 
+          if (me?.userType === 'PROFESSIONAL') {
+            sendGTMEvent({
+              event: 'data_submit',
+              user_id: me?.id,
+              user_email: me?.email,
+              data: {
+                type: 'about',
+                avatar: Boolean(values.avatar),
+                firstName: Boolean(values.firstName),
+                lastName: Boolean(values.lastName),
+                phone: Boolean(values.phone),
+                about: Boolean(values.about),
+                instagram: Boolean(values.instagram),
+                facebook: Boolean(values.facebook),
+                tiktok: Boolean(values.tiktok),
+              },
+            });
+          }
+
           showToast({
             variant: 'success',
             title: intl.formatMessage({
@@ -110,7 +130,16 @@ export const ProfessionalSettingsAbout: FC = () => {
           }
         });
     },
-    [userUpdate, proUpdate, avatarUpload, intl, me?.userType, queryClient]
+    [
+      userUpdate,
+      proUpdate,
+      avatarUpload,
+      intl,
+      me?.userType,
+      queryClient,
+      me?.id,
+      me?.email,
+    ]
   );
 
   return (
