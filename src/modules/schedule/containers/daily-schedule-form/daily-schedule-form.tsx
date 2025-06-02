@@ -1,6 +1,7 @@
 import { type FC, useCallback, useEffect, useMemo } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { sendGTMEvent } from '@next/third-parties/google';
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
 import { add, differenceInMinutes, format, startOfDay } from 'date-fns';
@@ -164,6 +165,19 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
                 title: formatMessage({ id: 'daily.toast.schedule.deleted' }),
               });
 
+              sendGTMEvent({
+                event: 'schedule_add',
+                user_id: me?.id,
+                user_email: me?.email,
+                data: {
+                  isWeeklySchedule: false,
+                  isSpecificDay: true,
+                  isDayOff: true,
+                  scheduleDay: Boolean(dates[0]),
+                  hasBreaks: false,
+                },
+              });
+
               const listByDayKey = getQueryKey(trpc.schedule.listByDay);
 
               queryClient.resetQueries({
@@ -202,6 +216,24 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
               queryClient.resetQueries({
                 queryKey: listByDayKey,
                 exact: false,
+              });
+
+              sendGTMEvent({
+                event: 'schedule_add',
+                user_id: me?.id,
+                user_email: me?.email,
+                data: {
+                  isWeeklySchedule: false,
+                  isSpecificDay: true,
+                  isDayOff: true,
+                  scheduleDay: Boolean(dates[0]),
+                  hasBreaks: false,
+                  specificDay: Boolean(dates[0]?.getDate()),
+                  specificMonth: Boolean(dates[0]?.getMonth()),
+                  specificYear: Boolean(dates[0]?.getFullYear()),
+                  start: Boolean(startOfDay(dates[0])),
+                  end: Boolean(add(startOfDay(dates[0]), { seconds: 1 })),
+                },
               });
             },
           }
@@ -254,6 +286,24 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
           if (dates.length > 1) {
             handleReset();
           }
+
+          sendGTMEvent({
+            event: 'schedule_add',
+            user_id: me?.id,
+            user_email: me?.email,
+            data: {
+              isWeeklySchedule: false,
+              isSpecificDay: true,
+              isDayOff: false,
+              scheduleDay: Boolean(dates[0]),
+              hasBreaks: Boolean(formValues.breaks.length > 0),
+              specificDay: Boolean(dates[0]?.getDate()),
+              specificMonth: Boolean(dates[0]?.getMonth()),
+              specificYear: Boolean(dates[0]?.getFullYear()),
+              start: Boolean(start),
+              end: Boolean(end),
+            },
+          });
         },
       }
     );
@@ -286,6 +336,19 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
     isWorkdayEnabled.setTrue();
     isOpenModalDayOverride.setFalse();
 
+    sendGTMEvent({
+      event: 'schedule_add',
+      user_id: me?.id,
+      user_email: me?.email,
+      data: {
+        isWeeklySchedule: true,
+        isSpecificDay: false,
+        isDayOff: false,
+        scheduleDay: Boolean(weekdaySchedule.day),
+        hasBreaks: Boolean(weekdaySchedule.breaks.length > 0),
+      },
+    });
+
     if (specificDayScheduleQuery.data) {
       dailyScheduleDelete.mutate(
         {
@@ -298,6 +361,20 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
 
             queryClient.resetQueries({ queryKey, exact: false });
             queryClient.resetQueries({ queryKey: listByDayKey, exact: false });
+
+            sendGTMEvent({
+              event: 'schedule_add',
+              user_id: me?.id,
+              user_email: me?.email,
+              data: {
+                isWeeklySchedule: true,
+                isSpecificDay: false,
+                isDayOff: false,
+                scheduleDay: Boolean(weekdaySchedule.day),
+                hasBreaks: Boolean(weekdaySchedule.breaks.length > 0),
+                deleted: true,
+              },
+            });
           },
         }
       );
