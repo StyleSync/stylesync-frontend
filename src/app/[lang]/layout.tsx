@@ -1,3 +1,4 @@
+import { GoogleTagManager } from '@next/third-parties/google';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { GeistSans } from 'geist/font/sans';
@@ -20,6 +21,7 @@ export default async function RootLayout({
 
   return (
     <html lang={params.lang}>
+      <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID ?? ''} />
       <body className={GeistSans.className}>
         <TrpcProvider>
           <IntlProvider locale={params.lang} dictionary={dictionary}>

@@ -1,3 +1,4 @@
+import { sendGTMEvent } from '@next/third-parties/google';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { PrismaClient } from '@prisma/client';
 import type { NextAuthOptions } from 'next-auth';
@@ -15,6 +16,23 @@ export const authOptions: NextAuthOptions = {
       allowDangerousEmailAccountLinking: true,
     }),
   ],
+  events: {
+    signIn: async ({ user, isNewUser }) => {
+      if (isNewUser) {
+        sendGTMEvent({
+          event: 'sign_up',
+          user_id: user?.id,
+          user_email: user?.email,
+        });
+      }
+
+      sendGTMEvent({
+        event: 'sign_in',
+        user_id: user?.id,
+        user_email: user?.email,
+      });
+    },
+  },
   callbacks: {
     session: async ({ session, user }) => {
       if (session.user) {
