@@ -1,8 +1,10 @@
 'use client';
 import { type FC, useCallback, useState } from 'react';
 
+import { sendGTMEvent } from '@next/third-parties/google';
 import type { Role } from '@prisma/client';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { useIntl } from 'react-intl';
 
 import { AccountTypeSelect } from '@/modules/auth/components/account-type-select';
@@ -22,6 +24,7 @@ export const ExistingAccountTypeSelect: FC<
   const [userType, setUserType] = useState<Role | null>(null);
   // queries
   const userUpdateMutation = trpc.user.update.useMutation();
+  const { data: session } = useSession();
 
   const handleSave = useCallback(() => {
     userUpdateMutation.mutate(
@@ -30,11 +33,17 @@ export const ExistingAccountTypeSelect: FC<
       },
       {
         onSuccess: () => {
+          sendGTMEvent({
+            event: 'account_type_selected',
+            user_id: session?.user.id,
+            user_email: session?.user?.email,
+            user_type: userType,
+          });
           router.push('/app/onboard');
         },
       }
     );
-  }, [router, userType, userUpdateMutation]);
+  }, [router, userType, userUpdateMutation, session]);
 
   return (
     <div className={styles.root}>
