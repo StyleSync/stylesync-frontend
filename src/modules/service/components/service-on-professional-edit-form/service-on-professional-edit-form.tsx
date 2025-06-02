@@ -117,6 +117,14 @@ export const ServiceOnProfessionalEditForm: FC<
                   trpc.professional.getProfileCompletionStatus
                 ),
               });
+
+              showToast({
+                variant: 'success',
+                title: intl.formatMessage({
+                  id: 'service.constructor.add.success',
+                }),
+                description: '',
+              });
             },
             onError: (err) => {
               showToast({

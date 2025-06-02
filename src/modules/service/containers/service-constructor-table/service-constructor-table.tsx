@@ -55,7 +55,6 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
             title: intl.formatMessage({
               id: 'service.constructor.table.toast.error',
             }),
-            description: '',
           });
         },
       }
@@ -66,6 +65,7 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
     serviceOnProfessionalGroupDelete,
     serviceOnProfessionalList,
     onRemove,
+    intl,
   ]);
 
   const handleSelect = ({ id }: DropdownItem) => {

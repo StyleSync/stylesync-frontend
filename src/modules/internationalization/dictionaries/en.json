@@ -472,5 +472,10 @@
   "profile.notFound.searchPros": "Search for professionals",
   "profile.notFound.goHome": "Go to homepage",
   "day.off": "Day Off",
-  "working.day": "Working Day"
+  "working.day": "Working Day",
+  "toast.about.success.title": "Changes has been saved!",
+  "toast.about.error.title": "Error",
+  "service.constructor.add.success": "Service added",
+  "services.constructor.delete.success": "Services group deleted",
+  "service.constructor.delete.success": "Service deleted"
 }
