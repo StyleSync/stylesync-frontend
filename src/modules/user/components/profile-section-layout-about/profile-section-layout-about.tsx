@@ -9,6 +9,7 @@ import { useIntl } from 'react-intl';
 import { useBoolean } from 'usehooks-ts';
 import { z } from 'zod';
 
+import { Button } from '@/modules/core/components/button';
 import { TextField } from '@/modules/core/components/text-field';
 import { useDebounce } from '@/modules/core/hooks/use-debounce';
 import { showToast } from '@/modules/core/providers/toast-provider';
@@ -104,8 +105,6 @@ export const ProfileSectionLayoutAbout: FC<ProfileSectionLayoutAboutProps> = ({
       id='about-me'
       onEdit={isEdiAbout.toggle}
       onCancel={onCancel}
-      formId={formId}
-      onSave={onSave}
     >
       <Suspense
         fallback={
@@ -117,7 +116,7 @@ export const ProfileSectionLayoutAbout: FC<ProfileSectionLayoutAboutProps> = ({
         }
       >
         {isEdiAbout.value ? (
-          <form id={formId} onSubmit={onSave}>
+          <form className='flex flex-col gap-y-6' id={formId} onSubmit={onSave}>
             <TextField
               charCount={debounceAbout?.length}
               {...form.register('about')}
@@ -130,6 +129,15 @@ export const ProfileSectionLayoutAbout: FC<ProfileSectionLayoutAboutProps> = ({
               })}
               style={{ height: 200, resize: 'none' }}
             />
+            {isEdiAbout.value && (
+              <Button
+                className='ml-auto'
+                variant='primary'
+                text={intl.formatMessage({ id: 'button.save' })}
+                type='submit'
+                form={formId}
+              />
+            )}
           </form>
         ) : (
           <AboutMe userId={userId} />

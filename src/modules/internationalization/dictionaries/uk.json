@@ -476,5 +476,6 @@
   "toast.about.error.title": "Помилка",
   "service.constructor.add.success": "Послуга додана",
   "services.constructor.delete.success": "Група послуг видалена",
-  "service.constructor.delete.success": "Послуга видалена"
+  "service.constructor.delete.success": "Послуга видалена",
+  "select.service.add.group.title": "Додати послугу"
 }

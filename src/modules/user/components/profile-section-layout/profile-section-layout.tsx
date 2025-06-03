@@ -17,18 +17,11 @@ export const ProfileSectionLayout: FC<ProfileSectionLayoutProps> = ({
   edit,
   onEdit,
   onCancel,
-  formId,
-  onSave,
-  headerActions,
 }) => {
   const intl = useIntl();
 
   const handleEdit = () => {
     edit ? onCancel?.() : onEdit?.();
-  };
-
-  const handleSave = () => {
-    onSave?.();
   };
 
   return (
@@ -40,20 +33,12 @@ export const ProfileSectionLayout: FC<ProfileSectionLayoutProps> = ({
         <div className='flex items-center gap-2'>
           {edit ? (
             <>
-              {headerActions}
               <Button
-                className='h-[20px] w-[20px] text-destructive'
+                className='duration-450 h-[20px] w-[20px] text-destructive transition-colors hover:bg-destructive/20'
                 variant='unstyled'
                 icon='close'
                 type='button'
                 onClick={handleEdit}
-              />
-              <Button
-                variant='primary'
-                text={intl.formatMessage({ id: 'button.save' })}
-                type='submit'
-                form={formId}
-                onClick={handleSave}
               />
             </>
           ) : (

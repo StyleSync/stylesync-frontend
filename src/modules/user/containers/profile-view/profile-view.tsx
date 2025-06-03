@@ -105,6 +105,7 @@ export function ProfileView({ session }: ProfileViewProps) {
 
           <ErrorBoundary fallback={null}>
             <ProfileSectionLayout
+              edit={false}
               title='pro.layout.title.location'
               id='profile-location'
               onEdit={() => {}}

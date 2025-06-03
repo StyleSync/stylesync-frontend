@@ -1,1 +1,1 @@
-export { ProfileSectionLayoutAbout } from './profile-section-layout-services';
+export { ProfileSectionLayoutServices } from './profile-section-layout-services';

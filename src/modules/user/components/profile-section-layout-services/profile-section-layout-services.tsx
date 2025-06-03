@@ -82,8 +82,8 @@ export const ProfileSectionLayoutServices: FC<
         title: intl.formatMessage({
           id:
             serviceGroup?.serviceOnProfessionalList.length === 1
-              ? 'service.constructor.delete.group.success'
-              : 'service.constructor.delete.success',
+              ? 'service.constructor.delete.success'
+              : 'services.constructor.delete.success',
         }),
       });
     },
@@ -101,7 +101,7 @@ export const ProfileSectionLayoutServices: FC<
 
   if (isGroupsLoading) {
     return (
-      <div className='mx-auto mt-[110px] flex w-full max-w-[924px] flex-col gap-y-1'>
+      <div className='mx-auto mt-[90px] flex w-full flex-col gap-y-1 px-6 md:mt-[110px] md:max-w-[924px]'>
         <div className='skeleton flex h-[133px] w-full rounded' />
         <div className='skeleton flex h-[77px] w-full rounded' />
       </div>
@@ -115,29 +115,18 @@ export const ProfileSectionLayoutServices: FC<
       id='profile-services'
       onEdit={isEditServices.toggle}
       onCancel={onCancel}
-      onSave={onCancel}
-      headerActions={
-        isEditServices.value && (
-          <ServiceSelect
-            services={serviceList ?? []}
-            onServiceSelect={handleServiceSelect}
-            blackList={sortedServiceOnProfessionalGroups.map(
-              (group) => group.service.id
-            )}
-            isLoading={serviceListData.isPending}
-          />
-        )
-      }
     >
-      <Suspense
-        fallback={
-          <div className='flex flex-col gap-y-2'>
-            <div className='skeleton flex h-4 w-[70%] rounded' />
-            <div className='skeleton flex h-4 w-[80%] rounded' />
-            <div className='skeleton flex h-4 w-[50%] rounded' />
+      <Suspense>
+        {isEditServices.value && (
+          <div className='flex gap-4'>
+            <ServiceSelect
+              services={serviceList ?? []}
+              onServiceSelect={handleServiceSelect}
+              blackList={[]}
+              isLoading={serviceListData.isPending}
+            />
           </div>
-        }
-      >
+        )}
         {sortedServiceOnProfessionalGroups.map((group) => (
           <Fragment key={group.service.id}>
             {isEditServices.value ? (
@@ -146,11 +135,13 @@ export const ProfileSectionLayoutServices: FC<
                 onRemove={handleServiceRemove}
               />
             ) : (
-              <ServicesTable
-                service={group.service}
-                serviceOnProfessionalList={group.serviceOnProfessionalList}
-                isOwn
-              />
+              <>
+                <ServicesTable
+                  service={group.service}
+                  serviceOnProfessionalList={group.serviceOnProfessionalList}
+                  isOwn
+                />
+              </>
             )}
             <InfinityListController
               hasNextPage={serviceListData.hasNextPage || false}

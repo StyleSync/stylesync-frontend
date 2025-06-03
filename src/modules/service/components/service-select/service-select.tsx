@@ -30,12 +30,12 @@ export const ServiceSelect: FC<ServiceSelectProps> = ({
     if (deviceType === 'mobile') {
       return {
         variant: 'outlined',
-        text: formatMessage({ id: 'select.service.add.group' }),
+        text: formatMessage({ id: 'select.service.add.group.title' }),
       };
     }
 
     return {
-      text: formatMessage({ id: 'select.service.add.group' }),
+      text: formatMessage({ id: 'select.service.add.group.title' }),
       variant: 'outlined',
     };
   }, [deviceType, formatMessage]);

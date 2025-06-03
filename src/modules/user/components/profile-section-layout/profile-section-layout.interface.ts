@@ -7,7 +7,4 @@ export type ProfileSectionLayoutProps = {
   edit?: boolean;
   onEdit?: () => void;
   onCancel?: () => void;
-  formId?: string;
-  onSave?: () => void;
-  headerActions?: ReactNode;
 };

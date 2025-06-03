@@ -69,11 +69,6 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
   ]);
 
   const handleSelect = ({ id }: DropdownItem) => {
-    if (id === 'add') {
-      isActionsOpen.setFalse();
-      isCreateOpen.setTrue();
-    }
-
     if (id === 'delete') {
       isActionsOpen.setFalse();
       handleTableRemoveClick();
@@ -88,13 +83,6 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
           text={intl.formatMessage({ id: service.name })}
         />
         <div className={styles.actions}>
-          <Button
-            aria-label='Add service group'
-            icon='plus'
-            variant='outlined'
-            type='button'
-            onClick={isCreateOpen.setTrue}
-          />
           <Button
             aria-label='Delete service group'
             className={styles.remove}
@@ -120,14 +108,6 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
           }
           onSelect={handleSelect}
           items={[
-            {
-              id: 'add',
-              variant: 'primary',
-              icon: 'plus',
-              text: intl.formatMessage({
-                id: 'service.constructor.add.sevice',
-              }),
-            },
             {
               id: 'delete',
               variant: 'danger',

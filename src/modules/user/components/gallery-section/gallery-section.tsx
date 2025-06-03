@@ -42,6 +42,7 @@ export const GallerySection: FC<GallerySectionProps> = ({ userId }) => {
       <ProfileSectionLayout
         title={'pro.layout.title.gallery'}
         id='profile-gallery'
+        edit={false}
       >
         <div className={styles.root}>
           <div className='skeleton h-[180px] w-full rounded-xl md:h-[330px]' />
@@ -63,6 +64,7 @@ export const GallerySection: FC<GallerySectionProps> = ({ userId }) => {
     <ProfileSectionLayout
       title={'pro.layout.title.gallery'}
       id='profile-gallery'
+      edit={false}
     >
       <div
         className={clsx(styles.root, {
