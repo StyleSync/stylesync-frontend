@@ -34,7 +34,7 @@ export const ProfileSectionLayout: FC<ProfileSectionLayoutProps> = ({
           {edit ? (
             <>
               <Button
-                className='duration-450 h-[20px] w-[20px] text-destructive transition-colors hover:bg-destructive/20'
+                className='!bg-destructive/10 text-destructive'
                 variant='unstyled'
                 icon='close'
                 type='button'
