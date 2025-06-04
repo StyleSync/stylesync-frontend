@@ -31,6 +31,7 @@ export const useOnboard = () => {
           id: 'onboard.data.description.about',
         }),
         Step: OnboardAbout,
+        allowSkip: false,
       },
       services: {
         value: 'services',
@@ -39,29 +40,31 @@ export const useOnboard = () => {
           id: 'onboard.data.description.services',
         }),
         Step: OnboardServices,
+        allowSkip: true,
       },
       schedule: {
         value: 'schedule',
         title: intl.formatMessage({ id: 'onboard.data.schedule' }),
         description: 'test',
-
         Step: OnboardSchedule,
+        allowSkip: true,
       },
       gallery: {
         value: 'gallery',
         title: intl.formatMessage({ id: 'onboard.data.gallery' }),
-
         description: 'test',
         Step: OnboardGallery,
+        allowSkip: true,
       },
       location: {
         value: 'location',
         title: intl.formatMessage({ id: 'onboard.data.location' }),
         description: 'test',
         Step: OnboardLocation,
+        allowSkip: true,
       },
     }),
-    []
+    [intl]
   );
   const progress = useMemo(() => {
     const currentIndex = steps.findIndex((step) => step === active);
