@@ -24,7 +24,7 @@ export const OnboardLayout: FC<OnboardLayoutProps> = ({
   meta,
   prevButtonProps,
   nextButtonProps,
-  active,
+  allowSkip = true,
 }) => {
   const intl = useIntl();
   const deviceType = useDeviceType();
@@ -96,7 +96,7 @@ export const OnboardLayout: FC<OnboardLayoutProps> = ({
           </Typography>
           {deviceType === 'mobile' &&
             me?.userType === 'PROFESSIONAL' &&
-            active !== 'about' && (
+            allowSkip && (
               <Button
                 className='absolute right-[23px] top-[69px] z-20 !h-8 !text-primary'
                 text={intl.formatMessage({ id: 'button.skip' })}

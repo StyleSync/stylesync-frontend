@@ -7,5 +7,5 @@ export type OnboardLayoutProps = ChildrenProp & {
   };
   nextButtonProps?: Partial<ButtonProps>;
   prevButtonProps?: Partial<ButtonProps>;
-  active?: string;
+  allowSkip?: boolean;
 };

@@ -8,7 +8,7 @@ import { UserLocationSelectForm } from '@/modules/location/containers/user-locat
 import { OnboardLayout } from '@/modules/onboard/components/onboard-layout';
 import type { ProOnboardStepProps } from '@/modules/onboard/containers/pro-onboard/pro-onboard.interface';
 
-export const OnboardLocation: FC<ProOnboardStepProps> = ({ back, active }) => {
+export const OnboardLocation: FC<ProOnboardStepProps> = ({ back }) => {
   const intl = useIntl();
   const { data: userData } = trpc.user.me.useQuery();
   const { mutateAsync: updateUser } = trpc.user.update.useMutation();
@@ -30,7 +30,6 @@ export const OnboardLocation: FC<ProOnboardStepProps> = ({ back, active }) => {
       prevButtonProps={{
         onClick: back,
       }}
-      active={active}
     >
       <UserLocationSelectForm />
     </OnboardLayout>

@@ -13,5 +13,6 @@ export type ProOnboardData<Value extends string> = Record<
     title: string;
     description: string;
     Step: FC<ProOnboardStepProps>;
+    allowSkip?: boolean;
   }
 >;

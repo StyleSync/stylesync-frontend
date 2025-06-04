@@ -8,11 +8,7 @@ import { emptySchedule } from '@/modules/schedule/constants/schedule.constants';
 import { WeeklyScheduleForm } from '@/modules/schedule/containers/schedule-form';
 import type { WeeklySchedule } from '@/modules/schedule/types/schedule.types';
 
-export const OnboardSchedule: FC<ProOnboardStepProps> = ({
-  next,
-  back,
-  active,
-}) => {
+export const OnboardSchedule: FC<ProOnboardStepProps> = ({ next, back }) => {
   const intl = useIntl();
 
   const [schedule, setSchedule] = useState<WeeklySchedule>(emptySchedule);
@@ -28,7 +24,6 @@ export const OnboardSchedule: FC<ProOnboardStepProps> = ({
       prevButtonProps={{
         onClick: back,
       }}
-      active={active}
     >
       <WeeklyScheduleForm schedule={schedule} setSchedule={setSchedule} />
     </OnboardLayout>
