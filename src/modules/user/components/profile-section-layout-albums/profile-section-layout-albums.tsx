@@ -3,7 +3,7 @@ import { ProfessionalGalleryForm } from '../professional-gallery-form';
 import { ProfileSectionLayout } from '../profile-section-layout';
 import { type ProfileSectionLayoutAlbumsProps } from './profile-section-layout-albums.interface';
 import { useState, type FC } from 'react';
-import { GallerySection } from '@/modules/user/components/gallery-section';
+
 import styles from './profile-section-layout-albums.module.scss';
 import clsx from 'clsx';
 import { AlbumCard } from '@/modules/gallery/components/album-card';
