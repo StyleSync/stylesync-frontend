@@ -4,7 +4,6 @@ import { Suspense, useMemo } from 'react';
 
 import clsx from 'clsx';
 import { useParams, useRouter } from 'next/navigation';
-import { ErrorBoundary } from 'react-error-boundary';
 import { useIntl } from 'react-intl';
 
 import { BookingProvider } from '@/modules/booking/providers/booking-provider';
@@ -15,6 +14,7 @@ import { GallerySection } from '@/modules/user/components/gallery-section';
 import { ProLocation } from '@/modules/user/components/pro-location';
 import { ProfileSectionLayout } from '@/modules/user/components/profile-section-layout';
 import { ProfileSectionLayoutAbout } from '@/modules/user/components/profile-section-layout-about';
+import { ProfileSectionLayoutLocation } from '@/modules/user/components/profile-section-layout-location';
 import { ProfileSectionLayoutServices } from '@/modules/user/components/profile-section-layout-services/profile-section-layout-services';
 import { ProBookActions } from '@/modules/user/containers/pro-book-actions';
 import { ProfessionalInfoBigCard } from '@/modules/user/containers/professional-info-big-card';
@@ -22,6 +22,8 @@ import { ProfessionalInfoBigCard } from '@/modules/user/containers/professional-
 import { type ProfileViewProps } from './profile-view.interface';
 
 import styles from './profile-view.module.scss';
+import { ProfessionalGalleryForm } from '../../components/professional-gallery-form';
+import { ProfileSectionLayoutAlbums } from '../../components/profile-section-layout-albums';
 
 export function ProfileView({ session }: ProfileViewProps) {
   const { id: queryId } = useParams<{ id: string }>();
@@ -103,26 +105,29 @@ export function ProfileView({ session }: ProfileViewProps) {
 
           <ProfileSectionLayoutServices userId={userId} />
 
-          <ErrorBoundary fallback={null}>
-            <ProfileSectionLayout
-              edit={false}
-              title='pro.layout.title.location'
-              id='profile-location'
-              onEdit={() => {}}
+          <ProfileSectionLayoutLocation userId={userId} />
+
+          <ProfileSectionLayoutAlbums userId={userId} />
+
+          {/* <ProfileSectionLayout
+            edit={false}
+            title='pro.layout.title.location'
+            id='profile-location'
+            onEdit={() => {}}
+          >
+            <Suspense
+              fallback={
+                <div className='flex flex-col gap-y-4'>
+                  <div className='skeleton h-4 w-[60%] rounded' />
+                  <div className='skeleton h-[400px] w-full rounded-xl' />
+                </div>
+              }
             >
-              <Suspense
-                fallback={
-                  <div className='flex flex-col gap-y-4'>
-                    <div className='skeleton h-4 w-[60%] rounded' />
-                    <div className='skeleton h-[400px] w-full rounded-xl' />
-                  </div>
-                }
-              >
-                <ProLocation userId={userId} />
-              </Suspense>
-            </ProfileSectionLayout>
-          </ErrorBoundary>
-          <GallerySection userId={userId} />
+              <ProLocation userId={userId} />
+            </Suspense>
+          </ProfileSectionLayout> */}
+          {/* <ProfessionalGalleryForm /> */}
+          {/* <GallerySection userId={userId} /> */}
         </div>
         <ProBookActions userId={userId} />
       </main>

@@ -101,7 +101,7 @@ export const ProfileSectionLayoutServices: FC<
 
   if (isGroupsLoading) {
     return (
-      <div className='mx-auto mt-[90px] flex w-full flex-col gap-y-1 px-6 md:mt-[110px] md:max-w-[924px]'>
+      <div className='mx-auto mt-[90px] flex w-full flex-col gap-y-1 px-6 md:mt-[110px] md:max-w-[924px] md:px-0'>
         <div className='skeleton flex h-[133px] w-full rounded' />
         <div className='skeleton flex h-[77px] w-full rounded' />
       </div>

@@ -37,22 +37,6 @@ export const GallerySection: FC<GallerySectionProps> = ({ userId }) => {
     }
   );
 
-  if (isLoading) {
-    return (
-      <ProfileSectionLayout
-        title={'pro.layout.title.gallery'}
-        id='profile-gallery'
-        edit={false}
-      >
-        <div className={styles.root}>
-          <div className='skeleton h-[180px] w-full rounded-xl md:h-[330px]' />
-          <div className='skeleton h-[180px] w-full rounded-xl md:h-[330px]' />
-          <div className='skeleton h-[180px] w-full rounded-xl md:h-[330px]' />
-        </div>
-      </ProfileSectionLayout>
-    );
-  }
-
   if (isFetched && (!albumsListQuery || albumsListQuery.pages.length === 0)) {
     return null;
   }
