@@ -13,6 +13,7 @@ import { PRISMA_ERRORS } from '@/modules/core/constants/prisma-errors.constants'
 import { useDebounce } from '@/modules/core/hooks/use-debounce';
 import { useImageInputState } from '@/modules/core/hooks/use-image-input-state';
 import { trpc } from '@/modules/core/utils/trpc.utils';
+import { generateNickname } from '@/modules/user/utils/generate-nickname';
 import { getPrismaErrorMessage } from '@/modules/user/utils/get-prisma-error-message';
 
 import type {
@@ -140,7 +141,7 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
     const { data: me } = trpc.user.me.useQuery();
 
     // form
-    const { reset, setError, clearErrors, watch, ...form } =
+    const { reset, setError, clearErrors, watch, setValue, ...form } =
       useForm<AboutProfessionalFormValues>({
         defaultValues,
         resolver:
@@ -150,6 +151,8 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
       });
 
     const aboutValue = watch('about', '');
+    const firstName = watch('firstName', '');
+    const lastName = watch('lastName', '');
     const debounceAbout = useDebounce(aboutValue);
     // state
     const avatar = useImageInputState(initialValues?.avatar);
@@ -157,6 +160,14 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
     useEffect(() => {
       reset({ ...defaultValues, ...initialValues });
     }, [initialValues, reset]);
+
+    useEffect(() => {
+      if (firstName && lastName && !form.formState.dirtyFields.nickname) {
+        const generatedNickname = generateNickname(firstName, lastName);
+
+        setValue('nickname', generatedNickname);
+      }
+    }, [firstName, lastName, setValue, form.formState.dirtyFields.nickname]);
 
     const handleError = useCallback(
       (error: any) => {
@@ -217,6 +228,33 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
           onRemove={avatar.onRemove}
         />
         <div className={styles.inputsRow}>
+          <TextField
+            {...form.register('firstName')}
+            error={getErrorMessage(form.formState.errors.firstName?.message)}
+            variant='input'
+            label={intl.formatMessage({
+              id: 'user.about.professional.form.firstName',
+            })}
+          />
+          <TextField
+            {...form.register('lastName')}
+            error={getErrorMessage(form.formState.errors.lastName?.message)}
+            variant='input'
+            label={intl.formatMessage({
+              id: 'user.about.professional.form.lastName',
+            })}
+          />
+        </div>
+        <div className={styles.inputsRow}>
+          <TextField
+            {...form.register('email')}
+            error={getErrorMessage(form.formState.errors.email?.message)}
+            variant='input'
+            label={intl.formatMessage({
+              id: 'user.about.professional.form.email',
+            })}
+            disabled
+          />
           <Controller
             control={form.control}
             name='nickname'
@@ -236,33 +274,6 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
                 />
               );
             }}
-          />
-          <TextField
-            {...form.register('email')}
-            error={getErrorMessage(form.formState.errors.email?.message)}
-            variant='input'
-            label={intl.formatMessage({
-              id: 'user.about.professional.form.email',
-            })}
-            disabled
-          />
-        </div>
-        <div className={styles.inputsRow}>
-          <TextField
-            {...form.register('firstName')}
-            error={getErrorMessage(form.formState.errors.firstName?.message)}
-            variant='input'
-            label={intl.formatMessage({
-              id: 'user.about.professional.form.firstName',
-            })}
-          />
-          <TextField
-            {...form.register('lastName')}
-            error={getErrorMessage(form.formState.errors.lastName?.message)}
-            variant='input'
-            label={intl.formatMessage({
-              id: 'user.about.professional.form.lastName',
-            })}
           />
         </div>
         <div className={styles.inputsRow}>
