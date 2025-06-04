@@ -1,6 +1,10 @@
-import type { ChildrenProp } from '@/modules/core/types/react.types';
+import type { ReactNode } from 'react';
 
-export type ProfileSectionLayoutProps = ChildrenProp & {
-  id: string;
+export type ProfileSectionLayoutProps = {
+  children: ReactNode;
   title: string;
+  id?: string;
+  edit?: boolean;
+  onEdit?: () => void;
+  onCancel?: () => void;
 };
