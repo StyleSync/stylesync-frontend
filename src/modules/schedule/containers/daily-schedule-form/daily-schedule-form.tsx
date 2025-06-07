@@ -441,7 +441,7 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='inline-block w-full max-w-[400px] md:w-1/2'
+      className='inline-block w-full max-w-[400px] border-t border-gray-light bg-[rgba(59,130,239,0.05)] py-4 md:w-1/2 md:bg-transparent'
     >
       <div className='flex flex-col gap-6 md:pt-[22px]'>
         {dates.length > 1 ? (
