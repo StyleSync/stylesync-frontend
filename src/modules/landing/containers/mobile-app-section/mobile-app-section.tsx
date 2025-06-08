@@ -19,10 +19,10 @@ export const MobileAppSection = () => {
   const image2 = intl.locale === 'uk' ? profileUk.src : profileEn.src;
 
   return (
-    <section className='relative flex w-full flex-col items-center justify-center p-3 sm:mt-12 lg:mt-20'>
+    <section className='relative flex w-full flex-col items-center justify-center p-2 sm:mt-40'>
       <Image
         className='absolute left-0 top-0 z-0 aspect-square h-full w-full max-w-full'
-        src={net}
+        src={net.src}
         alt='img'
         width={net.width}
         height={net.width}
@@ -33,19 +33,16 @@ export const MobileAppSection = () => {
           background: 'linear-gradient(180deg, transparent 0%, white 70%)',
         }}
       />
-      <div className='flex flex-col gap-5'>
+      <div className='flex flex-col gap-6'>
         <Typography
           weight='semibold'
-          className='text-center !text-4xl !text-black md:!text-5xl'
+          className='max-w-[650px] text-center !text-4xl !text-black md:!text-5xl'
         >
           {intl.formatMessage({ id: 'pages.landing.mobileApp.title' })}
         </Typography>
-        <Typography
-          variant='body1'
-          className='max-w-[820px] px-2 text-center !text-gray-accent'
-        >
+        <span className='max-w-[700px] px-2 text-center text-lg text-gray-accent'>
           {intl.formatMessage({ id: 'pages.landing.mobileApp.description' })}
-        </Typography>
+        </span>
         {/* <div className='z-0 flex items-center justify-center gap-5 md:gap-8'>
           <Icon
             className='z-[25] hover:cursor-pointer'

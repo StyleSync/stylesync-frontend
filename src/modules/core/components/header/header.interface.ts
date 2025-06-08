@@ -11,4 +11,5 @@ export type HeaderProps = {
     centralSlot?: string;
     rightSlot?: string;
   };
+  transparentOnTop?: boolean;
 } & StylingProps;
