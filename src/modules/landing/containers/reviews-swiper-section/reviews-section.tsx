@@ -12,7 +12,7 @@ import 'swiper/css';
 const testimonialsData1 = [
   {
     img: Image,
-    text: "Absolutely thrilled with the results! The specialist at the beauty salon was incredibly skilled and attentive. My experience was nothing short of amazing, and I can't wait to book my next appointment. Thank you for your exceptional service!",
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
     author: {
       avatar: img,
       name: 'Ivan Romli',
@@ -21,7 +21,7 @@ const testimonialsData1 = [
   },
   {
     img: Image,
-    text: "Absolutely thrilled with the results! The specialist at the beauty salon was incredibly skilled and attentive. My experience was nothing short of amazing, and I can't wait to book my next appointment. Thank you for your exceptional service!",
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
     author: {
       avatar: img,
       name: 'Ivan Romli',
@@ -30,73 +30,7 @@ const testimonialsData1 = [
   },
   {
     img: Image,
-    text: "Absolutely thrilled with the results! The specialist at the beauty salon was incredibly skilled and attentive. My experience was nothing short of amazing, and I can't wait to book my next appointment. Thank you for your exceptional service!",
-    author: {
-      avatar: img,
-      name: 'Ivan Romli',
-      occupation: 'student',
-    },
-  },
-  {
-    img: Image,
-    text: "Absolutely thrilled with the results! The specialist at the beauty salon was incredibly skilled and attentive. My experience was nothing short of amazing, and I can't wait to book my next appointment. Thank you for your exceptional service!",
-    author: {
-      avatar: img,
-      name: 'Ivan Romli',
-      occupation: 'student',
-    },
-  },
-  {
-    img: Image,
-    text: "Absolutely thrilled with the results! The specialist at the beauty salon was incredibly skilled and attentive. My experience was nothing short of amazing, and I can't wait to book my next appointment. Thank you for your exceptional service!",
-    author: {
-      avatar: img,
-      name: 'Ivan Romli',
-      occupation: 'student',
-    },
-  },
-];
-
-const testimonialsData2 = [
-  {
-    img: Image,
-    text: "Absolutely thrilled with the results! The specialist at the beauty salon was incredibly skilled and attentive. My experience was nothing short of amazing, and I can't wait to book my next appointment. Thank you for your exceptional service!",
-    author: {
-      avatar: img,
-      name: 'Ivan Romli',
-      occupation: 'student',
-    },
-  },
-  {
-    img: Image,
-    text: "Absolutely thrilled with the results! The specialist at the beauty salon was incredibly skilled and attentive. My experience was nothing short of amazing, and I can't wait to book my next appointment. Thank you for your exceptional service!",
-    author: {
-      avatar: img,
-      name: 'Ivan Romli',
-      occupation: 'student',
-    },
-  },
-  {
-    img: Image,
-    text: "Absolutely thrilled with the results! The specialist at the beauty salon was incredibly skilled and attentive. My experience was nothing short of amazing, and I can't wait to book my next appointment. Thank you for your exceptional service!",
-    author: {
-      avatar: img,
-      name: 'Ivan Romli',
-      occupation: 'student',
-    },
-  },
-  {
-    img: Image,
-    text: "Absolutely thrilled with the results! The specialist at the beauty salon was incredibly skilled and attentive. My experience was nothing short of amazing, and I can't wait to book my next appointment. Thank you for your exceptional service!",
-    author: {
-      avatar: img,
-      name: 'Ivan Romli',
-      occupation: 'student',
-    },
-  },
-  {
-    img: Image,
-    text: "Absolutely thrilled with the results! The specialist at the beauty salon was incredibly skilled and attentive. My experience was nothing short of amazing, and I can't wait to book my next appointment. Thank you for your exceptional service!",
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
     author: {
       avatar: img,
       name: 'Ivan Romli',
@@ -111,16 +45,16 @@ export const ReviewsSection = () => {
       <Typography
         variant='title'
         weight='semibold'
-        className='text-center !text-4xl !text-black md:!text-5xl'
+        className='max-w-[800px] text-center !text-4xl !leading-[1.2] !text-black md:!text-5xl'
       >
-        Check Out What They Said
+        Що кажуть майстри, які вже користуються
       </Typography>
       <div className='mt-16 w-full'>
         <Swiper
           className='h-full w-full'
-          wrapperClass=' !ease-linear'
+          wrapperClass='!ease-linear'
           slidesPerView={2.4}
-          speed={10000}
+          speed={40000}
           loop
           spaceBetween={20}
           modules={[Autoplay]}
@@ -160,11 +94,11 @@ export const ReviewsSection = () => {
         </Swiper>
       </div>
 
-      <div className='mt-5 w-full'>
+      {/* <div className='mt-5 w-full'>
         <Swiper
           className='h-full w-full'
           wrapperClass=' !ease-linear'
-          speed={10000}
+          speed={40000}
           loop
           modules={[Autoplay]}
           autoplay={{
@@ -204,7 +138,7 @@ export const ReviewsSection = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-      </div>
+      </div> */}
     </section>
   );
 };

@@ -16,6 +16,7 @@ export const LandingHeader = async () => {
       }}
       // centralSlot={<ProSearchField />}
       rightSlot={<UserMenuBadge session={session} />}
+      transparentOnTop
     />
   );
 };

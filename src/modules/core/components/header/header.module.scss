@@ -17,6 +17,21 @@
   z-index: 20;
   transition: variables.$transition-medium;
 
+  &.transparentOnTop {
+    background-color: transparent;
+    backdrop-filter: none;
+    --webkit-backdrop-filter: none;
+    box-shadow: none;
+  }
+
+  &.pageScrolled {
+    background: linear-gradient(-180deg, white, rgba(#fff, 0.8));
+    backdrop-filter: saturate(180%) blur(20px);
+    --webkit-backdrop-filter: saturate(180%) blur(20px);
+    box-shadow: variables.$main-box-shadow;
+    transition: variables.$transition-ultrafast;
+  }
+
   @include mixins.tablet {
     padding: utils.spacing(2, 5);
   }
@@ -26,14 +41,6 @@
     background: linear-gradient(-180deg, white, transparent);
     box-shadow: none;
     backdrop-filter: none;
-
-    &.pageScrolled {
-      background: linear-gradient(-180deg, white, rgba(#fff, 0.8));
-      backdrop-filter: saturate(180%) blur(20px);
-      --webkit-backdrop-filter: saturate(180%) blur(20px);
-      box-shadow: variables.$main-box-shadow;
-      transition: variables.$transition-ultrafast;
-    }
 
     .logo {
       width: 103px;
