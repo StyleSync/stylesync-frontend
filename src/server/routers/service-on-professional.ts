@@ -50,6 +50,7 @@ export const serviceOnProfessionalRouter = router({
         duration: z.number().min(1, 'Required'),
         description: z.string().optional(),
         serviceId: z.string().min(1, 'Required'),
+        position: z.number().min(0).optional(),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -79,6 +80,7 @@ export const serviceOnProfessionalRouter = router({
           duration: z.number().min(1, 'Required'),
           serviceId: z.string().min(1, 'Required'),
           description: z.string().optional(),
+          position: z.number().min(0).optional(),
         })
       )
     )
@@ -102,6 +104,7 @@ export const serviceOnProfessionalRouter = router({
         currency: z.enum([Currency.USD, Currency.UAH, Currency.EUR]).optional(),
         duration: z.number().min(1, 'Required').optional(),
         description: z.string().optional(),
+        position: z.number().min(0).optional(),
       })
     )
     .mutation(async ({ input, ctx }) => {

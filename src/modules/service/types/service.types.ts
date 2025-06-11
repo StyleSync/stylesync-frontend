@@ -14,7 +14,12 @@ export type ServiceOnProfessionalList = Omit<
   Prisma.ServiceOnProfessionalGetPayload<{
     include: { service: true };
   }>,
-  'professionalId' | 'serviceId' | 'createdAt' | 'updatedAt' | 'deletedAt'
+  | 'professionalId'
+  | 'serviceId'
+  | 'createdAt'
+  | 'updatedAt'
+  | 'deletedAt'
+  | 'position'
 >[];
 
 export type ServiceOnProfessionalListItem = ServiceOnProfessionalList[number];

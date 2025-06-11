@@ -11,6 +11,7 @@ export const defaultServiceOnProfessionalSelect =
     currency: true,
     duration: true,
     description: true,
+    position: true,
     service: { select: defaultServiceSelect },
     professional: { select: defaultProfessionalSelect },
   });
