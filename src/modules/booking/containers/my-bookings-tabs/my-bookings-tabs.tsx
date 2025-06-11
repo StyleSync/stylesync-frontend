@@ -6,6 +6,7 @@ import { useIntl } from 'react-intl';
 import { useMyBookingsTab } from '@/modules/booking/hooks/use-my-bookings-tab';
 import { Tabs } from '@/modules/core/components/tabs';
 import type { Tab } from '@/modules/core/components/tabs/tabs.interface';
+import { useGtmAuthEvents } from '@/modules/core/hooks/use-gtm-auth-events';
 
 import type {
   MyBookingsTabKey,
@@ -18,6 +19,8 @@ export const MyBookingsTabs: FC<MyBookingsTabsProps> = () => {
   const intl = useIntl();
 
   const { activeTab, setActiveTab } = useMyBookingsTab();
+
+  useGtmAuthEvents();
 
   const tabs: Tab[] = [
     {

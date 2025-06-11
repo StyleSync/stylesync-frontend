@@ -9,6 +9,7 @@ import { useIntl } from 'react-intl';
 
 import { AccountTypeSelect } from '@/modules/auth/components/account-type-select';
 import { Button } from '@/modules/core/components/button';
+import { useGtmAuthEvents } from '@/modules/core/hooks/use-gtm-auth-events';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 
 import type { ExistingAccountTypeSelectProps } from './existing-account-type-select.interface';
@@ -25,6 +26,8 @@ export const ExistingAccountTypeSelect: FC<
   // queries
   const userUpdateMutation = trpc.user.update.useMutation();
   const { data: session } = useSession();
+
+  useGtmAuthEvents();
 
   const handleSave = useCallback(() => {
     userUpdateMutation.mutate(
