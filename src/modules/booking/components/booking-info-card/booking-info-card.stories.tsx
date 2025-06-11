@@ -29,6 +29,7 @@ export const Base: Story = {
         serviceId: '',
         professionalId: '',
         description: null,
+        position: 0,
         createdAt: new Date(),
         updatedAt: new Date(),
         deletedAt: null,
