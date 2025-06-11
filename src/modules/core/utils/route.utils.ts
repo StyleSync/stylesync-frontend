@@ -20,11 +20,11 @@ export const pageGuard = async (
   }
 
   if (config.require.userType && !session.user.userType) {
-    redirect('/app/account-type');
+    redirect('/app/account-type?signUp=true');
   }
 
   if (config.require.onboarding && !session.user.onboardingCompleted) {
-    redirect('/app/onboard');
+    redirect('/app/onboard?signUp=true');
   }
 
   return session;
