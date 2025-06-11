@@ -6,6 +6,12 @@
   background-color: variables.$grey-light-color;
   padding: utils.spacing(3);
   border-top: 1px solid variables.$primary-light-color;
+  cursor: grab;
+  touch-action: none;
+
+  &:active {
+    cursor: grabbing;
+  }
 
   @include mixins.phone {
     padding: utils.spacing(2);
