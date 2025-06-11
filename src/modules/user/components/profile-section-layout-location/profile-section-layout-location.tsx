@@ -1,18 +1,20 @@
-import { useBoolean } from 'usehooks-ts';
+import { useCallback, useRef } from 'react';
+
 import { TRPCClientError } from '@trpc/client';
-import { useRef, useCallback } from 'react';
+import { useIntl } from 'react-intl';
+import { useBoolean } from 'usehooks-ts';
+
+import { Button } from '@/modules/core/components/button';
+import { showToast } from '@/modules/core/providers/toast-provider';
+import { onQueryRetry } from '@/modules/core/utils/query-retry.utils';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { UserLocationSelectForm } from '@/modules/location/containers/user-location-select-form';
+import type { Address } from '@/modules/location/types/address.types';
 import { ProLocation } from '@/modules/user/components/pro-location';
 import { ProfileSectionLayout } from '@/modules/user/components/profile-section-layout';
-import { trpc } from '@/modules/core/utils/trpc.utils';
 import type { AppRouter } from '@/server/routers/_app';
 
 import { ProfileSectionLayoutLocationProps } from './profile-section-layout-location.interface';
-import { UserLocationSelectForm } from '@/modules/location/containers/user-location-select-form';
-import { onQueryRetry } from '@/modules/core/utils/query-retry.utils';
-import type { Address } from '@/modules/location/types/address.types';
-import { Button } from '@/modules/core/components/button';
-import { useIntl } from 'react-intl';
-import { showToast } from '@/modules/core/providers/toast-provider';
 
 export const ProfileSectionLayoutLocation = ({
   userId,
@@ -167,7 +169,7 @@ export const ProfileSectionLayoutLocation = ({
 
       return;
     }
-  }, [location, locationCreate, locationDelete, locationUpdate]);
+  }, [location, locationCreate, locationDelete, locationUpdate, intl, isEdit]);
 
   return (
     <ProfileSectionLayout

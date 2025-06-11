@@ -478,5 +478,6 @@
   "service.constructor.add.success": "Service added",
   "services.constructor.delete.success": "Services group deleted",
   "service.constructor.delete.success": "Service deleted",
-  "select.service.add.group.title": "Add service"
+  "select.service.add.group.title": "Add service",
+  "professional.settings.location.not.specified": "Location not specified"
 }
