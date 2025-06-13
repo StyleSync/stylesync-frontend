@@ -471,5 +471,12 @@
   "profile.notFound.searchPros": "Шукати професіоналів",
   "profile.notFound.goHome": "На головну",
   "day.off": "Вихідний день",
-  "working.day": "Робочий день"
+  "working.day": "Робочий день",
+  "toast.about.success.title": "Зміни збережено!",
+  "toast.about.error.title": "Помилка",
+  "service.constructor.add.success": "Послуга додана",
+  "services.constructor.delete.success": "Група послуг видалена",
+  "service.constructor.delete.success": "Послуга видалена",
+  "select.service.add.group.title": "Додати послугу",
+  "professional.settings.location.not.specified": "Локація не вказана"
 }

@@ -4,19 +4,16 @@ import { Suspense, useMemo } from 'react';
 
 import clsx from 'clsx';
 import { useParams, useRouter } from 'next/navigation';
-import { ErrorBoundary } from 'react-error-boundary';
 import { useIntl } from 'react-intl';
 
 import { BookingProvider } from '@/modules/booking/providers/booking-provider';
 import { ErrorView } from '@/modules/core/components/error-view';
 import { Spinner } from '@/modules/core/components/spinner';
 import { trpc } from '@/modules/core/utils/trpc.utils';
-import { ServiceTableSkeleton } from '@/modules/service/components/service-table-skeleton';
-import { AboutMe } from '@/modules/user/components/about-me';
-import { GallerySection } from '@/modules/user/components/gallery-section';
-import { ProLocation } from '@/modules/user/components/pro-location';
-import { ProfileSectionLayout } from '@/modules/user/components/profile-section-layout';
-import { UserServices } from '@/modules/user/components/user-services';
+import { ProfileSectionLayoutAbout } from '@/modules/user/components/profile-section-layout-about';
+import { ProfileSectionLayoutAlbums } from '@/modules/user/components/profile-section-layout-albums';
+import { ProfileSectionLayoutLocation } from '@/modules/user/components/profile-section-layout-location';
+import { ProfileSectionLayoutServices } from '@/modules/user/components/profile-section-layout-services/profile-section-layout-services';
 import { ProBookActions } from '@/modules/user/containers/pro-book-actions';
 import { ProfessionalInfoBigCard } from '@/modules/user/containers/professional-info-big-card';
 
@@ -100,45 +97,33 @@ export function ProfileView({ session }: ProfileViewProps) {
         </section>
         <div className={styles.divider} />
         <div className={styles.sectionGroup}>
-          <ProfileSectionLayout title='pro.layout.title.about' id='about-me'>
+          <ProfileSectionLayoutAbout userId={userId} />
+
+          <ProfileSectionLayoutServices userId={userId} />
+
+          <ProfileSectionLayoutLocation userId={userId} />
+
+          <ProfileSectionLayoutAlbums userId={userId} />
+
+          {/* <ProfileSectionLayout
+            edit={false}
+            title='pro.layout.title.location'
+            id='profile-location'
+            onEdit={() => {}}
+          >
             <Suspense
               fallback={
-                <div className='flex flex-col gap-y-2'>
-                  <div className='skeleton flex h-4 w-[70%] rounded' />
-                  <div className='skeleton flex h-4 w-[80%] rounded' />
-                  <div className='skeleton flex h-4 w-[50%] rounded' />
+                <div className='flex flex-col gap-y-4'>
+                  <div className='skeleton h-4 w-[60%] rounded' />
+                  <div className='skeleton h-[400px] w-full rounded-xl' />
                 </div>
               }
             >
-              <AboutMe userId={userId} />
+              <ProLocation userId={userId} />
             </Suspense>
-          </ProfileSectionLayout>
-          <ProfileSectionLayout
-            title='pro.layout.title.services'
-            id='profile-services'
-          >
-            <Suspense fallback={<ServiceTableSkeleton rows={3} />}>
-              <UserServices userId={userId} session={session} />
-            </Suspense>
-          </ProfileSectionLayout>
-          <ErrorBoundary fallback={null}>
-            <ProfileSectionLayout
-              title='pro.layout.title.location'
-              id='profile-location'
-            >
-              <Suspense
-                fallback={
-                  <div className='flex flex-col gap-y-4'>
-                    <div className='skeleton h-4 w-[60%] rounded' />
-                    <div className='skeleton h-[400px] w-full rounded-xl' />
-                  </div>
-                }
-              >
-                <ProLocation userId={userId} />
-              </Suspense>
-            </ProfileSectionLayout>
-          </ErrorBoundary>
-          <GallerySection userId={userId} />
+          </ProfileSectionLayout> */}
+          {/* <ProfessionalGalleryForm /> */}
+          {/* <GallerySection userId={userId} /> */}
         </div>
         <ProBookActions userId={userId} />
       </main>

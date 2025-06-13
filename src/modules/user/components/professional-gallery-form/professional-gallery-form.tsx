@@ -101,7 +101,7 @@ export const ProfessionalGalleryForm: FC<ProfessionalGalleryFormProps> = () => {
               />
             }
           />
-          <div className='mt-5 grid grid-cols-1 gap-4 md:mt-8 md:grid-cols-3 xl:grid-cols-5'>
+          <div className='mt-5 grid grid-cols-2 gap-4 md:mt-8 md:grid-cols-3'>
             {albumsList?.map((album) => (
               <div key={album.id}>
                 <AlbumCard
