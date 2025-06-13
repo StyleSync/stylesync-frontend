@@ -23,17 +23,16 @@ export const ProfileSectionLayoutLocation = ({
   const intl = useIntl();
 
   const { data: me } = trpc.user.me.useQuery({ expand: ['professional'] });
-  const { data: location, ...locationQuery } =
-    trpc.location.getByProfessionalId.useQuery(
-      {
-        id: me?.professional?.id ?? '',
-      },
-      {
-        enabled: Boolean(me?.professional?.id),
-        retry: (retryCount, error) =>
-          onQueryRetry(retryCount, error as TRPCClientError<AppRouter>),
-      }
-    );
+  const { data: location } = trpc.location.getByProfessionalId.useQuery(
+    {
+      id: me?.professional?.id ?? '',
+    },
+    {
+      enabled: Boolean(me?.professional?.id),
+      retry: (retryCount, error) =>
+        onQueryRetry(retryCount, error as TRPCClientError<AppRouter>),
+    }
+  );
 
   // mutations
   const locationCreate = trpc.location.create.useMutation();

@@ -22,7 +22,6 @@ export const GallerySection: FC<GallerySectionProps> = ({ userId }) => {
 
   const {
     data: albumsListQuery,
-    isLoading,
     isFetched,
     hasNextPage,
     fetchNextPage,

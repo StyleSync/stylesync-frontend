@@ -37,7 +37,7 @@ export const ProfileSectionLayoutAbout: FC<ProfileSectionLayoutAboutProps> = ({
   userId,
 }) => {
   const intl = useIntl();
-  const isEdiAbout = useBoolean();
+  const isEditAbout = useBoolean();
   const queryClient = useQueryClient();
   const formId = useId();
 
@@ -69,7 +69,7 @@ export const ProfileSectionLayoutAbout: FC<ProfileSectionLayoutAboutProps> = ({
   };
 
   const onCancel = () => {
-    isEdiAbout.setFalse();
+    isEditAbout.setFalse();
   };
 
   const onSave = handleSubmit((data) => {
@@ -86,7 +86,7 @@ export const ProfileSectionLayoutAbout: FC<ProfileSectionLayoutAboutProps> = ({
             variant: 'success',
             title: intl.formatMessage({ id: 'toast.about.success.title' }),
           });
-          isEdiAbout.setFalse();
+          isEditAbout.setFalse();
         },
         onError: () => {
           showToast({
@@ -100,10 +100,10 @@ export const ProfileSectionLayoutAbout: FC<ProfileSectionLayoutAboutProps> = ({
 
   return (
     <ProfileSectionLayout
-      edit={isEdiAbout.value}
+      edit={isEditAbout.value}
       title='pro.layout.title.about'
       id='about-me'
-      onEdit={isEdiAbout.toggle}
+      onEdit={isEditAbout.toggle}
       onCancel={onCancel}
     >
       <Suspense
@@ -115,7 +115,7 @@ export const ProfileSectionLayoutAbout: FC<ProfileSectionLayoutAboutProps> = ({
           </div>
         }
       >
-        {isEdiAbout.value ? (
+        {isEditAbout.value ? (
           <form className='flex flex-col gap-y-6' id={formId} onSubmit={onSave}>
             <TextField
               charCount={debounceAbout?.length}
@@ -129,7 +129,7 @@ export const ProfileSectionLayoutAbout: FC<ProfileSectionLayoutAboutProps> = ({
               })}
               style={{ height: 200, resize: 'none' }}
             />
-            {isEdiAbout.value && (
+            {isEditAbout.value && (
               <Button
                 className='ml-auto'
                 variant='primary'

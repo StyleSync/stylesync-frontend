@@ -10,10 +10,8 @@ import { BookingProvider } from '@/modules/booking/providers/booking-provider';
 import { ErrorView } from '@/modules/core/components/error-view';
 import { Spinner } from '@/modules/core/components/spinner';
 import { trpc } from '@/modules/core/utils/trpc.utils';
-import { GallerySection } from '@/modules/user/components/gallery-section';
-import { ProLocation } from '@/modules/user/components/pro-location';
-import { ProfileSectionLayout } from '@/modules/user/components/profile-section-layout';
 import { ProfileSectionLayoutAbout } from '@/modules/user/components/profile-section-layout-about';
+import { ProfileSectionLayoutAlbums } from '@/modules/user/components/profile-section-layout-albums';
 import { ProfileSectionLayoutLocation } from '@/modules/user/components/profile-section-layout-location';
 import { ProfileSectionLayoutServices } from '@/modules/user/components/profile-section-layout-services/profile-section-layout-services';
 import { ProBookActions } from '@/modules/user/containers/pro-book-actions';
@@ -22,8 +20,6 @@ import { ProfessionalInfoBigCard } from '@/modules/user/containers/professional-
 import { type ProfileViewProps } from './profile-view.interface';
 
 import styles from './profile-view.module.scss';
-import { ProfessionalGalleryForm } from '../../components/professional-gallery-form';
-import { ProfileSectionLayoutAlbums } from '../../components/profile-section-layout-albums';
 
 export function ProfileView({ session }: ProfileViewProps) {
   const { id: queryId } = useParams<{ id: string }>();
