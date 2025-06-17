@@ -5,6 +5,7 @@ import { useIntl } from 'react-intl';
 
 import { Avatar } from '@/modules/core/components/avatar';
 import { Button } from '@/modules/core/components/button';
+import { Spinner } from '@/modules/core/components/spinner';
 
 import type { AvatarSelectProps } from './avatar-select.interface';
 
@@ -15,6 +16,8 @@ export const AvatarSelect: FC<AvatarSelectProps> = ({
   className,
   value,
   onRemove,
+  hideActions,
+  isLoading,
   ...props
 }) => {
   const intl = useIntl();
@@ -33,29 +36,37 @@ export const AvatarSelect: FC<AvatarSelectProps> = ({
         shape='circle'
         shadow
       />
-      <div className={styles.actions}>
-        <Button
-          className={clsx(styles.action, styles.select)}
-          text={
-            value
-              ? intl.formatMessage({ id: 'button.avatar.select.new' })
-              : intl.formatMessage({ id: 'button.avatar.select' })
-          }
-          variant='unstyled'
-          onClick={handleSelectClick}
-        />
-        {!!value && (
-          <>
-            <div className={styles.divider} />
-            <Button
-              className={clsx(styles.action, styles.delete)}
-              text={intl.formatMessage({ id: 'button.remove' })}
-              variant='danger'
-              onClick={onRemove}
-            />
-          </>
-        )}
-      </div>
+      {isLoading && (
+        <div className={styles.spinnerOverlay}>
+          <Spinner size='medium' />
+        </div>
+      )}
+
+      {!hideActions && (
+        <div className={styles.actions}>
+          <Button
+            className={clsx(styles.action, styles.select)}
+            text={
+              value
+                ? intl.formatMessage({ id: 'button.avatar.select.new' })
+                : intl.formatMessage({ id: 'button.avatar.select' })
+            }
+            variant='unstyled'
+            onClick={handleSelectClick}
+          />
+          {!!value && (
+            <>
+              <div className={styles.divider} />
+              <Button
+                className={clsx(styles.action, styles.delete)}
+                text={intl.formatMessage({ id: 'button.remove' })}
+                variant='danger'
+                onClick={onRemove}
+              />
+            </>
+          )}
+        </div>
+      )}
       <input
         aria-label='Avatar select'
         ref={inputRef}

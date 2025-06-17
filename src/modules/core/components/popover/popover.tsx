@@ -27,6 +27,8 @@ export const Popover: FC<PopoverProps> = ({
   disablePortal = false,
   forceTriggerWidth = false,
   backgroundBlurEffect = true,
+  onMouseLeave,
+  onMouseEnter,
 }) => {
   const popperRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -88,6 +90,8 @@ export const Popover: FC<PopoverProps> = ({
               onEscapeKeyDown={onClose}
               onPointerDownOutside={handlePointerDownOutside}
               onOpenAutoFocus={handleOpenAutoFocus}
+              onMouseLeave={onMouseLeave}
+              onMouseEnter={onMouseEnter}
             >
               {children}
             </RPopover.Content>

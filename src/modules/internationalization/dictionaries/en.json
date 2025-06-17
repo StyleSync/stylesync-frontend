@@ -479,5 +479,10 @@
   "services.constructor.delete.success": "Services group deleted",
   "service.constructor.delete.success": "Service deleted",
   "select.service.add.group.title": "Add service",
-  "professional.settings.location.not.specified": "Location not specified"
+  "professional.settings.location.not.specified": "Location not specified",
+  "user.avatar.update.success": "Photo added",
+  "user.avatar.update.error": "Error, please try again",
+  "user.avatar.upload.failed": "Failed to upload image",
+  "user.avatar.add": "Add avatar",
+  "user.avatar.delete": "Delete avatar"
 }
