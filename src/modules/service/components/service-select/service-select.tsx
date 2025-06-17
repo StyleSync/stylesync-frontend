@@ -16,6 +16,8 @@ import type { ServiceSelectProps } from './service-select.interface';
 
 import styles from './service-select.module.scss';
 
+const ALIGN_OFFSET = -70;
+
 export const ServiceSelect: FC<ServiceSelectProps> = ({
   services,
   onServiceSelect,
@@ -97,6 +99,7 @@ export const ServiceSelect: FC<ServiceSelectProps> = ({
         ...popoverProps,
         classes: { content: 'max-h-[340px] overflow-y-auto' },
         side: 'bottom',
+        alignOffset: deviceType === 'mobile' ? ALIGN_OFFSET : 0,
       }}
     />
   );
