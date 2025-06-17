@@ -90,6 +90,10 @@ export const UserData: FC<UserDataProps> = ({ professional }) => {
       try {
         await updateUser({ avatar: null });
         avatar.onRemove();
+        showToast({
+          variant: 'success',
+          title: intl.formatMessage({ id: 'user.avatar.remove.success' }),
+        });
       } catch (error) {
         showToast({
           variant: 'error',

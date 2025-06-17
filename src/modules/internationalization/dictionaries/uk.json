@@ -483,5 +483,6 @@
   "user.avatar.update.error": "Помилка, спробуйте ще раз",
   "user.avatar.upload.failed": "Не вдалось завантажити зображення",
   "user.avatar.add": "Додати аватарку",
-  "user.avatar.delete": "Видалити аватарку"
+  "user.avatar.delete": "Видалити аватарку",
+  "user.avatar.remove.success": "Аватарка видалена"
 }

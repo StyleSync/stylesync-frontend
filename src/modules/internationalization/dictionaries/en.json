@@ -484,5 +484,6 @@
   "user.avatar.update.error": "Error, please try again",
   "user.avatar.upload.failed": "Failed to upload image",
   "user.avatar.add": "Add avatar",
-  "user.avatar.delete": "Delete avatar"
+  "user.avatar.delete": "Delete avatar",
+  "user.avatar.remove.success": "Avatar removed"
 }
