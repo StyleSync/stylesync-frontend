@@ -17,6 +17,7 @@ export const ProfileSectionLayout: FC<ProfileSectionLayoutProps> = ({
   edit,
   onEdit,
   onCancel,
+  isOwnProfile = false,
 }) => {
   const intl = useIntl();
 
@@ -30,21 +31,23 @@ export const ProfileSectionLayout: FC<ProfileSectionLayoutProps> = ({
         <Typography className={styles.title} As='h2' variant='subtitle'>
           {intl.formatMessage({ id: title })}
         </Typography>
-        <div className='flex items-center gap-2'>
-          {edit ? (
-            <>
-              <Button
-                className='!bg-destructive/10 text-destructive transition-colors duration-500 hover:!bg-destructive/20'
-                variant='unstyled'
-                icon='close'
-                type='button'
-                onClick={handleEdit}
-              />
-            </>
-          ) : (
-            <Button variant='secondary' icon='pencil' onClick={handleEdit} />
-          )}
-        </div>
+        {isOwnProfile && (
+          <div className='flex items-center gap-2'>
+            {edit ? (
+              <>
+                <Button
+                  className='!bg-destructive/10 text-destructive transition-colors duration-500 hover:!bg-destructive/20'
+                  variant='unstyled'
+                  icon='close'
+                  type='button'
+                  onClick={handleEdit}
+                />
+              </>
+            ) : (
+              <Button variant='secondary' icon='pencil' onClick={handleEdit} />
+            )}
+          </div>
+        )}
       </div>
       {children}
     </section>

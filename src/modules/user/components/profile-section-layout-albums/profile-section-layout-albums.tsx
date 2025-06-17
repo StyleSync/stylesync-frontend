@@ -1,18 +1,21 @@
+import { type FC, useState } from 'react';
+
+import clsx from 'clsx';
 import { useBoolean } from 'usehooks-ts';
-import { ProfessionalGalleryForm } from '../professional-gallery-form';
-import { ProfileSectionLayout } from '../profile-section-layout';
+
+import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { AlbumCard } from '@/modules/gallery/components/album-card';
+import { ProfessionalGalleryForm } from '@/modules/user/components/professional-gallery-form';
+import { ProfileSectionLayout } from '@/modules/user/components/profile-section-layout';
+
 import { type ProfileSectionLayoutAlbumsProps } from './profile-section-layout-albums.interface';
-import { useState, type FC } from 'react';
 
 import styles from './profile-section-layout-albums.module.scss';
-import clsx from 'clsx';
-import { AlbumCard } from '@/modules/gallery/components/album-card';
-import { trpc } from '@/modules/core/utils/trpc.utils';
-import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
 
 export const ProfileSectionLayoutAlbums: FC<
   ProfileSectionLayoutAlbumsProps
-> = ({ userId }) => {
+> = ({ userId, isOwnProfile }) => {
   const isEdit = useBoolean();
 
   const [activeAlbum, setActiveAlbum] = useState<string | null>(null);
@@ -63,6 +66,7 @@ export const ProfileSectionLayoutAlbums: FC<
       id='profile-albums'
       onEdit={() => isEdit.setTrue()}
       onCancel={() => isEdit.setFalse()}
+      isOwnProfile={isOwnProfile}
     >
       {isEdit.value ? (
         <ProfessionalGalleryForm />

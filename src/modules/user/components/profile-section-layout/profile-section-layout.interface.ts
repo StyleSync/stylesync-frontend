@@ -7,4 +7,5 @@ export type ProfileSectionLayoutProps = {
   edit?: boolean;
   onEdit?: () => void;
   onCancel?: () => void;
+  isOwnProfile?: boolean;
 };

@@ -42,6 +42,11 @@ export function ProfileView({ session }: ProfileViewProps) {
     [data, queryId]
   );
 
+  const isOwnProfile = useMemo(
+    () => session?.user?.id === userId,
+    [session?.user?.id, userId]
+  );
+
   const { isPending: isProfessionalPending, isError: isProfessionalError } =
     trpc.professional.get.useQuery(
       {
@@ -97,33 +102,25 @@ export function ProfileView({ session }: ProfileViewProps) {
         </section>
         <div className={styles.divider} />
         <div className={styles.sectionGroup}>
-          <ProfileSectionLayoutAbout userId={userId} />
+          <ProfileSectionLayoutAbout
+            userId={userId}
+            isOwnProfile={isOwnProfile}
+          />
 
-          <ProfileSectionLayoutServices userId={userId} />
+          <ProfileSectionLayoutServices
+            userId={userId}
+            isOwnProfile={isOwnProfile}
+          />
 
-          <ProfileSectionLayoutLocation userId={userId} />
+          <ProfileSectionLayoutLocation
+            userId={userId}
+            isOwnProfile={isOwnProfile}
+          />
 
-          <ProfileSectionLayoutAlbums userId={userId} />
-
-          {/* <ProfileSectionLayout
-            edit={false}
-            title='pro.layout.title.location'
-            id='profile-location'
-            onEdit={() => {}}
-          >
-            <Suspense
-              fallback={
-                <div className='flex flex-col gap-y-4'>
-                  <div className='skeleton h-4 w-[60%] rounded' />
-                  <div className='skeleton h-[400px] w-full rounded-xl' />
-                </div>
-              }
-            >
-              <ProLocation userId={userId} />
-            </Suspense>
-          </ProfileSectionLayout> */}
-          {/* <ProfessionalGalleryForm /> */}
-          {/* <GallerySection userId={userId} /> */}
+          <ProfileSectionLayoutAlbums
+            userId={userId}
+            isOwnProfile={isOwnProfile}
+          />
         </div>
         <ProBookActions userId={userId} />
       </main>

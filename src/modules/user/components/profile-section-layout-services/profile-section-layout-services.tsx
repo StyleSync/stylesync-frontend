@@ -28,7 +28,7 @@ import type { ProfileSectionServicesLayoutProps } from './profile-section-layout
 
 export const ProfileSectionLayoutServices: FC<
   ProfileSectionServicesLayoutProps
-> = ({ userId }) => {
+> = ({ userId, isOwnProfile }) => {
   const isEditServices = useBoolean();
   const isCreateServiceOpen = useBoolean();
   const [selectedService, setSelectedService] = useState<Service | null>(null);
@@ -115,6 +115,7 @@ export const ProfileSectionLayoutServices: FC<
       id='profile-services'
       onEdit={isEditServices.toggle}
       onCancel={onCancel}
+      isOwnProfile={isOwnProfile}
     >
       <Suspense>
         {isEditServices.value && (

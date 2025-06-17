@@ -35,6 +35,7 @@ const schemaAbout: z.Schema<AboutFormValues> = z.object({
 
 export const ProfileSectionLayoutAbout: FC<ProfileSectionLayoutAboutProps> = ({
   userId,
+  isOwnProfile,
 }) => {
   const intl = useIntl();
   const isEditAbout = useBoolean();
@@ -105,6 +106,7 @@ export const ProfileSectionLayoutAbout: FC<ProfileSectionLayoutAboutProps> = ({
       id='about-me'
       onEdit={isEditAbout.toggle}
       onCancel={onCancel}
+      isOwnProfile={isOwnProfile}
     >
       <Suspense
         fallback={

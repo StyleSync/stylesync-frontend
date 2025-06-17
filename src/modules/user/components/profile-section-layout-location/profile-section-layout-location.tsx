@@ -18,6 +18,7 @@ import { ProfileSectionLayoutLocationProps } from './profile-section-layout-loca
 
 export const ProfileSectionLayoutLocation = ({
   userId,
+  isOwnProfile,
 }: ProfileSectionLayoutLocationProps) => {
   const isEdit = useBoolean();
   const intl = useIntl();
@@ -177,6 +178,7 @@ export const ProfileSectionLayoutLocation = ({
       edit={isEdit.value}
       onEdit={isEdit.toggle}
       onCancel={isEdit.setFalse}
+      isOwnProfile={isOwnProfile}
     >
       {isEdit.value ? (
         <div className='flex flex-col gap-y-6'>

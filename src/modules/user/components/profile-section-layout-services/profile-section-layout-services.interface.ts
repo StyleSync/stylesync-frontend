@@ -1,1 +1,4 @@
-export type ProfileSectionServicesLayoutProps = { userId: string };
+export type ProfileSectionServicesLayoutProps = {
+  userId: string;
+  isOwnProfile?: boolean;
+};
