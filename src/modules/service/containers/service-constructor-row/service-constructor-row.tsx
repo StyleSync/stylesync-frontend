@@ -26,6 +26,7 @@ const DRAGGING_Z_INDEX = 999;
 
 export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
   data,
+  index,
 }) => {
   const queryClient = useQueryClient();
   const deviceType = useDeviceType();
@@ -47,6 +48,10 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
     isDragging,
   } = useSortable({
     id: data.id,
+    data: {
+      index,
+      position: data.position,
+    },
     resizeObserverConfig: {
       disabled: false,
     },

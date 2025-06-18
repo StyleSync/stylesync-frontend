@@ -8,18 +8,14 @@ export type ServiceOnProfessional = {
   currency: Currency;
   service: Service;
   description: string | null;
+  position: number;
 };
 
 export type ServiceOnProfessionalList = Omit<
   Prisma.ServiceOnProfessionalGetPayload<{
     include: { service: true };
   }>,
-  | 'professionalId'
-  | 'serviceId'
-  | 'createdAt'
-  | 'updatedAt'
-  | 'deletedAt'
-  | 'position'
+  'professionalId' | 'serviceId' | 'createdAt' | 'updatedAt' | 'deletedAt'
 >[];
 
 export type ServiceOnProfessionalListItem = ServiceOnProfessionalList[number];

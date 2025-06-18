@@ -1,4 +1,4 @@
-import { type FC, useCallback, useState } from 'react';
+import { type FC, useCallback, useEffect, useState } from 'react';
 
 import {
   closestCenter,
@@ -55,6 +55,8 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
   // queries
   const serviceOnProfessionalGroupDelete =
     useServiceOnProfessionalGroupDelete();
+  const serviceOnProfessionalUpdateMutation =
+    trpc.serviceOnProfessional.update.useMutation();
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -66,6 +68,11 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
+
+  // Update
+  useEffect(() => {
+    setItems(serviceOnProfessionalList);
+  }, [serviceOnProfessionalList]);
 
   const handleTableRemoveClick = useCallback(() => {
     serviceOnProfessionalGroupDelete.mutate(
@@ -113,7 +120,17 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
       const oldIndex = items.findIndex((item) => item.id === active.id);
       const newIndex = items.findIndex((item) => item.id === over.id);
 
-      setItems(arrayMove(items, oldIndex, newIndex));
+      const newItems = arrayMove(items, oldIndex, newIndex);
+
+      setItems(newItems);
+
+      // Update positions for all items
+      newItems.forEach((item, index) => {
+        serviceOnProfessionalUpdateMutation.mutate({
+          id: item.id,
+          position: index,
+        });
+      });
     }
   };
 
@@ -174,10 +191,11 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
           items={items.map((item) => item.id)}
           strategy={verticalListSortingStrategy}
         >
-          {items.map((serviceOnProfessional) => (
+          {items.map((serviceOnProfessional, index) => (
             <ServiceConstructorRow
               key={serviceOnProfessional.id}
               data={serviceOnProfessional}
+              index={index}
             />
           ))}
         </SortableContext>
@@ -191,6 +209,7 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
           price: 0,
           currency: 'UAH',
           description: '',
+          position: items.length,
         }}
         isActive={isCreateOpen.value}
         onOpenChange={isCreateOpen.setFalse}
