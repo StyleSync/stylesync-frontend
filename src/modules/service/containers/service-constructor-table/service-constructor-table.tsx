@@ -49,14 +49,10 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
   // state
   const isActionsOpen = useBoolean();
   const isCreateOpen = useBoolean();
-  const [items, setItems] = useState<ServiceOnProfessional[]>(
-    serviceOnProfessionalList
-  );
+  const [items, setItems] = useState<ServiceOnProfessional[]>([]);
   // queries
   const serviceOnProfessionalGroupDelete =
     useServiceOnProfessionalGroupDelete();
-  const serviceOnProfessionalUpdateMutation =
-    trpc.serviceOnProfessional.update.useMutation();
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -69,9 +65,8 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
     })
   );
 
-  // Update
   useEffect(() => {
-    setItems(serviceOnProfessionalList);
+    setItems(serviceOnProfessionalList.sort((a, b) => a.position - b.position));
   }, [serviceOnProfessionalList]);
 
   const handleTableRemoveClick = useCallback(() => {
@@ -123,14 +118,6 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
       const newItems = arrayMove(items, oldIndex, newIndex);
 
       setItems(newItems);
-
-      // Update positions for all items
-      newItems.forEach((item, index) => {
-        serviceOnProfessionalUpdateMutation.mutate({
-          id: item.id,
-          position: index,
-        });
-      });
     }
   };
 

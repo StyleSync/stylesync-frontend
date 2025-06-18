@@ -1,4 +1,4 @@
-import { type FC, useCallback, useRef } from 'react';
+import { type FC, useCallback, useEffect, useRef } from 'react';
 
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -39,6 +39,9 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
   const serviceOnProfessionalDeleteMutation =
     trpc.serviceOnProfessional.delete.useMutation();
 
+  const serviceOnProfessionalUpdateMutation =
+    trpc.serviceOnProfessional.update.useMutation();
+
   const {
     attributes,
     listeners,
@@ -56,6 +59,15 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
       disabled: false,
     },
   });
+
+  useEffect(() => {
+    if (data.position !== index) {
+      serviceOnProfessionalUpdateMutation.mutate({
+        id: data.id,
+        position: index,
+      });
+    }
+  }, [data.position, index, data.id]);
 
   const style = {
     transform: CSS.Translate.toString(transform),

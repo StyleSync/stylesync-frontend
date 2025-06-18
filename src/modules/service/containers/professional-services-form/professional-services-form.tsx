@@ -29,8 +29,8 @@ export const ProfessionalServicesForm: FC<ProfessionalServicesFormProps> = ({
 
   const serviceList =
     serviceListQuery?.pages.map((page) => page.items).flat() || [];
-  // memo
 
+  // memo
   const sortedServiceOnProfessionalGroups = useMemo(
     () => sortServiceOnProfessionalGroups(serviceOnProfessionalGroups),
     [serviceOnProfessionalGroups]
