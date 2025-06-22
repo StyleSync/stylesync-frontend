@@ -1,9 +1,11 @@
 import { type FC, useCallback, useEffect } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { sendGTMEvent } from '@next/third-parties/google';
 import { type Currency } from '@prisma/client';
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
+import { useSession } from 'next-auth/react';
 import { Controller, useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
 import { z } from 'zod';
@@ -71,6 +73,7 @@ export const ServiceOnProfessionalEditForm: FC<
   const intl = useIntl();
   const queryClient = useQueryClient();
   const isNew = data.id.startsWith('new__');
+  const { data: session } = useSession();
   // form
   const form = useForm<ServiceOnProfessionalFormValues>({
     defaultValues: mapServiceOnProfessionalToFormValues(data),
@@ -107,6 +110,15 @@ export const ServiceOnProfessionalEditForm: FC<
           {
             onSuccess: () => {
               onOpenChange(false);
+              sendGTMEvent({
+                event: 'service_add',
+                user_id: session?.user?.id,
+                user_email: session?.user?.email,
+                data: {
+                  title: values.title,
+                  service: data?.service?.name,
+                },
+              });
 
               queryClient.invalidateQueries({
                 queryKey: getQueryKey(trpc.serviceOnProfessional.list),

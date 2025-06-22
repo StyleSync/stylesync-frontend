@@ -1,6 +1,7 @@
 import { type FC, useEffect } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { sendGTMEvent } from '@next/third-parties/google';
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
 import { useForm } from 'react-hook-form';
@@ -34,6 +35,8 @@ export const AlbumAddModal: FC<
 > = ({ album, ...props }) => {
   const intl = useIntl();
   const queryClient = useQueryClient();
+  // queries
+  const { data: me } = trpc.user.me.useQuery();
   // mutations
   const createAlbumMutation = trpc.album.create.useMutation();
   const renameAlbumMutation = trpc.album.update.useMutation();
@@ -76,6 +79,19 @@ export const AlbumAddModal: FC<
             });
           },
           onSuccess: () => {
+            if (me?.userType === 'PROFESSIONAL') {
+              sendGTMEvent({
+                event: 'data_submit',
+                user_id: me?.id,
+                user_email: me?.email,
+                data: {
+                  type: 'gallery',
+                  action: 'edit',
+                  title: Boolean(data.title),
+                },
+              });
+            }
+
             showToast({
               variant: 'success',
               title: intl.formatMessage({
@@ -108,6 +124,19 @@ export const AlbumAddModal: FC<
           });
         },
         onSuccess: () => {
+          if (me?.userType === 'PROFESSIONAL') {
+            sendGTMEvent({
+              event: 'data_submit',
+              user_id: me?.id,
+              user_email: me?.email,
+              data: {
+                type: 'gallery',
+                action: 'create',
+                title: Boolean(data.title),
+              },
+            });
+          }
+
           showToast({
             variant: 'success',
             title: intl.formatMessage({

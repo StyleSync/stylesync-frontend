@@ -9,6 +9,7 @@ import { useIntl } from 'react-intl';
 import { BookingProvider } from '@/modules/booking/providers/booking-provider';
 import { ErrorView } from '@/modules/core/components/error-view';
 import { Spinner } from '@/modules/core/components/spinner';
+import { useGtmAuthEvents } from '@/modules/core/hooks/use-gtm-auth-events';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { ProfileSectionLayoutAbout } from '@/modules/user/components/profile-section-layout-about';
 import { ProfileSectionLayoutAlbums } from '@/modules/user/components/profile-section-layout-albums';
@@ -25,6 +26,8 @@ export function ProfileView({ session }: ProfileViewProps) {
   const { id: queryId } = useParams<{ id: string }>();
   const router = useRouter();
   const intl = useIntl();
+
+  useGtmAuthEvents();
 
   const { data, isPending, isError } = trpc.user.checkNickname.useQuery(
     {

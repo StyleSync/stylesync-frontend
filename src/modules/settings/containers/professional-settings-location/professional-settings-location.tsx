@@ -1,5 +1,6 @@
 import { type FC, useCallback, useRef } from 'react';
 
+import { sendGTMEvent } from '@next/third-parties/google';
 import { TRPCClientError } from '@trpc/client';
 import { useIntl } from 'react-intl';
 
@@ -67,6 +68,20 @@ export const ProfessionalSettingsLocation: FC = () => {
           },
 
           onSuccess: () => {
+            if (me?.userType === 'PROFESSIONAL') {
+              sendGTMEvent({
+                event: 'data_submit',
+                user_id: me?.id,
+                user_email: me?.email,
+                data: {
+                  type: 'location',
+                  name: Boolean(newLocation.name),
+                  latitude: Boolean(newLocation.lat),
+                  longitude: Boolean(newLocation.lng),
+                },
+              });
+            }
+
             showToast({
               variant: 'success',
               title: intl.formatMessage({
@@ -106,6 +121,20 @@ export const ProfessionalSettingsLocation: FC = () => {
           },
 
           onSuccess: () => {
+            if (me?.userType === 'PROFESSIONAL') {
+              sendGTMEvent({
+                event: 'data_submit',
+                user_id: me?.id,
+                user_email: me?.email,
+                data: {
+                  type: 'location',
+                  name: Boolean(newLocation.name),
+                  latitude: Boolean(newLocation.lat),
+                  longitude: Boolean(newLocation.lng),
+                },
+              });
+            }
+
             showToast({
               variant: 'success',
               title: intl.formatMessage({
@@ -142,6 +171,18 @@ export const ProfessionalSettingsLocation: FC = () => {
           },
 
           onSuccess: () => {
+            if (me?.userType === 'PROFESSIONAL') {
+              sendGTMEvent({
+                event: 'data_submit',
+                user_id: me?.id,
+                user_email: me?.email,
+                data: {
+                  type: 'location',
+                  deleted: true,
+                },
+              });
+            }
+
             showToast({
               variant: 'success',
               title: intl.formatMessage({
@@ -157,7 +198,16 @@ export const ProfessionalSettingsLocation: FC = () => {
 
       return;
     }
-  }, [location, locationCreate, locationDelete, locationUpdate]);
+  }, [
+    location,
+    locationCreate,
+    locationDelete,
+    locationUpdate,
+    me?.userType,
+    me?.id,
+    me?.email,
+    intl,
+  ]);
 
   return (
     <ProfileSettingsTabContentLayout

@@ -1,5 +1,6 @@
 import { type FC, useCallback, useId, useMemo } from 'react';
 
+import { sendGTMEvent } from '@next/third-parties/google';
 import { useRouter } from 'next/navigation';
 import { useIntl } from 'react-intl';
 
@@ -100,6 +101,22 @@ export const OnboardAbout: FC<ProOnboardStepProps> = ({ next }) => {
             },
             {
               onSuccess: () => {
+                sendGTMEvent({
+                  event: 'data_submit',
+                  user_id: me?.id,
+                  user_email: me?.email,
+                  data: {
+                    type: 'about',
+                    avatar: Boolean(values.avatar),
+                    firstName: Boolean(values.firstName),
+                    lastName: Boolean(values.lastName),
+                    phone: Boolean(values.phone),
+                    about: Boolean(values.about),
+                    instagram: Boolean(values.instagram),
+                    facebook: Boolean(values.facebook),
+                    tiktok: Boolean(values.tiktok),
+                  },
+                });
                 meQuery.refetch();
                 next();
               },

@@ -13,7 +13,8 @@
     "build-storybook": "storybook build",
     "svg:optimize": "node ./scripts/svg-optimize.js",
     "chromatic": "npx chromatic --project-token=$STYLESYNC_CHROMATIC_TOKEN",
-    "release": "release-it"
+    "release": "release-it",
+    "check-all": "next lint --quiet && tsc --noEmit"
   },
   "dependencies": {
     "@custom-react-hooks/use-element-size": "1.5.1",
@@ -32,6 +33,7 @@
     "@mui/material": "7.1.0",
     "@mui/x-date-pickers": "^7.7.1",
     "@next-auth/prisma-adapter": "1.0.7",
+    "@next/third-parties": "^15.3.3",
     "@prisma/client": "6.8.2",
     "@radix-ui/react-accordion": "1.2.10",
     "@radix-ui/react-dialog": "1.1.13",
