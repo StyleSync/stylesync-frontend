@@ -6,12 +6,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 2rem;
-  min-height: 280px;
 
   @include mixins.phone {
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
-    min-height: 200px;
   }
 
   &_displayAlbum {

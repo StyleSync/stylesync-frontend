@@ -1,5 +1,5 @@
 import type { PopperContentProps } from '@radix-ui/react-popper';
-import type { ReactNode } from 'react';
+import type { MouseEvent, ReactNode } from 'react';
 
 import type { ChildrenProp } from '@/modules/core/types/react.types';
 
@@ -20,4 +20,6 @@ export type PopoverProps = ChildrenProp & {
   classes?: {
     content?: string;
   };
+  onMouseLeave?: (e: MouseEvent<HTMLElement>) => void;
+  onMouseEnter?: (e: MouseEvent<HTMLElement>) => void;
 };
