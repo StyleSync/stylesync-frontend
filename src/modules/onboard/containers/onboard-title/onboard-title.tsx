@@ -70,6 +70,9 @@ export const OnboardTitle: FC = () => {
     );
   }, [router, session, me, meUpdate, professionalCreateAsync, intl]);
 
+  const currentStep = onboardData[active];
+  const allowSkip = currentStep?.allowSkip ?? true;
+
   return (
     <>
       {accountData?.data?.userType === 'PROFESSIONAL' && (
@@ -78,13 +81,15 @@ export const OnboardTitle: FC = () => {
             <Typography variant='subtitle' weight='medium'>
               {intl.formatMessage({ id: 'onboard.title.title' })}
             </Typography>
-            <Button
-              className={styles.skip}
-              text={intl.formatMessage({ id: 'button.skip' })}
-              variant='outlined'
-              disabled={isLoading || meQuery.isError}
-              onClick={skip}
-            />
+            {allowSkip && (
+              <Button
+                className={styles.skip}
+                text={intl.formatMessage({ id: 'button.skip' })}
+                variant='outlined'
+                disabled={isLoading || meQuery.isError}
+                onClick={skip}
+              />
+            )}
           </div>
           <div className='pageContent'>
             <Stepper
