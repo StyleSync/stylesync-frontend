@@ -13,7 +13,8 @@
     "build-storybook": "storybook build",
     "svg:optimize": "node ./scripts/svg-optimize.js",
     "chromatic": "npx chromatic --project-token=$STYLESYNC_CHROMATIC_TOKEN",
-    "release": "release-it"
+    "release": "release-it",
+    "check-all": "next lint --quiet && tsc --noEmit"
   },
   "dependencies": {
     "@custom-react-hooks/use-element-size": "1.5.1",
