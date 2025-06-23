@@ -14,7 +14,7 @@ export const IntroSection = () => {
 
   return (
     <section className='relative flex h-screen w-full'>
-      <div className='z-10 mx-auto flex max-w-[1200px] flex-1 flex-row gap-x-8'>
+      <div className='z-10 mx-auto flex w-full max-w-[1200px] flex-col gap-x-8 pt-[72px] md:flex-row md:pt-0'>
         <div className='flex flex-1 flex-col justify-center gap-y-6'>
           {/* <div className={clsx('flex items-center gap-x-4')}>
             <ServiceCircle iconName='skincare' size={60} />
@@ -23,16 +23,15 @@ export const IntroSection = () => {
             <ServiceCircle iconName='nails' size={70} />
             <ServiceCircle iconName='fitness' size={60} />
           </div> */}
-          <h1 className='text-6xl font-semibold leading-[1.2]'>
+          <h1 className='px-3 text-center text-6xl font-semibold leading-[1.2] md:text-6xl'>
             <span className='bg-gradient-to-r from-black to-black bg-clip-text text-transparent'>
               Всі твої записи — в одному місці
             </span>
           </h1>
-          <span className='text-xl font-normal text-dark'>
-            Сервіс для запису, який розуміє твої потреби. Без адмінів. Без
-            складнощів.
+          <span className='text-center text-xl font-normal text-dark'>
+            Сервіс для запису, який розуміє твої потреби.
           </span>
-          <div className='flex flex-col gap-y-4'>
+          <div className='flex flex-col items-center gap-y-4'>
             <Button
               rippleColor='rgba(255,255,255,0.3)'
               className='z-10 mt-7 !h-[52px] rounded-[26px] bg-gradient-to-r from-[#FA719A] to-[#FDA571] text-white shadow-accentShadow shadow-orange/20 transition hover:shadow-[#FC858C]/30'

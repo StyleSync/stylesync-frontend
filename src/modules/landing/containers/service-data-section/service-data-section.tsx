@@ -19,9 +19,9 @@ export const ServiceDataSection = () => {
 
   return (
     <section className='relative mt-8 flex w-full py-56'>
-      <div className='z-10 mx-auto flex max-w-[1200px] flex-1 flex-row items-center gap-x-8'>
+      <div className='z-10 mx-auto flex w-full max-w-[1200px] flex-1 flex-col items-center gap-x-8 px-4 xl:flex-row'>
         <div className='flex flex-1 flex-col gap-y-6'>
-          <h1 className='text-5xl font-semibold leading-[1.2]'>
+          <h1 className='mx-auto text-center text-5xl font-semibold leading-[1.2]'>
             <span className='bg-gradient-to-r from-black to-black bg-clip-text text-transparent'>
               StyleSync це все автоматизує
             </span>
@@ -86,11 +86,11 @@ export const ServiceDataSection = () => {
               root: '!h-12',
               text: '!text-base',
             }}
-            className='mt-10'
+            className='mx-auto mt-10'
           />
         </div>
-        <div className='flex-1'>
-          <div className='flex flex-1 items-end'>
+        <div className='mt-[55px] w-full flex-1 sm:w-auto'>
+          <div className='flex flex-1 items-center sm:mx-4 sm:flex-row sm:items-end'>
             <IphoneLayout
               imageUrl={profile}
               className='relative left-[50px] z-10 sm:left-[70px] xl:left-[100px]'
@@ -98,7 +98,7 @@ export const ServiceDataSection = () => {
             />
             <IphoneLayout
               imageUrl={search}
-              className='relative right-[50px] sm:right-0'
+              className='relative right-[50px] mt-[46px] sm:right-0 md:right-[50px]'
               width={270}
             />
           </div>

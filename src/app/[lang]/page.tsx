@@ -8,6 +8,7 @@ import { LandingHeader } from '@/modules/landing/containers/header/landing-heade
 import { IntroSection } from '@/modules/landing/containers/intro-section';
 import { MobileAppSection } from '@/modules/landing/containers/mobile-app-section';
 import { ReviewsSection } from '@/modules/landing/containers/reviews-swiper-section';
+import { ServiceCardSection } from '@/modules/landing/containers/service-cards-section';
 import { ServiceDataSection } from '@/modules/landing/containers/service-data-section';
 
 export default async function Home() {
@@ -36,12 +37,12 @@ export default async function Home() {
       <LandingHeader />
       <main className='relative flex flex-col'>
         <IntroSection />
-        <section className='z-0 mx-auto mt-10 flex w-full max-w-[1200px] flex-col'>
+        <section className='z-0 mx-auto mt-10 flex w-full max-w-[1200px] flex-col px-4'>
           <span className='mx-auto text-5xl font-semibold text-black'>
             Знайомо?
           </span>
-          <div className='mt-16 grid grid-cols-2 gap-6'>
-            <div className='flex items-center gap-x-4 rounded-xl p-6 shadow'>
+          <div className='mt-16 grid grid-cols-1 gap-4 sm:grid-cols-2'>
+            <div className='flex items-center gap-x-4 rounded-xl p-4 shadow md:flex-row md:justify-start md:text-start'>
               <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-destructive-light'>
                 <span className='text-2xl font-semibold text-destructive'>
                   1
@@ -51,8 +52,9 @@ export default async function Home() {
                 Клієнт забув прийти - втрата доходу
               </span>
             </div>
-            <div className='flex items-center gap-x-4 rounded-xl p-6 shadow'>
-              <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-destructive-light'>
+
+            <div className='flex items-center gap-x-4 rounded-xl p-4 shadow md:flex-row md:justify-start md:text-start'>
+              <div className='flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-destructive-light'>
                 <span className='text-2xl font-semibold text-destructive'>
                   2
                 </span>
@@ -62,8 +64,8 @@ export default async function Home() {
               </span>
             </div>
 
-            <div className='flex items-center gap-x-4 rounded-xl p-6 shadow'>
-              <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-destructive-light'>
+            <div className='flex items-center gap-x-4 rounded-xl p-4 shadow md:flex-row md:justify-start md:text-start'>
+              <div className='flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-destructive-light'>
                 <span className='text-2xl font-semibold text-destructive'>
                   3
                 </span>
@@ -72,7 +74,8 @@ export default async function Home() {
                 Відповідаєш на повідомлення замість відпочинку
               </span>
             </div>
-            <div className='flex items-center gap-x-4 rounded-xl p-6 shadow'>
+
+            <div className='flex items-center gap-x-4 rounded-xl p-4 shadow md:flex-row md:justify-start md:text-start'>
               <div className='flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-destructive-light'>
                 <span className='text-2xl font-semibold text-destructive'>
                   4
@@ -83,7 +86,8 @@ export default async function Home() {
                 організуватись
               </span>
             </div>
-            <div className='flex items-center gap-x-4 rounded-xl p-6 shadow'>
+
+            <div className='flex items-center gap-x-4 rounded-xl p-4 shadow md:flex-row md:justify-start md:text-start'>
               <div className='flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-destructive-light'>
                 <span className='text-2xl font-semibold text-destructive'>
                   5
@@ -95,14 +99,14 @@ export default async function Home() {
             </div>
           </div>
         </section>
-        {/* <section className='z-0 mx-auto mt-24 flex w-full max-w-[1200px] flex-col'>
+        <section className='z-0 mx-auto mt-24 flex w-full max-w-[1200px] flex-col'>
           <span className='mx-auto text-5xl font-semibold text-black'>
             StyleSync все це автоматизує
           </span>
-        </section> */}
+        </section>
         <ServiceDataSection />
         <ReviewsSection />
-        {/* <ServiceCardSection /> */}
+        <ServiceCardSection />
         <MobileAppSection />
       </main>
       <Footer />
