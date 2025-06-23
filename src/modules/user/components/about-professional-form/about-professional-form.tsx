@@ -162,12 +162,18 @@ const AboutProfessionalForm = memo<AboutProfessionalFormProps>(
     }, [initialValues, reset]);
 
     useEffect(() => {
-      if (firstName && lastName && !form.formState.dirtyFields.nickname) {
+      if (firstName && lastName && !form.getValues('nickname')) {
         const generatedNickname = generateNickname(firstName, lastName);
 
         setValue('nickname', generatedNickname);
       }
-    }, [firstName, lastName, setValue, form.formState.dirtyFields.nickname]);
+    }, [
+      firstName,
+      lastName,
+      setValue,
+      form.formState.dirtyFields.nickname,
+      form,
+    ]);
 
     const handleError = useCallback(
       (error: any) => {
