@@ -19,7 +19,7 @@ export const MobileAppSection = () => {
   const image2 = intl.locale === 'uk' ? profileUk.src : profileEn.src;
 
   return (
-    <section className='relative flex w-full flex-col items-center justify-center p-2 sm:mt-40'>
+    <section className='relative mt-24 flex w-full flex-col items-center justify-center p-2 pb-24 md:mt-40 md:pb-0'>
       <Image
         className='absolute left-0 top-0 z-0 aspect-square h-full w-full max-w-full'
         src={net.src}

@@ -1,9 +1,7 @@
 'use client';
-import Image from 'next/image';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import img from '@/assets/images/girl.png';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { ReviewCard } from '@/modules/landing/components/reviews-card/review-cards';
 
@@ -11,29 +9,29 @@ import 'swiper/css';
 
 const testimonialsData1 = [
   {
-    img: Image,
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
+    // img: Image,
+    text: 'Я не рахую, скільки клієнток просто не приходили — бо забули. Зараз з StyleSync усе автоматично: клієнтці прийшло нагадування, мені також, і я знаю, що все під контролем. Набагато більше клієнтів та відповідно грошей',
     author: {
-      avatar: img,
-      name: 'Ivan Romli',
+      // avatar: img,
+      name: 'Оксана Гнатенко',
       occupation: 'student',
     },
   },
   {
-    img: Image,
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
+    // img: Image,
+    text: 'Я вже не веду таблиці. У StyleSync кожна клієнтка має свою картку — я бачу, коли була востаннє, які нотатки лишала, які матеріали використали. Це не просто зручно — я нарешті почуваюся професійно',
     author: {
-      avatar: img,
-      name: 'Ivan Romli',
+      // avatar: img,
+      name: 'Наталія Воробйова',
       occupation: 'student',
     },
   },
   {
-    img: Image,
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
+    // img: Image,
+    text: 'У мене 3 месенджери, 2 акаунти в інсті — і раніше клієнтки писали куди завгодно. Зараз я просто кидаю їм лінк на запис, і все. А вільний час використовую не на переписки, а на відпочинок',
     author: {
-      avatar: img,
-      name: 'Ivan Romli',
+      // avatar: img,
+      name: 'Ірина Мельник',
       occupation: 'student',
     },
   },
