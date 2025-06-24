@@ -10,6 +10,7 @@ import { Button } from '@/modules/core/components/button';
 import { Typography } from '@/modules/core/components/typogrpahy';
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import { useRipple } from '@/modules/core/hooks/use-ripple';
+import { showToast } from '@/modules/core/providers/toast-provider';
 import { formatDuration } from '@/modules/core/utils/time.utils';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { ServiceOnProfessionalEditForm } from '@/modules/service/components/service-on-professional-edit-form';
@@ -45,10 +46,17 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
           queryClient.invalidateQueries({
             queryKey: getQueryKey(trpc.serviceOnProfessional.list),
           });
+
+          showToast({
+            variant: 'success',
+            title: intl.formatMessage({
+              id: 'service.constructor.delete.success',
+            }),
+          });
         },
       }
     );
-  }, [data.id, serviceOnProfessionalDeleteMutation]);
+  }, [data.id, serviceOnProfessionalDeleteMutation, queryClient, intl]);
 
   return (
     <div

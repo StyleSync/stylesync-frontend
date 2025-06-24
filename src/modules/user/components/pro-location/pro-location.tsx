@@ -1,13 +1,11 @@
 'use client';
 import { type FC } from 'react';
 
-import { TRPCClientError } from '@trpc/client';
 import dynamic from 'next/dynamic';
+import { useIntl } from 'react-intl';
 
 import { Typography } from '@/modules/core/components/typogrpahy';
-import { onQueryRetry } from '@/modules/core/utils/query-retry.utils';
 import { trpc } from '@/modules/core/utils/trpc.utils';
-import type { AppRouter } from '@/server/routers/_app';
 
 import type { ProLocationProps } from './pro-location.interface';
 
@@ -21,18 +19,20 @@ const Map = dynamic(
 );
 
 export const ProLocation: FC<ProLocationProps> = ({ userId }) => {
+  const intl = useIntl();
+
   // queries
-  const [professional] = trpc.professional.get.useSuspenseQuery({
+  const { data: professional } = trpc.professional.get.useQuery({
     id: userId,
     expand: ['user'],
   });
-  const [location] = trpc.location.getByProfessionalId.useSuspenseQuery(
+  const { data: location } = trpc.location.getByProfessionalId.useQuery(
     {
-      id: professional.id,
+      id: professional?.id ?? '',
     },
     {
-      retry: (retryCount, error) =>
-        onQueryRetry(retryCount, error as TRPCClientError<AppRouter>),
+      enabled: Boolean(professional?.id),
+      retry: false,
     }
   );
 
@@ -46,9 +46,21 @@ export const ProLocation: FC<ProLocationProps> = ({ userId }) => {
   };
   const zoom = location && zoomNum;
 
+  if (!location) {
+    return (
+      <div className={styles.root}>
+        <Typography className={styles.address}>
+          {intl.formatMessage({
+            id: 'professional.settings.location.not.specified',
+          })}
+        </Typography>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.root}>
-      <Typography className={styles.address}>{location?.name}</Typography>
+      <Typography className={styles.address}>{location.name}</Typography>
       <div className={styles.mapContainer}>
         <Map markers={markers} center={center} zoom={zoom} />
       </div>

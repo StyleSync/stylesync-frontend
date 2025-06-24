@@ -6,8 +6,16 @@
   align-items: center;
   column-gap: utils.spacing(1);
   width: fit-content;
+  position: relative;
 
-  .avatar {
+  .spinnerOverlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .actions {

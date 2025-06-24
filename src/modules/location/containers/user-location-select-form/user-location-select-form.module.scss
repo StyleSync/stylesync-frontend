@@ -5,6 +5,7 @@
   flex-direction: column;
   row-gap: utils.spacing(2);
   flex: 1;
+  min-height: 40px;
 
   .searchBar {
     position: relative;
@@ -16,5 +17,11 @@
     .search {
       flex: 1;
     }
+  }
+
+  :global(.leaflet-container) {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
   }
 }

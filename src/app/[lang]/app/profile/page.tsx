@@ -15,10 +15,12 @@ export default async function ProfileRedirect() {
   });
 
   if (session?.user.userType === 'PROFESSIONAL') {
-    redirect(`/app/profile/${session.user?.nickname || session.user.id}`);
+    redirect(
+      `/app/profile/${session.user?.nickname || session.user.id}?login=true`
+    );
   }
 
   if (session?.user.userType === 'CUSTOMER') {
-    redirect(`/app/my-bookings`);
+    redirect(`/app/my-bookings?login=true`);
   }
 }
