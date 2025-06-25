@@ -79,6 +79,7 @@ import Tiktok from '@/assets/icons/tiktok.svg?icon';
 import TimeIcon from '@/assets/icons/time.svg?icon';
 import TrashIcon from '@/assets/icons/trash.svg?icon';
 import UserIcon from '@/assets/icons/user.svg?icon';
+import UsersIcon from '@/assets/icons/users.svg?icon';
 import ViberLogoIcon from '@/assets/icons/viber-logo.svg?icon';
 import XLanding from '@/assets/icons/x-landing.svg?icon';
 
@@ -166,6 +167,7 @@ export const icons = {
   'parmanent-makeup': Parmanent,
   lips: Lips,
   'arrow-left-curved': ArowLeftCurved,
+  users: UsersIcon,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;

@@ -10,4 +10,8 @@ export const headerRouteConfig: {
     title: 'burger.menu.btn.settings',
     match: (pathname) => pathname.includes('/app/settings'),
   },
+  {
+    title: 'Клієнти', // todo: translate
+    match: (pathname) => pathname.includes('/app/clients'),
+  },
 ];

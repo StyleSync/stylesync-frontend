@@ -63,11 +63,6 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
 
     return [
       {
-        href: `/app/profile/${me.nickname || me.id}`,
-        icon: 'user',
-        title: intl.formatMessage({ id: 'burger.menu.btn.myProfile' }),
-      },
-      {
         href: '/app/my-bookings',
         icon: 'list',
         title: intl.formatMessage({ id: 'burger.menu.btn.myBookings' }),
@@ -75,16 +70,26 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
           <BookingsBadge className='absolute left-[calc(50%+2px)] top-[4px]' />
         ),
       },
+      {
+        href: '/app/clients',
+        icon: 'users',
+        title: 'Клієнти',
+      },
+      {
+        href: `/app/profile/${me.nickname || me.id}`,
+        icon: 'user',
+        title: intl.formatMessage({ id: 'burger.menu.btn.myProfile' }),
+      },
       // {
       //   href: '/app/search-pro',
       //   icon: 'search',
       //   title: intl.formatMessage({ id: 'user.header.navigation.search' }),
       // },
-      {
-        href: '/app/settings',
-        icon: 'settings',
-        title: intl.formatMessage({ id: 'burger.menu.btn.settings' }),
-      },
+      // {
+      //   href: '/app/settings',
+      //   icon: 'settings',
+      //   title: intl.formatMessage({ id: 'burger.menu.btn.settings' }),
+      // },
     ];
   }, [me, intl]);
 
