@@ -23,6 +23,7 @@ import { ServiceConstructorTable } from '@/modules/service/containers/service-co
 import { useServiceOnProfessionalGroups } from '@/modules/service/hooks/use-service-on-professional-groups';
 import { sortServiceOnProfessionalGroups } from '@/modules/service/utils/service.utils';
 import { ProfileSectionLayout } from '@/modules/user/components/profile-section-layout';
+import type { ServiceOnProfessional } from '@/modules/service/types/service.types';
 
 import type { ProfileSectionServicesLayoutProps } from './profile-section-layout-services.interface';
 
@@ -99,6 +100,19 @@ export const ProfileSectionLayoutServices: FC<
     setSelectedService(null);
   }, [isCreateServiceOpen]);
 
+  const handleReorder = (
+    serviceId: string,
+    newItems: ServiceOnProfessional[]
+  ) => {
+    setGroups((prev) =>
+      prev.map((group) =>
+        group.service.id === serviceId
+          ? { ...group, serviceOnProfessionalList: [...newItems] }
+          : group
+      )
+    );
+  };
+
   if (isGroupsLoading) {
     return (
       <div className='mx-auto mt-[90px] flex w-full flex-col gap-y-1 px-6 md:mt-[110px] md:max-w-[924px] md:px-0'>
@@ -134,6 +148,7 @@ export const ProfileSectionLayoutServices: FC<
               <ServiceConstructorTable
                 {...group}
                 onRemove={handleServiceRemove}
+                onReorder={handleReorder}
               />
             ) : (
               <>
@@ -161,6 +176,7 @@ export const ProfileSectionLayoutServices: FC<
               price: 0,
               currency: 'UAH',
               description: '',
+              position: serviceList.length,
             }}
             isActive={isCreateServiceOpen.value}
             onOpenChange={handleCreateFormClose}

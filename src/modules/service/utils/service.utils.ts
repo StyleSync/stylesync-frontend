@@ -54,9 +54,7 @@ export const sortServiceOnProfessionalGroups = (
   );
 
   next.forEach((group) => {
-    group.serviceOnProfessionalList.sort((s1, s2) =>
-      alphabetCompare(s1.title, s2.title)
-    );
+    group.serviceOnProfessionalList.sort((s1, s2) => s1.position - s2.position);
   });
 
   return next;
