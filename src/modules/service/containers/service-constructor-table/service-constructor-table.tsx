@@ -43,7 +43,6 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
   service,
   serviceOnProfessionalList,
   onRemove,
-  onReorder,
 }) => {
   const queryClient = useQueryClient();
   const intl = useIntl();
@@ -117,13 +116,8 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
       const newIndex = items.findIndex((item) => item.id === over.id);
 
       const newItems = arrayMove(items, oldIndex, newIndex);
-      const newItemsWithPositions = newItems.map((item, idx) => ({
-        ...item,
-        position: idx,
-      }));
 
-      setItems(newItemsWithPositions);
-      onReorder?.(service.id, newItemsWithPositions);
+      setItems(newItems);
     }
   };
 

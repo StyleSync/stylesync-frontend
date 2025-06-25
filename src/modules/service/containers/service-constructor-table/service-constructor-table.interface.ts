@@ -6,5 +6,4 @@ export type ServiceConstructorTableProps = {
   service: Service;
   serviceOnProfessionalList: ServiceOnProfessional[];
   onRemove: (service: Service) => void;
-  onReorder?: (serviceId: string, newItems: ServiceOnProfessional[]) => void;
 };

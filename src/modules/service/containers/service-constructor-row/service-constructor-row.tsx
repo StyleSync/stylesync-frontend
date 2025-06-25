@@ -62,10 +62,19 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
 
   useEffect(() => {
     if (data.position !== index) {
-      serviceOnProfessionalUpdateMutation.mutate({
-        id: data.id,
-        position: index,
-      });
+      serviceOnProfessionalUpdateMutation.mutate(
+        {
+          id: data.id,
+          position: index,
+        },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries({
+              queryKey: getQueryKey(trpc.serviceOnProfessional.list),
+            });
+          },
+        }
+      );
     }
   }, [data.position, index, data.id]);
 
