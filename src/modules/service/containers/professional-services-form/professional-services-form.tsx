@@ -87,6 +87,7 @@ export const ProfessionalServicesForm: FC<ProfessionalServicesFormProps> = ({
             key={group.service.id}
             {...group}
             onRemove={handleServiceRemove}
+            showActions
           />
         ))}
       </Placeholder>

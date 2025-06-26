@@ -43,6 +43,7 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
   service,
   serviceOnProfessionalList,
   onRemove,
+  showActions,
 }) => {
   const queryClient = useQueryClient();
   const intl = useIntl();
@@ -129,6 +130,16 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
           text={intl.formatMessage({ id: service.name })}
         />
         <div className={styles.actions}>
+          {showActions && (
+            <Button
+              aria-label='Add service group'
+              icon='plus'
+              variant='outlined'
+              type='button'
+              onClick={isCreateOpen.setTrue}
+            />
+          )}
+
           <Button
             aria-label='Delete service group'
             className={styles.remove}
