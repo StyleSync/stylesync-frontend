@@ -6,5 +6,5 @@ export type ServiceConstructorTableProps = {
   service: Service;
   serviceOnProfessionalList: ServiceOnProfessional[];
   onRemove: (service: Service) => void;
-  showActions: boolean;
+  isEditServices?: boolean;
 };

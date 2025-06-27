@@ -15,7 +15,7 @@
     align-items: center;
     justify-content: space-between;
     height: 70px;
-    padding: utils.spacing(0,3);
+    padding: utils.spacing(0, 3);
 
     @include mixins.phone {
       padding: utils.spacing(0, 2);
@@ -48,6 +48,10 @@
       }
     }
   }
+}
+
+.editBorder {
+  border: 1px dashed variables.$primary-light-color;
 }
 
 @keyframes fadein {

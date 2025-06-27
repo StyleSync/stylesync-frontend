@@ -27,6 +27,7 @@ const DRAGGING_Z_INDEX = 999;
 export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
   data,
   index,
+  isEditServices,
 }) => {
   const queryClient = useQueryClient();
   const deviceType = useDeviceType();
@@ -115,6 +116,7 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
     <div
       className={clsx(styles.root, {
         'opacity-[0.7]': serviceOnProfessionalDeleteMutation.isPending,
+        [styles.editBorder]: isEditServices,
       })}
       ref={setNodeRef}
       style={style}

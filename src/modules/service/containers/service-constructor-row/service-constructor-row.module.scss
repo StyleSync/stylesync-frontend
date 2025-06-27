@@ -76,3 +76,7 @@
     }
   }
 }
+
+.editBorder {
+  border-top: 1px dashed variables.$primary-color;
+}

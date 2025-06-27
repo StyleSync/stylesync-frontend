@@ -134,7 +134,7 @@ export const ProfileSectionLayoutServices: FC<
               <ServiceConstructorTable
                 {...group}
                 onRemove={handleServiceRemove}
-                showActions={false}
+                isEditServices={isEditServices.value}
               />
             ) : (
               <>

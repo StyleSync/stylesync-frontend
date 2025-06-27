@@ -3,4 +3,5 @@ import type { ServiceOnProfessionalListItem } from '@/modules/service/types/serv
 export type ServiceConstructorRowProps = {
   data: ServiceOnProfessionalListItem;
   index: number;
+  isEditServices?: boolean;
 };
