@@ -17,7 +17,6 @@ import { endOfMonth, format, startOfDay, startOfMonth } from 'date-fns';
 import { useIntl } from 'react-intl';
 import { type Swiper } from 'swiper/types';
 
-import { PointsBookingActions } from '@/modules/booking/components/points-booking-actions/points-booking-action';
 import { BookingInfoDialog } from '@/modules/booking/containers/booking-info-dialog';
 import { Icon } from '@/modules/core/components/icon';
 import { trpc } from '@/modules/core/utils/trpc.utils';
@@ -194,11 +193,11 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
 
   return (
     <div className='relative flex w-full flex-1 flex-col gap-2'>
-      <div className='absolute right-6 top-2'>
+      {/* <div className='absolute right-6 top-2'>
         <PointsBookingActions />
-      </div>
+      </div> */}
 
-      <div className='pl-6'>
+      <div className='flex w-full justify-center px-4'>
         <DateSelectCalendar
           onDateSelect={setSelectedDate}
           onMonthChange={setSelectedDates}
@@ -218,7 +217,7 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
         />
       </div>
 
-      <div className='flex-1 border-t border-primary-light pl-6'>
+      <div className='flex-1 border-t border-primary-light pl-4'>
         <FullCalendar
           events={eventsFullCalendarList}
           ref={fullCalendarRef}

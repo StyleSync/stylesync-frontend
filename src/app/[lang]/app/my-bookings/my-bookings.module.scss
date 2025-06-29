@@ -3,10 +3,12 @@
 @use '@/styles/mixins';
 
 .root {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   padding-top: calc(#{variables.$header-height} + #{utils.spacing(7)});
+  z-index: 3;
 
   @include mixins.phone {
     padding-top: calc(#{variables.$header-height-mobile} + #{utils.spacing(2)});

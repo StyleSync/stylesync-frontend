@@ -72,7 +72,7 @@
   "booking.metadata.fillPersonalInfo": "Будь ласка, заповніть наступну інформацію для підтвердження бронювання",
   "booking.time.select.title": "Оберіть дату",
   "booking.list.upcomming": "Майбутні",
-  "booking.list.past": "Минулі",
+  "booking.list.past": "Історія бронювань",
   "booking.list.listEmpty": "Список порожній",
   "booking.modal.success.title": "Бронювання успішне!",
   "booking.modal.success.service": "Послуга",

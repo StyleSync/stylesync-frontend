@@ -10,7 +10,7 @@ import type { TabsProps } from './tabs.interface';
 import styles from './tabs.module.scss';
 
 const Tabs = forwardRef<HTMLDivElement, TabsProps>(
-  ({ value, tabs, onChange, typographyProps }, ref) => {
+  ({ value, tabs, onChange, typographyProps, variant = 'default' }, ref) => {
     const handleTabClick = (key: string) => () => {
       if (value !== key) {
         onChange && onChange(key);
@@ -18,13 +18,19 @@ const Tabs = forwardRef<HTMLDivElement, TabsProps>(
     };
 
     return (
-      <div className={styles.root} ref={ref}>
+      <div
+        className={clsx(styles.root, {
+          [styles.root_contained]: variant === 'contained',
+        })}
+        ref={ref}
+      >
         {tabs.map((tab) => (
           <div
             key={tab.key}
             className={clsx(styles.tab, {
-              [styles.tab_active]: value === tab.key,
+              [styles.tab_contained]: variant === 'contained',
             })}
+            data-active={value === tab.key}
             onClick={handleTabClick(tab.key)}
           >
             {tab.icon && <Icon name={tab.icon} className={styles.icon} />}

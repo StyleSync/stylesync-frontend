@@ -48,12 +48,13 @@ export const DateSelectCalendar: FC<DateSelectCalendarProps> = ({
           onClick={isOpen.setTrue}
           text={formattedDate}
           classes={{
-            iconEnd: '!w-5 !h-4',
-            root: '!pl-2 !pr-2',
+            iconEnd: '!w-4 !h-3',
+            root: '!py-1 !px-2',
+            text: '!text-dark !text-sm !font-normal',
           }}
         />
       }
-      align='start'
+      align='center'
       backgroundBlurEffect={false}
     >
       <LocalizationProvider

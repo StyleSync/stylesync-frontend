@@ -7,9 +7,12 @@ export type Tab = {
   icon?: IconName;
 };
 
+type TabsVariant = 'default' | 'contained';
+
 export type TabsProps = {
   value: string;
   tabs: Tab[];
   onChange?: (key: string) => void;
   typographyProps?: TypographyProps;
+  variant?: TabsVariant;
 };

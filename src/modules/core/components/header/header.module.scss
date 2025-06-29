@@ -22,7 +22,7 @@
   }
 
   @include mixins.phone {
-    padding: utils.spacing(2, 3);
+    padding: utils.spacing(2);
     background: linear-gradient(-180deg, white, transparent);
     box-shadow: none;
     backdrop-filter: none;

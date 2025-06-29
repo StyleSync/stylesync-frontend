@@ -1,5 +1,6 @@
 import { type FC, useMemo } from 'react';
 
+import clsx from 'clsx';
 import { endOfDay, format, isSameDay, startOfDay } from 'date-fns';
 import { enUS, uk } from 'date-fns/locale';
 import { useIntl } from 'react-intl';
@@ -7,7 +8,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { bookingStatusMetadata } from '@/modules/booking/constants/booking.constants';
 import styles from '@/modules/booking/containers/booking-time-select/booking-time-select.module.scss';
-import { Typography } from '@/modules/core/components/typogrpahy';
 
 import 'swiper/scss';
 import 'swiper/scss/navigation';
@@ -40,11 +40,11 @@ export const DateSliderCalendar: FC<DateSliderCalendarProps> = ({
     <Swiper
       onSwiper={onSwiper}
       ref={swiperRef}
-      spaceBetween={10}
+      // spaceBetween={10}
       loop={false}
       slidesPerView='auto'
       slidesOffsetBefore={24}
-      className='z-10 w-full !pb-4'
+      className='z-10 w-full'
     >
       {days.map((day, index) => {
         const dayEvents = events.items.filter(
@@ -55,26 +55,43 @@ export const DateSliderCalendar: FC<DateSliderCalendarProps> = ({
 
         const statuses = dayEvents.map((event) => event.status);
         const uniqStatuses = Array.from(new Set(statuses));
+        const isSelected = selectedDate && isSameDay(selectedDate, day);
 
         return (
           <SwiperSlide key={index} className={styles.swiperSlideCalendar}>
             <div
-              className={`flex h-full w-full flex-col items-center rounded-xl px-[7px] py-[11px] pb-3 shadow ${selectedDate && isSameDay(selectedDate, day) ? 'bg-primary' : 'bg-white'}`}
+              className={clsx(
+                'flex h-full w-full flex-col items-center justify-center rounded-xl bg-transparent px-[7px] py-[11px] pb-3',
+                {
+                  // '!bg-primary shadow': isSelected,
+                }
+              )}
               onClick={() => handleDateSelect(day)}
             >
-              <Typography
-                className={`capitalize ${selectedDate && isSameDay(selectedDate, day) ? '!text-white' : '!text-dark'}`}
-                variant='body2'
+              <span
+                className={clsx(
+                  'text-xs font-medium capitalize text-gray-accent',
+                  { '!text-primary': isSelected }
+                )}
               >
                 {format(day, 'EEE', { locale: dateFnsLocale })}
-              </Typography>
-              <Typography
-                className={`mt-2 ${selectedDate && isSameDay(selectedDate, day) ? '!text-white' : '!text-black'}`}
-                weight='semibold'
-                variant='body1'
+              </span>
+              <div
+                className={clsx(
+                  'mt-1 flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-full',
+                  {
+                    'bg-primary': isSelected,
+                  }
+                )}
               >
-                {format(day, 'd', { locale: dateFnsLocale })}
-              </Typography>
+                <span
+                  className={clsx('text-base font-medium text-dark', {
+                    '!text-white': isSelected,
+                  })}
+                >
+                  {format(day, 'd', { locale: dateFnsLocale })}
+                </span>
+              </div>
               <div className='mt-1 flex gap-[2px]'>
                 {uniqStatuses.map((status) => {
                   const statusMetadata = bookingStatusMetadata[status];

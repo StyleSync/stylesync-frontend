@@ -18,9 +18,9 @@
 .avatarContainer {
   position: relative;
   display: flex;
-  border: 2px solid #fff;
+  border: 1px solid #fff;
   overflow: hidden;
-  background-color: #d8e6fc;
+  background: linear-gradient(129deg, #f0f0f0 0%, #d3d3d3 100%);
   flex-shrink: 0;
   transition: variables.$transition-fast;
 

@@ -20,10 +20,10 @@ export default async function MyBookings() {
   return (
     <BookingProvider userId={session?.user?.id}>
       <div className={styles.root}>
-        <section className='px-6 md:px-[40px]'>
+        <section className='px-4 md:px-[40px]'>
           <MyBookingsTabs />
         </section>
-        <section className='relative flex w-full flex-1 bg-white shadow'>
+        <section className='relative flex w-full flex-1'>
           <MyBookingsContent />
         </section>
       </div>
