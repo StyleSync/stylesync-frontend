@@ -10,6 +10,7 @@ import { availableReschedule } from '@/server/routers/booking/available.reschedu
 import { rescheduleBooking } from '@/server/routers/booking/reschedule';
 import {
   defaultBookingSelect,
+  defaultProfessionalClientSelect,
   defaultServiceOnProfessionalSelect,
 } from '@/server/selectors';
 import { defaultScheduleSelect } from '@/server/selectors/schedule';
@@ -41,7 +42,7 @@ export const bookingRouter = router({
     .input(
       z.object({
         code: z.string().min(1, 'Required'),
-        expand: z.array(z.enum(['serviceProfessional'])).optional(),
+        expand: z.array(z.enum(['serviceProfessional', 'client'])).optional(),
       })
     )
     .query(async ({ input }) => {
@@ -53,6 +54,9 @@ export const bookingRouter = router({
             'serviceProfessional'
           ) && {
             select: defaultServiceOnProfessionalSelect,
+          },
+          client: !!input.expand?.includes('client') && {
+            select: defaultProfessionalClientSelect,
           },
         },
       });
@@ -70,7 +74,7 @@ export const bookingRouter = router({
     .input(
       z.object({
         id: z.string().min(1, 'Required'),
-        expand: z.array(z.enum(['serviceProfessional'])).optional(),
+        expand: z.array(z.enum(['serviceProfessional', 'client'])).optional(),
       })
     )
     .query(async ({ input }) => {
@@ -82,6 +86,9 @@ export const bookingRouter = router({
             'serviceProfessional'
           ) && {
             select: defaultServiceOnProfessionalSelect,
+          },
+          client: !!input.expand?.includes('client') && {
+            select: defaultProfessionalClientSelect,
           },
         },
       });
@@ -160,6 +167,7 @@ export const bookingRouter = router({
         guestComment: z.string().optional(),
         guestEmail: z.string().email().or(z.literal('')),
         serviceProfessionalId: z.string().min(1, 'Required'),
+        clientId: z.string().optional(),
         day: z.enum([
           Day.MONDAY,
           Day.TUESDAY,
@@ -283,12 +291,52 @@ export const bookingRouter = router({
         });
       }
 
+      // Validate client if provided
+      if (input.clientId) {
+        const client = await prisma.professionalClient.findUnique({
+          where: { id: input.clientId },
+          select: { professionalId: true },
+        });
+
+        if (!client) {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: `No client found with id '${input.clientId}'`,
+          });
+        }
+
+        if (client.professionalId !== professional.id) {
+          throw new TRPCError({
+            code: 'FORBIDDEN',
+            message: `You don't have permission to use this client`,
+          });
+        }
+      }
+
+      // Auto-connect client by phone number if no clientId provided
+      let finalClientId = input.clientId;
+
+      if (!input.clientId) {
+        const existingClient = await prisma.professionalClient.findFirst({
+          where: {
+            professionalId: professional.id,
+            phone: input.guestPhone,
+          },
+          select: { id: true },
+        });
+
+        if (existingClient) {
+          finalClientId = existingClient.id;
+        }
+      }
+
       // eslint-disable-next-line unused-imports/no-unused-vars
       const { day, date, yearTime, monthTime, dayTime, ...createData } = input;
 
       const booking = await prisma.booking.create({
         data: {
           ...createData,
+          clientId: finalClientId,
           userId: ctx?.user?.id,
           status: BookingStatus.PENDING,
           code: uniqueString(),
@@ -445,7 +493,7 @@ export const bookingRouter = router({
           limit: z.number().min(1).max(maxLimit).default(defaultLimit),
           offset: z.number().min(0).default(0),
           cursor: z.string().nullish(),
-          expand: z.array(z.enum(['serviceProfessional'])).optional(),
+          expand: z.array(z.enum(['serviceProfessional', 'client'])).optional(),
           sortDirection: z.enum(['asc', 'desc']).optional(),
           sortField: z.enum(['startTime']).optional(),
         })
@@ -478,6 +526,9 @@ export const bookingRouter = router({
             'serviceProfessional'
           ) && {
             select: defaultServiceOnProfessionalSelect,
+          },
+          client: !!input?.expand?.includes('client') && {
+            select: defaultProfessionalClientSelect,
           },
         },
         orderBy: input?.sortField && {
