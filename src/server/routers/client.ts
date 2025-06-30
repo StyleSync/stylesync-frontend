@@ -370,25 +370,16 @@ export const clientRouter = router({
       }
 
       // Update all matching bookings to connect them to the client
-      const updatePromises = matchingBookings.map((booking) =>
-        prisma.booking.update({
-          where: { id: booking.id },
-          data: { clientId: input.clientId },
-          select: {
-            id: true,
-            clientId: true,
-            guestPhone: true,
-            guestFirstName: true,
-            guestLastName: true,
-          },
-        })
-      );
-
-      const updatedBookings = await Promise.all(updatePromises);
+      const updateResult = await prisma.booking.updateMany({
+        where: {
+          id: { in: matchingBookings.map((booking) => booking.id) },
+        },
+        data: { clientId: input.clientId },
+      });
 
       return {
-        message: `Successfully connected ${updatedBookings.length} bookings to client`,
-        connectedCount: updatedBookings.length,
+        message: `Successfully connected ${updateResult.count} bookings to client`,
+        connectedCount: updateResult.count,
       };
     }),
 });
