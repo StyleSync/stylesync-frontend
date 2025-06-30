@@ -134,6 +134,7 @@ export const ProfileSectionLayoutServices: FC<
               <ServiceConstructorTable
                 {...group}
                 onRemove={handleServiceRemove}
+                isEditServices={isEditServices.value}
               />
             ) : (
               <>
@@ -161,6 +162,7 @@ export const ProfileSectionLayoutServices: FC<
               price: 0,
               currency: 'UAH',
               description: '',
+              position: serviceList.length,
             }}
             isActive={isCreateServiceOpen.value}
             onOpenChange={handleCreateFormClose}

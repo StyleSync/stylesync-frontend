@@ -1,5 +1,7 @@
-import type { ServiceOnProfessional } from '@/modules/service/types/service.types';
+import type { ServiceOnProfessionalListItem } from '@/modules/service/types/service.types';
 
 export type ServiceConstructorRowProps = {
-  data: ServiceOnProfessional;
+  data: ServiceOnProfessionalListItem;
+  index: number;
+  isEditServices?: boolean;
 };

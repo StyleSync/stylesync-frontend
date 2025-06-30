@@ -193,6 +193,7 @@ export const serviceOnProfessionalRouter = router({
         take: limit + 1,
         skip: input?.cursor ? undefined : input?.offset ?? 0,
         cursor: input?.cursor ? { id: input?.cursor } : undefined,
+        orderBy: [{ position: 'asc' }, { createdAt: 'asc' }],
       });
 
       return { items, nextCursor: getCursor(items, limit) };

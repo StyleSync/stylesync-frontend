@@ -1,5 +1,21 @@
-import { type FC, useCallback } from 'react';
+import { type FC, useCallback, useEffect, useState } from 'react';
 
+import {
+  closestCenter,
+  DndContext,
+  DragEndEvent,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
 import clsx from 'clsx';
@@ -17,6 +33,7 @@ import { trpc } from '@/modules/core/utils/trpc.utils';
 import { ServiceOnProfessionalEditForm } from '@/modules/service/components/service-on-professional-edit-form';
 import { ServiceConstructorRow } from '@/modules/service/containers/service-constructor-row';
 import { useServiceOnProfessionalGroupDelete } from '@/modules/service/hooks/use-service-on-professional-group-delete';
+import type { ServiceOnProfessional } from '@/modules/service/types/service.types';
 
 import type { ServiceConstructorTableProps } from './service-constructor-table.interface';
 
@@ -26,15 +43,32 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
   service,
   serviceOnProfessionalList,
   onRemove,
+  isEditServices,
 }) => {
   const queryClient = useQueryClient();
   const intl = useIntl();
   // state
   const isActionsOpen = useBoolean();
   const isCreateOpen = useBoolean();
+  const [items, setItems] = useState<ServiceOnProfessional[]>([]);
   // queries
   const serviceOnProfessionalGroupDelete =
     useServiceOnProfessionalGroupDelete();
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  useEffect(() => {
+    setItems(serviceOnProfessionalList.sort((a, b) => a.position - b.position));
+  }, [serviceOnProfessionalList]);
 
   const handleTableRemoveClick = useCallback(() => {
     serviceOnProfessionalGroupDelete.mutate(
@@ -75,8 +109,25 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
     }
   };
 
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const oldIndex = items.findIndex((item) => item.id === active.id);
+      const newIndex = items.findIndex((item) => item.id === over.id);
+
+      const newItems = arrayMove(items, oldIndex, newIndex);
+
+      setItems(newItems);
+    }
+  };
+
   return (
-    <div className={styles.root}>
+    <div
+      className={clsx(styles.root, {
+        [styles.editBorder]: isEditServices,
+      })}
+    >
       <div className={styles.header}>
         <Tag
           icon={service.icon as IconName}
@@ -122,12 +173,26 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
           }}
         />
       </div>
-      {serviceOnProfessionalList.map((serviceOnProfessional) => (
-        <ServiceConstructorRow
-          key={serviceOnProfessional.id}
-          data={serviceOnProfessional}
-        />
-      ))}
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+        modifiers={[restrictToVerticalAxis]}
+      >
+        <SortableContext
+          items={items.map((item) => item.id)}
+          strategy={verticalListSortingStrategy}
+        >
+          {items.map((serviceOnProfessional, index) => (
+            <ServiceConstructorRow
+              key={serviceOnProfessional.id}
+              data={serviceOnProfessional}
+              index={index}
+              isEditServices={isEditServices}
+            />
+          ))}
+        </SortableContext>
+      </DndContext>
       <ServiceOnProfessionalEditForm
         data={{
           service,
@@ -137,6 +202,7 @@ export const ServiceConstructorTable: FC<ServiceConstructorTableProps> = ({
           price: 0,
           currency: 'UAH',
           description: '',
+          position: items.length,
         }}
         isActive={isCreateOpen.value}
         onOpenChange={isCreateOpen.setFalse}

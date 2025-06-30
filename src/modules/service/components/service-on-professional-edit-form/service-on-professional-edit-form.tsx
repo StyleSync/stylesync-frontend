@@ -106,6 +106,7 @@ export const ServiceOnProfessionalEditForm: FC<
             ...mapFormValuesToServiceOnProfessional(values),
             description: values.description || '',
             serviceId: data.service.id,
+            position: data.position,
           },
           {
             onSuccess: () => {

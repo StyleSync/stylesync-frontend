@@ -1,5 +1,7 @@
-import { type FC, useCallback, useRef } from 'react';
+import { type FC, useCallback, useEffect, useRef } from 'react';
 
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
 import clsx from 'clsx';
@@ -20,8 +22,12 @@ import type { ServiceConstructorRowProps } from './service-constructor-row.inter
 
 import styles from './service-constructor-row.module.scss';
 
+const DRAGGING_Z_INDEX = 999;
+
 export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
   data,
+  index,
+  isEditServices,
 }) => {
   const queryClient = useQueryClient();
   const deviceType = useDeviceType();
@@ -33,6 +39,54 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
   // queries
   const serviceOnProfessionalDeleteMutation =
     trpc.serviceOnProfessional.delete.useMutation();
+
+  const serviceOnProfessionalUpdateMutation =
+    trpc.serviceOnProfessional.update.useMutation();
+
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    id: data.id,
+    data: {
+      index,
+      position: data.position,
+    },
+    resizeObserverConfig: {
+      disabled: false,
+    },
+  });
+
+  useEffect(() => {
+    if (data.position !== index) {
+      serviceOnProfessionalUpdateMutation.mutate(
+        {
+          id: data.id,
+          position: index,
+        },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries({
+              queryKey: getQueryKey(trpc.serviceOnProfessional.list),
+            });
+          },
+        }
+      );
+    }
+  }, [data.position, index, data.id]);
+
+  const style = {
+    transform: CSS.Translate.toString(transform),
+    transition,
+    backgroundColor: isDragging ? 'rgba(216, 230, 252, 0.8)' : '#fff',
+    boxShadow: isDragging ? '0 18px 30px 0 rgba(37, 74, 165, 0.15)' : 'none',
+    position: 'relative' as const,
+    zIndex: isDragging ? DRAGGING_Z_INDEX : 0,
+  };
 
   useRipple(rootRef, {
     disabled: isEdit.value || deviceType !== 'mobile',
@@ -56,14 +110,18 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
         },
       }
     );
-  }, [data.id, serviceOnProfessionalDeleteMutation, queryClient, intl]);
+  }, [data.id, serviceOnProfessionalDeleteMutation, queryClient]);
 
   return (
     <div
       className={clsx(styles.root, {
         'opacity-[0.7]': serviceOnProfessionalDeleteMutation.isPending,
+        [styles.editBorder]: isEditServices,
       })}
-      ref={rootRef}
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
     >
       <div className={styles.display}>
         <div className={styles.info}>
@@ -83,7 +141,11 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
             icon='pencil'
             disabled={serviceOnProfessionalDeleteMutation.isPending}
             variant='outlined'
-            onClick={isEdit.setTrue}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              isEdit.setTrue();
+            }}
           />
           <Button
             className='z-50'
@@ -91,7 +153,12 @@ export const ServiceConstructorRow: FC<ServiceConstructorRowProps> = ({
             icon='trash'
             variant='danger'
             isLoading={serviceOnProfessionalDeleteMutation.isPending}
-            onClick={handleDelete}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+
+              handleDelete();
+            }}
           />
         </div>
       </div>
