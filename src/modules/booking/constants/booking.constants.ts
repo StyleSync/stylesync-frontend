@@ -25,7 +25,7 @@ export const bookingStatusMetadata: Record<
   },
   FINISHED: {
     title: 'booking.status.finished',
-    color: 'bg-gray-accent',
+    color: 'bg-green',
   },
   REJECTED: {
     title: 'booking.status.rejected',

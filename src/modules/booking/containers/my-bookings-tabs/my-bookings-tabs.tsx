@@ -13,7 +13,7 @@ import type {
   MyBookingsTabsProps,
 } from './my-bookings-tabs.interface';
 
-export const myBookingsDefaultTab: MyBookingsTabKey = 'list';
+export const myBookingsDefaultTab: MyBookingsTabKey = 'calendar';
 
 export const MyBookingsTabs: FC<MyBookingsTabsProps> = () => {
   const intl = useIntl();
@@ -24,14 +24,14 @@ export const MyBookingsTabs: FC<MyBookingsTabsProps> = () => {
 
   const tabs: Tab[] = [
     {
-      key: 'list',
-      name: intl.formatMessage({ id: 'booking.tabs.list' }),
-      icon: 'list',
-    },
-    {
       key: 'calendar',
       name: intl.formatMessage({ id: 'booking.tabs.calendar' }),
       icon: 'calendar',
+    },
+    {
+      key: 'list',
+      name: intl.formatMessage({ id: 'booking.tabs.list' }),
+      icon: 'list',
     },
   ];
 
@@ -42,5 +42,12 @@ export const MyBookingsTabs: FC<MyBookingsTabsProps> = () => {
     [setActiveTab]
   );
 
-  return <Tabs value={activeTab} onChange={handleTabChange} tabs={tabs} />;
+  return (
+    <Tabs
+      value={activeTab}
+      onChange={handleTabChange}
+      tabs={tabs}
+      variant='contained'
+    />
+  );
 };

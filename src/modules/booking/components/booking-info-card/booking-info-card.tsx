@@ -3,9 +3,8 @@ import { type FC, RefObject, useMemo, useRef } from 'react';
 import clsx from 'clsx';
 import { useIntl } from 'react-intl';
 
-import { BookingStatus } from '@/modules/booking/components/booking-status';
 import { bookingStatusMetadata } from '@/modules/booking/constants/booking.constants';
-import { Icon } from '@/modules/core/components/icon';
+import { Avatar } from '@/modules/core/components/avatar';
 import { useRipple } from '@/modules/core/hooks/use-ripple';
 import { formatI18n } from '@/modules/internationalization/utils/data-fns-internationalization';
 
@@ -34,51 +33,44 @@ export const BookingInfoCard: FC<BookingInfoCardProps> = ({
   return (
     <div
       className={clsx(
-        'flex cursor-pointer rounded-xl pl-[3px] shadow transition hover:shadow-colour',
-        statusMetadata?.color
+        `relative flex w-full cursor-pointer py-2 pl-[3px] transition md:rounded-r-lg md:bg-white md:pr-4 md:shadow md:hover:shadow-colour`
       )}
       onClick={() => onClick && onClick(booking)}
     >
-      <div className='flex w-full items-center rounded-xl bg-white py-4 pr-6'>
-        <div className='flex w-[90px] flex-col items-center gap-y-1 border-r border-gray-light py-1'>
-          <span className='text-text text-2xl font-medium'>{day}</span>
-          <span className='text-text text-base font-normal capitalize'>
-            {month}
-          </span>
-        </div>
+      <div className='flex w-full items-center rounded-xl py-1'>
         <div className='flex flex-1 flex-col md:flex-row'>
-          <div className='flex flex-1 flex-col gap-y-2 pl-6'>
-            <span className='text-base'>
-              {booking.serviceProfessional.title}
-            </span>
-            <div className='flex flex-col gap-y-2 md:hidden'>
-              <BookingStatus status={booking.status} />
-              <div className='flex items-center gap-x-2'>
-                <Icon
-                  name='time'
-                  className='h-4 w-4 shrink-0 text-gray-accent'
-                />
-                <span className='truncate text-sm text-gray-accent'>
-                  {time}
-                </span>
-              </div>
+          <div className='flex flex-1 items-center gap-x-4 pl-4'>
+            <div className='flex items-center gap-x-4'>
+              <Avatar
+                fallback={
+                  <span className='text-gray-accent'>
+                    {booking.guestFirstName[0]}
+                  </span>
+                }
+              />
             </div>
-            <div className='flex items-center gap-x-2'>
-              <Icon name='user' className='h-4 w-4 text-gray-accent' />
-              <span className='text-sm text-gray-accent'>
+            <div className='flex flex-col'>
+              <span className='text-base font-medium text-dark'>
                 {`${booking.guestFirstName || ''} ${booking.guestLastName || ''}`}
               </span>
+              <span className='text-sm font-normal text-gray-accent'>
+                {booking.serviceProfessional.title}
+              </span>
             </div>
-          </div>
-          <div className='ml-6 hidden flex-col-reverse gap-y-1 md:flex md:flex-col md:items-end md:gap-y-2'>
-            <BookingStatus status={booking.status} />
-            <div className='flex items-center gap-x-2'>
-              <Icon name='time' className='h-4 w-4 shrink-0 text-gray-accent' />
-              <span className='truncate text-sm text-gray-accent'>{time}</span>
+            <div className='ml-auto flex w-[100px] items-center gap-x-2'>
+              <span className='truncate text-sm font-normal text-gray-accent'>
+                {time}
+              </span>
             </div>
           </div>
         </div>
       </div>
+      <div
+        className={clsx(
+          'absolute left-0 top-0 h-full w-[2px] rounded-full',
+          statusMetadata?.color
+        )}
+      />
     </div>
   );
 };

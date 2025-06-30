@@ -1,11 +1,13 @@
 import { type FC, memo, type SVGAttributes } from 'react';
 
+import EmptyListIllustration from '@/assets/illustrations/empty-list.svg?icon';
 import FilesIllustration from '@/assets/illustrations/files.svg?icon';
 import FolderIllustration from '@/assets/illustrations/folder.svg?icon';
 
 export const illustrations = {
   folder: FolderIllustration,
   files: FilesIllustration,
+  emptyList: EmptyListIllustration,
 } satisfies Record<string, FC<SVGAttributes<SVGElement>>>;
 
 export type IllustrationName = keyof typeof illustrations;

@@ -74,7 +74,7 @@
   "booking.metadata.fillPersonalInfo": "Please complete the following information to confirm your booking",
   "booking.time.select.title": "Select a date",
   "booking.list.upcomming": "Upcoming",
-  "booking.list.past": "Past",
+  "booking.list.past": "Bookings history",
   "booking.list.listEmpty": "List is empty",
   "booking.modal.success.title": "Booking successful!",
   "booking.modal.success.service": "Service",

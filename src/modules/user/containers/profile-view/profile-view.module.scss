@@ -3,11 +3,13 @@
 @use '@/styles/mixins';
 
 .root {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   background-color: variables.$grey-light-color;
   padding-top: variables.$header-height;
+  z-index: 3;
 
   @include mixins.phone {
     padding-top: variables.$header-height-mobile;

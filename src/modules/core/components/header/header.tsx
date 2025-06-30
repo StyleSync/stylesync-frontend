@@ -4,9 +4,13 @@ import { createPortal } from 'react-dom';
 
 import clsx from 'clsx';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useIntl } from 'react-intl';
 import { useBoolean, useEventListener } from 'usehooks-ts';
 
 import { Icon } from '@/modules/core/components/icon';
+import { headerRouteConfig } from '@/modules/core/constants/header.constants';
+import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import type { ChildrenProp } from '@/modules/core/types/react.types';
 
 import type { HeaderProps } from './header.interface';
@@ -23,6 +27,12 @@ const Header: FC<HeaderProps> & { BottomContent: FC<ChildrenProp> } = ({
   classes,
 }) => {
   const isPageScrolled = useBoolean();
+  const pathname = usePathname();
+  const intl = useIntl();
+  const deviceType = useDeviceType();
+  const routeConfig = headerRouteConfig.find((config) =>
+    config.match(pathname)
+  );
 
   useEventListener('scroll', () => {
     if (window.scrollY >= PAGE_SCROLL_TRIGGER) {
@@ -45,9 +55,15 @@ const Header: FC<HeaderProps> & { BottomContent: FC<ChildrenProp> } = ({
     >
       <div className={clsx(styles.content, classes?.content)}>
         <div className={clsx(styles.leftSlot, classes?.leftSlot)}>
-          <Link href='/' aria-label='Logo'>
-            <Icon className={styles.logo} name='stylesync-logo' width={150} />
-          </Link>
+          {routeConfig?.title && deviceType === 'mobile' ? (
+            <span className='text-xl font-medium text-dark'>
+              {intl.formatMessage({ id: routeConfig.title })}
+            </span>
+          ) : (
+            <Link href='/' aria-label='Logo'>
+              <Icon className={styles.logo} name='stylesync-logo' width={150} />
+            </Link>
+          )}
         </div>
         <div className={clsx(styles.centralSlot, classes?.centralSlot)}>
           {centralSlot}
