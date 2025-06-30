@@ -314,9 +314,11 @@ export const bookingRouter = router({
       }
 
       // Auto-connect client by phone number if no clientId provided
-      let finalClientId = input.clientId;
+      let finalClientId: string | null = null;
 
-      if (!input.clientId) {
+      if (input.clientId) {
+        finalClientId = input.clientId;
+      } else {
         const existingClient = await prisma.professionalClient.findFirst({
           where: {
             professionalId: professional.id,
