@@ -5,6 +5,7 @@
 .root {
   box-shadow: variables.$main-box-shadow;
   border-radius: utils.spacing(1.5);
+  background-color: #fff;
 
   @include mixins.phone {
     overflow: hidden;

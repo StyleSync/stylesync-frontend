@@ -33,11 +33,11 @@ export const BookingInfoCard: FC<BookingInfoCardProps> = ({
   return (
     <div
       className={clsx(
-        `relative flex w-full cursor-pointer py-2 pl-[3px] transition md:rounded-r-lg md:bg-white md:pr-4 md:shadow md:hover:shadow-colour`
+        `relative flex w-full cursor-pointer py-2 pl-[3px] transition md:rounded-lg md:bg-white md:pr-4 md:shadow md:hover:shadow-colour`
       )}
       onClick={() => onClick && onClick(booking)}
     >
-      <div className='flex w-full items-center rounded-xl py-1'>
+      <div className='relative flex w-full items-center rounded-xl py-1'>
         <div className='flex flex-1 flex-col md:flex-row'>
           <div className='flex flex-1 items-center gap-x-4 pl-4'>
             <div className='flex items-center gap-x-4'>
@@ -64,13 +64,13 @@ export const BookingInfoCard: FC<BookingInfoCardProps> = ({
             </div>
           </div>
         </div>
+        <div
+          className={clsx(
+            'absolute left-0 top-0 h-full w-[2px] rounded-full',
+            statusMetadata?.color
+          )}
+        />
       </div>
-      <div
-        className={clsx(
-          'absolute left-0 top-0 h-full w-[2px] rounded-full',
-          statusMetadata?.color
-        )}
-      />
     </div>
   );
 };
