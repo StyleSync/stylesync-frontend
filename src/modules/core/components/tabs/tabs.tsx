@@ -32,6 +32,7 @@ const Tabs = forwardRef<HTMLDivElement, TabsProps>(
             })}
             data-active={value === tab.key}
             onClick={handleTabClick(tab.key)}
+            data-active={value === tab.key}
           >
             {tab.icon && <Icon name={tab.icon} className={styles.icon} />}
             <Typography

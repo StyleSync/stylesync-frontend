@@ -14,7 +14,7 @@ export default async function Clients() {
   }
 
   return (
-    <div className='px-4 py-20'>
+    <div className='relative z-10 h-screen py-20'>
       <ClientsList />
     </div>
   );

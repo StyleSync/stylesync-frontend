@@ -1,0 +1,19 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.dialogOverlay {
+  z-index: calc(#{variables.$level-dialog-2} - 1);
+}
+
+.dialogContent {
+  padding: utils.spacing(3, 3);
+  z-index: variables.$level-dialog-2;
+  max-width: 540px;
+  width: 100%;
+
+  @include mixins.phone {
+    min-height: 100vh;
+    border-radius: 0;
+  }
+}
