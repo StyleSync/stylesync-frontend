@@ -67,7 +67,7 @@ export const BookingsUserList: FC<BookingsUserListProps> = () => {
               </Typography>
             }
           >
-            <div className='mt-8 grid gap-6 [grid-template-columns:repeat(auto-fill,_minmax(300px,1fr))] [grid-template-rows:max-content] md:[grid-template-columns:repeat(auto-fill,_minmax(400px,1fr))]'>
+            <div className='mt-8 grid gap-4 [grid-template-columns:repeat(auto-fill,_minmax(300px,1fr))] [grid-template-rows:max-content] md:[grid-template-columns:repeat(auto-fill,_minmax(400px,1fr))]'>
               {upcomingEvents.map((booking) => (
                 <BookingInfoCard
                   key={booking.id}
@@ -104,7 +104,7 @@ export const BookingsUserList: FC<BookingsUserListProps> = () => {
               </Typography>
             }
           >
-            <div className='mt-8 grid gap-6 [grid-template-columns:repeat(auto-fill,_minmax(300px,1fr))] [grid-template-rows:max-content] md:[grid-template-columns:repeat(auto-fill,_minmax(400px,1fr))]'>
+            <div className='mt-8 grid gap-4 [grid-template-columns:repeat(auto-fill,_minmax(300px,1fr))] [grid-template-rows:max-content] md:[grid-template-columns:repeat(auto-fill,_minmax(400px,1fr))]'>
               {pastEvents.map((booking) => (
                 <BookingInfoCard
                   key={booking.id}

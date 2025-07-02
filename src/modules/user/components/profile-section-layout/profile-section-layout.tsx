@@ -4,7 +4,6 @@ import { type FC } from 'react';
 import { useIntl } from 'react-intl';
 
 import { Button } from '@/modules/core/components/button';
-import { Typography } from '@/modules/core/components/typogrpahy';
 
 import { ProfileSectionLayoutProps } from './profile-section-layout.interface';
 
@@ -28,9 +27,9 @@ export const ProfileSectionLayout: FC<ProfileSectionLayoutProps> = ({
   return (
     <section className={`${styles.root}`} id={id}>
       <div className='flex items-center justify-between'>
-        <Typography className={styles.title} As='h2' variant='subtitle'>
+        <h2 className='text-base font-medium text-dark'>
           {intl.formatMessage({ id: title })}
-        </Typography>
+        </h2>
         {isOwnProfile && (
           <div className='flex items-center gap-2'>
             {edit ? (
@@ -44,7 +43,12 @@ export const ProfileSectionLayout: FC<ProfileSectionLayoutProps> = ({
                 />
               </>
             ) : (
-              <Button variant='secondary' icon='pencil' onClick={handleEdit} />
+              <Button
+                variant='secondary'
+                className='!bg-white shadow'
+                icon='pencil'
+                onClick={handleEdit}
+              />
             )}
           </div>
         )}

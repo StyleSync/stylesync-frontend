@@ -7,12 +7,10 @@ import { useBoolean } from 'usehooks-ts';
 
 import { AvatarSelect } from '@/modules/core/components/avatar-select';
 import { DropdownMenu } from '@/modules/core/components/dropdown-menu';
-import { Typography } from '@/modules/core/components/typogrpahy';
 import { useImageInputState } from '@/modules/core/hooks/use-image-input-state';
 import { showToast } from '@/modules/core/providers/toast-provider';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import type { UserDataProps } from '@/modules/user/containers/professional-info-big-card/professional-info-big-card.interface';
-import styles from '@/modules/user/containers/professional-info-big-card/professional-info-big-card.module.scss';
 import { useAvatarUploadMutation } from '@/modules/user/hooks/use-avatar-upload-mutation';
 import { getFullName } from '@/modules/user/utils/user.utils';
 
@@ -106,7 +104,7 @@ export const UserData: FC<UserDataProps> = ({ professional }) => {
   };
 
   return (
-    <div className='flex items-center gap-x-4 gap-y-4'>
+    <div className='relative flex w-full items-center p-4'>
       <DropdownMenu
         isOpen={isOpen.value}
         onClose={isOpen.setFalse}
@@ -129,7 +127,7 @@ export const UserData: FC<UserDataProps> = ({ professional }) => {
           <button
             onMouseEnter={isOpen.setTrue}
             onMouseLeave={isOpen.setFalse}
-            className='relative'
+            className='absolute -top-[40px] left-1/2 -translate-x-1/2'
           >
             <AvatarSelect
               value={avatar.preview}
@@ -154,15 +152,11 @@ export const UserData: FC<UserDataProps> = ({ professional }) => {
         }}
       />
 
-      <div className='flex flex-col gap-y-2'>
-        <Typography className='!text-white' variant='title' weight='medium'>
+      <div className='mt-8 flex w-full flex-col items-center gap-y-2'>
+        <span className='text-lg font-semibold text-dark'>
           {getFullName(professional.user)}
-        </Typography>
-        <div className={styles.proBadge}>
-          <Typography variant='small' weight='medium'>
-            STYLE PRO
-          </Typography>
-        </div>
+        </span>{' '}
+        <span className='text-sm font-medium text-gray-accent'>Спеціаліст</span>
       </div>
     </div>
   );

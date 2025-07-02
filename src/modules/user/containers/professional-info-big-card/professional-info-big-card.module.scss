@@ -5,18 +5,7 @@
 .container {
   position: relative;
   display: flex;
-  flex-direction: column;
-  width: 100%;
-  overflow: hidden;
-  height: fit-content;
-  border-radius: variables.$border-radius-medium;
-  box-shadow: variables.$main-box-shadow;
-  background: linear-gradient(to right, #fa709a 0%, #fee140 100%);
-
-  //@include mixins.inline-animation(variables.$transition-ultrafast, 1) {
-  //  from { opacity: 0 }
-  //  to { opacity: 1 }
-  //}
+  margin-top: 30px;
 
   .generalInfo {
     display: flex;
@@ -61,11 +50,6 @@
   .top {
     display: flex;
     align-items: center;
-    padding: utils.spacing(3, 3);
-
-    @include mixins.phone {
-      padding: utils.spacing(2);
-    }
   }
 
   .info {
@@ -134,7 +118,6 @@
           column-gap: utils.spacing(1);
           color: variables.$error-color;
 
-
           span {
             color: inherit;
           }
@@ -198,8 +181,8 @@
     display: flex;
     padding: 4px 12px;
     box-shadow: variables.$main-box-shadow;
-    background-color: transparent;
-    border: 1px solid #fee140;
+    // background-color: transparent;
+    background-color: #fee140;
     width: fit-content;
     border-radius: variables.$border-radius-small;
 

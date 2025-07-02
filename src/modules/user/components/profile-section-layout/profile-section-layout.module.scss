@@ -8,7 +8,7 @@
   width: 100%;
   max-width: 968px;
   margin: 0 auto;
-  padding: utils.spacing(6) utils.spacing(3) utils.spacing(2);
+  padding: utils.spacing(6) utils.spacing(2) utils.spacing(2);
 
   @include mixins.phone {
     padding-top: utils.spacing(3);

@@ -20,7 +20,7 @@ export const AboutMe: FC<AboutMeProps> = ({ userId }) => {
 
   return (
     <div className={styles.root}>
-      <Typography className='w-full max-w-[90%]' variant='body2'>
+      <Typography className='w-full max-w-[90%] !leading-6' variant='body2'>
         {professional.about ||
           intl.formatMessage({ id: 'user.about.me.noInfo' })}
       </Typography>
