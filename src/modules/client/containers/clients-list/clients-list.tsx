@@ -34,7 +34,6 @@ const clients = [
 
 export const ClientsList = () => {
   const isOpenAddClientModal = useBoolean();
-  // const isOpenClientsDetailsModal = useBoolean();
   // state
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
   const [isNewBooking, setIsNewBooking] = useState(false);

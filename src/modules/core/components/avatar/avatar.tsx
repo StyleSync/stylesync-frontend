@@ -63,7 +63,13 @@ export const Avatar: FC<AvatarProps> = ({
         />
       )}
       {!url && fallback && (
-        <div className={styles.fallbackContainer}>{fallback}</div>
+        <div
+          className={clsx(styles.fallbackContainer, {
+            [styles.bigSize]: size === 'medium',
+          })}
+        >
+          {fallback}
+        </div>
       )}
     </div>
   );

@@ -15,7 +15,7 @@ export const ClientCard: FC<ClientCardProps> = ({
       onClick={onClick}
       className={`flex items-center gap-[10px] py-3 pl-6 ${isLast ? '' : 'border-b border-gray-light px-6'} `}
     >
-      <Avatar />
+      <Avatar fallback={name[0]} />
       <div className='flex flex-col'>
         <span>{name}</span>
         <span className='text-gray'>{phone}</span>

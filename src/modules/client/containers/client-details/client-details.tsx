@@ -73,7 +73,7 @@ export const ClientDetails: FC<ClientsDetailProps> = ({
         </div>
 
         <div className='z-[100] mt-8 flex flex-col items-center gap-[18px]'>
-          <Avatar size='medium' />
+          <Avatar fallback={client?.name[0]} shadow size='medium' />
           <span>{client?.name}</span>
           <div className='flex gap-5'>
             <Button
@@ -94,7 +94,7 @@ export const ClientDetails: FC<ClientsDetailProps> = ({
           </div>
         </div>
 
-        <div className='z-[100] mx-3 mb-[15px] mt-8 flex justify-between rounded-2xl bg-white px-4 py-3 shadow-md'>
+        <div className='z-[100] mx-3 mb-[15px] mt-8 flex justify-between rounded-2xl bg-white px-4 py-3 shadow-accentShadow'>
           <div className='flex flex-col items-start'>
             <span className='text-base font-medium text-dark'>0</span>
             <span className='text-sm text-gray'>Бронювань</span>
