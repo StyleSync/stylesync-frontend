@@ -132,6 +132,23 @@ model Professional {
   services   ServiceOnProfessional[]
   createdAt  DateTime                @default(now())
   updatedAt  DateTime                @default(now()) @updatedAt
+  clients    ProfessionalClient[]
+}
+
+model ProfessionalClient {
+  id             String       @id @default(cuid())
+  firstName      String?
+  lastName       String?
+  phone          String?
+  name           String?
+  email          String?
+  image          String?
+  professionalId String
+  professional   Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+  bookings       Booking[]
+  notes          String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @default(now()) @updatedAt
 }
 
 model SmsUsage {
@@ -248,6 +265,8 @@ model Booking {
   status                BookingStatus         @default(PENDING)
   serviceProfessionalId String
   serviceProfessional   ServiceOnProfessional @relation(fields: [serviceProfessionalId], references: [id], onDelete: Cascade)
+  clientId              String?
+  client                ProfessionalClient?   @relation(fields: [clientId], references: [id], onDelete: SetNull)
   createdAt             DateTime              @default(now())
   updatedAt             DateTime              @updatedAt
   deletedAt             DateTime?
