@@ -200,55 +200,57 @@ export const DailyScheduleSection = () => {
                 </div>
               </div>
             </div>
-            <LocalizationProvider
-              dateAdapter={AdapterDateFns}
-              adapterLocale={dateFnsLocale}
-            >
-              <StaticDatePicker
-                value={selectedMonth}
-                onMonthChange={(value) => {
-                  setSelectedMonth(value);
-                }}
-                slots={{
-                  actionBar: () => null,
-                  day: renderCalendarDay,
-                  toolbar: () => null,
-                  switchViewButton: () => null,
-                }}
-                slotProps={{
-                  day: {
-                    selectedDates,
-                    schedules: schedules ?? [],
-                    onDaySelect: handleDateChange,
-                    weeklySchedule: weekScheduleQuery.data,
-                  } as any,
-                }}
-                sx={{
-                  width: '100%',
-                  backgroundColor: 'transparent',
-                  '& .MuiDateCalendar-root': {
+            <div className='relative -left-2 w-[calc(100%+1rem)] rounded-lg bg-white p-2 shadow'>
+              <LocalizationProvider
+                dateAdapter={AdapterDateFns}
+                adapterLocale={dateFnsLocale}
+              >
+                <StaticDatePicker
+                  value={selectedMonth}
+                  onMonthChange={(value) => {
+                    setSelectedMonth(value);
+                  }}
+                  slots={{
+                    actionBar: () => null,
+                    day: renderCalendarDay,
+                    toolbar: () => null,
+                    switchViewButton: () => null,
+                  }}
+                  slotProps={{
+                    day: {
+                      selectedDates,
+                      schedules: schedules ?? [],
+                      onDaySelect: handleDateChange,
+                      weeklySchedule: weekScheduleQuery.data,
+                    } as any,
+                  }}
+                  sx={{
                     width: '100%',
-                  },
-                  '& .MuiDayCalendar-weekContainer': {
-                    justifyContent: 'space-between',
-                  },
-                  '& .MuiDayCalendar-header': {
-                    justifyContent: 'space-between',
-                  },
-                  '& .MuiPickersDay-root': {
-                    height: '40px',
-                  },
-                  '& .MuiDayCalendar-weekDayLabel': {
-                    fontSize: '16px',
-                  },
-                  '& .MuiPickersCalendarHeader-root': {
-                    paddingLeft: '8px',
-                    paddingRight: '0',
-                    marginBottom: '10px',
-                  },
-                }}
-              />
-            </LocalizationProvider>
+                    backgroundColor: 'transparent',
+                    '& .MuiDateCalendar-root': {
+                      width: '100%',
+                    },
+                    '& .MuiDayCalendar-weekContainer': {
+                      justifyContent: 'space-between',
+                    },
+                    '& .MuiDayCalendar-header': {
+                      justifyContent: 'space-between',
+                    },
+                    '& .MuiPickersDay-root': {
+                      height: '40px',
+                    },
+                    '& .MuiDayCalendar-weekDayLabel': {
+                      fontSize: '16px',
+                    },
+                    '& .MuiPickersCalendarHeader-root': {
+                      paddingLeft: '8px',
+                      paddingRight: '0',
+                      marginBottom: '10px',
+                    },
+                  }}
+                />
+              </LocalizationProvider>
+            </div>
           </div>
         </div>
         {selectedDates.length > 0 && (
