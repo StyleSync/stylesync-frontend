@@ -16,7 +16,7 @@ export type ButtonVariant =
 
 export type ButtonProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
-  'children' | 'className' | 'style'
+  'children' | 'className' | 'style' | 'slot'
 > &
   StylingProps & {
     variant?: ButtonVariant;
@@ -32,6 +32,6 @@ export type ButtonProps = Omit<
       iconEnd?: string;
       text?: string;
     };
-    slot?: ReactNode;
+    slot?: ReactNode | null | undefined;
     slotEnd?: ReactNode;
   };

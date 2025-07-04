@@ -11,6 +11,14 @@ import type { SidebarLink, SidebarProps } from './sidebar.interface';
 
 import styles from './sidebar.module.scss';
 
+const bgColors = [
+  'bg-primary',
+  'bg-purple',
+  'bg-cyan',
+  'bg-green',
+  'bg-orange',
+];
+
 export const Sidebar: FC<SidebarProps> = ({
   linkGroups,
   activeLink,
@@ -49,14 +57,31 @@ export const Sidebar: FC<SidebarProps> = ({
                         [styles.active]: activeLink === link.id,
                       })}
                       key={link.id}
-                      icon={link.icon}
                       text={link.name}
                       onClick={handleLinkClick(link)}
                       variant='unstyled'
                       iconEnd='chevron-right'
                       classes={{
-                        text: '!text-base !font-semibold lg:!font-normal',
+                        text: '!text-base !font-medium lg:!font-normal',
+                        iconEnd: '!text-gray ml-auto md:hidden',
                       }}
+                      slot={
+                        link.icon && (
+                          <div
+                            className={clsx(
+                              'flex h-8 w-8 shrink-0 items-center justify-center rounded-md',
+                              bgColors[index % bgColors.length]
+                            )}
+                          >
+                            <Icon
+                              name={link.icon}
+                              width={20}
+                              height={20}
+                              className='text-white'
+                            />
+                          </div>
+                        )
+                      }
                     />
                   )}
                 </Fragment>
