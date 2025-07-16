@@ -3,4 +3,5 @@ export type ClientCardProps = {
   phone: string;
   isLast?: boolean;
   onClick: () => void;
+  image?: string;
 };

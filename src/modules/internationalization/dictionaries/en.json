@@ -287,6 +287,7 @@
   "button.finished": "Mark as Finished",
   "button.missed": "Mark as Missed",
   "button.open.details": "Open details",
+  "button.add.booking": "Add new booking",
 
   "duration.hour": "{count, plural, one {# hour} other {# hours}}",
   "duration.minute": "{count, plural, one {# minute} other {# minutes}}",
@@ -485,5 +486,20 @@
   "user.avatar.upload.failed": "Failed to upload image",
   "user.avatar.add": "Add avatar",
   "user.avatar.delete": "Delete avatar",
-  "user.avatar.remove.success": "Avatar removed"
+  "user.avatar.remove.success": "Avatar removed",
+  "button.edit": "Edit",
+
+  "client.info.update.success": "Changes have been saved",
+  "client.name": "Name",
+  "client.lastName": "Last name",
+  "client.email": "Email",
+  "client.phone": "Phone",
+  "client.notes": "Client notes",
+  "client.add.title": "New client",
+  "client.search.placeholder": "Search clients",
+  "client.add.button": "Add new client",
+  "client.booking.tabs.future": "Future",
+  "client.booking.tabs.past": "Past",
+  "client.add.booking": "Add new booking",
+  "client.header.title": "Clients"
 }

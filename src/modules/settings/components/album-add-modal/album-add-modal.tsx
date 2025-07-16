@@ -28,7 +28,7 @@ const albumValidationSchema = z.object({
   title: z.string().min(1),
 });
 
-export type albomFormValue = z.infer<typeof albumValidationSchema>;
+export type albumFormValue = z.infer<typeof albumValidationSchema>;
 
 export const AlbumAddModal: FC<
   Omit<DialogProps, 'children'> & AlbumAddModalProps
@@ -42,7 +42,7 @@ export const AlbumAddModal: FC<
   const renameAlbumMutation = trpc.album.update.useMutation();
 
   // form
-  const form = useForm<albomFormValue>({
+  const form = useForm<albumFormValue>({
     defaultValues,
     resolver: zodResolver(albumValidationSchema),
   });
@@ -59,7 +59,7 @@ export const AlbumAddModal: FC<
     }
   }, [props.isOpen, form, album]);
 
-  const handleSubmit = (data: albomFormValue) => {
+  const handleSubmit = (data: albumFormValue) => {
     if (album) {
       renameAlbumMutation.mutate(
         {

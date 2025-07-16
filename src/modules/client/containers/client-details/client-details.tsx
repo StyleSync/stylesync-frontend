@@ -1,6 +1,7 @@
 import { type FC, useState } from 'react';
 
 import Image from 'next/image';
+import { useIntl } from 'react-intl';
 
 import Bg from '@/assets/images/bg-1.png';
 import { ClientTabs } from '@/modules/client/components/client-tabs/client-tabs';
@@ -9,33 +10,29 @@ import { Button } from '@/modules/core/components/button';
 import { DialogFullScreen } from '@/modules/core/components/dialog-full-screen';
 import { Tabs } from '@/modules/core/components/tabs';
 import type { Tab } from '@/modules/core/components/tabs/tabs.interface';
+import { trpc } from '@/modules/core/utils/trpc.utils';
 
 import { type ClientsDetailProps } from './client-details.interface';
 
-const tabs: Tab[] = [
-  {
-    key: 'future',
-    name: 'Майбутні',
-  },
-  {
-    key: 'past',
-    name: 'Минулі',
-  },
-];
-
 export const ClientDetails: FC<ClientsDetailProps> = ({
-  client,
+  clientId,
   isOpen,
   onOpenChange,
   onAddBooking,
   onEditClientInfo,
 }) => {
+  const intl = useIntl();
   const [activeClientInfoTab, setActiveClientInfoTab] = useState<
     'future' | 'past'
   >('future');
 
   const [activeClientTab, setActiveClientTab] = useState<'booking' | 'about'>(
     'booking'
+  );
+
+  const { data: client, isLoading } = trpc.client.get.useQuery(
+    { id: clientId ?? '' },
+    { enabled: !!clientId }
   );
 
   const handleClose = () => {
@@ -49,6 +46,17 @@ export const ClientDetails: FC<ClientsDetailProps> = ({
       setActiveClientInfoTab(key);
     }
   };
+
+  const tabs: Tab[] = [
+    {
+      key: 'future',
+      name: intl.formatMessage({ id: 'client.booking.tabs.future' }),
+    },
+    {
+      key: 'past',
+      name: intl.formatMessage({ id: 'client.booking.tabs.past' }),
+    },
+  ];
 
   return (
     <DialogFullScreen
@@ -67,14 +75,23 @@ export const ClientDetails: FC<ClientsDetailProps> = ({
           <Button
             className='!pr-0 text-primary'
             variant='unstyled'
-            text='Редагувати'
+            text={intl.formatMessage({ id: 'button.edit' })}
             onClick={onEditClientInfo}
           />
         </div>
 
         <div className='z-[100] mt-8 flex flex-col items-center gap-[18px]'>
-          <Avatar fallback={client?.name[0]} shadow size='medium' />
-          <span>{client?.name}</span>
+          <Avatar
+            url={client?.image ?? ''}
+            fallback={`${client?.firstName?.[0] ?? ''}${client?.lastName?.[0] ?? ''}`}
+            shadow
+            size='medium'
+          />
+          {isLoading ? (
+            <div className='skeleton h-8 w-24 rounded' />
+          ) : (
+            <span>{`${client?.firstName} ${client?.lastName}`}</span>
+          )}
           <div className='flex gap-5'>
             <Button
               className='!bg-primary-light text-primary'
@@ -94,7 +111,7 @@ export const ClientDetails: FC<ClientsDetailProps> = ({
           </div>
         </div>
 
-        <div className='z-[100] mx-3 mb-[15px] mt-8 flex justify-between rounded-2xl bg-white px-4 py-3 shadow-accentShadow'>
+        <div className='z-[100] mx-3 mb-[15px] mt-8 flex justify-between rounded-2xl bg-white px-4 py-3 shadow-md'>
           <div className='flex flex-col items-start'>
             <span className='text-base font-medium text-dark'>0</span>
             <span className='text-sm text-gray'>Бронювань</span>
@@ -121,7 +138,7 @@ export const ClientDetails: FC<ClientsDetailProps> = ({
                 className='mt-4 text-primary'
                 icon='plus'
                 variant='unstyled'
-                text='Додати нове бронювання'
+                text={intl.formatMessage({ id: 'client.add.booking' })}
                 onClick={onAddBooking}
               />
               <div className='mt-4 w-full px-3'>
@@ -138,21 +155,42 @@ export const ClientDetails: FC<ClientsDetailProps> = ({
           {activeClientTab === 'about' && (
             <div className='mt-6 flex flex-col gap-10 px-4'>
               <div className='flex flex-col gap-2'>
-                <p className='text-xs text-dark'>Нотатки про клієнта</p>
+                <p className='text-xs text-dark'>
+                  {intl.formatMessage({ id: 'client.notes' })}
+                </p>
                 <p className='text-dark'>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua
+                  {isLoading ? (
+                    <div className='skeleton h-4 w-full rounded' />
+                  ) : (
+                    client?.notes
+                  )}
                 </p>
               </div>
 
               <div className='flex flex-col gap-2'>
-                <p className='text-xs text-dark'>Email</p>
-                <p className='text-dark'>s.karina@gmail.com</p>
+                <p className='text-xs text-dark'>
+                  {intl.formatMessage({ id: 'client.email' })}
+                </p>
+                <p className='text-dark'>
+                  {isLoading ? (
+                    <div className='skeleton h-4 w-full rounded' />
+                  ) : (
+                    client?.email
+                  )}
+                </p>
               </div>
 
               <div className='flex flex-col gap-2'>
-                <p className='text-xs text-dark'>Phone</p>
-                <p className='text-dark'>+380 99 242 55 55</p>
+                <p className='text-xs text-dark'>
+                  {intl.formatMessage({ id: 'client.phone' })}
+                </p>
+                <p className='text-dark'>
+                  {isLoading ? (
+                    <div className='skeleton h-4 w-full rounded' />
+                  ) : (
+                    client?.phone
+                  )}
+                </p>
               </div>
             </div>
           )}

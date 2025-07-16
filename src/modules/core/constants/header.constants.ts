@@ -11,7 +11,7 @@ export const headerRouteConfig: {
     match: (pathname) => pathname.includes('/app/settings'),
   },
   {
-    title: 'Клієнти', // todo: translate
+    title: 'client.header.title',
     match: (pathname) => pathname.includes('/app/clients'),
   },
 ];

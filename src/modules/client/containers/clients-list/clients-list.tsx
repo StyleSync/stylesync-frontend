@@ -1,52 +1,85 @@
 'use client';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
+import { useIntl } from 'react-intl';
 import { useBoolean } from 'usehooks-ts';
 
 import { AddClientModal } from '@/modules/client/components/add-client-modal/add-client-modal';
 import { AddNewBookingModal } from '@/modules/client/components/add-new-booking-modal';
 import { ClientCard } from '@/modules/client/components/clients-card';
 import { EditClientInfoModal } from '@/modules/client/components/edit-client-info-modal/edit-client-info-modal';
+import { EditClientInfoModalValues } from '@/modules/client/components/edit-client-info-modal/edit-client-info-modal.interface';
 import { ClientDetails } from '@/modules/client/containers/client-details';
 import {
-  type Client,
   groupClientsByFirstLetter,
   sortByFirstAndLastName,
 } from '@/modules/client/utils/sort-clients';
 import { Button } from '@/modules/core/components/button';
 import { Icon } from '@/modules/core/components/icon';
-
-const clients = [
-  { name: 'Андрій Іванов', phone: '380 67 123 45 67' },
-  { name: 'Андрій Іванов', phone: '380 67 123 45 64' },
-  { name: 'Богдан Бондаренко', phone: '380 99 016 24 44' },
-  { name: 'Багдан Бондаренко', phone: '380 99 016 24 34' },
-  { name: 'Багдан Бандаренко', phone: '380 99 016 24 34' },
-  { name: 'Валентина Мельник', phone: '380 93 876 54 32' },
-  { name: 'Ганна Петренко', phone: '380 50 112 33 44' },
-  { name: 'Ґеннадій Юрченко', phone: '380 66 998 77 66' },
-  { name: 'Дмитро Горобець', phone: '380 96 123 45 67' },
-  { name: 'Єлизавета Шевченко', phone: '380 63 444 55 66' },
-  { name: 'Жанна Коваль', phone: '380 97 222 11 00' },
-  { name: 'Зоряна Литвин', phone: '380 68 111 22 33' },
-  { name: 'Ірина Кравченко', phone: '380 95 777 88 99' },
-];
+import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
+import { trpc } from '@/modules/core/utils/trpc.utils';
+import { AppRouterOutputs } from '@/server/types';
 
 export const ClientsList = () => {
+  const intl = useIntl();
+
   const isOpenAddClientModal = useBoolean();
   // state
-  const [selectedClient, setSelectedClient] = useState<Client | null>(null);
+  const [selectedClient, setSelectedClient] = useState<
+    AppRouterOutputs['client']['get'] | null
+  >(null);
   const [isNewBooking, setIsNewBooking] = useState(false);
   const [isEditClientInfo, setIsEditClientInfo] = useState(false);
 
-  const sortedClients = sortByFirstAndLastName(clients);
+  // queries
+  const { data: me } = trpc.user.me.useQuery({
+    expand: ['professional'],
+  });
+
+  const {
+    data: clientsListQuery,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  } = trpc.client.list.useInfiniteQuery(
+    {
+      limit: 100,
+      offset: 0,
+      professionalId: me?.professional?.id,
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    }
+  );
+
+  const initialClientValues = useMemo<
+    Partial<EditClientInfoModalValues & { image: string }>
+  >(
+    () => ({
+      image: selectedClient?.image ?? '',
+      email: selectedClient?.email ?? '',
+      lastName: selectedClient?.lastName ?? '',
+      firstName: selectedClient?.firstName ?? '',
+      phone: selectedClient?.phone ?? '',
+      notes: selectedClient?.notes ?? '',
+    }),
+    [selectedClient]
+  );
+
+  const clientsList =
+    clientsListQuery?.pages.map((page) => page.items).flat() || [];
+
+  const sortedClients = sortByFirstAndLastName(clientsList);
   const groupedClients = groupClientsByFirstLetter(sortedClients);
 
   const ukrainianAlphabet = 'АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ'.split('');
+  const englishAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  const fullAlphabet = [...ukrainianAlphabet, ...englishAlphabet];
 
-  const sortedGroups: [string, Client[]][] = ukrainianAlphabet
-    .filter((letter) => groupedClients[letter])
-    .map((letter) => [letter, groupedClients[letter]]);
+  const sortedGroups: [string, AppRouterOutputs['client']['get'][]][] =
+    fullAlphabet
+      .filter((letter) => groupedClients[letter])
+      .map((letter) => [letter, groupedClients[letter]]);
 
   return (
     <div className='flex h-full flex-col overflow-hidden'>
@@ -56,7 +89,9 @@ export const ClientsList = () => {
             <Icon name='search' width={20} height={20} className='text-gray' />
             <input
               className='h-[40px] flex-1 bg-transparent outline-none placeholder:text-sm placeholder:font-medium placeholder:text-gray'
-              placeholder='Пошук клієнтів'
+              placeholder={intl.formatMessage({
+                id: 'client.search.placeholder',
+              })}
             />
           </div>
           <AddClientModal
@@ -67,7 +102,7 @@ export const ClientsList = () => {
                 className='!pl-0 text-primary'
                 icon='plus'
                 variant='unstyled'
-                text='Додати нового клієнта'
+                text={intl.formatMessage({ id: 'client.add.button' })}
                 onClick={isOpenAddClientModal.toggle}
               />
             }
@@ -84,14 +119,20 @@ export const ClientsList = () => {
             {list.map((client, index) => (
               <ClientCard
                 isLast={index === list.length - 1}
+                image={client.image ?? ''}
                 key={client.phone}
-                name={client.name}
-                phone={client.phone}
+                name={`${client.firstName} ${client.lastName}`}
+                phone={client.phone ?? ''}
                 onClick={() => {
                   setSelectedClient(client);
                 }}
               />
             ))}
+            <InfinityListController
+              hasNextPage={hasNextPage || false}
+              onLoadMore={fetchNextPage}
+              isNextPageLoading={isFetchingNextPage}
+            />
           </div>
         ))}
       </div>
@@ -99,7 +140,7 @@ export const ClientsList = () => {
       <ClientDetails
         isOpen={!!selectedClient}
         onOpenChange={() => setSelectedClient(null)}
-        client={selectedClient}
+        clientId={selectedClient?.id || null}
         onAddBooking={() => setIsNewBooking(true)}
         onEditClientInfo={() => setIsEditClientInfo(true)}
       />
@@ -114,6 +155,8 @@ export const ClientsList = () => {
         onOpenChange={() => {
           setIsEditClientInfo(false);
         }}
+        clientId={selectedClient?.id || null}
+        initialValues={initialClientValues}
       />
     </div>
   );

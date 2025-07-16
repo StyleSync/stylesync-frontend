@@ -291,6 +291,8 @@
   "button.missed": "Пропущено",
   "button.open.details": "Відкрити деталі",
   "button.registration": "Реєстрація",
+  "button.edit": "Редагувати",
+  "button.add.booking": "Додати нове бронювання",
 
   "duration.hour": "{count, plural, one {# година} few {# години} many {# годин} other {# годин}}",
   "duration.minute": "{count, plural, one {# хвилина} few {# хвилини} many {# хвилин} other {# хвилин}}",
@@ -484,5 +486,19 @@
   "user.avatar.upload.failed": "Не вдалось завантажити зображення",
   "user.avatar.add": "Додати аватарку",
   "user.avatar.delete": "Видалити аватарку",
-  "user.avatar.remove.success": "Аватарка видалена"
+  "user.avatar.remove.success": "Аватарка видалена",
+
+  "client.info.update.success": "Зміни збережено",
+  "client.name": "Ім'я",
+  "client.lastName": "Прізвище",
+  "client.email": "Електронна пошта",
+  "client.phone": "Телефон",
+  "client.notes": "Нотатки про клієнта",
+  "client.add.title": "Новий клієнт",
+  "client.search.placeholder": "Пошук клієнтів",
+  "client.add.button": "Додати нового клієнта",
+  "client.booking.tabs.future": "Майбутні",
+  "client.booking.tabs.past": "Минулі",
+  "client.add.booking": "Додати нове бронювання",
+  "client.header.title": "Клієнти"
 }

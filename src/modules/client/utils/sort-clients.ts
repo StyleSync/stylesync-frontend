@@ -1,44 +1,95 @@
-export type Client = {
-  name: string;
-  phone: string;
-};
+import { AppRouterOutputs } from '@/server/types';
+
 export type GroupedClients = {
-  [letter: string]: Client[];
+  [letter: string]: AppRouterOutputs['client']['get'][];
 };
 
-export const sortByFirstAndLastName = (clients: Client[]) => {
+// Проста транслiтерацiя (UA standard, тільки перша літера)
+const transliterateLetter = (char: string): string => {
+  const map: Record<string, string> = {
+    А: 'A',
+    Б: 'B',
+    В: 'V',
+    Г: 'H',
+    Ґ: 'G',
+    Д: 'D',
+    Е: 'E',
+    Є: 'Ye',
+    Ж: 'Zh',
+    З: 'Z',
+    И: 'Y',
+    І: 'I',
+    Ї: 'Yi',
+    Й: 'Y',
+    К: 'K',
+    Л: 'L',
+    М: 'M',
+    Н: 'N',
+    О: 'O',
+    П: 'P',
+    Р: 'R',
+    С: 'S',
+    Т: 'T',
+    У: 'U',
+    Ф: 'F',
+    Х: 'Kh',
+    Ц: 'Ts',
+    Ч: 'Ch',
+    Ш: 'Sh',
+    Щ: 'Shch',
+    Ь: '',
+    Ю: 'Yu',
+    Я: 'Ya',
+  };
+
+  const upperChar = char.toUpperCase();
+
+  return map[upperChar] || upperChar;
+};
+
+export const sortByFirstAndLastName = (
+  clients: AppRouterOutputs['client']['get'][]
+) => {
   return [...clients].sort((a, b) => {
-    const [aFirst, ...aRest] = a.name.trim().split(' ');
-    const [bFirst, ...bRest] = b.name.trim().split(' ');
+    const aFirst =
+      transliterateLetter(a.firstName?.[0] ?? '') +
+      a.firstName?.slice(1).toLowerCase();
+    const bFirst =
+      transliterateLetter(b.firstName?.[0] ?? '') +
+      b.firstName?.slice(1).toLowerCase();
 
-    const aLast = aRest.join(' ');
-    const bLast = bRest.join(' ');
+    const aLast = a.lastName?.trim().toLowerCase() ?? '';
+    const bLast = b.lastName?.trim().toLowerCase() ?? '';
 
-    if (aFirst.toLowerCase() < bFirst.toLowerCase()) return -1;
-    if (aFirst.toLowerCase() > bFirst.toLowerCase()) return 1;
+    if (aFirst < bFirst) return -1;
+    if (aFirst > bFirst) return 1;
 
-    // Імена однакові — порівнюємо прізвища
-    if (aLast.toLowerCase() < bLast.toLowerCase()) return -1;
-    if (aLast.toLowerCase() > bLast.toLowerCase()) return 1;
+    if (aLast < bLast) return -1;
+    if (aLast > bLast) return 1;
 
     return 0;
   });
 };
 
 export const groupClientsByFirstLetter = (
-  clients: Client[]
+  clients: AppRouterOutputs['client']['get'][]
 ): GroupedClients => {
-  return clients.reduce((acc: GroupedClients, client: Client) => {
-    const firstName = client.name.trim().split(' ')[0]; // беремо ім’я
-    const firstLetter = firstName[0].toUpperCase();
+  return clients.reduce(
+    (acc: GroupedClients, client: AppRouterOutputs['client']['get']) => {
+      const rawLetter = client.firstName?.[0] ?? '';
+      const letter = transliterateLetter(rawLetter).charAt(0).toUpperCase();
 
-    if (!acc[firstLetter]) {
-      // eslint-disable-next-line no-param-reassign
-      acc[firstLetter] = [];
-    }
+      if (!letter.match(/[A-Z]/)) return acc;
 
-    acc[firstLetter].push(client);
+      if (!acc[letter]) {
+        // eslint-disable-next-line no-param-reassign
+        acc[letter] = [];
+      }
 
-    return acc;
-  }, {});
+      acc[letter].push(client);
+
+      return acc;
+    },
+    {}
+  );
 };
