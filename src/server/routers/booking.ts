@@ -419,6 +419,7 @@ export const bookingRouter = router({
           date: z.string().datetime().optional(),
           startDate: z.string().datetime().optional(),
           endDate: z.string().datetime().optional(),
+          clientId: z.string().min(1, 'Required').optional(),
           limit: z.number().min(1).max(maxLimit).default(defaultLimit),
           offset: z.number().min(0).default(0),
           cursor: z.string().nullish(),
@@ -451,6 +452,7 @@ export const bookingRouter = router({
 
       const items = await prisma.booking.findMany({
         where: {
+          clientId: input?.clientId,
           serviceProfessionalId: !!input?.serviceProfessionalId
             ? input?.serviceProfessionalId
             : { in: serviceOnProfessionalIds },
@@ -493,6 +495,7 @@ export const bookingRouter = router({
           startDate: z.string().datetime().optional(),
           endDate: z.string().datetime().optional(),
           limit: z.number().min(1).max(maxLimit).default(defaultLimit),
+          clientId: z.string().min(1, 'Required').optional(),
           offset: z.number().min(0).default(0),
           cursor: z.string().nullish(),
           expand: z.array(z.enum(['serviceProfessional', 'client'])).optional(),
@@ -508,6 +511,7 @@ export const bookingRouter = router({
       const items = await prisma.booking.findMany({
         where: {
           userId: id,
+          clientId: input?.clientId,
           AND: [
             input?.date
               ? {
