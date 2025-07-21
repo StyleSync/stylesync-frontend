@@ -15,9 +15,7 @@ export default async function ProfileRedirect() {
   });
 
   if (session?.user.userType === 'PROFESSIONAL') {
-    redirect(
-      `/app/profile/${session.user?.nickname || session.user.id}?login=true`
-    );
+    redirect(`/app/my-bookings?login=true`);
   }
 
   if (session?.user.userType === 'CUSTOMER') {

@@ -1,8 +1,6 @@
-import { type FC, useEffect } from 'react';
+import { type FC, useCallback, useEffect } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useQueryClient } from '@tanstack/react-query';
-import { getQueryKey } from '@trpc/react-query';
 import { useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
 import { z } from 'zod';
@@ -11,11 +9,10 @@ import { AvatarSelect } from '@/modules/core/components/avatar-select';
 import { Button } from '@/modules/core/components/button';
 import { DialogFullScreen } from '@/modules/core/components/dialog-full-screen';
 import { TextField } from '@/modules/core/components/text-field';
+import { PRISMA_ERRORS } from '@/modules/core/constants/prisma-errors.constants';
 import { useDebounce } from '@/modules/core/hooks/use-debounce';
 import { useImageInputState } from '@/modules/core/hooks/use-image-input-state';
-import { showToast } from '@/modules/core/providers/toast-provider';
-import { trpc } from '@/modules/core/utils/trpc.utils';
-import { useAvatarUploadMutation } from '@/modules/user/hooks/use-avatar-upload-mutation';
+import { getPrismaErrorMessage } from '@/modules/user/utils/get-prisma-error-message';
 
 import type {
   EditClientInfoModalProps,
@@ -57,31 +54,31 @@ const validationSchema: z.Schema<EditClientInfoModalValues> = z.object({
     .string()
     .min(1, 'validation.phone.required')
     .regex(phoneRegex, 'validation.phone.invalid'),
-  email: z.string(),
+  email: z.string().optional(),
   notes: z.string().max(THOUSAND, 'validation.about.maxLength'),
 });
 
 export const EditClientInfoModal: FC<EditClientInfoModalProps> = ({
   isOpen,
   onOpenChange,
-  clientId,
+  // clientId,
   initialValues,
+  onSubmit,
 }) => {
   const intl = useIntl();
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   // avatar
-  const avatar = useImageInputState(initialValues?.image);
-  const avatarUpload = useAvatarUploadMutation();
+  const image = useImageInputState(initialValues?.image);
   // query
-  const { mutate: clientInfoUpdate, isPending } =
-    trpc.client.update.useMutation();
+  // const { mutate: clientInfoUpdate, isPending } =
+  //   trpc.client.update.useMutation();
 
-  const { data: client } = trpc.client.get.useQuery(
-    { id: clientId ?? '' },
-    { enabled: !!clientId }
-  );
+  // const { data: client } = trpc.client.get.useQuery(
+  //   { id: clientId ?? '' },
+  //   { enabled: !!clientId }
+  // );
 
-  const { register, handleSubmit, watch, formState, reset } =
+  const { register, handleSubmit, watch, formState, setError, reset } =
     useForm<EditClientInfoModalValues>({
       defaultValues,
       resolver: zodResolver(validationSchema),
@@ -96,49 +93,43 @@ export const EditClientInfoModal: FC<EditClientInfoModalProps> = ({
     }
   };
 
-  const handleSubmitForm = async (data: EditClientInfoModalValues) => {
-    let imageUrl: string | null = null;
-
-    if (avatar.file) {
-      if (typeof avatar.file === 'object') {
-        const uploaded = await avatarUpload.mutateAsync(avatar.file);
-
-        imageUrl = uploaded.url;
-      } else if (typeof avatar.file === 'string') {
-        imageUrl = avatar.file;
+  const handleError = useCallback(
+    (error: any) => {
+      if (
+        getPrismaErrorMessage(error, 'phone', PRISMA_ERRORS.UNIQUE_DUPLICATE)
+      ) {
+        setError('phone', {
+          message: intl.formatMessage({
+            id: 'onboard.about.toast.error.title.phone',
+          }),
+        });
       }
-    }
 
-    clientInfoUpdate(
-      {
-        ...data,
-        image: imageUrl ?? undefined,
-        id: client?.id ?? '',
-      },
-      {
-        onSuccess: () => {
-          showToast({
-            variant: 'success',
-            title: intl.formatMessage({
-              id: 'client.info.update.success',
-            }),
-          });
-
-          queryClient.invalidateQueries({
-            queryKey: getQueryKey(trpc.client.list),
-          });
-
-          onOpenChange?.(false);
-        },
+      if (
+        getPrismaErrorMessage(error, 'phone', PRISMA_ERRORS.UNIQUE_DUPLICATE)
+      ) {
+        setError('phone', {
+          message: intl.formatMessage({
+            id: 'onboard.about.toast.error.title.phone',
+          }),
+        });
       }
-    );
-  };
+    },
+    [intl, setError]
+  );
 
   const handleCloseModal = () => {
     if (onOpenChange) {
       onOpenChange(false);
     }
   };
+
+  const handleSubmitForm = useCallback(
+    (data: EditClientInfoModalValues & { image?: File | string | null }) => {
+      onSubmit && onSubmit(data, handleError);
+    },
+    [onSubmit, handleError]
+  );
 
   useEffect(() => {
     reset({ ...defaultValues, ...initialValues });
@@ -150,7 +141,7 @@ export const EditClientInfoModal: FC<EditClientInfoModalProps> = ({
       onOpenChange={onOpenChange}
       classes={{
         overlay: 'z-[199]',
-        content: 'w-full p-6',
+        content: 'w-full p-5',
       }}
       applyMobileBottomTabPadding
     >
@@ -160,17 +151,23 @@ export const EditClientInfoModal: FC<EditClientInfoModalProps> = ({
       >
         <Button
           variant='outlined'
-          icon='arrow-left'
-          className='-ml-2 !border-none !text-dark'
+          icon='chevron-left'
+          className='-ml-4 !border-none !pb-4 !text-dark'
           onClick={handleCloseModal}
         />
 
-        <div className='mt-7 flex flex-1 flex-col items-center gap-7'>
+        <div
+          className='mt-7 flex flex-1 flex-col items-center gap-7 overflow-y-auto pb-6'
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+          }}
+        >
           <AvatarSelect
             className='flex flex-col'
-            value={avatar.preview}
-            onChange={avatar.onChange}
-            onRemove={avatar.onRemove}
+            value={image.preview}
+            onChange={image.onChange}
+            onRemove={image.onRemove}
           />
           <TextField
             {...register('firstName')}
@@ -211,7 +208,7 @@ export const EditClientInfoModal: FC<EditClientInfoModalProps> = ({
 
         <div className='mt-auto'>
           <Button
-            isLoading={isPending}
+            // isLoading={isPending}
             type='submit'
             className='!mt-auto !w-full'
             text={intl.formatMessage({ id: 'button.save' })}

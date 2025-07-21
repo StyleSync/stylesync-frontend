@@ -29,8 +29,6 @@ import { getDaysOfCurrentMonth } from '@/modules/schedule/utils/get-current-mont
 
 import { type CalendarMobileProps } from './calendar-mobile.interface';
 
-const SPEED_TO_SLIDE = 500;
-
 export const CalendarMobile: FC<CalendarMobileProps> = () => {
   const intl = useIntl();
 
@@ -186,7 +184,7 @@ export const CalendarMobile: FC<CalendarMobileProps> = () => {
       );
 
       if (index !== -1) {
-        swiperRef.current.slideTo(index, SPEED_TO_SLIDE);
+        swiperRef.current.slideTo(index, 0);
       }
     }
   }, [selectedDate, selectedDates]);

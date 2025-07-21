@@ -9,7 +9,7 @@ export default function Page() {
 
   useEffect(() => {
     signIn('auth0', {
-      callbackUrl: '/app/profile',
+      callbackUrl: '/app/my-bookings',
       ui_locales: params.lang as string,
     });
   }, []);

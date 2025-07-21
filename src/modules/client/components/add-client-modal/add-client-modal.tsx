@@ -3,12 +3,13 @@ import { type FC, useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
 import { z } from 'zod';
 
 import { Button } from '@/modules/core/components/button';
 import { DialogFullScreen } from '@/modules/core/components/dialog-full-screen';
+import { PhoneField } from '@/modules/core/components/phone-field';
 import { TextField } from '@/modules/core/components/text-field';
 import { showToast } from '@/modules/core/providers/toast-provider';
 import { trpc } from '@/modules/core/utils/trpc.utils';
@@ -20,7 +21,6 @@ import type {
 
 import styles from './add-client-modal.module.scss';
 
-const THIRTY_TWO = 32;
 const nameRegex = /^[A-Za-zА-Яа-яІіЇїЄєҐґ']+$/;
 const phoneRegex = /^(\+\d{1,3}[- ]?)?\d{10}$/;
 
@@ -33,21 +33,25 @@ const defaultValues: AddClientModalValues = {
 const validationSchema: z.Schema<AddClientModalValues> = z.object({
   firstName: z
     .string()
-    .min(2, 'validation.firstName.minLength')
-    .max(THIRTY_TWO, 'validation.firstName.maxLength')
-    .regex(nameRegex, 'validation.firstName.invalidCharacters')
+    .or(z.literal(''))
     .refine(
-      (value) => /^[A-ZА-ЯІЇЄҐ]/.test(value),
+      (value) => !value || /^[A-ZА-ЯІЇЄҐ]/.test(value),
       'validation.firstName.firstLetterCapitalized'
+    )
+    .refine(
+      (value) => !value || nameRegex.test(value),
+      'validation.firstName.invalidCharacters'
     ),
   lastName: z
     .string()
-    .min(2, 'validation.lastName.minLength')
-    .max(THIRTY_TWO, 'validation.lastName.maxLength')
-    .regex(nameRegex, 'validation.lastName.invalidCharacters')
+    .or(z.literal(''))
     .refine(
-      (value) => /^[A-ZА-ЯІЇЄҐ]/.test(value),
+      (value) => !value || /^[A-ZА-ЯІЇЄҐ]/.test(value),
       'validation.firstName.firstLetterCapitalized'
+    )
+    .refine(
+      (value) => !value || nameRegex.test(value),
+      'validation.lastName.invalidCharacters'
     ),
   phone: z
     .string()
@@ -65,7 +69,7 @@ export const AddClientModal: FC<AddClientModalProps> = ({
 
   const createClientMutation = trpc.client.create.useMutation();
 
-  const { register, handleSubmit, formState, reset } =
+  const { register, handleSubmit, formState, reset, ...form } =
     useForm<AddClientModalValues>({
       defaultValues,
       resolver: zodResolver(validationSchema),
@@ -129,12 +133,19 @@ export const AddClientModal: FC<AddClientModalProps> = ({
         </h2>
 
         <div className='mt-14 flex flex-1 flex-col gap-7'>
-          <TextField
-            {...register('phone')}
-            error={getErrorMessage(formState.errors.phone?.message)}
-            className='!w-full'
-            label={intl.formatMessage({ id: 'client.phone' })}
-            variant='input'
+          <Controller
+            control={form.control}
+            name='phone'
+            render={({ field }) => {
+              return (
+                <PhoneField
+                  error={getErrorMessage(formState.errors.phone?.message)}
+                  label={intl.formatMessage({ id: 'client.phone' })}
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              );
+            }}
           />
           <TextField
             {...register('firstName')}

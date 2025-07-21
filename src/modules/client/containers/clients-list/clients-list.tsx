@@ -1,6 +1,8 @@
 'use client';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
+import { useQueryClient } from '@tanstack/react-query';
+import { getQueryKey } from '@trpc/react-query';
 import { useIntl } from 'react-intl';
 import { useBoolean } from 'usehooks-ts';
 
@@ -17,11 +19,16 @@ import {
 import { Button } from '@/modules/core/components/button';
 import { Icon } from '@/modules/core/components/icon';
 import { InfinityListController } from '@/modules/core/components/infinity-list-controller/infinity-list-controller';
+import { showToast } from '@/modules/core/providers/toast-provider';
 import { trpc } from '@/modules/core/utils/trpc.utils';
+import { useAvatarUploadMutation } from '@/modules/user/hooks/use-avatar-upload-mutation';
 import { AppRouterOutputs } from '@/server/types';
 
 export const ClientsList = () => {
   const intl = useIntl();
+
+  const avatarUpload = useAvatarUploadMutation();
+  const queryClient = useQueryClient();
 
   const isOpenAddClientModal = useBoolean();
   // state
@@ -52,6 +59,9 @@ export const ClientsList = () => {
     }
   );
 
+  const { mutate: clientInfoUpdate, isPending } =
+    trpc.client.update.useMutation();
+
   const initialClientValues = useMemo<
     Partial<EditClientInfoModalValues & { image: string }>
   >(
@@ -80,6 +90,54 @@ export const ClientsList = () => {
     fullAlphabet
       .filter((letter) => groupedClients[letter])
       .map((letter) => [letter, groupedClients[letter]]);
+
+  const handleSubmitForm = useCallback(
+    async (
+      data: EditClientInfoModalValues & { image: File | string | null },
+      onError: (error: any) => void
+    ) => {
+      let imageUrl: string | null = null;
+
+      if (data.image) {
+        if (typeof data.image === 'object') {
+          const uploaded = await avatarUpload.mutateAsync(data.image);
+
+          imageUrl = uploaded.url;
+        } else if (typeof data.image === 'string') {
+          imageUrl = data.image;
+        }
+      }
+
+      try {
+        await clientInfoUpdate(
+          {
+            ...data,
+            image: imageUrl ?? undefined,
+            id: selectedClient?.id ?? '',
+          },
+          {
+            onSuccess: () => {
+              showToast({
+                variant: 'success',
+                title: intl.formatMessage({
+                  id: 'client.info.update.success',
+                }),
+              });
+
+              queryClient.invalidateQueries({
+                queryKey: getQueryKey(trpc.client.list),
+              });
+
+              setIsEditClientInfo(false);
+            },
+          }
+        );
+      } catch (error) {
+        onError(error);
+      }
+    },
+    [avatarUpload, clientInfoUpdate, queryClient, selectedClient, intl]
+  );
 
   return (
     <div className='flex h-full flex-col overflow-hidden'>
@@ -157,6 +215,7 @@ export const ClientsList = () => {
         }}
         clientId={selectedClient?.id || null}
         initialValues={initialClientValues}
+        onSubmit={handleSubmitForm}
       />
     </div>
   );
