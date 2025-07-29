@@ -125,8 +125,12 @@ export const EditClientInfoModal: FC<EditClientInfoModalProps> = ({
   };
 
   const handleSubmitForm = useCallback(
-    (data: EditClientInfoModalValues & { image?: File | string | null }) => {
-      onSubmit && onSubmit(data, handleError);
+    async (
+      data: EditClientInfoModalValues & { image?: File | string | null }
+    ) => {
+      if (onSubmit) {
+        await onSubmit(data, handleError);
+      }
     },
     [onSubmit, handleError]
   );

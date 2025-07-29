@@ -93,7 +93,7 @@ export const ClientsList = () => {
 
   const handleSubmitForm = useCallback(
     async (
-      data: EditClientInfoModalValues & { image: File | string | null },
+      data: EditClientInfoModalValues & { image?: File | string | null },
       onError: (error: any) => void
     ) => {
       let imageUrl: string | null = null;
@@ -213,7 +213,7 @@ export const ClientsList = () => {
         onOpenChange={() => {
           setIsEditClientInfo(false);
         }}
-        clientId={selectedClient?.id || null}
+        // clientId={selectedClient?.id || null}
         initialValues={initialClientValues}
         onSubmit={handleSubmitForm}
       />
