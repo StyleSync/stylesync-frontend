@@ -1,7 +1,7 @@
 import { type FC } from 'react';
 
 import { Button } from '@/modules/core/components/button';
-import { Dialog } from '@/modules/core/components/dialog';
+import { DialogFullScreen } from '@/modules/core/components/dialog-full-screen';
 import { TextField } from '@/modules/core/components/text-field';
 
 import { type AddClientModalProps } from './add-client-modal.interface';
@@ -20,7 +20,7 @@ export const AddClientModal: FC<AddClientModalProps> = ({
   };
 
   return (
-    <Dialog
+    <DialogFullScreen
       trigger={trigger}
       isOpen={isOpen}
       onOpenChange={onOpenChange}
@@ -28,6 +28,7 @@ export const AddClientModal: FC<AddClientModalProps> = ({
         overlay: styles.dialogOverlay,
         content: styles.dialogContent,
       }}
+      applyMobileBottomTabPadding
     >
       <form className='flex w-full flex-col'>
         <Button
@@ -48,6 +49,6 @@ export const AddClientModal: FC<AddClientModalProps> = ({
           <Button className='!mt-auto !w-full' text='Зберегти' />
         </div>
       </form>
-    </Dialog>
+    </DialogFullScreen>
   );
 };
