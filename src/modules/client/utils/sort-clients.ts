@@ -1,7 +1,7 @@
 import { AppRouterOutputs } from '@/server/types';
 
 export type GroupedClients = {
-  [letter: string]: AppRouterOutputs['client']['get'][];
+  [letter: string]: AppRouterOutputs['client']['list']['items'];
 };
 
 // Проста транслiтерацiя (UA standard, тільки перша літера)
@@ -72,10 +72,13 @@ export const sortByFirstAndLastName = (
 };
 
 export const groupClientsByFirstLetter = (
-  clients: AppRouterOutputs['client']['get'][]
+  clients: AppRouterOutputs['client']['list']['items']
 ): GroupedClients => {
   return clients.reduce(
-    (acc: GroupedClients, client: AppRouterOutputs['client']['get']) => {
+    (
+      acc: GroupedClients,
+      client: AppRouterOutputs['client']['list']['items'][number]
+    ) => {
       const rawLetter = client.firstName?.[0] ?? '';
       const letter = transliterateLetter(rawLetter).charAt(0).toUpperCase();
 

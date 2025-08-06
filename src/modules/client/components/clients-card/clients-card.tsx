@@ -14,7 +14,7 @@ export const ClientCard: FC<ClientCardProps> = ({
   return (
     <div
       onClick={onClick}
-      className={`flex items-center gap-[10px] py-3 pl-6 ${isLast ? '' : 'border-b border-gray-light px-6'} `}
+      className={`flex items-center gap-[10px] py-3 pl-6 hover:cursor-pointer ${isLast ? '' : 'border-b border-gray-light px-6'} `}
     >
       <Avatar
         fallback={

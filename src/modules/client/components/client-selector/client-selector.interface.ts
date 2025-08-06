@@ -1,10 +1,10 @@
+import { AppRouterOutputs } from '@/server/types';
+
 export type ClientSelectorProps = {
   onSelect?: () => void;
-  selectedClient?: {
-    id: string;
-    name: string;
-    avatar?: string;
-  } | null;
-  placeholder?: string;
+  selectedClient?: AppRouterOutputs['client']['get'] | null;
+  setSelectedClient?: (
+    client: AppRouterOutputs['client']['get'] | null
+  ) => void;
   disabled?: boolean;
 };

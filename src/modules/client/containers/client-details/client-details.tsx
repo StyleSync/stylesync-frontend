@@ -11,7 +11,7 @@ import { DialogFullScreen } from '@/modules/core/components/dialog-full-screen';
 import { Tabs } from '@/modules/core/components/tabs';
 import type { Tab } from '@/modules/core/components/tabs/tabs.interface';
 import { trpc } from '@/modules/core/utils/trpc.utils';
-import { useAvatarUploadMutation } from '@/modules/user/hooks/use-avatar-upload-mutation';
+import { AppRouterOutputs } from '@/server/types';
 
 import { type ClientsDetailProps } from './client-details.interface';
 
@@ -24,8 +24,6 @@ export const ClientDetails: FC<ClientsDetailProps> = ({
 }) => {
   const intl = useIntl();
 
-  const avatarUpload = useAvatarUploadMutation();
-
   const [activeClientInfoTab, setActiveClientInfoTab] = useState<
     'future' | 'past'
   >('future');
@@ -33,6 +31,10 @@ export const ClientDetails: FC<ClientsDetailProps> = ({
   const [activeClientTab, setActiveClientTab] = useState<'booking' | 'about'>(
     'booking'
   );
+
+  const [selectedClient, setSelectedClient] = useState<
+    AppRouterOutputs['client']['get'] | null
+  >(null);
 
   const { data: client, isLoading } = trpc.client.get.useQuery(
     { id: clientId ?? '' },
@@ -49,44 +51,6 @@ export const ClientDetails: FC<ClientsDetailProps> = ({
     if (key === 'future' || key === 'past') {
       setActiveClientInfoTab(key);
     }
-  };
-
-  const handleSubmitForm = async (data: EditClientInfoModalValues) => {
-    let imageUrl: string | null = null;
-
-    if (avatar.file) {
-      if (typeof avatar.file === 'object') {
-        const uploaded = await avatarUpload.mutateAsync(avatar.file);
-
-        imageUrl = uploaded.url;
-      } else if (typeof avatar.file === 'string') {
-        imageUrl = avatar.file;
-      }
-    }
-
-    clientInfoUpdate(
-      {
-        ...data,
-        image: imageUrl ?? undefined,
-        id: client?.id ?? '',
-      },
-      {
-        onSuccess: () => {
-          showToast({
-            variant: 'success',
-            title: intl.formatMessage({
-              id: 'client.info.update.success',
-            }),
-          });
-
-          queryClient.invalidateQueries({
-            queryKey: getQueryKey(trpc.client.list),
-          });
-
-          onOpenChange?.(false);
-        },
-      }
-    );
   };
 
   const tabs: Tab[] = [

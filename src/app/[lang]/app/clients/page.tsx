@@ -1,4 +1,4 @@
-import { ClientsList } from '@/modules/client/containers/clients-list';
+import { ClientsListContainer } from '@/modules/client/containers/clients-list-container';
 import { pageGuard } from '@/modules/core/utils/route.utils';
 
 export default async function Clients() {
@@ -15,7 +15,7 @@ export default async function Clients() {
 
   return (
     <div className='relative z-10 h-screen py-20'>
-      <ClientsList />
+      <ClientsListContainer />
     </div>
   );
 }
