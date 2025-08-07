@@ -36,8 +36,6 @@ export const ClientsListContainer = () => {
   const [isNewBooking, setIsNewBooking] = useState(false);
   const [isEditClientInfo, setIsEditClientInfo] = useState(false);
 
-  const createBooking = trpc.booking.create.useMutation();
-
   const {
     data: clientsListQuery,
     isFetchingNextPage,
@@ -194,7 +192,6 @@ export const ClientsListContainer = () => {
         onOpenChange={() => {
           setIsEditClientInfo(false);
         }}
-        // clientId={selectedClient?.id || null}
         initialValues={initialClientValues}
         onSubmit={handleSubmitForm}
       />

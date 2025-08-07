@@ -500,5 +500,10 @@
   "client.booking.tabs.future": "Майбутні",
   "client.booking.tabs.past": "Минулі",
   "client.add.booking": "Додати нове бронювання",
-  "client.header.title": "Клієнти"
+  "client.header.title": "Клієнти",
+  "create.booking.title": "Нове бронювання",
+  "booking.service": "Сервіс",
+  "booking.date": "Дата",
+  "booking.time": "Час",
+  "client.add.success": "Клієнта додано"
 }

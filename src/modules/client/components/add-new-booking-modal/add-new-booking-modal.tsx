@@ -135,7 +135,7 @@ export const AddNewBookingModal: FC<AddNewBookingModalProps> = ({
           type='button'
         />
         <h2 className='z-50 mt-3 text-center text-lg font-medium text-dark'>
-          Нове бронювання
+          {intl.formatMessage({ id: 'create.booking.title' })}
         </h2>
 
         <div className='z-50 mt-14 flex flex-1 flex-col gap-7'>
@@ -171,7 +171,7 @@ export const AddNewBookingModal: FC<AddNewBookingModalProps> = ({
               )
             }
             className='!w-full'
-            label='Сервіс'
+            label={intl.formatMessage({ id: 'booking.service' })}
             variant='input'
             onClick={() => isOpenServicesSelectorModal.setTrue()}
             value={selectedService?.title || ''}
@@ -187,7 +187,7 @@ export const AddNewBookingModal: FC<AddNewBookingModalProps> = ({
           <DateSelect
             value={date}
             onChange={handleDateChange}
-            placeholder={'Дата'}
+            placeholder={intl.formatMessage({ id: 'booking.date' })}
             triggerProps={{
               classes: {
                 root: clsx('!w-full !py-6 !justify-between', {
@@ -203,7 +203,7 @@ export const AddNewBookingModal: FC<AddNewBookingModalProps> = ({
 
           <TimeField
             inputProps={{
-              label: 'Час',
+              label: intl.formatMessage({ id: 'booking.time' }),
             }}
             value={timeValue}
             onChange={setTimeValue}
@@ -213,7 +213,7 @@ export const AddNewBookingModal: FC<AddNewBookingModalProps> = ({
         <div className='z-50 mt-auto'>
           <Button
             className='!mt-auto !w-full'
-            text='Зберегти'
+            text={intl.formatMessage({ id: 'button.save' })}
             onClick={handleBookingCreate}
             isLoading={createBooking.isPending}
           />

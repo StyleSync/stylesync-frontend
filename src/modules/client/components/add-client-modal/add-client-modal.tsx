@@ -80,7 +80,7 @@ export const AddClientModal: FC<AddClientModalProps> = ({
       onSuccess: () => {
         showToast({
           variant: 'success',
-          title: 'Клієнта додано',
+          title: intl.formatMessage({ id: 'client.add.success' }),
         });
 
         queryClient.invalidateQueries({

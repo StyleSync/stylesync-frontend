@@ -61,22 +61,12 @@ const validationSchema: z.Schema<EditClientInfoModalValues> = z.object({
 export const EditClientInfoModal: FC<EditClientInfoModalProps> = ({
   isOpen,
   onOpenChange,
-  // clientId,
   initialValues,
   onSubmit,
 }) => {
   const intl = useIntl();
-  // const queryClient = useQueryClient();
   // avatar
   const image = useImageInputState(initialValues?.image);
-  // query
-  // const { mutate: clientInfoUpdate, isPending } =
-  //   trpc.client.update.useMutation();
-
-  // const { data: client } = trpc.client.get.useQuery(
-  //   { id: clientId ?? '' },
-  //   { enabled: !!clientId }
-  // );
 
   const { register, handleSubmit, watch, formState, setError, reset } =
     useForm<EditClientInfoModalValues>({

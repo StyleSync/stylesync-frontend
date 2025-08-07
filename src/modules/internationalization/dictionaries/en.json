@@ -501,5 +501,10 @@
   "client.booking.tabs.future": "Future",
   "client.booking.tabs.past": "Past",
   "client.add.booking": "Add new booking",
-  "client.header.title": "Clients"
+  "client.header.title": "Clients",
+  "create.booking.title": "New booking",
+  "booking.service": "Service",
+  "booking.date": "Date",
+  "booking.time": "Time",
+  "client.add.success": "Client added"
 }
