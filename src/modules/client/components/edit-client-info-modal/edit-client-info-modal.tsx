@@ -177,7 +177,7 @@ export const EditClientInfoModal: FC<EditClientInfoModalProps> = ({
           />
           <TextField
             {...register('phone')}
-            error={getErrorMessage(formState.errors.firstName?.message)}
+            error={getErrorMessage(formState.errors.phone?.message)}
             className='!w-full'
             label={intl.formatMessage({ id: 'client.phone' })}
             variant='input'

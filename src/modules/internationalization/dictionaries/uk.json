@@ -507,5 +507,12 @@
   "booking.time": "Час",
   "client.add.success": "Клієнта додано",
   "client.booking.tabs.future.empty": "Немає запланованих бронювань",
-  "client.booking.tabs.past.empty": "Немає минулих бронювань"
+  "client.booking.tabs.past.empty": "Немає минулих бронювань",
+  "client.booking.tabs.booking": "БРОНЮВАННЯ",
+  "client.booking.tabs.about": "ПРО КЛІЄНТА",
+  "client.select.placeholder": "Виберіть клієнта",
+  "client.booking.tabs.canceled": "Скасовано",
+  "client.booking.tabs.total.income": "Загальний дохід",
+  "client.booking.tabs.total.income.value": "0.00 UAH",
+  "client.booking.tabs.booking.count": "Бронювань"
 }
