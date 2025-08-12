@@ -505,5 +505,7 @@
   "booking.service": "Сервіс",
   "booking.date": "Дата",
   "booking.time": "Час",
-  "client.add.success": "Клієнта додано"
+  "client.add.success": "Клієнта додано",
+  "client.booking.tabs.future.empty": "Немає запланованих бронювань",
+  "client.booking.tabs.past.empty": "Немає минулих бронювань"
 }

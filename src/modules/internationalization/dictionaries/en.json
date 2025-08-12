@@ -506,5 +506,7 @@
   "booking.service": "Service",
   "booking.date": "Date",
   "booking.time": "Time",
-  "client.add.success": "Client added"
+  "client.add.success": "Client added",
+  "client.booking.tabs.future.empty": "No future bookings",
+  "client.booking.tabs.past.empty": "No past bookings"
 }

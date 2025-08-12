@@ -1,27 +1,26 @@
 import React, { type FC, useState } from 'react';
 
-import { addMinutes, getDate, getMonth, getYear } from 'date-fns';
+import { useQueryClient } from '@tanstack/react-query';
+import { getQueryKey } from '@trpc/react-query';
+import { getDate, getMonth, getYear, startOfToday } from 'date-fns';
 import Image from 'next/image';
 import { useIntl } from 'react-intl';
 import { useBoolean } from 'usehooks-ts';
 
 import Bg from '@/assets/images/bg-1.png';
+import { BookingTimeSelect } from '@/modules/booking/containers/booking-time-select';
 import { ClientSelector } from '@/modules/client/components/client-selector';
 import { ClientSelectorModal } from '@/modules/client/components/client-selector-modal';
 import { ClientsListModal } from '@/modules/client/components/clients-list-modal';
 import { Button } from '@/modules/core/components/button';
-import { DateSelect } from '@/modules/core/components/date-select';
 import { DialogFullScreen } from '@/modules/core/components/dialog-full-screen';
 import { Icon } from '@/modules/core/components/icon';
 import { TextField } from '@/modules/core/components/text-field';
-import { TimeField } from '@/modules/core/components/time-field';
 import { showToast } from '@/modules/core/providers/toast-provider';
 import { trpc } from '@/modules/core/utils/trpc.utils';
-import { Time, TimeValue } from '@/modules/core/utils/time.utils';
 import { ServiceOnProfessional } from '@/modules/service/types/service.types';
+import { AppRouterOutputs, AvailableBookingTime } from '@/server/types';
 import { mapDateToDayEnum } from '@/server/utils/helpers';
-import { AppRouterOutputs } from '@/server/types';
-import clsx from 'clsx';
 
 import { type AddNewBookingModalProps } from './add-new-booking-modal.interface';
 
@@ -32,36 +31,39 @@ export const AddNewBookingModal: FC<AddNewBookingModalProps> = ({
   setSelectedClient,
 }) => {
   const intl = useIntl();
-  const [selectedService, setSelectedService] =
-    useState<ServiceOnProfessional | null>(null);
-  const [timeValue, setTimeValue] = useState('');
-  const [date, setDate] = useState<Date | null>(null);
+  const queryClient = useQueryClient();
 
   const isOpenClientsListModal = useBoolean();
   const isOpenServicesSelectorModal = useBoolean();
 
+  const [selectedService, setSelectedService] =
+    useState<ServiceOnProfessional | null>(null);
+  const [selectedDay, setSelectedDay] = useState<string | null>(
+    startOfToday().toISOString()
+  );
+  const [selectedTimeRange, setSelectedTimeRange] =
+    useState<null | AvailableBookingTime>(null);
+
   const createBooking = trpc.booking.create.useMutation();
 
   const handleBookingCreate = () => {
-    if (!date || !selectedService || !timeValue) return;
-
-    const startTime = new Time(timeValue as TimeValue).setTimeOfDate(date);
+    if (!selectedDay || !selectedService || !selectedTimeRange) return;
 
     createBooking.mutate(
       {
-        startTime: startTime.toISOString(),
-        endTime: addMinutes(startTime, selectedService.duration).toISOString(),
-        date: date.toISOString(),
+        startTime: selectedTimeRange.startTime,
+        endTime: selectedTimeRange.endTime,
+        date: selectedDay || '',
         guestFirstName: selectedClient?.firstName || '',
         guestLastName: selectedClient?.lastName || '',
         guestPhone: selectedClient?.phone || '',
         guestEmail: selectedClient?.email || '',
         serviceProfessionalId: selectedService.id,
         clientId: selectedClient?.id,
-        day: mapDateToDayEnum(date.toISOString()),
-        yearTime: getYear(date),
-        monthTime: getMonth(date),
-        dayTime: getDate(date),
+        day: mapDateToDayEnum(selectedDay),
+        yearTime: getYear(new Date(selectedDay)),
+        monthTime: getMonth(new Date(selectedDay)),
+        dayTime: getDate(new Date(selectedDay)),
       },
       {
         onSuccess: () => {
@@ -70,7 +72,14 @@ export const AddNewBookingModal: FC<AddNewBookingModalProps> = ({
             title: 'Бронювання успішно створено',
           });
 
-          handleCloseModal();
+          handleModalOpenChange(false);
+
+          const listByDayKey = getQueryKey(trpc.booking.list);
+
+          queryClient.resetQueries({
+            queryKey: listByDayKey,
+            exact: false,
+          });
         },
         onError: () => {
           showToast({
@@ -85,10 +94,6 @@ export const AddNewBookingModal: FC<AddNewBookingModalProps> = ({
         },
       }
     );
-  };
-
-  const handleDateChange = (selectedDate: Date | null) => {
-    setDate(selectedDate);
   };
 
   const handleClientSelect = () => {
@@ -110,33 +115,44 @@ export const AddNewBookingModal: FC<AddNewBookingModalProps> = ({
     }
   };
 
-  const handleCloseModal = () => {
+  const handleModalOpenChange = (open: boolean) => {
+    if (!open) {
+      setSelectedService(null);
+      setSelectedDay(startOfToday().toISOString());
+      setSelectedTimeRange(null);
+    }
+
     if (onOpenChange) {
-      onOpenChange(false);
+      onOpenChange(open);
     }
   };
 
   return (
     <DialogFullScreen
       isOpen={isOpen}
-      onOpenChange={onOpenChange}
+      onOpenChange={handleModalOpenChange}
       classes={{
         overlay: 'z-[20]',
         content: 'w-full p-6',
       }}
       applyMobileBottomTabPadding
     >
-      <form className='flex w-full flex-col' onSubmit={handleBookingCreate}>
-        <Button
-          variant='outlined'
-          icon='chevron-left'
-          className='absolute left-6 top-[30px] z-[200] -ml-2 !border-none !text-dark'
-          onClick={handleCloseModal}
-          type='button'
-        />
-        <h2 className='z-50 mt-3 text-center text-lg font-medium text-dark'>
-          {intl.formatMessage({ id: 'create.booking.title' })}
-        </h2>
+      <form
+        className='flex w-full flex-col overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'
+        onSubmit={handleBookingCreate}
+      >
+        <div className='z-50 mt-3 flex items-center'>
+          <Button
+            variant='outlined'
+            icon='chevron-left'
+            className='-ml-2 !border-none !text-dark'
+            onClick={() => handleModalOpenChange(false)}
+            type='button'
+          />
+          <h2 className='z-50 mt-[4px] flex-1 text-center text-lg font-medium text-dark'>
+            {intl.formatMessage({ id: 'create.booking.title' })}
+          </h2>
+        </div>
 
         <div className='z-50 mt-14 flex flex-1 flex-col gap-7'>
           <ClientSelector
@@ -184,30 +200,15 @@ export const AddNewBookingModal: FC<AddNewBookingModalProps> = ({
             onServiceSelect={setSelectedService}
           />
 
-          <DateSelect
-            value={date}
-            onChange={handleDateChange}
-            placeholder={intl.formatMessage({ id: 'booking.date' })}
-            triggerProps={{
-              classes: {
-                root: clsx('!w-full !py-6 !justify-between', {
-                  '!text-gray hover:!border-primary hover:!text-primary': !date,
-                }),
-              },
-              style: {
-                borderColor: '#ced4dc',
-                paddingRight: '15px',
-              },
-            }}
-          />
-
-          <TimeField
-            inputProps={{
-              label: intl.formatMessage({ id: 'booking.time' }),
-            }}
-            value={timeValue}
-            onChange={setTimeValue}
-          />
+          {selectedService && (
+            <BookingTimeSelect
+              selectedDay={selectedDay}
+              setSelectedDay={setSelectedDay}
+              selectedTimeRange={selectedTimeRange}
+              setSelectedTimeRange={setSelectedTimeRange}
+              serviceOnProfessionalId={selectedService.id}
+            />
+          )}
         </div>
 
         <div className='z-50 mt-auto'>

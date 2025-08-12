@@ -15,10 +15,11 @@ export const BookingInfoCard: FC<BookingInfoCardProps> = ({
   onClick,
 }) => {
   const intl = useIntl();
+
   // refs
   const rootRef = useRef<HTMLDivElement>(null) as RefObject<HTMLElement>;
   // memo
-  const { day, month, time } = useMemo(() => {
+  const { time } = useMemo(() => {
     return {
       day: formatI18n(booking.startTime, 'dd', intl.locale),
       month: formatI18n(booking.startTime, 'MMM', intl.locale).replace('.', ''),
