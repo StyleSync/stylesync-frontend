@@ -96,10 +96,6 @@ export const AddNewBookingModal: FC<AddNewBookingModalProps> = ({
     );
   };
 
-  const handleClientSelect = () => {
-    isOpenClientsListModal.setTrue();
-  };
-
   const handleClientClick = (client: AppRouterOutputs['client']['get']) => {
     if (setSelectedClient) {
       setSelectedClient(client);
@@ -156,7 +152,7 @@ export const AddNewBookingModal: FC<AddNewBookingModalProps> = ({
 
         <div className='z-50 mt-14 flex flex-1 flex-col gap-7'>
           <ClientSelector
-            onSelect={handleClientSelect}
+            onSelect={isOpenClientsListModal.setTrue}
             selectedClient={selectedClient}
             setSelectedClient={setSelectedClient}
           />

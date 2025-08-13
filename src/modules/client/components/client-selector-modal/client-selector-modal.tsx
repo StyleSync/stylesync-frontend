@@ -1,11 +1,13 @@
 import { FC, useMemo } from 'react';
 
+import { useIntl } from 'react-intl';
+
+import { ClientSelectorServices } from '@/modules/client/components/client-selector-services';
 import { Button } from '@/modules/core/components/button';
 import { DialogFullScreen } from '@/modules/core/components/dialog-full-screen';
-import { ClientSelectorServices } from '@/modules/client/components/client-selector-services';
 import { useServiceOnProfessionalGroups } from '@/modules/service/hooks/use-service-on-professional-groups';
-import { sortServiceOnProfessionalGroups } from '@/modules/service/utils/service.utils';
 import type { ServiceOnProfessional } from '@/modules/service/types/service.types';
+import { sortServiceOnProfessionalGroups } from '@/modules/service/utils/service.utils';
 
 import { type ClientSelectorModalProps } from './client-selector-modal.inderface';
 
@@ -14,6 +16,8 @@ export const ClientSelectorModal: FC<ClientSelectorModalProps> = ({
   onOpenChange,
   onServiceSelect,
 }) => {
+  const intl = useIntl();
+
   const { groups } = useServiceOnProfessionalGroups();
 
   const sortedServiceOnProfessionalGroups = useMemo(
@@ -54,7 +58,7 @@ export const ClientSelectorModal: FC<ClientSelectorModalProps> = ({
             onClick={handleClose}
           />
           <span className='flex-1 text-center text-lg font-medium text-dark'>
-            Виберіть сервіс
+            {intl.formatMessage({ id: 'client.select.service' })}
           </span>
         </div>
         <ClientSelectorServices

@@ -515,5 +515,6 @@
   "client.booking.tabs.canceled": "Canceled",
   "client.booking.tabs.total.income": "Total income",
   "client.booking.tabs.total.income.value": "0.00 UAH",
-  "client.booking.tabs.booking.count": "Bookings"
+  "client.booking.tabs.booking.count": "Bookings",
+  "client.select.service": "Select service"
 }
