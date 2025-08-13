@@ -69,7 +69,9 @@ export const AddNewBookingModal: FC<AddNewBookingModalProps> = ({
         onSuccess: () => {
           showToast({
             variant: 'success',
-            title: 'Бронювання успішно створено',
+            title: intl.formatMessage({
+              id: 'create.booking.toast.success.title',
+            }),
           });
 
           handleModalOpenChange(false);
@@ -94,6 +96,10 @@ export const AddNewBookingModal: FC<AddNewBookingModalProps> = ({
         },
       }
     );
+  };
+
+  const handleClientSelect = () => {
+    isOpenClientsListModal.setTrue();
   };
 
   const handleClientClick = (client: AppRouterOutputs['client']['get']) => {
@@ -152,7 +158,7 @@ export const AddNewBookingModal: FC<AddNewBookingModalProps> = ({
 
         <div className='z-50 mt-14 flex flex-1 flex-col gap-7'>
           <ClientSelector
-            onSelect={isOpenClientsListModal.setTrue}
+            onSelect={handleClientSelect}
             selectedClient={selectedClient}
             setSelectedClient={setSelectedClient}
           />

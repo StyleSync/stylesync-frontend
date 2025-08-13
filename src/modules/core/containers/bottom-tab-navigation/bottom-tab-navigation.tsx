@@ -73,7 +73,7 @@ export const BottomTabNavigation: FC<BottomTabNavigationProps> = () => {
       {
         href: '/app/clients',
         icon: 'users',
-        title: 'Клієнти',
+        title: intl.formatMessage({ id: 'burger.menu.btn.clients' }),
       },
       {
         href: `/app/profile/${me.nickname || me.id}`,

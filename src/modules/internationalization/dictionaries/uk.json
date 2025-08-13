@@ -373,7 +373,7 @@
   "burger.menu.btn.settings": "Налаштування",
   "burger.menu.btn.signOut": "Вийти",
   "burger.menu.notAuthenticated": "Не авторизовано",
-
+  "burger.menu.btn.clients": "Клієнти",
   "validation.firstName.required": "Ім'я є обов'язковим",
   "validation.firstName.minLength": "Ім'я повинно містити принаймні 2 символи",
   "validation.firstName.maxLength": "Ім'я повинно містити не більше 32 символів",
@@ -515,5 +515,6 @@
   "client.booking.tabs.total.income": "Загальний дохід",
   "client.booking.tabs.total.income.value": "0.00 UAH",
   "client.booking.tabs.booking.count": "Бронювань",
-  "client.select.service": "Виберіть сервіс"
+  "client.select.service": "Виберіть сервіс",
+  "create.booking.toast.success.title": "Бронювання успішно створено"
 }
