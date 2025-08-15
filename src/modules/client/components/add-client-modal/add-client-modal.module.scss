@@ -1,0 +1,12 @@
+@use '@/styles/variables.module';
+@use '@/styles/utils';
+@use '@/styles/mixins';
+
+.dialogOverlay {
+  z-index: calc(#{variables.$level-dialog-2} - 1);
+}
+
+.dialogContent {
+  padding: utils.spacing(3, 3);
+  width: 100%;
+}

@@ -23,7 +23,7 @@ export default async function Home() {
     }
 
     if (session.user.userType === 'PROFESSIONAL') {
-      redirect('/app/profile');
+      redirect('/app/my-bookings');
     }
 
     if (session.user.userType === 'CUSTOMER') {

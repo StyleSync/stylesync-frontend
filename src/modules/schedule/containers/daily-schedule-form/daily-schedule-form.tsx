@@ -65,7 +65,6 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
   const isOpenModalDayOverride = useBoolean();
   const queryClient = useQueryClient();
 
-  // Format the date for display based on current locale
   const dateLocale = locale === 'uk' ? uk : enUS;
   const formattedDate = useMemo(() => {
     return dates
@@ -79,7 +78,6 @@ export const DailyScheduleForm: FC<DailyScheduleFormProps> = ({
       .join(', ');
   }, [dates, dateLocale]);
 
-  // queries
   const { data: me } = trpc.user.me.useQuery({
     expand: ['professional'],
   });

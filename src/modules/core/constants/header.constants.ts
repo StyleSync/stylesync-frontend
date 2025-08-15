@@ -10,4 +10,8 @@ export const headerRouteConfig: {
     title: 'burger.menu.btn.settings',
     match: (pathname) => pathname.includes('/app/settings'),
   },
+  {
+    title: 'client.header.title',
+    match: (pathname) => pathname.includes('/app/clients'),
+  },
 ];
