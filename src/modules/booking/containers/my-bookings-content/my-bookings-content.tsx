@@ -1,23 +1,30 @@
 'use client';
-import { Suspense, useContext } from 'react';
+import { Suspense, useState } from 'react';
+
+import { useBoolean } from 'usehooks-ts';
 
 import { BookingsUserList } from '@/modules/booking/components/booking-user-list';
 import { BookingsList } from '@/modules/booking/components/bookings-list';
 import { useMyBookingsTab } from '@/modules/booking/hooks/use-my-bookings-tab';
-import { BookingContext } from '@/modules/booking/providers/booking-provider';
+import { AddNewBookingModal } from '@/modules/client/components/add-new-booking-modal';
 import { Button } from '@/modules/core/components/button';
 import { useDeviceType } from '@/modules/core/hooks/use-device-type';
 import { trpc } from '@/modules/core/utils/trpc.utils';
 import { Calendar } from '@/modules/schedule/components/calendar';
 import { CalendarMobile } from '@/modules/schedule/components/mobile-calendar';
+import { AppRouterOutputs } from '@/server/types';
 
 import styles from './my-bookings-content.module.scss';
 
 export const MyBookingsContent = () => {
   const { activeTab } = useMyBookingsTab();
 
+  const [selectedClientForBooking, setSelectedClientForBooking] = useState<
+    AppRouterOutputs['client']['get'] | null
+  >(null);
+
+  const isOpen = useBoolean(false);
   const deviceType = useDeviceType();
-  const { book } = useContext(BookingContext);
 
   const [me] = trpc.user.me.useSuspenseQuery({ expand: ['professional'] });
 
@@ -45,8 +52,14 @@ export const MyBookingsContent = () => {
         variant='primary'
         className='fixed bottom-24 right-4 z-10 !h-12 !w-12 md:!hidden'
         onClick={() => {
-          book();
+          isOpen.setValue(true);
         }}
+      />
+      <AddNewBookingModal
+        isOpen={isOpen.value}
+        onOpenChange={isOpen.setValue}
+        selectedClient={selectedClientForBooking}
+        setSelectedClient={setSelectedClientForBooking}
       />
     </div>
   );

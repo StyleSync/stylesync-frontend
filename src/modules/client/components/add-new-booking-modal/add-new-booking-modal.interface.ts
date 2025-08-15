@@ -1,4 +1,3 @@
-import { CreateBookingRequestData } from '@/modules/booking/components/service-booking-modal/service-booking-modal.interface';
 import type { DialogProps } from '@/modules/core/types/dialog.types';
 import { AppRouterOutputs } from '@/server/types';
 

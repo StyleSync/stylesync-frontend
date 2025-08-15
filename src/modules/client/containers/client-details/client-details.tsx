@@ -182,15 +182,25 @@ export const ClientDetails: FC<ClientsDetailProps> = ({
         <div className='z-[100] mx-3 mb-[15px] mt-8 flex justify-between rounded-2xl bg-white px-4 py-3 shadow-md'>
           <div className='flex flex-col items-start'>
             <span className='text-base font-medium text-dark'>0</span>
-            <span className='text-sm text-gray'>Бронювань</span>
+            <span className='text-sm text-gray'>
+              {intl.formatMessage({ id: 'client.booking.tabs.booking' })}
+            </span>
           </div>
           <div className='flex flex-col items-start'>
             <span className='text-base font-medium text-dark'>0</span>
-            <span className='text-sm text-gray'>Скасовано</span>
+            <span className='text-sm text-gray'>
+              {intl.formatMessage({ id: 'client.booking.tabs.canceled' })}
+            </span>
           </div>
           <div className='flex flex-col items-start'>
-            <span className='text-base font-medium text-dark'>0.00 UAH</span>
-            <span className='text-sm text-gray'>Загальний дохід</span>
+            <span className='text-base font-medium text-dark'>
+              {intl.formatMessage({
+                id: 'client.booking.tabs.total.income.value',
+              })}
+            </span>
+            <span className='text-sm text-gray'>
+              {intl.formatMessage({ id: 'client.booking.tabs.total.income' })}
+            </span>
           </div>
         </div>
 
