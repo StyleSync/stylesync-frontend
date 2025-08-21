@@ -43,7 +43,61 @@ export const clientRouter = router({
         });
       }
 
-      return client;
+      // Get booking statistics for the client
+      const bookingStats = await prisma.booking.aggregate({
+        where: {
+          clientId: input.id,
+          serviceProfessional: {
+            professionalId: professional.id,
+          },
+        },
+        _count: {
+          id: true,
+        },
+      });
+
+      // Get cancelled booking count
+      const cancelledBookingsCount = await prisma.booking.count({
+        where: {
+          clientId: input.id,
+          status: 'CANCELED',
+          serviceProfessional: {
+            professionalId: professional.id,
+          },
+        },
+      });
+
+      // Get total revenue from completed bookings
+      const completedBookings = await prisma.booking.findMany({
+        where: {
+          clientId: input.id,
+          status: 'FINISHED',
+          serviceProfessional: {
+            professionalId: professional.id,
+          },
+        },
+        select: {
+          serviceProfessional: {
+            select: {
+              price: true,
+            },
+          },
+        },
+      });
+
+      const totalRevenue = completedBookings.reduce(
+        (sum, booking) => sum + booking.serviceProfessional.price,
+        0
+      );
+
+      return {
+        ...client,
+        bookingStats: {
+          totalBookings: bookingStats._count.id,
+          cancelledBookings: cancelledBookingsCount,
+          totalRevenue,
+        },
+      };
     }),
   create: privateProcedure
     .input(
@@ -157,6 +211,22 @@ export const clientRouter = router({
           offset: z.number().min(0).default(0),
           cursor: z.string().nullish(),
           search: z.string().optional(),
+          sortFields: z
+            .array(
+              z.object({
+                field: z.enum([
+                  'createdAt',
+                  'updatedAt',
+                  'firstName',
+                  'lastName',
+                  'name',
+                  'phone',
+                  'email',
+                ]),
+                order: z.enum(['asc', 'desc']),
+              })
+            )
+            .default([{ field: 'createdAt', order: 'desc' }]),
         })
         .optional()
     )
@@ -181,7 +251,9 @@ export const clientRouter = router({
         take: limit + 1,
         skip: input?.cursor ? undefined : input?.offset ?? 0,
         cursor: input?.cursor ? { id: input?.cursor } : undefined,
-        orderBy: { createdAt: 'desc' },
+        orderBy: input?.sortFields.map((sortField) => ({
+          [sortField.field]: sortField.order,
+        })),
       });
 
       return { items, nextCursor: getCursor(items, limit) };

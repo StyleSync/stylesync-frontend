@@ -5,8 +5,8 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#3b82ef',
-          light: '#d8e6fc',
+          DEFAULT: '#007AFF',
+          light: '#EAF4FF',
         },
         accent: {
           DEFAULT: '#0252cc',
@@ -23,15 +23,28 @@ module.exports = {
           accent: '#767A85',
         },
         destructive: {
-          DEFAULT: '#ff62a5',
-          light: '#ffdbeb',
+          DEFAULT: '#FF3B30',
+          light: '#FFECEC',
         },
         green: {
-          DEFAULT: '#4bb543',
-          light: '#DCFFE5',
+          DEFAULT: '#34C759',
+          light: '#E6F8EC',
         },
         orange: {
-          DEFAULT: '#FA714E',
+          DEFAULT: '#FF9500',
+          light: '#FFF3E0',
+        },
+        cyan: {
+          DEFAULT: '#32ADE6',
+          light: '#E1F6FD',
+        },
+        purple: {
+          DEFAULT: '#AF52DE',
+          light: '#F3E8FB',
+        },
+        yellow: {
+          DEFAULT: '#FFCC00',
+          light: '#FFF9E5',
         },
       },
       boxShadow: {

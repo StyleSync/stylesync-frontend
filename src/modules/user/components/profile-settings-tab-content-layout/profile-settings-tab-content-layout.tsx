@@ -50,7 +50,7 @@ export const ProfileSettingsTabContentLayout: FC<
     <div className={styles.root}>
       {deviceType === 'mobile' && (
         <Image
-          className='absolute bottom-0 left-0 right-0 top-0 z-[-1] h-full w-full object-cover opacity-20'
+          className='absolute bottom-0 left-0 right-0 top-0 z-[-1] h-full w-full object-cover opacity-10'
           src={Bg.src}
           width={Bg.width}
           height={Bg.height}
@@ -79,13 +79,6 @@ export const ProfileSettingsTabContentLayout: FC<
       <div className='flex flex-1 gap-x-6 overflow-y-auto pb-0 md:overflow-y-visible'>
         <div className={styles.content}>
           <div className={styles.scrolledContent}>
-            {deviceType === 'mobile' && title && (
-              <span className='text-2xl font-medium text-dark'>
-                {intl.formatMessage({
-                  id: title,
-                })}
-              </span>
-            )}
             <Placeholder
               isActive={isLoading}
               placeholder={<Spinner size='medium' />}
