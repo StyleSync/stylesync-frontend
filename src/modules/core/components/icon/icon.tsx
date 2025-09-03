@@ -11,6 +11,7 @@ import ArrowRightIcon from '@/assets/icons/arrow-right.svg?icon';
 import ArrowTopIcon from '@/assets/icons/arrow-top.svg?icon';
 import BeautyServiceIcon from '@/assets/icons/beauty-service.svg?icon';
 import CalendarIcon from '@/assets/icons/calendar.svg?icon';
+import ChartDownIcon from '@/assets/icons/chart-down.svg?icon';
 import CheckMarkIcon from '@/assets/icons/check-mark.svg?icon';
 import ChevronBottomIcon from '@/assets/icons/chevron-bottom.svg?icon';
 import ChevronLeftIcon from '@/assets/icons/chevron-left.svg?icon';
@@ -166,6 +167,7 @@ export const icons = {
   'parmanent-makeup': Parmanent,
   lips: Lips,
   'arrow-left-curved': ArowLeftCurved,
+  'chart-down': ChartDownIcon,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;

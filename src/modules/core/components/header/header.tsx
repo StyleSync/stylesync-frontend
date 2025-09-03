@@ -25,6 +25,7 @@ const Header: FC<HeaderProps> & { BottomContent: FC<ChildrenProp> } = ({
   centralSlot,
   rightSlot,
   classes,
+  transparentOnTop = false,
 }) => {
   const isPageScrolled = useBoolean();
   const pathname = usePathname();
@@ -48,6 +49,7 @@ const Header: FC<HeaderProps> & { BottomContent: FC<ChildrenProp> } = ({
     <header
       className={clsx(
         styles.root,
+        { [styles.transparentOnTop]: transparentOnTop },
         { [styles.pageScrolled]: isPageScrolled.value },
         className
       )}
