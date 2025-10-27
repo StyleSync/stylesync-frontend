@@ -23,7 +23,7 @@ export default async function AppLayout({ children }: ChildrenProp) {
         blurDataURL={Bg.blurDataURL}
         alt='background'
       />
-      <div className='fixed left-0 top-0 z-[2] h-full w-full bg-gradient-to-b from-white to-transparent' />
+      <div className='pointer-events-none fixed left-0 top-0 z-0 h-full w-full bg-gradient-to-b from-white to-transparent' />
       {children}
       <BottomTabNavigation />
     </>
